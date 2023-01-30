@@ -1,0 +1,16 @@
+RewriteEngine On
+# use for authentication
+RewriteCond %{HTTP:Authorization} ^(.+)$
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+
+Header set Access-Control-Allow-Origin *
+
+#department
+RewriteRule ^departments$ controllers/settings/department/department.php [L]
+RewriteRule ^departments/([0-9]+)$ controllers/settings/department/department.php?departmentid=$1 [L]
+RewriteRule ^departments/active/([0-9]+)$ controllers/settings/department/active.php?departmentid=$1 [L]
+RewriteRule ^departments/limit/([0-9]+)/([0-9]+)$ controllers/settings/department/limit.php?start=$1&total=$2 [L]
+RewriteRule ^departments/search/([A-Za-z0-9-]+)$ controllers/settings/department/search.php?search=$1 [L]
+

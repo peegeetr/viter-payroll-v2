@@ -1,0 +1,17 @@
+Donation Receipt important information to show
+1. Designation
+2. Frequency
+3. Amount
+4. Payment Method
+5. Date
+6. Name
+7. Email
+
+Subscription and One-time payment has always "charge.succeeded" Event. Use it for sending notification.
+
+To know if Subscription or One-time payment.
+1. Get the "payment_intent ID" from "charge.succeeded" Event.
+2. Get the "invoice ID" from "payment_intent.created" Event. If invoice value is null then it is "One-time payment" else "Subscription Payment".
+
+
+

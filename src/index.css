@@ -1,0 +1,160 @@
+@font-face {
+  font-family: "poppinsRegular";
+  src: url(font/Poppins-Regular.ttf) format("truetype");
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-bold;
+  }
+  p {
+    @apply mb-2;
+  }
+  body {
+    @apply leading-relaxed font-[poppinsRegular] text-sm min-h-full text-dark;
+  }
+  table {
+    @apply border-collapse border-spacing-2 text-left w-full p-1;
+  }
+  table tr {
+    @apply border-b border-solid border-gray-300 hover:bg-gray-50;
+  }
+  table td {
+    @apply p-1.5;
+  }
+  table td:last-child {
+    @apply w-28;
+  }
+  table th {
+    @apply font-bold bg-gray-200 p-1.5 whitespace-nowrap sm:whitespace-normal first:w-[2rem];
+  }
+  table th:last-child {
+    @apply w-28;
+  }
+  input,
+  select {
+    @apply border border-solid border-gray-300 p-2 rounded-lg w-full;
+  }
+  textarea {
+    @apply block border border-solid border-gray-300 p-2 rounded-lg w-full h-28;
+  }
+  input:disabled,
+  select:disabled,
+  textarea:disabled,
+  .disabled {
+    @apply bg-gray-100 border-gray-200 cursor-not-allowed hover:bg-gray-100 hover:text-inherit hover:border-gray-200;
+  }
+  /* button:disabled {
+    @apply bg-primary opacity-50 hover:bg-primary hover:opacity-50 hover:text-white cursor-not-allowed;
+  } */
+  input:focus,
+  select:focus,
+  textarea:focus {
+    @apply border border-solid border-primary outline-0;
+  }
+
+  /* * {
+    @apply border border-red-500;
+  } */
+}
+
+@layer components {
+  .wrapper {
+    @apply relative min-h-screen pt-20 ml-0 px-5 md:ml-20 lg:ml-44 lg:px-10;
+  }
+  .btn-primary {
+    @apply flex items-center justify-center text-white gap-2 px-3 py-1 bg-primary rounded-full border-primary border  hover:bg-white hover:text-primary hover:border-gray-300 duration-300 ease-in;
+  }
+  .btn-action-table {
+    @apply cursor-pointer text-gray-500 text-base align-middle border border-solid border-gray-300 !py-1.5 !px-3 rounded-md hover:bg-primary hover:text-white duration-200 ease-in;
+  }
+  .btn-modal-submit {
+    @apply flex items-center justify-center text-white gap-2 px-3 py-1.5 bg-primary rounded-full border-primary border hover:bg-white hover:text-primary duration-200 ease-in w-full disabled:bg-primary disabled:opacity-50 disabled:hover:bg-primary disabled:hover:opacity-50 disabled:hover:text-white disabled:cursor-not-allowed;
+  }
+  .btn-modal-cancel {
+    @apply flex items-center justify-center text-dark gap-2 px-3 py-1.5 bg-white rounded-full border-gray-300 border w-full disabled:!cursor-not-allowed;
+  }
+}
+
+@layer utilities {
+  li.active {
+    @apply bg-white rounded-l-3xl relative before:absolute before:content-[""] before:h-full before:w-3 before:rounded-tr-2xl before:right-0 before:-bottom-12 before:shadow-[0_-25px_0_0_rgb(255,255,255)] text-primary after:absolute after:content-[""] after:h-full after:w-3 after:rounded-br-2xl after:right-0 after:-top-12 after:shadow-[0_25px_0_0_rgb(255,255,255)];
+  }
+  span.error-show {
+    @apply text-[11px] absolute right-0 -bottom-5 text-red-500 italic z-50;
+  }
+  input.error-show,
+  select.error-show,
+  textarea.error-show {
+    @apply border border-red-500 bg-red-50;
+  }
+  .tooltip-action-table {
+    @apply relative p-1 bg-transparent leading-none;
+  }
+  .tooltip-action-table::before {
+    @apply content-[''] absolute w-0 h-0 left-2/4 -translate-x-2/4 bottom-full border-t-4 border-r-4 border-l-4 border-solid border-transparent border-t-dark/80 opacity-0 pointer-events-none;
+  }
+  .tooltip-action-table::after {
+    @apply content-[attr(data-tooltip)] absolute left-2/4 -translate-x-2/4 bottom-full -top-[26px] bg-dark/80 text-white p-1 rounded-sm h-fit leading-none z-10 whitespace-nowrap text-center opacity-0 text-sm pointer-events-none;
+  }
+  .tooltip-action-table:hover::before {
+    @apply opacity-100;
+  }
+  .tooltip-action-table:hover::after {
+    @apply opacity-100;
+  }
+  .tooltip-navigation {
+    @apply relative p-1 bg-transparent leading-none;
+  }
+  .tooltip-navigation::before {
+    @apply content-[''] absolute w-0 h-0 top-2/4 -translate-y-2/4 rotate-90 left-20 border-t-4 border-r-4 border-l-4 border-solid border-transparent border-t-dark/80 opacity-0 pointer-events-none;
+  }
+  .tooltip-navigation::after {
+    @apply content-[attr(data-tooltip)] absolute top-2/4 -translate-y-2/4 left-[86px]  bg-dark/80 text-white p-1 rounded-sm h-fit leading-none z-10 whitespace-nowrap text-center opacity-0 text-sm pointer-events-none;
+  }
+  .tooltip-navigation:hover::before {
+    @apply md:opacity-100 opacity-0 lg:opacity-0;
+  }
+  .tooltip-navigation:hover::after {
+    @apply md:opacity-100 opacity-0 lg:opacity-0;
+  }
+  .placeholder {
+    @apply relative;
+  }
+
+  .placeholder.focused::after {
+    @apply hidden;
+  }
+
+  .placeholder::after {
+    @apply content-[attr(data-label)] absolute top-2 left-2 bg-white w-5/6 h-7 px-[2px] py-[2px] pointer-events-none text-gray-400;
+  }
+}
+
+::-webkit-scrollbar {
+  @apply appearance-none;
+}
+::-webkit-scrollbar:vertical {
+  @apply w-1;
+}
+::-webkit-scrollbar:horizontal {
+  @apply h-1 bg-gray-400;
+}
+::-webkit-scrollbar-track-piece {
+  @apply bg-gray-300 rounded-xl;
+}
+::-webkit-scrollbar-track {
+  @apply bg-transparent rounded-xl;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-600 rounded-xl border-transparent border-8;
+}

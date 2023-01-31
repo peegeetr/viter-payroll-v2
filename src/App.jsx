@@ -1,6 +1,7 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { devNavUrl, UrlAdmin } from "./component/helpers/functions-general";
+import Deduction from "./component/pages/deductions/Deduction";
 import Earnings from "./component/pages/earnings/Earnings";
 import PayItem from "./component/pages/pay-type/pay-item/PayItem";
 import PayTypeLink from "./component/pages/pay-type/PayTypePage";
@@ -33,6 +34,12 @@ function App() {
             <Route
               path={`${devNavUrl}/${UrlAdmin}/earnings`}
               element={<Earnings />}
+            />
+
+            {/* Deductions Link */}
+            <Route
+              path={`${devNavUrl}/${UrlAdmin}/deductions`}
+              element={<Deduction />}
             />
 
             {/* Pay Type Link */}

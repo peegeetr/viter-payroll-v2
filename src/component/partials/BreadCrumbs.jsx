@@ -13,8 +13,6 @@ const BreadCrumbs = () => {
 
   const crumbs = location.pathname
     .replace("/dev-app/admin", "")
-    .replace("-", " ")
-    .replace("-", " ")
     .split("/")
     .filter((crumb) => crumb !== "")
     .map((crumb, key) => {

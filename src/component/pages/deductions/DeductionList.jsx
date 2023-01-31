@@ -6,17 +6,15 @@ import {
   setIsRestore,
 } from "../../../store/StoreAction";
 import { StoreContext } from "../../../store/StoreContext";
-import Loadmore from "../../partials/Loadmore";
 import ModalConfirm from "../../partials/modals/ModalConfirm";
 import ModalDeleteRestore from "../../partials/modals/ModalDeleteRestore";
 import NoData from "../../partials/NoData";
 import SearchBar from "../../partials/SearchBar";
 import ServerError from "../../partials/ServerError";
-import TableSpinner from "../../partials/spinners/TableSpinner";
 import StatusActive from "../../partials/status/StatusActive";
 import StatusInactive from "../../partials/status/StatusInactive";
 
-const EarningsList = ({ setItemEdit, handleSearch }) => {
+const DeductionList = ({ setItemEdit, handleSearch }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [dataItem, setData] = React.useState(null);
   const [id, setId] = React.useState(null);
@@ -170,4 +168,4 @@ const EarningsList = ({ setItemEdit, handleSearch }) => {
   );
 };
 
-export default EarningsList;
+export default DeductionList;

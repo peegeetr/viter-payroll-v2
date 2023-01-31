@@ -40,8 +40,7 @@ Menu Earnings
     Done - search bar
     Done - load more button
     Done - standard action button
-
-
+ 
 Add earning modal field
     Done - Employee (select show All, List of employee)
     Done - Pay type

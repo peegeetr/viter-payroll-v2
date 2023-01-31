@@ -1,6 +1,15 @@
 import React from "react";
-import { FaCheck, FaEdit, FaUserCircle, FaUsers } from "react-icons/fa";
-import { SlArrowRight } from "react-icons/sl";
+import {
+  FaArchive,
+  FaCheck,
+  FaEdit,
+  FaHistory,
+  FaList,
+  FaTrash,
+  FaUserCircle,
+  FaUsers,
+} from "react-icons/fa";
+import { BiListPlus } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import { setStartIndex } from "../../../store/StoreAction";
 import { devNavUrl, UrlAdmin } from "../../helpers/functions-general";
@@ -17,8 +26,8 @@ const PayTypeLink = () => {
           className="w-full py-4"
         >
           <div className="flex items-center">
-            <span className="text-lg mr-4">
-              <FaUsers />
+            <span className="text-lg mr-3">
+              <BiListPlus className="text-2xl" />
             </span>
             <span className="text-base font-bold">Users</span>
           </div>
@@ -31,9 +40,10 @@ const PayTypeLink = () => {
         <div className="flex items-center gap-1">
           <Link
             to={`${devNavUrl}/${UrlAdmin}/settings/users`}
-            className="btn-action-table group-hover:bg-primary group-hover:text-white"
+            className="btn-action-table tooltip-action-table"
+            data-tooltip="View"
           >
-            <SlArrowRight className="inline" />
+            <FaList className="inline" />
           </Link>
 
           <button
@@ -47,10 +57,23 @@ const PayTypeLink = () => {
           <button
             type="button"
             className="btn-action-table tooltip-action-table"
-            data-tooltip="Approve"
-            // onClick={() => handleApprove(item)}
+            data-tooltip="Archive"
           >
-            <FaCheck />
+            <FaArchive />
+          </button>
+          <button
+            type="button"
+            className="btn-action-table tooltip-action-table"
+            data-tooltip="Restore"
+          >
+            <FaHistory />
+          </button>
+          <button
+            type="button"
+            className="btn-action-table tooltip-action-table"
+            data-tooltip="Delete"
+          >
+            <FaTrash />
           </button>
         </div>
       </div>

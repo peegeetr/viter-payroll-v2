@@ -225,11 +225,13 @@ const ModalAddEarnings = ({ itemEdit }) => {
                       />
                     </div>
                     <div className="relative mb-5">
-                      <InputTextArea
-                        placeholder="Reason"
+                      <InputText
+                        placeholder="Note"
                         type="text"
                         name="sample"
                         disabled={loading}
+                        onChange={handleSearchChange}
+                        value={addsearch}
                       />
                     </div>
                     <div className="flex items-center gap-1 pt-5">

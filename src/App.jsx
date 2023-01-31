@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { devNavUrl, UrlAdmin } from "./component/helpers/functions-general";
 import Deduction from "./component/pages/deductions/Deduction";
 import Earnings from "./component/pages/earnings/Earnings";
+import EmployeeLink from "./component/pages/employee/EmployeeLink";
+import HolidaysLink from "./component/pages/holidays/HolidaysLink";
 import PayItem from "./component/pages/pay-type/pay-item/PayItem";
 import PayTypeLink from "./component/pages/pay-type/PayTypePage";
 import PayrollLink from "./component/pages/payroll/PayrollLink";
@@ -24,7 +26,7 @@ function App() {
         <Router>
           <Routes>
             <Route path={`*`} element={<PageNotFound />} />
-            <Route path={`/${devNavUrl}`} element={<div>Payroll </div>} />
+            <Route path={`/${devNavUrl}`} element={<div>Payroll</div>} />
             <Route
               path={`${devNavUrl}/${UrlAdmin}/payroll`}
               element={<PayrollLink />}
@@ -40,6 +42,18 @@ function App() {
             <Route
               path={`${devNavUrl}/${UrlAdmin}/deductions`}
               element={<Deduction />}
+            />
+
+            {/* Employee Link */}
+            <Route
+              path={`${devNavUrl}/${UrlAdmin}/employee`}
+              element={<EmployeeLink />}
+            />
+
+            {/* Holidays Link */}
+            <Route
+              path={`${devNavUrl}/${UrlAdmin}/holidays`}
+              element={<HolidaysLink />}
             />
 
             {/* Pay Type Link */}

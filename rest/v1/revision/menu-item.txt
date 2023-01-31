@@ -25,6 +25,7 @@ Earnings
         - PHIC Er
         - PGBG Er
         - HMO Er
+
 Deductions
     - MANDATORY DEDUCTIONS	
         - SSS

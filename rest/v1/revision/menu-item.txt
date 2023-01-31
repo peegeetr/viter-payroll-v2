@@ -1,0 +1,29 @@
+Menu Pay Type
+- WAGES	
+- DE MINIMIS	
+- 13TH MO. & OTHER BENEFITS	
+- MANDATORY DEDUCTIONS	
+- OPTIONAL DEDUCTIONS	
+- OTHER DEDUCTIONS	
+- TAX
+
+Menu Earnings
+- add earnings (action button)
+- with table list
+- search bar
+- load more button
+
+
+Add earning modal field
+- Employee (select show All, List of employee)
+- Pay type
+- Pay item
+- Amount
+- Frequency (semi-monthly, monthly)
+- No. of installment
+- Start date
+- End date
+- Description
+
+Action buttons
+- standard 

@@ -1,29 +1,56 @@
 Menu Pay Type
 - WAGES	
+    - Basic Pay
+    - Overtime Pay
+    - Paid Leave
+    - Holiday
+    - Inlfation Adjustment
+    - Pay Adjustment
+    - Night Shift Differential
+    - Hazard Pay
 - DE MINIMIS	
+    - Rice Allowance
+    - Clothing Allowance
+    - Laundry Allowance
 - 13TH MO. & OTHER BENEFITS	
+    - 13th Month
+    - Bonus
+    - Employee Referral Bonus
+    - Bereavement
+    - Separation Pay
+    - Other Allowances
 - MANDATORY DEDUCTIONS	
+    - SSS
+    - Philhealth
+    - Pag-Ibig
 - OPTIONAL DEDUCTIONS	
+    - SSS Loan
+    - Pag-Ibig Loan
+    - Pag-Ibig MP2
 - OTHER DEDUCTIONS	
+    - FWC- Tithes
+    - FCA- Tuition
+    - Other Deductions
 - TAX
+    - Payroll Tax
 
 Menu Earnings
-- add earnings (action button)
-- with table list
-- search bar
-- load more button
+    - add earnings (action button)
+    - with table list
+    - search bar
+    - load more button
 
 
 Add earning modal field
-- Employee (select show All, List of employee)
-- Pay type
-- Pay item
-- Amount
-- Frequency (semi-monthly, monthly)
-- No. of installment
-- Start date
-- End date
-- Description
+    - Employee (select show All, List of employee)
+    - Pay type
+    - Pay item
+    - Amount
+    - Frequency (semi-monthly, monthly)
+    - No. of installment
+    - Start date
+    - End date
+    - Description
 
 Action buttons
-- standard 
+    - standard 

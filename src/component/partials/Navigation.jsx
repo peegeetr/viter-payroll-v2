@@ -40,149 +40,115 @@ const Navigation = ({ menu }) => {
             }
           >
             <Link
-              to={`${devNavUrl}/admin/overview`}
+              to={`${devNavUrl}/admin/payroll`}
               className="w-full flex items-center !p-4 md:justify-center lg:justify-start tooltip-navigation"
               onClick={handleShow}
               data-tooltip="Overviews"
             >
               <MdDashboard className="mr-4 w-4 h-4 md:mr-0 lg:mr-4" />
-              <span className="md:hidden lg:block">Overviews</span>
+              <span className="md:hidden lg:block">Payroll</span>
             </Link>
           </li>
           <li
             className={
-              menu === "attendance"
+              menu === "employee"
                 ? "active"
                 : "hover:bg-gradient-to-r hover:from-primary hover:to-secondary"
             }
           >
             <Link
-              to={`${devNavUrl}/admin/attendance`}
+              to={`${devNavUrl}/admin/employee`}
               className="w-full flex items-center !p-4 md:justify-center lg:justify-start tooltip-navigation"
               onClick={handleShow}
-              data-tooltip="Attendance"
+              data-tooltip="Employee"
             >
               <FaCalendarCheck className="mr-4 w-4 h-4 md:mr-0 lg:mr-4" />
-              <span className="md:hidden lg:block">Attendance</span>
+              <span className="md:hidden lg:block">Employee</span>
             </Link>
           </li>
           <li
             className={
-              menu === "leaves"
+              menu === "earnings"
                 ? "active"
                 : "hover:bg-gradient-to-r hover:from-primary hover:to-secondary"
             }
           >
             <Link
-              to={`${devNavUrl}/admin/leaves`}
+              to={`${devNavUrl}/admin/earnings`}
               className="w-full flex items-center !p-4 md:justify-center lg:justify-start tooltip-navigation"
               onClick={handleShow}
-              data-tooltip="Leaves"
+              data-tooltip="Earnings"
             >
               <FaCalendarAlt className="mr-4 w-4 h-4 md:mr-0 lg:mr-4" />
-              <span className="md:hidden lg:block">Leaves</span>
+              <span className="md:hidden lg:block">Earnings</span>
             </Link>
           </li>
           <li
             className={
-              menu === "overtime"
+              menu === "deductions"
                 ? "active"
                 : "hover:bg-gradient-to-r hover:from-primary hover:to-secondary"
             }
           >
             <Link
-              to={`${devNavUrl}/admin/overtime`}
+              to={`${devNavUrl}/admin/deductions`}
               className="w-full flex items-center !p-4 md:justify-center lg:justify-start tooltip-navigation"
               onClick={handleShow}
-              data-tooltip="Overtime"
+              data-tooltip="Deductions"
             >
               <FaBusinessTime className="mr-4 w-4 h-4 md:mr-0 lg:mr-4" />
-              <span className="md:hidden lg:block">Overtime</span>
+              <span className="md:hidden lg:block">Deductions</span>
             </Link>
           </li>
           <li
             className={
-              menu === "approval"
+              menu === "pay-type"
                 ? "active"
                 : "hover:bg-gradient-to-r hover:from-primary hover:to-secondary"
             }
           >
             <Link
-              to={`${devNavUrl}/admin/approval`}
+              to={`${devNavUrl}/admin/pay-type`}
               className="w-full flex items-center !p-4 md:justify-center lg:justify-start tooltip-navigation"
               onClick={handleShow}
-              data-tooltip="Approval"
+              data-tooltip="Pay Type"
             >
               <FaUserCheck className="mr-4 w-4 h-4 md:mr-0 lg:mr-4" />
-              <span className="md:hidden lg:block">Approval</span>
+              <span className="md:hidden lg:block">Pay Type</span>
             </Link>
           </li>
           <li
             className={
-              menu === "task"
+              menu === "holidays"
                 ? "active"
                 : "hover:bg-gradient-to-r hover:from-primary hover:to-secondary"
             }
           >
             <Link
-              to={`${devNavUrl}/admin/task`}
+              to={`${devNavUrl}/admin/holidays`}
               className="w-full flex items-center !p-4 md:justify-center lg:justify-start tooltip-navigation"
               onClick={handleShow}
-              data-tooltip="Task"
+              data-tooltip="Holidays"
             >
               <FaTasks className="mr-4 w-4 h-4 md:mr-0 lg:mr-4" />
-              <span className="md:hidden lg:block">Task</span>
+              <span className="md:hidden lg:block">Holidays</span>
             </Link>
           </li>
           <li
             className={
-              menu === "employees"
+              menu === "reports"
                 ? "active"
                 : "hover:bg-gradient-to-r hover:from-primary hover:to-secondary"
             }
           >
             <Link
-              to={`${devNavUrl}/admin/employees`}
+              to={`${devNavUrl}/admin/reports`}
               className="w-full flex items-center !p-4 md:justify-center lg:justify-start tooltip-navigation"
               onClick={handleShow}
-              data-tooltip="Employees"
+              data-tooltip="Reports"
             >
               <FaUsers className="mr-4 w-4 h-4 md:mr-0 lg:mr-4" />
-              <span className="md:hidden lg:block">Employees</span>
-            </Link>
-          </li>
-          <li
-            className={
-              menu === "my-info"
-                ? "active"
-                : "hover:bg-gradient-to-r hover:from-primary hover:to-secondary"
-            }
-          >
-            <Link
-              to={`${devNavUrl}/admin/my-info`}
-              className="w-full flex items-center !p-4 md:justify-center lg:justify-start tooltip-navigation"
-              onClick={handleShow}
-              data-tooltip="My Info"
-            >
-              <FaInfoCircle className="mr-4 w-4 h-4 md:mr-0 lg:mr-4" />
-              <span className="md:hidden lg:block">My Info</span>
-            </Link>
-          </li>
-          <li
-            className={
-              menu === "evaluation"
-                ? "active"
-                : "hover:bg-gradient-to-r hover:from-primary hover:to-secondary"
-            }
-          >
-            <Link
-              to={`${devNavUrl}/admin/evaluation`}
-              className="w-full flex items-center !p-4 md:justify-center lg:justify-start tooltip-navigation"
-              onClick={handleShow}
-              data-tooltip="Evaluation"
-            >
-              <FaNewspaper className="mr-4 w-4 h-4 md:mr-0 lg:mr-4" />
-              <span className="md:hidden lg:block">Evaluation</span>
+              <span className="md:hidden lg:block">Reports</span>
             </Link>
           </li>
           <li

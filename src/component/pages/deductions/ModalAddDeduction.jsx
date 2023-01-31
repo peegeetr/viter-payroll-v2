@@ -69,7 +69,7 @@ const ModalAddDeduction = ({ itemEdit }) => {
         <div className="p-1 w-[350px] rounded-b-2xl">
           <div className="flex justify-between items-center bg-primary p-3 rounded-t-2xl">
             <h3 className="text-white text-sm">
-              {itemEdit ? "Update" : "Add"} Earnings
+              {itemEdit ? "Update" : "Add"} Deductions
             </h3>
             <button
               type="button"

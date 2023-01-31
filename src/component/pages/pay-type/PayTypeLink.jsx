@@ -19,13 +19,11 @@ const PayTypeLink = ({ setItemEdit }) => {
   return (
     <>
       <li className="py-2">
-        <div
-          className="group flex items-center justify-between border-b border-solid border-gray-300"
-          onClick={() => dispatch(setStartIndex(0))}
-        >
+        <div className="group flex items-center justify-between border-b border-solid border-gray-300 ">
           <Link
-            to={`${devNavUrl}/${UrlAdmin}/settings/users`}
+            to={`${devNavUrl}/${UrlAdmin}/pay-type/pay-item`}
             className="w-full py-4"
+            onClick={() => dispatch(setStartIndex(0))}
           >
             <div className="flex items-center">
               <span className="text-lg mr-4">
@@ -41,9 +39,10 @@ const PayTypeLink = ({ setItemEdit }) => {
 
           <div className="flex items-center gap-1">
             <Link
-              to={`${devNavUrl}/${UrlAdmin}/settings/users`}
-              className="btn-action-table tooltip-action-table"
+              to={`${devNavUrl}/${UrlAdmin}/pay-type/pay-item`}
+              className="btn-action-table tooltip-action-table group-hover:bg-primary group-hover:text-white"
               data-tooltip="View"
+              onClick={() => dispatch(setStartIndex(0))}
             >
               <FaList className="inline " />
             </Link>

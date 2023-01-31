@@ -1,5 +1,5 @@
 import React from "react";
-import { RiUserSharedFill } from "react-icons/ri";
+import { FaUsers } from "react-icons/fa";
 import { SlArrowRight } from "react-icons/sl";
 import { Link } from "react-router-dom";
 import { setStartIndex } from "../../../../store/StoreAction";
@@ -20,7 +20,7 @@ const UserLink = () => {
       >
         <div className="flex items-center">
           <span className="text-lg mr-4">
-            <RiUserSharedFill />
+            <FaUsers />
           </span>
           <span className="text-base font-bold">Users</span>
         </div>

@@ -37,22 +37,21 @@ Deductions
         - Payroll Tax
 
 Menu Earnings
-    - add earnings (action button)
-    - with table list
-    - search bar
-    - load more button
+    Done - add earnings (action button)
+    Done - with table list
+    Done - search bar
+    Done - load more button
+    Done - standard action button
 
 
 Add earning modal field
-    - Employee (select show All, List of employee)
-    - Pay type
-    - Pay item
-    - Amount
-    - Frequency (semi-monthly, monthly)
-    - No. of installment
-    - Start date
-    - End date
-    - Description
-
-Action buttons
-    - standard 
+    Done - Employee (select show All, List of employee)
+    Done - Pay type
+    Done - Pay item
+    Done - Amount
+    Done - Frequency (semi-monthly, monthly)
+    Done - No. of installment
+    Done - Start date
+    Done - End date
+    Done - Description
+ 

@@ -4,14 +4,11 @@ import {
   FaBusinessTime,
   FaCalendarAlt,
   FaCalendarCheck,
-  FaEye,
-  FaInfoCircle,
-  FaNewspaper,
   FaTasks,
   FaUserCheck,
   FaUsers,
 } from "react-icons/fa";
-import { MdDashboard } from "react-icons/md";
+import { GiReceiveMoney } from "react-icons/gi";
 import { Link } from "react-router-dom";
 import { setIsShow } from "../../store/StoreAction";
 import { StoreContext } from "../../store/StoreContext";
@@ -45,7 +42,7 @@ const Navigation = ({ menu }) => {
               onClick={handleShow}
               data-tooltip="Overviews"
             >
-              <MdDashboard className="mr-4 w-4 h-4 md:mr-0 lg:mr-4" />
+              <GiReceiveMoney className="mr-4 w-4 h-4 md:mr-0 lg:mr-4" />
               <span className="md:hidden lg:block">Payroll</span>
             </Link>
           </li>

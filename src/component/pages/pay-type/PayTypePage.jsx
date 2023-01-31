@@ -1,16 +1,16 @@
 import React from "react";
-import { FaPlusCircle, FaUsers } from "react-icons/fa";
-import { SlArrowRight } from "react-icons/sl";
-import { Link } from "react-router-dom";
-import { setIsAdd, setStartIndex } from "../../../store/StoreAction.jsx";
-import { devNavUrl, UrlAdmin } from "../../helpers/functions-general.jsx";
-import BreadCrumbs from "../../partials/BreadCrumbs.jsx";
+import { FaPlusCircle } from "react-icons/fa";
+import { setIsAdd } from "../../../store/StoreAction.jsx";
+import { StoreContext } from "../../../store/StoreContext.jsx";
 import Footer from "../../partials/Footer.jsx";
 import Header from "../../partials/Header.jsx";
 import Navigation from "../../partials/Navigation.jsx";
+import ModalAddPayType from "./ModalAddPayType.jsx";
 import PayTypeLink from "./PayTypeLink.jsx";
 
 const PayTypePage = () => {
+  const { store, dispatch } = React.useContext(StoreContext);
+  const [itemEdit, setItemEdit] = React.useState(null);
   const handleAdd = () => {
     dispatch(setIsAdd(true));
     setItemEdit(null);
@@ -32,10 +32,11 @@ const PayTypePage = () => {
 
         <hr />
         <ul className="pt-5 pb-20 relative">
-          <PayTypeLink />
+          <PayTypeLink setItemEdit={setItemEdit} />
         </ul>
         <Footer />
       </div>
+      {store.isAdd && <ModalAddPayType itemEdit={itemEdit} />}
     </>
   );
 };

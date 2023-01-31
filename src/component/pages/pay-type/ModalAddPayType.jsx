@@ -106,6 +106,25 @@ const ModalAddPayType = ({ itemEdit }) => {
               {(props) => {
                 return (
                   <Form>
+                    <div
+                      className="relative mb-5 placeholder"
+                      data-label="Type Category"
+                    >
+                      <InputSelect
+                        name="sample"
+                        //  disabled={!loading}
+                        onFocus={(e) =>
+                          e.target.parentElement.classList.add("focused")
+                        }
+                      >
+                        <optgroup label="Type Category">
+                          <option value=""> -- </option>
+                          <option value="earnings">Earnings</option>
+                          <option value="deductions">Deductions</option>
+                        </optgroup>
+                      </InputSelect>
+                    </div>
+
                     <div className="relative mb-5">
                       <InputText
                         placeholder="Names"

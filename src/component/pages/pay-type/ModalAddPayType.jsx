@@ -13,7 +13,7 @@ import {
 import { devApiUrl } from "../../helpers/functions-general";
 import ButtonSpinner from "../../partials/spinners/ButtonSpinner";
 
-const ModalAddEarnings = ({ itemEdit }) => {
+const ModalAddPayType = ({ itemEdit }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [loading, setLoading] = React.useState(false);
   const [data, setData] = React.useState([]);
@@ -69,7 +69,7 @@ const ModalAddEarnings = ({ itemEdit }) => {
         <div className="p-1 w-[350px] rounded-b-2xl">
           <div className="flex justify-between items-center bg-primary p-3 rounded-t-2xl">
             <h3 className="text-white text-sm">
-              {itemEdit ? "Update" : "Add"} Earnings
+              {itemEdit ? "Update" : "Add"} Pay Type
             </h3>
             <button
               type="button"
@@ -106,96 +106,9 @@ const ModalAddEarnings = ({ itemEdit }) => {
               {(props) => {
                 return (
                   <Form>
-                    <div
-                      className="relative mb-5 placeholder"
-                      data-label="Employee"
-                    >
-                      <InputSelect
-                        name="sample"
-                        //  disabled={!loading}
-                        onFocus={(e) =>
-                          e.target.parentElement.classList.add("focused")
-                        }
-                      >
-                        <optgroup label="Employee">
-                          <option value=""> -- </option>
-                          <option value="all">All</option>
-                          <option value="sample">Lumabas, Cyrene M.</option>
-                        </optgroup>
-                      </InputSelect>
-                    </div>
-
-                    <div
-                      className="relative mb-5 placeholder"
-                      data-label="Pay Type"
-                    >
-                      <InputSelect
-                        name="sample"
-                        //  disabled={!loading}
-                        onFocus={(e) =>
-                          e.target.parentElement.classList.add("focused")
-                        }
-                      >
-                        <optgroup label="Pay Type">
-                          <option value=""> -- </option>
-                          <option value="sample">Wages</option>
-                          <option value="sample">de minimis</option>
-                        </optgroup>
-                      </InputSelect>
-                    </div>
-
-                    <div
-                      className="relative mb-5 placeholder"
-                      data-label="Pay Item"
-                    >
-                      <InputSelect
-                        name="sample"
-                        //  disabled={!loading}
-                        onFocus={(e) =>
-                          e.target.parentElement.classList.add("focused")
-                        }
-                      >
-                        <optgroup label="Pay Item">
-                          <option value=""> -- </option>
-                          <option value="sample">Adjustment</option>
-                          <option value="sample">de minimis</option>
-                        </optgroup>
-                      </InputSelect>
-                    </div>
-
                     <div className="relative mb-5">
                       <InputText
-                        placeholder="Amount"
-                        type="text"
-                        name="sample"
-                        disabled={loading}
-                        onChange={handleSearchChange}
-                        value={addsearch}
-                      />
-                    </div>
-
-                    <div
-                      className="relative mb-5 placeholder"
-                      data-label="Frequency"
-                    >
-                      <InputSelect
-                        name="sample"
-                        //  disabled={!loading}
-                        onFocus={(e) =>
-                          e.target.parentElement.classList.add("focused")
-                        }
-                      >
-                        <optgroup label="Frequency">
-                          <option value=""> -- </option>
-                          <option value="1">Semi-monthly</option>
-                          <option value="0">Monthly</option>
-                        </optgroup>
-                      </InputSelect>
-                    </div>
-
-                    <div className="relative mb-5">
-                      <InputText
-                        placeholder="No. of installment"
+                        placeholder="Names"
                         type="text"
                         name="sample"
                         disabled={loading}
@@ -205,28 +118,8 @@ const ModalAddEarnings = ({ itemEdit }) => {
                     </div>
 
                     <div className="relative mb-5">
-                      <InputText
-                        placeholder="Start Date"
-                        type="text"
-                        onFocus={(e) => (e.target.type = "date")}
-                        onBlur={(e) => (e.target.type = "date")}
-                        name="sample"
-                        disabled={loading}
-                      />
-                    </div>
-                    <div className="relative mb-5">
-                      <InputText
-                        placeholder="End Date"
-                        type="text"
-                        onFocus={(e) => (e.target.type = "date")}
-                        onBlur={(e) => (e.target.type = "date")}
-                        name="sample"
-                        disabled={loading}
-                      />
-                    </div>
-                    <div className="relative mb-5">
-                      <InputText
-                        placeholder="Note"
+                      <InputTextArea
+                        placeholder="Description"
                         type="text"
                         name="sample"
                         disabled={loading}
@@ -268,4 +161,4 @@ const ModalAddEarnings = ({ itemEdit }) => {
   );
 };
 
-export default ModalAddEarnings;
+export default ModalAddPayType;

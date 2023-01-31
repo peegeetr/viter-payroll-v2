@@ -20,6 +20,11 @@ Earnings
         - Bereavement
         - Separation Pay
         - Other Allowances
+    - EMPLOYER CONTRIBUTIONS
+        - SSS Er
+        - PHIC Er
+        - PGBG Er
+        - HMO Er
 Deductions
     - MANDATORY DEDUCTIONS	
         - SSS

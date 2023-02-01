@@ -5,9 +5,4 @@ import { defineConfig } from "vite";
 export default defineConfig({
   plugins: [react()],
   base: "/dev-app",
-  resolve: {
-    alias: {
-      src: "/src",
-    },
-  },
 });

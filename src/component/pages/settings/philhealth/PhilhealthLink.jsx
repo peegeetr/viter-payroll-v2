@@ -1,21 +1,22 @@
 import React from "react";
-import { FaUserCog } from "react-icons/fa";
+import { FaUser } from "react-icons/fa";
+import { GiHealthNormal } from "react-icons/gi";
 import { SlArrowRight } from "react-icons/sl";
 import { Link } from "react-router-dom";
 import { devNavUrl, UrlAdmin } from "../../../helpers/functions-general.jsx";
 
-const DetailsLink = () => {
+const PhilhealthLink = () => {
   return (
     <div className="group flex items-center justify-between border-b border-solid border-gray-300">
       <Link
-        to={`${devNavUrl}/${UrlAdmin}/employee/details/payroll`}
+        to={`${devNavUrl}/${UrlAdmin}/settings/philhealth`}
         className="w-full py-4"
       >
         <div className="flex items-center">
           <span className="text-lg mr-4">
-            <FaUserCog />
+            <GiHealthNormal />
           </span>
-          <span className="text-base font-bold">Payroll Details</span>
+          <span className="text-base font-bold">Philhealth</span>
         </div>
         <p className="ml-[35px] my-0">
           Manage what actions and capabilities every account are can perform in
@@ -24,7 +25,7 @@ const DetailsLink = () => {
       </Link>
 
       <Link
-        to={`${devNavUrl}/${UrlAdmin}/employee/details/payroll`}
+        to={`${devNavUrl}/${UrlAdmin}/settings/philhealth`}
         className="btn-action-table group-hover:bg-primary group-hover:text-white"
       >
         <SlArrowRight className="inline" />
@@ -33,4 +34,4 @@ const DetailsLink = () => {
   );
 };
 
-export default DetailsLink;
+export default PhilhealthLink;

@@ -3,13 +3,19 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { devNavUrl, UrlAdmin } from "./component/helpers/functions-general";
 import Deduction from "./component/pages/deductions/Deduction";
 import Earnings from "./component/pages/earnings/Earnings";
-import EmployeeLink from "./component/pages/employee/EmployeeLink";
 import Employee from "./component/pages/employee/Employee";
+import EmployeeLink from "./component/pages/employee/EmployeeLink";
 import HolidaysLink from "./component/pages/holidays/HolidaysLink";
 import PayItem from "./component/pages/pay-type/pay-item/PayItem";
 import PayTypeLink from "./component/pages/pay-type/PayTypePage";
 import PayrollLink from "./component/pages/payroll/PayrollLink";
+import Pagibig from "./component/pages/settings/pagibig/Pagibig.jsx";
+import Philhealth from "./component/pages/settings/philhealth/philhealth.jsx";
 import SettingsLink from "./component/pages/settings/SettingsLink";
+import SssBracket from "./component/pages/settings/sss-bracket/SssBracket.jsx";
+import TaxMonthly from "./component/pages/settings/tax-bracket/tax-monthly/TaxMonthly.jsx";
+import TaxSemi from "./component/pages/settings/tax-bracket/tax-semi/TaxSemi.jsx";
+import TaxBracket from "./component/pages/settings/tax-bracket/TaxBracket.jsx";
 import OtherUser from "./component/pages/settings/users/other/OtherUser";
 import Role from "./component/pages/settings/users/role/Role";
 import SystemUser from "./component/pages/settings/users/system/SystemUser";
@@ -102,6 +108,36 @@ function App() {
             <Route
               path={`${devNavUrl}/${UrlAdmin}/settings/users/role`}
               element={<Role />}
+            />
+
+            <Route
+              path={`${devNavUrl}/${UrlAdmin}/settings/tax-bracket`}
+              element={<TaxBracket />}
+            />
+
+            <Route
+              path={`${devNavUrl}/${UrlAdmin}/settings/tax-bracket/monthly`}
+              element={<TaxMonthly />}
+            />
+
+            <Route
+              path={`${devNavUrl}/${UrlAdmin}/settings/tax-bracket/semi-monthly`}
+              element={<TaxSemi />}
+            />
+
+            <Route
+              path={`${devNavUrl}/${UrlAdmin}/settings/pagibig`}
+              element={<Pagibig />}
+            />
+
+            <Route
+              path={`${devNavUrl}/${UrlAdmin}/settings/philhealth`}
+              element={<Philhealth />}
+            />
+
+            <Route
+              path={`${devNavUrl}/${UrlAdmin}/settings/sss-bracket`}
+              element={<SssBracket />}
             />
           </Routes>
         </Router>

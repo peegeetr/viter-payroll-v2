@@ -37,9 +37,9 @@ const BreadCrumbs = () => {
   return (
     <>
       <ul className="my-2 flex items-center">
-        <span className="mr-1 text-primary">
+        {/* <span className="mr-1 text-primary">
           {crumbs.length === 1 ? "" : <AiFillSetting />}
-        </span>
+        </span> */}
         {crumbs.length === 1 ? "" : crumbs}
       </ul>
     </>

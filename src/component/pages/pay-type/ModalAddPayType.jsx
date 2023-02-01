@@ -108,7 +108,7 @@ const ModalAddPayType = ({ itemEdit }) => {
                   <Form>
                     <div
                       className="relative mb-5 placeholder"
-                      data-label="Type Category"
+                      data-label="Category"
                     >
                       <InputSelect
                         name="sample"
@@ -117,8 +117,8 @@ const ModalAddPayType = ({ itemEdit }) => {
                           e.target.parentElement.classList.add("focused")
                         }
                       >
-                        <optgroup label="Type Category">
-                          <option value=""> -- </option>
+                        <optgroup label="Category">
+                          <option value="" disabled hidden></option>
                           <option value="earnings">Earnings</option>
                           <option value="deductions">Deductions</option>
                         </optgroup>

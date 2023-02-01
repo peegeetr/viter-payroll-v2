@@ -17,6 +17,8 @@ import UserPage from "./component/pages/settings/users/UserPage";
 import PageNotFound from "./component/partials/PageNotFound";
 
 import { StoreProvider } from "./store/StoreContext";
+import Details from "./component/pages/employee/payroll-details/Details";
+import SalaryHistory from "./component/pages/employee/salary-history/SalaryHistory";
 
 function App() {
   // Create a client
@@ -54,6 +56,14 @@ function App() {
             <Route
               path={`${devNavUrl}/${UrlAdmin}/employee/details`}
               element={<EmployeeLink />}
+            />
+            <Route
+              path={`${devNavUrl}/${UrlAdmin}/employee/details/payroll`}
+              element={<Details />}
+            />
+            <Route
+              path={`${devNavUrl}/${UrlAdmin}/employee/details/salary-history`}
+              element={<SalaryHistory />}
             />
 
             {/* Holidays Link */}

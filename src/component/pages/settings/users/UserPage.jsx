@@ -15,7 +15,7 @@ const UserPage = () => {
     <>
       <Header />
       <Navigation menu="settings" />
-      <div className="relative min-h-screen pt-20 ml-0 px-5 md:ml-20 lg:ml-40 lg:px-10">
+      <div className="wrapper">
         <BreadCrumbs />
         <hr />
         <ul className="pt-5 pb-20 relative">

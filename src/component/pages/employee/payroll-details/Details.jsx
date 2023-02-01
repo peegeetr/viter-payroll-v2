@@ -8,10 +8,9 @@ import Header from "../../../partials/Header";
 import ModalError from "../../../partials/modals/ModalError";
 import ModalSuccess from "../../../partials/modals/ModalSuccess";
 import Navigation from "../../../partials/Navigation";
-import ModalAddPayItem from "./ModalAddPayItem";
-import PayItemList from "./PayItemList";
+import DetailsList from "./DetailsList";
 
-const PayItem = () => {
+const Details = () => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [itemEdit, setItemEdit] = React.useState(null);
 
@@ -25,30 +24,23 @@ const PayItem = () => {
   return (
     <>
       <Header />
-      <Navigation menu="pay-type" />
+      <Navigation menu="employee" />
       <div className="wrapper">
         <div className="flex items-center justify-between mb-3 whitespace-nowrap overflow-auto gap-2">
           <BreadCrumbs />
-          <div className="flex items-center gap-1">
-            <button type="button" className="btn-primary" onClick={handleAdd}>
-              <FaPlusCircle />
-              <span>Add</span>
-            </button>
-          </div>
         </div>
         <hr />
 
         <div className="w-full pt-5 pb-20">
-          <PayItemList setItemEdit={setItemEdit} />
+          <DetailsList setItemEdit={setItemEdit} />
         </div>
         <Footer />
       </div>
 
-      {store.isAdd && <ModalAddPayItem itemEdit={itemEdit} />}
       {store.success && <ModalSuccess />}
       {store.error && <ModalError />}
     </>
   );
 };
 
-export default PayItem;
+export default Details;

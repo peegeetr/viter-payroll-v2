@@ -59,8 +59,8 @@ const ModalDeleteRestore = ({
             <span className="text-5xl text-red-700 ">
               <FaQuestionCircle className="my-0 mx-auto" />
             </span>
-            <span className="text-sm font-bold">{msg} ?</span> <br />
-            <span className="text-sm font-bold">{item}</span>
+            <span className="text-sm font-bold">{msg}</span> <br />
+            <span className="text-sm font-bold">{item} ?</span>
             <p>You can't undo this action.</p>
             <div className="flex items-center gap-1 pt-5">
               <button

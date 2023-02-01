@@ -4,20 +4,20 @@ import {
   setIsAdd,
   setIsConfirm,
   setIsRestore,
-} from "../../../../../store/StoreAction";
-import { StoreContext } from "../../../../../store/StoreContext";
-import useFetchDataLoadMore from "../../../../custom-hooks/useFetchDataLoadMore";
-import Loadmore from "../../../../partials/Loadmore";
-import ModalConfirm from "../../../../partials/modals/ModalConfirm";
-import ModalDeleteRestore from "../../../../partials/modals/ModalDeleteRestore";
-import NoData from "../../../../partials/NoData";
-import SearchBar from "../../../../partials/SearchBar";
-import ServerError from "../../../../partials/ServerError";
-import TableSpinner from "../../../../partials/spinners/TableSpinner";
-import StatusActive from "../../../../partials/status/StatusActive";
-import StatusInactive from "../../../../partials/status/StatusInactive";
+} from "../../../../store/StoreAction";
+import { StoreContext } from "../../../../store/StoreContext";
+import useFetchDataLoadMore from "../../../custom-hooks/useFetchDataLoadMore";
+import Loadmore from "../../../partials/Loadmore";
+import ModalConfirm from "../../../partials/modals/ModalConfirm";
+import ModalDeleteRestore from "../../../partials/modals/ModalDeleteRestore";
+import NoData from "../../../partials/NoData";
+import SearchBar from "../../../partials/SearchBar";
+import ServerError from "../../../partials/ServerError";
+import TableSpinner from "../../../partials/spinners/TableSpinner";
+import StatusActive from "../../../partials/status/StatusActive";
+import StatusInactive from "../../../partials/status/StatusInactive";
 
-const DetailsList = ({ setItemEdit }) => {
+const SalaryHistoryList = ({ setItemEdit }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [dataItem, setData] = React.useState(null);
   const [id, setId] = React.useState(null);
@@ -83,9 +83,7 @@ const DetailsList = ({ setItemEdit }) => {
           <thead>
             <tr>
               <th>#</th>
-              <th className="w-[15rem]">Name</th>
-              <th className="w-[25rem]">Email</th>
-              <th className="w-[10rem]">Role</th>
+              <th className="w-[15rem]">Item Name</th>
               <th>Status</th>
               <th>Actions</th>
             </tr>
@@ -100,8 +98,7 @@ const DetailsList = ({ setItemEdit }) => {
                     <td>
                       {item.user_system_lname}, {item.user_system_fname}
                     </td>
-                    <td>{item.user_system_email}</td>
-                    <td>{item.role_name}</td>
+
                     <td>
                       {item.user_system_is_active === 1 ? (
                         <StatusActive />
@@ -210,4 +207,4 @@ const DetailsList = ({ setItemEdit }) => {
   );
 };
 
-export default DetailsList;
+export default SalaryHistoryList;

@@ -8,14 +8,47 @@ import {
   FaTrash,
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { setIsAdd, setStartIndex } from "../../../store/StoreAction";
+import {
+  setIsAdd,
+  setIsConfirm,
+  setIsRestore,
+  setStartIndex,
+} from "../../../store/StoreAction";
+import { StoreContext } from "../../../store/StoreContext";
 import { devNavUrl, UrlAdmin } from "../../helpers/functions-general";
+import ModalConfirm from "../../partials/modals/ModalConfirm";
+import ModalDeleteRestore from "../../partials/modals/ModalDeleteRestore";
 
 const PayTypeLink = ({ setItemEdit }) => {
+  const { store, dispatch } = React.useContext(StoreContext);
+  const [dataItem, setData] = React.useState(null);
+  const [id, setId] = React.useState(null);
+  const [isDel, setDel] = React.useState(false);
   const handleEdit = () => {
     dispatch(setIsAdd(true));
     setItemEdit(null);
   };
+  const handleArchive = (item) => {
+    dispatch(setIsConfirm(true));
+    setId(item.department_aid);
+    setData(item);
+    setDel(true);
+  };
+
+  const handleDelete = (item) => {
+    dispatch(setIsRestore(true));
+    setId(item.user_system_aid);
+    setData(item);
+    setDel(true);
+  };
+
+  const handleRestore = (item) => {
+    dispatch(setIsRestore(true));
+    setId(item.user_system_aid);
+    setData(item);
+    setDel(null);
+  };
+
   return (
     <>
       <li className="py-2">
@@ -52,7 +85,6 @@ const PayTypeLink = ({ setItemEdit }) => {
               type="button"
               className="btn-action-table tooltip-action-table"
               data-tooltip="Edit"
-              onClick={handleEdit}
             >
               <FaEdit />
             </button>
@@ -60,20 +92,25 @@ const PayTypeLink = ({ setItemEdit }) => {
               type="button"
               className="btn-action-table tooltip-action-table"
               data-tooltip="Archive"
+              onClick={handleArchive}
             >
               <FaArchive />
             </button>
+
             <button
               type="button"
               className="btn-action-table tooltip-action-table"
               data-tooltip="Restore"
+              onClick={handleRestore}
             >
               <FaHistory />
             </button>
+
             <button
               type="button"
               className="btn-action-table tooltip-action-table"
               data-tooltip="Delete"
+              onClick={handleDelete}
             >
               <FaTrash />
             </button>
@@ -208,6 +245,35 @@ const PayTypeLink = ({ setItemEdit }) => {
           </div>
         </div>
       </li>
+      {store.isConfirm && (
+        <ModalConfirm
+          id={id}
+          isDel={isDel}
+          mysqlApiArchive={`/v1/departments/active/${id}`}
+          mysqlApiDelete={`/v1/departments/active/${id}`}
+          msg={
+            isDel
+              ? "Are you sure you want to archive"
+              : "Are you sure you want to delete"
+          }
+          item={`"${dataItem.department_name}"`}
+        />
+      )}
+
+      {store.isRestore && (
+        <ModalDeleteRestore
+          id={id}
+          isDel={isDel}
+          mysqlApiDelete={`/v1/user-systems/${id}`}
+          mysqlApiRestore={`/v1/user-systems/active/${id}`}
+          msg={
+            isDel
+              ? "Are you sure you want to delete "
+              : "Are you sure you want to restore "
+          }
+          item={`"${dataItem.user_system_email}"`}
+        />
+      )}
     </>
   );
 };

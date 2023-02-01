@@ -58,13 +58,7 @@ const EmployeeList = ({ setItemEdit, handleSearch }) => {
             <tr>
               <th>#</th>
               <th className="w-[15rem]">Employeee</th>
-              <th>Email</th>
-              <th>Pay Item</th>
-              <th>Amount</th>
-              <th>Frequency</th>
-              <th>No. of Installment</th>
-              <th>Start Date</th>
-              <th>End Date</th>
+              <th className="w-[30rem]">Email</th>
               <th>Status</th>
               <th>Actions</th>
             </tr>
@@ -73,13 +67,9 @@ const EmployeeList = ({ setItemEdit, handleSearch }) => {
             <tr>
               <td>1.</td>
               <td>Lumabas, Cyrene M.</td>
-              <td>cyrene.lumabas@frontlinebusiness.com.ph</td>
-              <td>Overtime Pay</td>
-              <td>00.00</td>
-              <td>monthly</td>
-              <td>Mon Jan 30, 2023</td>
-              <td>Mon Jan 30, 2023</td>
-              <td>Employee</td>
+              <td className="break-all">
+                cyrenecyrenecyrene.lumabas@frontlinebusiness.com.ph
+              </td>
               <td>{1 === 1 ? <StatusActive /> : <StatusInactive />}</td>
               <td>
                 <div className="flex items-center gap-3">

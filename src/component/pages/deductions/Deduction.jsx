@@ -23,7 +23,7 @@ const Deduction = () => {
     <>
       <Header />
       <Navigation menu="deductions" />
-      <div className="relative min-h-screen pt-20 ml-0 px-5 md:ml-20 lg:ml-40 lg:px-10">
+      <div className="wrapper">
         <div className="flex items-center justify-between mb-3 whitespace-nowrap overflow-auto gap-2">
           <h4 className="text-xl">Deductions</h4>
           <div className="flex items-center gap-1">

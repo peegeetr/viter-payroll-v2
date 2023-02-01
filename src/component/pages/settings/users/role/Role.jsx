@@ -24,9 +24,7 @@ const Role = () => {
     <>
       <Header />
       <Navigation menu="settings" />
-      <div className="relative min-h-screen pt-20 ml-0 px-5 md:ml-20 lg:ml-40 lg:px-10">
-        {/* <h4 className="text-xl">Settings</h4> */}
-
+      <div className="wrapper">
         <div className="flex items-center justify-between mb-3 whitespace-nowrap overflow-auto gap-2">
           <BreadCrumbs />
           <div className="flex items-center gap-1">

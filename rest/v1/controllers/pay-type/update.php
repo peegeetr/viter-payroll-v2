@@ -18,9 +18,10 @@ if (array_key_exists("paytypeid", $_GET)) {
     $payType->paytype_description = addslashes(trim($data["paytype_description"]));
     $payType->paytype_category = addslashes(trim($data["paytype_category"])); 
     $payType->paytype_datetime = date("Y-m-d H:i:s");
-    $column_name_old = strtolower($data["paytype_name_old"]);
+     
+    $column_name_old = strtolower(explode(" ",$data["paytype_name_old"])[0]);
     // string value convert to lower case
-    $column_name = strtolower($data["paytype_name"]);
+    $column_name = strtolower(explode(" ",$data["paytype_name"])[0]);
     //check to see if task id in query string is not empty and is number, if not return json error
     checkId($payType->paytype_aid);
     // check name

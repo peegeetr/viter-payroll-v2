@@ -9,6 +9,8 @@ import HolidaysLink from "./component/pages/holidays/HolidaysLink";
 import PayItem from "./component/pages/pay-type/pay-item/PayItem";
 import PayTypeLink from "./component/pages/pay-type/PayTypePage";
 import PayrollLink from "./component/pages/payroll/PayrollLink";
+import Pagibig from "./component/pages/settings/pagibig/Pagibig.jsx";
+import Philhealth from "./component/pages/settings/philhealth/philhealth.jsx";
 import SettingsLink from "./component/pages/settings/SettingsLink";
 import SssBracket from "./component/pages/settings/sss-bracket/SssBracket.jsx";
 import TaxMonthly from "./component/pages/settings/tax-bracket/tax-monthly/TaxMonthly.jsx";
@@ -111,6 +113,16 @@ function App() {
             <Route
               path={`${devNavUrl}/${UrlAdmin}/settings/tax-bracket/semi-monthly`}
               element={<TaxSemi />}
+            />
+
+            <Route
+              path={`${devNavUrl}/${UrlAdmin}/settings/pagibig`}
+              element={<Pagibig />}
+            />
+
+            <Route
+              path={`${devNavUrl}/${UrlAdmin}/settings/philhealth`}
+              element={<Philhealth />}
             />
 
             <Route

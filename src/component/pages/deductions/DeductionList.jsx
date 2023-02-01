@@ -75,9 +75,9 @@ const DeductionList = ({ setItemEdit, handleSearch }) => {
               <td>Overtime Pay</td>
               <td>00.00</td>
               <td>monthly</td>
+              <td>1</td>
               <td>Mon Jan 30, 2023</td>
               <td>Mon Jan 30, 2023</td>
-              <td>Employee</td>
               <td>{1 === 1 ? <StatusActive /> : <StatusInactive />}</td>
               <td>
                 <div className="flex items-center gap-3">

@@ -6,17 +6,15 @@ import {
   setIsRestore,
 } from "../../../store/StoreAction";
 import { StoreContext } from "../../../store/StoreContext";
-import Loadmore from "../../partials/Loadmore";
 import ModalConfirm from "../../partials/modals/ModalConfirm";
 import ModalDeleteRestore from "../../partials/modals/ModalDeleteRestore";
 import NoData from "../../partials/NoData";
 import SearchBar from "../../partials/SearchBar";
 import ServerError from "../../partials/ServerError";
-import TableSpinner from "../../partials/spinners/TableSpinner";
 import StatusActive from "../../partials/status/StatusActive";
 import StatusInactive from "../../partials/status/StatusInactive";
 
-const EarningsList = ({ setItemEdit, handleSearch }) => {
+const EmployeeList = ({ setItemEdit, handleSearch }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [dataItem, setData] = React.useState(null);
   const [id, setId] = React.useState(null);
@@ -77,9 +75,9 @@ const EarningsList = ({ setItemEdit, handleSearch }) => {
               <td>Overtime Pay</td>
               <td>00.00</td>
               <td>monthly</td>
-              <td>1</td>
               <td>Mon Jan 30, 2023</td>
               <td>Mon Jan 30, 2023</td>
+              <td>Employee</td>
               <td>{1 === 1 ? <StatusActive /> : <StatusInactive />}</td>
               <td>
                 <div className="flex items-center gap-3">
@@ -170,4 +168,4 @@ const EarningsList = ({ setItemEdit, handleSearch }) => {
   );
 };
 
-export default EarningsList;
+export default EmployeeList;

@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { devNavUrl, UrlAdmin } from "./component/helpers/functions-general";
 import Deduction from "./component/pages/deductions/Deduction";
 import Earnings from "./component/pages/earnings/Earnings";
-import EmployeeLink from "./component/pages/employee/EmployeeLink";
+import Employee from "./component/pages/employee/Employee";
 import HolidaysLink from "./component/pages/holidays/HolidaysLink";
 import PayItem from "./component/pages/pay-type/pay-item/PayItem";
 import PayTypeLink from "./component/pages/pay-type/PayTypePage";
@@ -47,7 +47,7 @@ function App() {
             {/* Employee Link */}
             <Route
               path={`${devNavUrl}/${UrlAdmin}/employee`}
-              element={<EmployeeLink />}
+              element={<Employee />}
             />
 
             {/* Holidays Link */}

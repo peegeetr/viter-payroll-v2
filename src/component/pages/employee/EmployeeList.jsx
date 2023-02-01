@@ -1,11 +1,13 @@
 import React from "react";
 import { FaArchive, FaEdit, FaHistory, FaTrash } from "react-icons/fa";
+import { Link } from "react-router-dom";
 import {
   setIsAdd,
   setIsConfirm,
   setIsRestore,
 } from "../../../store/StoreAction";
 import { StoreContext } from "../../../store/StoreContext";
+import { devNavUrl, UrlAdmin } from "../../helpers/functions-general";
 import ModalConfirm from "../../partials/modals/ModalConfirm";
 import ModalDeleteRestore from "../../partials/modals/ModalDeleteRestore";
 import NoData from "../../partials/NoData";
@@ -56,7 +58,7 @@ const EmployeeList = ({ setItemEdit, handleSearch }) => {
             <tr>
               <th>#</th>
               <th className="w-[15rem]">Employeee</th>
-              <th>Pay Type</th>
+              <th>Email</th>
               <th>Pay Item</th>
               <th>Amount</th>
               <th>Frequency</th>
@@ -71,7 +73,7 @@ const EmployeeList = ({ setItemEdit, handleSearch }) => {
             <tr>
               <td>1.</td>
               <td>Lumabas, Cyrene M.</td>
-              <td>Wages</td>
+              <td>cyrene.lumabas@frontlinebusiness.com.ph</td>
               <td>Overtime Pay</td>
               <td>00.00</td>
               <td>monthly</td>
@@ -81,14 +83,15 @@ const EmployeeList = ({ setItemEdit, handleSearch }) => {
               <td>{1 === 1 ? <StatusActive /> : <StatusInactive />}</td>
               <td>
                 <div className="flex items-center gap-3">
-                  <button
+                  <Link
+                    to={`${devNavUrl}/${UrlAdmin}/employee/details`}
                     type="button"
                     className="btn-action-table tooltip-action-table"
                     data-tooltip="Edit"
                     onClick={handleEdit}
                   >
                     <FaEdit />
-                  </button>
+                  </Link>
                   <button
                     type="button"
                     className="btn-action-table tooltip-action-table"

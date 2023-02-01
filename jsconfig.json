@@ -1,6 +1,10 @@
 {
   "compilerOptions": {
-    "baseUrl": "src"
+    "baseUrl": "src",
+    "target": "es6",
+    "paths": {
+      "src/*": ["./src/*"]
+    }
   },
-  "include": ["src"]
+  "include": ["src", "src/*.jsx", "src/*.js"]
 }

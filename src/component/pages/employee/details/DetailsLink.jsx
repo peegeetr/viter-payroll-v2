@@ -1,8 +1,8 @@
+import { devNavUrl, UrlAdmin } from "component/helpers/functions-general";
 import React from "react";
 import { FaUserCog } from "react-icons/fa";
 import { SlArrowRight } from "react-icons/sl";
 import { Link } from "react-router-dom";
-import { devNavUrl, UrlAdmin } from "component/helpers/functions-general";
 
 const DetailsLink = () => {
   return (

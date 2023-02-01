@@ -1,5 +1,5 @@
 import React from "react";
-import { FaUsers } from "react-icons/fa";
+import { FaUserShield } from "react-icons/fa";
 import { SlArrowRight } from "react-icons/sl";
 import { Link } from "react-router-dom";
 import { setStartIndex } from "../../../../store/StoreAction";
@@ -20,7 +20,7 @@ const SssBracketLink = () => {
       >
         <div className="flex items-center">
           <span className="text-lg mr-4">
-            <FaUsers />
+            <FaUserShield />
           </span>
           <span className="text-base font-bold">SSS Bracket</span>
         </div>

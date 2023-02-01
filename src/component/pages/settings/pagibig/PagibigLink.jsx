@@ -1,5 +1,4 @@
-import React from "react";
-import { FaUser } from "react-icons/fa";
+import { FaHeart } from "react-icons/fa";
 import { SlArrowRight } from "react-icons/sl";
 import { Link } from "react-router-dom";
 import { devNavUrl, UrlAdmin } from "../../../helpers/functions-general.jsx";
@@ -13,7 +12,7 @@ const PagibigLink = () => {
       >
         <div className="flex items-center">
           <span className="text-lg mr-4">
-            <FaUser />
+            <FaHeart />
           </span>
           <span className="text-base font-bold">Pag-Ibig</span>
         </div>

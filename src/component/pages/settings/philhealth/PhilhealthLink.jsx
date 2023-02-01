@@ -1,5 +1,6 @@
 import React from "react";
 import { FaUser } from "react-icons/fa";
+import { GiHealthNormal } from "react-icons/gi";
 import { SlArrowRight } from "react-icons/sl";
 import { Link } from "react-router-dom";
 import { devNavUrl, UrlAdmin } from "../../../helpers/functions-general.jsx";
@@ -13,7 +14,7 @@ const PhilhealthLink = () => {
       >
         <div className="flex items-center">
           <span className="text-lg mr-4">
-            <FaUser />
+            <GiHealthNormal />
           </span>
           <span className="text-base font-bold">Philhealth</span>
         </div>

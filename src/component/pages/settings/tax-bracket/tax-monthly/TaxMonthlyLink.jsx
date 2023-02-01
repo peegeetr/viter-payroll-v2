@@ -1,5 +1,4 @@
-import React from "react";
-import { FaUser } from "react-icons/fa";
+import { BsCalendar2MonthFill } from "react-icons/bs";
 import { SlArrowRight } from "react-icons/sl";
 import { Link } from "react-router-dom";
 import { devNavUrl, UrlAdmin } from "../../../../helpers/functions-general";
@@ -13,7 +12,7 @@ const TaxMonthlyLink = () => {
       >
         <div className="flex items-center">
           <span className="text-lg mr-4">
-            <FaUser />
+            <BsCalendar2MonthFill />
           </span>
           <span className="text-base font-bold">Monthly</span>
         </div>

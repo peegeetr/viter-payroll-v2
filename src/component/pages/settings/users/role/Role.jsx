@@ -42,7 +42,7 @@ const Role = () => {
         <Footer />
       </div>
 
-      {store.isAdd && <ModalAddRole itemEdit={itemEdit} />}
+      {store.isAdd && <ModalAddRole item={itemEdit} />}
       {store.success && <ModalSuccess />}
       {store.error && <ModalError />}
     </>

@@ -2,9 +2,9 @@ import React from "react";
 import {
   FaArchive,
   FaEdit,
+  FaHistory,
   FaRegListAlt,
   FaTrash,
-  FaHistory,
 } from "react-icons/fa";
 import { setIsConfirm, setIsRestore } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";

@@ -11,6 +11,7 @@ import PayTypeLink from "./PayTypeLink.jsx";
 const PayTypePage = () => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [itemEdit, setItemEdit] = React.useState(null);
+
   const handleAdd = () => {
     dispatch(setIsAdd(true));
     setItemEdit(null);
@@ -36,7 +37,7 @@ const PayTypePage = () => {
         </ul>
         <Footer />
       </div>
-      {store.isAdd && <ModalAddPayType itemEdit={itemEdit} />}
+      {store.isAdd && <ModalAddPayType item={itemEdit} />}
     </>
   );
 };

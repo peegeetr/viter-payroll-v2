@@ -5,10 +5,10 @@ import * as Yup from "yup";
 import { setIsAdd, setStartIndex } from "../../../../../store/StoreAction";
 import { StoreContext } from "../../../../../store/StoreContext";
 import { fetchData } from "../../../../helpers/fetchData";
-import { InputText } from "../../../../helpers/FormInputs";
+import { InputText, InputTextArea } from "../../../../helpers/FormInputs";
 import ButtonSpinner from "../../../../partials/spinners/ButtonSpinner";
 
-const ModalAddRole = ({ itemEdit }) => {
+const ModalAddRole = ({ item }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [loading, setLoading] = React.useState(false);
 
@@ -17,13 +17,16 @@ const ModalAddRole = ({ itemEdit }) => {
   };
 
   const initVal = {
-    department_aid: itemEdit ? itemEdit.department_aid : "",
-    department_name: itemEdit ? itemEdit.department_name : "",
-    department_name_old: itemEdit ? itemEdit.department_name : "",
+    role_aid: item ? item.role_aid : "",
+    role_name: item ? item.role_name : "",
+    role_description: item ? item.role_description : "",
+
+    role_name_old: item ? item.role_name : "",
   };
 
   const yupSchema = Yup.object({
-    department_name: Yup.string().required("Required"),
+    role_name: Yup.string().required("Required"),
+    role_description: Yup.string().required("Required"),
   });
 
   return (
@@ -32,7 +35,7 @@ const ModalAddRole = ({ itemEdit }) => {
         <div className="p-1 w-[350px] rounded-b-2xl">
           <div className="flex justify-between items-center bg-primary p-3 rounded-t-2xl">
             <h3 className="text-white text-sm">
-              {itemEdit ? "Update" : "Add"} department
+              {item ? "Update" : "Add"} department
             </h3>
             <button
               type="button"
@@ -50,19 +53,17 @@ const ModalAddRole = ({ itemEdit }) => {
                 console.log();
                 fetchData(
                   setLoading,
-                  itemEdit
-                    ? `/v1/departments/${itemEdit.department_aid}`
-                    : "/v1/departments",
+                  item ? `/v1/roles/${item.role_aid}` : "/v1/roles",
                   values, // form data values
                   null, // result set data
-                  itemEdit ? "Succesfully updated." : "Succesfully added.", // success msg
+                  item ? "Succesfully updated." : "Succesfully added.", // success msg
                   "", // additional error msg if needed
                   dispatch, // context api action
                   store, // context api state
                   true, // boolean to show success modal
                   false, // boolean to show load more functionality button
                   null,
-                  itemEdit ? "put" : "post" // method
+                  item ? "put" : "post" // method
                 );
                 dispatch(setStartIndex(0));
               }}
@@ -74,7 +75,15 @@ const ModalAddRole = ({ itemEdit }) => {
                       <InputText
                         placeholder="Name"
                         type="text"
-                        name="department_name"
+                        name="role_name"
+                        disabled={loading}
+                      />
+                    </div>
+                    <div className="relative mb-5">
+                      <InputTextArea
+                        placeholder="Description"
+                        type="text"
+                        name="role_description"
                         disabled={loading}
                       />
                     </div>
@@ -85,13 +94,7 @@ const ModalAddRole = ({ itemEdit }) => {
                         disabled={loading || !props.dirty}
                         className="btn-modal-submit relative"
                       >
-                        {loading ? (
-                          <ButtonSpinner />
-                        ) : itemEdit ? (
-                          "Save"
-                        ) : (
-                          "Add"
-                        )}
+                        {loading ? <ButtonSpinner /> : item ? "Save" : "Add"}
                       </button>
                       <button
                         type="reset"

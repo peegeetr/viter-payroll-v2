@@ -4,59 +4,30 @@ import { FaTimesCircle } from "react-icons/fa";
 import * as Yup from "yup";
 import { setIsAdd, setStartIndex } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
-import fetchApi from "../../../helpers/fetchApi";
+import { fetchData } from "../../../helpers/fetchData";
 import { InputText } from "../../../helpers/FormInputs";
-import { devApiUrl } from "../../../helpers/functions-general";
+import { getUrlParam } from "../../../helpers/functions-general";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 
-const ModalAddPayItem = ({ itemEdit }) => {
+const ModalAddPayItem = ({ item }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [loading, setLoading] = React.useState(false);
-  const [data, setData] = React.useState([]);
-  const [isSearch, setIsSearch] = React.useState(false);
-  const [addsearch, setaddSearch] = React.useState("");
-  const search = React.useRef(null);
+  const paytypeid = getUrlParam().get("paytypeid");
 
   const handleClose = () => {
     dispatch(setIsAdd(false));
   };
 
-  const handleSearchChange = async (e) => {
-    if (e.target.value.trim() === "") {
-      setaddSearch("");
-      setIsSearch(false);
-      return;
-    }
-    // setLoading(true);
-    setIsSearch(true);
-    setaddSearch(e.target.value);
-    const data = await fetchApi(
-      devApiUrl + "/v1/departments/search/",
-      { search: e.target.value },
-      dispatch
-    );
-    if (typeof data === "undefined") {
-      return;
-    }
-    if (!data.status) {
-      setData([]);
-      setIsSearch(false);
-      return;
-    }
-    if (data.status) {
-      setData(data.data);
-    }
-  };
-
   const initVal = {
-    user_other_aid: itemEdit ? itemEdit.user_other_aid : "",
-    user_other_emp_id: itemEdit ? itemEdit.user_other_emp_id : "",
-    user_other_role_id: itemEdit ? itemEdit.user_other_role_id : "",
-    user_other_emp_id_old: itemEdit ? itemEdit.user_other_emp_id : "",
+    payitem_aid: item ? item.payitem_aid : "",
+    payitem_name: item ? item.payitem_name : "",
+    payitem_paytype_id: paytypeid,
+
+    payitem_name_old: item ? item.payitem_name : "",
   };
 
   const yupSchema = Yup.object({
-    sample: Yup.string().required("Required"),
+    payitem_name: Yup.string().required("Required"),
   });
 
   return (
@@ -65,7 +36,7 @@ const ModalAddPayItem = ({ itemEdit }) => {
         <div className="p-1 w-[350px] rounded-b-2xl">
           <div className="flex justify-between items-center bg-primary p-3 rounded-t-2xl">
             <h3 className="text-white text-sm">
-              {itemEdit ? "Update" : "Add"} Pay Item
+              {item ? "Update" : "Add"} Pay Item
             </h3>
             <button
               type="button"
@@ -82,19 +53,17 @@ const ModalAddPayItem = ({ itemEdit }) => {
               onSubmit={async (values, { setSubmitting, resetForm }) => {
                 fetchData(
                   setLoading,
-                  itemEdit
-                    ? `/v1/user-others/${itemEdit.user_other_aid}`
-                    : "/v1/user-others",
+                  item ? `/v1/payitem/${item.payitem_aid}` : "/v1/payitem",
                   values, // form data values
                   null, // result set data
-                  itemEdit ? "Succesfully updated." : "Succesfully added.", // success msg
+                  item ? "Succesfully updated." : "Succesfully added.", // success msg
                   "", // additional error msg if needed
                   dispatch, // context api action
                   store, // context api state
                   true, // boolean to show success modal
                   false, // boolean to show load more functionality button
                   null, // navigate default value
-                  itemEdit ? "put" : "post"
+                  item ? "put" : "post"
                 );
                 dispatch(setStartIndex(0));
               }}
@@ -104,12 +73,10 @@ const ModalAddPayItem = ({ itemEdit }) => {
                   <Form>
                     <div className="relative mb-5">
                       <InputText
-                        placeholder="Names"
+                        placeholder="Name"
                         type="text"
-                        name="sample"
+                        name="payitem_name"
                         disabled={loading}
-                        onChange={handleSearchChange}
-                        value={addsearch}
                       />
                     </div>
 
@@ -119,13 +86,7 @@ const ModalAddPayItem = ({ itemEdit }) => {
                         disabled={loading || !props.dirty}
                         className="btn-modal-submit relative"
                       >
-                        {loading ? (
-                          <ButtonSpinner />
-                        ) : itemEdit ? (
-                          "Save"
-                        ) : (
-                          "Add"
-                        )}
+                        {loading ? <ButtonSpinner /> : item ? "Save" : "Add"}
                       </button>
                       <button
                         type="reset"

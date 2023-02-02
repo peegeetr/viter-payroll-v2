@@ -84,14 +84,12 @@ class PayItem
     {
         try {
             $sql = "update {$this->tblPayItem} set ";
-            $sql .= "payitem_name = :payitem_name, ";
-            $sql .= "payitem_paytype_id = :payitem_paytype_id, "; 
+            $sql .= "payitem_name = :payitem_name, "; 
             $sql .= "payitem_datetime = :payitem_datetime ";
             $sql .= "where payitem_aid  = :payitem_aid ";
             $query = $this->connection->prepare($sql);
             $query->execute([
-                "payitem_name" => $this->payitem_name,
-                "payitem_paytype_id" => $this->payitem_paytype_id, 
+                "payitem_name" => $this->payitem_name, 
                 "payitem_datetime" => $this->payitem_datetime,
                 "payitem_aid" => $this->payitem_aid,
             ]);
@@ -144,9 +142,11 @@ class PayItem
         try {
             $sql = "select payitem_name from {$this->tblPayItem} ";
             $sql .= "where payitem_name = :payitem_name ";
+            $sql .= "and payitem_paytype_id = :payitem_paytype_id ";
             $query = $this->connection->prepare($sql);
             $query->execute([
                 "payitem_name" => "{$this->payitem_name}",
+                "payitem_paytype_id" => "{$this->payitem_paytype_id}",
             ]);
         } catch (PDOException $ex) {
             $query = false;

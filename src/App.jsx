@@ -29,6 +29,7 @@ import JobDetails from "./component/pages/employee/job-details/JobDetails";
 import DeductionsPage from "./component/pages/deductions/DeductionsPage";
 import ManageDeduction from "./component/pages/deductions/manage-list/ManageDeduction";
 import FilterDeductions from "./component/pages/deductions/filter/FilterDeductions";
+import ReportsLink from "./component/pages/reports/ReportsLink";
 
 function App() {
   // Create a client
@@ -40,40 +41,14 @@ function App() {
           <Routes>
             <Route path={`*`} element={<PageNotFound />} />
             <Route path={`/${devNavUrl}`} element={<div>Payroll</div>} />
+
+            {/* Payroll Page */}
             <Route
               path={`${devNavUrl}/${UrlAdmin}/payroll`}
               element={<PayrollLink />}
             />
 
-            {/* Earnings Link */}
-            <Route
-              path={`${devNavUrl}/${UrlAdmin}/earnings`}
-              element={<EarningsPage />}
-            />
-            <Route
-              path={`${devNavUrl}/${UrlAdmin}/earnings/manage`}
-              element={<ManageEarnings />}
-            />
-            <Route
-              path={`${devNavUrl}/${UrlAdmin}/earnings/filter`}
-              element={<FilterEarnings />}
-            />
-
-            {/* Deductions Link */}
-            <Route
-              path={`${devNavUrl}/${UrlAdmin}/deductions`}
-              element={<DeductionsPage />}
-            />
-            <Route
-              path={`${devNavUrl}/${UrlAdmin}/deductions/manage`}
-              element={<ManageDeduction />}
-            />
-            <Route
-              path={`${devNavUrl}/${UrlAdmin}/deductions/filter`}
-              element={<FilterDeductions />}
-            />
-
-            {/* Employee Link */}
+            {/* Employee Page */}
             <Route
               path={`${devNavUrl}/${UrlAdmin}/employee`}
               element={<Employee />}
@@ -92,13 +67,35 @@ function App() {
               element={<SalaryHistory />}
             />
 
-            {/* Holidays Link */}
+            {/* Earnings Page */}
             <Route
-              path={`${devNavUrl}/${UrlAdmin}/holidays`}
-              element={<Holidays />}
+              path={`${devNavUrl}/${UrlAdmin}/earnings`}
+              element={<EarningsPage />}
+            />
+            <Route
+              path={`${devNavUrl}/${UrlAdmin}/earnings/manage`}
+              element={<ManageEarnings />}
+            />
+            <Route
+              path={`${devNavUrl}/${UrlAdmin}/earnings/filter`}
+              element={<FilterEarnings />}
             />
 
-            {/* Pay Type Link */}
+            {/* Deductions Page */}
+            <Route
+              path={`${devNavUrl}/${UrlAdmin}/deductions`}
+              element={<DeductionsPage />}
+            />
+            <Route
+              path={`${devNavUrl}/${UrlAdmin}/deductions/manage`}
+              element={<ManageDeduction />}
+            />
+            <Route
+              path={`${devNavUrl}/${UrlAdmin}/deductions/filter`}
+              element={<FilterDeductions />}
+            />
+
+            {/* Pay Type Page */}
             <Route
               path={`${devNavUrl}/${UrlAdmin}/pay-type`}
               element={<PayTypeLink />}
@@ -108,7 +105,19 @@ function App() {
               element={<PayItem />}
             />
 
-            {/* Settings Link */}
+            {/* Holidays Page */}
+            <Route
+              path={`${devNavUrl}/${UrlAdmin}/holidays`}
+              element={<Holidays />}
+            />
+
+            {/* Reports Page */}
+            <Route
+              path={`${devNavUrl}/${UrlAdmin}/reports`}
+              element={<ReportsLink />}
+            />
+
+            {/* Settings Page */}
             <Route
               path={`${devNavUrl}/${UrlAdmin}/settings`}
               element={<SettingsLink />}

@@ -4,13 +4,13 @@ import Footer from "../../partials/Footer.jsx";
 import Header from "../../partials/Header.jsx";
 import Navigation from "../../partials/Navigation.jsx";
 
-const PayrollLink = () => {
+const ReportsLink = () => {
   return (
     <>
       <Header />
-      <Navigation menu="payroll" />
+      <Navigation menu="reports" />
       <div className="wrapper">
-        <h4 className="text-xl">Payroll</h4>
+        <h4 className="text-xl">Reports</h4>
         <BreadCrumbs />
         <hr />
         <ul className="pt-5 pb-20 relative">
@@ -22,4 +22,4 @@ const PayrollLink = () => {
   );
 };
 
-export default PayrollLink;
+export default ReportsLink;

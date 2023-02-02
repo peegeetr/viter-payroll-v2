@@ -13,8 +13,7 @@ RewriteRule ^departments/([0-9]+)$ controllers/settings/department/department.ph
 RewriteRule ^departments/active/([0-9]+)$ controllers/settings/department/active.php?departmentid=$1 [L]
 RewriteRule ^departments/limit/([0-9]+)/([0-9]+)$ controllers/settings/department/limit.php?start=$1&total=$2 [L]
 RewriteRule ^departments/search/([A-Za-z0-9-]+)$ controllers/settings/department/search.php?search=$1 [L]
-
-
+ 
 #role
 RewriteRule ^roles$ controllers/settings/user/role/role.php [L]
 RewriteRule ^roles/([0-9]+)$ controllers/settings/user/role/role.php?roleid=$1 [L]

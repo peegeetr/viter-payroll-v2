@@ -6,7 +6,7 @@ import {
 } from "../../../store/StoreAction";
 import { StoreContext } from "../../../store/StoreContext";
 import fetchApi from "../../helpers/fetchApi";
-import { consoleLog, devApiUrl } from "../../helpers/functions-general";
+import { consoleLog, hrisDevApiUrl } from "../../helpers/functions-general";
 import { hrisFetchData } from "../../helpers/hrisFetchData";
 
 const hrisUseFetchDataLoadMore = (url, url2, perPage, search) => {
@@ -44,7 +44,7 @@ const hrisUseFetchDataLoadMore = (url, url2, perPage, search) => {
     dispatch(setStartIndex(store.startIndex + perPage));
 
     // get total result of data
-    const result = await fetchApi(devApiUrl + url2, {});
+    const result = await fetchApi(hrisDevApiUrl + url2, {});
 
     consoleLog(result);
 

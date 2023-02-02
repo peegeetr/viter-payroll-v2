@@ -1,8 +1,6 @@
 import React from "react";
 import { StoreContext } from "../../store/StoreContext";
-import fetchApi from "../helpers/fetchApi";
 import { fetchData } from "../helpers/fetchData";
-import { devApiUrl } from "../helpers/functions-general";
 
 const useLoadPayType = (url, method = null) => {
   const { store, dispatch } = React.useContext(StoreContext);

@@ -3,7 +3,7 @@ import React from "react";
 // Online URL dev hris
 export const hrisDevApiUrl =
   "https://hris.frontlinebusiness.com.ph/dev-app/rest";
-export const hrisdevBaseImgUrl =
+export const devBaseImgUrl =
   "https://hris.frontlinebusiness.com.ph/dev-app/img";
 export const hrisdevBaseUrl = "https://hris.frontlinebusiness.com.ph/dev-app";
 export const hrisdevNavUrl = "/dev-app";

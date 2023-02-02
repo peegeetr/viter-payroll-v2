@@ -12,12 +12,6 @@ import FilterEarningsList from "./FilterEarningsList";
 
 const FilterEarnings = () => {
   const { store, dispatch } = React.useContext(StoreContext);
-  const [itemEdit, setItemEdit] = React.useState(null);
-
-  const handleAdd = () => {
-    dispatch(setIsAdd(true));
-    setItemEdit(null);
-  };
 
   return (
     <>

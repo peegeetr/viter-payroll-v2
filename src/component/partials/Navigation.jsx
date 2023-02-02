@@ -10,7 +10,7 @@ import {
 } from "react-icons/fa";
 import { GiReceiveMoney } from "react-icons/gi";
 import { Link } from "react-router-dom";
-import { setIsShow } from "../../store/StoreAction";
+import { setIsShow, setStartIndex } from "../../store/StoreAction";
 import { StoreContext } from "../../store/StoreContext";
 import { devNavUrl } from "../helpers/functions-general";
 
@@ -19,6 +19,7 @@ const Navigation = ({ menu }) => {
 
   const handleShow = () => {
     dispatch(setIsShow(!store.isShow));
+    dispatch(setStartIndex(0));
   };
 
   return (

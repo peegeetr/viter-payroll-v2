@@ -1,53 +1,16 @@
-import React from "react";
 import { Form, Formik } from "formik";
+import React from "react";
 import * as Yup from "yup";
-import { FaArchive, FaEdit, FaHistory, FaTrash } from "react-icons/fa";
-import {
-  setIsAdd,
-  setIsConfirm,
-  setIsRestore,
-} from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
 import { fetchData } from "../../../helpers/fetchData";
-import ModalConfirm from "../../../partials/modals/ModalConfirm";
-import ModalDeleteRestore from "../../../partials/modals/ModalDeleteRestore";
+import { InputSelect, InputText } from "../../../helpers/FormInputs";
 import NoData from "../../../partials/NoData";
 import ServerError from "../../../partials/ServerError";
 import StatusActive from "../../../partials/status/StatusActive";
 import StatusInactive from "../../../partials/status/StatusInactive";
-import { InputSelect, InputText } from "../../../helpers/FormInputs";
 
 const FilterDeductionsList = () => {
   const { store, dispatch } = React.useContext(StoreContext);
-  const [dataItem, setData] = React.useState(null);
-  const [id, setId] = React.useState(null);
-  const [isDel, setDel] = React.useState(false);
-
-  const handleEdit = (item) => {
-    dispatch(setIsAdd(true));
-    setItemEdit(item);
-  };
-
-  const handleArchive = (item) => {
-    dispatch(setIsConfirm(true));
-    setId(item.user_system_aid);
-    setData(item);
-    setDel(null);
-  };
-
-  const handleRestore = (item) => {
-    dispatch(setIsRestore(true));
-    setId(item.user_system_aid);
-    setData(item);
-    setDel(null);
-  };
-
-  const handleDelete = (item) => {
-    dispatch(setIsRestore(true));
-    setId(item.user_system_aid);
-    setData(item);
-    setDel(true);
-  };
 
   const initVal = {
     sample: "",
@@ -169,31 +132,6 @@ const FilterDeductionsList = () => {
           </tbody>
         </table>
       </div>
-
-      {store.isConfirm && (
-        <ModalConfirm
-          id={id}
-          isDel={isDel}
-          mysqlApiArchive={`/v1/user-systems/active/${id}`}
-          msg={"Are you sure you want to archive this user"}
-          item={`"${dataItem.user_system_email}"`}
-        />
-      )}
-
-      {store.isRestore && (
-        <ModalDeleteRestore
-          id={id}
-          isDel={isDel}
-          mysqlApiDelete={`/v1/user-systems/${id}`}
-          mysqlApiRestore={`/v1/user-systems/active/${id}`}
-          msg={
-            isDel
-              ? "Are you sure you want to delete this user"
-              : "Are you sure you want to restore this user"
-          }
-          item={`"${dataItem.user_system_email}"`}
-        />
-      )}
     </>
   );
 };

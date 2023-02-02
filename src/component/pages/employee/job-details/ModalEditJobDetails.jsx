@@ -67,33 +67,33 @@ const ModalEditJobDetails = ({ itemEdit, jobTitle, department }) => {
           </div>
 
           <div className="bg-white rounded-b-2xl overflow-hidden">
-            <div className="max-h-[28rem] overflow-y-scroll p-4">
-              <Formik
-                initialValues={initVal}
-                validationSchema={yupSchema}
-                onSubmit={async (values, { setSubmitting, resetForm }) => {
-                  console.log();
-                  fetchData(
-                    setLoading,
-                    `/v1/employees/employment/${itemEdit.employee_aid}`,
-                    values, // form data values
-                    null, // result set data
-                    "Succesfully updated.", // success msg
-                    "", // additional error msg if needed
-                    dispatch, // context api action
-                    store, // context api state
-                    true, // boolean to show success modal
-                    false, // boolean to show load more functionality button
-                    null,
-                    "put" // method
-                  );
-                  dispatch(setStartIndex(0));
-                }}
-              >
-                {(props) => {
-                  return (
-                    <Form>
-                      <div className="relative mb-5 pt-5">
+            <Formik
+              initialValues={initVal}
+              validationSchema={yupSchema}
+              onSubmit={async (values, { setSubmitting, resetForm }) => {
+                console.log();
+                fetchData(
+                  setLoading,
+                  `/v1/employees/employment/${itemEdit.employee_aid}`,
+                  values, // form data values
+                  null, // result set data
+                  "Succesfully updated.", // success msg
+                  "", // additional error msg if needed
+                  dispatch, // context api action
+                  store, // context api state
+                  true, // boolean to show success modal
+                  false, // boolean to show load more functionality button
+                  null,
+                  "put" // method
+                );
+                dispatch(setStartIndex(0));
+              }}
+            >
+              {(props) => {
+                return (
+                  <Form>
+                    <div className="max-h-[28rem] overflow-y-scroll p-4">
+                      <div className="relative mb-5 ">
                         <InputText
                           placeholder="Date Employed"
                           type="text"
@@ -103,14 +103,6 @@ const ModalEditJobDetails = ({ itemEdit, jobTitle, department }) => {
                           disabled={loading}
                         />
                       </div>
-                      {/* <div className="relative mb-5">
-                        <InputText
-                          placeholder="Employee Number"
-                          type="text"
-                          name="employee_job_number"
-                          disabled={loading}
-                        />
-                      </div> */}
                       <div className="relative mb-5">
                         <InputText
                           placeholder="TIN"
@@ -229,7 +221,7 @@ const ModalEditJobDetails = ({ itemEdit, jobTitle, department }) => {
                           disabled={loading}
                         />
                       </div>
-                      <div className="relative mb-5">
+                      <div className="relative ">
                         <InputTextArea
                           placeholder="Comment"
                           type="text"
@@ -237,29 +229,28 @@ const ModalEditJobDetails = ({ itemEdit, jobTitle, department }) => {
                           disabled={loading}
                         />
                       </div>
-
-                      <div className="flex items-center gap-1 pt-5">
-                        <button
-                          type="submit"
-                          disabled={loading || !props.dirty}
-                          className="btn-modal-submit relative"
-                        >
-                          {loading ? <ButtonSpinner /> : "Save"}
-                        </button>
-                        <button
-                          type="reset"
-                          className="btn-modal-cancel"
-                          onClick={handleClose}
-                          disabled={loading}
-                        >
-                          Cancel
-                        </button>
-                      </div>
-                    </Form>
-                  );
-                }}
-              </Formik>
-            </div>
+                    </div>
+                    <div className="flex items-center gap-1 p-4">
+                      <button
+                        type="submit"
+                        disabled={loading || !props.dirty}
+                        className="btn-modal-submit relative"
+                      >
+                        {loading ? <ButtonSpinner /> : "Save"}
+                      </button>
+                      <button
+                        type="reset"
+                        className="btn-modal-cancel"
+                        onClick={handleClose}
+                        disabled={loading}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </Form>
+                );
+              }}
+            </Formik>
           </div>
         </div>
       </div>

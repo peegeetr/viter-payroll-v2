@@ -2,13 +2,18 @@ import React from "react";
 import { FaUserCog } from "react-icons/fa";
 import { SlArrowRight } from "react-icons/sl";
 import { Link } from "react-router-dom";
-import { devNavUrl, UrlAdmin } from "../../../helpers/functions-general.jsx";
+import {
+  devNavUrl,
+  getUrlParam,
+  UrlAdmin,
+} from "../../../helpers/functions-general.jsx";
 
 const JobDetailsLink = () => {
+  const eid = getUrlParam().get("employeeid");
   return (
     <div className="group flex items-center justify-between border-b border-solid border-gray-300">
       <Link
-        to={`${devNavUrl}/${UrlAdmin}/employee/details/job`}
+        to={`${devNavUrl}/${UrlAdmin}/employee/details/job?employeeid=${eid}`}
         className="w-full py-4"
       >
         <div className="flex items-center">
@@ -24,7 +29,7 @@ const JobDetailsLink = () => {
       </Link>
 
       <Link
-        to={`${devNavUrl}/${UrlAdmin}/employee/details/job`}
+        to={`${devNavUrl}/${UrlAdmin}/employee/details/job?employeeid=${eid}`}
         className="btn-action-table group-hover:bg-primary group-hover:text-white"
       >
         <SlArrowRight className="inline" />

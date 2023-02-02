@@ -1,5 +1,11 @@
 import React from "react";
-import { FaArchive, FaEdit, FaHistory, FaTrash } from "react-icons/fa";
+import {
+  FaArchive,
+  FaEdit,
+  FaHistory,
+  FaTrash,
+  FaUserCircle,
+} from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { setIsConfirm, setIsRestore } from "../../../store/StoreAction";
 import { StoreContext } from "../../../store/StoreContext";
@@ -125,10 +131,17 @@ const EmployeeList = ({ setItemEdit }) => {
                     </td>
                     <td>
                       <div className="flex items-center gap-1">
-                        {item.employee_is_active === 1 ? (
+                        <Link
+                          to={`${devNavUrl}/${UrlAdmin}/employee/details?employeeid=${item.employee_aid}`}
+                          className="btn-action-table tooltip-action-table"
+                          data-tooltip="Edit"
+                        >
+                          <FaEdit />
+                        </Link>
+                        {/* {item.employee_is_active === 1 ? (
                           <>
                             <Link
-                              to={`${devNavUrl}/${UrlAdmin}/employees/details?employeeid=${item.employee_aid}`}
+                              to={`${devNavUrl}/${UrlAdmin}/employee/details?employeeid=${item.employee_aid}`}
                               className="btn-action-table tooltip-action-table"
                               data-tooltip="Edit"
                             >
@@ -162,7 +175,7 @@ const EmployeeList = ({ setItemEdit }) => {
                               <FaTrash />
                             </button>
                           </>
-                        )}
+                        )} */}
                       </div>
                     </td>
                   </tr>

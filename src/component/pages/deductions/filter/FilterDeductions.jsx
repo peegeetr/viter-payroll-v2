@@ -8,13 +8,11 @@ import Header from "../../../partials/Header";
 import ModalError from "../../../partials/modals/ModalError";
 import ModalSuccess from "../../../partials/modals/ModalSuccess";
 import Navigation from "../../../partials/Navigation";
-import DetailsList from "./DetailsList";
+import FilterDeductionsList from "./FilterDeductionsList";
 
-const Details = () => {
+const FilterDeductions = () => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [itemEdit, setItemEdit] = React.useState(null);
-
-  // consoleLog(result);
 
   const handleAdd = () => {
     dispatch(setIsAdd(true));
@@ -24,15 +22,15 @@ const Details = () => {
   return (
     <>
       <Header />
-      <Navigation menu="employee" />
+      <Navigation menu="deductions" />
       <div className="wrapper">
-        <div className="flex items-center justify-between mb-3 whitespace-nowrap overflow-auto gap-2">
+        <div className="flex items-center justify-between whitespace-nowrap overflow-auto gap-2">
           <BreadCrumbs />
         </div>
         <hr />
 
         <div className="w-full pt-5 pb-20">
-          <DetailsList setItemEdit={setItemEdit} />
+          <FilterDeductionsList />
         </div>
         <Footer />
       </div>
@@ -43,4 +41,4 @@ const Details = () => {
   );
 };
 
-export default Details;
+export default FilterDeductions;

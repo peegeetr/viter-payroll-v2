@@ -1,8 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { devNavUrl, UrlAdmin } from "./component/helpers/functions-general";
-import Deduction from "./component/pages/deductions/Deduction";
-import Earnings from "./component/pages/earnings/Earnings";
 import Employee from "./component/pages/employee/Employee";
 import EmployeeLink from "./component/pages/employee/EmployeeLink";
 import Holidays from "./component/pages/holidays/Holidays";
@@ -23,8 +21,14 @@ import UserPage from "./component/pages/settings/users/UserPage";
 import PageNotFound from "./component/partials/PageNotFound";
 
 import { StoreProvider } from "./store/StoreContext";
-import Details from "./component/pages/employee/payroll-details/Details";
 import SalaryHistory from "./component/pages/employee/salary-history/SalaryHistory";
+import ManageEarnings from "./component/pages/earnings/manage-list/ManageEarnings";
+import EarningsPage from "./component/pages/earnings/EarningsPage";
+import FilterEarnings from "./component/pages/earnings/filter/FilterEarnings";
+import JobDetails from "./component/pages/employee/job-details/JobDetails";
+import DeductionsPage from "./component/pages/deductions/DeductionsPage";
+import ManageDeduction from "./component/pages/deductions/manage-list/ManageDeduction";
+import FilterDeductions from "./component/pages/deductions/filter/FilterDeductions";
 
 function App() {
   // Create a client
@@ -44,13 +48,29 @@ function App() {
             {/* Earnings Link */}
             <Route
               path={`${devNavUrl}/${UrlAdmin}/earnings`}
-              element={<Earnings />}
+              element={<EarningsPage />}
+            />
+            <Route
+              path={`${devNavUrl}/${UrlAdmin}/earnings/manage`}
+              element={<ManageEarnings />}
+            />
+            <Route
+              path={`${devNavUrl}/${UrlAdmin}/earnings/filter`}
+              element={<FilterEarnings />}
             />
 
             {/* Deductions Link */}
             <Route
               path={`${devNavUrl}/${UrlAdmin}/deductions`}
-              element={<Deduction />}
+              element={<DeductionsPage />}
+            />
+            <Route
+              path={`${devNavUrl}/${UrlAdmin}/deductions/manage`}
+              element={<ManageDeduction />}
+            />
+            <Route
+              path={`${devNavUrl}/${UrlAdmin}/deductions/filter`}
+              element={<FilterDeductions />}
             />
 
             {/* Employee Link */}
@@ -64,8 +84,8 @@ function App() {
               element={<EmployeeLink />}
             />
             <Route
-              path={`${devNavUrl}/${UrlAdmin}/employee/details/payroll`}
-              element={<Details />}
+              path={`${devNavUrl}/${UrlAdmin}/employee/details/job`}
+              element={<JobDetails />}
             />
             <Route
               path={`${devNavUrl}/${UrlAdmin}/employee/details/salary-history`}

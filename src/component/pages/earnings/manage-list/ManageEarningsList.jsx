@@ -4,17 +4,17 @@ import {
   setIsAdd,
   setIsConfirm,
   setIsRestore,
-} from "../../../store/StoreAction";
-import { StoreContext } from "../../../store/StoreContext";
-import ModalConfirm from "../../partials/modals/ModalConfirm";
-import ModalDeleteRestore from "../../partials/modals/ModalDeleteRestore";
-import NoData from "../../partials/NoData";
-import SearchBar from "../../partials/SearchBar";
-import ServerError from "../../partials/ServerError";
-import StatusActive from "../../partials/status/StatusActive";
-import StatusInactive from "../../partials/status/StatusInactive";
+} from "../../../../store/StoreAction";
+import { StoreContext } from "../../../../store/StoreContext";
+import ModalConfirm from "../../../partials/modals/ModalConfirm";
+import ModalDeleteRestore from "../../../partials/modals/ModalDeleteRestore";
+import NoData from "../../../partials/NoData";
+import SearchBar from "../../../partials/SearchBar";
+import ServerError from "../../../partials/ServerError";
+import StatusActive from "../../../partials/status/StatusActive";
+import StatusInactive from "../../../partials/status/StatusInactive";
 
-const DeductionList = ({ setItemEdit, handleSearch }) => {
+const ManageEarningsList = ({ setItemEdit, handleSearch }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [dataItem, setData] = React.useState(null);
   const [id, setId] = React.useState(null);
@@ -55,14 +55,14 @@ const DeductionList = ({ setItemEdit, handleSearch }) => {
           <thead>
             <tr>
               <th>#</th>
-              <th className="w-[15rem]">Employeee</th>
-              <th>Pay Type</th>
-              <th>Pay Item</th>
-              <th>Amount</th>
-              <th>Frequency</th>
-              <th>No. of Installment</th>
-              <th>Start Date</th>
-              <th>End Date</th>
+              <th className="min-w-[12rem]">Employeee</th>
+              <th className="min-w-[7rem]">Pay Type</th>
+              <th className="min-w-[7rem]">Pay Item</th>
+              <th className="min-w-[7rem]">Amount</th>
+              <th className="min-w-[7rem]">Frequency</th>
+              <th className="min-w-[10rem]">No. of Installment</th>
+              <th className="min-w-[10rem]">Start Date</th>
+              <th className="min-w-[10rem]">End Date</th>
               <th>Status</th>
               <th>Actions</th>
             </tr>
@@ -168,4 +168,4 @@ const DeductionList = ({ setItemEdit, handleSearch }) => {
   );
 };
 
-export default DeductionList;
+export default ManageEarningsList;

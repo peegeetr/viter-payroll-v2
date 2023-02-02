@@ -9,6 +9,7 @@ import PayTypeLink from "./component/pages/pay-type/PayTypePage";
 import PayrollLink from "./component/pages/payroll/PayrollLink";
 import Pagibig from "./component/pages/settings/pagibig/Pagibig.jsx";
 import Philhealth from "./component/pages/settings/philhealth/philhealth.jsx";
+import Rates from "./component/pages/settings/Rates/Rates.jsx";
 import SettingsLink from "./component/pages/settings/SettingsLink";
 import SssBracket from "./component/pages/settings/sss-bracket/SssBracket.jsx";
 import TaxMonthly from "./component/pages/settings/tax-bracket/tax-monthly/TaxMonthly.jsx";
@@ -167,6 +168,11 @@ function App() {
             <Route
               path={`${devNavUrl}/${UrlAdmin}/settings/sss-bracket`}
               element={<SssBracket />}
+            />
+
+            <Route
+              path={`${devNavUrl}/${UrlAdmin}/settings/rates`}
+              element={<Rates />}
             />
           </Routes>
         </Router>

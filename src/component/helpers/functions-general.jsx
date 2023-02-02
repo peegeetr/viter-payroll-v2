@@ -7,7 +7,7 @@ import React from "react";
 // export const devBaseUrl = "https://hris.frontlinebusiness.com.ph/dev-app";
 // export const devNavUrl = "/dev-app";
 
-// // // // Local URL dev
+// Local URL dev
 // export const devApiUrl = "http://localhost/react-vite/viter-hris-v3/rest";
 // export const devBaseUrl = "http://localhost/react-vite/viter-hris-v3/public";
 // export const devBaseImgUrl =

@@ -60,3 +60,5 @@ Add earning modal field
     Done - End date
     Done - Description
  
+Description
+    Manage what actions and capabilities every account are can perform in the system.

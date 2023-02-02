@@ -3,27 +3,24 @@
 $conn = null;
 $conn = checkDbConnection();
 // make instance of classes
-$payType = new PayType($conn);
+$payItem = new PayItem($conn);
 // get $_GET data
-// check if paytypeid is in the url e.g. /jobtitle/1
+// check if payitemid is in the url e.g. /jobtitle/1
 $error = [];
 $returnData = [];
-if (array_key_exists("paytypeid", $_GET)) {
+if (array_key_exists("payitemid", $_GET)) {
  
     // get task id from query string
-    $payType->paytype_aid = $_GET['paytypeid'];
-    $column_name = strtolower(explode(" ", $data["column_name"])[0]);
+    $payItem->payitem_aid = $_GET['payitemid']; 
     
     //check to see if task id in query string is not empty and is number, if not return json error
-    checkId($payType->paytype_aid);  
-    
-    // drop column  
-    checkDropColumnName($payType, $column_name);
+    checkId($payItem->payitem_aid);  
+     
     // delete
-    $query = checkDelete($payType); 
+    $query = checkDelete($payItem); 
     $returnData["data"] = [];
     $returnData["count"] = $query->rowCount();
-    $returnData["Role ID"] = $payType->paytype_aid;
+    $returnData["Role ID"] = $payItem->payitem_aid;
     $returnData["success"] = true;
     return $returnData;
 }

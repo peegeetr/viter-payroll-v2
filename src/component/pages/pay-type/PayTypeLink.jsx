@@ -21,6 +21,7 @@ import ModalConfirm from "../../partials/modals/ModalConfirm";
 import ModalDeleteRestore from "../../partials/modals/ModalDeleteRestore";
 import NoData from "../../partials/NoData";
 import ServerError from "../../partials/ServerError";
+import TableSpinner from "../../partials/spinners/TableSpinner";
 import StatusActive from "../../partials/status/StatusActive";
 import StatusInactive from "../../partials/status/StatusInactive";
 
@@ -41,7 +42,7 @@ const PayTypeLink = ({ setItemEdit }) => {
     dispatch(setIsConfirm(true));
     setId(item.paytype_aid);
     setData(item);
-    setDel(true);
+    setDel(null);
   };
 
   const handleDelete = (item) => {
@@ -60,18 +61,20 @@ const PayTypeLink = ({ setItemEdit }) => {
 
   return (
     <>
+      {payTypeLoading && <TableSpinner />}
+
       {payType.length > 0 ? (
         payType.map((item, key) => {
           return (
             <li key={key} className="py-2">
               <div className="group flex items-center justify-between border-b border-solid border-gray-300 ">
                 <Link
-                  to={`${devNavUrl}/${UrlAdmin}/pay-type/pay-item`}
+                  to={`${devNavUrl}/${UrlAdmin}/pay-type/pay-item?paytypeid=${item.paytype_aid}`}
                   className="w-full py-4"
                   onClick={() => dispatch(setStartIndex(0))}
                 >
-                  <div className="text-left grid lg:grid-cols-[2fr_1fr] ">
-                    <div>
+                  <div className="text-left grid lg:grid-cols-[3fr_1fr] ">
+                    <div className="">
                       <div className="flex items-center">
                         <span className="text-lg mr-4">
                           <FaClipboardList />
@@ -80,18 +83,18 @@ const PayTypeLink = ({ setItemEdit }) => {
                           <span className="capitalize">
                             {item.paytype_name}
                           </span>
-                          <br />
-                          <span className="capitalize">
-                            {item.paytype_category}
-                          </span>
                         </p>
                       </div>
                       <p className="ml-[35px] my-0">
+                        <span className="capitalize font-bold ">
+                          {item.paytype_category}
+                        </span>
+                        <br />
                         {item.paytype_description}
                       </p>
                     </div>
                     <div className="ml-[35px] lg:m-0">
-                      <p className=" font-bold">Status</p>
+                      <p className="font-bold">Status</p>
 
                       <p className="my-0">
                         {item.paytype_is_active === 1 ? (
@@ -106,8 +109,8 @@ const PayTypeLink = ({ setItemEdit }) => {
 
                 <div className="flex items-center gap-1">
                   <Link
-                    to={`${devNavUrl}/${UrlAdmin}/pay-type/pay-item`}
-                    className="btn-action-table tooltip-action-table group-hover:bg-primary group-hover:text-white"
+                    to={`${devNavUrl}/${UrlAdmin}/pay-type/pay-item?paytypeid=${item.paytype_aid}`}
+                    className="btn-action-table tooltip-action-table "
                     data-tooltip="View"
                     onClick={() => dispatch(setStartIndex(0))}
                   >
@@ -172,13 +175,14 @@ const PayTypeLink = ({ setItemEdit }) => {
           </div>
         </li>
       )}
+
       {store.isConfirm && (
         <ModalConfirm
           id={id}
           isDel={isDel}
-          mysqlApiArchive={`/v1/paytype/${id}`}
-          msg={"Are you sure you want to archive"}
-          item={`"${dataItem.paytype_name}"`}
+          mysqlApiArchive={`/v1/paytype/active/${id}`}
+          msg={"Are you sure you want to archive "}
+          item={`${dataItem.paytype_name}`}
         />
       )}
 

@@ -4,6 +4,8 @@ import { setIsAdd } from "../../../store/StoreAction.jsx";
 import { StoreContext } from "../../../store/StoreContext.jsx";
 import Footer from "../../partials/Footer.jsx";
 import Header from "../../partials/Header.jsx";
+import ModalError from "../../partials/modals/ModalError.jsx";
+import ModalSuccess from "../../partials/modals/ModalSuccess.jsx";
 import Navigation from "../../partials/Navigation.jsx";
 import ModalAddPayType from "./ModalAddPayType.jsx";
 import PayTypeLink from "./PayTypeLink.jsx";
@@ -37,7 +39,10 @@ const PayTypePage = () => {
         </ul>
         <Footer />
       </div>
+
       {store.isAdd && <ModalAddPayType item={itemEdit} />}
+      {store.success && <ModalSuccess />}
+      {store.error && <ModalError />}
     </>
   );
 };

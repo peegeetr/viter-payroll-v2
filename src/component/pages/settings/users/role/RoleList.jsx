@@ -149,7 +149,7 @@ const RoleList = ({ setItemEdit }) => {
           isDel={isDel}
           mysqlApiArchive={`/v1/roles/active/${id}`}
           msg={"Are you sure you want to archive this role"}
-          item={`"${dataItem.role_name}"`}
+          item={`${dataItem.role_name}`}
         />
       )}
 

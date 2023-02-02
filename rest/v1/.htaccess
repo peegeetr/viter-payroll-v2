@@ -24,3 +24,8 @@ RewriteRule ^roles/active/([0-9]+)$ controllers/settings/user/role/active.php?ro
 RewriteRule ^paytype$ controllers/pay-type/paytype.php [L]
 RewriteRule ^paytype/([0-9]+)$ controllers/pay-type/paytype.php?paytypeid=$1 [L]
 RewriteRule ^paytype/active/([0-9]+)$ controllers/pay-type/active.php?paytypeid=$1 [L]
+
+#payitem
+RewriteRule ^payitem$ controllers/pay-type/pay-item/payitem.php [L]
+RewriteRule ^payitem/([0-9]+)$ controllers/pay-type/pay-item/payitem.php?payitemid=$1 [L]
+RewriteRule ^payitem/active/([0-9]+)$ controllers/pay-type/pay-item/active.php?payitemid=$1 [L]

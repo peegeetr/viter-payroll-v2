@@ -12,10 +12,13 @@ if (array_key_exists("paytypeid", $_GET)) {
  
     // get task id from query string
     $payType->paytype_aid = $_GET['paytypeid'];
-    $column_name = strtolower(explode(" ", $data["column_name"])[0]);
+    $column_name = strtolower(explode(" ",$data["column_name"])[0]); 
     
     //check to see if task id in query string is not empty and is number, if not return json error
     checkId($payType->paytype_aid);  
+    
+    // drop column  
+    isAssociated($payType);
     
     // drop column  
     checkDropColumnName($payType, $column_name);

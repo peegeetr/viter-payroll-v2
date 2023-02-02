@@ -228,4 +228,26 @@ class PayType
         }
         return $query;
     }
+    
+    // read by id
+    public function checkAssociation()
+    {
+        try {
+            $sql = "select type.paytype_name, item.payitem_name, "; 
+            $sql .= "item.payitem_is_active, item.payitem_aid from ";
+            $sql .= "{$this->tblPayType} as type, "; 
+            $sql .= "{$this->tblPayItem} as item "; 
+            $sql .= "where type.paytype_aid = :paytype_aid ";  
+            $sql .= "and item.payitem_paytype_id = type.paytype_aid "; 
+            $sql .= "order by item.payitem_is_active desc, item.payitem_name asc ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "paytype_aid" => $this->paytype_aid,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
 }

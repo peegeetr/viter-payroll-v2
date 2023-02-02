@@ -79,10 +79,10 @@ const PayItemList = ({ setItemEdit }) => {
                 <div className="flex mb-5 xs:mb-0 ">
                   <FaRegListAlt className="h-8 w-8 mx-5" />
                   <div className="text-left grid grid-cols-[5rem_1fr] ">
+                    <p className="font-semibold text-base">Pay Item :</p>
+                    <p className="pl-2 text-base">{item.payitem_name} </p>
                     <p className="mb-0 font-semibold">Pay Type : </p>
                     <p className="mb-0 pl-2">{item.paytype_name}</p>
-                    <p className="font-semibold">Pay Item :</p>
-                    <p className="pl-2">{item.payitem_name} </p>
                     <p className="mb-0 font-semibold">Status :</p>
                     <p className="mb-0  pl-2">
                       {item.payitem_is_active === 1 ? (

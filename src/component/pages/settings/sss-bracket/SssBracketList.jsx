@@ -27,8 +27,8 @@ const SssBracketList = ({ setItemEdit }) => {
     handleSearch,
     handleChange,
   } = useFetchDataLoadMore(
-    `/v1/user-systems/limit/${start}/${perPage}`,
-    "/v1/user-systems",
+    `/v1/rates/${start}/${perPage}`,
+    "/v1/rates",
     perPage,
     search
   );

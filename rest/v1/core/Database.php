@@ -14,7 +14,7 @@ class Database
 
         // Localhost
         $host = "localhost";
-        $dbname = "fbs_hris_v3";
+        $dbname = "fbs_payroll_v2";
         $username = "root";
         $password = "";
 

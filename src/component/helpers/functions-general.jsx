@@ -1,11 +1,12 @@
 import React from "react";
 
 // Online URL dev
-// export const devApiUrl = "https://hris.frontlinebusiness.com.ph/dev-app/rest";
-// export const devBaseImgUrl =
-//   "https://hris.frontlinebusiness.com.ph/dev-app/img";
-// export const devBaseUrl = "https://hris.frontlinebusiness.com.ph/dev-app";
-// export const devNavUrl = "/dev-app";
+export const hrisDevApiUrl =
+  "https://hris.frontlinebusiness.com.ph/dev-app/rest";
+export const hrisdevBaseImgUrl =
+  "https://hris.frontlinebusiness.com.ph/dev-app/img";
+export const hrisdevBaseUrl = "https://hris.frontlinebusiness.com.ph/dev-app";
+export const hrisdevNavUrl = "/dev-app";
 
 // Local URL dev
 // export const devApiUrl = "http://localhost/react-vite/viter-hris-v3/rest";

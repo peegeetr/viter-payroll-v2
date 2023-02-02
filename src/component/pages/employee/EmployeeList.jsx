@@ -9,7 +9,7 @@ import {
 import { Link } from "react-router-dom";
 import { setIsConfirm, setIsRestore } from "../../../store/StoreAction";
 import { StoreContext } from "../../../store/StoreContext";
-import useFetchDataLoadMore from "../../custom-hooks/useFetchDataLoadMore";
+import hrisUseFetchDataLoadMore from "../../custom-hooks/hris/hrisUseFetchDataLoadMore";
 import { devNavUrl, UrlAdmin } from "../../helpers/functions-general";
 import Loadmore from "../../partials/Loadmore";
 import ModalConfirm from "../../partials/modals/ModalConfirm";
@@ -38,7 +38,7 @@ const EmployeeList = ({ setItemEdit }) => {
     result,
     handleSearch,
     handleChange,
-  } = useFetchDataLoadMore(
+  } = hrisUseFetchDataLoadMore(
     `/v1/employees/limit/${start}/${perPage}`,
     "/v1/employees",
     perPage,

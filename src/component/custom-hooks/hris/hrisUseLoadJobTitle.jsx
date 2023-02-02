@@ -1,23 +1,21 @@
 import React from "react";
-import { StoreContext } from "../../store/StoreContext";
-import fetchApi from "../helpers/fetchApi";
-import { fetchData } from "../helpers/fetchData";
-import { devApiUrl } from "../helpers/functions-general";
+import { StoreContext } from "../../../store/StoreContext";
+import { hrisFetchData } from "../../helpers/hrisFetchData";
 
-const useLoadEmployee = (url, method = null, id = null) => {
+const hrisUseLoadJobTitle = (url, method = null, param2 = null) => {
   const { store, dispatch } = React.useContext(StoreContext);
-  const [employee, setResult] = React.useState([]);
-  const [employeeLoading, setLoading] = React.useState(false);
+  const [jobTitle, setResult] = React.useState([]);
+  const [jobTitleLoading, setLoading] = React.useState(false);
 
   React.useEffect(() => {
     getData();
   }, [store.isSave]);
 
   const getData = async () => {
-    fetchData(
+    hrisFetchData(
       setLoading, // Boolean loading values optional
       url,
-      { val1: id }, // form data values
+      {}, // form data values
       setResult,
       "", // success msg optional
       "", // additional error msg if needed optional
@@ -31,9 +29,9 @@ const useLoadEmployee = (url, method = null, id = null) => {
   };
 
   return {
-    employeeLoading,
-    employee,
+    jobTitleLoading,
+    jobTitle,
   };
 };
 
-export default useLoadEmployee;
+export default hrisUseLoadJobTitle;

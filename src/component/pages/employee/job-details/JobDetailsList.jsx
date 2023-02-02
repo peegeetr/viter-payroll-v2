@@ -2,10 +2,11 @@ import React from "react";
 import { FaEdit } from "react-icons/fa";
 import { setIsAdd, setIsRestore } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
-import useLoadDepartment from "../../../custom-hooks/useLoadDepartment";
-import useLoadEmployee from "../../../custom-hooks/useLoadEmployee";
-import useLoadJobTitle from "../../../custom-hooks/useLoadJobTitle";
+import hrisUseLoadDepartment from "../../../custom-hooks/hris/hrisUseLoadDepartment";
+import useLoadEmployee from "../../../custom-hooks/hris/hrisUseLoadEmployee";
+import hrisUseLoadJobTitle from "../../../custom-hooks/hris/hrisUseLoadJobTitle";
 import {
+  formatDate,
   getUrlParam,
   numberWithCommas,
 } from "../../../helpers/functions-general";
@@ -27,9 +28,9 @@ const JobDetailsList = () => {
     "get"
   );
 
-  const { jobTitle } = useLoadJobTitle("/v1/job-titles", "get");
+  const { jobTitle } = hrisUseLoadJobTitle("/v1/job-titles", "get");
 
-  const { department } = useLoadDepartment("/v1/departments", "get");
+  const { department } = hrisUseLoadDepartment("/v1/departments", "get");
 
   const handleEdit = (item) => {
     dispatch(setIsAdd(true));

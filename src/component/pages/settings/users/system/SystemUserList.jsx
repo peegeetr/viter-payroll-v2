@@ -110,7 +110,7 @@ const SystemUserList = ({ setItemEdit }) => {
                       )}
                     </td>
                     <td>
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-2">
                         {item.user_system_is_active === 1 ? (
                           <>
                             <button

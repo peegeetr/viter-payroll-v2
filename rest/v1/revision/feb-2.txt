@@ -1,0 +1,35 @@
+*CY
+    =>REST DB-BACKUP 
+        ->rest/db-backup/prv2_payitem.sql
+        ->rest/db-backup/prv2_paytype.sql
+        ->rest/db-backup/prv2_settings_role.sql
+
+
+
+    =>REST CONTROLLERS
+        -> PAY-TYPE ALL FILE
+            - rest/controllers/pay-type/ 
+        
+            -> PAY-ITEM ALL FILE
+                - rest/controllers/pay-type/pay-item/
+        
+        -> SETTINGS
+            -> USER -> ROLE ALL FILE
+                - rest/controllers/settings/user/role/
+
+
+
+    =>REST MODELS
+        -> PAY-TYPE ALL FILE
+            - rest/models/pay-type/ 
+        
+            -> PAY-ITEM ALL FILE
+                - rest/models/pay-type/pay-item/
+        
+        -> SETTINGS
+            -> USER -> ROLE ALL FILE
+                - rest/models/settings/user/role/
+
+
+
+ 

@@ -7,10 +7,10 @@ import Header from "../../partials/Header";
 import ModalError from "../../partials/modals/ModalError";
 import ModalSuccess from "../../partials/modals/ModalSuccess";
 import Navigation from "../../partials/Navigation";
-import DeductionList from "./DeductionList";
-import ModalAddDeduction from "./ModalAddDeduction";
+import HolidaysList from "./HolidaysList";
+import ModalAddHolidays from "./ModalAddHolidays";
 
-const Deduction = () => {
+const Holidays = () => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [itemEdit, setItemEdit] = React.useState(null);
 
@@ -18,14 +18,13 @@ const Deduction = () => {
     dispatch(setIsAdd(true));
     setItemEdit(null);
   };
-
   return (
     <>
       <Header />
-      <Navigation menu="deductions" />
-      <div className="relative min-h-screen pt-20 ml-0 px-5 md:ml-20 lg:ml-40 lg:px-10">
+      <Navigation menu="holidays" />
+      <div className="wrapper">
         <div className="flex items-center justify-between mb-3 whitespace-nowrap overflow-auto gap-2">
-          <h4 className="text-xl">Deductions</h4>
+          <h4 className="text-xl">Holidays</h4>
           <div className="flex items-center gap-1">
             <button type="button" className="btn-primary" onClick={handleAdd}>
               <FaPlusCircle />
@@ -36,16 +35,16 @@ const Deduction = () => {
         <hr />
 
         <div className="w-full pt-5 pb-20">
-          <DeductionList />
+          <HolidaysList />
         </div>
         <Footer />
       </div>
 
-      {store.isAdd && <ModalAddDeduction itemEdit={itemEdit} />}
+      {store.isAdd && <ModalAddHolidays item={itemEdit} />}
       {store.success && <ModalSuccess />}
       {store.error && <ModalError />}
     </>
   );
 };
 
-export default Deduction;
+export default Holidays;

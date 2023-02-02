@@ -1,5 +1,4 @@
 import React from "react";
-import { AiFillSetting } from "react-icons/ai";
 import { Link, useLocation } from "react-router-dom";
 import { setStartIndex } from "../../store/StoreAction";
 import { StoreContext } from "../../store/StoreContext";
@@ -37,9 +36,9 @@ const BreadCrumbs = () => {
   return (
     <>
       <ul className="my-2 flex items-center">
-        <span className="mr-1 text-primary">
+        {/* <span className="mr-1 text-primary">
           {crumbs.length === 1 ? "" : <AiFillSetting />}
-        </span>
+        </span> */}
         {crumbs.length === 1 ? "" : crumbs}
       </ul>
     </>

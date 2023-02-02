@@ -137,7 +137,7 @@ export const MyCheckbox = ({ label, open, ...props }) => {
       <input
         {...field}
         {...props}
-        className={meta.touched && meta.error ? "error-show" : null}
+        className={meta.touched && meta.error ? "error-show w-8" : "w-8"}
       />
       <label className="label" htmlFor={props.id || props.name}>
         {label}

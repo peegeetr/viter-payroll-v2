@@ -2,18 +2,13 @@ import { Form, Formik } from "formik";
 import React from "react";
 import { FaTimesCircle } from "react-icons/fa";
 import * as Yup from "yup";
-import { setIsAdd, setStartIndex } from "../../../store/StoreAction";
-import { StoreContext } from "../../../store/StoreContext";
-import fetchApi from "../../helpers/fetchApi";
-import {
-  InputSelect,
-  InputText,
-  InputTextArea,
-} from "../../helpers/FormInputs";
-import { devApiUrl } from "../../helpers/functions-general";
-import ButtonSpinner from "../../partials/spinners/ButtonSpinner";
+import { setIsAdd, setStartIndex } from "../../../../store/StoreAction";
+import { StoreContext } from "../../../../store/StoreContext";
+import { fetchData } from "../../../helpers/fetchData";
+import { InputSelect, InputText } from "../../../helpers/FormInputs";
+import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 
-const ModalAddEarnings = ({ itemEdit }) => {
+const ModalAddManageDeduction = ({ itemEdit }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [loading, setLoading] = React.useState(false);
   const [data, setData] = React.useState([]);
@@ -23,33 +18,6 @@ const ModalAddEarnings = ({ itemEdit }) => {
 
   const handleClose = () => {
     dispatch(setIsAdd(false));
-  };
-
-  const handleSearchChange = async (e) => {
-    if (e.target.value.trim() === "") {
-      setaddSearch("");
-      setIsSearch(false);
-      return;
-    }
-    // setLoading(true);
-    setIsSearch(true);
-    setaddSearch(e.target.value);
-    const data = await fetchApi(
-      devApiUrl + "/v1/departments/search/",
-      { search: e.target.value },
-      dispatch
-    );
-    if (typeof data === "undefined") {
-      return;
-    }
-    if (!data.status) {
-      setData([]);
-      setIsSearch(false);
-      return;
-    }
-    if (data.status) {
-      setData(data.data);
-    }
   };
 
   const initVal = {
@@ -69,7 +37,7 @@ const ModalAddEarnings = ({ itemEdit }) => {
         <div className="p-1 w-[350px] rounded-b-2xl">
           <div className="flex justify-between items-center bg-primary p-3 rounded-t-2xl">
             <h3 className="text-white text-sm">
-              {itemEdit ? "Update" : "Add"} Earnings
+              {itemEdit ? "Update" : "Add"} Deductions
             </h3>
             <button
               type="button"
@@ -169,8 +137,6 @@ const ModalAddEarnings = ({ itemEdit }) => {
                         type="text"
                         name="sample"
                         disabled={loading}
-                        onChange={handleSearchChange}
-                        value={addsearch}
                       />
                     </div>
 
@@ -199,8 +165,6 @@ const ModalAddEarnings = ({ itemEdit }) => {
                         type="text"
                         name="sample"
                         disabled={loading}
-                        onChange={handleSearchChange}
-                        value={addsearch}
                       />
                     </div>
 
@@ -230,8 +194,6 @@ const ModalAddEarnings = ({ itemEdit }) => {
                         type="text"
                         name="sample"
                         disabled={loading}
-                        onChange={handleSearchChange}
-                        value={addsearch}
                       />
                     </div>
                     <div className="flex items-center gap-1 pt-5">
@@ -268,4 +230,4 @@ const ModalAddEarnings = ({ itemEdit }) => {
   );
 };
 
-export default ModalAddEarnings;
+export default ModalAddManageDeduction;

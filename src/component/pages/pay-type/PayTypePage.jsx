@@ -4,6 +4,8 @@ import { setIsAdd } from "../../../store/StoreAction.jsx";
 import { StoreContext } from "../../../store/StoreContext.jsx";
 import Footer from "../../partials/Footer.jsx";
 import Header from "../../partials/Header.jsx";
+import ModalError from "../../partials/modals/ModalError.jsx";
+import ModalSuccess from "../../partials/modals/ModalSuccess.jsx";
 import Navigation from "../../partials/Navigation.jsx";
 import ModalAddPayType from "./ModalAddPayType.jsx";
 import PayTypeLink from "./PayTypeLink.jsx";
@@ -11,6 +13,7 @@ import PayTypeLink from "./PayTypeLink.jsx";
 const PayTypePage = () => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [itemEdit, setItemEdit] = React.useState(null);
+
   const handleAdd = () => {
     dispatch(setIsAdd(true));
     setItemEdit(null);
@@ -36,7 +39,10 @@ const PayTypePage = () => {
         </ul>
         <Footer />
       </div>
-      {store.isAdd && <ModalAddPayType itemEdit={itemEdit} />}
+
+      {store.isAdd && <ModalAddPayType item={itemEdit} />}
+      {store.success && <ModalSuccess />}
+      {store.error && <ModalError />}
     </>
   );
 };

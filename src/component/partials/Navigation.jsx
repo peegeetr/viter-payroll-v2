@@ -10,7 +10,7 @@ import {
 } from "react-icons/fa";
 import { GiReceiveMoney } from "react-icons/gi";
 import { Link } from "react-router-dom";
-import { setIsShow } from "../../store/StoreAction";
+import { setIsShow, setStartIndex } from "../../store/StoreAction";
 import { StoreContext } from "../../store/StoreContext";
 import { devNavUrl } from "../helpers/functions-general";
 
@@ -19,6 +19,7 @@ const Navigation = ({ menu }) => {
 
   const handleShow = () => {
     dispatch(setIsShow(!store.isShow));
+    dispatch(setStartIndex(0));
   };
 
   return (
@@ -31,7 +32,7 @@ const Navigation = ({ menu }) => {
         <ul className="text-sm mt-16 text-white">
           <li
             className={
-              menu === "overview"
+              menu === "payroll"
                 ? "active"
                 : "hover:bg-gradient-to-r hover:from-primary hover:to-secondary"
             }
@@ -40,7 +41,7 @@ const Navigation = ({ menu }) => {
               to={`${devNavUrl}/admin/payroll`}
               className="w-full flex items-center !p-4 md:justify-center lg:justify-start tooltip-navigation"
               onClick={handleShow}
-              data-tooltip="Overviews"
+              data-tooltip="Payroll"
             >
               <GiReceiveMoney className="mr-4 w-4 h-4 md:mr-0 lg:mr-4" />
               <span className="md:hidden lg:block">Payroll</span>

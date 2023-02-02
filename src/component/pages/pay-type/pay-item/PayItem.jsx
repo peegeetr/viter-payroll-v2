@@ -26,7 +26,8 @@ const PayItem = () => {
     <>
       <Header />
       <Navigation menu="pay-type" />
-      <div className="relative min-h-screen pt-20 ml-0 px-5 md:ml-20 lg:ml-40 lg:px-10">
+      <div className="wrapper">
+        {/* <h4 className="text-xl">Holidays</h4> */}
         <div className="flex items-center justify-between mb-3 whitespace-nowrap overflow-auto gap-2">
           <BreadCrumbs />
           <div className="flex items-center gap-1">
@@ -44,7 +45,7 @@ const PayItem = () => {
         <Footer />
       </div>
 
-      {store.isAdd && <ModalAddPayItem itemEdit={itemEdit} />}
+      {store.isAdd && <ModalAddPayItem item={itemEdit} />}
       {store.success && <ModalSuccess />}
       {store.error && <ModalError />}
     </>

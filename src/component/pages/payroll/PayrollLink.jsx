@@ -8,9 +8,9 @@ const PayrollLink = () => {
   return (
     <>
       <Header />
-      <Navigation menu="attendance" />
+      <Navigation menu="payroll" />
       <div className="wrapper">
-        <h4 className="text-xl">Attendance</h4>
+        <h4 className="text-xl">Payroll</h4>
         <BreadCrumbs />
         <hr />
         <ul className="pt-5 pb-20 relative">

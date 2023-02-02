@@ -81,7 +81,7 @@ const RoleList = ({ setItemEdit }) => {
                       )}
                     </td>
                     <td>
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-2">
                         {item.role_is_active === 1 ? (
                           <>
                             <button
@@ -149,7 +149,7 @@ const RoleList = ({ setItemEdit }) => {
           isDel={isDel}
           mysqlApiArchive={`/v1/roles/active/${id}`}
           msg={"Are you sure you want to archive this role"}
-          item={`"${dataItem.role_name}"`}
+          item={`${dataItem.role_name}`}
         />
       )}
 
@@ -164,7 +164,7 @@ const RoleList = ({ setItemEdit }) => {
               ? "Are you sure you want to delete this role"
               : "Are you sure you want to restore this role"
           }
-          item={`"${dataItem.role_name}"`}
+          item={`${dataItem.role_name}`}
         />
       )}
     </>

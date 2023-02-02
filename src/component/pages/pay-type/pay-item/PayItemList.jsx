@@ -1,17 +1,26 @@
 import React from "react";
-import { FaArchive, FaEdit, FaHistory, FaTrash } from "react-icons/fa";
+import {
+  FaArchive,
+  FaEdit,
+  FaHistory,
+  FaRegListAlt,
+  FaTrash,
+} from "react-icons/fa";
 import {
   setIsAdd,
   setIsConfirm,
   setIsRestore,
 } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
-import useFetchDataLoadMore from "../../../custom-hooks/useFetchDataLoadMore";
-import Loadmore from "../../../partials/Loadmore";
+import useLoadPayItem from "../../../custom-hooks/useLoadPayItem";
+import {
+  devNavUrl,
+  getUrlParam,
+  UrlAdmin,
+} from "../../../helpers/functions-general";
 import ModalConfirm from "../../../partials/modals/ModalConfirm";
 import ModalDeleteRestore from "../../../partials/modals/ModalDeleteRestore";
 import NoData from "../../../partials/NoData";
-import SearchBar from "../../../partials/SearchBar";
 import ServerError from "../../../partials/ServerError";
 import TableSpinner from "../../../partials/spinners/TableSpinner";
 import StatusActive from "../../../partials/status/StatusActive";
@@ -22,160 +31,122 @@ const PayItemList = ({ setItemEdit }) => {
   const [dataItem, setData] = React.useState(null);
   const [id, setId] = React.useState(null);
   const [isDel, setDel] = React.useState(false);
-  const search = React.useRef(null);
-  const perPage = 10;
-  const start = store.startIndex + 1;
-  let counter = 0;
 
-  const {
-    loading,
-    handleLoad,
-    totalResult,
-    result,
-    handleSearch,
-    handleChange,
-  } = useFetchDataLoadMore(
-    `/v1/user-systems/limit/${start}/${perPage}`,
-    "/v1/user-systems",
-    perPage,
-    search
+  const paytypeid = getUrlParam().get("paytypeid");
+
+  const { payItem, payItemLoading } = useLoadPayItem(
+    `/v1/paytype/${paytypeid}`,
+    "get"
   );
 
   const handleEdit = (item) => {
     dispatch(setIsAdd(true));
     setItemEdit(item);
   };
-
   const handleArchive = (item) => {
     dispatch(setIsConfirm(true));
-    setId(item.user_system_aid);
-    setData(item);
-    setDel(null);
-  };
-
-  const handleRestore = (item) => {
-    dispatch(setIsRestore(true));
-    setId(item.user_system_aid);
+    setId(item.payitem_aid);
     setData(item);
     setDel(null);
   };
 
   const handleDelete = (item) => {
     dispatch(setIsRestore(true));
-    setId(item.user_system_aid);
+    setId(item.payitem_aid);
     setData(item);
     setDel(true);
   };
 
+  const handleRestore = (item) => {
+    dispatch(setIsRestore(true));
+    setId(item.payitem_aid);
+    setData(item);
+    setDel(null);
+  };
+
   return (
     <>
-      <SearchBar
-        search={search}
-        handleSearch={handleSearch}
-        handleChange={handleChange}
-        loading={loading}
-        result={result}
-        store={store}
-        url={`/v1/user-systems/search/`}
-      />
-      <div className="relative text-center overflow-x-auto z-0">
-        <table>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th className="w-[15rem]">Item Name</th>
-              <th>Status</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {result.length > 0 ? (
-              result.map((item, key) => {
-                counter++;
-                return (
-                  <tr key={key}>
-                    <td>{counter}.</td>
-                    <td>
-                      {item.user_system_lname}, {item.user_system_fname}
-                    </td>
+      <div className="relative  z-0">
+        {payItemLoading && <TableSpinner />}
 
-                    <td>
-                      {item.user_system_is_active === 1 ? (
+        {payItem.length > 0 ? (
+          payItem.map((item, key) => {
+            return (
+              <div
+                key={key}
+                className="sm:flex justify-between py-5 items-center border-b-2 border-solid "
+              >
+                <div className="flex mb-5 xs:mb-0 ">
+                  <FaRegListAlt className="h-8 w-8 mx-5" />
+                  <div className="text-left grid grid-cols-[5rem_1fr] ">
+                    <p className="font-semibold text-base">Pay Item :</p>
+                    <p className="pl-2 text-base">{item.payitem_name} </p>
+                    <p className="mb-0 font-semibold">Pay Type : </p>
+                    <p className="mb-0 pl-2">{item.paytype_name}</p>
+                    <p className="mb-0 font-semibold">Status :</p>
+                    <p className="mb-0  pl-2">
+                      {item.payitem_is_active === 1 ? (
                         <StatusActive />
                       ) : (
                         <StatusInactive />
                       )}
-                    </td>
-                    <td>
-                      <div className="flex items-center gap-3">
-                        {item.user_system_is_active === 1 ? (
-                          <>
-                            <button
-                              type="button"
-                              className="btn-action-table tooltip-action-table"
-                              data-tooltip="Edit"
-                              onClick={() => handleEdit(item)}
-                            >
-                              <FaEdit />
-                            </button>
-                            <button
-                              type="button"
-                              className="btn-action-table tooltip-action-table"
-                              data-tooltip="Archive"
-                              onClick={() => handleArchive(item)}
-                            >
-                              <FaArchive />
-                            </button>
-                          </>
-                        ) : (
-                          <>
-                            <button
-                              type="button"
-                              className="btn-action-table tooltip-action-table"
-                              data-tooltip="Restore"
-                              onClick={() => handleRestore(item)}
-                            >
-                              <FaHistory />
-                            </button>
-                            <button
-                              type="button"
-                              className="btn-action-table tooltip-action-table"
-                              data-tooltip="Delete"
-                              onClick={() => handleDelete(item)}
-                            >
-                              <FaTrash />
-                            </button>
-                          </>
-                        )}
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })
-            ) : result === -1 ? (
-              <tr className="text-center ">
-                <td colSpan="100%" className="p-10">
-                  <ServerError />
-                </td>
-              </tr>
-            ) : (
-              <tr className="text-center ">
-                <td colSpan="100%" className="p-10">
-                  {loading && <TableSpinner />}
-                  <NoData />
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+                    </p>
+                  </div>
+                </div>
+                <div className="flex sm:mt-0 mt-5 justify-center items-center gap-1">
+                  {item.payitem_is_active === 1 ? (
+                    <>
+                      <button
+                        to={`${devNavUrl}/${UrlAdmin}/employees/details`}
+                        type="button"
+                        className="btn-action-table tooltip-action-table"
+                        data-tooltip="Edit"
+                        onClick={() => handleEdit(item)}
+                      >
+                        <FaEdit />
+                      </button>
+                      <button
+                        type="button"
+                        className="btn-action-table tooltip-action-table"
+                        data-tooltip="Archive"
+                        onClick={() => handleArchive(item)}
+                      >
+                        <FaArchive />
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <button
+                        type="button"
+                        className="btn-action-table tooltip-action-table"
+                        data-tooltip="Restore"
+                        onClick={() => handleRestore(item)}
+                      >
+                        <FaHistory />
+                      </button>
 
-        {!store.isSearch && (
-          <Loadmore
-            handleLoad={handleLoad}
-            loading={loading}
-            result={result}
-            totalResult={totalResult}
-          />
+                      <button
+                        type="button"
+                        className="btn-action-table tooltip-action-table"
+                        data-tooltip="Delete"
+                        onClick={() => handleDelete(item)}
+                      >
+                        <FaTrash />
+                      </button>
+                    </>
+                  )}
+                </div>
+              </div>
+            );
+          })
+        ) : payItem === -1 ? (
+          <div className="text-center mt-5">
+            <ServerError />
+          </div>
+        ) : (
+          <div className="text-center mt-5">
+            <NoData />
+          </div>
         )}
       </div>
 
@@ -183,9 +154,9 @@ const PayItemList = ({ setItemEdit }) => {
         <ModalConfirm
           id={id}
           isDel={isDel}
-          mysqlApiArchive={`/v1/user-systems/active/${id}`}
-          msg={"Are you sure you want to archive this user"}
-          item={`"${dataItem.user_system_email}"`}
+          mysqlApiArchive={`/v1/payitem/active/${id}`}
+          msg={"Are you sure you want to archive "}
+          item={`${dataItem.payitem_name}`}
         />
       )}
 
@@ -193,14 +164,14 @@ const PayItemList = ({ setItemEdit }) => {
         <ModalDeleteRestore
           id={id}
           isDel={isDel}
-          mysqlApiDelete={`/v1/user-systems/${id}`}
-          mysqlApiRestore={`/v1/user-systems/active/${id}`}
+          mysqlApiDelete={`/v1/payitem/${id}`}
+          mysqlApiRestore={`/v1/payitem/active/${id}`}
           msg={
             isDel
-              ? "Are you sure you want to delete this user"
-              : "Are you sure you want to restore this user"
+              ? "Are you sure you want to delete "
+              : "Are you sure you want to restore "
           }
-          item={`"${dataItem.user_system_email}"`}
+          item={`${dataItem.payitem_name}`}
         />
       )}
     </>

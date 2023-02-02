@@ -48,7 +48,7 @@ export const fetchData = async (
 
   // if result data is undefined or false
   if (data === undefined || !data) {
-    // setResult(-1);
+    setResult(-1);
     dispatch(setError(true));
     dispatch(setMessage("API / Network Error"));
     setLoading !== null && setLoading(false);
@@ -62,7 +62,6 @@ export const fetchData = async (
   // if result data is empty and success is false
   if (!data.success) {
     setLoading !== null && setLoading(false);
-    // setResult(-1);
     dispatch(setError(true));
     dispatch(setMessage(data.error));
     return;

@@ -289,18 +289,26 @@ function checkEnpoint()
 // validator
 
 // check existence
-function checkExistence($count, $value)
+function checkExistence($count, $msg = "")
 {
     if ($count > 0) {
         $response = new Response();
         $error = [];
         $response->setSuccess(false);
-        $error['error'] = "{$value} already exist.";
+        $error['error'] = $msg;
         $error["success"] = false;
         $response->setData($error);
         $response->send();
         exit;
     }
+}
+  
+// check association
+function isAssociated($object)
+{
+    $query = $object->checkAssociation();
+    $count = $query->rowCount();
+    checkExistence($count, "You cannot delete this item because it is already associated with other module.");
 }
 
 // check name
@@ -308,15 +316,16 @@ function isNameExist($object, $name)
 {
     $query = $object->checkName();
     $count = $query->rowCount();
-    checkExistence($count, $name);
+    checkExistence($count, "{$name} already exist.");
 }
+ 
 
 // check email
 function isEmailExist($object, $email)
 {
     $query = $object->checkEmail();
     $count = $query->rowCount();
-    checkExistence($count, $email);
+    checkExistence($count, "{$email} already exist.");
 }
 
 // compare name

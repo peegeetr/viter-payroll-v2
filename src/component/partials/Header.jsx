@@ -18,7 +18,7 @@ const Header = () => {
         <div>
           <FbsLogoSm />
         </div>
-        <h1 className="text-base p-2">PAYROLL SYSTEM</h1>
+        <h1 className="text-base p-1 font-bold">PAYROLL SYSTEM</h1>
         <div className="flex justify-between items-center gap-3">
           <FaUserCircle className="w-9 h-9 text-gray-500 hidden md:block" />
           <div className="hidden md:block leading-normal">

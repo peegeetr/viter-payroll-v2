@@ -57,14 +57,14 @@ const EarningsList = ({ setItemEdit, handleSearch }) => {
           <thead>
             <tr>
               <th>#</th>
-              <th className="w-[15rem]">Employeee</th>
-              <th>Pay Type</th>
-              <th>Pay Item</th>
-              <th>Amount</th>
-              <th>Frequency</th>
-              <th>No. of Installment</th>
-              <th>Start Date</th>
-              <th>End Date</th>
+              <th className="min-w-[15rem]">Employeee</th>
+              <th className="min-w-[15rem]">Pay Type</th>
+              <th className="min-w-[15rem]">Pay Item</th>
+              <th className="min-w-[7rem]">Amount</th>
+              <th className="min-w-[7rem]">Frequency</th>
+              <th className="min-w-[10rem]">No. of Installment</th>
+              <th className="min-w-[15rem]">Start Date</th>
+              <th className="min-w-[15rem]">End Date</th>
               <th>Status</th>
               <th>Actions</th>
             </tr>
@@ -82,7 +82,7 @@ const EarningsList = ({ setItemEdit, handleSearch }) => {
               <td>Mon Jan 30, 2023</td>
               <td>{1 === 1 ? <StatusActive /> : <StatusInactive />}</td>
               <td>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2">
                   <button
                     type="button"
                     className="btn-action-table tooltip-action-table"

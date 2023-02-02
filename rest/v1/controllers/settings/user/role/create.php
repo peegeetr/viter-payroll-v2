@@ -21,7 +21,7 @@ $role->role_is_active = 1;
 $role->role_created = date("Y-m-d");
 $role->role_datetime = date("Y-m-d H:i:s");
 // string value convert to lower case
-$column_name = strtolower($data["role_name"]);
+$column_name = strtolower(explode(" ",$data["role_name"])[0]); 
 
 // check name
 isNameExist($role, $role->role_name);

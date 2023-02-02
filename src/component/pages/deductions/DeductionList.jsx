@@ -80,7 +80,7 @@ const DeductionList = ({ setItemEdit, handleSearch }) => {
               <td>Mon Jan 30, 2023</td>
               <td>{1 === 1 ? <StatusActive /> : <StatusInactive />}</td>
               <td>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2">
                   <button
                     type="button"
                     className="btn-action-table tooltip-action-table"

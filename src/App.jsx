@@ -5,7 +5,7 @@ import Deduction from "./component/pages/deductions/Deduction";
 import Earnings from "./component/pages/earnings/Earnings";
 import Employee from "./component/pages/employee/Employee";
 import EmployeeLink from "./component/pages/employee/EmployeeLink";
-import HolidaysLink from "./component/pages/holidays/HolidaysLink";
+import Holidays from "./component/pages/holidays/Holidays";
 import PayItem from "./component/pages/pay-type/pay-item/PayItem";
 import PayTypeLink from "./component/pages/pay-type/PayTypePage";
 import PayrollLink from "./component/pages/payroll/PayrollLink";
@@ -75,7 +75,7 @@ function App() {
             {/* Holidays Link */}
             <Route
               path={`${devNavUrl}/${UrlAdmin}/holidays`}
-              element={<HolidaysLink />}
+              element={<Holidays />}
             />
 
             {/* Pay Type Link */}

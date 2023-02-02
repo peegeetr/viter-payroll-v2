@@ -12,7 +12,7 @@ if (array_key_exists("roleid", $_GET)) {
  
     // get task id from query string
     $role->role_aid = $_GET['roleid'];
-    $column_name = strtolower($data["column_name"]);
+    $column_name = strtolower(explode(" ",$data["column_name"])[0]);  
     
     //check to see if task id in query string is not empty and is number, if not return json error
     checkId($role->role_aid);  

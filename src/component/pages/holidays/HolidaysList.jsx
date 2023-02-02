@@ -16,7 +16,7 @@ import ServerError from "../../partials/ServerError";
 import StatusActive from "../../partials/status/StatusActive";
 import StatusInactive from "../../partials/status/StatusInactive";
 
-const EmployeeList = ({ setItemEdit, handleSearch }) => {
+const HolidaysList = ({ setItemEdit }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [dataItem, setData] = React.useState(null);
   const [id, setId] = React.useState(null);
@@ -30,35 +30,36 @@ const EmployeeList = ({ setItemEdit, handleSearch }) => {
 
   const handleArchive = (item) => {
     dispatch(setIsConfirm(true));
-    setId(item.user_system_aid);
-    setData(item);
-    setDel(null);
-  };
-
-  const handleRestore = (item) => {
-    dispatch(setIsRestore(true));
-    setId(item.user_system_aid);
+    setId(item.paytype_aid);
     setData(item);
     setDel(null);
   };
 
   const handleDelete = (item) => {
     dispatch(setIsRestore(true));
-    setId(item.user_system_aid);
+    setId(item.paytype_aid);
     setData(item);
     setDel(true);
   };
 
+  const handleRestore = (item) => {
+    dispatch(setIsRestore(true));
+    setId(item.paytype_aid);
+    setData(item);
+    setDel(null);
+  };
+
   return (
     <>
-      <SearchBar search={search} handleSearch={handleSearch} store={store} />
       <div className="relative text-center overflow-x-auto z-0">
         <table>
           <thead>
             <tr>
               <th>#</th>
-              <th className="min-w-[15rem]">Employeee</th>
-              <th className="min-w-[30rem]">Email</th>
+              <th className="min-w-[10rem]">Holidays</th>
+              <th className="min-w-[10rem]">Date</th>
+              <th className="min-w-[5rem]">Type</th>
+              <th>Rate</th>
               <th>Status</th>
               <th>Actions</th>
             </tr>
@@ -66,22 +67,22 @@ const EmployeeList = ({ setItemEdit, handleSearch }) => {
           <tbody>
             <tr>
               <td>1.</td>
-              <td>Lumabas, Cyrene M.</td>
-              <td className="break-all">
-                cyrenecyrenecyrene.lumabas@frontlinebusiness.com.ph
-              </td>
+              <td>New Year</td>
+              <td>Mon Jan 1, 2023</td>
+              <td>Regular</td>
+              <td>100%</td>
               <td>{1 === 1 ? <StatusActive /> : <StatusInactive />}</td>
               <td>
                 <div className="flex items-center gap-2">
-                  <Link
-                    to={`${devNavUrl}/${UrlAdmin}/employee/details`}
+                  <button
                     type="button"
                     className="btn-action-table tooltip-action-table"
                     data-tooltip="Edit"
                     onClick={handleEdit}
+                    // onClick={() => handleEdit(item)}
                   >
                     <FaEdit />
-                  </Link>
+                  </button>
                   <button
                     type="button"
                     className="btn-action-table tooltip-action-table"
@@ -122,15 +123,6 @@ const EmployeeList = ({ setItemEdit, handleSearch }) => {
             </tr>
           </tbody>
         </table>
-
-        {/* {!store.isSearch && (
-          <Loadmore
-            handleLoad={handleLoad}
-            loading={loading}
-            result={result}
-            totalResult={totalResult}
-          />
-        )} */}
       </div>
 
       {store.isConfirm && (
@@ -161,4 +153,4 @@ const EmployeeList = ({ setItemEdit, handleSearch }) => {
   );
 };
 
-export default EmployeeList;
+export default HolidaysList;

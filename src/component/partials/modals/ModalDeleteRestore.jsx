@@ -17,7 +17,7 @@ const ModalDeleteRestore = ({
   const { store, dispatch } = React.useContext(StoreContext);
   const [loading, setLoading] = React.useState(false);
 
-  consoleLog(item);
+  // consoleLog(item);
 
   const handleClose = () => {
     dispatch(setIsRestore(false));

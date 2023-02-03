@@ -51,7 +51,7 @@ const ModalConfirm = ({
       false,
       false,
       null,
-      "put" // method
+      isDel ? "delete" : "put"
     );
     dispatch(setStartIndex(0));
   };

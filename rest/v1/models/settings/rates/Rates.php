@@ -18,7 +18,7 @@ class Rates
     public function __construct($db)
     {
         $this->connection = $db;
-        $this->tblRates = "payrollv2_settings_rates";
+        $this->tblRates = "prv2_settings_rates";
     }
 
     public function create()

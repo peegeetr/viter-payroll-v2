@@ -21,7 +21,7 @@ class SemiMonthly
     public function __construct($db)
     {
         $this->connection = $db;
-        $this->tblSemiMonthly = "payrollv2_settings_semi_monthly";
+        $this->tblSemiMonthly = "prv2_settings_semi_monthly";
     }
 
     public function create()

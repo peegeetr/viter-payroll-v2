@@ -66,7 +66,7 @@ const RatesList = () => {
         </div>
       </div>
 
-      {store.isAdd && <ModalEditRate item={itemEdit} />}
+      {store.isAdd && <ModalEditRate itemEdit={itemEdit} />}
     </>
   );
 };

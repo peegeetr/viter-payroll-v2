@@ -21,7 +21,7 @@ class TaxMonthly
     public function __construct($db)
     {
         $this->connection = $db;
-        $this->tbltaxMonthly = "payrollv2_settings_tax_monthly";
+        $this->tbltaxMonthly = "prv2_settings_tax_monthly";
     }
 
     public function create()

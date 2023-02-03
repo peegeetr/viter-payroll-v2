@@ -75,7 +75,7 @@ const ModalAddOtherUser = ({ itemEdit, role }) => {
               {(props) => {
                 return (
                   <Form>
-                    <div className="relative mb-5 mt-5">
+                    <div className="relative my-5">
                       <InputText
                         label="Name"
                         type="text"

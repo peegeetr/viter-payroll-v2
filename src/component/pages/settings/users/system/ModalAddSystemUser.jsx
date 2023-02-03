@@ -72,7 +72,7 @@ const ModalAddSystemUser = ({ itemEdit, role }) => {
               {(props) => {
                 return (
                   <Form>
-                    <div className="relative mb-5 mt-5">
+                    <div className="relative my-5">
                       <InputText
                         label="Name"
                         type="text"
@@ -80,7 +80,7 @@ const ModalAddSystemUser = ({ itemEdit, role }) => {
                         disabled={loading}
                       />
                     </div>
-                    <div className="relative mb-5 mt-5">
+                    <div className="relative mb-5 ">
                       <InputText
                         label="Email"
                         type="text"

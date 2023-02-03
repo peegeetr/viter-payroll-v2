@@ -40,3 +40,15 @@ RewriteRule ^tax/semi-monthly/([0-9]+)$ controllers/settings/tax-bracket/semi-mo
 #SETTINGS TAX BRACKET
 RewriteRule ^tax/monthly$ controllers/settings/tax-bracket/tax-monthly/tax-monthly.php [L]
 RewriteRule ^tax/monthly/([0-9]+)$ controllers/settings/tax-bracket/tax-monthly/tax-monthly.php?taxmonthlyid=$1  [L]
+
+#SETTINGS USER SYSTEM
+RewriteRule ^user-systems$ controllers/settings/user/system/system.php [L]
+RewriteRule ^user-systems/([0-9]+)$ controllers/settings/user/system/system.php?usersystemid=$1 [L]
+RewriteRule ^user-systems/active/([0-9]+)$ controllers/settings/user/system/active.php?usersystemid=$1 [L] 
+RewriteRule ^user-systems/reset/([0-9]+)$ controllers/settings/user/system/reset.php?usersystemid=$1 [L] 
+
+#SETTINGS USER OTHER
+RewriteRule ^user-others$ controllers/settings/user/other/other.php [L]
+RewriteRule ^user-others/([0-9]+)$ controllers/settings/user/other/other.php?userotherid=$1 [L]
+RewriteRule ^user-others/active/([0-9]+)$ controllers/settings/user/other/active.php?userotherid=$1 [L] 
+RewriteRule ^user-others/reset/([0-9]+)$ controllers/settings/user/other/reset.php?userotherid=$1 [L] 

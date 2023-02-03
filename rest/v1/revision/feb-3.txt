@@ -1,4 +1,5 @@
-*MON
+*MON MON MON MON MON MON MON MON MON MON MON MON MON 
+
     =>REST DB-BACKUP 
         ->rest/db-backup/prv2_settings_rates.sql
         ->rest/db-backup/prv2_settings_tax_monthly.sql
@@ -27,3 +28,39 @@
                     - rest/models/tax-bracket/semi-monthly/ 
                 -> TAX-MONTHLY 
                     - rest/models/tax-bracket/tax-monthly/ 
+
+
+
+
+
+* CY CY CY CY CY CY CY CY CY CY CY CY CY CY CY CY CY
+
+    =>REST DB-BACKUP 
+        ->rest/db-backup/prv2_settings_user_system
+        ->rest/db-backup/prv2_settings_user_other
+
+        
+    =>REST CONTROLLERS 
+        -> SETTINGS
+             -> OTHER - ALL FILES
+                - rest/controllers/settings/other/
+
+             -> ROLE
+                - rest/controllers/settings/role/delete.php
+                - rest/controllers/settings/role/functions.php
+                - rest/controllers/settings/role/role.php
+  
+             -> SYSTEM - ALL FILES
+                - rest/controllers/settings/system/
+    
+                
+   =>REST MODELS
+        -> SETTINGS
+             -> OTHER
+                - rest/models/settings/other/UserOther.php
+
+             -> ROLE 
+                - rest/models/settings/role/Role.php
+ 
+             -> SYSTEM 
+                - rest/models/settings/user/UserSystem.php

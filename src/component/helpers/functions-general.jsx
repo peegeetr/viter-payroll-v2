@@ -22,16 +22,16 @@ export const hrisDevApiUrl =
 // export const devBaseUrl = "https://hris.frontlinebusiness.com.ph/dev-app";
 // export const devNavUrl = "/dev-app";
 
-// // // // Local URL dev
-export const devApiUrl = "http://localhost/viter-payroll-v2/rest";
-export const devBaseUrl = "http://localhost/viter-payroll-v2/public";
-export const devBaseImgUrl = "http://localhost/viter-payroll-v2/public/img";
-export const devNavUrl = "";
-
-// cy url
-// export const devApiUrl = "http://localhost/projects/viter-payroll-v2/rest";
-// export const devBaseUrl = "http://localhost/projects/viter-payroll-v2/public";
+// Local URL dev
+// export const devApiUrl = "http://localhost/viter-payroll-v2/rest";
+// export const devBaseUrl = "http://localhost/viter-payroll-v2/public";
+// export const devBaseImgUrl = "http://localhost/viter-payroll-v2/public/img";
 // export const devNavUrl = "";
+
+// // cy url
+export const devApiUrl = "http://localhost/projects/viter-payroll-v2/rest";
+export const devBaseUrl = "http://localhost/projects/viter-payroll-v2/public";
+export const devNavUrl = "";
 
 export const UrlAdmin = "admin";
 

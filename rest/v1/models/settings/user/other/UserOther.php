@@ -84,66 +84,7 @@ class UserOther
         }
         return $query;
     }
-
-    // read limit
-    public function readLimit()
-    {
-        try {
-            $sql = "select user.user_other_name, ";
-            $sql .= "user.user_other_is_active, ";
-            $sql .= "user.user_other_role_id, ";
-            $sql .= "role.role_aid, ";
-            $sql .= "role.role_name, ";
-            $sql .= "employee.employee_fname, ";
-            $sql .= "employee.employee_mname, ";
-            $sql .= "employee.employee_lname, ";
-            $sql .= "employee.employee_email, ";
-            $sql .= "user.user_other_aid ";
-            $sql .= "from {$this->tblUserOther} as user, ";
-            $sql .= "{$this->tblRole} as role, ";
-            $sql .= "{$this->tblEmployee} as employee ";
-            $sql .= "where user.user_other_role_id = role.role_aid ";
-            $sql .= "and user.user_other_name = employee.employee_aid ";
-            $sql .= "order by user.user_other_is_active desc, ";
-            $sql .= "user.user_other_name asc ";
-            $sql .= "limit :start, ";
-            $sql .= ":total ";
-            $query = $this->connection->prepare($sql);
-            $query->execute([
-                "start" => $this->user_other_start - 1,
-                "total" => $this->user_other_total,
-            ]);
-        } catch (PDOException $ex) {
-            $query = false;
-        }
-        return $query;
-    }
-
-    // search
-    public function search()
-    {
-        try {
-            $sql = "select * from {$this->tblUserOther} as user, ";
-            $sql .= "{$this->tblRole} as role, ";
-            $sql .= "{$this->tblEmployee} as employee ";
-            $sql .= "where user.user_other_role_id = role.role_aid ";
-            $sql .= "and user.user_other_name = employee.employee_aid ";
-            $sql .= "and ( employee.employee_fname like :employee_fname ";
-            $sql .= "or employee.employee_lname like :employee_lname ";
-            $sql .= ") ";
-            $sql .= "order by user.user_other_is_active desc, ";
-            $sql .= "user.user_other_role_id asc ";
-            $query = $this->connection->prepare($sql);
-            $query->execute([
-                "employee_fname" => "{$this->user_other_search}%",
-                "employee_lname" => "{$this->user_other_search}%",
-            ]);
-        } catch (PDOException $ex) {
-            $query = false;
-        }
-        return $query;
-    }
-
+ 
     // read by id
     public function readById()
     {
@@ -165,13 +106,15 @@ class UserOther
     public function update()
     {
         try {
-            $sql = "update {$this->tblUserOther} set ";
-            $sql .= "user_other_role_id = :user_other_role_id, ";
+            $sql = "update {$this->tblUserOther} set "; 
+            $sql .= "user_other_name = :user_other_name, ";
+            $sql .= "user_other_email = :user_other_email, ";
             $sql .= "user_other_datetime = :user_other_datetime ";
             $sql .= "where user_other_aid  = :user_other_aid ";
             $query = $this->connection->prepare($sql);
-            $query->execute([
-                "user_other_role_id" => $this->user_other_role_id,
+            $query->execute([ 
+                "user_other_name" => $this->user_other_name,
+                "user_other_email" => $this->user_other_email,
                 "user_other_datetime" => $this->user_other_datetime,
                 "user_other_aid" => $this->user_other_aid,
             ]);
@@ -201,6 +144,26 @@ class UserOther
         return $query;
     }
 
+    // reset
+    public function reset()
+    {
+        try {
+            $sql = "update {$this->tblUserOther} set ";
+            $sql .= "user_other_key = :user_other_key, ";
+            $sql .= "user_other_datetime = :user_other_datetime ";
+            $sql .= "where user_other_aid = :user_other_aid ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "user_other_key" => $this->user_other_key,
+                "user_other_datetime" => $this->user_other_datetime,
+                "user_other_aid" => $this->user_other_aid,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
     // delete
     public function delete()
     {
@@ -216,11 +179,9 @@ class UserOther
         }
         return $query;
     }
-
-    // validator
-
-    // email
-    public function checkEmail()
+  
+    // name
+    public function checkName()
     {
         try {
             $sql = "select user_other_name from {$this->tblUserOther} ";
@@ -228,6 +189,22 @@ class UserOther
             $query = $this->connection->prepare($sql);
             $query->execute([
                 "user_other_name" => "{$this->user_other_name}",
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    // email
+    public function checkEmail()
+    {
+        try {
+            $sql = "select user_other_email from {$this->tblUserOther} ";
+            $sql .= "where user_other_email = :user_other_email ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "user_other_email" => "{$this->user_other_email}",
             ]);
         } catch (PDOException $ex) {
             $query = false;

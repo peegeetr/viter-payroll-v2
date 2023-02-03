@@ -202,6 +202,14 @@ function checkActive($object)
     return $query;
 }
 
+// Reset 
+function checkReset($object)
+{
+    $query = $object->reset();
+    checkQuery($query, "There's a problem processing your request. (reset)");
+    return $query;
+}
+
 // Delete 
 function checkDelete($object)
 {
@@ -302,7 +310,7 @@ function checkExistence($count, $msg = "")
         exit;
     }
 }
-  
+ 
 // check association
 function isAssociated($object)
 {

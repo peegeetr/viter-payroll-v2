@@ -10,7 +10,7 @@ import ButtonSpinner from "../spinners/ButtonSpinner";
 const ModalConfirm = ({
   id,
   isDel,
-  mysqlApiDelete,
+  mysqlApiReset,
   mysqlApiArchive,
   msg,
   item,
@@ -41,14 +41,14 @@ const ModalConfirm = ({
     setLoading(true);
     fetchData(
       setLoading,
-      isDel ? mysqlApiDelete : mysqlApiArchive,
-      { isActive: 0 },
+      isDel ? mysqlApiReset : mysqlApiArchive,
+      { isActive: 0, email: item },
       null,
-      "",
+      isDel ? "Please check your email to continue resetting password." : "",
       "",
       dispatch,
       store,
-      false,
+      isDel ? true : false,
       false,
       null,
       isDel ? "delete" : "put"
@@ -74,7 +74,7 @@ const ModalConfirm = ({
               <FaQuestionCircle className="my-0 mx-auto" />
             </span>
             <span className="text-sm font-bold">{msg}</span> <br />
-            <span className="text-sm font-bold ">"{item}" ?</span>
+            <span className="text-sm font-bold break-all">"{item}" ?</span>
             <p>You can't undo this action.</p>
             <div className="flex items-center gap-1 pt-5">
               <button

@@ -11,7 +11,7 @@ const BreadCrumbs = () => {
   let currentLink = "";
 
   const crumbs = location.pathname
-    .replace("/dev-app/admin", "")
+    .replace("/admin", "")
     .split("/")
     .filter((crumb) => crumb !== "")
     .map((crumb, key) => {

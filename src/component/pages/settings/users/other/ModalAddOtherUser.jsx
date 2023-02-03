@@ -5,14 +5,11 @@ import * as Yup from "yup";
 import { setIsAdd, setStartIndex } from "../../../../../store/StoreAction";
 import { StoreContext } from "../../../../../store/StoreContext";
 import { fetchData } from "../../../../helpers/fetchData";
-import {
-  InputSelect,
-  InputText,
-  InputTextArea,
-} from "../../../../helpers/FormInputs";
+import { InputText } from "../../../../helpers/FormInputs";
+import { devApiUrl } from "../../../../helpers/functions-general";
 import ButtonSpinner from "../../../../partials/spinners/ButtonSpinner";
 
-const ModalAddOtherUser = ({ itemEdit, role }) => {
+const ModalAddOtherUser = ({ item, roleId }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [loading, setLoading] = React.useState(false);
 
@@ -21,15 +18,17 @@ const ModalAddOtherUser = ({ itemEdit, role }) => {
   };
 
   const initVal = {
-    user_other_aid: itemEdit ? itemEdit.user_other_aid : "",
-    user_other_emp_id: itemEdit ? itemEdit.user_other_emp_id : "",
-    user_other_role_id: itemEdit ? itemEdit.user_other_role_id : "",
-    user_other_emp_id_old: itemEdit ? itemEdit.user_other_emp_id : "",
+    user_other_name: item ? item.user_other_name : "",
+    user_other_email: item ? item.user_other_email : "",
+    user_other_role_id: roleId,
+
+    user_other_name_old: item ? item.user_other_name : "",
+    user_other_email_old: item ? item.user_other_email : "",
   };
 
   const yupSchema = Yup.object({
-    user_other_emp_id: Yup.string().required("Required"),
-    user_other_role_id: Yup.string().required("Required"),
+    user_other_name: Yup.string().required("Required"),
+    user_other_email: Yup.string().required("Required").email("Invalid email"),
   });
 
   return (
@@ -38,7 +37,7 @@ const ModalAddOtherUser = ({ itemEdit, role }) => {
         <div className="p-1 w-[350px] rounded-b-2xl">
           <div className="flex justify-between items-center bg-primary p-3 rounded-t-2xl">
             <h3 className="text-white text-sm">
-              {itemEdit ? "Update" : "Add"} user
+              {item ? "Update" : "Add"} user
             </h3>
             <button
               type="button"
@@ -55,19 +54,19 @@ const ModalAddOtherUser = ({ itemEdit, role }) => {
               onSubmit={async (values, { setSubmitting, resetForm }) => {
                 fetchData(
                   setLoading,
-                  itemEdit
-                    ? `/v1/user-others/${itemEdit.user_other_aid}`
-                    : "/v1/user-others",
+                  item
+                    ? `${devApiUrl}/v1/user-others/${item.user_other_aid}`
+                    : `${devApiUrl}/v1/user-others`,
                   values, // form data values
                   null, // result set data
-                  itemEdit ? "Succesfully updated." : "Succesfully added.", // success msg
+                  item ? "Succesfully updated." : "Succesfully added.", // success msg
                   "", // additional error msg if needed
                   dispatch, // context api action
                   store, // context api state
                   true, // boolean to show success modal
                   false, // boolean to show load more functionality button
                   null, // navigate default value
-                  itemEdit ? "put" : "post"
+                  item ? "put" : "post"
                 );
                 dispatch(setStartIndex(0));
               }}
@@ -79,7 +78,7 @@ const ModalAddOtherUser = ({ itemEdit, role }) => {
                       <InputText
                         label="Name"
                         type="text"
-                        name="role_name"
+                        name="user_other_name"
                         disabled={loading}
                       />
                     </div>
@@ -87,15 +86,7 @@ const ModalAddOtherUser = ({ itemEdit, role }) => {
                       <InputText
                         label="Email"
                         type="text"
-                        name="role_name"
-                        disabled={loading}
-                      />
-                    </div>
-                    <div className="relative mb-5 mt-5">
-                      <InputText
-                        label="Role"
-                        type="text"
-                        name="role_name"
+                        name="user_other_email"
                         disabled={loading}
                       />
                     </div>
@@ -107,7 +98,7 @@ const ModalAddOtherUser = ({ itemEdit, role }) => {
                         className="btn-modal-submit relative"
                       >
                         {loading && <ButtonSpinner />}
-                        {itemEdit ? "Save" : "Add"}
+                        {item ? "Save" : "Add"}
                       </button>
                       <button
                         type="reset"

@@ -5,11 +5,11 @@ import * as Yup from "yup";
 import { setIsAdd, setStartIndex } from "../../../../../store/StoreAction";
 import { StoreContext } from "../../../../../store/StoreContext";
 import { fetchData } from "../../../../helpers/fetchData";
-import { InputSelect, InputText } from "../../../../helpers/FormInputs";
-import { consoleLog, devApiUrl } from "../../../../helpers/functions-general";
+import { InputText } from "../../../../helpers/FormInputs";
+import { devApiUrl } from "../../../../helpers/functions-general";
 import ButtonSpinner from "../../../../partials/spinners/ButtonSpinner";
 
-const ModalAddSystemUser = ({ itemEdit, role }) => {
+const ModalAddSystemUser = ({ item, roleId }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [loading, setLoading] = React.useState(false);
 
@@ -18,15 +18,17 @@ const ModalAddSystemUser = ({ itemEdit, role }) => {
   };
 
   const initVal = {
-    user_other_aid: itemEdit ? itemEdit.user_other_aid : "",
-    user_other_emp_id: itemEdit ? itemEdit.user_other_emp_id : "",
-    user_other_role_id: itemEdit ? itemEdit.user_other_role_id : "",
-    user_other_emp_id_old: itemEdit ? itemEdit.user_other_emp_id : "",
+    user_system_name: item ? item.user_system_name : "",
+    user_system_email: item ? item.user_system_email : "",
+    user_system_role_id: roleId,
+
+    user_system_name_old: item ? item.user_system_name : "",
+    user_system_email_old: item ? item.user_system_email : "",
   };
 
   const yupSchema = Yup.object({
-    user_other_emp_id: Yup.string().required("Required"),
-    user_other_role_id: Yup.string().required("Required"),
+    user_system_name: Yup.string().required("Required"),
+    user_system_email: Yup.string().required("Required").email("Invalid email"),
   });
 
   return (
@@ -35,7 +37,7 @@ const ModalAddSystemUser = ({ itemEdit, role }) => {
         <div className="p-1 w-[350px] rounded-b-2xl">
           <div className="flex justify-between items-center bg-primary p-3 rounded-t-2xl">
             <h3 className="text-white text-sm">
-              {itemEdit ? "Update" : "Add"} user
+              {item ? "Update" : "Add"} user
             </h3>
             <button
               type="button"
@@ -52,19 +54,19 @@ const ModalAddSystemUser = ({ itemEdit, role }) => {
               onSubmit={async (values, { setSubmitting, resetForm }) => {
                 fetchData(
                   setLoading,
-                  itemEdit
-                    ? `${devApiUrl}/v1/user-others/${itemEdit.user_other_aid}`
-                    : `${devApiUrl}/v1/user-others`,
+                  item
+                    ? `${devApiUrl}/v1/user-systems/${item.user_system_aid}`
+                    : `${devApiUrl}/v1/user-systems`,
                   values, // form data values
                   null, // result set data
-                  itemEdit ? "Succesfully updated." : "Succesfully added.", // success msg
+                  item ? "Succesfully updated." : "Succesfully added.", // success msg
                   "", // additional error msg if needed
                   dispatch, // context api action
                   store, // context api state
                   true, // boolean to show success modal
                   false, // boolean to show load more functionality button
                   null, // navigate default value
-                  itemEdit ? "put" : "post"
+                  item ? "put" : "post"
                 );
                 dispatch(setStartIndex(0));
               }}
@@ -76,7 +78,7 @@ const ModalAddSystemUser = ({ itemEdit, role }) => {
                       <InputText
                         label="Name"
                         type="text"
-                        name="role_name"
+                        name="user_system_name"
                         disabled={loading}
                       />
                     </div>
@@ -84,31 +86,18 @@ const ModalAddSystemUser = ({ itemEdit, role }) => {
                       <InputText
                         label="Email"
                         type="text"
-                        name="role_name"
+                        name="user_system_email"
                         disabled={loading}
                       />
                     </div>
-                    <div className="relative mb-5 mt-5">
-                      <InputText
-                        label="Role"
-                        type="text"
-                        name="role_name"
-                        disabled={loading}
-                      />
-                    </div>
+
                     <div className="flex items-center gap-1 pt-5">
                       <button
                         type="submit"
                         disabled={loading || !props.dirty}
                         className="btn-modal-submit relative"
                       >
-                        {loading ? (
-                          <ButtonSpinner />
-                        ) : itemEdit ? (
-                          "Save"
-                        ) : (
-                          "Add"
-                        )}
+                        {loading ? <ButtonSpinner /> : item ? "Save" : "Add"}
                       </button>
                       <button
                         type="reset"

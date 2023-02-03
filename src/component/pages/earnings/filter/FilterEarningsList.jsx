@@ -53,16 +53,17 @@ const FilterEarningsList = () => {
           return (
             <Form>
               <div className="grid sm:grid-cols-3 gap-3 mb-5">
-                <div className="relative placeholder" data-label="Pay Item">
+                <div className="relative label">
                   <InputSelect
+                    label="Pay Item"
                     name="sample"
-                    //  disabled={!loading}
+                    // disabled={loading}
                     onFocus={(e) =>
                       e.target.parentElement.classList.add("focused")
                     }
                   >
                     <optgroup label="Pay Item">
-                      <option value="" disabled hidden></option>
+                      <option value="" hidden></option>
                       <option value="all">All</option>
                       <option value="sample">Lumabas, Cyrene M.</option>
                     </optgroup>
@@ -70,7 +71,7 @@ const FilterEarningsList = () => {
                 </div>
                 <div className="relative">
                   <InputText
-                    placeholder="Start Date"
+                    label="Start Date"
                     type="text"
                     onFocus={(e) => (e.target.type = "date")}
                     onBlur={(e) => (e.target.type = "text")}
@@ -80,7 +81,7 @@ const FilterEarningsList = () => {
                 </div>
                 <div className="relative">
                   <InputText
-                    placeholder="End Date"
+                    label="End Date"
                     type="text"
                     onFocus={(e) => (e.target.type = "date")}
                     onBlur={(e) => (e.target.type = "text")}

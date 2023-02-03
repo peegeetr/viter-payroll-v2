@@ -52,8 +52,9 @@ const FilterDeductionsList = () => {
           return (
             <Form>
               <div className="grid sm:grid-cols-3 gap-3 mb-5">
-                <div className="relative placeholder" data-label="Pay Item">
+                <div className="relative label">
                   <InputSelect
+                    label="Pay Item"
                     name="sample"
                     //  disabled={!loading}
                     onFocus={(e) =>
@@ -69,7 +70,7 @@ const FilterDeductionsList = () => {
                 </div>
                 <div className="relative">
                   <InputText
-                    placeholder="Start Date"
+                    label="Start Date"
                     type="text"
                     onFocus={(e) => (e.target.type = "date")}
                     onBlur={(e) => (e.target.type = "text")}
@@ -79,7 +80,7 @@ const FilterDeductionsList = () => {
                 </div>
                 <div className="relative">
                   <InputText
-                    placeholder="End Date"
+                    label="End Date"
                     type="text"
                     onFocus={(e) => (e.target.type = "date")}
                     onBlur={(e) => (e.target.type = "text")}

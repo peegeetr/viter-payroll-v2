@@ -72,7 +72,7 @@ const ModalAddTaxSemi = ({ itemEdit }) => {
                   <Form>
                     <div className="relative mb-5">
                       <InputText
-                        placeholder="Range From"
+                        label="Range From"
                         type="text"
                         name="sample"
                         disabled={loading}
@@ -81,7 +81,7 @@ const ModalAddTaxSemi = ({ itemEdit }) => {
 
                     <div className="relative mb-5">
                       <InputText
-                        placeholder="Range To"
+                        label="Range To"
                         type="text"
                         name="sample"
                         disabled={loading}
@@ -90,7 +90,7 @@ const ModalAddTaxSemi = ({ itemEdit }) => {
 
                     <div className="relative mb-5">
                       <InputText
-                        placeholder="Less Amount"
+                        label="Less Amount"
                         type="text"
                         name="sample"
                         disabled={loading}
@@ -99,7 +99,7 @@ const ModalAddTaxSemi = ({ itemEdit }) => {
 
                     <div className="relative mb-5">
                       <InputText
-                        placeholder="Rate %"
+                        label="Rate %"
                         type="text"
                         name="sample"
                         disabled={loading}
@@ -108,7 +108,7 @@ const ModalAddTaxSemi = ({ itemEdit }) => {
 
                     <div className="relative mb-5">
                       <InputText
-                        placeholder="Addt'l Amount"
+                        label="Addt'l Amount"
                         type="text"
                         name="sample"
                         disabled={loading}

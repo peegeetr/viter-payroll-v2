@@ -17,8 +17,7 @@ if (array_key_exists("usersystemid", $_GET)) {
 // check data
 checkPayload($data);
 // get data
-$user_system->user_system_fname = addslashes(trim($data["user_system_fname"]));
-$user_system->user_system_lname = addslashes(trim($data["user_system_lname"]));
+$user_system->user_system_name = addslashes(trim($data["user_system_name"])); 
 $user_system->user_system_is_active = 1;
 $user_system->user_system_email = addslashes(trim($data["user_system_email"]));
 $user_system->user_system_role_id = addslashes(trim($data["user_system_role_id"]));

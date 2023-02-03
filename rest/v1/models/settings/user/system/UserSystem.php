@@ -144,6 +144,26 @@ class UserSystem
         return $query;
     }
 
+    // reset
+    public function reset()
+    {
+        try {
+            $sql = "update {$this->tblUserSystem} set ";
+            $sql .= "user_system_key = :user_system_key, ";
+            $sql .= "user_system_datetime = :user_system_datetime ";
+            $sql .= "where user_system_aid = :user_system_aid ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "user_system_key" => $this->user_system_key,
+                "user_system_datetime" => $this->user_system_datetime,
+                "user_system_aid" => $this->user_system_aid,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
     // delete
     public function delete()
     {

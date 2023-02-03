@@ -38,7 +38,7 @@
     @apply font-bold bg-gray-200 p-1.5 whitespace-nowrap sm:whitespace-normal first:w-[2rem];
   }
   table th:last-child {
-    @apply w-28;
+    @apply w-44;
   }
   input,
   select {

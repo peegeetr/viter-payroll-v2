@@ -14,14 +14,15 @@ if (array_key_exists("usersystemid", $_GET)) {
     // get data
     // get usersystemid from query string
     $user_system->user_system_aid = $_GET['usersystemid'];
-    $user_system->user_system_fname = addslashes(trim($data["user_system_fname"]));
-    $user_system->user_system_lname = addslashes(trim($data["user_system_lname"]));
+    $user_system->user_system_name = addslashes(trim($data["user_system_name"])); 
     $user_system->user_system_email = addslashes(trim($data["user_system_email"]));
     $user_system->user_system_datetime = date("Y-m-d H:i:s");
+
+    $user_system_name_old = strtolower($data["user_system_name_old"]);
     $user_system_email_old = strtolower($data["user_system_email_old"]);
     //check to see if task id in query string is not empty and is number, if not return json error
-    checkId($user_system->user_system_aid);
-    // check name
+    checkId($user_system->user_system_aid); 
+    // check email
     compareEmail($user_system, $user_system_email_old, $user_system->user_system_email);
     // update
     $query = checkUpdate($user_system);

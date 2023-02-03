@@ -9,7 +9,7 @@ import PayTypeLink from "./component/pages/pay-type/PayTypePage";
 import PayrollLink from "./component/pages/payroll/PayrollLink";
 import Pagibig from "./component/pages/settings/pagibig/Pagibig.jsx";
 import Philhealth from "./component/pages/settings/philhealth/philhealth.jsx";
-import Rates from "./component/pages/settings/Rates/Rates.jsx";
+import Rates from "./component/pages/settings/rates/Rates.jsx";
 import SettingsLink from "./component/pages/settings/SettingsLink";
 import SssBracket from "./component/pages/settings/sss-bracket/SssBracket.jsx";
 import TaxMonthly from "./component/pages/settings/tax-bracket/tax-monthly/TaxMonthly.jsx";
@@ -21,16 +21,16 @@ import SystemUser from "./component/pages/settings/users/system/SystemUser";
 import UserPage from "./component/pages/settings/users/UserPage";
 import PageNotFound from "./component/partials/PageNotFound";
 
-import { StoreProvider } from "./store/StoreContext";
-import SalaryHistory from "./component/pages/employee/salary-history/SalaryHistory";
-import ManageEarnings from "./component/pages/earnings/manage-list/ManageEarnings";
+import DeductionsPage from "./component/pages/deductions/DeductionsPage";
+import FilterDeductions from "./component/pages/deductions/filter/FilterDeductions";
+import ManageDeduction from "./component/pages/deductions/manage-list/ManageDeduction";
 import EarningsPage from "./component/pages/earnings/EarningsPage";
 import FilterEarnings from "./component/pages/earnings/filter/FilterEarnings";
+import ManageEarnings from "./component/pages/earnings/manage-list/ManageEarnings";
 import JobDetails from "./component/pages/employee/job-details/JobDetails";
-import DeductionsPage from "./component/pages/deductions/DeductionsPage";
-import ManageDeduction from "./component/pages/deductions/manage-list/ManageDeduction";
-import FilterDeductions from "./component/pages/deductions/filter/FilterDeductions";
+import SalaryHistory from "./component/pages/employee/salary-history/SalaryHistory";
 import ReportsLink from "./component/pages/reports/ReportsLink";
+import { StoreProvider } from "./store/StoreContext";
 
 function App() {
   // Create a client

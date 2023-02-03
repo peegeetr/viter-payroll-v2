@@ -56,14 +56,14 @@ const ManageEarningsList = ({ setItemEdit, handleSearch }) => {
           <thead>
             <tr>
               <th>#</th>
-              <th className="min-w-[12rem]">Employeee</th>
-              <th className="min-w-[7rem]">Pay Type</th>
-              <th className="min-w-[7rem]">Pay Item</th>
-              <th className="min-w-[7rem]">Amount</th>
-              <th className="min-w-[7rem]">Frequency</th>
-              <th className="min-w-[10rem]">No. of Installment</th>
-              <th className="min-w-[10rem]">Start Date</th>
-              <th className="min-w-[10rem]">End Date</th>
+              <th className="min-w-[8rem]">Employeee</th>
+              <th className="min-w-[5rem]">Pay Type</th>
+              <th className="min-w-[5rem]">Pay Item</th>
+              <th className="min-w-[5rem]">Amount</th>
+              <th className="min-w-[5rem]">Frequency</th>
+              <th className="min-w-[8rem]">No. of Installment</th>
+              <th className="min-w-[8rem]">Start Date</th>
+              <th className="min-w-[8rem]">End Date</th>
               <th>Status</th>
               <th>Actions</th>
             </tr>

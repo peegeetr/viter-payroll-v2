@@ -36,8 +36,8 @@ const SystemUserList = ({ setItemEdit }) => {
     handleSearch,
     handleChange,
   } = useFetchDataLoadMore(
-    `${devApiUrl}/v1/user-systems/limit/${start}/${perPage}`,
-    `${devApiUrl}/v1/user-systems`,
+    `${devApiUrl}/v1/roles/limit/${start}/${perPage}`,
+    `${devApiUrl}/v1/roles`,
     perPage,
     search
   );

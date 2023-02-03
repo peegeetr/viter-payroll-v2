@@ -72,45 +72,30 @@ const ModalAddSystemUser = ({ itemEdit, role }) => {
               {(props) => {
                 return (
                   <Form>
-                    <div className="relative mb-6">
-                      <input
+                    <div className="relative mb-5 mt-5">
+                      <InputText
+                        label="Name"
                         type="text"
-                        placeholder="Search employee"
+                        name="role_name"
                         disabled={loading}
                       />
-                      <ul className="absolute w-full z-10 overflow-y-scroll ">
-                        <li className="bg-gray-200 cursor-pointer hover:bg-gray-300 p-1 border-t-0 border-r-0 border-l-0 border-b border-gray-300 rounded-bl-none rounded-br-none">
-                          Merin, Mark Ryan
-                        </li>
-                        <li className="bg-gray-200 cursor-pointer hover:bg-gray-300 p-1 border-t-0 border-r-0 border-l-0 border-b border-gray-300 rounded-bl-none rounded-br-none">
-                          Merin, Mark Ryan
-                        </li>
-                      </ul>
                     </div>
-                    <div className="relative mb-5">
-                      <InputSelect
-                        placeholder="Role"
-                        name="useother_role_id"
+                    <div className="relative mb-5 mt-5">
+                      <InputText
+                        label="Email"
+                        type="text"
+                        name="role_name"
                         disabled={loading}
-                      >
-                        <>
-                          <optgroup label="Select role">
-                            {role.length > 0 ? (
-                              role.map((item, key) => {
-                                return (
-                                  <option key={key} value={item.role_aid}>
-                                    {item.role_name}
-                                  </option>
-                                );
-                              })
-                            ) : (
-                              <option value="">No Data</option>
-                            )}
-                          </optgroup>
-                        </>
-                      </InputSelect>
+                      />
                     </div>
-
+                    <div className="relative mb-5 mt-5">
+                      <InputText
+                        label="Role"
+                        type="text"
+                        name="role_name"
+                        disabled={loading}
+                      />
+                    </div>
                     <div className="flex items-center gap-1 pt-5">
                       <button
                         type="submit"

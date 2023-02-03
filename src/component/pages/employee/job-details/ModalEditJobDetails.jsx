@@ -36,6 +36,7 @@ const ModalEditJobDetails = ({ itemEdit, jobTitle, department }) => {
       : "",
     employee_email: itemEdit ? itemEdit.employee_email : "",
     employee_job_drive_link: itemEdit ? itemEdit.employee_job_drive_link : "",
+    employee_job_start_time: itemEdit ? itemEdit.employee_job_start_time : "",
     employee_job_comments: itemEdit ? itemEdit.employee_job_comments : "",
   };
 
@@ -96,7 +97,7 @@ const ModalEditJobDetails = ({ itemEdit, jobTitle, department }) => {
                     <div className="max-h-[28rem] overflow-y-scroll p-4">
                       <div className="relative mb-5 ">
                         <InputText
-                          placeholder="Date Employed"
+                          label="Date Employed"
                           type="text"
                           onFocus={(e) => (e.target.type = "date")}
                           onBlur={(e) => (e.target.type = "text")}
@@ -106,7 +107,7 @@ const ModalEditJobDetails = ({ itemEdit, jobTitle, department }) => {
                       </div>
                       <div className="relative mb-5">
                         <InputText
-                          placeholder="TIN"
+                          label="TIN"
                           type="text"
                           name="employee_job_tin"
                           disabled={loading}
@@ -114,22 +115,16 @@ const ModalEditJobDetails = ({ itemEdit, jobTitle, department }) => {
                       </div>
                       <div className="relative mb-5">
                         <InputText
-                          placeholder="Status"
+                          label="Status"
                           type="text"
                           name="employee_job_status"
                           disabled={loading}
                         />
                       </div>
 
-                      <div
-                        className={
-                          itemEdit
-                            ? "relative mb-5"
-                            : "relative mb-5 placeholder"
-                        }
-                        data-label="Department"
-                      >
+                      <div className="relative mb-5">
                         <InputSelect
+                          label="Department"
                           name="employee_job_department_id"
                           disabled={loading}
                           onFocus={(e) =>
@@ -153,15 +148,9 @@ const ModalEditJobDetails = ({ itemEdit, jobTitle, department }) => {
                         </InputSelect>
                       </div>
 
-                      <div
-                        className={
-                          itemEdit
-                            ? "relative mb-5"
-                            : "relative mb-5 placeholder"
-                        }
-                        data-label="Job Title"
-                      >
+                      <div className="relative mb-5">
                         <InputSelect
+                          label="Job Title"
                           name="employee_job_title_id"
                           disabled={loading}
                           onFocus={(e) =>
@@ -184,15 +173,9 @@ const ModalEditJobDetails = ({ itemEdit, jobTitle, department }) => {
                           </optgroup>
                         </InputSelect>
                       </div>
-                      <div
-                        className={
-                          itemEdit
-                            ? "relative mb-5"
-                            : "relative mb-5 placeholder"
-                        }
-                        data-label="Supervisor"
-                      >
+                      <div className="relative mb-5">
                         <InputSelect
+                          label="Supervisor"
                           name="employee_job_supervisor_id"
                           disabled={loading}
                           onFocus={(e) =>
@@ -208,7 +191,7 @@ const ModalEditJobDetails = ({ itemEdit, jobTitle, department }) => {
                       </div>
                       <div className="relative mb-5">
                         <InputText
-                          placeholder="Work Email"
+                          label="Work Email"
                           type="text"
                           name="employee_email"
                           disabled={loading}
@@ -216,7 +199,7 @@ const ModalEditJobDetails = ({ itemEdit, jobTitle, department }) => {
                       </div>
                       <div className="relative mb-5">
                         <InputTextArea
-                          placeholder="Drive Link"
+                          label="Drive Link"
                           type="text"
                           name="employee_job_drive_link"
                           disabled={loading}
@@ -224,7 +207,7 @@ const ModalEditJobDetails = ({ itemEdit, jobTitle, department }) => {
                       </div>
                       <div className="relative ">
                         <InputTextArea
-                          placeholder="Comment"
+                          label="Comment"
                           type="text"
                           name="employee_job_comments"
                           disabled={loading}

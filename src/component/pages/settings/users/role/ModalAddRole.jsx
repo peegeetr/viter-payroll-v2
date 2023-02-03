@@ -74,9 +74,9 @@ const ModalAddRole = ({ item }) => {
               {(props) => {
                 return (
                   <Form>
-                    <div className="relative mb-5">
+                    <div className="relative mb-5 mt-5">
                       <InputText
-                        placeholder="Name"
+                        label="Name"
                         type="text"
                         name="role_name"
                         disabled={loading}
@@ -84,7 +84,7 @@ const ModalAddRole = ({ item }) => {
                     </div>
                     <div className="relative mb-5">
                       <InputTextArea
-                        placeholder="Description"
+                        label="Description"
                         type="text"
                         name="role_description"
                         disabled={loading}

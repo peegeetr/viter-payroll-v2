@@ -35,7 +35,7 @@ const Holidays = () => {
         <hr />
 
         <div className="w-full pt-5 pb-20">
-          <HolidaysList />
+          <HolidaysList setItemEdit={setItemEdit} />
         </div>
         <Footer />
       </div>

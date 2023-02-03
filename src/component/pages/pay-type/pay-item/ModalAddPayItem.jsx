@@ -72,9 +72,9 @@ const ModalAddPayItem = ({ item }) => {
               {(props) => {
                 return (
                   <Form>
-                    <div className="relative mb-5">
+                    <div className="relative mb-5 mt-5">
                       <InputText
-                        placeholder="Name"
+                        label="Name"
                         type="text"
                         name="payitem_name"
                         disabled={loading}

@@ -79,13 +79,9 @@ const ModalAddPayType = ({ item }) => {
               {(props) => {
                 return (
                   <Form>
-                    <div
-                      className={
-                        item ? "relative mb-5 " : "relative mb-5 placeholder"
-                      }
-                      data-label="Category"
-                    >
+                    <div className="relative mb-5 mt-5">
                       <InputSelect
+                        label="Category"
                         name="paytype_category"
                         disabled={loading}
                         onFocus={(e) =>
@@ -93,7 +89,7 @@ const ModalAddPayType = ({ item }) => {
                         }
                       >
                         <optgroup label="Category">
-                          <option value="" disabled hidden></option>
+                          <option value="" hidden></option>
                           <option value="earnings">Earnings</option>
                           <option value="deductions">Deductions</option>
                         </optgroup>
@@ -102,7 +98,7 @@ const ModalAddPayType = ({ item }) => {
 
                     <div className="relative mb-5">
                       <InputText
-                        placeholder="Name"
+                        label="Name"
                         type="text"
                         name="paytype_name"
                         disabled={loading}
@@ -110,7 +106,7 @@ const ModalAddPayType = ({ item }) => {
                     </div>
                     <div className="relative mb-5">
                       <InputTextArea
-                        placeholder="Description"
+                        label="Description"
                         type="text"
                         name="paytype_description"
                         disabled={loading}

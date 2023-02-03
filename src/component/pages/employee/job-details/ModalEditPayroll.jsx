@@ -28,6 +28,8 @@ const ModalEditPayroll = ({ itemEdit }) => {
 
   const initVal = {
     employee_aid: itemEdit ? itemEdit.employee_aid : "",
+    employee_job_payroll_elegibility:
+      itemEdit.employee_job_payroll_elegibility === 1 ? true : false,
     employee_job_sss_deduc:
       itemEdit.employee_job_sss_deduc === 1 ? true : false,
     employee_job_pag_ibig_deduc:
@@ -101,6 +103,16 @@ const ModalEditPayroll = ({ itemEdit }) => {
                   return (
                     <Form>
                       <div className="relative mb-3 pt-5 flex items-center">
+                        <p className="w-1/2 m-0">Payroll Elegibility</p>
+                        <span>
+                          <MyCheckbox
+                            type="checkbox"
+                            name="employee_job_payroll_elegibility"
+                            disabled={loading}
+                          />
+                        </span>
+                      </div>
+                      <div className="relative mb-3 flex items-center">
                         <p className="w-1/2 m-0">With SSS deduction?</p>
                         <span>
                           <MyCheckbox
@@ -202,7 +214,7 @@ const ModalEditPayroll = ({ itemEdit }) => {
                           disabled={loading || !props.dirty}
                           className="btn-modal-submit relative"
                         >
-                          {loading ? <ButtonSpinner /> : "Save"}
+                          {loading && <ButtonSpinner />} Save
                         </button>
                         <button
                           type="reset"

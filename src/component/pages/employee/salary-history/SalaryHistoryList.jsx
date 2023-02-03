@@ -36,8 +36,8 @@ const SalaryHistoryList = ({ setItemEdit }) => {
     handleSearch,
     handleChange,
   } = useFetchDataLoadMore(
-    `${devApiUrl}/v1/user-systems/limit/${start}/${perPage}`,
-    `${devApiUrl}/v1/user-systems`,
+    `${devApiUrl}/v1/payitem/limit/${start}/${perPage}`,
+    `${devApiUrl}/v1/payitem`,
     perPage,
     search
   );

@@ -2,8 +2,6 @@ import React from "react";
 
 // Online URL dev
 // export const devApiUrl = "https://hris.frontlinebusiness.com.ph/dev-app/rest";
-<<<<<<< HEAD
-=======
 // export const devBaseImgUrl =
 //   "https://hris.frontlinebusiness.com.ph/dev-app/img";
 // export const devBaseUrl = "https://hris.frontlinebusiness.com.ph/dev-app";
@@ -12,7 +10,7 @@ import React from "react";
 // Local URL dev
 // export const devApiUrl = "http://localhost/react-vite/viter-hris-v3/rest";
 // export const devBaseUrl = "http://localhost/react-vite/viter-hris-v3/public";
->>>>>>> b5f1c62e0cbfec3d2fe6d3f04c8f6dfbc3febf06
+
 // export const devBaseImgUrl =
 //   "https://hris.frontlinebusiness.com.ph/dev-app/img";
 // export const devBaseUrl = "https://hris.frontlinebusiness.com.ph/dev-app";
@@ -25,9 +23,9 @@ export const devBaseImgUrl = "http://localhost/viter-payroll-v2/public/img";
 export const devNavUrl = "/dev-app";
 
 // cy url
-export const devApiUrl = "http://localhost/projects/viter-payroll-v2/rest";
-export const devBaseUrl = "http://localhost/projects/viter-payroll-v2/public";
-export const devNavUrl = "/dev-app";
+// export const devApiUrl = "http://localhost/projects/viter-payroll-v2/rest";
+// export const devBaseUrl = "http://localhost/projects/viter-payroll-v2/public";
+// export const devNavUrl = "/dev-app";
 
 export const UrlAdmin = "admin";
 

@@ -13,10 +13,10 @@ const FilterEarningsList = () => {
   const { store, dispatch } = React.useContext(StoreContext);
 
   const initVal = {
-    sample: "",
-    sample: "",
-    sample: "",
-    sample: "",
+    // sample: "",
+    // sample: "",
+    // sample: "",
+    // sample: "",
   };
 
   const yupSchema = Yup.object({

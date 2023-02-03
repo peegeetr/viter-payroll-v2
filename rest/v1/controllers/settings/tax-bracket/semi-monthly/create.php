@@ -1,4 +1,4 @@
-x<?php
+<?php
 // check database connection
 $conn = null;
 $conn = checkDbConnection();

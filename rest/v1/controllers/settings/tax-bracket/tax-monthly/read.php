@@ -3,17 +3,17 @@
 $conn = null;
 $conn = checkDbConnection();
 // make instance of classes
-$semiMonthly = new SemiMonthly($conn);
+$taxMonthly = new TaxMonthly($conn);
 // get $_GET data
 // check if departmentid is in the url e.g. /department/1
 $error = [];
 $returnData = [];
-if (array_key_exists("semiMonthlyid", $_GET)) {
+if (array_key_exists("taxMonthlyid", $_GET)) {
     // get task id from query string
-    $semiMonthly->semi_monthly_aid  = $_GET['semiMonthlyid'];
+    $taxMonthly->tax_monthly_aid  = $_GET['taxMonthlyid'];
     //check to see if task id in query string is not empty and is number, if not return json error
-    checkId($semiMonthly->semi_monthly_aid );
-    $query = checkReadById($semiMonthly);
+    checkId($taxMonthly->tax_monthly_aid );
+    $query = checkReadById($taxMonthly);
     http_response_code(200);
     $returnData["data"] = getResultData($query);
     $returnData["count"] = $query->rowCount();
@@ -23,7 +23,7 @@ if (array_key_exists("semiMonthlyid", $_GET)) {
 
 // if request is a GET e.g. /department
 if (empty($_GET)) {
-    $query = checkReadAll($semiMonthly);
+    $query = checkReadAll($taxMonthly);
     http_response_code(200);
     $returnData["data"] = getResultData($query);
     $returnData["count"] = $query->rowCount();

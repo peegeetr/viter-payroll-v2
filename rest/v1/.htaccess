@@ -19,11 +19,7 @@ RewriteRule ^roles$ controllers/settings/user/role/role.php [L]
 RewriteRule ^roles/([0-9]+)$ controllers/settings/user/role/role.php?roleid=$1 [L]
 RewriteRule ^roles/active/([0-9]+)$ controllers/settings/user/role/active.php?roleid=$1 [L]
 
-<<<<<<< HEAD
-#SETTINGS RATES
-RewriteRule ^rates$ controllers/settings/rates/rates.php [L]
-RewriteRule ^rates/([0-9]+)$ controllers/settings/rates/rates.php?rateid=$1 [L]
-=======
+
 #paytype
 RewriteRule ^paytype$ controllers/pay-type/paytype.php [L]
 RewriteRule ^paytype/([0-9]+)$ controllers/pay-type/paytype.php?paytypeid=$1 [L]
@@ -34,4 +30,14 @@ RewriteRule ^payitem$ controllers/pay-type/pay-item/payitem.php [L]
 RewriteRule ^payitem/([0-9]+)$ controllers/pay-type/pay-item/payitem.php?payitemid=$1 [L]
 RewriteRule ^payitem/active/([0-9]+)$ controllers/pay-type/pay-item/active.php?payitemid=$1 [L]
  
->>>>>>> b5f1c62e0cbfec3d2fe6d3f04c8f6dfbc3febf06
+#SETTINGS RATES
+RewriteRule ^rates$ controllers/settings/rates/rates.php [L]
+RewriteRule ^rates/([0-9]+)$ controllers/settings/rates/rates.php?rateid=$1 [L]
+
+#SETTINGS SEMI BRACKET
+RewriteRule ^semi-monthly$ controllers/settings/tax-bracket/semi-monthly/semi-monthly.php [L]
+RewriteRule ^semi-monthly/([0-9]+)$ controllers/settings/tax-bracket/semi-monthly/semi-monthly.php?semiMonthlyid=$1  [L]
+
+#SETTINGS TAX BRACKET
+RewriteRule ^tax-monthly$ controllers/settings/tax-bracket/tax-monthly/tax-monthly.php [L]
+RewriteRule ^tax-monthly/([0-9]+)$ controllers/settings/tax-bracket/tax-monthly/tax-monthly.php?taxMonthlyid=$1  [L]

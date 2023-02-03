@@ -8,6 +8,7 @@ import {
   InputText,
   InputTextArea,
 } from "../../../helpers/FormInputs.jsx";
+import { devApiUrl } from "../../../helpers/functions-general.jsx";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner.jsx";
 
 const PhilhealthForm = ({ itemEdit }) => {
@@ -27,7 +28,9 @@ const PhilhealthForm = ({ itemEdit }) => {
             console.log();
             fetchData(
               setLoading,
-              itemEdit ? `/v1/departments ` : "/v1/departments",
+              itemEdit
+                ? `${devApiUrl}/v1/departments`
+                : `${devApiUrl}/v1/departments`,
               values, // form data values
               null, // result set data
               itemEdit ? "Succesfully updated." : "Succesfully added.", // success msg
@@ -47,7 +50,7 @@ const PhilhealthForm = ({ itemEdit }) => {
               <Form>
                 <div className="relative mb-5">
                   <InputText
-                    placeholder="EE Amount"
+                    label="EE Amount"
                     type="text"
                     name="department_name"
                     disabled={loading}
@@ -56,7 +59,7 @@ const PhilhealthForm = ({ itemEdit }) => {
 
                 <div className="relative mb-5">
                   <InputText
-                    placeholder="ER Amount"
+                    label="ER Amount"
                     type="text"
                     name="department_name"
                     disabled={loading}

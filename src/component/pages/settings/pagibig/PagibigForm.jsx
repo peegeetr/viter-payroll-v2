@@ -3,11 +3,8 @@ import React from "react";
 import * as Yup from "yup";
 import { setStartIndex } from "../../../../store/StoreAction.jsx";
 import { StoreContext } from "../../../../store/StoreContext.jsx";
-import {
-  InputSelect,
-  InputText,
-  InputTextArea,
-} from "../../../helpers/FormInputs.jsx";
+import { InputText } from "../../../helpers/FormInputs.jsx";
+import { devApiUrl } from "../../../helpers/functions-general.jsx";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner.jsx";
 
 const PagibigForm = ({ itemEdit }) => {
@@ -27,7 +24,9 @@ const PagibigForm = ({ itemEdit }) => {
             console.log();
             fetchData(
               setLoading,
-              itemEdit ? `/v1/departments ` : "/v1/departments",
+              itemEdit
+                ? `${devApiUrl}/v1/departments`
+                : `${devApiUrl}/v1/departments`,
               values, // form data values
               null, // result set data
               itemEdit ? "Succesfully updated." : "Succesfully added.", // success msg
@@ -47,7 +46,7 @@ const PagibigForm = ({ itemEdit }) => {
               <Form>
                 <div className="relative mb-5">
                   <InputText
-                    placeholder="Percentage"
+                    label="Percentage"
                     type="text"
                     name="department_name"
                     disabled={loading}
@@ -56,7 +55,7 @@ const PagibigForm = ({ itemEdit }) => {
 
                 <div className="relative mb-5">
                   <InputText
-                    placeholder="Min"
+                    label="Min"
                     type="text"
                     name="department_name"
                     disabled={loading}
@@ -65,7 +64,7 @@ const PagibigForm = ({ itemEdit }) => {
 
                 <div className="relative mb-5">
                   <InputText
-                    placeholder="Max"
+                    label="Max"
                     type="text"
                     name="department_name"
                     disabled={loading}

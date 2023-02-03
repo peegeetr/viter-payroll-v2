@@ -1,6 +1,4 @@
 import React from "react";
-import { FaPlusCircle } from "react-icons/fa";
-import { setIsAdd } from "../../../../store/StoreAction.jsx";
 import { StoreContext } from "../../../../store/StoreContext.jsx";
 import BreadCrumbs from "../../../partials/BreadCrumbs.jsx";
 import Footer from "../../../partials/Footer.jsx";

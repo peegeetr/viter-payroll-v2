@@ -7,9 +7,10 @@ import { setIsAdd, setStartIndex } from "../../../../store/StoreAction.jsx";
 import { StoreContext } from "../../../../store/StoreContext.jsx";
 import { fetchData } from "../../../helpers/fetchData.jsx";
 import { InputText } from "../../../helpers/FormInputs.jsx";
+import { devApiUrl } from "../../../helpers/functions-general.jsx";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner.jsx";
 
-const ModalEditRates = ({ itemEdit }) => {
+const ModalEditRates = ({ item }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [loading, setLoading] = React.useState(false);
 
@@ -17,14 +18,14 @@ const ModalEditRates = ({ itemEdit }) => {
     dispatch(setIsAdd(false));
   };
 
-  console.log(itemEdit[0].rates_night_differential);
+  console.log(item.rates_night_differential);
 
   const initVal = {
-    rates_night_differential: itemEdit[0].rates_night_differential,
-    rates_overtime: itemEdit[0].rates_overtime,
-    rates_special_holiday: itemEdit[0].rates_special_holiday,
-    rates_regular_holiday: itemEdit[0].rates_regular_holiday,
-    rates_rest_day: itemEdit[0].rates_rest_day,
+    rates_night_differential: item.rates_night_differential,
+    rates_overtime: item.rates_overtime,
+    rates_special_holiday: item.rates_special_holiday,
+    rates_regular_holiday: item.rates_regular_holiday,
+    rates_rest_day: item.rates_rest_day,
   };
 
   const yupSchema = Yup.object({
@@ -56,7 +57,7 @@ const ModalEditRates = ({ itemEdit }) => {
               onSubmit={async (values, { setSubmitting, resetForm }) => {
                 fetchData(
                   setLoading,
-                  `/v1/rates/${itemEdit[0].rates_aid}`,
+                  `${devApiUrl}/v1/rates/${item.rates_aid}`,
                   values, // form data values
                   null, // result set data
                   "Succesfully updated.", // success msg
@@ -74,41 +75,41 @@ const ModalEditRates = ({ itemEdit }) => {
               {(props) => {
                 return (
                   <Form>
-                    <div className="relative mb-6">
+                    <div className="relative my-5">
                       <InputText
-                        placeholder="Night differential"
+                        label="Night differential"
                         type="text"
                         name="rates_night_differential"
                         disabled={loading}
                       />
                     </div>
-                    <div className="relative mb-6">
+                    <div className="relative mb-5">
                       <InputText
-                        placeholder="Overtime"
+                        label="Overtime"
                         type="text"
                         name="rates_overtime"
                         disabled={loading}
                       />
                     </div>
-                    <div className="relative mb-6">
+                    <div className="relative mb-5">
                       <InputText
-                        placeholder="Special Holiday"
+                        label="Special Holiday"
                         type="text"
                         name="rates_special_holiday"
                         disabled={loading}
                       />
                     </div>
-                    <div className="relative mb-6">
+                    <div className="relative mb-5">
                       <InputText
-                        placeholder="Regular Holiday"
+                        label="Regular Holiday"
                         type="text"
                         name="rates_regular_holiday"
                         disabled={loading}
                       />
                     </div>
-                    <div className="relative mb-6">
+                    <div className="relative mb-5">
                       <InputText
-                        placeholder="Rest Day"
+                        label="Rest Day"
                         type="text"
                         name="rates_rest_day"
                         disabled={loading}

@@ -3,13 +3,14 @@ import { FaEdit } from "react-icons/fa";
 import { setIsAdd } from "../../../../store/StoreAction.jsx";
 import { StoreContext } from "../../../../store/StoreContext.jsx";
 import useLoadRates from "../../../custom-hooks/useLoadRates.jsx";
+import { devApiUrl } from "../../../helpers/functions-general.jsx";
 import NoData from "../../../partials/NoData.jsx";
 import TableSpinner from "../../../partials/spinners/TableSpinner.jsx";
 import ModalEditRate from "./ModalEditRate.jsx";
 
 const RatesList = () => {
   const { store, dispatch } = React.useContext(StoreContext);
-  const { rate, rateLoading } = useLoadRates("/v1/rates", "get");
+  const { rate, rateLoading } = useLoadRates(`${devApiUrl}/v1/rates`, "get");
   const [itemEdit, setItemEdit] = React.useState(null);
 
   const handleEdit = () => {
@@ -32,37 +33,40 @@ const RatesList = () => {
             >
               <FaEdit />
             </button>
-          </div>
-          <div className="text-left grid grid-cols-2 xs:grid-cols-2 mb-5 pl-2">
-            <div className="font-semibold ">
-              <p>Night Differential :</p>
-              <p>Overtime :</p>
-              <p>Special Holiday :</p>
-              <p>Regular Holidays :</p>
-              <p>Rest Day :</p>
-            </div>
-            <div className="pl-2 ">
-              {rate.length > 0 ? (
-                rate.map((item, key) => {
-                  return (
-                    <div key={key}>
+          </div>{" "}
+          {rate.length > 0 ? (
+            rate.map((item, key) => {
+              return (
+                <div
+                  key={key}
+                  className="text-left grid grid-cols-2 xs:grid-cols-2 mb-5 pl-2"
+                >
+                  <div className="font-semibold ">
+                    <p>Night Differential :</p>
+                    <p>Overtime :</p>
+                    <p>Special Holiday :</p>
+                    <p>Regular Holidays :</p>
+                    <p>Rest Day :</p>
+                  </div>
+                  <div className="pl-2 ">
+                    <div>
                       <p>{item.rates_night_differential}%</p>
                       <p>{item.rates_overtime}%</p>
                       <p>{item.rates_special_holiday}%</p>
                       <p>{item.rates_regular_holiday}%</p>
                       <p>{item.rates_rest_day}%</p>
                     </div>
-                  );
-                })
-              ) : (
-                <NoData />
-              )}
-            </div>
-          </div>
+                  </div>{" "}
+                </div>
+              );
+            })
+          ) : (
+            <NoData />
+          )}
         </div>
       </div>
 
-      {store.isAdd && <ModalEditRate itemEdit={itemEdit} />}
+      {store.isAdd && <ModalEditRate item={itemEdit} />}
     </>
   );
 };

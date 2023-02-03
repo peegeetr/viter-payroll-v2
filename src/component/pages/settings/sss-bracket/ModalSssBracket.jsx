@@ -51,8 +51,8 @@ const ModalSssBracket = ({ itemEdit }) => {
                 // fetchData(
                 //   setLoading,
                 //   itemEdit
-                //     ? `/v1/user-others/${itemEdit.user_other_aid}`
-                //     : "/v1/user-others",
+                //     ? `${devApiUrl}/v1/user-others/${itemEdit.user_other_aid}`
+                //     : `${devApiUrl}/v1/user-others`,
                 //   values, // form data values
                 //   null, // result set data
                 //   itemEdit ? "Succesfully updated." : "Succesfully added.", // success msg

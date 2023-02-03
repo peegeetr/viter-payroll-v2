@@ -3,6 +3,7 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 import { setIsAdd, setIsConfirm } from "../../../../store/StoreAction.jsx";
 import { StoreContext } from "../../../../store/StoreContext.jsx";
 import useFetchDataLoadMore from "../../../custom-hooks/useFetchDataLoadMore.jsx";
+import { devApiUrl } from "../../../helpers/functions-general.jsx";
 import Loadmore from "../../../partials/Loadmore.jsx";
 import ModalConfirm from "../../../partials/modals/ModalConfirm.jsx";
 import NoData from "../../../partials/NoData.jsx";
@@ -27,8 +28,8 @@ const SssBracketList = ({ setItemEdit }) => {
     handleSearch,
     handleChange,
   } = useFetchDataLoadMore(
-    `/v1/rates/${start}/${perPage}`,
-    "/v1/rates",
+    `${devApiUrl}/v1/rates/${start}/${perPage}`,
+    `${devApiUrl}/v1/rates`,
     perPage,
     search
   );
@@ -54,7 +55,7 @@ const SssBracketList = ({ setItemEdit }) => {
         loading={loading}
         result={result}
         store={store}
-        url={`/v1/user-systems/search/`}
+        url={`${devApiUrl}/v1/user-systems/search/`}
       />
       <div className="relative text-center overflow-x-auto z-0">
         <table>
@@ -137,9 +138,9 @@ const SssBracketList = ({ setItemEdit }) => {
         <ModalConfirm
           id={id}
           isDel={isDel}
-          mysqlApiArchive={`/v1/user-systems/active/${id}`}
+          mysqlApiArchive={`${devApiUrl}/v1/user-systems/active/${id}`}
           msg={"Are you sure you want to remove this data"}
-          //   item={`"${dataItem.user_system_email}"`}
+          //   item={`${dataItem.user_system_email}`}
           item={""}
         />
       )}

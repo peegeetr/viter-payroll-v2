@@ -2,6 +2,7 @@ import React from "react";
 import { FaArchive, FaEdit, FaTrash } from "react-icons/fa";
 import { setIsAdd, setIsConfirm } from "../../../../../store/StoreAction.jsx";
 import { StoreContext } from "../../../../../store/StoreContext.jsx";
+import { devApiUrl } from "../../../../helpers/functions-general.jsx";
 import ModalConfirm from "../../../../partials/modals/ModalConfirm.jsx";
 import NoData from "../../../../partials/NoData.jsx";
 import ServerError from "../../../../partials/ServerError.jsx";
@@ -92,7 +93,7 @@ const TaxSemiList = ({ setItemEdit, item }) => {
         <ModalConfirm
           id={id}
           isDel={isDel}
-          mysqlApiArchive={`/v1/user-systems/active/${id}`}
+          mysqlApiArchive={`${devApiUrl}/v1/user-systems/active/${id}`}
           msg={"Are you sure you want to remove this data"}
           //   item={`"${dataItem.user_system_email}"`}
           item=""

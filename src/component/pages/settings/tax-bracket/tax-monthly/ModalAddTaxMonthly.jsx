@@ -4,7 +4,9 @@ import { FaTimesCircle } from "react-icons/fa";
 import * as Yup from "yup";
 import { setIsAdd, setStartIndex } from "../../../../../store/StoreAction.jsx";
 import { StoreContext } from "../../../../../store/StoreContext.jsx";
+import { fetchData } from "../../../../helpers/fetchData.jsx";
 import { InputText } from "../../../../helpers/FormInputs.jsx";
+import { devApiUrl } from "../../../../helpers/functions-general.jsx";
 import ButtonSpinner from "../../../../partials/spinners/ButtonSpinner.jsx";
 
 const ModalAddTaxMonthly = ({ itemEdit }) => {
@@ -17,14 +19,21 @@ const ModalAddTaxMonthly = ({ itemEdit }) => {
   };
 
   const initVal = {
-    // user_other_aid: itemEdit ? itemEdit.user_other_aid : "",
-    // user_other_emp_id: itemEdit ? itemEdit.user_other_emp_id : "",
-    // user_other_role_id: itemEdit ? itemEdit.user_other_role_id : "",
-    // user_other_emp_id_old: itemEdit ? itemEdit.user_other_emp_id : "",
+    tax_monthly_range_from: itemEdit ? itemEdit.tax_monthly_range_from : "",
+    tax_monthly_range_to: itemEdit ? itemEdit.tax_monthly_range_to : "",
+    tax_monthly_less_amount: itemEdit ? itemEdit.tax_monthly_less_amount : "",
+    tax_monthly_rate: itemEdit ? itemEdit.tax_monthly_rate : "",
+    tax_monthly_additional_amount: itemEdit
+      ? itemEdit.tax_monthly_additional_amount
+      : "",
   };
 
   const yupSchema = Yup.object({
-    // sample: Yup.string().required("Required"),
+    tax_monthly_range_from: Yup.string().required("Required"),
+    tax_monthly_range_to: Yup.string().required("Required"),
+    tax_monthly_less_amount: Yup.string().required("Required"),
+    tax_monthly_rate: Yup.string().required("Required"),
+    tax_monthly_additional_amount: Yup.string().required("Required"),
   });
 
   return (
@@ -48,22 +57,22 @@ const ModalAddTaxMonthly = ({ itemEdit }) => {
               initialValues={initVal}
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
-                // fetchData(
-                //   setLoading,
-                //   itemEdit
-                //     ? `${devApiUrl}/v1/user-others/${itemEdit.user_other_aid}`
-                //     : `${devApiUrl}/v1/user-others`,
-                //   values, // form data values
-                //   null, // result set data
-                //   itemEdit ? "Succesfully updated." : "Succesfully added.", // success msg
-                //   "", // additional error msg if needed
-                //   dispatch, // context api action
-                //   store, // context api state
-                //   true, // boolean to show success modal
-                //   false, // boolean to show load more functionality button
-                //   null, // navigate default value
-                //   itemEdit ? "put" : "post"
-                // );
+                fetchData(
+                  setLoading,
+                  itemEdit
+                    ? `${devApiUrl}/v1/tax-monthly/${itemEdit.tax_monthly_aid}`
+                    : `${devApiUrl}/v1/tax-monthly`,
+                  values, // form data values
+                  null, // result set data
+                  itemEdit ? "Succesfully updated." : "Succesfully added.", // success msg
+                  "", // additional error msg if needed
+                  dispatch, // context api action
+                  store, // context api state
+                  true, // boolean to show success modal
+                  false, // boolean to show load more functionality button
+                  null, // navigate default value
+                  itemEdit ? "put" : "post"
+                );
                 dispatch(setStartIndex(0));
               }}
             >
@@ -74,7 +83,7 @@ const ModalAddTaxMonthly = ({ itemEdit }) => {
                       <InputText
                         label="Range From"
                         type="text"
-                        name="sample"
+                        name="tax_monthly_range_from"
                         disabled={loading}
                       />
                     </div>
@@ -83,7 +92,7 @@ const ModalAddTaxMonthly = ({ itemEdit }) => {
                       <InputText
                         label="Range To"
                         type="text"
-                        name="sample"
+                        name="tax_monthly_range_to"
                         disabled={loading}
                       />
                     </div>
@@ -92,7 +101,7 @@ const ModalAddTaxMonthly = ({ itemEdit }) => {
                       <InputText
                         label="Less Amount"
                         type="text"
-                        name="sample"
+                        name="tax_monthly_less_amount"
                         disabled={loading}
                       />
                     </div>
@@ -101,7 +110,7 @@ const ModalAddTaxMonthly = ({ itemEdit }) => {
                       <InputText
                         label="Rate %"
                         type="text"
-                        name="sample"
+                        name="tax_monthly_rate"
                         disabled={loading}
                       />
                     </div>
@@ -110,7 +119,7 @@ const ModalAddTaxMonthly = ({ itemEdit }) => {
                       <InputText
                         label="Addt'l Amount"
                         type="text"
-                        name="sample"
+                        name="tax_monthly_additional_amount"
                         disabled={loading}
                       />
                     </div>

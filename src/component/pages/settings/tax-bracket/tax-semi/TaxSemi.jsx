@@ -15,8 +15,6 @@ const TaxSemi = () => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [itemEdit, setItemEdit] = React.useState(null);
 
-  // consoleLog(result);
-
   const handleAdd = () => {
     dispatch(setIsAdd(true));
     setItemEdit(null);

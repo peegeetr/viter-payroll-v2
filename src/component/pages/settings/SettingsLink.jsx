@@ -5,7 +5,7 @@ import Header from "../../partials/Header.jsx";
 import Navigation from "../../partials/Navigation.jsx";
 import PagibigLink from "./pagibig/PagibigLink.jsx";
 import PhilhealthLink from "./philhealth/PhilhealthLink.jsx";
-import RatesLink from "./Rates/RatesLink.jsx";
+import RatesLink from "./rates/RatesLink.jsx";
 import SssBracketLink from "./sss-bracket/SssBracketLink.jsx";
 import TaxBracketLink from "./tax-bracket/TaxBracketLink.jsx";
 import UserLink from "./users/UserLink.jsx";

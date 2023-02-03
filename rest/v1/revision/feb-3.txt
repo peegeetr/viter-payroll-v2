@@ -1,0 +1,29 @@
+*MON
+    =>REST DB-BACKUP 
+        ->rest/db-backup/prv2_settings_rates.sql
+        ->rest/db-backup/prv2_settings_tax_monthly.sql
+        ->rest/db-backup/prv2_settings_semi_monthly.sql
+
+
+    =>REST CONTROLLERS
+               
+        -> SETTINGS
+             -> RATES - ALL FILES
+                - rest/controllers/rates/ 
+
+             -> SEMI-MONTHLY - ALL FILES
+                - rest/controllers/semi-monthly/ 
+
+             -> TAX-MONTHLY - ALL FILES
+                - rest/controllers/tax-monthly/ 
+            
+                
+   =>REST MODELS
+        -> SETTINGS
+             -> RATES - ALL FILES
+                    - rest/models/rates/   
+             -> TAX BRACKET
+                -> SEMI-MONTHLY
+                    - rest/models/tax-bracket/semi-monthly/ 
+                -> TAX-MONTHLY 
+                    - rest/models/tax-bracket/tax-monthly/ 

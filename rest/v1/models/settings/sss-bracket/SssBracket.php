@@ -1,56 +1,57 @@
 <?php
-class Rates
+class SssBracket
 {
-    public $rates_aid;
-    public $rates_active;
-    public $rates_night_differential;
-    public $rates_overtime;
-    public $rates_special_holiday;
-    public $rates_regular_holiday;
-    public $rates_rest_day;
-    public $rates_created;
-    public $rates_datetime;
+    public $sss_bracket_aid ;
+    public $sss_bracket_active;
+    public $sss_bracket_range_from;
+    public $sss_bracket_range_to;
+    public $sss_bracket_er;
+    public $sss_bracket_ee;
+    public $sss_bracket_total;
+    public $sss_bracket_created;
+    public $sss_bracket_datetime;
 
     public $connection;
     public $lastInsertedId;
-    public $tblRates;
+    public $tblSssBracket;
 
     public function __construct($db)
     {
         $this->connection = $db;
-        $this->tblRates = "prv2_settings_rates";
+        $this->tblSssBracket = "prv2_settings_sss_bracket";
     }
 
     public function create()
     {
         try {
-            $sql = "insert into {$this->tblRates} ";
-            $sql .= "( rates_active, ";
-            $sql .= "rates_night_differential, ";
-            $sql .= "rates_overtime, ";
-            $sql .= "rates_special_holiday, ";
-            $sql .= "rates_regular_holiday, ";
-            $sql .= "rates_rest_day, ";
-            $sql .= "rates_created, ";
-            $sql .= "rates_datetime ) values ( ";
-            $sql .= ":rates_active, ";
-            $sql .= ":rates_night_differential, ";
-            $sql .= ":rates_overtime, ";
-            $sql .= ":rates_special_holiday, ";
-            $sql .= ":rates_regular_holiday, ";
-            $sql .= ":rates_rest_day, ";
-            $sql .= ":rates_created, ";
-            $sql .= ":rates_datetime ) ";
+            $sql = "insert into {$this->tblSssBracket} ";
+            $sql .= "( sss_bracket_active, ";
+            $sql .= "sss_bracket_range_from, ";
+            $sql .= "sss_bracket_range_to, ";
+            $sql .= "sss_bracket_er, ";
+            $sql .= "sss_bracket_ee, ";
+            $sql .= "sss_bracket_total, ";
+            $sql .= "sss_bracket_created, ";
+            $sql .= "sss_bracket_datetime ) values ( ";
+            $sql .= ":sss_bracket_active, ";
+            $sql .= ":sss_bracket_range_from, ";
+            $sql .= ":sss_bracket_range_to, ";
+            $sql .= ":sss_bracket_er, ";
+            $sql .= ":sss_bracket_ee, ";
+            $sql .= ":sss_bracket_total, ";
+            $sql .= ":sss_bracket_created, ";
+            $sql .= ":sss_bracket_datetime ) ";
             $query = $this->connection->prepare($sql);
             $query->execute([
-                "rates_active" => $this->rates_active,
-                "rates_night_differential" => $this->rates_night_differential,
-                "rates_overtime" => $this->rates_overtime,
-                "rates_special_holiday" => $this->rates_special_holiday,
-                "rates_regular_holiday" => $this->rates_regular_holiday,
-                "rates_rest_day" => $this->rates_rest_day,
-                "rates_created" => $this->rates_created,
-                "rates_datetime" => $this->rates_datetime,
+                "sss_bracket_active" => $this->sss_bracket_active,
+                "sss_bracket_range_from" => $this->sss_bracket_range_from,
+                "sss_bracket_range_to" => $this->sss_bracket_range_to,
+                "sss_bracket_er" => $this->sss_bracket_er,
+                "sss_bracket_ee" => $this->sss_bracket_ee,
+                "sss_bracket_total" => $this->sss_bracket_total,
+                "sss_bracket_created" => $this->sss_bracket_created,
+                "sss_bracket_datetime" => $this->sss_bracket_datetime,
+                
             ]);
             $this->lastInsertedId = $this->connection->lastInsertId();
         } catch (PDOException $ex) {
@@ -63,7 +64,7 @@ class Rates
     {
         try {
             $sql = "select * ";
-            $sql .= "from {$this->tblRates} ";
+            $sql .= "from {$this->tblSssBracket} ";
             $sql .= "order by rates_active desc ";
             
             $query = $this->connection->query($sql);
@@ -75,7 +76,7 @@ class Rates
 
     public function update() {    
         try {
-            $sql = "update {$this->tblRates} set ";
+            $sql = "update {$this->tblSssBracket} set ";
             $sql .= "rates_night_differential = :rates_night_differential, ";
             $sql .= "rates_overtime = :rates_overtime, ";
             $sql .= "rates_special_holiday = :rates_special_holiday, ";

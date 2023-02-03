@@ -2,20 +2,29 @@ import React from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { setIsAdd, setIsConfirm } from "../../../../../store/StoreAction.jsx";
 import { StoreContext } from "../../../../../store/StoreContext.jsx";
+import useLoadTaxMonthly from "../../../../custom-hooks/useLoadTaxMonthly.jsx";
 import { devApiUrl } from "../../../../helpers/functions-general.jsx";
 import ModalConfirm from "../../../../partials/modals/ModalConfirm.jsx";
 import NoData from "../../../../partials/NoData.jsx";
 import ServerError from "../../../../partials/ServerError.jsx";
+import TableSpinner from "../../../../partials/spinners/TableSpinner.jsx";
 const TaxMonthlyList = ({ setItemEdit, item }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [id, setId] = React.useState(null);
   const [isDel, setDel] = React.useState(false);
   const [dataItem, setData] = React.useState(null);
 
+  const { monthly, monthlyLoading } = useLoadTaxMonthly(
+    `${devApiUrl}/v1/tax-monthly`,
+    "get"
+  );
+
+  let counter = 0;
+
   const handleDelete = (item) => {
     dispatch(setIsConfirm(true));
-    setId(item);
-    setData(dataItem);
+    setId(item.tax_monthly_aid);
+    setData(item);
     setDel(true);
   };
 
@@ -40,49 +49,54 @@ const TaxMonthlyList = ({ setItemEdit, item }) => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1</td>
-              <td>x</td>
-              <td>x</td>
-              <td>x</td>
-              <td>x</td>
-              <td>vvvv</td>
-              <td>
-                <div className="flex items-center gap-3">
-                  <button
-                    type="button"
-                    className="btn-action-table tooltip-action-table"
-                    data-tooltip="Edit"
-                    onClick={() => handleEdit(item)}
-                  >
-                    <FaEdit />
-                  </button>
-                  <button
-                    type="button"
-                    className="btn-action-table tooltip-action-table"
-                    data-tooltip="Delete"
-                    onClick={() => handleDelete(item)}
-                  >
-                    <FaTrash />
-                  </button>
-                </div>
-              </td>
-            </tr>
-
-            <tr className="text-center ">
-              <td colSpan="100%" className="p-10">
-                <ServerError />
-              </td>
-            </tr>
-
-            <tr className="text-center ">
-              <td colSpan="100%" className="p-10">
-                {/* {loading &&  <TableSpinner />} */}
-
-                <NoData />
-              </td>
-            </tr>
-            {/* )} */}
+            {monthly.length > 0 ? (
+              monthly.map((item, key) => {
+                counter++;
+                return (
+                  <tr key={key}>
+                    <td>{counter}</td>
+                    <td>{item.tax_monthly_range_from}</td>
+                    <td>{item.tax_monthly_range_to}</td>
+                    <td>{item.tax_monthly_less_amount}</td>
+                    <td>{item.tax_monthly_rate}</td>
+                    <td>{item.tax_monthly_additional_amount}</td>
+                    <td>
+                      <div className="flex items-center gap-3">
+                        <button
+                          type="button"
+                          className="btn-action-table tooltip-action-table"
+                          data-tooltip="Edit"
+                          onClick={() => handleEdit(item)}
+                        >
+                          <FaEdit />
+                        </button>
+                        <button
+                          type="button"
+                          className="btn-action-table tooltip-action-table"
+                          data-tooltip="Delete"
+                          onClick={() => handleDelete(item)}
+                        >
+                          <FaTrash />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })
+            ) : monthly === -1 ? (
+              <tr className="text-center ">
+                <td colSpan="100%" className="p-10">
+                  <ServerError />
+                </td>
+              </tr>
+            ) : (
+              <tr className="text-center ">
+                <td colSpan="100%" className="p-10">
+                  {monthlyLoading && <TableSpinner />}
+                  <NoData />
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>
@@ -91,10 +105,9 @@ const TaxMonthlyList = ({ setItemEdit, item }) => {
         <ModalConfirm
           id={id}
           isDel={isDel}
-          mysqlApiArchive={`${devApiUrl}/v1/user-systems/active/${id}`}
+          mysqlApiDelete={`${devApiUrl}/v1/tax-monthly/${id}`}
           msg={"Are you sure you want to remove this data"}
-          //   item={`${dataItem.user_system_email}`}
-          item=""
+          item={`${dataItem.tax_monthly_range_from} to ${dataItem.tax_monthly_range_to}`}
         />
       )}
     </>

@@ -121,5 +121,35 @@ class TaxMonthly
         return $query;
     }
 
+    public function checkRangeFrom()
+    {
+        try {
+            $sql = "select tax_monthly_range_from from {$this->tbltaxMonthly} ";
+            $sql .= "where tax_monthly_range_from = :tax_monthly_range_from ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "tax_monthly_range_from" => "{$this->tax_monthly_range_from}",
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    public function checkRangeTo()
+    {
+        try {
+            $sql = "select tax_monthly_range_to from {$this->tbltaxMonthly} ";
+            $sql .= "where tax_monthly_range_to = :tax_monthly_range_to ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "tax_monthly_range_to" => "{$this->tax_monthly_range_to}",
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
 
 }

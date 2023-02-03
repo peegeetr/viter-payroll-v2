@@ -16,7 +16,7 @@ const TaxSemiList = ({ setItemEdit, item }) => {
   const [dataItem, setData] = React.useState(null);
 
   const { semi, semiLoading } = useLoadSemiMonthly(
-    `${devApiUrl}/v1/semi-monthly`,
+    `${devApiUrl}/v1/tax/semi-monthly`,
     "get"
   );
   let counter = 0;

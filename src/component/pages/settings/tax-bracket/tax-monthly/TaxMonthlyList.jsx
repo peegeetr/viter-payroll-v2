@@ -15,7 +15,7 @@ const TaxMonthlyList = ({ setItemEdit, item }) => {
   const [dataItem, setData] = React.useState(null);
 
   const { monthly, monthlyLoading } = useLoadTaxMonthly(
-    `${devApiUrl}/v1/tax-monthly`,
+    `${devApiUrl}/v1/tax/monthly`,
     "get"
   );
 

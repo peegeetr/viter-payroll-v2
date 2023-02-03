@@ -6,6 +6,8 @@ require '../../../../core/header.php';
 require '../../../../core/functions.php';
 // use needed classes
 require '../../../../models/settings/tax-bracket/semi-monthly/SemiMonthly.php';
+
+require './functions.php';
 // get payload
 $body = file_get_contents("php://input");
 $data = json_decode($body, true);

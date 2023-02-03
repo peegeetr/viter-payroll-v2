@@ -5,7 +5,7 @@ $conn = checkDbConnection();
 // make instance of classes
 $semiMonthly = new SemiMonthly($conn);
 // get should not be present
-if (array_key_exists("semiMonthlyid", $_GET)) {
+if (array_key_exists("semimonthlyid", $_GET)) {
     $response->setSuccess(false);
     $error['code'] = "404";
     $error['message'] = "Endpoint not found.";
@@ -24,7 +24,9 @@ $semiMonthly->semi_monthly_active = 1;
 $semiMonthly->semi_monthly_created = date("Y-m-d");
 $semiMonthly->semi_monthly_datetime = date("Y-m-d H:i:s");
 // check name
-// isNameExist($semiMonthly, $semiMonthly->semiMonthly_name);
+isRangeFromExist($semiMonthly, $semiMonthly->semi_monthly_range_from);
+isRangeFromTo($semiMonthly, $semiMonthly->semi_monthly_range_to);
+
 $query = checkCreate($semiMonthly);
 $returnData = [];
 $returnData["data"] = [];

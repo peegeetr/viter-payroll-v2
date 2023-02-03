@@ -8,9 +8,9 @@ $semiMonthly = new SemiMonthly($conn);
 // check if departmentid is in the url e.g. /department/1
 $error = [];
 $returnData = [];
-if (array_key_exists("semiMonthlyid", $_GET)) {
+if (array_key_exists("semimonthlyid", $_GET)) {
     // get task id from query string
-    $semiMonthly->semi_monthly_aid  = $_GET['semiMonthlyid'];
+    $semiMonthly->semi_monthly_aid  = $_GET['semimonthlyid'];
     //check to see if task id in query string is not empty and is number, if not return json error
     checkId($semiMonthly->semi_monthly_aid );
     $query = checkReadById($semiMonthly);

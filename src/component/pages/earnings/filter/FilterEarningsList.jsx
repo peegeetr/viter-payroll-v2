@@ -33,7 +33,8 @@ const FilterEarningsList = () => {
             setLoading,
             item
               ? `${devApiUrl}/v1/paytype/${item.paytype_aid}`
-              : "/v1/paytype",
+              : `${devApiUrl}/v1/paytype`,
+
             values, // form data values
             null, // result set data
             item ? "Succesfully updated." : "Succesfully added.", // success msg

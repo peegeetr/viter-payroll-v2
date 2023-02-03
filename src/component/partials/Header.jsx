@@ -15,10 +15,12 @@ const Header = () => {
   return (
     <>
       <div className="fixed z-30 bg-white w-full flex justify-between items-center h-16 px-3 border-solid border-b-2 border-primary">
-        <div>
-          <FbsLogoSm />
+        <div className="flex items-center">
+          <span className="hidden sm:block">
+            <FbsLogoSm />
+          </span>
+          <h1 className="sm:pl-5">ONLINE PAYROLL</h1>
         </div>
-        <h1 className="text-base p-1 font-bold">PAYROLL SYSTEM</h1>
         <div className="flex justify-between items-center gap-3">
           <FaUserCircle className="w-9 h-9 text-gray-500 hidden md:block" />
           <div className="hidden md:block leading-normal">

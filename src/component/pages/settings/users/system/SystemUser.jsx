@@ -10,6 +10,9 @@ import Header from "../../../../partials/Header";
 import ModalError from "../../../../partials/modals/ModalError";
 import ModalSuccess from "../../../../partials/modals/ModalSuccess";
 import Navigation from "../../../../partials/Navigation";
+import ServerError from "../../../../partials/ServerError";
+import TableSpinner from "../../../../partials/spinners/TableSpinner";
+import { getRoleIdDev } from "../function-users";
 import ModalAddSystemUser from "./ModalAddSystemUser";
 import SystemUserList from "./SystemUserList";
 
@@ -17,7 +20,7 @@ const SystemUser = () => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [itemEdit, setItemEdit] = React.useState(null);
 
-  const { role } = useLoadRole(`${devApiUrl}/v1/roles`, "get");
+  const { role, roleLoading } = useLoadRole(`${devApiUrl}/v1/roles`, "get");
 
   // consoleLog(result);
 
@@ -43,7 +46,14 @@ const SystemUser = () => {
         <hr />
 
         <div className="w-full pt-5 pb-20">
-          <SystemUserList setItemEdit={setItemEdit} />
+          {" "}
+          {roleLoading ? (
+            <TableSpinner />
+          ) : getRoleIdDev(role) === -1 ? (
+            <ServerError />
+          ) : (
+            <SystemUserList setItemEdit={setItemEdit} />
+          )}
         </div>
         <Footer />
       </div>

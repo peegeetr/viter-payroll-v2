@@ -10,16 +10,16 @@ import Header from "../../../../partials/Header";
 import ModalError from "../../../../partials/modals/ModalError";
 import ModalSuccess from "../../../../partials/modals/ModalSuccess";
 import Navigation from "../../../../partials/Navigation";
+import ServerError from "../../../../partials/ServerError";
+import TableSpinner from "../../../../partials/spinners/TableSpinner";
+import { getRoleIdAdmin } from "../function-users";
 import ModalAddOtherUser from "./ModalAddOtherUser";
 import OtherUserList from "./OtherUserList";
 
 const OtherUser = () => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [itemEdit, setItemEdit] = React.useState(null);
-
-  const { role } = useLoadRole(`${devApiUrl}/v1/roles`, "get");
-
-  // consoleLog(result);
+  const { role, roleLoading } = useLoadRole(`${devApiUrl}/v1/roles`, "get");
 
   const handleAdd = () => {
     dispatch(setIsAdd(true));
@@ -43,12 +43,20 @@ const OtherUser = () => {
         <hr />
 
         <div className="w-full pt-5 pb-20">
-          <OtherUserList setItemEdit={setItemEdit} />
+          {roleLoading ? (
+            <TableSpinner />
+          ) : getRoleIdAdmin(role) === -1 ? (
+            <ServerError />
+          ) : (
+            <OtherUserList setItemEdit={setItemEdit} />
+          )}
         </div>
         <Footer />
       </div>
 
-      {store.isAdd && <ModalAddOtherUser itemEdit={itemEdit} role={role} />}
+      {store.isAdd && (
+        <ModalAddOtherUser item={itemEdit} roleId={getRoleIdAdmin(role)} />
+      )}
       {store.success && <ModalSuccess />}
       {store.error && <ModalError />}
     </>

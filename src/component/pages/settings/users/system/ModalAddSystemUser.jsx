@@ -5,11 +5,11 @@ import * as Yup from "yup";
 import { setIsAdd, setStartIndex } from "../../../../../store/StoreAction";
 import { StoreContext } from "../../../../../store/StoreContext";
 import { fetchData } from "../../../../helpers/fetchData";
-import { InputSelect, InputText } from "../../../../helpers/FormInputs";
-import { consoleLog, devApiUrl } from "../../../../helpers/functions-general";
+import { InputText } from "../../../../helpers/FormInputs";
+import { devApiUrl } from "../../../../helpers/functions-general";
 import ButtonSpinner from "../../../../partials/spinners/ButtonSpinner";
 
-const ModalAddSystemUser = ({ itemEdit, role }) => {
+const ModalAddSystemUser = ({ itemEdit, roleId }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [loading, setLoading] = React.useState(false);
 
@@ -18,15 +18,17 @@ const ModalAddSystemUser = ({ itemEdit, role }) => {
   };
 
   const initVal = {
-    user_other_aid: itemEdit ? itemEdit.user_other_aid : "",
-    user_other_emp_id: itemEdit ? itemEdit.user_other_emp_id : "",
-    user_other_role_id: itemEdit ? itemEdit.user_other_role_id : "",
-    user_other_emp_id_old: itemEdit ? itemEdit.user_other_emp_id : "",
+    user_system_name: itemEdit ? itemEdit.user_system_name : "",
+    user_system_email: itemEdit ? itemEdit.user_system_email : "",
+    user_system_role_id: roleId,
+
+    user_system_name_old: itemEdit ? itemEdit.user_system_name : "",
+    user_system_email_old: itemEdit ? itemEdit.user_system_email : "",
   };
 
   const yupSchema = Yup.object({
-    user_other_emp_id: Yup.string().required("Required"),
-    user_other_role_id: Yup.string().required("Required"),
+    user_system_name: Yup.string().required("Required"),
+    user_system_email: Yup.string().required("Required").email("Invalid email"),
   });
 
   return (
@@ -53,7 +55,7 @@ const ModalAddSystemUser = ({ itemEdit, role }) => {
                 fetchData(
                   setLoading,
                   itemEdit
-                    ? `${devApiUrl}/v1/user-others/${itemEdit.user_other_aid}`
+                    ? `${devApiUrl}/v1/user-others/${itemEdit.user_system_aid}`
                     : `${devApiUrl}/v1/user-others`,
                   values, // form data values
                   null, // result set data
@@ -76,7 +78,7 @@ const ModalAddSystemUser = ({ itemEdit, role }) => {
                       <InputText
                         label="Name"
                         type="text"
-                        name="role_name"
+                        name="user_system_name"
                         disabled={loading}
                       />
                     </div>
@@ -84,18 +86,11 @@ const ModalAddSystemUser = ({ itemEdit, role }) => {
                       <InputText
                         label="Email"
                         type="text"
-                        name="role_name"
+                        name="user_system_email"
                         disabled={loading}
                       />
                     </div>
-                    <div className="relative mb-5 mt-5">
-                      <InputText
-                        label="Role"
-                        type="text"
-                        name="role_name"
-                        disabled={loading}
-                      />
-                    </div>
+
                     <div className="flex items-center gap-1 pt-5">
                       <button
                         type="submit"

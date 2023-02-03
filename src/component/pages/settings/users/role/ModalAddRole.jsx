@@ -6,6 +6,7 @@ import { setIsAdd, setStartIndex } from "../../../../../store/StoreAction";
 import { StoreContext } from "../../../../../store/StoreContext";
 import { fetchData } from "../../../../helpers/fetchData";
 import { InputText, InputTextArea } from "../../../../helpers/FormInputs";
+import { devApiUrl } from "../../../../helpers/functions-general";
 import ButtonSpinner from "../../../../partials/spinners/ButtonSpinner";
 
 const ModalAddRole = ({ item }) => {
@@ -53,7 +54,9 @@ const ModalAddRole = ({ item }) => {
                 console.log();
                 fetchData(
                   setLoading,
-                  item ? `/v1/roles/${item.role_aid}` : "/v1/roles",
+                  item
+                    ? `${devApiUrl}/v1/roles/${item.role_aid}`
+                    : `${devApiUrl}/v1/roles`,
                   values, // form data values
                   null, // result set data
                   item ? "Succesfully updated." : "Succesfully added.", // success msg
@@ -71,9 +74,9 @@ const ModalAddRole = ({ item }) => {
               {(props) => {
                 return (
                   <Form>
-                    <div className="relative mb-5">
+                    <div className="relative mb-5 mt-5">
                       <InputText
-                        placeholder="Name"
+                        label="Name"
                         type="text"
                         name="role_name"
                         disabled={loading}
@@ -81,7 +84,7 @@ const ModalAddRole = ({ item }) => {
                     </div>
                     <div className="relative mb-5">
                       <InputTextArea
-                        placeholder="Description"
+                        label="Description"
                         type="text"
                         name="role_description"
                         disabled={loading}

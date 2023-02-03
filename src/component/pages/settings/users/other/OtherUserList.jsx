@@ -7,6 +7,7 @@ import {
 } from "../../../../../store/StoreAction";
 import { StoreContext } from "../../../../../store/StoreContext";
 import useFetchDataLoadMore from "../../../../custom-hooks/useFetchDataLoadMore";
+import { devApiUrl } from "../../../../helpers/functions-general";
 import Loadmore from "../../../../partials/Loadmore";
 import ModalConfirm from "../../../../partials/modals/ModalConfirm";
 import ModalDeleteRestore from "../../../../partials/modals/ModalDeleteRestore";
@@ -35,8 +36,8 @@ const OtherUserList = ({ setItemEdit }) => {
     handleSearch,
     handleChange,
   } = useFetchDataLoadMore(
-    `/v1/user-others/limit/${start}/${perPage}`,
-    "/v1/user-others",
+    `${devApiUrl}/v1/user-others/limit/${start}/${perPage}`,
+    `${devApiUrl}/v1/user-others`,
     perPage,
     search
   );
@@ -187,9 +188,9 @@ const OtherUserList = ({ setItemEdit }) => {
         <ModalConfirm
           id={id}
           isDel={isDel}
-          mysqlApiArchive={`/v1/user-others/active/${id}`}
+          mysqlApiArchive={`${devApiUrl}/v1/user-others/active/${id}`}
           msg={"Are you sure you want to archive this user"}
-          item={`"${dataItem.user_other_email}"`}
+          item={`${dataItem.user_other_email}`}
         />
       )}
 
@@ -197,14 +198,14 @@ const OtherUserList = ({ setItemEdit }) => {
         <ModalDeleteRestore
           id={id}
           isDel={isDel}
-          mysqlApiDelete={`/v1/user-others/${id}`}
-          mysqlApiRestore={`/v1/user-others/active/${id}`}
+          mysqlApiDelete={`${devApiUrl}/v1/user-others/${id}`}
+          mysqlApiRestore={`${devApiUrl}/v1/user-others/active/${id}`}
           msg={
             isDel
               ? "Are you sure you want to delete this user"
               : "Are you sure you want to restore this user"
           }
-          item={`"${dataItem.user_other_email}"`}
+          item={`${dataItem.user_other_email}`}
         />
       )}
     </>

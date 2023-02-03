@@ -2,55 +2,22 @@ import { Form, Formik } from "formik";
 import React from "react";
 import { FaTimesCircle } from "react-icons/fa";
 import * as Yup from "yup";
-import {
-  setIsAdd,
-  setIsSearch,
-  setStartIndex,
-} from "../../../../../store/StoreAction";
+import { setIsAdd, setStartIndex } from "../../../../../store/StoreAction";
 import { StoreContext } from "../../../../../store/StoreContext";
-import fetchApi from "../../../../helpers/fetchApi";
 import { fetchData } from "../../../../helpers/fetchData";
-import { InputSelect, InputText } from "../../../../helpers/FormInputs";
-import { consoleLog, devApiUrl } from "../../../../helpers/functions-general";
+import {
+  InputSelect,
+  InputText,
+  InputTextArea,
+} from "../../../../helpers/FormInputs";
 import ButtonSpinner from "../../../../partials/spinners/ButtonSpinner";
 
 const ModalAddOtherUser = ({ itemEdit, role }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [loading, setLoading] = React.useState(false);
-  const [data, setData] = React.useState([]);
-  const [isSearch, setIsSearch] = React.useState(false);
-  const [addsearch, setaddSearch] = React.useState("");
-  const search = React.useRef(null);
 
   const handleClose = () => {
     dispatch(setIsAdd(false));
-  };
-
-  const handleSearchChange = async (e) => {
-    if (e.target.value.trim() === "") {
-      setaddSearch("");
-      setIsSearch(false);
-      return;
-    }
-    // setLoading(true);
-    setIsSearch(true);
-    setaddSearch(e.target.value);
-    const data = await fetchApi(
-      devApiUrl + "/v1/departments/search/",
-      { search: e.target.value },
-      dispatch
-    );
-    if (typeof data === "undefined") {
-      return;
-    }
-    if (!data.status) {
-      setData([]);
-      setIsSearch(false);
-      return;
-    }
-    if (data.status) {
-      setData(data.data);
-    }
   };
 
   const initVal = {
@@ -108,53 +75,29 @@ const ModalAddOtherUser = ({ itemEdit, role }) => {
               {(props) => {
                 return (
                   <Form>
-                    <div className="relative mb-6">
-                      {/* <InputText
-                        placeholder="Search employee"
+                    <div className="relative mb-5 mt-5">
+                      <InputText
+                        label="Name"
                         type="text"
-                        name="user_other_emp_id"
+                        name="role_name"
                         disabled={loading}
-                        onChange={handleSearchChange}
-                        value={addsearch}
-                      /> */}
-                      <input
-                        type="text"
-                        placeholder="Search employee"
-                        disabled={loading}
-                        onChange={handleSearchChange}
-                        value={addsearch}
                       />
-                      <ul className="absolute w-full z-10 overflow-y-scroll ">
-                        <li className="bg-gray-200 cursor-pointer hover:bg-gray-300 p-1 border-t-0 border-r-0 border-l-0 border-b border-gray-300 rounded-bl-none rounded-br-none">
-                          Merin, Mark Ryan
-                        </li>
-                        <li className="bg-gray-200 cursor-pointer hover:bg-gray-300 p-1 border-t-0 border-r-0 border-l-0 border-b border-gray-300 rounded-bl-none rounded-br-none">
-                          Merin, Mark Ryan
-                        </li>
-                      </ul>
                     </div>
-                    <div className="relative mb-5">
-                      <InputSelect
-                        placeholder="Role"
-                        name="useother_role_id"
+                    <div className="relative mb-5 mt-5">
+                      <InputText
+                        label="Email"
+                        type="text"
+                        name="role_name"
                         disabled={loading}
-                      >
-                        <>
-                          <optgroup label="Select role">
-                            {role.length > 0 ? (
-                              role.map((item, key) => {
-                                return (
-                                  <option key={key} value={item.role_aid}>
-                                    {item.role_name}
-                                  </option>
-                                );
-                              })
-                            ) : (
-                              <option value="">No Data</option>
-                            )}
-                          </optgroup>
-                        </>
-                      </InputSelect>
+                      />
+                    </div>
+                    <div className="relative mb-5 mt-5">
+                      <InputText
+                        label="Role"
+                        type="text"
+                        name="role_name"
+                        disabled={loading}
+                      />
                     </div>
 
                     <div className="flex items-center gap-1 pt-5">
@@ -163,13 +106,8 @@ const ModalAddOtherUser = ({ itemEdit, role }) => {
                         disabled={loading || !props.dirty}
                         className="btn-modal-submit relative"
                       >
-                        {loading ? (
-                          <ButtonSpinner />
-                        ) : itemEdit ? (
-                          "Save"
-                        ) : (
-                          "Add"
-                        )}
+                        {loading && <ButtonSpinner />}
+                        {itemEdit ? "Save" : "Add"}
                       </button>
                       <button
                         type="reset"

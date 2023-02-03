@@ -43,7 +43,9 @@ export const fetchData = async (
 ) => {
   setLoading !== null && setLoading(true);
 
-  const data = await fetchApi(devApiUrl + endpoint, fd, dispatch, method);
+  // const data = await fetchApi(devApiUrl + endpoint, fd, dispatch, method);
+  const data = await fetchApi(endpoint, fd, dispatch, method);
+
   consoleLog(data);
 
   // if result data is undefined or false

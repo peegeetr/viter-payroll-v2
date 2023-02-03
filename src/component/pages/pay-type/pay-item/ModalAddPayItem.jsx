@@ -6,7 +6,7 @@ import { setIsAdd, setStartIndex } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
 import { fetchData } from "../../../helpers/fetchData";
 import { InputText } from "../../../helpers/FormInputs";
-import { getUrlParam } from "../../../helpers/functions-general";
+import { devApiUrl, getUrlParam } from "../../../helpers/functions-general";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 
 const ModalAddPayItem = ({ item }) => {
@@ -19,7 +19,6 @@ const ModalAddPayItem = ({ item }) => {
   };
 
   const initVal = {
-    payitem_aid: item ? item.payitem_aid : "",
     payitem_name: item ? item.payitem_name : "",
     payitem_paytype_id: paytypeid,
 
@@ -53,7 +52,9 @@ const ModalAddPayItem = ({ item }) => {
               onSubmit={async (values, { setSubmitting, resetForm }) => {
                 fetchData(
                   setLoading,
-                  item ? `/v1/payitem/${item.payitem_aid}` : "/v1/payitem",
+                  item
+                    ? `${devApiUrl}/v1/payitem//${item.payitem_aid}`
+                    : `${devApiUrl}/v1/payitem`,
                   values, // form data values
                   null, // result set data
                   item ? "Succesfully updated." : "Succesfully added.", // success msg
@@ -71,9 +72,9 @@ const ModalAddPayItem = ({ item }) => {
               {(props) => {
                 return (
                   <Form>
-                    <div className="relative mb-5">
+                    <div className="relative mb-5 mt-5">
                       <InputText
-                        placeholder="Name"
+                        label="Name"
                         type="text"
                         name="payitem_name"
                         disabled={loading}

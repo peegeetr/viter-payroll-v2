@@ -1,16 +1,14 @@
 import React from "react";
-import {
-  FaArchive,
-  FaEdit,
-  FaHistory,
-  FaTrash,
-  FaUserCircle,
-} from "react-icons/fa";
+import { FaEdit, FaUserCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { setIsConfirm, setIsRestore } from "../../../store/StoreAction";
 import { StoreContext } from "../../../store/StoreContext";
 import useFetchDataLoadMore from "../../custom-hooks/useFetchDataLoadMore";
-import { devNavUrl, UrlAdmin } from "../../helpers/functions-general";
+import {
+  devNavUrl,
+  hrisDevApiUrl,
+  UrlAdmin,
+} from "../../helpers/functions-general";
 import Loadmore from "../../partials/Loadmore";
 import ModalConfirm from "../../partials/modals/ModalConfirm";
 import ModalDeleteRestore from "../../partials/modals/ModalDeleteRestore";
@@ -21,7 +19,7 @@ import TableSpinner from "../../partials/spinners/TableSpinner";
 import StatusActive from "../../partials/status/StatusActive";
 import StatusInactive from "../../partials/status/StatusInactive";
 
-const EmployeeList = ({ setItemEdit }) => {
+const EmployeeList = () => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [dataItem, setData] = React.useState(null);
   const [id, setId] = React.useState(null);
@@ -39,8 +37,8 @@ const EmployeeList = ({ setItemEdit }) => {
     handleSearch,
     handleChange,
   } = useFetchDataLoadMore(
-    `/v1/employees/limit/${start}/${perPage}`,
-    "/v1/employees",
+    `${hrisDevApiUrl}/v1/employees/limit/${start}/${perPage}`,
+    `${hrisDevApiUrl}/v1/employees`,
     perPage,
     search
   );
@@ -211,7 +209,7 @@ const EmployeeList = ({ setItemEdit }) => {
         <ModalConfirm
           id={id}
           isDel={isDel}
-          mysqlApiArchive={`/v1/employees/active/${id}`}
+          mysqlApiArchive={`${hrisDevApiUrl}/v1/employees/active/${id}`}
           msg={"Are you sure you want to archive this employee"}
           item={`"${dataItem.employee_lname}, ${dataItem.employee_fname}"`}
         />
@@ -221,8 +219,8 @@ const EmployeeList = ({ setItemEdit }) => {
         <ModalDeleteRestore
           id={id}
           isDel={isDel}
-          mysqlApiDelete={`/v1/employees/${id}`}
-          mysqlApiRestore={`/v1/employees/active/${id}`}
+          mysqlApiDelete={`${hrisDevApiUrl}/v1/employees/${id}`}
+          mysqlApiRestore={`${hrisDevApiUrl}/v1/employees/active/${id}`}
           msg={
             isDel
               ? "Are you sure you want to delete this employee"

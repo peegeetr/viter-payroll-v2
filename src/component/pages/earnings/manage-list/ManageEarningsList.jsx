@@ -6,6 +6,7 @@ import {
   setIsRestore,
 } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
+import { devApiUrl } from "../../../helpers/functions-general";
 import ModalConfirm from "../../../partials/modals/ModalConfirm";
 import ModalDeleteRestore from "../../../partials/modals/ModalDeleteRestore";
 import NoData from "../../../partials/NoData";
@@ -144,9 +145,9 @@ const ManageEarningsList = ({ setItemEdit, handleSearch }) => {
         <ModalConfirm
           id={id}
           isDel={isDel}
-          mysqlApiArchive={`/v1/user-systems/active/${id}`}
+          mysqlApiArchive={`${devApiUrl}/v1/user-systems/active/${id}`}
           msg={"Are you sure you want to archive this user"}
-          item={`"${dataItem.user_system_email}"`}
+          item={`${dataItem.user_system_email}`}
         />
       )}
 
@@ -154,14 +155,14 @@ const ManageEarningsList = ({ setItemEdit, handleSearch }) => {
         <ModalDeleteRestore
           id={id}
           isDel={isDel}
-          mysqlApiDelete={`/v1/user-systems/${id}`}
-          mysqlApiRestore={`/v1/user-systems/active/${id}`}
+          mysqlApiDelete={`${devApiUrl}/v1/user-systems/${id}`}
+          mysqlApiRestore={`${devApiUrl}/v1/user-systems/active/${id}`}
           msg={
             isDel
               ? "Are you sure you want to delete this user"
               : "Are you sure you want to restore this user"
           }
-          item={`"${dataItem.user_system_email}"`}
+          item={`${dataItem.user_system_email}`}
         />
       )}
     </>

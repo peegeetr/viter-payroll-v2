@@ -44,6 +44,11 @@
   select {
     @apply border border-solid border-gray-300 p-2 rounded-lg w-full;
   }
+
+  label {
+    @apply text-xs text-primary transform -translate-y-6 -translate-x-2 absolute left-3 top-4 px-1 bg-white z-10;
+  }
+
   textarea {
     @apply block border border-solid border-gray-300 p-2 rounded-lg w-full h-28;
   }

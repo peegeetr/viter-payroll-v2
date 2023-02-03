@@ -19,7 +19,6 @@ RewriteRule ^roles$ controllers/settings/user/role/role.php [L]
 RewriteRule ^roles/([0-9]+)$ controllers/settings/user/role/role.php?roleid=$1 [L]
 RewriteRule ^roles/active/([0-9]+)$ controllers/settings/user/role/active.php?roleid=$1 [L]
 
-
 #paytype
 RewriteRule ^paytype$ controllers/pay-type/paytype.php [L]
 RewriteRule ^paytype/([0-9]+)$ controllers/pay-type/paytype.php?paytypeid=$1 [L]

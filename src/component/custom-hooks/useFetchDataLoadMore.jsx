@@ -40,7 +40,7 @@ const useFetchDataLoadMore = (url, url2, perPage, search) => {
     dispatch(setStartIndex(store.startIndex + perPage));
 
     // get total result of data
-    const result = await fetchApi(devApiUrl + url2, {});
+    const result = await fetchApi(url2, {});
 
     consoleLog(result);
 

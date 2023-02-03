@@ -6,7 +6,9 @@ import useLoadDepartment from "../../../custom-hooks/useLoadDepartment";
 import useLoadEmployee from "../../../custom-hooks/useLoadEmployee";
 import useLoadJobTitle from "../../../custom-hooks/useLoadJobTitle";
 import {
+  formatDate,
   getUrlParam,
+  hrisDevApiUrl,
   numberWithCommas,
 } from "../../../helpers/functions-general";
 import NoData from "../../../partials/NoData";
@@ -23,13 +25,16 @@ const JobDetailsList = () => {
   const eid = getUrlParam().get("employeeid");
 
   const { employee, employeeLoading } = useLoadEmployee(
-    `/v1/employees/job/${eid}`,
+    `${hrisDevApiUrl}/v1/employees/job/${eid}`,
     "get"
   );
 
-  const { jobTitle } = useLoadJobTitle("/v1/job-titles", "get");
+  const { jobTitle } = useLoadJobTitle(`${hrisDevApiUrl}/v1/job-titles`, "get");
 
-  const { department } = useLoadDepartment("/v1/departments", "get");
+  const { department } = useLoadDepartment(
+    `${hrisDevApiUrl}/v1/departments`,
+    "get"
+  );
 
   const handleEdit = (item) => {
     dispatch(setIsAdd(true));

@@ -23,12 +23,13 @@ export const InputText = ({ label, ...props }) => {
   const [field, meta] = useField(props);
   return (
     <>
-      <label htmlFor={props.id || props.name}>{label}</label>
       <input
         {...field}
         {...props}
         className={meta.touched && meta.error ? "error-show" : null}
       />
+      <label htmlFor={props.id || props.name}>{label}</label>
+
       {meta.touched && meta.error ? (
         <span className="error-show">{meta.error}</span>
       ) : null}

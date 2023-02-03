@@ -6,6 +6,7 @@ import { setIsAdd } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
 import { fetchData } from "../../../helpers/fetchData";
 import { InputSelect, InputText } from "../../../helpers/FormInputs";
+import { devApiUrl } from "../../../helpers/functions-general";
 
 const ModalAddManageEarnings = ({ itemEdit }) => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -42,7 +43,8 @@ const ModalAddManageEarnings = ({ itemEdit }) => {
               <FaTimesCircle />
             </button>
           </div>
-          <div className="bg-white p-4 rounded-b-2xl">
+
+          <div className="bg-white rounded-b-2xl overflow-hidden">
             <Formik
               initialValues={initVal}
               validationSchema={yupSchema}
@@ -50,8 +52,8 @@ const ModalAddManageEarnings = ({ itemEdit }) => {
                 fetchData(
                   setLoading,
                   itemEdit
-                    ? `/v1/user-others/${itemEdit.user_other_aid}`
-                    : "/v1/user-others",
+                    ? `${devApiUrl}/v1/user-others/${itemEdit.user_other_aid}`
+                    : `${devApiUrl}/v1/user-others`,
                   values, // form data values
                   null, // result set data
                   itemEdit ? "Succesfully updated." : "Succesfully added.", // success msg
@@ -69,141 +71,130 @@ const ModalAddManageEarnings = ({ itemEdit }) => {
               {(props) => {
                 return (
                   <Form>
-                    <div
-                      className="relative mb-5 placeholder"
-                      data-label="Employee"
-                    >
-                      <InputSelect
-                        name="sample"
-                        //  disabled={!loading}
-                        onFocus={(e) =>
-                          e.target.parentElement.classList.add("focused")
-                        }
-                      >
-                        <optgroup label="Employee">
-                          <option value=""> -- </option>
-                          <option value="all">All</option>
-                          <option value="sample">Lumabas, Cyrene M.</option>
-                        </optgroup>
-                      </InputSelect>
-                    </div>
+                    <div className="max-h-[28rem] overflow-y-scroll p-4">
+                      <div className="relative mb-5 mt-2">
+                        <InputSelect
+                          label="Employee"
+                          name="sample"
+                          //  disabled={!loading}
+                          onFocus={(e) =>
+                            e.target.parentElement.classList.add("focused")
+                          }
+                        >
+                          <optgroup label="Employee">
+                            <option value="" hidden></option>
+                            <option value="all">All</option>
+                            <option value="sample">Lumabas, Cyrene M.</option>
+                          </optgroup>
+                        </InputSelect>
+                      </div>
 
-                    <div
-                      className="relative mb-5 placeholder"
-                      data-label="Pay Type"
-                    >
-                      <InputSelect
-                        name="sample"
-                        //  disabled={!loading}
-                        onFocus={(e) =>
-                          e.target.parentElement.classList.add("focused")
-                        }
-                      >
-                        <optgroup label="Pay Type">
-                          <option value=""> -- </option>
-                          <option value="sample">Wages</option>
-                          <option value="sample">de minimis</option>
-                        </optgroup>
-                      </InputSelect>
-                    </div>
+                      <div className="relative mb-5 ">
+                        <InputSelect
+                          name="sample"
+                          label="Pay Type"
+                          //  disabled={!loading}
+                          onFocus={(e) =>
+                            e.target.parentElement.classList.add("focused")
+                          }
+                        >
+                          <optgroup label="Pay Type">
+                            <option value="" hidden></option>
+                            <option value="sample">Wages</option>
+                            <option value="sample">de minimis</option>
+                          </optgroup>
+                        </InputSelect>
+                      </div>
 
-                    <div
-                      className="relative mb-5 placeholder"
-                      data-label="Pay Item"
-                    >
-                      <InputSelect
-                        name="sample"
-                        //  disabled={!loading}
-                        onFocus={(e) =>
-                          e.target.parentElement.classList.add("focused")
-                        }
-                      >
-                        <optgroup label="Pay Item">
-                          <option value=""> -- </option>
-                          <option value="sample">Adjustment</option>
-                          <option value="sample">de minimis</option>
-                        </optgroup>
-                      </InputSelect>
-                    </div>
+                      <div className="relative mb-5 ">
+                        <InputSelect
+                          label="Pay Item"
+                          name="sample"
+                          //  disabled={!loading}
+                          onFocus={(e) =>
+                            e.target.parentElement.classList.add("focused")
+                          }
+                        >
+                          <optgroup label="Pay Item">
+                            <option value="" hidden></option>
+                            <option value="sample">Adjustment</option>
+                            <option value="sample">de minimis</option>
+                          </optgroup>
+                        </InputSelect>
+                      </div>
 
-                    <div className="relative mb-5">
-                      <InputText
-                        placeholder="Amount"
-                        type="text"
-                        name="sample"
-                        disabled={loading}
-                      />
-                    </div>
+                      <div className="relative mb-5">
+                        <InputText
+                          label="Amount"
+                          type="text"
+                          name="sample"
+                          disabled={loading}
+                        />
+                      </div>
 
-                    <div
-                      className="relative mb-5 placeholder"
-                      data-label="Frequency"
-                    >
-                      <InputSelect
-                        name="sample"
-                        //  disabled={!loading}
-                        onFocus={(e) =>
-                          e.target.parentElement.classList.add("focused")
-                        }
-                      >
-                        <optgroup label="Frequency">
-                          <option value=""> -- </option>
-                          <option value="1">Semi-monthly</option>
-                          <option value="0">Monthly</option>
-                        </optgroup>
-                      </InputSelect>
-                    </div>
+                      <div className="relative mb-5">
+                        <InputSelect
+                          name="sample"
+                          label="Frequency"
+                          //  disabled={!loading}
+                          onFocus={(e) =>
+                            e.target.parentElement.classList.add("focused")
+                          }
+                        >
+                          <optgroup label="Frequency">
+                            <option value="" hidden></option>
+                            <option value="1">Semi-monthly</option>
+                            <option value="0">Monthly</option>
+                          </optgroup>
+                        </InputSelect>
+                      </div>
 
-                    <div className="relative mb-5">
-                      <InputText
-                        placeholder="No. of installment"
-                        type="text"
-                        name="sample"
-                        disabled={loading}
-                      />
-                    </div>
+                      <div className="relative mb-5">
+                        <InputText
+                          label="No. of installment"
+                          type="text"
+                          name="sample"
+                          disabled={loading}
+                        />
+                      </div>
 
-                    <div className="relative mb-5">
-                      <InputText
-                        placeholder="Start Date"
-                        type="text"
-                        onFocus={(e) => (e.target.type = "date")}
-                        onBlur={(e) => (e.target.type = "date")}
-                        name="sample"
-                        disabled={loading}
-                      />
+                      <div className="relative mb-5">
+                        <InputText
+                          label="Start Date"
+                          type="text"
+                          onFocus={(e) => (e.target.type = "date")}
+                          onBlur={(e) => (e.target.type = "date")}
+                          name="sample"
+                          disabled={loading}
+                        />
+                      </div>
+                      <div className="relative mb-5">
+                        <InputText
+                          label="End Date"
+                          type="text"
+                          onFocus={(e) => (e.target.type = "date")}
+                          onBlur={(e) => (e.target.type = "date")}
+                          name="sample"
+                          disabled={loading}
+                        />
+                      </div>
+                      <div className="relative mb-5">
+                        <InputText
+                          label="Note"
+                          type="text"
+                          name="sample"
+                          disabled={loading}
+                        />
+                      </div>
                     </div>
-                    <div className="relative mb-5">
-                      <InputText
-                        placeholder="End Date"
-                        type="text"
-                        onFocus={(e) => (e.target.type = "date")}
-                        onBlur={(e) => (e.target.type = "date")}
-                        name="sample"
-                        disabled={loading}
-                      />
-                    </div>
-                    <div className="relative mb-5">
-                      <InputText
-                        placeholder="Note"
-                        type="text"
-                        name="sample"
-                        disabled={loading}
-                      />
-                    </div>
-                    <div className="flex items-center gap-1 pt-5">
+                    <div className="flex items-center gap-1 p-4 ">
                       <button
                         type="submit"
                         disabled={loading || !props.dirty}
                         className="btn-modal-submit relative"
                       >
-                        {loading ? (
-                          <ButtonSpinner />
-                        ) : itemEdit ? (
-                          "Save"
-                        ) : (
-                          "Add"
-                        )}
+                        {loading && <ButtonSpinner />}
+                        {itemEdit ? "Save" : "Add"}
                       </button>
                       <button
                         type="reset"

@@ -10,6 +10,7 @@ import {
   InputText,
   InputTextArea,
 } from "../../helpers/FormInputs";
+import { devApiUrl } from "../../helpers/functions-general";
 import ButtonSpinner from "../../partials/spinners/ButtonSpinner";
 
 const ModalAddHolidays = ({ item }) => {
@@ -58,7 +59,9 @@ const ModalAddHolidays = ({ item }) => {
               onSubmit={async (values, { setSubmitting, resetForm }) => {
                 fetchData(
                   setLoading,
-                  item ? `/v1/paytype/${item.paytype_aid}` : "/v1/paytype",
+                  item
+                    ? `${devApiUrl}/v1/paytype/${item.paytype_aid}`
+                    : `${devApiUrl}/v1/paytype`,
                   values, // form data values
                   null, // result set data
                   item ? "Succesfully updated." : "Succesfully added.", // success msg
@@ -76,9 +79,9 @@ const ModalAddHolidays = ({ item }) => {
               {(props) => {
                 return (
                   <Form>
-                    <div className="relative mb-5">
+                    <div className="relative mb-5 mt-5">
                       <InputText
-                        placeholder="Holiday"
+                        label="Holiday"
                         type="text"
                         name="paytype_name"
                         disabled={loading}
@@ -86,7 +89,7 @@ const ModalAddHolidays = ({ item }) => {
                     </div>
                     <div className="relative mb-5">
                       <InputText
-                        placeholder="Date"
+                        label="Date"
                         type="text"
                         onFocus={(e) => (e.target.type = "date")}
                         onBlur={(e) => (e.target.type = "text")}
@@ -94,14 +97,10 @@ const ModalAddHolidays = ({ item }) => {
                         disabled={loading}
                       />
                     </div>
-                    <div
-                      className={
-                        item ? "relative mb-5 " : "relative mb-5 placeholder"
-                      }
-                      data-label="Type"
-                    >
+                    <div className="relative mb-5">
                       <InputSelect
                         name="paytype_name"
+                        label="Type"
                         disabled={loading}
                         onFocus={(e) =>
                           e.target.parentElement.classList.add("focused")
@@ -116,7 +115,7 @@ const ModalAddHolidays = ({ item }) => {
                     </div>
                     <div className="relative mb-5">
                       <InputText
-                        placeholder="Rate"
+                        label="Rate"
                         type="text"
                         name="paytype_name"
                         disabled={loading}

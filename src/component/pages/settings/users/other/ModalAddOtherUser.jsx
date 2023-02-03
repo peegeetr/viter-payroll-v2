@@ -2,55 +2,18 @@ import { Form, Formik } from "formik";
 import React from "react";
 import { FaTimesCircle } from "react-icons/fa";
 import * as Yup from "yup";
-import {
-  setIsAdd,
-  setIsSearch,
-  setStartIndex,
-} from "../../../../../store/StoreAction";
+import { setIsAdd, setStartIndex } from "../../../../../store/StoreAction";
 import { StoreContext } from "../../../../../store/StoreContext";
-import fetchApi from "../../../../helpers/fetchApi";
 import { fetchData } from "../../../../helpers/fetchData";
-import { InputSelect, InputText } from "../../../../helpers/FormInputs";
-import { consoleLog, devApiUrl } from "../../../../helpers/functions-general";
+import { InputSelect } from "../../../../helpers/FormInputs";
 import ButtonSpinner from "../../../../partials/spinners/ButtonSpinner";
 
 const ModalAddOtherUser = ({ itemEdit, role }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [loading, setLoading] = React.useState(false);
-  const [data, setData] = React.useState([]);
-  const [isSearch, setIsSearch] = React.useState(false);
-  const [addsearch, setaddSearch] = React.useState("");
-  const search = React.useRef(null);
 
   const handleClose = () => {
     dispatch(setIsAdd(false));
-  };
-
-  const handleSearchChange = async (e) => {
-    if (e.target.value.trim() === "") {
-      setaddSearch("");
-      setIsSearch(false);
-      return;
-    }
-    // setLoading(true);
-    setIsSearch(true);
-    setaddSearch(e.target.value);
-    const data = await fetchApi(
-      devApiUrl + "/v1/departments/search/",
-      { search: e.target.value },
-      dispatch
-    );
-    if (typeof data === "undefined") {
-      return;
-    }
-    if (!data.status) {
-      setData([]);
-      setIsSearch(false);
-      return;
-    }
-    if (data.status) {
-      setData(data.data);
-    }
   };
 
   const initVal = {
@@ -109,20 +72,10 @@ const ModalAddOtherUser = ({ itemEdit, role }) => {
                 return (
                   <Form>
                     <div className="relative mb-6">
-                      {/* <InputText
-                        placeholder="Search employee"
-                        type="text"
-                        name="user_other_emp_id"
-                        disabled={loading}
-                        onChange={handleSearchChange}
-                        value={addsearch}
-                      /> */}
                       <input
                         type="text"
                         placeholder="Search employee"
                         disabled={loading}
-                        onChange={handleSearchChange}
-                        value={addsearch}
                       />
                       <ul className="absolute w-full z-10 overflow-y-scroll ">
                         <li className="bg-gray-200 cursor-pointer hover:bg-gray-300 p-1 border-t-0 border-r-0 border-l-0 border-b border-gray-300 rounded-bl-none rounded-br-none">

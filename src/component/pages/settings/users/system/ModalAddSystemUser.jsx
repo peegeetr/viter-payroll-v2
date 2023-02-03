@@ -6,7 +6,7 @@ import { setIsAdd, setStartIndex } from "../../../../../store/StoreAction";
 import { StoreContext } from "../../../../../store/StoreContext";
 import { fetchData } from "../../../../helpers/fetchData";
 import { InputSelect, InputText } from "../../../../helpers/FormInputs";
-import { consoleLog } from "../../../../helpers/functions-general";
+import { consoleLog, devApiUrl } from "../../../../helpers/functions-general";
 import ButtonSpinner from "../../../../partials/spinners/ButtonSpinner";
 
 const ModalAddSystemUser = ({ itemEdit, role }) => {
@@ -18,18 +18,15 @@ const ModalAddSystemUser = ({ itemEdit, role }) => {
   };
 
   const initVal = {
-    user_system_aid: itemEdit ? itemEdit.user_system_aid : "",
-    user_system_fname: itemEdit ? itemEdit.user_system_fname : "",
-    user_system_lname: itemEdit ? itemEdit.user_system_lname : "",
-    user_system_email: itemEdit ? itemEdit.user_system_email : "",
-    user_system_role_id: itemEdit ? itemEdit.user_system_role_id : "",
-    user_system_email_old: itemEdit ? itemEdit.user_system_email : "",
+    user_other_aid: itemEdit ? itemEdit.user_other_aid : "",
+    user_other_emp_id: itemEdit ? itemEdit.user_other_emp_id : "",
+    user_other_role_id: itemEdit ? itemEdit.user_other_role_id : "",
+    user_other_emp_id_old: itemEdit ? itemEdit.user_other_emp_id : "",
   };
 
   const yupSchema = Yup.object({
-    user_system_fname: Yup.string().required("Required"),
-    user_system_lname: Yup.string().required("Required"),
-    user_system_email: Yup.string().required("Required").email("Invalid email"),
+    user_other_emp_id: Yup.string().required("Required"),
+    user_other_role_id: Yup.string().required("Required"),
   });
 
   return (
@@ -56,8 +53,8 @@ const ModalAddSystemUser = ({ itemEdit, role }) => {
                 fetchData(
                   setLoading,
                   itemEdit
-                    ? `/v1/user-systems/${itemEdit.user_system_aid}`
-                    : "/v1/user-systems",
+                    ? `${devApiUrl}/v1/user-others/${itemEdit.user_other_aid}`
+                    : `${devApiUrl}/v1/user-others`,
                   values, // form data values
                   null, // result set data
                   itemEdit ? "Succesfully updated." : "Succesfully added.", // success msg
@@ -73,58 +70,43 @@ const ModalAddSystemUser = ({ itemEdit, role }) => {
               }}
             >
               {(props) => {
-                role.length > 0 &&
-                  role.map((item) => {
-                    if (item.role_is_developer === 1) {
-                      props.values.user_system_role_id = item.role_aid;
-                    }
-                  });
                 return (
                   <Form>
                     <div className="relative mb-6">
-                      <InputText
-                        placeholder="First name"
+                      <input
                         type="text"
-                        name="user_system_fname"
+                        placeholder="Search employee"
                         disabled={loading}
                       />
-                    </div>
-                    <div className="relative mb-6">
-                      <InputText
-                        placeholder="Last name"
-                        type="text"
-                        name="user_system_lname"
-                        disabled={loading}
-                      />
-                    </div>
-                    <div className="relative mb-6">
-                      <InputText
-                        placeholder="Email"
-                        type="text"
-                        name="user_system_email"
-                        disabled={loading}
-                      />
+                      <ul className="absolute w-full z-10 overflow-y-scroll ">
+                        <li className="bg-gray-200 cursor-pointer hover:bg-gray-300 p-1 border-t-0 border-r-0 border-l-0 border-b border-gray-300 rounded-bl-none rounded-br-none">
+                          Merin, Mark Ryan
+                        </li>
+                        <li className="bg-gray-200 cursor-pointer hover:bg-gray-300 p-1 border-t-0 border-r-0 border-l-0 border-b border-gray-300 rounded-bl-none rounded-br-none">
+                          Merin, Mark Ryan
+                        </li>
+                      </ul>
                     </div>
                     <div className="relative mb-5">
                       <InputSelect
                         placeholder="Role"
-                        name="user_system_role_id"
+                        name="useother_role_id"
                         disabled={loading}
                       >
                         <>
-                          {role.length > 0 ? (
-                            role.map((item, key) => {
-                              return (
-                                item.role_is_developer === 1 && (
+                          <optgroup label="Select role">
+                            {role.length > 0 ? (
+                              role.map((item, key) => {
+                                return (
                                   <option key={key} value={item.role_aid}>
                                     {item.role_name}
                                   </option>
-                                )
-                              );
-                            })
-                          ) : (
-                            <option value="">No Data</option>
-                          )}
+                                );
+                              })
+                            ) : (
+                              <option value="">No Data</option>
+                            )}
+                          </optgroup>
                         </>
                       </InputSelect>
                     </div>
@@ -145,7 +127,7 @@ const ModalAddSystemUser = ({ itemEdit, role }) => {
                       </button>
                       <button
                         type="reset"
-                        className="btn-modal-cancel"
+                        className="btn-modal-cancel cursor-pointer"
                         onClick={handleClose}
                         disabled={loading}
                       >

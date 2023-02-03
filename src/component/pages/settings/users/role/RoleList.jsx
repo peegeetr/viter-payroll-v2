@@ -7,6 +7,7 @@ import {
 } from "../../../../../store/StoreAction";
 import { StoreContext } from "../../../../../store/StoreContext";
 import useLoadRole from "../../../../custom-hooks/useLoadRole";
+import { devApiUrl } from "../../../../helpers/functions-general";
 import ModalConfirm from "../../../../partials/modals/ModalConfirm";
 import ModalDeleteRestore from "../../../../partials/modals/ModalDeleteRestore";
 import NoData from "../../../../partials/NoData";
@@ -22,7 +23,7 @@ const RoleList = ({ setItemEdit }) => {
   const [isDel, setDel] = React.useState(false);
   let counter = 0;
 
-  const { role, roleLoading } = useLoadRole("/v1/roles", "get");
+  const { role, roleLoading } = useLoadRole(`${devApiUrl}/v1/roles`, "get");
 
   const handleEdit = (item) => {
     dispatch(setIsAdd(true));
@@ -147,7 +148,7 @@ const RoleList = ({ setItemEdit }) => {
         <ModalConfirm
           id={id}
           isDel={isDel}
-          mysqlApiArchive={`/v1/roles/active/${id}`}
+          mysqlApiArchive={`${devApiUrl}/v1/roles/active/${id}`}
           msg={"Are you sure you want to archive this role"}
           item={`${dataItem.role_name}`}
         />
@@ -157,8 +158,8 @@ const RoleList = ({ setItemEdit }) => {
         <ModalDeleteRestore
           id={id}
           isDel={isDel}
-          mysqlApiDelete={`/v1/roles/${id}`}
-          mysqlApiRestore={`/v1/roles/active/${id}`}
+          mysqlApiDelete={`${devApiUrl}/v1/roles/${id}`}
+          mysqlApiRestore={`${devApiUrl}/v1/roles/active/${id}`}
           msg={
             isDel
               ? "Are you sure you want to delete this role"

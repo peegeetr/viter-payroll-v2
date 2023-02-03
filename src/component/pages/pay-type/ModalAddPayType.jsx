@@ -10,6 +10,7 @@ import {
   InputText,
   InputTextArea,
 } from "../../helpers/FormInputs";
+import { devApiUrl } from "../../helpers/functions-general";
 import ButtonSpinner from "../../partials/spinners/ButtonSpinner";
 
 const ModalAddPayType = ({ item }) => {
@@ -58,7 +59,9 @@ const ModalAddPayType = ({ item }) => {
               onSubmit={async (values, { setSubmitting, resetForm }) => {
                 fetchData(
                   setLoading,
-                  item ? `/v1/paytype/${item.paytype_aid}` : "/v1/paytype",
+                  item
+                    ? `${devApiUrl}/v1/paytype/${item.paytype_aid}`
+                    : `${devApiUrl}/v1/paytype`,
                   values, // form data values
                   null, // result set data
                   item ? "Succesfully updated." : "Succesfully added.", // success msg

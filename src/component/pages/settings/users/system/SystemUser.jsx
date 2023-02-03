@@ -3,6 +3,7 @@ import { FaPlusCircle } from "react-icons/fa";
 import { setIsAdd } from "../../../../../store/StoreAction";
 import { StoreContext } from "../../../../../store/StoreContext";
 import useLoadRole from "../../../../custom-hooks/useLoadRole";
+import { devApiUrl } from "../../../../helpers/functions-general";
 import BreadCrumbs from "../../../../partials/BreadCrumbs";
 import Footer from "../../../../partials/Footer";
 import Header from "../../../../partials/Header";
@@ -16,7 +17,7 @@ const SystemUser = () => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [itemEdit, setItemEdit] = React.useState(null);
 
-  const { role } = useLoadRole("/v1/roles", "get");
+  const { role } = useLoadRole(`${devApiUrl}/v1/roles`, "get");
 
   // consoleLog(result);
 

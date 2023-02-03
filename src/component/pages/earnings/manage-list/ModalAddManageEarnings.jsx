@@ -6,6 +6,7 @@ import { setIsAdd } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
 import { fetchData } from "../../../helpers/fetchData";
 import { InputSelect, InputText } from "../../../helpers/FormInputs";
+import { devApiUrl } from "../../../helpers/functions-general";
 
 const ModalAddManageEarnings = ({ itemEdit }) => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -50,8 +51,8 @@ const ModalAddManageEarnings = ({ itemEdit }) => {
                 fetchData(
                   setLoading,
                   itemEdit
-                    ? `/v1/user-others/${itemEdit.user_other_aid}`
-                    : "/v1/user-others",
+                    ? `${devApiUrl}/v1/user-others/${itemEdit.user_other_aid}`
+                    : `${devApiUrl}/v1/user-others`,
                   values, // form data values
                   null, // result set data
                   itemEdit ? "Succesfully updated." : "Succesfully added.", // success msg

@@ -16,7 +16,11 @@ import {
 } from "../../../store/StoreAction";
 import { StoreContext } from "../../../store/StoreContext";
 import useLoadPayType from "../../custom-hooks/useLoadPayType";
-import { devNavUrl, UrlAdmin } from "../../helpers/functions-general";
+import {
+  devApiUrl,
+  devNavUrl,
+  UrlAdmin,
+} from "../../helpers/functions-general";
 import ModalConfirm from "../../partials/modals/ModalConfirm";
 import ModalDeleteRestore from "../../partials/modals/ModalDeleteRestore";
 import NoData from "../../partials/NoData";
@@ -31,7 +35,10 @@ const PayTypeLink = ({ setItemEdit }) => {
   const [id, setId] = React.useState(null);
   const [isDel, setDel] = React.useState(false);
 
-  const { payType, payTypeLoading } = useLoadPayType("/v1/paytype", "get");
+  const { payType, payTypeLoading } = useLoadPayType(
+    `${devApiUrl}/v1/paytype`,
+    "get"
+  );
 
   const handleEdit = (item) => {
     dispatch(setIsAdd(true));
@@ -180,7 +187,7 @@ const PayTypeLink = ({ setItemEdit }) => {
         <ModalConfirm
           id={id}
           isDel={isDel}
-          mysqlApiArchive={`/v1/paytype/active/${id}`}
+          mysqlApiArchive={`${devApiUrl}/v1/paytype/active/${id}`}
           msg={"Are you sure you want to archive "}
           item={`${dataItem.paytype_name}`}
         />
@@ -190,8 +197,8 @@ const PayTypeLink = ({ setItemEdit }) => {
         <ModalDeleteRestore
           id={id}
           isDel={isDel}
-          mysqlApiDelete={`/v1/paytype/${id}`}
-          mysqlApiRestore={`/v1/paytype/active/${id}`}
+          mysqlApiDelete={`${devApiUrl}/v1/paytype/${id}`}
+          mysqlApiRestore={`${devApiUrl}/v1/paytype/active/${id}`}
           msg={
             isDel
               ? "Are you sure you want to delete "

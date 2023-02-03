@@ -10,6 +10,7 @@ import {
   InputText,
   InputTextArea,
 } from "../../../helpers/FormInputs";
+import { hrisDevApiUrl } from "../../../helpers/functions-general";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 
 const ModalEditJobDetails = ({ itemEdit, jobTitle, department }) => {
@@ -74,7 +75,7 @@ const ModalEditJobDetails = ({ itemEdit, jobTitle, department }) => {
                 console.log();
                 fetchData(
                   setLoading,
-                  `/v1/employees/employment/${itemEdit.employee_aid}`,
+                  `${hrisDevApiUrl}/v1/employees/employment/${itemEdit.employee_aid}`,
                   values, // form data values
                   null, // result set data
                   "Succesfully updated.", // success msg

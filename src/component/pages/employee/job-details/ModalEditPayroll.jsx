@@ -15,6 +15,7 @@ import {
   InputTextArea,
   MyCheckbox,
 } from "../../../helpers/FormInputs";
+import { hrisDevApiUrl } from "../../../helpers/functions-general";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 
 const ModalEditPayroll = ({ itemEdit }) => {
@@ -81,7 +82,7 @@ const ModalEditPayroll = ({ itemEdit }) => {
                   console.log(values);
                   fetchData(
                     setLoading,
-                    `/v1/employees/payroll/${itemEdit.employee_aid}`,
+                    `${hrisDevApiUrl}/v1/employees/payroll/${itemEdit.employee_aid}`,
                     values, // form data values
                     null, // result set data
                     "Succesfully updated.", // success msg

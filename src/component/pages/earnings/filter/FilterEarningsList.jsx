@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import { StoreContext } from "../../../../store/StoreContext";
 import { fetchData } from "../../../helpers/fetchData";
 import { InputSelect, InputText } from "../../../helpers/FormInputs";
+import { devApiUrl } from "../../../helpers/functions-general";
 import NoData from "../../../partials/NoData";
 import ServerError from "../../../partials/ServerError";
 import StatusActive from "../../../partials/status/StatusActive";
@@ -30,7 +31,9 @@ const FilterEarningsList = () => {
         onSubmit={async (values, { setSubmitting, resetForm }) => {
           fetchData(
             setLoading,
-            item ? `/v1/paytype/${item.paytype_aid}` : "/v1/paytype",
+            item
+              ? `${devApiUrl}/v1/paytype/${item.paytype_aid}`
+              : "/v1/paytype",
             values, // form data values
             null, // result set data
             item ? "Succesfully updated." : "Succesfully added.", // success msg

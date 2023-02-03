@@ -14,6 +14,7 @@ import {
 import { StoreContext } from "../../../../store/StoreContext";
 import useLoadPayItem from "../../../custom-hooks/useLoadPayItem";
 import {
+  devApiUrl,
   devNavUrl,
   getUrlParam,
   UrlAdmin,
@@ -35,7 +36,7 @@ const PayItemList = ({ setItemEdit }) => {
   const paytypeid = getUrlParam().get("paytypeid");
 
   const { payItem, payItemLoading } = useLoadPayItem(
-    `/v1/paytype/${paytypeid}`,
+    `${devApiUrl}/v1/paytype/${paytypeid}`,
     "get"
   );
 
@@ -154,7 +155,7 @@ const PayItemList = ({ setItemEdit }) => {
         <ModalConfirm
           id={id}
           isDel={isDel}
-          mysqlApiArchive={`/v1/payitem/active/${id}`}
+          mysqlApiArchive={`${devApiUrl}/v1/payitem/active/${id}`}
           msg={"Are you sure you want to archive "}
           item={`${dataItem.payitem_name}`}
         />
@@ -164,8 +165,8 @@ const PayItemList = ({ setItemEdit }) => {
         <ModalDeleteRestore
           id={id}
           isDel={isDel}
-          mysqlApiDelete={`/v1/payitem/${id}`}
-          mysqlApiRestore={`/v1/payitem/active/${id}`}
+          mysqlApiDelete={`${devApiUrl}/v1/payitem/${id}`}
+          mysqlApiRestore={`${devApiUrl}/v1/payitem/active/${id}`}
           msg={
             isDel
               ? "Are you sure you want to delete "

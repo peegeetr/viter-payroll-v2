@@ -30,9 +30,9 @@ export const hrisdevNavUrl = "/dev-app";
 // export const devNavUrl = "/dev-app";
 
 // cy url
-// export const devApiUrl = "http://localhost/projects/viter-payroll-v2/rest";
-// export const devBaseUrl = "http://localhost/projects/viter-payroll-v2/public";
-// export const devNavUrl = "/dev-app";
+export const devApiUrl = "http://localhost/projects/viter-payroll-v2/rest";
+export const devBaseUrl = "http://localhost/projects/viter-payroll-v2/public";
+export const devNavUrl = "/dev-app";
 
 export const UrlAdmin = "admin";
 

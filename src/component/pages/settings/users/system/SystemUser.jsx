@@ -58,7 +58,9 @@ const SystemUser = () => {
         <Footer />
       </div>
 
-      {store.isAdd && <ModalAddSystemUser itemEdit={itemEdit} role={role} />}
+      {store.isAdd && (
+        <ModalAddSystemUser item={itemEdit} roleId={getRoleIdDev(role)} />
+      )}
       {store.success && <ModalSuccess />}
       {store.error && <ModalError />}
     </>

@@ -166,6 +166,7 @@ const RoleList = ({ setItemEdit }) => {
               : "Are you sure you want to restore this role"
           }
           item={`${dataItem.role_name}`}
+          isDeveloper={`${dataItem.role_is_developer}`}
         />
       )}
     </>

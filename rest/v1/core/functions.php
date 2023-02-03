@@ -303,6 +303,14 @@ function checkExistence($count, $msg = "")
     }
 }
   
+// check association for other user
+function isUseOtherAssociated($object)
+{
+    $query = $object->checkOtherAssociation();
+    $count = $query->rowCount();
+    checkExistence($count, "You cannot delete this item because it is already associated with other module.");
+}
+  
 // check association
 function isAssociated($object)
 {

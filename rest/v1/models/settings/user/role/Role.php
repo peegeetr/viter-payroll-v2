@@ -11,11 +11,15 @@ class Role
     public $connection;
     public $lastInsertedId;
     public $tblRole;
+    public $tblUserSystem;
+    public $tblUserOther;
 
     public function __construct($db)
     {
         $this->connection = $db;
         $this->tblRole = "prv2_settings_role";
+        $this->tblUserSystem = "prv2_settings_user_system";
+        $this->tblUserOther = "prv2_settings_user_other";
     }
 
     // create
@@ -216,4 +220,37 @@ class Role
         }
         return $query;
     }
+
+    // association
+    public function checkAssociation()
+    {
+        try {
+            $sql = "select user_system_role_id from {$this->tblUserSystem} "; 
+            $sql .= "where user_system_role_id = :role_aid "; 
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "role_aid" => "{$this->role_aid}",
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    // association
+    public function checkOtherAssociation()
+    {
+        try {
+            $sql = "select user_other_role_id from {$this->tblUserOther} "; 
+            $sql .= "where user_other_role_id = :role_aid "; 
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "role_aid" => "{$this->role_aid}",
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
 }

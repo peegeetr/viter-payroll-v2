@@ -24,6 +24,7 @@ if (array_key_exists("userotherid", $_GET)) {
     checkId($user_other->user_other_aid);
     // check name
     compareName($user_other, $user_other_name_old, $user_other->user_other_name);
+    // check email
     compareEmail($user_other, $user_other_email_old, $user_other->user_other_email);
     // update
     $query = checkUpdate($user_other);

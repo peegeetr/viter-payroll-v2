@@ -9,7 +9,7 @@ import { InputText } from "../../../../helpers/FormInputs";
 import { devApiUrl } from "../../../../helpers/functions-general";
 import ButtonSpinner from "../../../../partials/spinners/ButtonSpinner";
 
-const ModalAddSystemUser = ({ itemEdit, roleId }) => {
+const ModalAddSystemUser = ({ item, roleId }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [loading, setLoading] = React.useState(false);
 
@@ -18,12 +18,12 @@ const ModalAddSystemUser = ({ itemEdit, roleId }) => {
   };
 
   const initVal = {
-    user_system_name: itemEdit ? itemEdit.user_system_name : "",
-    user_system_email: itemEdit ? itemEdit.user_system_email : "",
+    user_system_name: item ? item.user_system_name : "",
+    user_system_email: item ? item.user_system_email : "",
     user_system_role_id: roleId,
 
-    user_system_name_old: itemEdit ? itemEdit.user_system_name : "",
-    user_system_email_old: itemEdit ? itemEdit.user_system_email : "",
+    user_system_name_old: item ? item.user_system_name : "",
+    user_system_email_old: item ? item.user_system_email : "",
   };
 
   const yupSchema = Yup.object({
@@ -37,7 +37,7 @@ const ModalAddSystemUser = ({ itemEdit, roleId }) => {
         <div className="p-1 w-[350px] rounded-b-2xl">
           <div className="flex justify-between items-center bg-primary p-3 rounded-t-2xl">
             <h3 className="text-white text-sm">
-              {itemEdit ? "Update" : "Add"} user
+              {item ? "Update" : "Add"} user
             </h3>
             <button
               type="button"
@@ -54,19 +54,19 @@ const ModalAddSystemUser = ({ itemEdit, roleId }) => {
               onSubmit={async (values, { setSubmitting, resetForm }) => {
                 fetchData(
                   setLoading,
-                  itemEdit
-                    ? `${devApiUrl}/v1/user-others/${itemEdit.user_system_aid}`
-                    : `${devApiUrl}/v1/user-others`,
+                  item
+                    ? `${devApiUrl}/v1/user-systems/${item.user_system_aid}`
+                    : `${devApiUrl}/v1/user-systems`,
                   values, // form data values
                   null, // result set data
-                  itemEdit ? "Succesfully updated." : "Succesfully added.", // success msg
+                  item ? "Succesfully updated." : "Succesfully added.", // success msg
                   "", // additional error msg if needed
                   dispatch, // context api action
                   store, // context api state
                   true, // boolean to show success modal
                   false, // boolean to show load more functionality button
                   null, // navigate default value
-                  itemEdit ? "put" : "post"
+                  item ? "put" : "post"
                 );
                 dispatch(setStartIndex(0));
               }}
@@ -97,13 +97,7 @@ const ModalAddSystemUser = ({ itemEdit, roleId }) => {
                         disabled={loading || !props.dirty}
                         className="btn-modal-submit relative"
                       >
-                        {loading ? (
-                          <ButtonSpinner />
-                        ) : itemEdit ? (
-                          "Save"
-                        ) : (
-                          "Add"
-                        )}
+                        {loading ? <ButtonSpinner /> : item ? "Save" : "Add"}
                       </button>
                       <button
                         type="reset"

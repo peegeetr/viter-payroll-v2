@@ -3,7 +3,6 @@ import { FaQuestionCircle, FaTimesCircle } from "react-icons/fa";
 import { setIsRestore, setStartIndex } from "../../../store/StoreAction";
 import { StoreContext } from "../../../store/StoreContext";
 import { fetchData } from "../../helpers/fetchData";
-import { consoleLog } from "../../helpers/functions-general";
 import ButtonSpinner from "../spinners/ButtonSpinner";
 
 const ModalDeleteRestore = ({
@@ -13,6 +12,7 @@ const ModalDeleteRestore = ({
   mysqlApiRestore,
   msg,
   item,
+  isDeveloper,
 }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [loading, setLoading] = React.useState(false);
@@ -28,7 +28,7 @@ const ModalDeleteRestore = ({
     fetchData(
       setLoading,
       isDel ? mysqlApiDelete : mysqlApiRestore,
-      { isActive: 1, column_name: item },
+      { isActive: 1, column_name: item, isDeveloper: isDeveloper },
       null,
       "",
       "",

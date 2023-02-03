@@ -1,5 +1,6 @@
 import React from "react";
-import { FaArchive, FaEdit, FaHistory, FaTrash } from "react-icons/fa";
+import { FaEdit, FaHistory, FaTrash, FaUserSlash } from "react-icons/fa";
+import { MdPassword } from "react-icons/md";
 import {
   setIsAdd,
   setIsConfirm,
@@ -33,15 +34,15 @@ const SystemUserList = ({ setItemEdit }) => {
     setItemEdit(item);
   };
 
-  const handleArchive = (item) => {
+  const handleReset = (item) => {
     dispatch(setIsConfirm(true));
     setId(item.user_system_aid);
     setData(item);
-    setDel(null);
+    setDel(true);
   };
 
-  const handleRestore = (item) => {
-    dispatch(setIsRestore(true));
+  const handleSuspend = (item) => {
+    dispatch(setIsConfirm(true));
     setId(item.user_system_aid);
     setData(item);
     setDel(null);
@@ -54,6 +55,13 @@ const SystemUserList = ({ setItemEdit }) => {
     setDel(true);
   };
 
+  const handleRestore = (item) => {
+    dispatch(setIsRestore(true));
+    setId(item.user_system_aid);
+    setData(item);
+    setDel(null);
+  };
+
   return (
     <>
       <div className="relative text-center overflow-x-auto z-0">
@@ -61,9 +69,9 @@ const SystemUserList = ({ setItemEdit }) => {
           <thead>
             <tr>
               <th>#</th>
-              <th className="w-[15rem]">Name</th>
+              <th className="w-[10rem]">Name</th>
               <th className="w-[25rem]">Email</th>
-              <th className="w-[10rem]">Role</th>
+              <th className="w-[8rem]">Role</th>
               <th>Status</th>
               <th>Actions</th>
             </tr>
@@ -100,10 +108,18 @@ const SystemUserList = ({ setItemEdit }) => {
                             <button
                               type="button"
                               className="btn-action-table tooltip-action-table"
-                              data-tooltip="Archive"
-                              onClick={() => handleArchive(item)}
+                              data-tooltip="Reset"
+                              onClick={() => handleReset(item)}
                             >
-                              <FaArchive />
+                              <MdPassword />
+                            </button>
+                            <button
+                              type="button"
+                              className="btn-action-table tooltip-action-table"
+                              data-tooltip="Suspend"
+                              onClick={() => handleSuspend(item)}
+                            >
+                              <FaUserSlash />
                             </button>
                           </>
                         ) : (
@@ -153,8 +169,13 @@ const SystemUserList = ({ setItemEdit }) => {
         <ModalConfirm
           id={id}
           isDel={isDel}
+          mysqlApiReset={`${devApiUrl}/v1/user-systems/reset/${id}`}
           mysqlApiArchive={`${devApiUrl}/v1/user-systems/active/${id}`}
-          msg={"Are you sure you want to archive this user"}
+          msg={
+            isDel
+              ? "Are you sure you want to reset "
+              : "Are you sure you want to archive "
+          }
           item={`${dataItem.user_system_email}`}
         />
       )}
@@ -167,8 +188,8 @@ const SystemUserList = ({ setItemEdit }) => {
           mysqlApiRestore={`${devApiUrl}/v1/user-systems/active/${id}`}
           msg={
             isDel
-              ? "Are you sure you want to delete this user"
-              : "Are you sure you want to restore this user"
+              ? "Are you sure you want to delete "
+              : "Are you sure you want to restore "
           }
           item={`${dataItem.user_system_email}`}
         />

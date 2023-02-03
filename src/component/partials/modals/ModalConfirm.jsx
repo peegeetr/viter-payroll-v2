@@ -10,7 +10,7 @@ import ButtonSpinner from "../spinners/ButtonSpinner";
 const ModalConfirm = ({
   id,
   isDel,
-  mysqlApiDelete,
+  mysqlApiReset,
   mysqlApiArchive,
   msg,
   item,
@@ -41,14 +41,14 @@ const ModalConfirm = ({
     setLoading(true);
     fetchData(
       setLoading,
-      isDel ? mysqlApiDelete : mysqlApiArchive,
-      { isActive: 0 },
+      isDel ? mysqlApiReset : mysqlApiArchive,
+      { isActive: 0, email: item },
       null,
-      "",
+      isDel ? "Please check your email to continue resetting password." : "",
       "",
       dispatch,
       store,
-      false,
+      isDel ? true : false,
       false,
       null,
       isDel ? "delete" : "put"

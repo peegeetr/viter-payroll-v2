@@ -1,5 +1,6 @@
 import React from "react";
-import { FaArchive, FaEdit, FaHistory, FaTrash } from "react-icons/fa";
+import { FaEdit, FaHistory, FaTrash, FaUserSlash } from "react-icons/fa";
+import { MdPassword } from "react-icons/md";
 import {
   setIsAdd,
   setIsConfirm,
@@ -38,6 +39,13 @@ const OtherUserList = ({ setItemEdit }) => {
     setId(item.user_other_aid);
     setData(item);
     setDel(null);
+  };
+
+  const handleReset = (item) => {
+    dispatch(setIsConfirm(true));
+    setId(item.user_other_aid);
+    setData(item);
+    setDel(true);
   };
 
   const handleRestore = (item) => {
@@ -100,10 +108,18 @@ const OtherUserList = ({ setItemEdit }) => {
                             <button
                               type="button"
                               className="btn-action-table tooltip-action-table"
+                              data-tooltip="Reset"
+                              onClick={() => handleReset(item)}
+                            >
+                              <MdPassword />
+                            </button>
+                            <button
+                              type="button"
+                              className="btn-action-table tooltip-action-table"
                               data-tooltip="Archive"
                               onClick={() => handleArchive(item)}
                             >
-                              <FaArchive />
+                              <FaUserSlash />
                             </button>
                           </>
                         ) : (
@@ -153,6 +169,7 @@ const OtherUserList = ({ setItemEdit }) => {
         <ModalConfirm
           id={id}
           isDel={isDel}
+          mysqlApiReset={`${devApiUrl}/v1/user-others/reset/${id}`}
           mysqlApiArchive={`${devApiUrl}/v1/user-others/active/${id}`}
           msg={"Are you sure you want to archive this user"}
           item={`${dataItem.user_other_email}`}

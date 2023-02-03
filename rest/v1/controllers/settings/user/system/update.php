@@ -21,9 +21,7 @@ if (array_key_exists("usersystemid", $_GET)) {
     $user_system_name_old = strtolower($data["user_system_name_old"]);
     $user_system_email_old = strtolower($data["user_system_email_old"]);
     //check to see if task id in query string is not empty and is number, if not return json error
-    checkId($user_system->user_system_aid);
-    // check name
-    compareName($user_system, $user_system_name_old, $user_system->user_system_name);
+    checkId($user_system->user_system_aid); 
     // check email
     compareEmail($user_system, $user_system_email_old, $user_system->user_system_email);
     // update

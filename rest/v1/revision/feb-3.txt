@@ -47,14 +47,12 @@
 
              -> ROLE
                 - rest/controllers/settings/role/delete.php
+                - rest/controllers/settings/role/functions.php
+                - rest/controllers/settings/role/role.php
   
              -> SYSTEM - ALL FILES
                 - rest/controllers/settings/system/
-  
-        
-    =>REST CORE 
-        -> rest/core/function.php
-  
+    
                 
    =>REST MODELS
         -> SETTINGS

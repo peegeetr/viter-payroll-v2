@@ -222,7 +222,7 @@ class Role
     }
 
     // association
-    public function checkAssociation()
+    public function checkUserSystemAssociation()
     {
         try {
             $sql = "select user_system_role_id from {$this->tblUserSystem} "; 
@@ -238,7 +238,7 @@ class Role
     }
 
     // association
-    public function checkOtherAssociation()
+    public function checkUserOtherAssociation()
     {
         try {
             $sql = "select user_other_role_id from {$this->tblUserOther} "; 

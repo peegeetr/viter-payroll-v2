@@ -23,6 +23,8 @@ const ModalAddTaxMonthly = ({ itemEdit }) => {
     tax_monthly_range_to: itemEdit ? itemEdit.tax_monthly_range_to : "",
     tax_monthly_less_amount: itemEdit ? itemEdit.tax_monthly_less_amount : "",
     tax_monthly_rate: itemEdit ? itemEdit.tax_monthly_rate : "",
+    tax_monthly_range_from_old: itemEdit ? itemEdit.tax_monthly_range_from : "",
+    tax_monthly_range_to_old: itemEdit ? itemEdit.tax_monthly_range_to : "",
     tax_monthly_additional_amount: itemEdit
       ? itemEdit.tax_monthly_additional_amount
       : "",
@@ -60,8 +62,8 @@ const ModalAddTaxMonthly = ({ itemEdit }) => {
                 fetchData(
                   setLoading,
                   itemEdit
-                    ? `${devApiUrl}/v1/tax-monthly/${itemEdit.tax_monthly_aid}`
-                    : `${devApiUrl}/v1/tax-monthly`,
+                    ? `${devApiUrl}/v1/tax/monthly/${itemEdit.tax_monthly_aid}`
+                    : `${devApiUrl}/v1/tax/monthly`,
                   values, // form data values
                   null, // result set data
                   itemEdit ? "Succesfully updated." : "Succesfully added.", // success msg

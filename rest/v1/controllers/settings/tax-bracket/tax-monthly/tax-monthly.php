@@ -6,6 +6,10 @@ require '../../../../core/header.php';
 require '../../../../core/functions.php';
 // use needed classes
 require '../../../../models/settings/tax-bracket/tax-monthly/TaxMonthly.php';
+// custom function
+require './functions.php';
+
+
 // get payload
 $body = file_get_contents("php://input");
 $data = json_decode($body, true);

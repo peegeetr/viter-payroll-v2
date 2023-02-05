@@ -34,12 +34,12 @@ RewriteRule ^rates$ controllers/settings/rates/rates.php [L]
 RewriteRule ^rates/([0-9]+)$ controllers/settings/rates/rates.php?rateid=$1 [L]
 
 #SETTINGS SEMI BRACKET
-RewriteRule ^semi-monthly$ controllers/settings/tax-bracket/semi-monthly/semi-monthly.php [L]
-RewriteRule ^semi-monthly/([0-9]+)$ controllers/settings/tax-bracket/semi-monthly/semi-monthly.php?semiMonthlyid=$1  [L]
+RewriteRule ^tax/semi-monthly$ controllers/settings/tax-bracket/semi-monthly/semi-monthly.php [L]
+RewriteRule ^tax/semi-monthly/([0-9]+)$ controllers/settings/tax-bracket/semi-monthly/semi-monthly.php?semimonthlyid=$1  [L]
 
 #SETTINGS TAX BRACKET
-RewriteRule ^tax-monthly$ controllers/settings/tax-bracket/tax-monthly/tax-monthly.php [L]
-RewriteRule ^tax-monthly/([0-9]+)$ controllers/settings/tax-bracket/tax-monthly/tax-monthly.php?taxMonthlyid=$1  [L]
+RewriteRule ^tax/monthly$ controllers/settings/tax-bracket/tax-monthly/tax-monthly.php [L]
+RewriteRule ^tax/monthly/([0-9]+)$ controllers/settings/tax-bracket/tax-monthly/tax-monthly.php?taxmonthlyid=$1  [L]
 
 #SETTINGS USER SYSTEM
 RewriteRule ^user-systems$ controllers/settings/user/system/system.php [L]

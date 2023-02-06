@@ -93,6 +93,7 @@ class Earnings
             $sql .= "earnings.earnings_start_pay_date, earnings.earnings_end_pay_date, ";
             $sql .= "earnings.earnings_payitem_id, earnings.earnings_paytype_id, ";
             $sql .= "payitem.payitem_aid, paytype.paytype_aid, ";
+            $sql .= "payitem.payitem_is_hris, ";
             $sql .= "payitem.payitem_name, paytype.paytype_name ";
             $sql .= "from {$this->tblEarnings} as earnings, ";
             $sql .= "{$this->tblPayType} as paytype, ";
@@ -117,6 +118,7 @@ class Earnings
             $sql .= "earnings.earnings_start_pay_date, earnings.earnings_end_pay_date, ";
             $sql .= "earnings.earnings_payitem_id, earnings.earnings_paytype_id, ";
             $sql .= "payitem.payitem_aid, paytype.paytype_aid, ";
+            $sql .= "payitem.payitem_is_hris, ";
             $sql .= "payitem.payitem_name, paytype.paytype_name ";
             $sql .= "from {$this->tblEarnings} as earnings, ";
             $sql .= "{$this->tblPayType} as paytype, ";
@@ -147,6 +149,7 @@ class Earnings
             $sql .= "earnings.earnings_start_pay_date, earnings.earnings_end_pay_date, ";
             $sql .= "earnings.earnings_payitem_id, earnings.earnings_paytype_id, ";
             $sql .= "payitem.payitem_aid, paytype.paytype_aid, ";
+            $sql .= "payitem.payitem_is_hris, ";
             $sql .= "payitem.payitem_name, paytype.paytype_name ";
             $sql .= "from {$this->tblEarnings} as earnings, ";
             $sql .= "{$this->tblPayType} as paytype, ";

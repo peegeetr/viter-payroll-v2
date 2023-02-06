@@ -1,0 +1,24 @@
+ * CY CY CY CY CY CY CY CY CY CY CY CY CY CY CY CY CY
+
+    =>REST DB-BACKUP 
+        -> 
+
+        
+    =>REST CONTROLLERS 
+        -> SETTINGS
+             -> USERS OTHER 
+                - rest/controllers/settings/users/other/create.php
+                - rest/controllers/settings/users/other/update.php
+ 
+             -> USERS ROLE 
+                - rest/controllers/settings/users/role/archive.php
+                - rest/controllers/settings/users/role/create.php
+                - rest/controllers/settings/users/role/functions.php
+     
+             -> USERS SYSTEM 
+                - rest/controllers/settings/users/system/create.php
+                - rest/controllers/settings/users/system/update.php
+    
+                
+   =>REST MODELS
+        -> 

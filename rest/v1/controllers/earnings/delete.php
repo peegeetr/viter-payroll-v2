@@ -3,24 +3,24 @@
 $conn = null;
 $conn = checkDbConnection();
 // make instance of classes
-$payItem = new PayItem($conn);
+$earnings = new Earnings($conn);
 // get $_GET data
-// check if payitemid is in the url e.g. /jobtitle/1
+// check if earningsid is in the url e.g. /jobtitle/1
 $error = [];
 $returnData = [];
-if (array_key_exists("payitemid", $_GET)) {
-
+if (array_key_exists("earningsid", $_GET)) {
+ 
     // get task id from query string
-    $payItem->payitem_aid = $_GET['payitemid'];
-
+    $earnings->earnings_aid = $_GET['earningsid']; 
+    
     //check to see if task id in query string is not empty and is number, if not return json error
-    checkId($payItem->payitem_aid);
-
+    checkId($earnings->earnings_aid);  
+     
     // delete
-    $query = checkDelete($payItem);
+    $query = checkDelete($earnings); 
     $returnData["data"] = [];
     $returnData["count"] = $query->rowCount();
-    $returnData["payitem ID"] = $payItem->payitem_aid;
+    $returnData["Role ID"] = $earnings->earnings_aid;
     $returnData["success"] = true;
     return $returnData;
 }

@@ -1,40 +1,40 @@
 <?php
 // set http header
-require '../../../core/header.php';
+require '../../core/header.php';
 // use needed functions
-require '../../../core/functions.php';
+require '../../core/functions.php';
 // use needed classes
-require '../../../models/pay-type/pay-item/PayItem.php';
+require '../../models/earnings/Earnings.php';
 // check database connection
 $conn = null;
 $conn = checkDbConnection();
 // make instance of classes
-$payItem = new PayItem($conn);
+$earnings = new Earnings($conn);
 $response = new Response();
 // get payload
 $body = file_get_contents("php://input");
 $data = json_decode($body, true);
 // get $_GET data
-// check if payitemid is in the url e.g. /jobtitle/1
+// check if earningsid is in the url e.g. /jobtitle/1
 $error = [];
 $returnData = [];
 // validate api key
 if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
     checkApiKey();
-    if (array_key_exists("payitemid", $_GET)) {
+    if (array_key_exists("earningsid", $_GET)) {
         // check data
         checkPayload($data);
         // get task id from query string
-        $payItem->payitem_aid = $_GET['payitemid'];
-        $payItem->payitem_is_active = trim($data["isActive"]);
-        $payItem->payitem_datetime = date("Y-m-d H:i:s");
+        $earnings->earnings_aid = $_GET['earningsid'];
+        $earnings->earnings_is_active = trim($data["isActive"]);
+        $earnings->earnings_datetime = date("Y-m-d H:i:s");
         //check to see if task id in query string is not empty and is number, if not return json error
-        checkId($payItem->payitem_aid);
-        $query = checkActive($payItem);
+        checkId($earnings->earnings_aid);
+        $query = checkActive($earnings);
         http_response_code(200);
         $returnData["data"] = [];
         $returnData["count"] = $query->rowCount();
-        $returnData["payitem ID"] = $payItem->payitem_aid;
+        $returnData["role ID"] = $earnings->earnings_aid;
         $returnData["success"] = true;
         $response->setData($returnData);
         $response->send();

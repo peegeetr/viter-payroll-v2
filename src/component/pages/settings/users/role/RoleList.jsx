@@ -151,6 +151,7 @@ const RoleList = ({ setItemEdit }) => {
           mysqlApiArchive={`${devApiUrl}/v1/roles/active/${id}`}
           msg={"Are you sure you want to archive this role"}
           item={`${dataItem.role_name}`}
+          isDeveloper={`${dataItem.role_is_developer}`}
         />
       )}
 

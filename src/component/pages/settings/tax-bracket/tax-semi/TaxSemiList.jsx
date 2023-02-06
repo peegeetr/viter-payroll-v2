@@ -1,14 +1,13 @@
 import React from "react";
-import { FaArchive, FaEdit, FaTrash } from "react-icons/fa";
-import { setIsAdd, setIsConfirm } from "../../../../../store/StoreAction.jsx";
+import { FaEdit, FaTrash } from "react-icons/fa";
+import { setIsAdd, setIsRestore } from "../../../../../store/StoreAction.jsx";
 import { StoreContext } from "../../../../../store/StoreContext.jsx";
 import useLoadSemiMonthly from "../../../../custom-hooks/useLoadSemiMonthly.jsx";
 import { devApiUrl } from "../../../../helpers/functions-general.jsx";
-import ModalConfirm from "../../../../partials/modals/ModalConfirm.jsx";
+import ModalDeleteRestore from "../../../../partials/modals/ModalDeleteRestore.jsx";
 import NoData from "../../../../partials/NoData.jsx";
 import ServerError from "../../../../partials/ServerError.jsx";
 import TableSpinner from "../../../../partials/spinners/TableSpinner.jsx";
-import ModalTaxSemi from "./ModalAddTaxSemi.jsx";
 const TaxSemiList = ({ setItemEdit, item }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [id, setId] = React.useState(null);
@@ -22,7 +21,7 @@ const TaxSemiList = ({ setItemEdit, item }) => {
   let counter = 0;
 
   const handleDelete = (item) => {
-    dispatch(setIsConfirm(true));
+    dispatch(setIsRestore(true));
     setId(item.semi_monthly_aid);
     setData(item);
     setDel(true);
@@ -101,11 +100,11 @@ const TaxSemiList = ({ setItemEdit, item }) => {
         </table>
       </div>
 
-      {store.isConfirm && (
-        <ModalConfirm
+      {store.isRestore && (
+        <ModalDeleteRestore
           id={id}
           isDel={isDel}
-          mysqlApiDelete={`${devApiUrl}/v1/semi-monthly/${id}`}
+          mysqlApiDelete={`${devApiUrl}/v1/tax/semi-monthly/${id}`}
           msg={"Are you sure you want to remove this data"}
           item={`${dataItem.semi_monthly_range_from} to ${dataItem.semi_monthly_range_to}`}
         />

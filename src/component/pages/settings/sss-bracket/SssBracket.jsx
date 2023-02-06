@@ -8,6 +8,7 @@ import Header from "../../../partials/Header.jsx";
 import ModalError from "../../../partials/modals/ModalError.jsx";
 import ModalSuccess from "../../../partials/modals/ModalSuccess.jsx";
 import Navigation from "../../../partials/Navigation.jsx";
+import ModalSssBracket from "./ModalSssBracket.jsx";
 import SssBracketList from "./SssBracketList.jsx";
 
 const SssBracket = () => {
@@ -34,12 +35,12 @@ const SssBracket = () => {
 
         <hr />
         <div className="w-full pt-5 pb-20">
-          <SssBracketList />
+          <SssBracketList setItemEdit={setItemEdit} />
         </div>
         <Footer />
       </div>
 
-      {/* {store.isAdd && <ModalAddSystemUser itemEdit={itemEdit} role={role} />} */}
+      {store.isAdd && <ModalSssBracket itemEdit={itemEdit} />}
       {store.success && <ModalSuccess />}
       {store.error && <ModalError />}
     </>

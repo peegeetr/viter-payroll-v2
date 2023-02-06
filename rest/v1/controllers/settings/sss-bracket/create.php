@@ -5,7 +5,7 @@ $conn = checkDbConnection();
 // make instance of classes
 $sss_bracket = new SssBracket($conn);
 // get should not be present
-if (array_key_exists("sssBracketid", $_GET)) {
+if (array_key_exists("sssbracketid", $_GET)) {
     $response->setSuccess(false);
     $error['code'] = "404";
     $error['message'] = "Endpoint not found.";

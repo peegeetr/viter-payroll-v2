@@ -5,12 +5,12 @@ require '../../../core/header.php';
 // use needed functions
 require '../../../core/functions.php';
 // use needed classes
-require '../../../models/settings/department/Department.php';
+require '../../../models/settings/sss-bracket/SssBracket.php';
 // check database connection
 $conn = null;
 $conn = checkDbConnection();
 // make instance of classes
-$department = new Department($conn);
+$sss_bracket = new SssBracket($conn);
 $response = new Response();
 // validate api key
 if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
@@ -19,11 +19,11 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
     if (array_key_exists("start", $_GET) && array_key_exists("total", $_GET)) {
         // get data
         // get task id from query string
-        $department->department_start = $_GET['start'];
-        $department->department_total = $_GET['total'];
+        $sss_bracket->sss_bracket_start = $_GET['start'];
+        $sss_bracket->sss_bracket_total = $_GET['total'];
         //check to see if task id in query string is not empty and is number, if not return json error
-        checkLimitId($department->department_start, $department->department_total);
-        $query = checkReadLimit($department);
+        checkLimitId($sss_bracket->sss_bracket_start, $sss_bracket->sss_bracket_total);
+        $query = checkReadLimit($sss_bracket);
         http_response_code(200);
         $returnData["data"] = getResultData($query);
         $returnData["count"] = $query->rowCount();

@@ -15,7 +15,7 @@ const ModalAddManageEarnings = ({ item, payType, employee }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [loading, setLoading] = React.useState(false);
   const [employeeId, setEmployeeId] = React.useState("");
-  const [payItem, setPayItem] = React.useState([""]);
+  const [payItem, setPayItem] = React.useState("");
   let payid = item ? `/${item.earnings_paytype_id}` : `/${0}`;
 
   const { result, setResult } = useLoadAll(
@@ -29,6 +29,7 @@ const ModalAddManageEarnings = ({ item, payType, employee }) => {
     const results = await fetchApi(`${devApiUrl}/v1/paytype/${paytypeid}`);
     if (results.data) {
       setLoading(false);
+      setPayItem([]);
       setResult(results.data);
     }
   };
@@ -41,6 +42,7 @@ const ModalAddManageEarnings = ({ item, payType, employee }) => {
       setPayItem(results.data);
     }
   };
+  consoleLog(payItem, result);
 
   const handleEmployee = async (e) => {
     // get employee id
@@ -98,22 +100,22 @@ const ModalAddManageEarnings = ({ item, payType, employee }) => {
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
                 consoleLog(values, employee);
-                fetchData(
-                  setLoading,
-                  item
-                    ? `${devApiUrl}/v1/earnings/${item.earnings_aid}`
-                    : `${devApiUrl}/v1/earnings`,
-                  { ...values, employee }, // form data values
-                  null, // result set data
-                  item ? "Succesfully updated." : "Succesfully added.", // success msg
-                  "", // additional error msg if needed
-                  dispatch, // context api action
-                  store, // context api state
-                  true, // boolean to show success modal
-                  false, // boolean to show load more functionality button
-                  null, // navigate default value
-                  item ? "put" : "post"
-                );
+                // fetchData(
+                //   setLoading,
+                //   item
+                //     ? `${devApiUrl}/v1/earnings/${item.earnings_aid}`
+                //     : `${devApiUrl}/v1/earnings`,
+                //   { ...values, employee }, // form data values
+                //   null, // result set data
+                //   item ? "Succesfully updated." : "Succesfully added.", // success msg
+                //   "", // additional error msg if needed
+                //   dispatch, // context api action
+                //   store, // context api state
+                //   true, // boolean to show success modal
+                //   false, // boolean to show load more functionality button
+                //   null, // navigate default value
+                //   item ? "put" : "post"
+                // );
                 dispatch(setStartIndex(0));
               }}
             >
@@ -221,63 +223,70 @@ const ModalAddManageEarnings = ({ item, payType, employee }) => {
                             )}
                           </optgroup>
                         </InputSelect>
-                      </div>{" "}
-                      {payItem.length > 0
-                        ? ""
-                        : payItem[0].payitem_is_hris === 1 && (
-                            <div className="relative mb-5">
-                              <InputText
-                                label="Amount"
-                                type="text"
-                                name="earnings_amount"
-                                disabled={loading}
-                              />
-                            </div>
-                          )}
-                      <div className="relative mb-5">
-                        <InputSelect
-                          name="earnings_frequency"
-                          label="Frequency"
-                          //  disabled={!loading}
-                          onFocus={(e) =>
-                            e.target.parentElement.classList.add("focused")
-                          }
-                        >
-                          <optgroup label="Frequency">
-                            <option value="" hidden></option>
-                            <option value="SM">Semi-monthly</option>
-                            <option value="M">Monthly</option>
-                          </optgroup>
-                        </InputSelect>
                       </div>
-                      <div className="relative mb-5">
-                        <InputText
-                          label="No. of installment"
-                          type="text"
-                          name="earnings_number_of_installment"
-                          disabled={loading}
-                        />
-                      </div>
-                      <div className="relative mb-5">
-                        <InputText
-                          label="Start Date"
-                          type="text"
-                          onFocus={(e) => (e.target.type = "date")}
-                          onBlur={(e) => (e.target.type = "date")}
-                          name="earnings_start_pay_date"
-                          disabled={loading}
-                        />
-                      </div>
-                      <div className="relative mb-5">
-                        <InputText
-                          label="End Date"
-                          type="text"
-                          onFocus={(e) => (e.target.type = "date")}
-                          onBlur={(e) => (e.target.type = "date")}
-                          name="earnings_end_pay_date"
-                          disabled={loading}
-                        />
-                      </div>
+
+                      {(payItem.length > 0 &&
+                        payItem[0].payitem_is_hris === 1) ||
+                      (item && item.payitem_is_hris === 1) ? (
+                        <p className="text-primary font-bold">
+                          This will be import data from HRIS.
+                        </p>
+                      ) : (
+                        <>
+                          <div className="relative mb-5">
+                            <InputText
+                              label="Amount"
+                              type="text"
+                              name="earnings_amount"
+                              disabled={loading}
+                            />
+                          </div>
+                          <div className="relative mb-5">
+                            <InputSelect
+                              name="earnings_frequency"
+                              label="Frequency"
+                              //  disabled={!loading}
+                              onFocus={(e) =>
+                                e.target.parentElement.classList.add("focused")
+                              }
+                            >
+                              <optgroup label="Frequency">
+                                <option value="" hidden></option>
+                                <option value="SM">Semi-monthly</option>
+                                <option value="M">Monthly</option>
+                              </optgroup>
+                            </InputSelect>
+                          </div>
+                          <div className="relative mb-5">
+                            <InputText
+                              label="No. of installment"
+                              type="text"
+                              name="earnings_number_of_installment"
+                              disabled={loading}
+                            />
+                          </div>
+                          <div className="relative mb-5">
+                            <InputText
+                              label="Start Date"
+                              type="text"
+                              onFocus={(e) => (e.target.type = "date")}
+                              onBlur={(e) => (e.target.type = "date")}
+                              name="earnings_start_pay_date"
+                              disabled={loading}
+                            />
+                          </div>
+                          <div className="relative mb-5">
+                            <InputText
+                              label="End Date"
+                              type="text"
+                              onFocus={(e) => (e.target.type = "date")}
+                              onBlur={(e) => (e.target.type = "date")}
+                              name="earnings_end_pay_date"
+                              disabled={loading}
+                            />
+                          </div>
+                        </>
+                      )}
                     </div>
                     <div className="flex items-center gap-1 p-4 ">
                       <button

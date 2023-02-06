@@ -1,10 +1,10 @@
 import React from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
-import { setIsAdd, setIsConfirm } from "../../../../../store/StoreAction.jsx";
+import { setIsAdd, setIsRestore } from "../../../../../store/StoreAction.jsx";
 import { StoreContext } from "../../../../../store/StoreContext.jsx";
 import useLoadTaxMonthly from "../../../../custom-hooks/useLoadTaxMonthly.jsx";
 import { devApiUrl } from "../../../../helpers/functions-general.jsx";
-import ModalConfirm from "../../../../partials/modals/ModalConfirm.jsx";
+import ModalDeleteRestore from "../../../../partials/modals/ModalDeleteRestore.jsx";
 import NoData from "../../../../partials/NoData.jsx";
 import ServerError from "../../../../partials/ServerError.jsx";
 import TableSpinner from "../../../../partials/spinners/TableSpinner.jsx";
@@ -22,7 +22,7 @@ const TaxMonthlyList = ({ setItemEdit, item }) => {
   let counter = 0;
 
   const handleDelete = (item) => {
-    dispatch(setIsConfirm(true));
+    dispatch(setIsRestore(true));
     setId(item.tax_monthly_aid);
     setData(item);
     setDel(true);
@@ -101,11 +101,11 @@ const TaxMonthlyList = ({ setItemEdit, item }) => {
         </table>
       </div>
 
-      {store.isConfirm && (
-        <ModalConfirm
+      {store.isRestore && (
+        <ModalDeleteRestore
           id={id}
           isDel={isDel}
-          mysqlApiDelete={`${devApiUrl}/v1/tax-monthly/${id}`}
+          mysqlApiDelete={`${devApiUrl}/v1/tax/monthly/${id}`}
           msg={"Are you sure you want to remove this data"}
           item={`${dataItem.tax_monthly_range_from} to ${dataItem.tax_monthly_range_to}`}
         />

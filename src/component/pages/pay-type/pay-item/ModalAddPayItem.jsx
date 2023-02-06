@@ -5,8 +5,12 @@ import * as Yup from "yup";
 import { setIsAdd, setStartIndex } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
 import { fetchData } from "../../../helpers/fetchData";
-import { InputText } from "../../../helpers/FormInputs";
-import { devApiUrl, getUrlParam } from "../../../helpers/functions-general";
+import { InputText, MyCheckbox } from "../../../helpers/FormInputs";
+import {
+  consoleLog,
+  devApiUrl,
+  getUrlParam,
+} from "../../../helpers/functions-general";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 
 const ModalAddPayItem = ({ item }) => {
@@ -20,6 +24,7 @@ const ModalAddPayItem = ({ item }) => {
 
   const initVal = {
     payitem_name: item ? item.payitem_name : "",
+    payitem_is_hris: item ? (item.payitem_is_hris === 1 ? true : false) : "",
     payitem_paytype_id: paytypeid,
 
     payitem_name_old: item ? item.payitem_name : "",
@@ -50,6 +55,7 @@ const ModalAddPayItem = ({ item }) => {
               initialValues={initVal}
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
+                consoleLog(values);
                 fetchData(
                   setLoading,
                   item
@@ -80,7 +86,19 @@ const ModalAddPayItem = ({ item }) => {
                         disabled={loading}
                       />
                     </div>
-
+                    <div className="relative mb-3 flex items-center">
+                      <p className=" w-1/2 m-0 text-primary">
+                        Is data from HRIS?
+                      </p>
+                      <span>
+                        <MyCheckbox
+                          type="checkbox"
+                          name="payitem_is_hris"
+                          id="Is data from HRIS?"
+                          disabled={loading}
+                        />
+                      </span>
+                    </div>
                     <div className="flex items-center gap-1 pt-5">
                       <button
                         type="submit"

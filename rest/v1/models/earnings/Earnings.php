@@ -12,11 +12,14 @@ class Earnings
     public $earnings_number_of_installment;
     public $earnings_start_pay_date;
     public $earnings_end_pay_date;
-    public $earnings_created; 
+    public $earnings_created;
     public $earnings_datetime;
 
     public $connection;
     public $lastInsertedId;
+    public $earnings_start;
+    public $earnings_total;
+    public $earnings_search;
     public $tblEarnings;
     public $tblPayType;
     public $tblPayItem;
@@ -63,7 +66,7 @@ class Earnings
                 "earnings_employee" => $this->earnings_employee,
                 "earnings_employee_id" => $this->earnings_employee_id,
                 "earnings_paytype_id" => $this->earnings_paytype_id,
-                "earnings_payitem_id" => $this->earnings_payitem_id, 
+                "earnings_payitem_id" => $this->earnings_payitem_id,
                 "earnings_is_active" => $this->earnings_is_active,
                 "earnings_amount" => $this->earnings_amount,
                 "earnings_frequency" => $this->earnings_frequency,
@@ -88,15 +91,75 @@ class Earnings
             $sql .= "earnings.earnings_employee, earnings.earnings_amount, ";
             $sql .= "earnings.earnings_frequency, earnings.earnings_number_of_installment, ";
             $sql .= "earnings.earnings_start_pay_date, earnings.earnings_end_pay_date, ";
+            $sql .= "earnings.earnings_payitem_id, earnings.earnings_paytype_id, ";
+            $sql .= "payitem.payitem_aid, paytype.paytype_aid, ";
             $sql .= "payitem.payitem_name, paytype.paytype_name ";
             $sql .= "from {$this->tblEarnings} as earnings, ";
             $sql .= "{$this->tblPayType} as paytype, ";
             $sql .= "{$this->tblPayItem} as payitem ";
-            $sql .= "where earnings.earnings_paytype_id = paytype.paytype_aid "; 
-            $sql .= "and earnings.earnings_payitem_id = payitem.payitem_aid "; 
+            $sql .= "where earnings.earnings_paytype_id = paytype.paytype_aid ";
+            $sql .= "and earnings.earnings_payitem_id = payitem.payitem_aid ";
             $sql .= "order by earnings.earnings_is_active desc, ";
             $sql .= "earnings.earnings_employee asc ";
             $query = $this->connection->query($sql);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    public function readLimit()
+    {
+        try {
+            $sql = "select earnings.earnings_aid, earnings.earnings_is_active, ";
+            $sql .= "earnings.earnings_employee, earnings.earnings_amount, ";
+            $sql .= "earnings.earnings_frequency, earnings.earnings_number_of_installment, ";
+            $sql .= "earnings.earnings_start_pay_date, earnings.earnings_end_pay_date, ";
+            $sql .= "earnings.earnings_payitem_id, earnings.earnings_paytype_id, ";
+            $sql .= "payitem.payitem_aid, paytype.paytype_aid, ";
+            $sql .= "payitem.payitem_name, paytype.paytype_name ";
+            $sql .= "from {$this->tblEarnings} as earnings, ";
+            $sql .= "{$this->tblPayType} as paytype, ";
+            $sql .= "{$this->tblPayItem} as payitem ";
+            $sql .= "where earnings.earnings_paytype_id = paytype.paytype_aid ";
+            $sql .= "and earnings.earnings_payitem_id = payitem.payitem_aid ";
+            $sql .= "order by earnings.earnings_is_active desc, ";
+            $sql .= "earnings.earnings_employee asc ";
+            $sql .= "limit :start, ";
+            $sql .= ":total ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "start" => $this->earnings_start - 1,
+                "total" => $this->earnings_total,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    public function search()
+    {
+        try {
+            $sql = "select earnings.earnings_aid, earnings.earnings_is_active, ";
+            $sql .= "earnings.earnings_employee, earnings.earnings_amount, ";
+            $sql .= "earnings.earnings_frequency, earnings.earnings_number_of_installment, ";
+            $sql .= "earnings.earnings_start_pay_date, earnings.earnings_end_pay_date, ";
+            $sql .= "earnings.earnings_payitem_id, earnings.earnings_paytype_id, ";
+            $sql .= "payitem.payitem_aid, paytype.paytype_aid, ";
+            $sql .= "payitem.payitem_name, paytype.paytype_name ";
+            $sql .= "from {$this->tblEarnings} as earnings, ";
+            $sql .= "{$this->tblPayType} as paytype, ";
+            $sql .= "{$this->tblPayItem} as payitem ";
+            $sql .= "where earnings.earnings_paytype_id = paytype.paytype_aid ";
+            $sql .= "and earnings.earnings_payitem_id = payitem.payitem_aid ";
+            $sql .= "and earnings.earnings_employee like :search ";
+            $sql .= "order by earnings.earnings_is_active desc, ";
+            $sql .= "earnings.earnings_employee asc ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "search" => "{$this->earnings_search}%",
+            ]);
         } catch (PDOException $ex) {
             $query = false;
         }
@@ -115,11 +178,11 @@ class Earnings
             $sql .= "from {$this->tblEarnings} as earnings, ";
             $sql .= "{$this->tblPayType} as paytype, ";
             $sql .= "{$this->tblPayItem} as payitem ";
-            $sql .= "where earnings.earnings_aid = :earnings_aid "; 
-            $sql .= "and earnings.earnings_paytype_id = paytype.paytype_aid "; 
-            $sql .= "and earnings.earnings_payitem_id = payitem.payitem_aid "; 
+            $sql .= "where earnings.earnings_aid = :earnings_aid ";
+            $sql .= "and earnings.earnings_paytype_id = paytype.paytype_aid ";
+            $sql .= "and earnings.earnings_payitem_id = payitem.payitem_aid ";
             $sql .= "order by earnings.earnings_is_active desc, ";
-            $sql .= "earnings.earnings_employee asc "; 
+            $sql .= "earnings.earnings_employee asc ";
             $query = $this->connection->prepare($sql);
             $query->execute([
                 "earnings_aid" => $this->earnings_aid,
@@ -135,8 +198,6 @@ class Earnings
     {
         try {
             $sql = "update {$this->tblEarnings} set ";
-            $sql .= "earnings_employee = :earnings_employee, ";
-            $sql .= "earnings_employee_id = :earnings_employee_id, ";
             $sql .= "earnings_paytype_id = :earnings_paytype_id, ";
             $sql .= "earnings_payitem_id = :earnings_payitem_id, ";
             $sql .= "earnings_amount = :earnings_amount, ";
@@ -148,8 +209,6 @@ class Earnings
             $sql .= "where earnings_aid = :earnings_aid ";
             $query = $this->connection->prepare($sql);
             $query->execute([
-                "earnings_employee" => $this->earnings_employee,
-                "earnings_employee_id" => $this->earnings_employee_id,
                 "earnings_paytype_id" => $this->earnings_paytype_id,
                 "earnings_payitem_id" => $this->earnings_payitem_id,
                 "earnings_amount" => $this->earnings_amount,
@@ -201,5 +260,4 @@ class Earnings
         }
         return $query;
     }
-  
 }

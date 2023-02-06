@@ -10,7 +10,7 @@ require '../../../models/settings/sss-bracket/SssBracket.php';
 $conn = null;
 $conn = checkDbConnection();
 // make instance of classes
-$ss_bracket = new SssBracket($conn);
+$sss_bracket = new SssBracket($conn);
 $response = new Response();
 // // validate api key
 if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
@@ -18,7 +18,7 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
     if (array_key_exists("search", $_GET)) {
         // get data
         // get task id from query string
-        $ss_bracket->sss_bracket_search = $_GET['search'];
+        $sss_bracket->sss_bracket_search = $_GET['search'];
         //check to see if search keyword in query string is not empty and less than 50 chars
         checkKeyword($sss_bracket->sss_bracket_search);
         $query = checkSearch($sss_bracket);

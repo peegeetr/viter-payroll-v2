@@ -23,6 +23,13 @@ RewriteRule ^roles/active/([0-9]+)$ controllers/settings/user/role/active.php?ro
 RewriteRule ^paytype$ controllers/pay-type/paytype.php [L]
 RewriteRule ^paytype/([0-9]+)$ controllers/pay-type/paytype.php?paytypeid=$1 [L]
 RewriteRule ^paytype/active/([0-9]+)$ controllers/pay-type/active.php?paytypeid=$1 [L]
+   
+#earnings
+RewriteRule ^earnings$ controllers/earnings/earnings.php [L]
+RewriteRule ^earnings/([0-9]+)$ controllers/earnings/earnings.php?earningsid=$1 [L]
+RewriteRule ^earnings/active/([0-9]+)$ controllers/earnings/active.php?earningsid=$1 [L]
+RewriteRule ^earnings/limit/([0-9]+)/([0-9]+)$ controllers/earnings/limit.php?start=$1&total=$2 [L]
+RewriteRule ^earnings/search/([A-Za-z0-9-]+)$ controllers/earnings/search.php?search=$1 [L]
   
 #payitem
 RewriteRule ^payitem$ controllers/pay-type/pay-item/payitem.php [L]
@@ -41,6 +48,13 @@ RewriteRule ^tax/semi-monthly/([0-9]+)$ controllers/settings/tax-bracket/semi-mo
 RewriteRule ^tax/monthly$ controllers/settings/tax-bracket/tax-monthly/tax-monthly.php [L]
 RewriteRule ^tax/monthly/([0-9]+)$ controllers/settings/tax-bracket/tax-monthly/tax-monthly.php?taxmonthlyid=$1  [L]
 
+#SETTINGS SSS BRACKET
+RewriteRule ^sss-bracket$ controllers/settings/sss-bracket/sss-bracket.php [L]
+RewriteRule ^sss-bracket/([0-9]+)$ controllers/settings/sss-bracket/sss-bracket.php?sssbracketid=$1 [L]
+RewriteRule ^sss-bracket/limit/([0-9]+)/([0-9]+)$ controllers/settings/sss-bracket/limit.php?start=$1&total=$2 [L]
+RewriteRule ^sss-bracket/search/([A-Za-z0-9-]+)$ controllers/settings/sss-bracket/search.php?search=$1 [L]
+
+
 #SETTINGS USER SYSTEM
 RewriteRule ^user-systems$ controllers/settings/user/system/system.php [L]
 RewriteRule ^user-systems/([0-9]+)$ controllers/settings/user/system/system.php?usersystemid=$1 [L]
@@ -52,3 +66,6 @@ RewriteRule ^user-others$ controllers/settings/user/other/other.php [L]
 RewriteRule ^user-others/([0-9]+)$ controllers/settings/user/other/other.php?userotherid=$1 [L]
 RewriteRule ^user-others/active/([0-9]+)$ controllers/settings/user/other/active.php?userotherid=$1 [L] 
 RewriteRule ^user-others/reset/([0-9]+)$ controllers/settings/user/other/reset.php?userotherid=$1 [L] 
+
+
+

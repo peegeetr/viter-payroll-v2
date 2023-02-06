@@ -13,6 +13,8 @@ class SssBracket
 
     public $connection;
     public $lastInsertedId;
+    public $sss_bracket_start;
+    public $sss_bracket_search;
     public $tblSssBracket;
 
     public function __construct($db)
@@ -65,7 +67,7 @@ class SssBracket
         try {
             $sql = "select * ";
             $sql .= "from {$this->tblSssBracket} ";
-            $sql .= "order by rates_active desc ";
+            $sql .= "order by sss_bracket_active desc ";
             
             $query = $this->connection->query($sql);
         } catch (PDOException $ex) {
@@ -77,22 +79,22 @@ class SssBracket
     public function update() {    
         try {
             $sql = "update {$this->tblSssBracket} set ";
-            $sql .= "rates_night_differential = :rates_night_differential, ";
-            $sql .= "rates_overtime = :rates_overtime, ";
-            $sql .= "rates_special_holiday = :rates_special_holiday, ";
-            $sql .= "rates_regular_holiday = :rates_regular_holiday, ";
-            $sql .= "rates_rest_day = :rates_rest_day, ";
-            $sql .= "rates_datetime = :rates_datetime ";
-            $sql .= "where rates_aid  = :rates_aid ";
+            $sql .= "sss_bracket_range_from = :sss_bracket_range_from, ";
+            $sql .= "sss_bracket_range_to = :sss_bracket_range_to, ";
+            $sql .= "sss_bracket_er = :sss_bracket_er, ";
+            $sql .= "sss_bracket_ee = :sss_bracket_ee, ";
+            $sql .= "sss_bracket_total = :sss_bracket_total, ";
+            $sql .= "sss_bracket_datetime = :sss_bracket_datetime ";
+            $sql .= "where sss_bracket_aid  = :sss_bracket_aid ";
             $query = $this->connection->prepare($sql);
             $query->execute([
-                "rates_night_differential" => $this->rates_night_differential,
-                "rates_overtime" => $this->rates_overtime,
-                "rates_special_holiday" => $this->rates_special_holiday,
-                "rates_regular_holiday" => $this->rates_regular_holiday,
-                "rates_rest_day" => $this->rates_rest_day,
-                "rates_datetime" => $this->rates_datetime,
-                "rates_aid" => $this->rates_aid,
+                "sss_bracket_range_from" => $this->sss_bracket_range_from,
+                "sss_bracket_range_to" => $this->sss_bracket_range_to,
+                "sss_bracket_er" => $this->sss_bracket_er,
+                "sss_bracket_ee" => $this->sss_bracket_ee,
+                "sss_bracket_total" => $this->sss_bracket_total,
+                "sss_bracket_datetime" => $this->sss_bracket_datetime,
+                "sss_bracket_aid" => $this->sss_bracket_aid,
             ]);
         } catch (PDOException $ex) {
             $query = false;
@@ -100,4 +102,56 @@ class SssBracket
         return $query;
     }
 
+    
+    public function delete()
+    {
+        try {
+            $sql = "delete from {$this->tblSssBracket} ";
+            $sql .= "where sss_bracket_aid  = :sss_bracket_aid ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "sss_bracket_aid" => $this->sss_bracket_aid,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    public function search()
+    {
+        try {
+            $sql = "select * from {$this->tblSssBracket} ";
+            $sql .= "where sss_bracket_range_from like :search ";
+            $sql .= "order by sss_bracket_range_from asc ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "search" => "{$this->sss_bracket_search}%",
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+
+    public function readLimit()
+    {
+        try {
+            $sql = "select * ";
+            $sql .= "from {$this->tblSssBracket} ";
+            $sql .= "order by sss_bracket_active desc, ";
+            $sql .= "sss_bracket_range_from asc ";
+            $sql .= "limit :start, ";
+            $sql .= ":total ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "start" => $this->sss_bracket_start - 1,
+                "total" => $this->sss_bracket_total,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
 }

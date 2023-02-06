@@ -2,6 +2,10 @@ import React from "react";
 import { FaPlusCircle } from "react-icons/fa";
 import { setIsAdd } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
+import useLoadEmployee from "../../../custom-hooks/useLoadEmployee";
+import useLoadPayItem from "../../../custom-hooks/useLoadPayItem";
+import useLoadPayType from "../../../custom-hooks/useLoadPayType";
+import { devApiUrl, hrisDevApiUrl } from "../../../helpers/functions-general";
 import BreadCrumbs from "../../../partials/BreadCrumbs";
 import Footer from "../../../partials/Footer";
 import Header from "../../../partials/Header";
@@ -14,6 +18,10 @@ import ModalAddManageEarnings from "./ModalAddManageEarnings";
 const ManageEarnings = () => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [itemEdit, setItemEdit] = React.useState(null);
+
+  const { payType } = useLoadPayType(`${devApiUrl}/v1/paytype`, "get");
+  // const { payItem } = useLoadPayItem(`${devApiUrl}/v1/payitem`, "get");
+  const { employee } = useLoadEmployee(`${hrisDevApiUrl}/v1/employees`, "get");
 
   const handleAdd = () => {
     dispatch(setIsAdd(true));
@@ -37,12 +45,19 @@ const ManageEarnings = () => {
         <hr />
 
         <div className="w-full pt-5 pb-20">
-          <ManageEarningsList />
+          <ManageEarningsList setItemEdit={setItemEdit} />
         </div>
         <Footer />
       </div>
 
-      {store.isAdd && <ModalAddManageEarnings itemEdit={itemEdit} />}
+      {store.isAdd && (
+        <ModalAddManageEarnings
+          item={itemEdit}
+          payType={payType}
+          employee={employee}
+          // payItem={payItem}
+        />
+      )}
       {store.success && <ModalSuccess />}
       {store.error && <ModalError />}
     </>

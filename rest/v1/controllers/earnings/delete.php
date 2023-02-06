@@ -3,21 +3,24 @@
 $conn = null;
 $conn = checkDbConnection();
 // make instance of classes
-$sss_bracket = new SssBracket($conn);
+$earnings = new Earnings($conn);
 // get $_GET data
-// check if departmentid is in the url e.g. /department/1
+// check if earningsid is in the url e.g. /jobtitle/1
 $error = [];
 $returnData = [];
-if (array_key_exists("sssbracketid", $_GET)) {
-    // get data
+if (array_key_exists("earningsid", $_GET)) {
+ 
     // get task id from query string
-    $sss_bracket->sss_bracket_aid = $_GET['sssbracketid'];
+    $earnings->earnings_aid = $_GET['earningsid']; 
+    
     //check to see if task id in query string is not empty and is number, if not return json error
-    checkId($sss_bracket->sss_bracket_aid);
-    $query = checkDelete($sss_bracket);
+    checkId($earnings->earnings_aid);  
+     
+    // delete
+    $query = checkDelete($earnings); 
     $returnData["data"] = [];
     $returnData["count"] = $query->rowCount();
-    $returnData["SSS Bracket ID"] = $sss_bracket->sss_bracket_aid;
+    $returnData["Role ID"] = $earnings->earnings_aid;
     $returnData["success"] = true;
     return $returnData;
 }

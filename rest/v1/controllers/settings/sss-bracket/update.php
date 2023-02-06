@@ -8,28 +8,29 @@ $sss_bracket = new SssBracket($conn);
 // check if departmentid is in the url e.g. /department/1
 $error = [];
 $returnData = [];
-if (array_key_exists("sssBracketid", $_GET)) {
+if (array_key_exists("sssbracketid", $_GET)) {
     // check data
     checkPayload($data);
     // get data
     // get departmentid from query string
-   $sss_bracket->department_aid = $_GET['sssBracketid'];
+   $sss_bracket->sss_bracket_aid = $_GET['sssbracketid'];
    $sss_bracket->sss_bracket_range_from = checkIndex($data, "sss_bracket_range_from");
    $sss_bracket->sss_bracket_range_to = checkIndex($data, "sss_bracket_range_to");
    $sss_bracket->sss_bracket_er = checkIndex($data, "sss_bracket_er");
    $sss_bracket->sss_bracket_ee = checkIndex($data, "sss_bracket_ee");
    $sss_bracket->sss_bracket_total = checkIndex($data, "sss_bracket_total");
+   $sss_bracket->sss_bracket_active = 1;
    $sss_bracket->sss_bracket_datetime = date("Y-m-d H:i:s");
     //$department_name_old = checkIndex($data, "department_name_old");
     //check to see if task id in query string is not empty and is number, if not return json error
-    checkId($department->sss_bracket_aid);
+    checkId($sss_bracket->sss_bracket_aid);
     // check name
     //compareName($department,$sss_bracket_name_old,$sss_bracket->department_name);
     // update
-    $query = checkUpdate($department);
+    $query = checkUpdate($sss_bracket);
     $returnData["data"] = [];
     $returnData["count"] = $query->rowCount();
-    $returnData["Department ID"] =$sss_bracket->sss_bracket_aid;
+    $returnData["SSS Bracket ID"] =$sss_bracket->sss_bracket_aid;
     $returnData["success"] = true;
     return $returnData;
 }

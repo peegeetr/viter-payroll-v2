@@ -14,6 +14,7 @@ const ModalConfirm = ({
   mysqlApiArchive,
   msg,
   item,
+  isDeveloper,
 }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [loading, setLoading] = React.useState(false);
@@ -42,7 +43,7 @@ const ModalConfirm = ({
     fetchData(
       setLoading,
       isDel ? mysqlApiReset : mysqlApiArchive,
-      { isActive: 0, email: item },
+      { isActive: 0, email: item, isDeveloper: isDeveloper },
       null,
       isDel ? "Please check your email to continue resetting password." : "",
       "",

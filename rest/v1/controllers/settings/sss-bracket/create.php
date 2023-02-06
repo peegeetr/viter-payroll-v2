@@ -24,7 +24,10 @@ $sss_bracket->sss_bracket_active = 1;
 $sss_bracket->sss_bracket_created = date("Y-m-d");
 $sss_bracket->sss_bracket_datetime = date("Y-m-d H:i:s");
 // check name
-//isNameExist($sss_bracket, $sss_bracket->sss_bracket_name);
+
+isRangeFromExist($sss_bracket, $sss_bracket->sss_bracket_range_from);
+isRangeToExist($sss_bracket, $sss_bracket->sss_bracket_range_to);
+
 $query = checkCreate($sss_bracket);
 $returnData = [];
 $returnData["data"] = [];

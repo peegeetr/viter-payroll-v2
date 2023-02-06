@@ -5,7 +5,7 @@ $conn = checkDbConnection();
 // make instance of classes
 $taxMonthly = new TaxMonthly($conn);
 // get should not be present
-if (array_key_exists("taxMonthlyid", $_GET)) {
+if (array_key_exists("taxmonthlyid", $_GET)) {
     $response->setSuccess(false);
     $error['code'] = "404";
     $error['message'] = "Endpoint not found.";
@@ -24,7 +24,9 @@ $taxMonthly->tax_monthly_active = 1;
 $taxMonthly->tax_monthly_created = date("Y-m-d");
 $taxMonthly->tax_monthly_datetime = date("Y-m-d H:i:s");
 // check name
-// isNameExist($taxMonthly, $taxMonthly->taxMonthly_name);
+isRangeFromExist($taxMonthly, $taxMonthly->tax_monthly_range_from);
+isRangeToExist($taxMonthly, $taxMonthly->tax_monthly_range_to);
+
 $query = checkCreate($taxMonthly);
 $returnData = [];
 $returnData["data"] = [];

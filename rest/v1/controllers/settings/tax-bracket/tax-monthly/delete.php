@@ -8,10 +8,10 @@ $taxMonthly = new TaxMonthly($conn);
 // check if departmentid is in the url e.g. /department/1
 $error = [];
 $returnData = [];
-if (array_key_exists("taxMonthlyid", $_GET)) {
+if (array_key_exists("taxmonthlyid", $_GET)) {
     // get data
     // get task id from query string
-    $taxMonthly->tax_monthly_aid  = $_GET['taxMonthlyid'];
+    $taxMonthly->tax_monthly_aid  = $_GET['taxmonthlyid'];
     //check to see if task id in query string is not empty and is number, if not return json error
     checkId($taxMonthly->tax_monthly_aid );
     $query = checkDelete($taxMonthly);

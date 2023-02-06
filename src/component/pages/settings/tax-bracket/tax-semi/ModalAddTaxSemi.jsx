@@ -23,6 +23,13 @@ const ModalAddTaxSemi = ({ itemEdit }) => {
     semi_monthly_range_to: itemEdit ? itemEdit.semi_monthly_range_to : "",
     semi_monthly_less_amount: itemEdit ? itemEdit.semi_monthly_less_amount : "",
     semi_monthly_rate: itemEdit ? itemEdit.semi_monthly_rate : "",
+
+    semi_monthly_range_from_old: itemEdit
+      ? itemEdit.semi_monthly_range_from
+      : "",
+
+    semi_monthly_range_to_old: itemEdit ? itemEdit.semi_monthly_range_to : "",
+
     semi_monthly_additional_amount: itemEdit
       ? itemEdit.semi_monthly_additional_amount
       : "",
@@ -60,8 +67,8 @@ const ModalAddTaxSemi = ({ itemEdit }) => {
                 fetchData(
                   setLoading,
                   itemEdit
-                    ? `${devApiUrl}/v1/semi-monthly/${itemEdit.semi_monthly_aid}`
-                    : `${devApiUrl}/v1/semi-monthly`,
+                    ? `${devApiUrl}/v1/tax/semi-monthly/${itemEdit.semi_monthly_aid}`
+                    : `${devApiUrl}/v1/tax/semi-monthly`,
                   values, // form data values
                   null, // result set data
                   itemEdit ? "Succesfully updated." : "Succesfully added.", // success msg

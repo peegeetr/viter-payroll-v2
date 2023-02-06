@@ -3,6 +3,7 @@
 require '../../../../core/header.php';
 // use needed functions
 require '../../../../core/functions.php';
+require 'functions.php';
 // use needed classes
 require '../../../../models/settings/user/role/Role.php';
 // check database connection
@@ -27,9 +28,19 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
         // get task id from query string
         $role->role_aid = $_GET['roleid'];
         $role->role_is_active = trim($data["isActive"]);
+        $is_developer = $data['isDeveloper'];
         $role->role_datetime = date("Y-m-d H:i:s");
         //check to see if task id in query string is not empty and is number, if not return json error
-        checkId($role->role_aid);
+        checkId($role->role_aid);    
+
+        
+
+        // archive validation if role id exist  
+        if ($is_developer == 1) {
+            isUserSystemAssociated($role, "archive");
+        } 
+        isUserOtherAssociated($role, "archive");
+        
         $query = checkActive($role);
         http_response_code(200);
         $returnData["data"] = [];

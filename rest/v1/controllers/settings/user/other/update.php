@@ -22,6 +22,7 @@ if (array_key_exists("userotherid", $_GET)) {
     $user_other_email_old = addslashes(trim($data["user_other_email_old"]));
     //check to see if task id in query string is not empty and is number, if not return json error
     checkId($user_other->user_other_aid); 
+    
     // check email
     compareEmail($user_other, $user_other_email_old, $user_other->user_other_email);
     // update

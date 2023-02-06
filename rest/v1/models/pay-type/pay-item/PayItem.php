@@ -4,7 +4,8 @@ class PayItem
     public $payitem_aid;
     public $payitem_is_active;
     public $payitem_paytype_id;
-    public $payitem_name; 
+    public $payitem_is_hris;
+    public $payitem_name;
     public $payitem_created;
     public $payitem_datetime;
 
@@ -24,19 +25,22 @@ class PayItem
         try {
             $sql = "insert into {$this->tblPayItem} ";
             $sql .= "( payitem_name, ";
-            $sql .= "payitem_paytype_id, "; 
+            $sql .= "payitem_paytype_id, ";
+            $sql .= "payitem_is_hris, ";
             $sql .= "payitem_is_active, ";
             $sql .= "payitem_created, ";
             $sql .= "payitem_datetime ) values ( ";
             $sql .= ":payitem_name, ";
-            $sql .= ":payitem_paytype_id, "; 
+            $sql .= ":payitem_paytype_id, ";
+            $sql .= ":payitem_is_hris, ";
             $sql .= ":payitem_is_active, ";
             $sql .= ":payitem_created, ";
             $sql .= ":payitem_datetime ) ";
             $query = $this->connection->prepare($sql);
             $query->execute([
                 "payitem_name" => $this->payitem_name,
-                "payitem_paytype_id" => $this->payitem_paytype_id, 
+                "payitem_paytype_id" => $this->payitem_paytype_id,
+                "payitem_is_hris" => $this->payitem_is_hris,
                 "payitem_is_active" => $this->payitem_is_active,
                 "payitem_created" => $this->payitem_created,
                 "payitem_datetime" => $this->payitem_datetime,
@@ -66,7 +70,8 @@ class PayItem
     public function readById()
     {
         try {
-            $sql = "select * from {$this->tblPayItem} ";
+            $sql = "select payitem_name, payitem_is_hris, payitem_aid ";
+            $sql .= "from {$this->tblPayItem} ";
             $sql .= "where payitem_aid = :payitem_aid ";
             $sql .= "order by payitem_name asc ";
             $query = $this->connection->prepare($sql);
@@ -84,12 +89,14 @@ class PayItem
     {
         try {
             $sql = "update {$this->tblPayItem} set ";
-            $sql .= "payitem_name = :payitem_name, "; 
+            $sql .= "payitem_name = :payitem_name, ";
+            $sql .= "payitem_is_hris = :payitem_is_hris, ";
             $sql .= "payitem_datetime = :payitem_datetime ";
             $sql .= "where payitem_aid  = :payitem_aid ";
             $query = $this->connection->prepare($sql);
             $query->execute([
-                "payitem_name" => $this->payitem_name, 
+                "payitem_name" => $this->payitem_name,
+                "payitem_is_hris" => $this->payitem_is_hris,
                 "payitem_datetime" => $this->payitem_datetime,
                 "payitem_aid" => $this->payitem_aid,
             ]);
@@ -134,8 +141,8 @@ class PayItem
         }
         return $query;
     }
- 
- 
+
+
     // name
     public function checkName()
     {

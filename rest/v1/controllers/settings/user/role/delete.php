@@ -20,9 +20,9 @@ if (array_key_exists("roleid", $_GET)) {
     
     // delete validation if role id exist  
     if ($is_developer == 1) {
-        isUserSystemAssociated($role);
+        isUserSystemAssociated($role, "delete");
     } 
-    isUserOtherAssociated($role);
+    isUserOtherAssociated($role, "delete");
     
     // drop column  
     checkDropColumnName($role, $column_name);

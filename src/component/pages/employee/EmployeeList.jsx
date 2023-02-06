@@ -73,7 +73,7 @@ const EmployeeList = () => {
         loading={loading}
         result={result}
         store={store}
-        url={`/v1/employees/search/`}
+        url={`${hrisDevApiUrl}/v1/employees/search/`}
       />
 
       <div className="relative text-center overflow-x-auto z-0">

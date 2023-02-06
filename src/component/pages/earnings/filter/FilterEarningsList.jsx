@@ -6,6 +6,7 @@ import { fetchData } from "../../../helpers/fetchData";
 import { InputSelect, InputText } from "../../../helpers/FormInputs";
 import { devApiUrl } from "../../../helpers/functions-general";
 import NoData from "../../../partials/NoData";
+import { MdFilterAlt } from "react-icons/md";
 import ServerError from "../../../partials/ServerError";
 import StatusActive from "../../../partials/status/StatusActive";
 import StatusInactive from "../../../partials/status/StatusInactive";
@@ -29,30 +30,46 @@ const FilterEarningsList = () => {
         initialValues={initVal}
         validationSchema={yupSchema}
         onSubmit={async (values, { setSubmitting, resetForm }) => {
-          fetchData(
-            setLoading,
-            item
-              ? `${devApiUrl}/v1/paytype/${item.paytype_aid}`
-              : `${devApiUrl}/v1/paytype`,
+          // console.log(values);
+          setLoading(true);
+          const result = await fetchApi(
+            values == "all" //admin location = empty
+              ? devApiUrl +
+                  "/admin/admin-attendance/admin-attendance-members/read-attendance-members-by-civil-id.php" // admin specific civil status
+              : devApiUrl +
+                  "/admin/admin-attendance/admin-attendance-members/read-attendance-members-by-all-civil-id.php", // admin all civil status
 
-            values, // form data values
-            null, // result set data
-            item ? "Succesfully updated." : "Succesfully added.", // success msg
-            "", // additional error msg if needed
-            dispatch, // context api action
-            store, // context api state
-            true, // boolean to show success modal
-            false, // boolean to show load more functionality button
-            null, // navigate default value
-            item ? "put" : "post"
+            {
+              token: "",
+              ...values,
+            }
           );
-          dispatch(setStartIndex(0));
+
+          // consoleLog(result);
+
+          if (typeof result === "undefined") {
+            consoleLog("undefined");
+            setLoading(false);
+            dispatch(setError(true));
+            dispatch(setMessage("API / Network Error"));
+            return;
+          }
+          if (!result.status) {
+            consoleLog("no data");
+            setLoading(false);
+            return;
+          }
+          if (result.status) {
+            setResult(result.data);
+            // setResult([]);
+            setLoading(false);
+          }
         }}
       >
         {(props) => {
           return (
             <Form>
-              <div className="grid sm:grid-cols-3 gap-3 mb-5">
+              <div className="grid sm:grid-cols-[1fr_1fr_1fr_150px] gap-3 mb-5">
                 <div className="relative label">
                   <InputSelect
                     label="Pay Item"
@@ -89,6 +106,11 @@ const FilterEarningsList = () => {
                     // disabled={loading}
                   />
                 </div>
+
+                <button className="btn-primary">
+                  <MdFilterAlt className="text-lg" />
+                  <span>Filter</span>
+                </button>
               </div>
             </Form>
           );

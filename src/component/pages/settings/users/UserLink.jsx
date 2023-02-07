@@ -16,13 +16,13 @@ const UserLink = () => {
     >
       <Link
         to={`${devNavUrl}/${UrlAdmin}/settings/users`}
-        className="w-full py-4"
+        className="w-full py-1"
       >
         <div className="flex items-center">
           <span className="text-lg mr-4">
             <FaUsers />
           </span>
-          <span className="text-base font-bold">Users</span>
+          <span className="font-bold">Users</span>
         </div>
         <p className="ml-[35px] my-0">
           Manage what actions and capabilities every account are can perform in

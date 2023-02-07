@@ -9,13 +9,13 @@ const SalaryHistoryLink = () => {
     <div className="group flex items-center justify-between border-b border-solid border-gray-300">
       <Link
         to={`${devNavUrl}/${UrlAdmin}/employee/details/salary-history`}
-        className="w-full py-4"
+        className="w-full py-1"
       >
         <div className="flex items-center">
           <span className="text-lg mr-4">
             <FaUserCog />
           </span>
-          <span className="text-base font-bold">Salary History</span>
+          <span className=" font-bold">Salary History</span>
         </div>
         <p className="ml-[35px] my-0">
           Manage what actions and capabilities every account are can perform in

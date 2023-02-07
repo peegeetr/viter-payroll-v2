@@ -79,7 +79,7 @@ const ModalAddPayType = ({ item }) => {
               {(props) => {
                 return (
                   <Form>
-                    <div className="relative mb-5 mt-5">
+                    <div className="relative my-5 ">
                       <InputSelect
                         label="Category"
                         name="paytype_category"

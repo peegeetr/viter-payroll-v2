@@ -14,13 +14,13 @@ const JobDetailsLink = () => {
     <div className="group flex items-center justify-between border-b border-solid border-gray-300">
       <Link
         to={`${devNavUrl}/${UrlAdmin}/employee/details/job?employeeid=${eid}`}
-        className="w-full py-4"
+        className="w-full py-1"
       >
         <div className="flex items-center">
           <span className="text-lg mr-4">
             <FaUserCog />
           </span>
-          <span className="text-base font-bold">Job Details</span>
+          <span className="font-bold">Job Details</span>
         </div>
         <p className="ml-[35px] my-0">
           Manage what actions and capabilities every account are can perform in

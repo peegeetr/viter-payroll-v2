@@ -95,7 +95,7 @@ const ModalEditJobDetails = ({ itemEdit, jobTitle, department }) => {
                 return (
                   <Form>
                     <div className="max-h-[28rem] overflow-y-scroll p-4">
-                      <div className="relative mb-5 ">
+                      <div className="relative my-5 ">
                         <InputText
                           label="Date Employed"
                           type="text"

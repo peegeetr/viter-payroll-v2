@@ -86,7 +86,7 @@ const ModalAddTaxSemi = ({ itemEdit }) => {
               {(props) => {
                 return (
                   <Form>
-                    <div className="relative mb-5">
+                    <div className="relative my-5 ">
                       <InputText
                         label="Range From"
                         type="text"

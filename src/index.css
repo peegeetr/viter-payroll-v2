@@ -44,9 +44,12 @@
   select {
     @apply border border-solid border-gray-300 p-2 rounded-lg w-full;
   }
-
   label {
-    @apply text-xs text-primary transform -translate-y-6 -translate-x-2 absolute left-3 top-4 px-1 bg-white z-10;
+    @apply text-xs text-primary transform -translate-y-6 -translate-x-1 absolute left-3 top-4 px-1  z-10 isolate;
+  }
+
+  label:before {
+    @apply content-[''] w-[97%] h-[1px] absolute left-[1px] top-[8px] bg-white -z-10;
   }
 
   textarea {
@@ -100,7 +103,7 @@
   input.error-show,
   select.error-show,
   textarea.error-show {
-    @apply border border-red-500 bg-red-50;
+    @apply border border-red-500 animate-shake;
   }
   .tooltip-action-table {
     @apply relative p-1 bg-transparent leading-none;

@@ -77,7 +77,7 @@ const PayTypeLink = ({ setItemEdit }) => {
               <div className="group flex items-center justify-between border-b border-solid border-gray-300 ">
                 <Link
                   to={`${devNavUrl}/${UrlAdmin}/pay-type/pay-item?paytypeid=${item.paytype_aid}`}
-                  className="w-full py-4"
+                  className="w-full py-1"
                   onClick={() => dispatch(setStartIndex(0))}
                 >
                   <div className="text-left grid lg:grid-cols-[3fr_1fr] ">

@@ -124,7 +124,7 @@ const ModalAddManageEarnings = ({ item, payType, employee }) => {
                 return (
                   <Form>
                     <div className="max-h-[28rem] overflow-y-scroll p-4">
-                      <div className="relative mb-5 mt-2">
+                      <div className="relative mb-5 mt-5">
                         {item ? (
                           <p>
                             <span className="text-primary">Employee: </span>

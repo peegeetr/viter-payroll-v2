@@ -4,14 +4,14 @@ function isRangeFromExist($object, $name)
 {
     $query = $object->checkRangeFrom();
     $count = $query->rowCount();
-    checkExistence($count, "{$name} already exist.");
+    checkExistence($count, "Range from {$name} already exist.");
 }
 
 function isRangeToExist($object, $name)
 {
     $query = $object->checkRangeTo();
     $count = $query->rowCount();
-    checkExistence($count, "{$name} already exist.");
+    checkExistence($count, "Range to {$name} already exist.");
 }
 
 

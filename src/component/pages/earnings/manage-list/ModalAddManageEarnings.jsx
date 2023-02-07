@@ -7,8 +7,16 @@ import { StoreContext } from "../../../../store/StoreContext";
 import useLoadAll from "../../../custom-hooks/useLoadAll";
 import fetchApi from "../../../helpers/fetchApi";
 import { fetchData } from "../../../helpers/fetchData";
-import { InputSelect, InputText } from "../../../helpers/FormInputs";
-import { consoleLog, devApiUrl } from "../../../helpers/functions-general";
+import {
+  InputSelect,
+  InputText,
+  MyCheckbox,
+} from "../../../helpers/FormInputs";
+import {
+  consoleLog,
+  devApiUrl,
+  handleNumOnly,
+} from "../../../helpers/functions-general";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 
 const ModalAddManageEarnings = ({ item, payType, employee }) => {
@@ -16,6 +24,8 @@ const ModalAddManageEarnings = ({ item, payType, employee }) => {
   const [loading, setLoading] = React.useState(false);
   const [employeeId, setEmployeeId] = React.useState("");
   const [payItem, setPayItem] = React.useState("");
+  const [isInstallmet, setIsInstallmet] = React.useState("");
+  const [absencesHris, setAbsencesHris] = React.useState([]);
   let payid = item ? `/${item.earnings_paytype_id}` : `/${0}`;
 
   const { result, setResult } = useLoadAll(
@@ -29,7 +39,6 @@ const ModalAddManageEarnings = ({ item, payType, employee }) => {
     const results = await fetchApi(`${devApiUrl}/v1/paytype/${paytypeid}`);
     if (results.data) {
       setLoading(false);
-      setPayItem([]);
       setResult(results.data);
     }
   };
@@ -42,41 +51,57 @@ const ModalAddManageEarnings = ({ item, payType, employee }) => {
       setPayItem(results.data);
     }
   };
-  consoleLog(payItem, result);
 
   const handleEmployee = async (e) => {
     // get employee id
     setEmployeeId(e.target.options[e.target.selectedIndex].id);
   };
 
+  const handleIsInstallment = async (e) => {
+    let categoryIsInstallmet = e.target.value;
+    // get employee id
+    setIsInstallmet(categoryIsInstallmet);
+  };
+
+  consoleLog(payItem, isInstallmet);
+
   const handleClose = () => {
     dispatch(setIsAdd(false));
   };
   const initVal = {
     earnings_employee: item ? item.earnings_employee : "",
+    earnings_payroll_id: item ? item.earnings_payroll_id : "sample_pr_id",
     earnings_employee_id: "",
     earnings_paytype_id: item ? item.earnings_paytype_id : "",
     earnings_payitem_id: item ? item.earnings_payitem_id : "",
-    earnings_amount: item ? item.earnings_amount : "",
     earnings_frequency: item ? item.earnings_frequency : "",
+
+    earnings_amount: item ? item.earnings_amount : "",
     earnings_number_of_installment: item
       ? item.earnings_number_of_installment
       : "",
     earnings_start_pay_date: item ? item.earnings_start_pay_date : "",
     earnings_end_pay_date: item ? item.earnings_end_pay_date : "",
+
+    earnings_is_installment: item ? item.earnings_is_installment : "",
   };
 
   const yupSchema = Yup.object({
     earnings_employee: Yup.string().required("Required"),
     earnings_paytype_id: Yup.string().required("Required"),
     earnings_payitem_id: Yup.string().required("Required"),
-    earnings_amount: Yup.string().required("Required"),
+    earnings_amount:
+      ((payItem.length > 0 && payItem[0].payitem_is_hris === 0) ||
+        (item && item.payitem_is_hris === 0)) &&
+      Yup.string().required("Required"),
     earnings_frequency: Yup.string().required("Required"),
-    earnings_number_of_installment: Yup.string().required("Required"),
-    earnings_start_pay_date: Yup.string().required("Required"),
-    earnings_end_pay_date: Yup.string().required("Required"),
+    earnings_number_of_installment:
+      isInstallmet === "2" && Yup.string().required("Required"),
+    earnings_start_pay_date:
+      isInstallmet !== "0" && Yup.string().required("Required"),
+    earnings_end_pay_date:
+      isInstallmet !== "0" && Yup.string().required("Required"),
   });
-
   return (
     <>
       <div className="fixed top-0 right-0 bottom-0 left-0 flex items-center justify-center bg-dark bg-opacity-50 z-50">
@@ -100,27 +125,34 @@ const ModalAddManageEarnings = ({ item, payType, employee }) => {
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
                 consoleLog(values, employee);
-                // fetchData(
-                //   setLoading,
-                //   item
-                //     ? `${devApiUrl}/v1/earnings/${item.earnings_aid}`
-                //     : `${devApiUrl}/v1/earnings`,
-                //   { ...values, employee }, // form data values
-                //   null, // result set data
-                //   item ? "Succesfully updated." : "Succesfully added.", // success msg
-                //   "", // additional error msg if needed
-                //   dispatch, // context api action
-                //   store, // context api state
-                //   true, // boolean to show success modal
-                //   false, // boolean to show load more functionality button
-                //   null, // navigate default value
-                //   item ? "put" : "post"
-                // );
+                // get data from HRIS
+                if (payItem[0].payitem_is_hris === 1) {
+                  // fetch data
+                  // filter data based on payroll period
+                  // set data filterd data to state and pass to server
+                }
+                fetchData(
+                  setLoading,
+                  item
+                    ? `${devApiUrl}/v1/earnings/${item.earnings_aid}`
+                    : `${devApiUrl}/v1/earnings`,
+                  { ...values, employee }, // form data values
+                  null, // result set data
+                  item ? "Succesfully updated." : "Succesfully added.", // success msg
+                  "", // additional error msg if needed
+                  dispatch, // context api action
+                  store, // context api state
+                  true, // boolean to show success modal
+                  false, // boolean to show load more functionality button
+                  null, // navigate default value
+                  item ? "put" : "post"
+                );
                 dispatch(setStartIndex(0));
               }}
             >
               {(props) => {
                 props.values.earnings_employee_id = employeeId;
+
                 return (
                   <Form>
                     <div className="max-h-[28rem] overflow-y-scroll p-4">
@@ -224,12 +256,27 @@ const ModalAddManageEarnings = ({ item, payType, employee }) => {
                           </optgroup>
                         </InputSelect>
                       </div>
-
+                      <div className="relative mb-5">
+                        <InputSelect
+                          name="earnings_frequency"
+                          label="Frequency"
+                          //  disabled={!loading}
+                          onFocus={(e) =>
+                            e.target.parentElement.classList.add("focused")
+                          }
+                        >
+                          <optgroup label="Frequency">
+                            <option value="" hidden></option>
+                            <option value="sm">Semi-monthly</option>
+                            <option value="m">Monthly</option>
+                          </optgroup>
+                        </InputSelect>
+                      </div>
                       {(payItem.length > 0 &&
                         payItem[0].payitem_is_hris === 1) ||
                       (item && item.payitem_is_hris === 1) ? (
-                        <p className="text-primary font-bold">
-                          This will be import data from HRIS.
+                        <p className="text-primary text-center">
+                          Data will be imported from HRIS.
                         </p>
                       ) : (
                         <>
@@ -237,54 +284,65 @@ const ModalAddManageEarnings = ({ item, payType, employee }) => {
                             <InputText
                               label="Amount"
                               type="text"
+                              onKeyPress={handleNumOnly}
                               name="earnings_amount"
                               disabled={loading}
                             />
                           </div>
-                          <div className="relative mb-5">
+
+                          <div className="relative mb-5 ">
                             <InputSelect
-                              name="earnings_frequency"
-                              label="Frequency"
-                              //  disabled={!loading}
+                              label={"Will be given"}
+                              onChange={handleIsInstallment}
+                              name="earnings_is_installment"
+                              disabled={loading}
                               onFocus={(e) =>
                                 e.target.parentElement.classList.add("focused")
                               }
                             >
-                              <optgroup label="Frequency">
+                              <optgroup label="Will be given">
                                 <option value="" hidden></option>
-                                <option value="SM">Semi-monthly</option>
-                                <option value="M">Monthly</option>
+                                <option value="0">Every payroll</option>
+                                <option value="1">One-time</option>
+                                <option value="2">Installment</option>
                               </optgroup>
                             </InputSelect>
                           </div>
-                          <div className="relative mb-5">
-                            <InputText
-                              label="No. of installment"
-                              type="text"
-                              name="earnings_number_of_installment"
-                              disabled={loading}
-                            />
-                          </div>
-                          <div className="relative mb-5">
-                            <InputText
-                              label="Start Date"
-                              type="text"
-                              onFocus={(e) => (e.target.type = "date")}
-                              onBlur={(e) => (e.target.type = "date")}
-                              name="earnings_start_pay_date"
-                              disabled={loading}
-                            />
-                          </div>
-                          <div className="relative mb-5">
-                            <InputText
-                              label="End Date"
-                              type="text"
-                              onFocus={(e) => (e.target.type = "date")}
-                              onBlur={(e) => (e.target.type = "date")}
-                              name="earnings_end_pay_date"
-                              disabled={loading}
-                            />
-                          </div>
+
+                          {isInstallmet === "2" && (
+                            <div className="relative mb-5">
+                              <InputText
+                                label="No. of installment"
+                                type="text"
+                                name="earnings_number_of_installment"
+                                disabled={loading}
+                              />
+                            </div>
+                          )}
+                          {(isInstallmet === "1" || isInstallmet === "2") && (
+                            <>
+                              <div className="relative mb-5">
+                                <InputText
+                                  label="Start Date"
+                                  type="text"
+                                  onFocus={(e) => (e.target.type = "date")}
+                                  onBlur={(e) => (e.target.type = "date")}
+                                  name="earnings_start_pay_date"
+                                  disabled={loading}
+                                />
+                              </div>
+                              <div className="relative mb-5">
+                                <InputText
+                                  label="End Date"
+                                  type="text"
+                                  onFocus={(e) => (e.target.type = "date")}
+                                  onBlur={(e) => (e.target.type = "date")}
+                                  name="earnings_end_pay_date"
+                                  disabled={loading}
+                                />
+                              </div>
+                            </>
+                          )}
                         </>
                       )}
                     </div>

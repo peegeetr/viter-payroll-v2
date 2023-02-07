@@ -117,7 +117,7 @@ const EmployeeList = () => {
                         {item.employee_mname}
                       </span>
                     </td>
-                    <td>123456</td>
+                    <td>{"item.EmpNo"}</td>
                     <td>{item.employee_email}</td>
                     <td>{item.employee_mobile_number}</td>
                     <td>
@@ -136,44 +136,6 @@ const EmployeeList = () => {
                         >
                           <FaEdit />
                         </Link>
-                        {/* {item.employee_is_active === 1 ? (
-                          <>
-                            <Link
-                              to={`${devNavUrl}/${UrlAdmin}/employee/details?employeeid=${item.employee_aid}`}
-                              className="btn-action-table tooltip-action-table"
-                              data-tooltip="Edit"
-                            >
-                              <FaEdit />
-                            </Link>
-                            <button
-                              type="button"
-                              className="btn-action-table tooltip-action-table"
-                              data-tooltip="Archive"
-                              onClick={() => handleArchive(item)}
-                            >
-                              <FaArchive />
-                            </button>
-                          </>
-                        ) : (
-                          <>
-                            <button
-                              type="button"
-                              className="btn-action-table tooltip-action-table"
-                              data-tooltip="Restore"
-                              onClick={() => handleRestore(item)}
-                            >
-                              <FaHistory />
-                            </button>
-                            <button
-                              type="button"
-                              className="btn-action-table tooltip-action-table"
-                              data-tooltip="Delete"
-                              onClick={() => handleDelete(item)}
-                            >
-                              <FaTrash />
-                            </button>
-                          </>
-                        )} */}
                       </div>
                     </td>
                   </tr>

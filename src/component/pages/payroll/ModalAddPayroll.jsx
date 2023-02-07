@@ -4,36 +4,38 @@ import { FaTimesCircle } from "react-icons/fa";
 import * as Yup from "yup";
 import { setIsAdd, setStartIndex } from "../../../store/StoreAction";
 import { StoreContext } from "../../../store/StoreContext";
+import useLoadLastPayrollId from "../../custom-hooks/useLoadLastPayrollId";
 import { fetchData } from "../../helpers/fetchData";
 import {
   InputSelect,
   InputText,
   InputTextArea,
 } from "../../helpers/FormInputs";
-import { devApiUrl } from "../../helpers/functions-general";
+import { consoleLog, devApiUrl } from "../../helpers/functions-general";
 import ButtonSpinner from "../../partials/spinners/ButtonSpinner";
 
 const ModalAddPayroll = ({ item }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [loading, setLoading] = React.useState(false);
 
+  const { lastId } = useLoadLastPayrollId(`${devApiUrl}/v1/payroll`, "get");
   const handleClose = () => {
     dispatch(setIsAdd(false));
   };
 
   const initVal = {
-    paytype_aid: item ? item.paytype_aid : "",
-    paytype_category: item ? item.paytype_category : "",
-    paytype_name: item ? item.paytype_name : "",
-    paytype_description: item ? item.paytype_description : "",
-
-    paytype_name_old: item ? item.paytype_name : "",
+    payroll_id: "",
+    payroll_start_date: item ? item.payroll_start_date : "",
+    payroll_end_date: item ? item.payroll_end_date : "",
+    payroll_pay_date: item ? item.payroll_pay_date : "",
+    payroll_earning_type: item ? item.payroll_earning_type : "",
   };
 
   const yupSchema = Yup.object({
-    paytype_category: Yup.string().required("Required"),
-    paytype_name: Yup.string().required("Required"),
-    paytype_description: Yup.string().required("Required"),
+    payroll_start_date: Yup.string().required("Required"),
+    payroll_end_date: Yup.string().required("Required"),
+    payroll_pay_date: Yup.string().required("Required"),
+    payroll_earning_type: Yup.string().required("Required"),
   });
 
   return (
@@ -57,11 +59,12 @@ const ModalAddPayroll = ({ item }) => {
               initialValues={initVal}
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
+                consoleLog(values);
                 fetchData(
                   setLoading,
                   item
-                    ? `${devApiUrl}/v1/paytype/${item.paytype_aid}`
-                    : `${devApiUrl}/v1/paytype`,
+                    ? `${devApiUrl}/v1/payroll/${item.payroll_aid}`
+                    : `${devApiUrl}/v1/payroll`,
                   values, // form data values
                   null, // result set data
                   item ? "Succesfully updated." : "Succesfully added.", // success msg
@@ -77,12 +80,13 @@ const ModalAddPayroll = ({ item }) => {
               }}
             >
               {(props) => {
+                props.values.payroll_id = lastId;
                 return (
                   <Form>
                     <div className="relative my-5 ">
                       <InputSelect
-                        label="Category"
-                        name="paytype_category"
+                        label="Earning Type"
+                        name="payroll_earning_type"
                         disabled={loading}
                         onFocus={(e) =>
                           e.target.parentElement.classList.add("focused")
@@ -90,28 +94,44 @@ const ModalAddPayroll = ({ item }) => {
                       >
                         <optgroup label="Category">
                           <option value="" hidden></option>
-                          <option value="earnings">Earnings</option>
-                          <option value="deductions">Deductions</option>
+                          <option value="salary">Salary</option>
+                          <option value="bonuses">Bonuses</option>
+                          <option value="13th month">13th month</option>
                         </optgroup>
                       </InputSelect>
                     </div>
-
+                    <p className="text-primary ml-3 mb-3">Pay period</p>
                     <div className="relative mb-5">
                       <InputText
-                        label="Name"
+                        label="From"
                         type="text"
-                        name="paytype_name"
+                        onFocus={(e) => (e.target.type = "date")}
+                        onBlur={(e) => (e.target.type = "date")}
+                        name="payroll_start_date"
                         disabled={loading}
                       />
                     </div>
                     <div className="relative mb-5">
-                      <InputTextArea
-                        label="Description"
+                      <InputText
+                        label="To"
                         type="text"
-                        name="paytype_description"
+                        onFocus={(e) => (e.target.type = "date")}
+                        onBlur={(e) => (e.target.type = "date")}
+                        name="payroll_end_date"
                         disabled={loading}
                       />
                     </div>
+                    <div className="relative mb-5">
+                      <InputText
+                        label="Pay Date"
+                        type="text"
+                        onFocus={(e) => (e.target.type = "date")}
+                        onBlur={(e) => (e.target.type = "date")}
+                        name="payroll_pay_date"
+                        disabled={loading}
+                      />
+                    </div>
+
                     <div className="flex items-center gap-1 pt-5">
                       <button
                         type="submit"

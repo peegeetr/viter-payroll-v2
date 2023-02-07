@@ -36,7 +36,7 @@ const Payroll = () => {
         <hr />
 
         <div className="w-full pt-5 pb-20">
-          <PayrollList />
+          <PayrollList setItemEdit={setItemEdit} />
         </div>
         <Footer />
       </div>

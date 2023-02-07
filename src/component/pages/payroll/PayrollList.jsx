@@ -1,12 +1,13 @@
 import React from "react";
-import { FaEdit, FaUserCircle } from "react-icons/fa";
+import { FaEdit, FaArchive, FaList, FaTrash } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { setIsConfirm, setIsRestore } from "../../../store/StoreAction";
 import { StoreContext } from "../../../store/StoreContext";
 import useFetchDataLoadMore from "../../custom-hooks/useFetchDataLoadMore";
 import {
+  devApiUrl,
   devNavUrl,
-  hrisDevApiUrl,
+  formatDate,
   UrlAdmin,
 } from "../../helpers/functions-general";
 import Loadmore from "../../partials/Loadmore";
@@ -19,7 +20,7 @@ import TableSpinner from "../../partials/spinners/TableSpinner";
 import StatusActive from "../../partials/status/StatusActive";
 import StatusInactive from "../../partials/status/StatusInactive";
 
-const PayrollList = () => {
+const PayrollList = ({ setItemEdit }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [dataItem, setData] = React.useState(null);
   const [id, setId] = React.useState(null);
@@ -37,29 +38,29 @@ const PayrollList = () => {
     handleSearch,
     handleChange,
   } = useFetchDataLoadMore(
-    `${hrisDevApiUrl}/v1/employees/limit/${start}/${perPage}`,
-    `${hrisDevApiUrl}/v1/employees`,
+    `${devApiUrl}/v1/payroll/limit/${start}/${perPage}`,
+    `${devApiUrl}/v1/payroll`,
     perPage,
     search
   );
 
   const handleArchive = (item) => {
     dispatch(setIsConfirm(true));
-    setId(item.employee_aid);
+    setId(item.payroll_aid);
     setData(item);
     setDel(null);
   };
 
   const handleRestore = (item) => {
     dispatch(setIsRestore(true));
-    setId(item.employee_aid);
+    setId(item.payroll_aid);
     setData(item);
     setDel(null);
   };
 
   const handleDelete = (item) => {
     dispatch(setIsRestore(true));
-    setId(item.employee_aid);
+    setId(item.payroll_aid);
     setData(item);
     setDel(true);
   };
@@ -73,7 +74,7 @@ const PayrollList = () => {
         loading={loading}
         result={result}
         store={store}
-        url={`${hrisDevApiUrl}/v1/employees/search/`}
+        url={`${devApiUrl}/v1/payroll/search/`}
       />
 
       <div className="relative text-center overflow-x-auto z-0">
@@ -82,11 +83,12 @@ const PayrollList = () => {
           <thead>
             <tr>
               <th className="text-center">#</th>
-              <th className="w-12"></th>
-              <th className="w-52">Full Name</th>
-              <th className="w-28">Emp. No.</th>
-              <th className="w-80">Work Email</th>
-              <th className="w-32">Contact</th>
+              <th>Payroll ID</th>
+              <th>Pay period</th>
+              <th>Pay Date</th>
+              <th>Earning Type</th>
+              <th>No. of Employee</th>
+              <th>Total Amount</th>
               <th>Status</th>
               <th>Actions</th>
             </tr>
@@ -98,82 +100,54 @@ const PayrollList = () => {
                 return (
                   <tr key={key}>
                     <td className="text-center">{counter}.</td>
+                    <td>{item.payroll_id}</td>
                     <td>
-                      {item.employee_photo > 0 ? (
-                        <img
-                          src="https://hris.frontlinebusiness.com.ph/img/abrigo.jpg"
-                          alt="employee photo"
-                          className="rounded-full h-8 w-8 object-cover object-center mx-auto"
-                        />
-                      ) : (
-                        <span className="text-3xl text-gray-400">
-                          <FaUserCircle />
-                        </span>
-                      )}
-                    </td>
-                    <td>
-                      {`${item.employee_lname}, ${item.employee_fname}`}{" "}
+                      {"Jan 16 - 31 2023"}
                       <span className="inline-block text-[0] first-letter:text-sm">
-                        {item.employee_mname}
+                        {item.payroll_mname}
                       </span>
                     </td>
-                    <td>123456</td>
-                    <td>{item.employee_email}</td>
-                    <td>{item.employee_mobile_number}</td>
+                    <td>{formatDate(item.payroll_pay_date)}</td>
+                    <td>{item.payroll_earning_type}</td>
+                    <td>42</td>
+                    <td>4200</td>
                     <td>
-                      {item.employee_is_active === 1 ? (
-                        <StatusActive />
+                      {item.payroll_is_paid === 1 ? (
+                        <StatusActive text={"paid"} />
                       ) : (
-                        <StatusInactive />
+                        <StatusInactive text={"draft"} />
                       )}
                     </td>
                     <td>
                       <div className="flex items-center gap-1">
-                        <Link
-                          to={`${devNavUrl}/${UrlAdmin}/employee/details?employeeid=${item.employee_aid}`}
+                        {item.payroll_is_paid === 0 && (
+                          <Link
+                            to={`${devNavUrl}/${UrlAdmin}/payroll/details?payrollid=${item.payroll_aid}`}
+                            className="btn-action-table tooltip-action-table"
+                            data-tooltip="Edit"
+                          >
+                            <FaEdit />
+                          </Link>
+                        )}
+
+                        <button
+                          type="button"
                           className="btn-action-table tooltip-action-table"
-                          data-tooltip="Edit"
+                          data-tooltip="View"
+                          onClick={() => handleRestore(item)}
                         >
-                          <FaEdit />
-                        </Link>
-                        {/* {item.employee_is_active === 1 ? (
-                          <>
-                            <Link
-                              to={`${devNavUrl}/${UrlAdmin}/employee/details?employeeid=${item.employee_aid}`}
-                              className="btn-action-table tooltip-action-table"
-                              data-tooltip="Edit"
-                            >
-                              <FaEdit />
-                            </Link>
-                            <button
-                              type="button"
-                              className="btn-action-table tooltip-action-table"
-                              data-tooltip="Archive"
-                              onClick={() => handleArchive(item)}
-                            >
-                              <FaArchive />
-                            </button>
-                          </>
-                        ) : (
-                          <>
-                            <button
-                              type="button"
-                              className="btn-action-table tooltip-action-table"
-                              data-tooltip="Restore"
-                              onClick={() => handleRestore(item)}
-                            >
-                              <FaHistory />
-                            </button>
-                            <button
-                              type="button"
-                              className="btn-action-table tooltip-action-table"
-                              data-tooltip="Delete"
-                              onClick={() => handleDelete(item)}
-                            >
-                              <FaTrash />
-                            </button>
-                          </>
-                        )} */}
+                          <FaList />
+                        </button>
+                        {item.payroll_is_paid === 0 && (
+                          <button
+                            type="button"
+                            className="btn-action-table tooltip-action-table"
+                            data-tooltip="Delete"
+                            onClick={() => handleDelete(item)}
+                          >
+                            <FaTrash />
+                          </button>
+                        )}
                       </div>
                     </td>
                   </tr>
@@ -209,9 +183,9 @@ const PayrollList = () => {
         <ModalConfirm
           id={id}
           isDel={isDel}
-          mysqlApiArchive={`${hrisDevApiUrl}/v1/employees/active/${id}`}
-          msg={"Are you sure you want to archive this employee"}
-          item={`"${dataItem.employee_lname}, ${dataItem.employee_fname}"`}
+          mysqlApiArchive={`${devApiUrl}/v1/payroll/active/${id}`}
+          msg={"Are you sure you want to archive this payroll"}
+          item={`${dataItem.payroll_id}`}
         />
       )}
 
@@ -219,14 +193,14 @@ const PayrollList = () => {
         <ModalDeleteRestore
           id={id}
           isDel={isDel}
-          mysqlApiDelete={`${hrisDevApiUrl}/v1/employees/${id}`}
-          mysqlApiRestore={`${hrisDevApiUrl}/v1/employees/active/${id}`}
+          mysqlApiDelete={`${devApiUrl}/v1/payroll/${id}`}
+          mysqlApiRestore={`${devApiUrl}/v1/payroll/active/${id}`}
           msg={
             isDel
-              ? "Are you sure you want to delete this employee"
-              : "Are you sure you want to restore this employee"
+              ? "Are you sure you want to delete this payroll"
+              : "Are you sure you want to restore this payroll"
           }
-          item={`"${dataItem.employee_lname}, ${dataItem.employee_fname}"`}
+          item={`${dataItem.payroll_id}`}
         />
       )}
     </>

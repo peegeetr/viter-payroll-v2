@@ -1,40 +1,32 @@
 <?php
-// set http header
+
+// set http header 
 require '../../core/header.php';
 // use needed functions
 require '../../core/functions.php';
 // use needed classes
-require '../../models/earnings/Earnings.php';
+require '../../models/payroll/Payroll.php';
 // check database connection
 $conn = null;
 $conn = checkDbConnection();
 // make instance of classes
-$earnings = new Earnings($conn);
+$payroll = new Payroll($conn);
 $response = new Response();
-// get payload
-$body = file_get_contents("php://input");
-$data = json_decode($body, true);
-// get $_GET data
-// check if earningsid is in the url e.g. /jobtitle/1
-$error = [];
-$returnData = [];
 // validate api key
 if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
     checkApiKey();
-    if (array_key_exists("earningsid", $_GET)) {
-        // check data
-        checkPayload($data);
+
+    if (array_key_exists("start", $_GET) && array_key_exists("total", $_GET)) {
+        // get data
         // get task id from query string
-        $earnings->earnings_aid = $_GET['earningsid'];
-        $earnings->earnings_is_paid = trim($data["isActive"]);
-        $earnings->earnings_datetime = date("Y-m-d H:i:s");
+        $payroll->payroll_start = $_GET['start'];
+        $payroll->payroll_total = $_GET['total'];
         //check to see if task id in query string is not empty and is number, if not return json error
-        checkId($earnings->earnings_aid);
-        $query = checkActive($earnings);
+        checkLimitId($payroll->payroll_start, $payroll->payroll_total);
+        $query = checkReadLimit($payroll);
         http_response_code(200);
-        $returnData["data"] = [];
+        $returnData["data"] = getResultData($query);
         $returnData["count"] = $query->rowCount();
-        $returnData["role ID"] = $earnings->earnings_aid;
         $returnData["success"] = true;
         $response->setData($returnData);
         $response->send();

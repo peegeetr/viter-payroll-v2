@@ -10,7 +10,7 @@ const DeductionsPage = () => {
       <Header />
       <Navigation menu="deductions" />
       <div className="wrapper">
-        <h4 className="text-xl">Deductions</h4>
+        <h4 className="text-xl mb-3 ">Deductions</h4>
         <hr />
         <ul className="pt-5 pb-20 relative">
           <li className="py-2">

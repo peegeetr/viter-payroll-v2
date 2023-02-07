@@ -31,6 +31,7 @@ import JobDetails from "./component/pages/employee/job-details/JobDetails";
 import SalaryHistory from "./component/pages/employee/salary-history/SalaryHistory";
 import ReportsLink from "./component/pages/reports/ReportsLink";
 import { StoreProvider } from "./store/StoreContext";
+import Payroll from "./component/pages/payroll/Payroll";
 
 function App() {
   // Create a client
@@ -46,7 +47,7 @@ function App() {
             {/* Payroll Page */}
             <Route
               path={`${devNavUrl}/${UrlAdmin}/payroll`}
-              element={<PayrollLink />}
+              element={<Payroll />}
             />
 
             {/* Employee Page */}

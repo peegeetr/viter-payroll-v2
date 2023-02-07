@@ -25,6 +25,8 @@ const ModalAddManageEarnings = ({ item, payType, employee }) => {
   const [employeeId, setEmployeeId] = React.useState("");
   const [payItem, setPayItem] = React.useState("");
   const [isInstallmet, setIsInstallmet] = React.useState("");
+  const [numberInsti, setNumberInsti] = React.useState("");
+  const [isDate, setIsDate] = React.useState("");
   const [absencesHris, setAbsencesHris] = React.useState([]);
   let payid = item ? `/${item.earnings_paytype_id}` : `/${0}`;
 
@@ -61,16 +63,27 @@ const ModalAddManageEarnings = ({ item, payType, employee }) => {
     let categoryIsInstallmet = e.target.value;
     // get employee id
     setIsInstallmet(categoryIsInstallmet);
+    // controll start, end date and frequency
+    if (categoryIsInstallmet === "0") {
+      setNumberInsti("0");
+      setIsDate("n/a");
+    }
+    if (categoryIsInstallmet === "1") {
+      setNumberInsti("1");
+      setIsDate("");
+    }
+    if (categoryIsInstallmet === "2") {
+      setNumberInsti("");
+      setIsDate("");
+    }
   };
-
-  consoleLog(payItem, isInstallmet);
 
   const handleClose = () => {
     dispatch(setIsAdd(false));
   };
   const initVal = {
     earnings_employee: item ? item.earnings_employee : "",
-    earnings_payroll_id: item ? item.earnings_payroll_id : "sample_pr_id",
+    earnings_payroll_id: "",
     earnings_employee_id: "",
     earnings_paytype_id: item ? item.earnings_paytype_id : "",
     earnings_payitem_id: item ? item.earnings_payitem_id : "",
@@ -98,9 +111,11 @@ const ModalAddManageEarnings = ({ item, payType, employee }) => {
     earnings_number_of_installment:
       isInstallmet === "2" && Yup.string().required("Required"),
     earnings_start_pay_date:
-      isInstallmet !== "0" && Yup.string().required("Required"),
+      (isInstallmet === "1" || isInstallmet === "2") &&
+      Yup.string().required("Required"),
     earnings_end_pay_date:
-      isInstallmet !== "0" && Yup.string().required("Required"),
+      (isInstallmet === "1" || isInstallmet === "2") &&
+      Yup.string().required("Required"),
   });
   return (
     <>
@@ -152,6 +167,10 @@ const ModalAddManageEarnings = ({ item, payType, employee }) => {
             >
               {(props) => {
                 props.values.earnings_employee_id = employeeId;
+                props.values.earnings_payroll_id = "sample_pr_id";
+                props.values.earnings_number_of_installment = numberInsti;
+                props.values.earnings_start_pay_date = isDate;
+                props.values.earnings_end_pay_date = isDate;
 
                 return (
                   <Form>
@@ -314,6 +333,7 @@ const ModalAddManageEarnings = ({ item, payType, employee }) => {
                               <InputText
                                 label="No. of installment"
                                 type="text"
+                                onKeyPress={handleNumOnly}
                                 name="earnings_number_of_installment"
                                 disabled={loading}
                               />

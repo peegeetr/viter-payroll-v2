@@ -92,7 +92,7 @@ const ManageEarningsList = ({ setItemEdit }) => {
               <th className="min-w-[5rem]">Pay Item</th>
               <th className="min-w-[5rem]">Amount</th>
               <th className="min-w-[5rem]">Frequency</th>
-              <th className="min-w-[8rem]">No. of Installment</th>
+              <th className="min-w-[10rem]">No. of Installment</th>
               <th className="min-w-[8rem]">Start Date</th>
               <th className="min-w-[8rem]">End Date</th>
               <th>Status</th>
@@ -116,8 +116,16 @@ const ManageEarningsList = ({ setItemEdit }) => {
                         : "Monthly"}
                     </td>
                     <td>{item.earnings_number_of_installment}</td>
-                    <td>{formatDate(item.earnings_start_pay_date)}</td>
-                    <td>{formatDate(item.earnings_end_pay_date)}</td>
+                    <td>
+                      {item.earnings_start_pay_date === "n/a"
+                        ? "N/A"
+                        : formatDate(item.earnings_start_pay_date)}
+                    </td>
+                    <td>
+                      {item.earnings_end_pay_date === "n/a"
+                        ? "N/A"
+                        : formatDate(item.earnings_end_pay_date)}
+                    </td>
                     <td>
                       {item.earnings_is_active === 1 ? (
                         <StatusActive text="Paid" />

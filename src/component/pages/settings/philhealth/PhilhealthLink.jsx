@@ -10,13 +10,13 @@ const PhilhealthLink = () => {
     <div className="group flex items-center justify-between border-b border-solid border-gray-300">
       <Link
         to={`${devNavUrl}/${UrlAdmin}/settings/philhealth`}
-        className="w-full py-4"
+        className="w-full py-1"
       >
         <div className="flex items-center">
           <span className="text-lg mr-4">
             <GiHealthNormal />
           </span>
-          <span className="text-base font-bold">Philhealth</span>
+          <span className="font-bold">Philhealth</span>
         </div>
         <p className="ml-[35px] my-0">
           Manage what actions and capabilities every account are can perform in

@@ -72,7 +72,7 @@ const ModalAddManageDeduction = ({ itemEdit }) => {
                 return (
                   <Form>
                     <div className="max-h-[28rem] overflow-y-scroll p-4">
-                      <div className="relative mb-5 mt-2">
+                      <div className="relative mb-5 mt-5">
                         <InputSelect
                           label="Employee"
                           name="sample"

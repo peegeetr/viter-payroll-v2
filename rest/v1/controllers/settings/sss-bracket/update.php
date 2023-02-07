@@ -21,11 +21,17 @@ if (array_key_exists("sssbracketid", $_GET)) {
    $sss_bracket->sss_bracket_total = checkIndex($data, "sss_bracket_total");
    $sss_bracket->sss_bracket_active = 1;
    $sss_bracket->sss_bracket_datetime = date("Y-m-d H:i:s");
+
+   $sss_bracket_range_from_old = strtolower($data["sss_bracket_range_from_old"]);
+   $sss_bracket_range_to_old = strtolower($data["sss_bracket_range_to_old"]);
+   
+
     //$department_name_old = checkIndex($data, "department_name_old");
     //check to see if task id in query string is not empty and is number, if not return json error
     checkId($sss_bracket->sss_bracket_aid);
     // check name
-    //compareName($department,$sss_bracket_name_old,$sss_bracket->department_name);
+    compareRangeFrom($sss_bracket, $sss_bracket_range_from_old, $sss_bracket->sss_bracket_range_from);
+    compareRangeTo($sss_bracket, $sss_bracket_range_to_old, $sss_bracket->sss_bracket_range_to);
     // update
     $query = checkUpdate($sss_bracket);
     $returnData["data"] = [];

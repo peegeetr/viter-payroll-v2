@@ -16,13 +16,13 @@ const RatesLink = () => {
     >
       <Link
         to={`${devNavUrl}/${UrlAdmin}/settings/rates`}
-        className="w-full py-4"
+        className="w-full py-1"
       >
         <div className="flex items-center">
           <span className="text-lg mr-4">
             <FaHandHoldingUsd />
           </span>
-          <span className="text-base font-bold">Rates</span>
+          <span className=" font-bold">Rates</span>
         </div>
         <p className="ml-[35px] my-0">
           Manage what actions and capabilities every account are can perform in

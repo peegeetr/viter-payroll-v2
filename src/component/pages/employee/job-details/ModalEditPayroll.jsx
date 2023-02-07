@@ -102,7 +102,7 @@ const ModalEditPayroll = ({ itemEdit }) => {
                 {(props) => {
                   return (
                     <Form>
-                      <div className="relative mb-3 pt-5 flex items-center">
+                      <div className="relative my-5 px-5 flex items-center">
                         <p className="w-1/2 m-0">Payroll Elegibility</p>
                         <span>
                           <MyCheckbox

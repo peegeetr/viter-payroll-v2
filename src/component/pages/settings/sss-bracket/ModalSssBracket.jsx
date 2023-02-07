@@ -27,6 +27,9 @@ const ModalSssBracket = ({ itemEdit }) => {
     sss_bracket_er: itemEdit ? itemEdit.sss_bracket_er : "",
     sss_bracket_ee: itemEdit ? itemEdit.sss_bracket_ee : "",
     sss_bracket_total: itemEdit ? itemEdit.sss_bracket_total : "",
+
+    sss_bracket_range_from_old: itemEdit ? itemEdit.sss_bracket_range_from : "",
+    sss_bracket_range_to_old: itemEdit ? itemEdit.sss_bracket_range_to : "",
   };
 
   const yupSchema = Yup.object({
@@ -80,7 +83,7 @@ const ModalSssBracket = ({ itemEdit }) => {
               {(props) => {
                 return (
                   <Form>
-                    <div className="relative mb-5">
+                    <div className="relative my-5">
                       <InputText
                         label="Range From"
                         type="text"

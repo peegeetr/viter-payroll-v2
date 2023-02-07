@@ -25,7 +25,7 @@ $semiMonthly->semi_monthly_created = date("Y-m-d");
 $semiMonthly->semi_monthly_datetime = date("Y-m-d H:i:s");
 // check name
 isRangeFromExist($semiMonthly, $semiMonthly->semi_monthly_range_from);
-isRangeFromTo($semiMonthly, $semiMonthly->semi_monthly_range_to);
+isRangeToExist($semiMonthly, $semiMonthly->semi_monthly_range_to);
 
 $query = checkCreate($semiMonthly);
 $returnData = [];

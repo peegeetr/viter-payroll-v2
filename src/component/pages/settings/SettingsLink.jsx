@@ -19,7 +19,7 @@ const SettingsLink = () => {
         <h4 className="text-xl">Settings</h4>
         <BreadCrumbs />
         <hr />
-        <ul className="pt-5 pb-20 relative">
+        <ul className="pt-2 pb-20 relative">
           <li className="py-2">
             <UserLink />
           </li>

@@ -154,4 +154,36 @@ class SssBracket
         }
         return $query;
     }
+
+    public function checkRangeFrom()
+    {
+        try {
+            $sql = "select sss_bracket_range_from from {$this->tblSssBracket} ";
+            $sql .= "where sss_bracket_range_from = :sss_bracket_range_from ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "sss_bracket_range_from" => "{$this->sss_bracket_range_from}",
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    public function checkRangeTo()
+    {
+        try {
+            $sql = "select sss_bracket_range_to from {$this->tblSssBracket} ";
+            $sql .= "where sss_bracket_range_to = :sss_bracket_range_to ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "sss_bracket_range_to" => "{$this->sss_bracket_range_to}",
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+
 }

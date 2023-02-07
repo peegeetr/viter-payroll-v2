@@ -3,12 +3,12 @@ import React from "react";
 // Online URL dev hris
 export const hrisDevApiUrl =
   "https://hris.frontlinebusiness.com.ph/dev-app/rest";
-// export const hrisDevBaseImgUrl =
-//   "https://hris.frontlinebusiness.com.ph/dev-app/img";
-// export const hrisdevBaseUrl = "https://hris.frontlinebusiness.com.ph/dev-app";
-// export const hrisdevNavUrl = "/dev-app";
+export const hrisDevBaseImgUrl =
+  "https://hris.frontlinebusiness.com.ph/dev-app/img";
+export const hrisdevBaseUrl = "https://hris.frontlinebusiness.com.ph/dev-app";
+export const hrisdevNavUrl = "/dev-app";
 
-// // Online URL dev payroll
+// Online URL dev payroll
 // export const devApiUrl = "https://payroll-app.frontlinebusiness.com.ph/rest";
 // export const devBaseImgUrl = "https://payroll-app.frontlinebusiness.com.ph/img";
 // export const devBaseUrl = "https://payroll-app.frontlinebusiness.com.ph";
@@ -23,15 +23,15 @@ export const hrisDevApiUrl =
 // export const devNavUrl = "/dev-app";
 
 // Local URL dev
-// export const devApiUrl = "http://localhost/viter-payroll-v2/rest";
-// export const devBaseUrl = "http://localhost/viter-payroll-v2/public";
-// export const devBaseImgUrl = "http://localhost/viter-payroll-v2/public/img";
-// export const devNavUrl = "";
+export const devApiUrl = "http://localhost/viter-payroll-v2/rest";
+export const devBaseUrl = "http://localhost/viter-payroll-v2/public";
+export const devBaseImgUrl = "http://localhost/viter-payroll-v2/public/img";
+export const devNavUrl = "";
 
 // // cy url
-export const devApiUrl = "http://localhost/projects/viter-payroll-v2/rest";
-export const devBaseUrl = "http://localhost/projects/viter-payroll-v2/public";
-export const devNavUrl = "";
+// export const devApiUrl = "http://localhost/projects/viter-payroll-v2/rest";
+// export const devBaseUrl = "http://localhost/projects/viter-payroll-v2/public";
+// export const devNavUrl = "";
 
 export const UrlAdmin = "admin";
 

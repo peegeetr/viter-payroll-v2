@@ -5,15 +5,15 @@ $conn = checkDbConnection();
 // make instance of classes
 $payroll = new Payroll($conn);
 // get $_GET data
-// check if earningsid is in the url e.g. /earningsid/1
+// check if payrollid is in the url e.g. /payrollid/1
 $error = [];
 $returnData = [];
-if (array_key_exists("earningsid", $_GET)) {
+if (array_key_exists("payrollid", $_GET)) {
     // check data
     checkPayload($data);
     // get data
-    // get earningsid from query string
-    $payroll->payroll_aid = $_GET['earningsid'];
+    // get payrollid from query string
+    $payroll->payroll_aid = $_GET['payrollid'];
     $payroll->payroll_start_date = checkIndex($data, "payroll_start_date");
     $payroll->payroll_end_date = checkIndex($data, "payroll_end_date");
     $payroll->payroll_pay_date = addslashes(trim($data["payroll_pay_date"]));

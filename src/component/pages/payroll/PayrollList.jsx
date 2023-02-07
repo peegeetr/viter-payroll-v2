@@ -1,7 +1,7 @@
 import React from "react";
-import { FaEdit, FaArchive, FaList, FaTrash } from "react-icons/fa";
+import { FaEdit, FaList, FaTrash } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { setIsConfirm, setIsRestore } from "../../../store/StoreAction";
+import { setIsAdd, setIsRestore } from "../../../store/StoreAction";
 import { StoreContext } from "../../../store/StoreContext";
 import useFetchDataLoadMore from "../../custom-hooks/useFetchDataLoadMore";
 import {
@@ -11,7 +11,6 @@ import {
   UrlAdmin,
 } from "../../helpers/functions-general";
 import Loadmore from "../../partials/Loadmore";
-import ModalConfirm from "../../partials/modals/ModalConfirm";
 import ModalDeleteRestore from "../../partials/modals/ModalDeleteRestore";
 import NoData from "../../partials/NoData";
 import SearchBar from "../../partials/SearchBar";
@@ -44,18 +43,9 @@ const PayrollList = ({ setItemEdit }) => {
     search
   );
 
-  const handleArchive = (item) => {
-    dispatch(setIsConfirm(true));
-    setId(item.payroll_aid);
-    setData(item);
-    setDel(null);
-  };
-
-  const handleRestore = (item) => {
-    dispatch(setIsRestore(true));
-    setId(item.payroll_aid);
-    setData(item);
-    setDel(null);
+  const handleEdit = (item) => {
+    dispatch(setIsAdd(true));
+    setItemEdit(item);
   };
 
   const handleDelete = (item) => {
@@ -102,7 +92,10 @@ const PayrollList = ({ setItemEdit }) => {
                     <td className="text-center">{counter}.</td>
                     <td>{item.payroll_id}</td>
                     <td>
-                      {"Jan 16 - 31 2023"}
+                      {`${formatDate(item.payroll_start_date).split(" ")[0]} 
+                      ${formatDate(item.payroll_start_date).split(" ")[1]} - ${
+                        formatDate(item.payroll_end_date).split(" ")[1]
+                      } ${formatDate(item.payroll_end_date).split(" ")[2]}`}
                       <span className="inline-block text-[0] first-letter:text-sm">
                         {item.payroll_mname}
                       </span>
@@ -121,23 +114,23 @@ const PayrollList = ({ setItemEdit }) => {
                     <td>
                       <div className="flex items-center gap-1">
                         {item.payroll_is_paid === 0 && (
-                          <Link
-                            to={`${devNavUrl}/${UrlAdmin}/payroll/details?payrollid=${item.payroll_aid}`}
+                          <button
+                            type="button"
                             className="btn-action-table tooltip-action-table"
                             data-tooltip="Edit"
+                            onClick={() => handleEdit(item)}
                           >
                             <FaEdit />
-                          </Link>
+                          </button>
                         )}
-
-                        <button
-                          type="button"
+                        <Link
+                          to={`${devNavUrl}/${UrlAdmin}/payroll/view?payrollid=${item.payroll_aid}`}
                           className="btn-action-table tooltip-action-table"
                           data-tooltip="View"
-                          onClick={() => handleRestore(item)}
                         >
                           <FaList />
-                        </button>
+                        </Link>
+
                         {item.payroll_is_paid === 0 && (
                           <button
                             type="button"
@@ -179,27 +172,12 @@ const PayrollList = ({ setItemEdit }) => {
         )}
       </div>
 
-      {store.isConfirm && (
-        <ModalConfirm
-          id={id}
-          isDel={isDel}
-          mysqlApiArchive={`${devApiUrl}/v1/payroll/active/${id}`}
-          msg={"Are you sure you want to archive this payroll"}
-          item={`${dataItem.payroll_id}`}
-        />
-      )}
-
       {store.isRestore && (
         <ModalDeleteRestore
           id={id}
           isDel={isDel}
           mysqlApiDelete={`${devApiUrl}/v1/payroll/${id}`}
-          mysqlApiRestore={`${devApiUrl}/v1/payroll/active/${id}`}
-          msg={
-            isDel
-              ? "Are you sure you want to delete this payroll"
-              : "Are you sure you want to restore this payroll"
-          }
+          msg={"Are you sure you want to delete this payroll"}
           item={`${dataItem.payroll_id}`}
         />
       )}

@@ -18,6 +18,7 @@ if (array_key_exists("earningsid", $_GET)) {
     $earnings->earnings_payitem_id = checkIndex($data, "earnings_payitem_id");
     $earnings->earnings_amount = checkIndex($data, "earnings_amount");
     $earnings->earnings_frequency = addslashes(trim($data["earnings_frequency"]));
+    $earnings->earnings_is_installment = checkIndex($data, "earnings_is_installment");
     $earnings->earnings_number_of_installment = checkIndex($data, "earnings_number_of_installment");
     $earnings->earnings_start_pay_date = checkIndex($data, "earnings_start_pay_date");
     $earnings->earnings_end_pay_date = checkIndex($data, "earnings_end_pay_date");

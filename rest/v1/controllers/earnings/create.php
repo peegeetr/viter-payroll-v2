@@ -34,7 +34,7 @@ $earnings->earnings_datetime = date("Y-m-d H:i:s");
 $allEmployee = $data["employee"];
 
 if ($earnings->earnings_employee == "all") {
-    // create employee to pending all
+    // create employee name and id
     for ($i = 0; $i < count($allEmployee); $i++) {
         $employee_lname = $allEmployee[$i]["employee_lname"];
         $employee_fname = $allEmployee[$i]["employee_fname"];
@@ -52,7 +52,7 @@ if ($earnings->earnings_employee == "all") {
 $returnData = [];
 $returnData["data"] = [];
 $returnData["count"] = $query->rowCount();
-$returnData["Role ID"] = $earnings->lastInsertedId;
+$returnData["earning ID"] = $earnings->lastInsertedId;
 $returnData["GET"] = $_GET;
 $returnData["success"] = true;
 return $returnData;

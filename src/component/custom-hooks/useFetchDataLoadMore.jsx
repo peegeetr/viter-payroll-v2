@@ -5,7 +5,7 @@ import fetchApi from "../helpers/fetchApi";
 import { fetchData } from "../helpers/fetchData";
 import { consoleLog, devApiUrl } from "../helpers/functions-general";
 
-const useFetchDataLoadMore = (url, url2, perPage, search) => {
+const useFetchDataLoadMore = (url, url2, perPage, search, param1 = null) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [totalResult, setTotalResult] = React.useState(perPage);
   const [result, setResult] = React.useState([]);
@@ -23,7 +23,9 @@ const useFetchDataLoadMore = (url, url2, perPage, search) => {
     fetchData(
       setLoading, // Boolean loading values optional
       url,
-      {}, // form data values
+      {
+        type: param1,
+      }, // form data values
       setResult,
       "",
       "", // additional error msg if needed optional

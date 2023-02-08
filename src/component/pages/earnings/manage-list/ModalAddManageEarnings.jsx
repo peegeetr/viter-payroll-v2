@@ -2,16 +2,16 @@ import { Form, Formik } from "formik";
 import React from "react";
 import { FaTimesCircle } from "react-icons/fa";
 import * as Yup from "yup";
-import { setIsAdd, setStartIndex } from "../../../../store/StoreAction";
+import {
+  setIsAdd,
+  setIsFinish,
+  setStartIndex,
+} from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
 import useLoadAll from "../../../custom-hooks/useLoadAll";
 import fetchApi from "../../../helpers/fetchApi";
 import { fetchData } from "../../../helpers/fetchData";
-import {
-  InputSelect,
-  InputText,
-  MyCheckbox,
-} from "../../../helpers/FormInputs";
+import { InputSelect, InputText } from "../../../helpers/FormInputs";
 import {
   consoleLog,
   devApiUrl,
@@ -44,6 +44,7 @@ const ModalAddManageEarnings = ({ item, payType, employee }) => {
       setResult(results.data);
     }
   };
+
   const handlePayItem = async (e, props) => {
     let payitemid = e.target.value;
     setLoading(true);
@@ -79,8 +80,10 @@ const ModalAddManageEarnings = ({ item, payType, employee }) => {
   };
 
   const handleClose = () => {
+    // dispatch(setIsFinish(false));
     dispatch(setIsAdd(false));
   };
+
   const initVal = {
     earnings_employee: item ? item.earnings_employee : "",
     earnings_payroll_id: "",
@@ -157,7 +160,7 @@ const ModalAddManageEarnings = ({ item, payType, employee }) => {
                   "", // additional error msg if needed
                   dispatch, // context api action
                   store, // context api state
-                  true, // boolean to show success modal
+                  false, // boolean to show success modal
                   false, // boolean to show load more functionality button
                   null, // navigate default value
                   item ? "put" : "post"
@@ -377,11 +380,12 @@ const ModalAddManageEarnings = ({ item, payType, employee }) => {
                       </button>
                       <button
                         type="reset"
-                        className="btn-modal-cancel cursor-pointer"
+                        className="btn-modal-submit cursor-pointer"
                         onClick={handleClose}
+                        // onClick={handleFinish}
                         disabled={loading}
                       >
-                        Cancel
+                        Finish
                       </button>
                     </div>
                   </Form>

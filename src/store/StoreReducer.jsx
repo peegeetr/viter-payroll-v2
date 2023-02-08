@@ -54,6 +54,12 @@ export const StoreReducer = (state, action) => {
         isAdd: action.payload,
       };
 
+    case "IS_FINISH":
+      return {
+        ...state,
+        isFinish: action.payload,
+      };
+
     case "IS_SEARCH":
       return {
         ...state,

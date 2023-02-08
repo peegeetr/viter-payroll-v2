@@ -33,7 +33,7 @@ const ManageEarnings = () => {
       <Header />
       <Navigation menu="earnings" />
       <div className="wrapper">
-        <div className="flex items-center justify-between whitespace-nowrap overflow-auto gap-2">
+        <div className="flex items-center mb-1 justify-between whitespace-nowrap overflow-auto gap-2">
           <BreadCrumbs />
           <div className="flex items-center gap-1">
             <button type="button" className="btn-primary" onClick={handleAdd}>

@@ -18,7 +18,7 @@ const FilterEarnings = () => {
       <Header />
       <Navigation menu="earnings" />
       <div className="wrapper">
-        <div className="flex items-center justify-between whitespace-nowrap overflow-auto gap-2">
+        <div className="flex items-center mb-1 justify-between whitespace-nowrap overflow-auto gap-2">
           <BreadCrumbs />
         </div>
         <hr />

@@ -92,10 +92,10 @@ const PayrollList = ({ setItemEdit }) => {
                     <td className="text-center">{counter}.</td>
                     <td>{item.payroll_id}</td>
                     <td>
-                      {`${formatDate(item.payroll_start_date).split(" ")[0]} 
-                      ${formatDate(item.payroll_start_date).split(" ")[1]} - ${
-                        formatDate(item.payroll_end_date).split(" ")[1]
-                      } ${formatDate(item.payroll_end_date).split(" ")[2]}`}
+                      {`${formatDate(item.payroll_start_date).split(" ")[1]} 
+                      ${formatDate(item.payroll_start_date).split(" ")[2]} - ${
+                        formatDate(item.payroll_end_date).split(" ")[2]
+                      },  ${formatDate(item.payroll_end_date).split(" ")[3]}`}
                       <span className="inline-block text-[0] first-letter:text-sm">
                         {item.payroll_mname}
                       </span>
@@ -124,7 +124,7 @@ const PayrollList = ({ setItemEdit }) => {
                           </button>
                         )}
                         <Link
-                          to={`${devNavUrl}/${UrlAdmin}/payroll/employee?payrollid=${item.payroll_aid}`}
+                          to={`${devNavUrl}/${UrlAdmin}/payroll/list?payrollid=${item.payroll_aid}`}
                           className="btn-action-table tooltip-action-table"
                           onClick={() => dispatch(setStartIndex(0))}
                           data-tooltip="View"

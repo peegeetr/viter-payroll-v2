@@ -28,7 +28,7 @@ export const devNavUrl = "";
 // export const devBaseImgUrl = "http://localhost/viter-payroll-v2/public/img";
 // export const devNavUrl = "";
 
-// // // cy url
+// // cy url
 // export const devApiUrl = "http://localhost/projects/viter-payroll-v2/rest";
 // export const devBaseUrl = "http://localhost/projects/viter-payroll-v2/public";
 // export const devNavUrl = "";
@@ -136,7 +136,7 @@ export const formatDate = (dateVal) => {
 
   // return `${days[day]} ${months[month]} ${date} ${year}`;
   // return `${days[day]}, ${months[month]} ${date}`;
-  return `${months[month]} ${date} ${year}`;
+  return `${days[day]} ${months[month]} ${date} ${year} `;
   // return `${months[month]}. ${date}, ${year}`;
   // return `${date} `;
 };

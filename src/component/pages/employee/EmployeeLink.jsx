@@ -11,7 +11,7 @@ const EmployeeLink = () => {
     <>
       <Header />
       <Navigation menu="employee" />
-      <div className="wrapper">
+      <div className="wrapper ">
         <BreadCrumbs />
         <hr />
         <ul className="pt-5 pb-20 relative">

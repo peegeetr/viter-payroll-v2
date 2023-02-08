@@ -6,11 +6,13 @@ import {
   setIsRestore,
 } from "../../../store/StoreAction";
 import { StoreContext } from "../../../store/StoreContext";
-import { devApiUrl } from "../../helpers/functions-general";
+import useLoadHolidays from "../../custom-hooks/useLoadHolidays.jsx";
+import { devApiUrl, formatDate } from "../../helpers/functions-general";
 import ModalConfirm from "../../partials/modals/ModalConfirm";
 import ModalDeleteRestore from "../../partials/modals/ModalDeleteRestore";
 import NoData from "../../partials/NoData";
 import ServerError from "../../partials/ServerError";
+import TableSpinner from "../../partials/spinners/TableSpinner.jsx";
 import StatusActive from "../../partials/status/StatusActive";
 import StatusInactive from "../../partials/status/StatusInactive";
 
@@ -21,30 +23,22 @@ const HolidaysList = ({ setItemEdit }) => {
   const [isDel, setDel] = React.useState(false);
   const search = React.useRef(null);
 
+  const { holidays, holidaysLoading } = useLoadHolidays(
+    `${devApiUrl}/v1/holidays`,
+    "get"
+  );
+  let counter = 0;
+
   const handleEdit = (item) => {
     dispatch(setIsAdd(true));
     setItemEdit(item);
   };
 
-  const handleArchive = (item) => {
-    dispatch(setIsConfirm(true));
-    setId(item.paytype_aid);
-    setData(item);
-    setDel(null);
-  };
-
   const handleDelete = (item) => {
     dispatch(setIsRestore(true));
-    setId(item.paytype_aid);
+    setId(item.holidays_aid);
     setData(item);
     setDel(true);
-  };
-
-  const handleRestore = (item) => {
-    dispatch(setIsRestore(true));
-    setId(item.paytype_aid);
-    setData(item);
-    setDel(null);
   };
 
   return (
@@ -58,93 +52,82 @@ const HolidaysList = ({ setItemEdit }) => {
               <th className="min-w-[10rem]">Date</th>
               <th className="min-w-[5rem]">Type</th>
               <th>Rate</th>
-              <th>Status</th>
+
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1.</td>
-              <td>New Year</td>
-              <td>Mon Jan 1, 2023</td>
-              <td>Regular</td>
-              <td>100%</td>
-              <td>{1 === 1 ? <StatusActive /> : <StatusInactive />}</td>
-              <td>
-                <div className="flex items-center gap-2">
-                  <button
-                    type="button"
-                    className="btn-action-table tooltip-action-table"
-                    data-tooltip="Edit"
-                    onClick={handleEdit}
-                    // onClick={() => handleEdit(item)}
-                  >
-                    <FaEdit />
-                  </button>
-                  <button
-                    type="button"
-                    className="btn-action-table tooltip-action-table"
-                    data-tooltip="Archive"
-                    onClick={handleArchive}
-                  >
-                    <FaArchive />
-                  </button>
-                  <button
-                    type="button"
-                    className="btn-action-table tooltip-action-table"
-                    data-tooltip="Restore"
-                    onClick={handleRestore}
-                  >
-                    <FaHistory />
-                  </button>
-                  <button
-                    type="button"
-                    className="btn-action-table tooltip-action-table"
-                    data-tooltip="Delete"
-                    onClick={handleDelete}
-                  >
-                    <FaTrash />
-                  </button>
-                </div>
-              </td>
-            </tr>
-            <tr className="text-center ">
-              <td colSpan="100%" className="p-10">
-                <ServerError />
-              </td>
-            </tr>
-            <tr className="text-center ">
-              <td colSpan="100%" className="p-10">
-                {/*{loading && <TableSpinner />}*/}
-                <NoData />
-              </td>
-            </tr>
+            {holidays.length > 0 ? (
+              holidays.map((item, key) => {
+                counter++;
+                return (
+                  <tr key={key}>
+                    <td>{counter}</td>
+                    <td>{item.holidays_name}</td>
+                    <td>
+                      {`${formatDate(item.holidays_date).split(" ")[0]} 
+                      ${formatDate(item.holidays_date).split(" ")[1]} 
+                      ${formatDate(item.holidays_date).split(" ")[2]}
+                      ${formatDate(item.holidays_date).split(" ")[3]}
+                      `}
+                    </td>
+                    <td>{item.holidays_type}</td>
+                    <td>{item.holidays_rate}</td>
+
+                    <td>
+                      <div className="flex items-center gap-2">
+                        <button
+                          type="button"
+                          className="btn-action-table tooltip-action-table"
+                          data-tooltip="Edit"
+                          onClick={() => {
+                            handleEdit(item);
+                          }}
+                        >
+                          <FaEdit />
+                        </button>
+
+                        <button
+                          type="button"
+                          className="btn-action-table tooltip-action-table"
+                          data-tooltip="Delete"
+                          onClick={() => {
+                            handleDelete(item);
+                          }}
+                        >
+                          <FaTrash />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })
+            ) : holidays === -1 ? (
+              <tr className="text-center ">
+                <td colSpan="100%" className="p-10">
+                  <ServerError />
+                </td>
+              </tr>
+            ) : (
+              <tr className="text-center ">
+                <td colSpan="100%" className="p-10">
+                  {holidaysLoading && <TableSpinner />}
+                  <NoData />
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>
-
-      {store.isConfirm && (
-        <ModalConfirm
-          id={id}
-          isDel={isDel}
-          mysqlApiArchive={`${devApiUrl}/v1/user-systems/active/${id}`}
-          msg={"Are you sure you want to archive this user"}
-          item={`${dataItem.user_system_email}`}
-        />
-      )}
 
       {store.isRestore && (
         <ModalDeleteRestore
           id={id}
           isDel={isDel}
-          mysqlApiDelete={`${devApiUrl}/v1/user-systems/${id}`}
-          mysqlApiRestore={`${devApiUrl}/v1/user-systems/active/${id}`}
-          msg={
-            isDel
-              ? "Are you sure you want to delete this user"
-              : "Are you sure you want to restore this user"
-          }
-          item={`${dataItem.user_system_email}`}
+          mysqlApiDelete={`${devApiUrl}/v1/holidays/${id}`}
+          mysqlApiRestore={null}
+          msg="Are you sure you want to delete this holiday"
+          item={`${dataItem.holidays_name}`}
         />
       )}
     </>

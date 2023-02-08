@@ -26,9 +26,7 @@ const SalaryHistory = () => {
       <Header />
       <Navigation menu="employee" />
       <div className="wrapper">
-        <div className="flex items-center justify-between mb-3 whitespace-nowrap overflow-auto gap-2">
-          <BreadCrumbs />
-        </div>
+        <BreadCrumbs />
         <hr />
 
         <div className="w-full pt-5 pb-20">

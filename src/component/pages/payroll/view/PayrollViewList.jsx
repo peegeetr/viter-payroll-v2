@@ -68,7 +68,7 @@ const PayrollViewList = ({ setItemEdit }) => {
         url={`${devApiUrl}/v1/payroll/search/`}
       />
 
-      <div className="relative text-center overflow-x-auto z-0">
+      <div className="relative text-center overflow-x-auto z-0 mb-5">
         {loading && <TableSpinner />}
         <table>
           <thead>
@@ -130,27 +130,87 @@ const PayrollViewList = ({ setItemEdit }) => {
             totalResult={totalResult}
           />
         )}
-        <div className="relative text-center overflow-x-auto z-0 w-full md:w-3/4 mx-auto mt-8">
-          <div className="grid grid-cols-2 items-center text-left font-bold bg-gray-200 p-2">
-            <p className="mb-0">Payroll Entry</p>
-            <p className="mb-0">Jan 1 - 15 2023</p>
-          </div>
+        <div className="relative text-center overflow-x-auto z-0 w-full lg:w-[30rem] mx-auto mt-8">
           <table>
             <tbody>
+              <tr className="font-bold bg-gray-200 hover:bg-gray-200 text-primary">
+                <td className="w-[15rem]">Payroll Entry - PR-001</td>
+                <td colSpan={2}>Jan 1 - 15 2023</td>
+              </tr>
               <tr className="font-bold">
-                <td>Particulars</td>
-                <td>Dr</td>
+                <td className="w-[15rem]">Particulars</td>
+                <td className="w-[8rem]">Dr</td>
                 <td>Cr</td>
               </tr>
               <tr>
-                <td>Salaries & Wages</td>
-                <td>0.00</td>
+                <td className="w-[15rem]">Salaries & Wages</td>
+                <td className="w-[8rem]">0.00</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Particulars</td>
-                <td>9,500.00</td>
+                <td className="w-[15rem]">13th Month & Bonuses</td>
+                <td className="w-[8rem]">9,500.00</td>
                 <td></td>
+              </tr>
+              <tr>
+                <td className="w-[15rem]">SSS Er</td>
+                <td className="w-[8rem]">0.00</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td className="w-[15rem]">PHIC Er</td>
+                <td className="w-[8rem]">0.00</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td className="w-[15rem]">PGBG ER</td>
+                <td className="w-[8rem]">0.00</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td className="w-[15rem] pl-8">SSS Payable</td>
+                <td className="w-[8rem]"></td>
+                <td>0.00</td>
+              </tr>
+              <tr>
+                <td className="w-[15rem] pl-8">PHIC Payable</td>
+                <td className="w-[8rem]"></td>
+                <td>0.00</td>
+              </tr>
+              <tr>
+                <td className="w-[15rem] pl-8">PGBG Payable</td>
+                <td className="w-[8rem]"></td>
+                <td>0.00</td>
+              </tr>
+              <tr>
+                <td className="w-[15rem] pl-8">Wtax Payable</td>
+                <td className="w-[8rem]"></td>
+                <td>0.00</td>
+              </tr>
+              <tr>
+                <td className="w-[15rem] pl-8">PGBG MP2 Payable</td>
+                <td className="w-[8rem]"></td>
+                <td>0.00</td>
+              </tr>
+              <tr>
+                <td className="w-[15rem] pl-8">Others</td>
+                <td className="w-[8rem]"></td>
+                <td>0.00</td>
+              </tr>
+              <tr>
+                <td className="w-[15rem] pl-8">Total Net Pay</td>
+                <td className="w-[8rem]"></td>
+                <td>9,500.00</td>
+              </tr>
+              <tr className="font-bold bg-gray-200 hover:bg-gray-200 ">
+                <td className="w-[15rem] pl-8"></td>
+                <td>9,500.00</td>
+                <td>9,500.00</td>
+              </tr>
+              <tr className="font-bold bg-gray-200 hover:bg-gray-200 ">
+                <td className="w-[15rem] pl-8"></td>
+                <td>0.00</td>
+                <td>0.00</td>
               </tr>
             </tbody>
           </table>

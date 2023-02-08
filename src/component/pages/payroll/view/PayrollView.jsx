@@ -1,5 +1,6 @@
 import React from "react";
-import { FaPlusCircle } from "react-icons/fa";
+import { FaEnvelope } from "react-icons/fa";
+import { ImPlay3 } from "react-icons/im";
 import { setIsAdd } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
 import BreadCrumbs from "../../../partials/BreadCrumbs";
@@ -25,12 +26,16 @@ const PayrollView = () => {
       <Header />
       <Navigation menu="payroll" />
       <div className="wrapper">
-        <div className="flex items-center mb-3 justify-between whitespace-nowrap overflow-auto gap-2">
+        <div className="flex items-center mb-1 justify-between whitespace-nowrap overflow-auto gap-2">
           <BreadCrumbs />
           <div className="flex items-center gap-1">
             <button type="button" className="btn-primary" onClick={handleAdd}>
-              <FaPlusCircle />
-              <span>Add</span>
+              <FaEnvelope />
+              <span>Email All</span>
+            </button>
+            <button type="button" className="btn-primary" onClick={handleAdd}>
+              <ImPlay3 />
+              <span>Run</span>
             </button>
           </div>
         </div>

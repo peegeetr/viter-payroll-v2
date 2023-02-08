@@ -49,6 +49,10 @@ RewriteRule ^payitem$ controllers/pay-type/pay-item/payitem.php [L]
 RewriteRule ^payitem/([0-9]+)$ controllers/pay-type/pay-item/payitem.php?payitemid=$1 [L]
 RewriteRule ^payitem/active/([0-9]+)$ controllers/pay-type/pay-item/active.php?payitemid=$1 [L]
  
+#HOLIDAYS
+RewriteRule ^holidays$ controllers/holidays/holidays.php [L]
+RewriteRule ^holidays/([0-9]+)$ controllers/holidays/holidays.php?holidaysid=$1 [L]
+
 #SETTINGS RATES
 RewriteRule ^rates$ controllers/settings/rates/rates.php [L]
 RewriteRule ^rates/([0-9]+)$ controllers/settings/rates/rates.php?rateid=$1 [L]

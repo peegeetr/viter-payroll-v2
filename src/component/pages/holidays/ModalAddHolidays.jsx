@@ -22,18 +22,21 @@ const ModalAddHolidays = ({ item }) => {
   };
 
   const initVal = {
-    paytype_aid: item ? item.paytype_aid : "",
-    paytype_category: item ? item.paytype_category : "",
-    paytype_name: item ? item.paytype_name : "",
-    paytype_description: item ? item.paytype_description : "",
+    holidays_aid: item ? item.holidays_aid : "",
+    holidays_name: item ? item.holidays_name : "",
+    holidays_date: item ? item.holidays_date : "",
+    holidays_type: item ? item.holidays_type : "",
+    holidays_rate: item ? item.holidays_rate : "",
 
-    paytype_name_old: item ? item.paytype_name : "",
+    holidays_name_old: item ? item.holidays_name : "",
+    holidays_date_old: item ? item.holidays_date : "",
   };
 
   const yupSchema = Yup.object({
-    paytype_category: Yup.string().required("Required"),
-    paytype_name: Yup.string().required("Required"),
-    paytype_description: Yup.string().required("Required"),
+    holidays_name: Yup.string().required("Required"),
+    holidays_date: Yup.string().required("Required"),
+    holidays_type: Yup.string().required("Required"),
+    holidays_rate: Yup.string().required("Required"),
   });
 
   return (
@@ -60,8 +63,8 @@ const ModalAddHolidays = ({ item }) => {
                 fetchData(
                   setLoading,
                   item
-                    ? `${devApiUrl}/v1/paytype/${item.paytype_aid}`
-                    : `${devApiUrl}/v1/paytype`,
+                    ? `${devApiUrl}/v1/holidays/${item.holidays_aid}`
+                    : `${devApiUrl}/v1/holidays`,
                   values, // form data values
                   null, // result set data
                   item ? "Succesfully updated." : "Succesfully added.", // success msg
@@ -83,7 +86,7 @@ const ModalAddHolidays = ({ item }) => {
                       <InputText
                         label="Holiday"
                         type="text"
-                        name="paytype_name"
+                        name="holidays_name"
                         disabled={loading}
                       />
                     </div>
@@ -93,13 +96,13 @@ const ModalAddHolidays = ({ item }) => {
                         type="text"
                         onFocus={(e) => (e.target.type = "date")}
                         onBlur={(e) => (e.target.type = "text")}
-                        name="paytype_name"
+                        name="holidays_date"
                         disabled={loading}
                       />
                     </div>
                     <div className="relative mb-5">
                       <InputSelect
-                        name="paytype_name"
+                        name="holidays_type"
                         label="Type"
                         disabled={loading}
                         onFocus={(e) =>
@@ -117,7 +120,7 @@ const ModalAddHolidays = ({ item }) => {
                       <InputText
                         label="Rate"
                         type="text"
-                        name="paytype_name"
+                        name="holidays_rate"
                         disabled={loading}
                       />
                     </div>

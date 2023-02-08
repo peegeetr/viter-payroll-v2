@@ -351,3 +351,11 @@ function compareEmail($object, $email_old, $email)
         isEmailExist($object, $email);
     }
 }
+
+
+function compareTwoValues($object, $name_old, $name, $id_old, $id)
+{
+    if (strtolower($name_old) !=  strtolower($name) || $id_old !=  $id) {
+        isNameExist($object, $name);
+    }
+}

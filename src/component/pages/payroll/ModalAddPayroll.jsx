@@ -92,7 +92,7 @@ const ModalAddPayroll = ({ item }) => {
                           e.target.parentElement.classList.add("focused")
                         }
                       >
-                        <optgroup label="Category">
+                        <optgroup label="Earning Type">
                           <option value="" hidden></option>
                           <option value="salary">Salary</option>
                           <option value="bonuses">Bonuses</option>

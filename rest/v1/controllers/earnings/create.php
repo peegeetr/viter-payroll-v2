@@ -28,7 +28,7 @@ $earnings->earnings_is_installment = checkIndex($data, "earnings_is_installment"
 $earnings->earnings_start_pay_date = checkIndex($data, "earnings_start_pay_date");
 $earnings->earnings_end_pay_date = checkIndex($data, "earnings_end_pay_date");
 $earnings->earnings_is_paid = 0;
-$earnings->earnings_created = date("Y-m-d");
+$earnings->earnings_created = date("Y-m-d H:i:s");
 $earnings->earnings_datetime = date("Y-m-d H:i:s");
 
 $allEmployee = $data["employee"];

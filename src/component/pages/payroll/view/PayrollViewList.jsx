@@ -1,5 +1,6 @@
 import React from "react";
 import { FaEdit, FaList, FaTrash } from "react-icons/fa";
+import { MdOutlineReceipt } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { setIsAdd, setIsRestore } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
@@ -67,17 +68,17 @@ const PayrollViewList = ({ setItemEdit }) => {
         url={`${devApiUrl}/v1/payroll/search/`}
       />
 
-      <div className="relative text-center overflow-x-auto z-0">
+      <div className="relative text-center overflow-x-auto z-0 mb-16">
         {loading && <TableSpinner />}
         <table>
           <thead>
             <tr>
               <th className="text-center">#</th>
-              <th className="w-[15rem]">Employee Name</th>
+              <th className="w-[15rem]">Employee</th>
               <th className="w-[8rem]">Gross</th>
               <th className="w-[8rem]">Deduction</th>
               <th className="w-[8srem]">Net Pay</th>
-              <th>Actions</th>
+              <th className="text-right">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -92,35 +93,14 @@ const PayrollViewList = ({ setItemEdit }) => {
                     <td>42</td>
                     <td>42</td>
                     <td>
-                      <div className="flex items-center gap-1">
-                        {item.payroll_is_paid === 0 && (
-                          <button
-                            type="button"
-                            className="btn-action-table tooltip-action-table"
-                            data-tooltip="Edit"
-                            onClick={() => handleEdit(item)}
-                          >
-                            <FaEdit />
-                          </button>
-                        )}
+                      <div className="flex items-center justify-end gap-1 mr-2">
                         <Link
-                          to={`${devNavUrl}/${UrlAdmin}/payroll/employee/payslip?payrollid=${item.payroll_aid}`}
+                          to={`${devNavUrl}/${UrlAdmin}/payroll/list/payslip?payrollid=${item.payroll_aid}`}
                           className="btn-action-table tooltip-action-table"
-                          data-tooltip="View"
+                          data-tooltip="Payslip"
                         >
-                          <FaList />
+                          <MdOutlineReceipt />
                         </Link>
-
-                        {item.payroll_is_paid === 0 && (
-                          <button
-                            type="button"
-                            className="btn-action-table tooltip-action-table"
-                            data-tooltip="Delete"
-                            onClick={() => handleDelete(item)}
-                          >
-                            <FaTrash />
-                          </button>
-                        )}
                       </div>
                     </td>
                   </tr>
@@ -150,6 +130,91 @@ const PayrollViewList = ({ setItemEdit }) => {
             totalResult={totalResult}
           />
         )}
+        <div className="relative text-center overflow-x-auto z-0 w-full lg:w-[30rem] mx-auto mt-8">
+          <table>
+            <tbody>
+              <tr className="bg-gray-200 hover:bg-gray-200 text-primary">
+                <td className="w-[15rem]">Payroll Entry - PR-001</td>
+                <td colSpan={2}>Jan 1 - 15 2023</td>
+              </tr>
+              <tr className="font-bold">
+                <td className="w-[15rem]">Particulars</td>
+                <td className="w-[8rem]">Dr</td>
+                <td>Cr</td>
+              </tr>
+              <tr>
+                <td className="w-[15rem]">Salaries & Wages</td>
+                <td className="w-[8rem]">0.00</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td className="w-[15rem]">13th Month & Bonuses</td>
+                <td className="w-[8rem]">9,500.00</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td className="w-[15rem]">SSS Er</td>
+                <td className="w-[8rem]">0.00</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td className="w-[15rem]">PHIC Er</td>
+                <td className="w-[8rem]">0.00</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td className="w-[15rem]">PGBG ER</td>
+                <td className="w-[8rem]">0.00</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td className="w-[15rem] pl-8">SSS Payable</td>
+                <td className="w-[8rem]"></td>
+                <td>0.00</td>
+              </tr>
+              <tr>
+                <td className="w-[15rem] pl-8">PHIC Payable</td>
+                <td className="w-[8rem]"></td>
+                <td>0.00</td>
+              </tr>
+              <tr>
+                <td className="w-[15rem] pl-8">PGBG Payable</td>
+                <td className="w-[8rem]"></td>
+                <td>0.00</td>
+              </tr>
+              <tr>
+                <td className="w-[15rem] pl-8">Wtax Payable</td>
+                <td className="w-[8rem]"></td>
+                <td>0.00</td>
+              </tr>
+              <tr>
+                <td className="w-[15rem] pl-8">PGBG MP2 Payable</td>
+                <td className="w-[8rem]"></td>
+                <td>0.00</td>
+              </tr>
+              <tr>
+                <td className="w-[15rem] pl-8">Others</td>
+                <td className="w-[8rem]"></td>
+                <td>0.00</td>
+              </tr>
+              <tr>
+                <td className="w-[15rem] pl-8">Total Net Pay</td>
+                <td className="w-[8rem]"></td>
+                <td>9,500.00</td>
+              </tr>
+              <tr className="font-bold bg-gray-200 hover:bg-gray-200 ">
+                <td className="w-[15rem] pl-8"></td>
+                <td>9,500.00</td>
+                <td>9,500.00</td>
+              </tr>
+              <tr className="font-bold bg-gray-200 hover:bg-gray-200 ">
+                <td className="w-[15rem] pl-8"></td>
+                <td>0.00</td>
+                <td>0.00</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
       {store.isRestore && (

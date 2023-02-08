@@ -22,7 +22,7 @@ $payroll->payroll_end_date = checkIndex($data, "payroll_end_date");
 $payroll->payroll_pay_date = checkIndex($data, "payroll_pay_date");
 $payroll->payroll_earning_type = checkIndex($data, "payroll_earning_type");
 $payroll->payroll_is_paid = 0;
-$payroll->payroll_created = date("Y-m-d");
+$payroll->payroll_created = date("Y-m-d H:i:s");
 $payroll->payroll_datetime = date("Y-m-d H:i:s");
 
 

@@ -1,16 +1,16 @@
 import React from "react";
-import { FaEdit, FaUserCircle } from "react-icons/fa";
+import { FaEdit, FaList, FaTrash } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { setIsConfirm, setIsRestore } from "../../../store/StoreAction";
+import { setIsAdd, setIsRestore } from "../../../store/StoreAction";
 import { StoreContext } from "../../../store/StoreContext";
 import useFetchDataLoadMore from "../../custom-hooks/useFetchDataLoadMore";
 import {
+  devApiUrl,
   devNavUrl,
-  hrisDevApiUrl,
+  formatDate,
   UrlAdmin,
 } from "../../helpers/functions-general";
 import Loadmore from "../../partials/Loadmore";
-import ModalConfirm from "../../partials/modals/ModalConfirm";
 import ModalDeleteRestore from "../../partials/modals/ModalDeleteRestore";
 import NoData from "../../partials/NoData";
 import SearchBar from "../../partials/SearchBar";
@@ -19,7 +19,7 @@ import TableSpinner from "../../partials/spinners/TableSpinner";
 import StatusActive from "../../partials/status/StatusActive";
 import StatusInactive from "../../partials/status/StatusInactive";
 
-const EmployeeList = () => {
+const PayrollList = ({ setItemEdit }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [dataItem, setData] = React.useState(null);
   const [id, setId] = React.useState(null);
@@ -37,29 +37,20 @@ const EmployeeList = () => {
     handleSearch,
     handleChange,
   } = useFetchDataLoadMore(
-    `${hrisDevApiUrl}/v1/employees/limit/${start}/${perPage}`,
-    `${hrisDevApiUrl}/v1/employees`,
+    `${devApiUrl}/v1/payroll/limit/${start}/${perPage}`,
+    `${devApiUrl}/v1/payroll`,
     perPage,
     search
   );
 
-  const handleArchive = (item) => {
-    dispatch(setIsConfirm(true));
-    setId(item.employee_aid);
-    setData(item);
-    setDel(null);
-  };
-
-  const handleRestore = (item) => {
-    dispatch(setIsRestore(true));
-    setId(item.employee_aid);
-    setData(item);
-    setDel(null);
+  const handleEdit = (item) => {
+    dispatch(setIsAdd(true));
+    setItemEdit(item);
   };
 
   const handleDelete = (item) => {
     dispatch(setIsRestore(true));
-    setId(item.employee_aid);
+    setId(item.payroll_aid);
     setData(item);
     setDel(true);
   };
@@ -73,7 +64,7 @@ const EmployeeList = () => {
         loading={loading}
         result={result}
         store={store}
-        url={`${hrisDevApiUrl}/v1/employees/search/`}
+        url={`${devApiUrl}/v1/payroll/search/`}
       />
 
       <div className="relative text-center overflow-x-auto z-0">
@@ -82,11 +73,12 @@ const EmployeeList = () => {
           <thead>
             <tr>
               <th className="text-center">#</th>
-              <th className="w-12"></th>
-              <th className="w-52">Full Name</th>
-              <th className="w-28">Emp. No.</th>
-              <th className="w-80">Work Email</th>
-              <th className="w-32">Contact</th>
+              <th>Payroll ID</th>
+              <th>Pay period</th>
+              <th>Pay Date</th>
+              <th>Earning Type</th>
+              <th>No. of Employee</th>
+              <th>Total Amount</th>
               <th>Status</th>
               <th>Actions</th>
             </tr>
@@ -98,44 +90,58 @@ const EmployeeList = () => {
                 return (
                   <tr key={key}>
                     <td className="text-center">{counter}.</td>
+                    <td>{item.payroll_id}</td>
                     <td>
-                      {item.employee_photo > 0 ? (
-                        <img
-                          src="https://hris.frontlinebusiness.com.ph/img/abrigo.jpg"
-                          alt="employee photo"
-                          className="rounded-full h-8 w-8 object-cover object-center mx-auto"
-                        />
-                      ) : (
-                        <span className="text-3xl text-gray-400">
-                          <FaUserCircle />
-                        </span>
-                      )}
-                    </td>
-                    <td>
-                      {`${item.employee_lname}, ${item.employee_fname}`}{" "}
+                      {`${formatDate(item.payroll_start_date).split(" ")[0]} 
+                      ${formatDate(item.payroll_start_date).split(" ")[1]} - ${
+                        formatDate(item.payroll_end_date).split(" ")[1]
+                      } ${formatDate(item.payroll_end_date).split(" ")[2]}`}
                       <span className="inline-block text-[0] first-letter:text-sm">
-                        {item.employee_mname}
+                        {item.payroll_mname}
                       </span>
                     </td>
-                    <td>{"item.EmpNo"}</td>
-                    <td>{item.employee_email}</td>
-                    <td>{item.employee_mobile_number}</td>
+                    <td>{formatDate(item.payroll_pay_date)}</td>
+                    <td>{item.payroll_earning_type}</td>
+                    <td>42</td>
+                    <td>4200</td>
                     <td>
-                      {item.employee_is_active === 1 ? (
-                        <StatusActive />
+                      {item.payroll_is_paid === 1 ? (
+                        <StatusActive text={"paid"} />
                       ) : (
-                        <StatusInactive />
+                        <StatusInactive text={"draft"} />
                       )}
                     </td>
                     <td>
                       <div className="flex items-center gap-1">
+                        {item.payroll_is_paid === 0 && (
+                          <button
+                            type="button"
+                            className="btn-action-table tooltip-action-table"
+                            data-tooltip="Edit"
+                            onClick={() => handleEdit(item)}
+                          >
+                            <FaEdit />
+                          </button>
+                        )}
                         <Link
-                          to={`${devNavUrl}/${UrlAdmin}/employee/details?employeeid=${item.employee_aid}`}
+                          to={`${devNavUrl}/${UrlAdmin}/payroll/employee?payrollid=${item.payroll_aid}`}
                           className="btn-action-table tooltip-action-table"
-                          data-tooltip="Edit"
+                          onClick={() => dispatch(setStartIndex(0))}
+                          data-tooltip="View"
                         >
-                          <FaEdit />
+                          <FaList />
                         </Link>
+
+                        {item.payroll_is_paid === 0 && (
+                          <button
+                            type="button"
+                            className="btn-action-table tooltip-action-table"
+                            data-tooltip="Delete"
+                            onClick={() => handleDelete(item)}
+                          >
+                            <FaTrash />
+                          </button>
+                        )}
                       </div>
                     </td>
                   </tr>
@@ -167,32 +173,17 @@ const EmployeeList = () => {
         )}
       </div>
 
-      {store.isConfirm && (
-        <ModalConfirm
-          id={id}
-          isDel={isDel}
-          mysqlApiArchive={`${hrisDevApiUrl}/v1/employees/active/${id}`}
-          msg={"Are you sure you want to archive this employee"}
-          item={`"${dataItem.employee_lname}, ${dataItem.employee_fname}"`}
-        />
-      )}
-
       {store.isRestore && (
         <ModalDeleteRestore
           id={id}
           isDel={isDel}
-          mysqlApiDelete={`${hrisDevApiUrl}/v1/employees/${id}`}
-          mysqlApiRestore={`${hrisDevApiUrl}/v1/employees/active/${id}`}
-          msg={
-            isDel
-              ? "Are you sure you want to delete this employee"
-              : "Are you sure you want to restore this employee"
-          }
-          item={`"${dataItem.employee_lname}, ${dataItem.employee_fname}"`}
+          mysqlApiDelete={`${devApiUrl}/v1/payroll/${id}`}
+          msg={"Are you sure you want to delete this payroll"}
+          item={`${dataItem.payroll_id}`}
         />
       )}
     </>
   );
 };
 
-export default EmployeeList;
+export default PayrollList;

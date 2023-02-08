@@ -10,7 +10,7 @@ const EarningsPage = () => {
       <Header />
       <Navigation menu="earnings" />
       <div className="wrapper">
-        <h4 className="text-xl">Earnings</h4>
+        <h4 className="text-xl mb-3">Earnings</h4>
         <hr />
         <ul className="pt-5 pb-20 relative">
           <li className="py-2">

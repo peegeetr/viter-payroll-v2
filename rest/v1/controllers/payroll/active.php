@@ -4,37 +4,37 @@ require '../../core/header.php';
 // use needed functions
 require '../../core/functions.php';
 // use needed classes
-require '../../models/earnings/Earnings.php';
+require '../../models/payroll/Payroll.php';
 // check database connection
 $conn = null;
 $conn = checkDbConnection();
 // make instance of classes
-$earnings = new Earnings($conn);
+$payroll = new Payroll($conn);
 $response = new Response();
 // get payload
 $body = file_get_contents("php://input");
 $data = json_decode($body, true);
 // get $_GET data
-// check if earningsid is in the url e.g. /jobtitle/1
+// check if payrollid is in the url e.g. /jobtitle/1
 $error = [];
 $returnData = [];
 // validate api key
 if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
     checkApiKey();
-    if (array_key_exists("earningsid", $_GET)) {
+    if (array_key_exists("payrollid", $_GET)) {
         // check data
         checkPayload($data);
         // get task id from query string
-        $earnings->earnings_aid = $_GET['earningsid'];
-        $earnings->earnings_is_paid = trim($data["isActive"]);
-        $earnings->earnings_datetime = date("Y-m-d H:i:s");
+        $payroll->payroll_aid = $_GET['payrollid'];
+        $payroll->payroll_is_paid = trim($data["isActive"]);
+        $payroll->payroll_datetime = date("Y-m-d H:i:s");
         //check to see if task id in query string is not empty and is number, if not return json error
-        checkId($earnings->earnings_aid);
-        $query = checkActive($earnings);
+        checkId($payroll->payroll_aid);
+        $query = checkActive($payroll);
         http_response_code(200);
         $returnData["data"] = [];
         $returnData["count"] = $query->rowCount();
-        $returnData["role ID"] = $earnings->earnings_aid;
+        $returnData["role ID"] = $payroll->payroll_aid;
         $returnData["success"] = true;
         $response->setData($returnData);
         $response->send();

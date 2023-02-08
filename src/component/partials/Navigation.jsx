@@ -60,7 +60,7 @@ const Navigation = ({ menu }) => {
               onClick={handleShow}
               data-tooltip="Employee"
             >
-              <FaCalendarCheck className="mr-4 w-4 h-4 md:mr-0 lg:mr-4" />
+              <FaUsers className="mr-4 w-4 h-4 md:mr-0 lg:mr-4" />
               <span className="md:hidden lg:block">Employee</span>
             </Link>
           </li>

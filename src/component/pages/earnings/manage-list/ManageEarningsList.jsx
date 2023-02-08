@@ -7,7 +7,11 @@ import {
 } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
 import useFetchDataLoadMore from "../../../custom-hooks/useFetchDataLoadMore";
-import { devApiUrl } from "../../../helpers/functions-general";
+import {
+  devApiUrl,
+  formatDate,
+  numberWithCommas,
+} from "../../../helpers/functions-general";
 import Loadmore from "../../../partials/Loadmore";
 import ModalConfirm from "../../../partials/modals/ModalConfirm";
 import ModalDeleteRestore from "../../../partials/modals/ModalDeleteRestore";
@@ -88,11 +92,11 @@ const ManageEarningsList = ({ setItemEdit }) => {
               <th className="min-w-[5rem]">Pay Item</th>
               <th className="min-w-[5rem]">Amount</th>
               <th className="min-w-[5rem]">Frequency</th>
-              <th className="min-w-[8rem]">No. of Installment</th>
+              <th className="min-w-[10rem]">No. of Installment</th>
               <th className="min-w-[8rem]">Start Date</th>
               <th className="min-w-[8rem]">End Date</th>
               <th>Status</th>
-              <th>Actions</th>
+              <th className="text-right">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -105,21 +109,33 @@ const ManageEarningsList = ({ setItemEdit }) => {
                     <td>{item.earnings_employee}</td>
                     <td>{item.paytype_name}</td>
                     <td>{item.payitem_name}</td>
-                    <td>{item.earnings_amount}</td>
-                    <td>{item.earnings_frequency}</td>
+                    <td>{numberWithCommas(item.earnings_amount)}</td>
+                    <td>
+                      {item.earnings_frequency === "sm"
+                        ? "Semi-monthly"
+                        : "Monthly"}
+                    </td>
                     <td>{item.earnings_number_of_installment}</td>
-                    <td>{item.earnings_start_pay_date}</td>
-                    <td>{item.earnings_end_pay_date}</td>
+                    <td>
+                      {item.earnings_start_pay_date === "n/a"
+                        ? "N/A"
+                        : formatDate(item.earnings_start_pay_date)}
+                    </td>
+                    <td>
+                      {item.earnings_end_pay_date === "n/a"
+                        ? "N/A"
+                        : formatDate(item.earnings_end_pay_date)}
+                    </td>
                     <td>
                       {item.earnings_is_active === 1 ? (
-                        <StatusActive />
+                        <StatusActive text="Paid" />
                       ) : (
-                        <StatusInactive />
+                        <StatusInactive text="Draft" />
                       )}
                     </td>
                     <td>
-                      <div className="flex items-center gap-2">
-                        <button
+                      <div className="flex items-center justify-end gap-2">
+                        {/* <button
                           type="button"
                           className="btn-action-table tooltip-action-table"
                           data-tooltip="Edit"
@@ -142,7 +158,7 @@ const ManageEarningsList = ({ setItemEdit }) => {
                           onClick={() => handleRestore(item)}
                         >
                           <FaHistory />
-                        </button>
+                        </button> */}
                         <button
                           type="button"
                           className="btn-action-table tooltip-action-table"

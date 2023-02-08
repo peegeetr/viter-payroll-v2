@@ -6,7 +6,6 @@ import EmployeeLink from "./component/pages/employee/EmployeeLink";
 import Holidays from "./component/pages/holidays/Holidays";
 import PayItem from "./component/pages/pay-type/pay-item/PayItem";
 import PayTypeLink from "./component/pages/pay-type/PayTypePage";
-import PayrollLink from "./component/pages/payroll/PayrollLink";
 import Pagibig from "./component/pages/settings/pagibig/Pagibig.jsx";
 import Philhealth from "./component/pages/settings/philhealth/philhealth.jsx";
 import Rates from "./component/pages/settings/rates/Rates.jsx";
@@ -31,6 +30,9 @@ import JobDetails from "./component/pages/employee/job-details/JobDetails";
 import SalaryHistory from "./component/pages/employee/salary-history/SalaryHistory";
 import ReportsLink from "./component/pages/reports/ReportsLink";
 import { StoreProvider } from "./store/StoreContext";
+import Payroll from "./component/pages/payroll/Payroll";
+import PayrollView from "./component/pages/payroll/view/PayrollView";
+import Payslip from "./component/pages/payroll/payslip/Payslip";
 
 function App() {
   // Create a client
@@ -46,7 +48,15 @@ function App() {
             {/* Payroll Page */}
             <Route
               path={`${devNavUrl}/${UrlAdmin}/payroll`}
-              element={<PayrollLink />}
+              element={<Payroll />}
+            />
+            <Route
+              path={`${devNavUrl}/${UrlAdmin}/payroll/employee`}
+              element={<PayrollView />}
+            />
+            <Route
+              path={`${devNavUrl}/${UrlAdmin}/payroll/employee/payslip`}
+              element={<Payslip />}
             />
 
             {/* Employee Page */}

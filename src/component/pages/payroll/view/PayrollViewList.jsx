@@ -1,25 +1,25 @@
 import React from "react";
 import { FaEdit, FaList, FaTrash } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { setIsAdd, setIsRestore } from "../../../store/StoreAction";
-import { StoreContext } from "../../../store/StoreContext";
-import useFetchDataLoadMore from "../../custom-hooks/useFetchDataLoadMore";
+import { setIsAdd, setIsRestore } from "../../../../store/StoreAction";
+import { StoreContext } from "../../../../store/StoreContext";
+import useFetchDataLoadMore from "../../../custom-hooks/useFetchDataLoadMore";
 import {
   devApiUrl,
   devNavUrl,
   formatDate,
   UrlAdmin,
-} from "../../helpers/functions-general";
-import Loadmore from "../../partials/Loadmore";
-import ModalDeleteRestore from "../../partials/modals/ModalDeleteRestore";
-import NoData from "../../partials/NoData";
-import SearchBar from "../../partials/SearchBar";
-import ServerError from "../../partials/ServerError";
-import TableSpinner from "../../partials/spinners/TableSpinner";
-import StatusActive from "../../partials/status/StatusActive";
-import StatusInactive from "../../partials/status/StatusInactive";
+} from "../../../helpers/functions-general";
+import Loadmore from "../../../partials/Loadmore";
+import ModalDeleteRestore from "../../../partials/modals/ModalDeleteRestore";
+import NoData from "../../../partials/NoData";
+import SearchBar from "../../../partials/SearchBar";
+import ServerError from "../../../partials/ServerError";
+import TableSpinner from "../../../partials/spinners/TableSpinner";
+import StatusActive from "../../../partials/status/StatusActive";
+import StatusInactive from "../../../partials/status/StatusInactive";
 
-const PayrollList = ({ setItemEdit }) => {
+const PayrollViewList = ({ setItemEdit }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [dataItem, setData] = React.useState(null);
   const [id, setId] = React.useState(null);
@@ -73,13 +73,10 @@ const PayrollList = ({ setItemEdit }) => {
           <thead>
             <tr>
               <th className="text-center">#</th>
-              <th>Payroll ID</th>
-              <th>Pay period</th>
-              <th>Pay Date</th>
-              <th>Earning Type</th>
-              <th>No. of Employee</th>
-              <th>Total Amount</th>
-              <th>Status</th>
+              <th className="w-[15rem]">Employee Name</th>
+              <th className="w-[8rem]">Gross</th>
+              <th className="w-[8rem]">Deduction</th>
+              <th className="w-[8srem]">Net Pay</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -90,27 +87,10 @@ const PayrollList = ({ setItemEdit }) => {
                 return (
                   <tr key={key}>
                     <td className="text-center">{counter}.</td>
-                    <td>{item.payroll_id}</td>
-                    <td>
-                      {`${formatDate(item.payroll_start_date).split(" ")[0]} 
-                      ${formatDate(item.payroll_start_date).split(" ")[1]} - ${
-                        formatDate(item.payroll_end_date).split(" ")[1]
-                      } ${formatDate(item.payroll_end_date).split(" ")[2]}`}
-                      <span className="inline-block text-[0] first-letter:text-sm">
-                        {item.payroll_mname}
-                      </span>
-                    </td>
-                    <td>{formatDate(item.payroll_pay_date)}</td>
-                    <td>{item.payroll_earning_type}</td>
+                    <td>Lumabas, Cyrene</td>
+                    <td>100</td>
                     <td>42</td>
-                    <td>4200</td>
-                    <td>
-                      {item.payroll_is_paid === 1 ? (
-                        <StatusActive text={"paid"} />
-                      ) : (
-                        <StatusInactive text={"draft"} />
-                      )}
-                    </td>
+                    <td>42</td>
                     <td>
                       <div className="flex items-center gap-1">
                         {item.payroll_is_paid === 0 && (
@@ -124,7 +104,7 @@ const PayrollList = ({ setItemEdit }) => {
                           </button>
                         )}
                         <Link
-                          to={`${devNavUrl}/${UrlAdmin}/payroll/employee?payrollid=${item.payroll_aid}`}
+                          to={`${devNavUrl}/${UrlAdmin}/payroll/employee/payslip?payrollid=${item.payroll_aid}`}
                           className="btn-action-table tooltip-action-table"
                           data-tooltip="View"
                         >
@@ -185,4 +165,4 @@ const PayrollList = ({ setItemEdit }) => {
   );
 };
 
-export default PayrollList;
+export default PayrollViewList;

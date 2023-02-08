@@ -100,7 +100,7 @@ class Payroll
     {
         try {
             $sql = "select * from {$this->tblPayroll} ";
-            $sql .= "where payroll_employee like :search ";
+            $sql .= "where payroll_id like :search ";
             $sql .= "order by payroll_is_paid desc ";
             $query = $this->connection->prepare($sql);
             $query->execute([

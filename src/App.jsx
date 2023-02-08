@@ -33,6 +33,7 @@ import ReportsLink from "./component/pages/reports/ReportsLink";
 import { StoreProvider } from "./store/StoreContext";
 import Payroll from "./component/pages/payroll/Payroll";
 import PayrollView from "./component/pages/payroll/view/PayrollView";
+import Payslip from "./component/pages/payroll/payslip/Payslip";
 
 function App() {
   // Create a client
@@ -51,8 +52,12 @@ function App() {
               element={<Payroll />}
             />
             <Route
-              path={`${devNavUrl}/${UrlAdmin}/payroll/view`}
+              path={`${devNavUrl}/${UrlAdmin}/payroll/employee`}
               element={<PayrollView />}
+            />
+            <Route
+              path={`${devNavUrl}/${UrlAdmin}/payroll/employee/payslip`}
+              element={<Payslip />}
             />
 
             {/* Employee Page */}

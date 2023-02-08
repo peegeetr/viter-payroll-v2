@@ -9,9 +9,9 @@ import ModalError from "../../../partials/modals/ModalError";
 import ModalSuccess from "../../../partials/modals/ModalSuccess";
 import Navigation from "../../../partials/Navigation";
 import ModalAddPayroll from "../ModalAddPayroll";
-import PayrollViewList from "./PayrollViewList";
+import PayrollList from "../PayrollList";
 
-const PayrollView = () => {
+const Payslip = () => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [itemEdit, setItemEdit] = React.useState(null);
 
@@ -36,27 +36,8 @@ const PayrollView = () => {
         </div>
         <hr />
 
-        <div className="w-full pt-2 pb-20">
-          <div className="xs:flex text-primary">
-            <p className="font-bold mr-8">
-              Payroll ID :{" "}
-              <span className="font-light text-primary">
-                {/* {`${formatDate(item.payroll_start_date).split(" ")[0]} 
-                      ${formatDate(item.payroll_start_date).split(" ")[1]} - ${
-          formatDate(item.payroll_end_date).split(" ")[1]
-        } ${formatDate(item.payroll_end_date).split(" ")[2]}`} */}
-                PR-001
-              </span>
-            </p>
-            <p className="font-bold">
-              Pay Period :{" "}
-              <span className="font-light text-primary">
-                {/* {item.payroll_id} */}
-                Jan 1 - 15 2023
-              </span>
-            </p>
-          </div>
-          <PayrollViewList setItemEdit={setItemEdit} />
+        <div className="w-full pt-5 pb-20">
+          <PayrollList setItemEdit={setItemEdit} />
         </div>
         <Footer />
       </div>
@@ -68,4 +49,4 @@ const PayrollView = () => {
   );
 };
 
-export default PayrollView;
+export default Payslip;

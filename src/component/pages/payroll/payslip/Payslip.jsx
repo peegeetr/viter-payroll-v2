@@ -1,4 +1,6 @@
 import React from "react";
+import { FaEnvelope } from "react-icons/fa";
+import { AiFillPrinter } from "react-icons/ai";
 import { StoreContext } from "../../../../store/StoreContext";
 import BreadCrumbs from "../../../partials/BreadCrumbs";
 import Footer from "../../../partials/Footer";
@@ -18,10 +20,20 @@ const Payslip = () => {
       <div className="wrapper">
         <div className="flex items-center mb-1 justify-between whitespace-nowrap overflow-auto gap-2">
           <BreadCrumbs />
+          <div className="flex items-center gap-1">
+            <button type="button" className="btn-primary">
+              <FaEnvelope />
+              <span>Email</span>
+            </button>
+            <button type="button" className="btn-primary">
+              <AiFillPrinter />
+              <span>Print</span>
+            </button>
+          </div>
         </div>
         <hr />
 
-        <div className="w-full pt-5 pb-20">
+        <div className="w-full pt-5 pb-20 mb-16">
           <PayslipList />
         </div>
         <Footer />

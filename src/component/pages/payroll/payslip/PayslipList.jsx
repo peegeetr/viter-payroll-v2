@@ -7,7 +7,7 @@ const PayslipList = () => {
             <span className="font-semibold">Employee : </span> Lumabas, Cyrene
           </p>
           <p className="mb-0">
-            <span className="font-semibold">Pay Day : </span> Jan 15 2023
+            <span className="font-semibold">Pay Date : </span> Jan 15 2023
           </p>
           <p className="mb-0">
             <span className="font-semibold">Department : </span> IT
@@ -24,7 +24,7 @@ const PayslipList = () => {
         </div>
       </div>
 
-      <div className="relative text-center overflow-x-auto z-0 ">
+      <div className="relative text-center overflow-x-auto z-0">
         <table>
           <tbody>
             <tr className="font-semibold bg-gray-100 hover:bg-gray-100 uppercase">
@@ -89,9 +89,9 @@ const PayslipList = () => {
             </tr>
             <tr>
               <td className="w-[20rem]">Deminimis</td>
-              <td className="w-[10rem]"></td>
-              <td></td>
-              <td></td>
+              <td className="w-[10rem]">0</td>
+              <td>0.00</td>
+              <td>0.00</td>
             </tr>
             <tr className="font-semibold bg-gray-100 hover:bg-gray-100">
               <td colSpan={3} className="uppercase text-right xs:pr-16">
@@ -172,20 +172,20 @@ const PayslipList = () => {
             </tr>
             <tr>
               <td className="w-[20rem]">SSS</td>
-              <td className="w-[10rem]">0</td>
-              <td>0.00</td>
+              <td className="w-[10rem]">(EE) 0.00</td>
+              <td>(ER) 0.00</td>
               <td>0.00</td>
             </tr>
             <tr>
               <td className="w-[20rem]">Pag-ibig</td>
-              <td className="w-[10rem]">0</td>
-              <td>0.00</td>
+              <td className="w-[10rem]">(EE) 0.00</td>
+              <td>(ER) 0.00</td>
               <td>0.00</td>
             </tr>
             <tr>
               <td className="w-[20rem]">Phil-Health</td>
-              <td className="w-[10rem]">0</td>
-              <td>0.00</td>
+              <td className="w-[10rem]">(EE) 0.00</td>
+              <td>(ER) 0.00</td>
               <td>0.00</td>
             </tr>
             <tr className="font-semibold bg-gray-100 hover:bg-gray-100">
@@ -295,17 +295,24 @@ const PayslipList = () => {
               </td>
               <td>9,830.55</td>
             </tr>
-            {/* netpay */}
             <tr>
               <td colSpan={4}>&nbsp;</td>
             </tr>
+            {/* netpay */}
             <tr className="bg-primary hover:bg-primary text-white uppercase">
-              <td colSpan={2}></td>
-              <td>net pay</td>
+              <td colSpan={3} className="uppercase text-right xs:pr-16 pr-4">
+                net pay
+              </td>
               <td>9,196.35</td>
             </tr>
           </tbody>
         </table>
+
+        <p className="text-center my-8 ">
+          <i>
+            This is a computer generated payslip. Does not require signature
+          </i>
+        </p>
       </div>
     </>
   );

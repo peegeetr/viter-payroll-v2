@@ -43,9 +43,9 @@ const PayrollView = () => {
 
         <div className="w-full pt-2 pb-20">
           <div className="xs:flex text-primary">
-            <p className="font-bold mr-8">
+            <p className="mr-8">
               ID :{" "}
-              <span className="font-light text-primary">
+              <span className="font-light text-black">
                 {/* {`${formatDate(item.payroll_start_date).split(" ")[0]} 
                       ${formatDate(item.payroll_start_date).split(" ")[1]} - ${
           formatDate(item.payroll_end_date).split(" ")[1]
@@ -53,11 +53,18 @@ const PayrollView = () => {
                 PR-001
               </span>
             </p>
-            <p className="font-bold">
+            <p className="mr-8">
               Pay Period :{" "}
-              <span className="font-light text-primary">
+              <span className="font-light text-black">
                 {/* {item.payroll_id} */}
                 Jan 1 - 15 2023
+              </span>
+            </p>
+            <p className="">
+              Period Work Days:{" "}
+              <span className="font-light text-black">
+                {/* {item.payroll_id} */}
+                12
               </span>
             </p>
           </div>

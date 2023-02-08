@@ -68,7 +68,7 @@ const PayrollViewList = ({ setItemEdit }) => {
         url={`${devApiUrl}/v1/payroll/search/`}
       />
 
-      <div className="relative text-center overflow-x-auto z-0 mb-5">
+      <div className="relative text-center overflow-x-auto z-0 mb-16">
         {loading && <TableSpinner />}
         <table>
           <thead>
@@ -133,7 +133,7 @@ const PayrollViewList = ({ setItemEdit }) => {
         <div className="relative text-center overflow-x-auto z-0 w-full lg:w-[30rem] mx-auto mt-8">
           <table>
             <tbody>
-              <tr className="font-bold bg-gray-200 hover:bg-gray-200 text-primary">
+              <tr className="bg-gray-200 hover:bg-gray-200 text-primary">
                 <td className="w-[15rem]">Payroll Entry - PR-001</td>
                 <td colSpan={2}>Jan 1 - 15 2023</td>
               </tr>

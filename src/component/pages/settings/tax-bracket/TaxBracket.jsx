@@ -26,9 +26,13 @@ const TaxBracket = () => {
         </div>
 
         <hr />
-        <ul className="pt-5 pb-20 relative">
-          <TaxMonthlyLink />
-          <TaxSemiLink />
+        <ul className="pt-2 pb-20 relative">
+          <li className="py-2">
+            <TaxMonthlyLink />
+          </li>
+          <li className="py-2">
+            <TaxSemiLink />
+          </li>
         </ul>
         <Footer />
       </div>

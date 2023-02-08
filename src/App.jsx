@@ -6,7 +6,6 @@ import EmployeeLink from "./component/pages/employee/EmployeeLink";
 import Holidays from "./component/pages/holidays/Holidays";
 import PayItem from "./component/pages/pay-type/pay-item/PayItem";
 import PayTypeLink from "./component/pages/pay-type/PayTypePage";
-import PayrollLink from "./component/pages/payroll/PayrollLink";
 import Pagibig from "./component/pages/settings/pagibig/Pagibig.jsx";
 import Philhealth from "./component/pages/settings/philhealth/philhealth.jsx";
 import Rates from "./component/pages/settings/rates/Rates.jsx";

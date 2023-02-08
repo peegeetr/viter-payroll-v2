@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 07, 2023 at 06:43 AM
+-- Generation Time: Feb 08, 2023 at 01:19 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `prv2_earnings` (
   `earnings_aid` int(11) NOT NULL,
   `earnings_payroll_id` varchar(20) NOT NULL,
-  `earnings_is_active` int(11) NOT NULL,
+  `earnings_is_paid` tinyint(1) NOT NULL,
   `earnings_employee` varchar(100) NOT NULL,
   `earnings_employee_id` varchar(20) NOT NULL,
   `earnings_paytype_id` varchar(20) NOT NULL,

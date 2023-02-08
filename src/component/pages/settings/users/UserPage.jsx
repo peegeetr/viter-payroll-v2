@@ -18,7 +18,7 @@ const UserPage = () => {
       <div className="wrapper">
         <BreadCrumbs />
         <hr />
-        <ul className="pt-5 pb-20 relative">
+        <ul className="pt-2 pb-20 relative">
           <li className="py-2" onClick={() => dispatch(setStartIndex(0))}>
             <SystemUserLink />
           </li>

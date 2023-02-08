@@ -28,7 +28,11 @@ const ModalDeleteRestore = ({
     fetchData(
       setLoading,
       isDel ? mysqlApiDelete : mysqlApiRestore,
-      { isActive: 1, column_name: item, isDeveloper: isDeveloper },
+      {
+        isActive: 1,
+        column_name: item,
+        isDeveloper: isDeveloper,
+      },
       null,
       "",
       "",

@@ -4,6 +4,7 @@ import { FaTimesCircle } from "react-icons/fa";
 import * as Yup from "yup";
 import { setIsAdd, setStartIndex } from "../../../store/StoreAction";
 import { StoreContext } from "../../../store/StoreContext";
+import useLoadAll from "../../custom-hooks/useLoadAll";
 import useLoadLastPayrollId from "../../custom-hooks/useLoadLastPayrollId";
 import { fetchData } from "../../helpers/fetchData";
 import {
@@ -11,12 +12,18 @@ import {
   InputText,
   InputTextArea,
 } from "../../helpers/FormInputs";
-import { consoleLog, devApiUrl } from "../../helpers/functions-general";
+import {
+  consoleLog,
+  devApiUrl,
+  hrisDevApiUrl,
+} from "../../helpers/functions-general";
 import ButtonSpinner from "../../partials/spinners/ButtonSpinner";
 
 const ModalAddPayroll = ({ item }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [loading, setLoading] = React.useState(false);
+
+  const { result } = useLoadAll(`${hrisDevApiUrl}/v1/employees`, "get");
 
   const { lastId } = useLoadLastPayrollId(`${devApiUrl}/v1/payroll`, "get");
   const handleClose = () => {
@@ -65,7 +72,7 @@ const ModalAddPayroll = ({ item }) => {
                   item
                     ? `${devApiUrl}/v1/payroll/${item.payroll_aid}`
                     : `${devApiUrl}/v1/payroll`,
-                  values, // form data values
+                  { ...values, employee: result }, // form data values
                   null, // result set data
                   item ? "Succesfully updated." : "Succesfully added.", // success msg
                   "", // additional error msg if needed

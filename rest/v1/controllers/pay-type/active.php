@@ -34,7 +34,7 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
         http_response_code(200);
         $returnData["data"] = [];
         $returnData["count"] = $query->rowCount();
-        $returnData["role ID"] = $payType->paytype_aid;
+        $returnData["paytype ID"] = $payType->paytype_aid;
         $returnData["success"] = true;
         $response->setData($returnData);
         $response->send();

@@ -34,7 +34,7 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
         http_response_code(200);
         $returnData["data"] = [];
         $returnData["count"] = $query->rowCount();
-        $returnData["role ID"] = $earnings->earnings_aid;
+        $returnData["earning ID"] = $earnings->earnings_aid;
         $returnData["success"] = true;
         $response->setData($returnData);
         $response->send();

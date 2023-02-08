@@ -1,5 +1,4 @@
 import React from "react";
-import { FaEdit, FaList, FaTrash } from "react-icons/fa";
 import { MdOutlineReceipt } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { setIsAdd, setIsRestore } from "../../../../store/StoreAction";
@@ -8,7 +7,7 @@ import useFetchDataLoadMore from "../../../custom-hooks/useFetchDataLoadMore";
 import {
   devApiUrl,
   devNavUrl,
-  formatDate,
+  getUrlParam,
   UrlAdmin,
 } from "../../../helpers/functions-general";
 import Loadmore from "../../../partials/Loadmore";
@@ -17,8 +16,6 @@ import NoData from "../../../partials/NoData";
 import SearchBar from "../../../partials/SearchBar";
 import ServerError from "../../../partials/ServerError";
 import TableSpinner from "../../../partials/spinners/TableSpinner";
-import StatusActive from "../../../partials/status/StatusActive";
-import StatusInactive from "../../../partials/status/StatusInactive";
 
 const PayrollViewList = ({ setItemEdit }) => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -30,6 +27,8 @@ const PayrollViewList = ({ setItemEdit }) => {
   const start = store.startIndex + 1;
   let counter = 0;
 
+  const pid = getUrlParam().get("payrollid");
+
   const {
     loading,
     handleLoad,
@@ -38,8 +37,8 @@ const PayrollViewList = ({ setItemEdit }) => {
     handleSearch,
     handleChange,
   } = useFetchDataLoadMore(
-    `${devApiUrl}/v1/payroll/limit/${start}/${perPage}`,
-    `${devApiUrl}/v1/payroll`,
+    `${devApiUrl}/v1/payrollList/limit/${start}/${perPage}/${pid}`,
+    `${devApiUrl}/v1/payrollList/${pid}`,
     perPage,
     search
   );
@@ -58,6 +57,25 @@ const PayrollViewList = ({ setItemEdit }) => {
 
   return (
     <>
+      <div className="xs:flex text-primary">
+        <p className="mr-8">
+          ID : <span className="font-light text-black">{pid}</span>
+        </p>
+        <p className="mr-8">
+          Pay Period :{" "}
+          <span className="font-light text-black">
+            {/* {item.payroll_id} */}
+            Jan 1 - 15 2023
+          </span>
+        </p>
+        <p className="">
+          Period Work Days:{" "}
+          <span className="font-light text-black">
+            {/* {item.payroll_id} */}
+            12
+          </span>
+        </p>
+      </div>
       <SearchBar
         search={search}
         handleSearch={handleSearch}
@@ -65,7 +83,7 @@ const PayrollViewList = ({ setItemEdit }) => {
         loading={loading}
         result={result}
         store={store}
-        url={`${devApiUrl}/v1/payroll/search/`}
+        url={`${devApiUrl}/v1/payrollList/search/`}
       />
 
       <div className="relative text-center overflow-x-auto z-0 mb-16">
@@ -88,7 +106,7 @@ const PayrollViewList = ({ setItemEdit }) => {
                 return (
                   <tr key={key}>
                     <td className="text-center">{counter}.</td>
-                    <td>Lumabas, Cyrene</td>
+                    <td>{item.payroll_list_employee_name}</td>
                     <td>100</td>
                     <td>42</td>
                     <td>42</td>

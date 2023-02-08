@@ -1,7 +1,7 @@
 import React from "react";
 import { StoreContext } from "../../store/StoreContext";
 import fetchApi from "../helpers/fetchApi";
-import { consoleLog, devApiUrl } from "../helpers/functions-general";
+import { consoleLog } from "../helpers/functions-general";
 
 const useLoadAll = (url) => {
   const { store, dispatch } = React.useContext(StoreContext);

@@ -26,13 +26,25 @@ $payroll->payroll_created = date("Y-m-d H:i:s");
 $payroll->payroll_datetime = date("Y-m-d H:i:s");
 
 
+$allEmployee = $data["employee"];
+
+// create employee name and id
+for ($i = 0; $i < count($allEmployee); $i++) {
+    $employee_lname = $allEmployee[$i]["employee_lname"];
+    $employee_fname = $allEmployee[$i]["employee_fname"];
+
+    $payroll->payroll_list_employee_name = "$employee_lname $employee_fname";
+    $payroll->payroll_list_employee_id = $allEmployee[$i]["employee_aid"];
+    // create payroll list
+    checkCreatePayrollList($payroll);
+}
 // create
 $query = checkCreate($payroll);
 
 $returnData = [];
 $returnData["data"] = [];
 $returnData["count"] = $query->rowCount();
-$returnData["Role ID"] = $payroll->lastInsertedId;
+$returnData["payroll ID"] = $payroll->lastInsertedId;
 $returnData["GET"] = $_GET;
 $returnData["success"] = true;
 return $returnData;

@@ -51,11 +51,11 @@ function App() {
               element={<Payroll />}
             />
             <Route
-              path={`${devNavUrl}/${UrlAdmin}/payroll/employee`}
+              path={`${devNavUrl}/${UrlAdmin}/payroll/list`}
               element={<PayrollView />}
             />
             <Route
-              path={`${devNavUrl}/${UrlAdmin}/payroll/employee/payslip`}
+              path={`${devNavUrl}/${UrlAdmin}/payroll/list/payslip`}
               element={<Payslip />}
             />
 

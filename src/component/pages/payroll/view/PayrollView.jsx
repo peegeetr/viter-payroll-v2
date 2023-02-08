@@ -39,7 +39,7 @@ const PayrollView = () => {
         <div className="w-full pt-2 pb-20">
           <div className="xs:flex text-primary">
             <p className="font-bold mr-8">
-              Payroll ID :{" "}
+              ID :{" "}
               <span className="font-light text-primary">
                 {/* {`${formatDate(item.payroll_start_date).split(" ")[0]} 
                       ${formatDate(item.payroll_start_date).split(" ")[1]} - ${

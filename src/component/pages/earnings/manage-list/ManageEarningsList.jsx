@@ -1,5 +1,5 @@
 import React from "react";
-import { FaArchive, FaEdit, FaHistory, FaTrash } from "react-icons/fa";
+import { FaTrash } from "react-icons/fa";
 import {
   setIsAdd,
   setIsConfirm,
@@ -109,7 +109,12 @@ const ManageEarningsList = ({ setItemEdit }) => {
                     <td>{item.earnings_employee}</td>
                     <td>{item.paytype_name}</td>
                     <td>{item.payitem_name}</td>
-                    <td>{numberWithCommas(item.earnings_amount)}</td>
+                    <td>
+                      P
+                      {numberWithCommas(
+                        Number(item.earnings_amount).toFixed(2)
+                      )}
+                    </td>
                     <td>
                       {item.earnings_frequency === "sm"
                         ? "Semi-monthly"

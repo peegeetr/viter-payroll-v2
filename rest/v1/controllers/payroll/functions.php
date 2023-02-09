@@ -22,5 +22,13 @@ function isEarningType($object, $name)
 {
     $query = $object->checkEarningType();
     $count = $query->rowCount();
-    checkExistence($count, "{$name} draft already exist.");
+    checkExistence($count, "You cannot create {$name} because you have already draft.");
+}
+
+// Read by draft
+function checkReadByDraft($object)
+{
+    $query = $object->readByDraft();
+    checkQuery($query, "Empty records (draft).");
+    return $query;
 }

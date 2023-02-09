@@ -26,6 +26,7 @@ RewriteRule ^paytype/active/([0-9]+)$ controllers/pay-type/active.php?paytypeid=
    
 #payroll
 RewriteRule ^payroll$ controllers/payroll/payroll.php [L]
+RewriteRule ^payroll/draft$ controllers/payroll/draft.php [L]
 RewriteRule ^payroll/([0-9]+)$ controllers/payroll/payroll.php?payrollid=$1 [L]
 RewriteRule ^payroll/active/([0-9]+)$ controllers/payroll/active.php?payrollid=$1 [L]
 RewriteRule ^payroll/limit/([0-9]+)/([0-9]+)$ controllers/payroll/limit.php?start=$1&total=$2 [L]
@@ -55,7 +56,7 @@ RewriteRule ^holidays/([0-9]+)$ controllers/holidays/holidays.php?holidaysid=$1 
 
 #SETTINGS RATES
 RewriteRule ^rates$ controllers/settings/rates/rates.php [L]
-RewriteRule ^rates/([0-9]+)$ controllers/settings/rates/rates.php?rateid=$1 [L]
+RewriteRule ^rates/([0-9]+)$ controllers/settings/rates/rates.php?ratesid=$1 [L]
 
 #SETTINGS SEMI BRACKET
 RewriteRule ^tax/semi-monthly$ controllers/settings/tax-bracket/semi-monthly/semi-monthly.php [L]

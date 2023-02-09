@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 03, 2023 at 04:22 AM
+-- Generation Time: Feb 10, 2023 at 12:10 AM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.0
 
@@ -30,11 +30,9 @@ SET time_zone = "+00:00";
 CREATE TABLE `prv2_settings_rates` (
   `rates_aid` int(11) NOT NULL,
   `rates_active` tinyint(1) NOT NULL,
-  `rates_night_differential` varchar(10) NOT NULL,
-  `rates_overtime` varchar(10) NOT NULL,
-  `rates_special_holiday` varchar(10) NOT NULL,
-  `rates_regular_holiday` varchar(10) NOT NULL,
-  `rates_rest_day` varchar(10) NOT NULL,
+  `rates_name` varchar(100) NOT NULL,
+  `rates_paytype_id` varchar(20) NOT NULL,
+  `rates_payitems_id` varchar(20) NOT NULL,
   `rates_created` varchar(20) NOT NULL,
   `rates_datetime` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -43,8 +41,10 @@ CREATE TABLE `prv2_settings_rates` (
 -- Dumping data for table `prv2_settings_rates`
 --
 
-INSERT INTO `prv2_settings_rates` (`rates_aid`, `rates_active`, `rates_night_differential`, `rates_overtime`, `rates_special_holiday`, `rates_regular_holiday`, `rates_rest_day`, `rates_created`, `rates_datetime`) VALUES
-(1, 1, 'sss', 'xx', 'z', 'x', 'xxxx', '2023-02-02', '2023-02-03 09:48:29');
+INSERT INTO `prv2_settings_rates` (`rates_aid`, `rates_active`, `rates_name`, `rates_paytype_id`, `rates_payitems_id`, `rates_created`, `rates_datetime`) VALUES
+(4, 1, 'sss', '1', '29', '2023-02-09', '2023-02-09 15:47:48'),
+(7, 1, 'kkk', '10', '6', '2023-02-09', '2023-02-09 15:59:17'),
+(10, 1, 'kkk', '11', '7', '2023-02-10', '2023-02-10 06:59:38');
 
 --
 -- Indexes for dumped tables
@@ -64,7 +64,7 @@ ALTER TABLE `prv2_settings_rates`
 -- AUTO_INCREMENT for table `prv2_settings_rates`
 --
 ALTER TABLE `prv2_settings_rates`
-  MODIFY `rates_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `rates_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

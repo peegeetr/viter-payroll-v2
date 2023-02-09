@@ -156,6 +156,14 @@ const ModalAddManageEarnings = ({ item, payType, employee, draft }) => {
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
                 consoleLog(values, employee);
+                consoleLog(
+                  getDateLength(
+                    values.earnings_start_pay_date,
+                    values.earnings_end_pay_date,
+                    draft[0].payroll_start_date,
+                    draft[0].payroll_end_date
+                  )
+                );
                 if (
                   getDateLength(
                     values.earnings_start_pay_date,

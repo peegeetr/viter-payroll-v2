@@ -1,6 +1,6 @@
 import React from "react";
 import { FaPlusCircle } from "react-icons/fa";
-import { setIsAdd, setIsFinish } from "../../../../store/StoreAction";
+import { setIsAdd, setIsFinish, setSave } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
 import useLoadEmployee from "../../../custom-hooks/useLoadEmployee";
 import useLoadPayItem from "../../../custom-hooks/useLoadPayItem";
@@ -23,7 +23,6 @@ const ManageEarnings = () => {
   // const { payItem } = useLoadPayItem(`${devApiUrl}/v1/payitem`, "get");
   const { employee } = useLoadEmployee(`${hrisDevApiUrl}/v1/employees`, "get");
 
-  console.log(store.isSave);
   const handleAdd = () => {
     dispatch(setIsAdd(true));
     // dispatch(setIsFinish(true));

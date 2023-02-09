@@ -8,17 +8,16 @@ $rates = new Rates($conn);
 // check if departmentid is in the url e.g. /department/1
 $error = [];
 $returnData = [];
-if (array_key_exists("rateid", $_GET)) {
+if (array_key_exists("ratesid", $_GET)) {
     // check data
     checkPayload($data);
     // get data
     // get departmentid from query string
-    $rates->rates_aid = $_GET['rateid'];
-    $rates->rates_night_differential = checkIndex($data, "rates_night_differential");
-    $rates->rates_overtime = checkIndex($data, "rates_overtime");
-    $rates->rates_special_holiday = checkIndex($data, "rates_special_holiday");
-    $rates->rates_regular_holiday = checkIndex($data, "rates_regular_holiday");
-    $rates->rates_rest_day = checkIndex($data, "rates_rest_day");
+    $rates->rates_aid = $_GET['ratesid'];
+    $rates->rates_name = checkIndex($data, "rates_name");
+    $rates->rates_paytype_id = checkIndex($data, "rates_paytype_id");
+    $rates->rates_payitems_id = checkIndex($data, "rates_payitems_id");
+    $rates->rates_active = 1;
     $rates->rates_datetime = date("Y-m-d H:i:s");
     // $rates_name_old = checkIndex($data, "rates_name_old");
     //check to see if task id in query string is not empty and is number, if not return json error

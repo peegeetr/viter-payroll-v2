@@ -49,7 +49,7 @@
   }
 
   label:before {
-    @apply content-[''] w-[97%] h-[1px] absolute left-[1px] top-[8px] bg-white -z-10;
+    @apply content-[''] w-[97%] h-[3px] absolute left-[1px] top-[7px] bg-white -z-10;
   }
 
   textarea {

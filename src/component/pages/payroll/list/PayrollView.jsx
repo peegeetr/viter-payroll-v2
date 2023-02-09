@@ -1,5 +1,5 @@
 import React from "react";
-import { FaEnvelope, FaSignInAlt } from "react-icons/fa";
+import { FaEnvelope, FaSave } from "react-icons/fa";
 import { ImPlay3 } from "react-icons/im";
 import { setIsAdd } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
@@ -38,7 +38,7 @@ const PayrollView = () => {
               <span>Run</span>
             </button>
             <button type="button" className="btn-primary" onClick={handleAdd}>
-              <FaSignInAlt className="rotate-90" />
+              <FaSave />
               <span>Mark Paid</span>
             </button>
           </div>

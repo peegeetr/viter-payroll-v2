@@ -28,17 +28,17 @@ export const getDateLength = (
   const payMonths = payEendD.getMonth() - payStart.getMonth();
   const PayDate = payYear * 365 + payMonths * 30.417 + payDays;
 
-  // return `${endDate} - ${startDate} = ${PayDate}`;
+  // return `${startDate} - ${endDate} = ${PayDate}`;
   //result
   if (inputStartDate === "n/a" && inputendDate === "n/a") {
-    return true;
+    return `true1 ${startDate} - ${endDate} = ${PayDate}`;
   } else if (endDate < "0" || startDate < "0") {
-    return false;
+    return `false1 ${startDate} - ${endDate} = ${PayDate}`;
   } else if (endDate <= PayDate && startDate <= PayDate) {
-    return true;
+    return `true2 ${startDate} - ${endDate} = ${PayDate}`;
   } else if (endDate === "0" && startDate === "0") {
-    return true;
+    return `true3 ${startDate} - ${endDate} = ${PayDate}`;
   } else {
-    return false;
+    return `false2 ${startDate} - ${endDate} = ${PayDate}`;
   }
 };

@@ -28,10 +28,8 @@ $payroll->payroll_datetime = date("Y-m-d H:i:s");
 
 $allEmployee = $data["employee"];
 
-if ($payroll->payroll_earning_type == "salary") {
-    // validation if salary is draft 
-    isEarningType($payroll, $payroll->payroll_earning_type);
-}
+// validation if salary is draft 
+isEarningType($payroll, $payroll->payroll_earning_type);
 
 
 

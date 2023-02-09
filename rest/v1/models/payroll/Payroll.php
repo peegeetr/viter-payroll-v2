@@ -116,6 +116,7 @@ class Payroll
         return $query;
     }
 
+
     public function readLimit()
     {
         try {
@@ -250,7 +251,6 @@ class Payroll
         return $query;
     }
 
-
     // name
     public function checkEarningType()
     {
@@ -262,6 +262,22 @@ class Payroll
             $query->execute([
                 "payroll_earning_type" => "{$this->payroll_earning_type}",
             ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    // read by draft
+    public function readByDraft()
+    {
+        try {
+            $sql = "select payroll_id, ";
+            $sql .= "payroll_start_date, ";
+            $sql .= "payroll_end_date ";
+            $sql .= "from {$this->tblPayroll} ";
+            $sql .= "where payroll_is_paid = 0 ";
+            $query = $this->connection->query($sql);
         } catch (PDOException $ex) {
             $query = false;
         }

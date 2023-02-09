@@ -1,5 +1,5 @@
 import React from "react";
-import { FaArchive, FaEdit, FaHistory, FaTrash } from "react-icons/fa";
+import { FaTrash } from "react-icons/fa";
 import {
   setIsAdd,
   setIsConfirm,

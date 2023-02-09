@@ -18,9 +18,9 @@ function checkDeletePayrollList($object)
 }
 
 // check name
-function earningType($object, $name)
+function isEarningType($object, $name)
 {
-    $query = $object->checkName();
+    $query = $object->checkEarningType();
     $count = $query->rowCount();
-    checkExistence($count, "{$name} already exist.");
+    checkExistence($count, "{$name} draft already exist.");
 }

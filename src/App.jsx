@@ -31,7 +31,7 @@ import SalaryHistory from "./component/pages/employee/salary-history/SalaryHisto
 import ReportsLink from "./component/pages/reports/ReportsLink";
 import { StoreProvider } from "./store/StoreContext";
 import Payroll from "./component/pages/payroll/Payroll";
-import PayrollView from "./component/pages/payroll/view/PayrollView";
+import PayrollView from "./component/pages/payroll/list/PayrollView";
 import Payslip from "./component/pages/payroll/payslip/Payslip";
 
 function App() {

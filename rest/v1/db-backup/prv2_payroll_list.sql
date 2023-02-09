@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `prv2_payroll_list` (
   `payroll_list_aid` int(11) NOT NULL,
-  `payroll_list_is_run` tinyint(1) NOT NULL,
+  `payroll_list_is_paid` tinyint(1) NOT NULL,
   `payroll_list_employee_name` varchar(100) NOT NULL,
   `payroll_list_employee_id` varchar(20) NOT NULL,
   `payroll_list_payroll_id` varchar(50) NOT NULL,

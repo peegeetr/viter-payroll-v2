@@ -1,7 +1,8 @@
 <?php
-class PayrollView
+class PayrollList
 {
     public $payroll_list_aid;
+    public $payroll_list_is_run;
     public $payroll_list_employee_name;
     public $payroll_list_employee_id;
     public $payroll_list_payroll_id;
@@ -42,9 +43,9 @@ class PayrollView
     public $payroll_list_datetime;
 
     public $connection;
-    public $payrollView_search;
-    public $payrollView_start;
-    public $payrollView_total;
+    public $payrollList_search;
+    public $payrollList_start;
+    public $payrollList_total;
     public $lastInsertedId;
     public $tblPayrollList;
     public $tblPayroll;
@@ -76,6 +77,7 @@ class PayrollView
         try {
             $sql = "select payroll_list_payroll_id, ";
             $sql .= "payroll_list_aid, ";
+            $sql .= "payroll_list_is_run, ";
             $sql .= "payroll_list_employee_name ";
             $sql .= "from {$this->tblPayrollList} as payrollList ";
             $sql .= "where payroll_list_payroll_id = :payroll_list_payroll_id ";
@@ -95,6 +97,7 @@ class PayrollView
         try {
             $sql = "select payroll_list_payroll_id, ";
             $sql .= "payroll_list_employee_name, ";
+            $sql .= "payroll_list_is_run, ";
             $sql .= "payroll_list_aid ";
             $sql .= "from {$this->tblPayrollList} ";
             $sql .= "where payroll_list_payroll_id = :payroll_list_payroll_id ";
@@ -103,8 +106,8 @@ class PayrollView
             $sql .= ":total ";
             $query = $this->connection->prepare($sql);
             $query->execute([
-                "start" => $this->payrollView_start - 1,
-                "total" => $this->payrollView_total,
+                "start" => $this->payrollList_start - 1,
+                "total" => $this->payrollList_total,
                 "payroll_list_payroll_id" => $this->payroll_list_payroll_id,
             ]);
         } catch (PDOException $ex) {
@@ -117,13 +120,17 @@ class PayrollView
     public function search()
     {
         try {
-            $sql = "select * from {$this->tblPayrollList} ";
+            $sql = "select payroll_list_payroll_id, ";
+            $sql .= "payroll_list_employee_name, ";
+            $sql .= "payroll_list_is_run, ";
+            $sql .= "payroll_list_aid ";
+            $sql .= "from {$this->tblPayrollList} ";
             $sql .= "where payroll_list_payroll_id = :payroll_list_payroll_id ";
             $sql .= "and payroll_list_employee_name like :search ";
             $sql .= "order by payroll_list_employee_name asc ";
             $query = $this->connection->prepare($sql);
             $query->execute([
-                "search" => "{$this->payrollView_search}%",
+                "search" => "{$this->payrollList_search}%",
                 "payroll_list_payroll_id" => $this->payroll_list_payroll_id,
             ]);
         } catch (PDOException $ex) {

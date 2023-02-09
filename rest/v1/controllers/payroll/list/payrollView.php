@@ -5,7 +5,7 @@ require '../../../core/header.php';
 // use needed functions
 require '../../../core/functions.php';
 // use needed classes
-require '../../../models/payroll/view/PayrollView.php';
+require '../../../models/payroll/list/PayrollList.php';
 // get payload
 $body = file_get_contents("php://input");
 $data = json_decode($body, true);

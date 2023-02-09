@@ -3,7 +3,7 @@
 $conn = null;
 $conn = checkDbConnection();
 // make instance of classes
-$payrollList = new PayrollView($conn);
+$payrollList = new PayrollList($conn);
 // get $_GET data
 // check if listpayrollid is in the url e.g. /role/1
 $error = [];

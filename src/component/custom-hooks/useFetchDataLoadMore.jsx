@@ -5,7 +5,7 @@ import fetchApi from "../helpers/fetchApi";
 import { fetchData } from "../helpers/fetchData";
 import { consoleLog, devApiUrl } from "../helpers/functions-general";
 
-const useFetchDataLoadMore = (url, url2, perPage, search, param1 = null) => {
+const useFetchDataLoadMore = (url, url2, perPage, search) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [totalResult, setTotalResult] = React.useState(perPage);
   const [result, setResult] = React.useState([]);
@@ -23,9 +23,7 @@ const useFetchDataLoadMore = (url, url2, perPage, search, param1 = null) => {
     fetchData(
       setLoading, // Boolean loading values optional
       url,
-      {
-        type: param1,
-      }, // form data values
+      {}, // form data values
       setResult,
       "",
       "", // additional error msg if needed optional
@@ -37,12 +35,11 @@ const useFetchDataLoadMore = (url, url2, perPage, search, param1 = null) => {
       "get" // method
       // dispatch(setStartIndex(0))
     );
-
     /* para maupdate yun number nng nakaload sa table na items */
     dispatch(setStartIndex(store.startIndex + perPage));
 
     // get total result of data
-    const result = await fetchApi(url2, {});
+    const result = await fetchApi(url2);
 
     consoleLog(result);
 

@@ -124,7 +124,7 @@ const PayrollList = ({ setItemEdit }) => {
                           </button>
                         )}
                         <Link
-                          to={`${devNavUrl}/${UrlAdmin}/payroll/list?payrollid=${item.payroll_aid}`}
+                          to={`${devNavUrl}/${UrlAdmin}/payroll/list?payrollid=${item.payroll_id}`}
                           className="btn-action-table tooltip-action-table"
                           onClick={() => dispatch(setStartIndex(0))}
                           data-tooltip="View"

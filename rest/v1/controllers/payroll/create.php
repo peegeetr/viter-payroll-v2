@@ -28,6 +28,8 @@ $payroll->payroll_datetime = date("Y-m-d H:i:s");
 
 $allEmployee = $data["employee"];
 
+// check name
+earningType($$payroll, $$payroll->payroll_earning_type);
 // create employee name and id
 for ($i = 0; $i < count($allEmployee); $i++) {
     $employee_lname = $allEmployee[$i]["employee_lname"];

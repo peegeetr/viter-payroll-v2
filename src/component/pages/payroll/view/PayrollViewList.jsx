@@ -4,9 +4,11 @@ import { Link } from "react-router-dom";
 import { setIsAdd, setIsRestore } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
 import useFetchDataLoadMore from "../../../custom-hooks/useFetchDataLoadMore";
+import useLoadPayroll from "../../../custom-hooks/useLoadPayroll";
 import {
   devApiUrl,
   devNavUrl,
+  formatDate,
   getUrlParam,
   UrlAdmin,
 } from "../../../helpers/functions-general";
@@ -22,12 +24,11 @@ const PayrollViewList = ({ setItemEdit }) => {
   const [dataItem, setData] = React.useState(null);
   const [id, setId] = React.useState(null);
   const [isDel, setDel] = React.useState(false);
+  const pid = getUrlParam().get("payrollid");
   const search = React.useRef(null);
   const perPage = 10;
   const start = store.startIndex + 1;
   let counter = 0;
-
-  const pid = getUrlParam().get("payrollid");
 
   const {
     loading,
@@ -43,18 +44,6 @@ const PayrollViewList = ({ setItemEdit }) => {
     search
   );
 
-  const handleEdit = (item) => {
-    dispatch(setIsAdd(true));
-    setItemEdit(item);
-  };
-
-  const handleDelete = (item) => {
-    dispatch(setIsRestore(true));
-    setId(item.payroll_aid);
-    setData(item);
-    setDel(true);
-  };
-
   return (
     <>
       <div className="xs:flex text-primary">
@@ -64,15 +53,16 @@ const PayrollViewList = ({ setItemEdit }) => {
         <p className="mr-8">
           Pay Period :{" "}
           <span className="font-light text-black">
-            {/* {item.payroll_id} */}
-            Jan 1 - 15 2023
+            {/* {`${formatDate(item.payroll_start_date).split(" ")[1]} 
+                      ${formatDate(item.payroll_start_date).split(" ")[2]} - ${
+              formatDate(item.payroll_end_date).split(" ")[2]
+            },  ${formatDate(item.payroll_end_date).split(" ")[3]}`} */}
           </span>
         </p>
         <p className="">
           Period Work Days:{" "}
           <span className="font-light text-black">
             {/* {item.payroll_id} */}
-            12
           </span>
         </p>
       </div>
@@ -83,7 +73,7 @@ const PayrollViewList = ({ setItemEdit }) => {
         loading={loading}
         result={result}
         store={store}
-        url={`${devApiUrl}/v1/payrollList/search/`}
+        url={`${devApiUrl}/v1/payrollList/search/${pid}/`}
       />
 
       <div className="relative text-center overflow-x-auto z-0 mb-16">
@@ -107,13 +97,13 @@ const PayrollViewList = ({ setItemEdit }) => {
                   <tr key={key}>
                     <td className="text-center">{counter}.</td>
                     <td>{item.payroll_list_employee_name}</td>
-                    <td>100</td>
-                    <td>42</td>
-                    <td>42</td>
+                    <td> </td>
+                    <td></td>
+                    <td></td>
                     <td>
                       <div className="flex items-center justify-end gap-1 mr-2">
                         <Link
-                          to={`${devNavUrl}/${UrlAdmin}/payroll/list/payslip?payrollid=${item.payroll_aid}`}
+                          to={`${devNavUrl}/${UrlAdmin}/payroll/list/payslip?payslipid=${item.payroll_list_aid}`}
                           className="btn-action-table tooltip-action-table"
                           data-tooltip="Payslip"
                         >

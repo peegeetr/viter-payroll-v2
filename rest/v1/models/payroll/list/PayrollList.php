@@ -2,7 +2,7 @@
 class PayrollList
 {
     public $payroll_list_aid;
-    public $payroll_list_is_run;
+    public $payroll_list_is_paid;
     public $payroll_list_employee_name;
     public $payroll_list_employee_id;
     public $payroll_list_payroll_id;
@@ -77,7 +77,7 @@ class PayrollList
         try {
             $sql = "select payroll_list_payroll_id, ";
             $sql .= "payroll_list_aid, ";
-            $sql .= "payroll_list_is_run, ";
+            $sql .= "payroll_list_is_paid, ";
             $sql .= "payroll_list_employee_name ";
             $sql .= "from {$this->tblPayrollList} as payrollList ";
             $sql .= "where payroll_list_payroll_id = :payroll_list_payroll_id ";
@@ -97,7 +97,7 @@ class PayrollList
         try {
             $sql = "select payroll_list_payroll_id, ";
             $sql .= "payroll_list_employee_name, ";
-            $sql .= "payroll_list_is_run, ";
+            $sql .= "payroll_list_is_paid, ";
             $sql .= "payroll_list_aid ";
             $sql .= "from {$this->tblPayrollList} ";
             $sql .= "where payroll_list_payroll_id = :payroll_list_payroll_id ";
@@ -122,7 +122,7 @@ class PayrollList
         try {
             $sql = "select payroll_list_payroll_id, ";
             $sql .= "payroll_list_employee_name, ";
-            $sql .= "payroll_list_is_run, ";
+            $sql .= "payroll_list_is_paid, ";
             $sql .= "payroll_list_aid ";
             $sql .= "from {$this->tblPayrollList} ";
             $sql .= "where payroll_list_payroll_id = :payroll_list_payroll_id ";

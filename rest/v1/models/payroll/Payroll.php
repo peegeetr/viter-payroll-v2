@@ -76,20 +76,20 @@ class Payroll
             $sql = "insert into {$this->tblPayrollList} ";
             $sql .= "( payroll_list_payroll_id, ";
             $sql .= "payroll_list_employee_name, ";
-            $sql .= "payroll_list_is_run, ";
+            $sql .= "payroll_list_is_paid, ";
             $sql .= "payroll_list_employee_id, ";
             $sql .= "payroll_list_created, ";
             $sql .= "payroll_list_datetime ) values ( ";
             $sql .= ":payroll_list_payroll_id, ";
             $sql .= ":payroll_list_employee_name, ";
-            $sql .= ":payroll_list_is_run, ";
+            $sql .= ":payroll_list_is_paid, ";
             $sql .= ":payroll_list_employee_id, ";
             $sql .= ":payroll_list_created, ";
             $sql .= ":payroll_list_datetime ) ";
             $query = $this->connection->prepare($sql);
             $query->execute([
                 "payroll_list_payroll_id" => $this->payroll_id,
-                "payroll_list_is_run" => $this->payroll_is_paid,
+                "payroll_list_is_paid" => $this->payroll_is_paid,
                 "payroll_list_employee_name" => $this->payroll_list_employee_name,
                 "payroll_list_employee_id" => $this->payroll_list_employee_id,
                 "payroll_list_created" => $this->payroll_created,

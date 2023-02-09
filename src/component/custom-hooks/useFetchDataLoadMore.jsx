@@ -35,12 +35,11 @@ const useFetchDataLoadMore = (url, url2, perPage, search) => {
       "get" // method
       // dispatch(setStartIndex(0))
     );
-
     /* para maupdate yun number nng nakaload sa table na items */
     dispatch(setStartIndex(store.startIndex + perPage));
 
     // get total result of data
-    const result = await fetchApi(url2, {});
+    const result = await fetchApi(url2);
 
     consoleLog(result);
 

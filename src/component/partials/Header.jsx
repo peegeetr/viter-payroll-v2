@@ -14,7 +14,7 @@ const Header = () => {
 
   return (
     <>
-      <div className="fixed z-30 bg-white w-full flex justify-between items-center h-16 px-3 border-solid border-b-2 border-primary">
+      <div className="fixed z-30 bg-white w-full flex justify-between items-center h-16 px-3 border-solid border-b-2 border-primary print:hidden">
         <div className="flex items-center">
           <span className="hidden sm:block">
             <FbsLogoSm />

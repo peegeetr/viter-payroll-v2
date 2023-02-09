@@ -9,18 +9,18 @@ $earnings = new Earnings($conn);
 $error = [];
 $returnData = [];
 if (array_key_exists("earningsid", $_GET)) {
- 
+
     // get task id from query string
-    $earnings->earnings_aid = $_GET['earningsid']; 
-    
+    $earnings->earnings_aid = $_GET['earningsid'];
+
     //check to see if task id in query string is not empty and is number, if not return json error
-    checkId($earnings->earnings_aid);  
-     
+    checkId($earnings->earnings_aid);
+
     // delete
-    $query = checkDelete($earnings); 
+    $query = checkDelete($earnings);
     $returnData["data"] = [];
     $returnData["count"] = $query->rowCount();
-    $returnData["Role ID"] = $earnings->earnings_aid;
+    $returnData["earning ID"] = $earnings->earnings_aid;
     $returnData["success"] = true;
     return $returnData;
 }

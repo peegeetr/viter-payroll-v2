@@ -22,7 +22,7 @@ $payType->paytype_is_active = 1;
 $payType->paytype_created = date("Y-m-d");
 $payType->paytype_datetime = date("Y-m-d H:i:s");
 // string value convert to lower case and get first word
-$column_name = strtolower(explode(" ",$data["paytype_name"])[0]);
+$column_name = strtolower(explode(" ", $data["paytype_name"])[0]);
 
 // check name
 isNameExist($payType, $payType->paytype_name);
@@ -35,7 +35,7 @@ checkUpdateColumnValue($payType, $column_name);
 $returnData = [];
 $returnData["data"] = [];
 $returnData["count"] = $query->rowCount();
-$returnData["Role ID"] = $payType->lastInsertedId;
+$returnData["paytype ID"] = $payType->lastInsertedId;
 $returnData["GET"] = $_GET;
 $returnData["success"] = true;
 return $returnData;

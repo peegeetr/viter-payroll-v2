@@ -2,32 +2,35 @@ import { Form, Formik } from "formik";
 import React from "react";
 import { FaTimesCircle } from "react-icons/fa";
 import * as Yup from "yup";
-import { setIsAdd, setStartIndex } from "../../../../store/StoreAction";
+import {
+  setIsAdd,
+  setStartIndex,
+  setError,
+  setMessage,
+} from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
 import useLoadAll from "../../../custom-hooks/useLoadAll";
 import fetchApi from "../../../helpers/fetchApi";
 import { fetchData } from "../../../helpers/fetchData";
-import {
-  InputSelect,
-  InputText,
-  MyCheckbox,
-} from "../../../helpers/FormInputs";
+import { InputSelect, InputText } from "../../../helpers/FormInputs";
 import {
   consoleLog,
   devApiUrl,
   handleNumOnly,
 } from "../../../helpers/functions-general";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
+import { getDateLength } from "./function-manage-list";
 
-const ModalAddManageEarnings = ({ item, payType, employee }) => {
+const ModalAddManageEarnings = ({ item, payType, employee, draft }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [loading, setLoading] = React.useState(false);
+  const [isAmount, setIsAmount] = React.useState(false);
   const [employeeId, setEmployeeId] = React.useState("");
   const [payItem, setPayItem] = React.useState("");
   const [isInstallmet, setIsInstallmet] = React.useState("");
   const [numberInsti, setNumberInsti] = React.useState("");
-  const [isDate, setIsDate] = React.useState("");
-  const [absencesHris, setAbsencesHris] = React.useState([]);
+  const [isStartDate, setIsStartDate] = React.useState("");
+  const [isEndDate, setIsEndDate] = React.useState("");
   let payid = item ? `/${item.earnings_paytype_id}` : `/${0}`;
 
   const { result, setResult } = useLoadAll(
@@ -63,19 +66,25 @@ const ModalAddManageEarnings = ({ item, payType, employee }) => {
     let categoryIsInstallmet = e.target.value;
     // get employee id
     setIsInstallmet(categoryIsInstallmet);
-    // controll start, end date and frequency
     if (categoryIsInstallmet === "0") {
-      setNumberInsti("0");
-      setIsDate("n/a");
+      setNumberInsti("n/a");
+      setIsStartDate("n/a");
+      setIsEndDate("n/a");
     }
     if (categoryIsInstallmet === "1") {
       setNumberInsti("1");
-      setIsDate("");
+      setIsStartDate(draft.length && draft[0].payroll_start_date);
+      setIsEndDate(draft.length && draft[0].payroll_end_date);
     }
     if (categoryIsInstallmet === "2") {
       setNumberInsti("");
-      setIsDate("");
+      setIsStartDate("");
+      setIsEndDate("");
     }
+  };
+
+  const handleAmount = () => {
+    setIsAmount(true);
   };
 
   const handleClose = () => {
@@ -83,38 +92,41 @@ const ModalAddManageEarnings = ({ item, payType, employee }) => {
   };
   const initVal = {
     earnings_employee: item ? item.earnings_employee : "",
-    earnings_payroll_id: "",
-    earnings_employee_id: "",
     earnings_paytype_id: item ? item.earnings_paytype_id : "",
     earnings_payitem_id: item ? item.earnings_payitem_id : "",
+    earnings_payroll_id: "",
+    earnings_employee_id: "",
     earnings_frequency: item ? item.earnings_frequency : "",
-
     earnings_amount: item ? item.earnings_amount : "",
     earnings_number_of_installment: item
       ? item.earnings_number_of_installment
       : "",
     earnings_start_pay_date: item ? item.earnings_start_pay_date : "",
     earnings_end_pay_date: item ? item.earnings_end_pay_date : "",
-
     earnings_is_installment: item ? item.earnings_is_installment : "",
+
+    amount: item ? item.earnings_amount : "",
+    startDate: item ? item.earnings_start_pay_date : "",
+    endDate: item ? item.earnings_end_pay_date : "",
+    number_of_installment: item ? item.earnings_number_of_installment : "",
   };
 
   const yupSchema = Yup.object({
     earnings_employee: Yup.string().required("Required"),
     earnings_paytype_id: Yup.string().required("Required"),
     earnings_payitem_id: Yup.string().required("Required"),
-    earnings_amount:
+    earnings_frequency: Yup.string().required("Required"),
+    number_of_installment:
+      numberInsti === "2" && Yup.string().required("Required"),
+    startDate: numberInsti === "2" && Yup.string().required("Required"),
+    endDate: numberInsti === "2" && Yup.string().required("Required"),
+    amount:
       ((payItem.length > 0 && payItem[0].payitem_is_hris === 0) ||
         (item && item.payitem_is_hris === 0)) &&
       Yup.string().required("Required"),
-    earnings_frequency: Yup.string().required("Required"),
-    earnings_number_of_installment:
-      isInstallmet === "2" && Yup.string().required("Required"),
-    earnings_start_pay_date:
-      (isInstallmet === "1" || isInstallmet === "2") &&
-      Yup.string().required("Required"),
-    earnings_end_pay_date:
-      (isInstallmet === "1" || isInstallmet === "2") &&
+    earnings_is_installment:
+      ((payItem.length > 0 && payItem[0].payitem_is_hris === 0) ||
+        (item && item.payitem_is_hris === 0)) &&
       Yup.string().required("Required"),
   });
   return (
@@ -123,7 +135,8 @@ const ModalAddManageEarnings = ({ item, payType, employee }) => {
         <div className="p-1 w-[350px] rounded-b-2xl">
           <div className="flex justify-between items-center bg-primary p-3 rounded-t-2xl">
             <h3 className="text-white text-sm">
-              {item ? "Update" : "Add"} Earnings
+              {item ? "Update" : "Add"} Earnings :
+              {draft.length && draft[0].payroll_id}
             </h3>
             <button
               type="button"
@@ -140,12 +153,33 @@ const ModalAddManageEarnings = ({ item, payType, employee }) => {
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
                 consoleLog(values, employee);
-                // get data from HRIS
-                if (payItem[0].payitem_is_hris === 1) {
-                  // fetch data
-                  // filter data based on payroll period
-                  // set data filterd data to state and pass to server
+                if (
+                  getDateLength(
+                    values.earnings_start_pay_date,
+                    values.earnings_end_pay_date,
+                    draft[0].payroll_start_date,
+                    draft[0].payroll_end_date
+                  ) === false
+                ) {
+                  dispatch(setError(true));
+                  dispatch(
+                    setMessage(
+                      "Start date and end date is not avilable for pay date."
+                    )
+                  );
+                  return;
                 }
+                // get data from HRIS
+                // if (
+                //   getDateLength(
+                //     values.earnings_start_pay_date,
+                //     values.earnings_end_pay_date
+                //   )
+                // ) {
+                //   // fetch data
+                //   // filter data based on payroll period
+                //   // set data filterd data to state and pass to server
+                // }
                 fetchData(
                   setLoading,
                   item
@@ -167,10 +201,19 @@ const ModalAddManageEarnings = ({ item, payType, employee }) => {
             >
               {(props) => {
                 props.values.earnings_employee_id = employeeId;
-                props.values.earnings_payroll_id = "sample_pr_id";
-                props.values.earnings_number_of_installment = numberInsti;
-                props.values.earnings_start_pay_date = isDate;
-                props.values.earnings_end_pay_date = isDate;
+                props.values.earnings_amount =
+                  Number(props.values.amount) /
+                  (props.values.earnings_number_of_installment === "n/a"
+                    ? "1"
+                    : Number(props.values.earnings_number_of_installment));
+                props.values.earnings_payroll_id =
+                  draft.length && draft[0].payroll_id;
+                props.values.earnings_number_of_installment =
+                  numberInsti || props.values.number_of_installment;
+                props.values.earnings_start_pay_date =
+                  isStartDate || props.values.startDate;
+                props.values.earnings_end_pay_date =
+                  isEndDate || props.values.endDate;
 
                 return (
                   <Form>
@@ -304,7 +347,11 @@ const ModalAddManageEarnings = ({ item, payType, employee }) => {
                               label="Amount"
                               type="text"
                               onKeyPress={handleNumOnly}
-                              name="earnings_amount"
+                              name={
+                                isAmount === false
+                                  ? "amount"
+                                  : "earnings_amount"
+                              }
                               disabled={loading}
                             />
                           </div>
@@ -329,25 +376,24 @@ const ModalAddManageEarnings = ({ item, payType, employee }) => {
                           </div>
 
                           {isInstallmet === "2" && (
-                            <div className="relative mb-5">
-                              <InputText
-                                label="No. of installment"
-                                type="text"
-                                onKeyPress={handleNumOnly}
-                                name="earnings_number_of_installment"
-                                disabled={loading}
-                              />
-                            </div>
-                          )}
-                          {(isInstallmet === "1" || isInstallmet === "2") && (
                             <>
+                              <div className="relative mb-5">
+                                <InputText
+                                  label="No. of installment"
+                                  type="number"
+                                  onBlur={(e) => handleAmount(e)}
+                                  min="2"
+                                  name="number_of_installment"
+                                  disabled={loading}
+                                />
+                              </div>
                               <div className="relative mb-5">
                                 <InputText
                                   label="Start Date"
                                   type="text"
                                   onFocus={(e) => (e.target.type = "date")}
                                   onBlur={(e) => (e.target.type = "date")}
-                                  name="earnings_start_pay_date"
+                                  name="startDate"
                                   disabled={loading}
                                 />
                               </div>
@@ -357,7 +403,7 @@ const ModalAddManageEarnings = ({ item, payType, employee }) => {
                                   type="text"
                                   onFocus={(e) => (e.target.type = "date")}
                                   onBlur={(e) => (e.target.type = "date")}
-                                  name="earnings_end_pay_date"
+                                  name="endDate"
                                   disabled={loading}
                                 />
                               </div>

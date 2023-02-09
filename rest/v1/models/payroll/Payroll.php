@@ -11,17 +11,23 @@ class Payroll
     public $payroll_created;
     public $payroll_datetime;
 
+    public $payroll_list_aid;
+    public $payroll_list_employee_name;
+    public $payroll_list_employee_id;
+
     public $connection;
     public $lastInsertedId;
     public $payroll_start;
     public $payroll_total;
     public $payroll_search;
     public $tblPayroll;
+    public $tblPayrollList;
 
     public function __construct($db)
     {
         $this->connection = $db;
         $this->tblPayroll = "prv2_payroll";
+        $this->tblPayrollList = "prv2_payroll_list";
     }
 
     // create
@@ -63,6 +69,39 @@ class Payroll
         return $query;
     }
 
+    // create
+    public function createPayrollList()
+    {
+        try {
+            $sql = "insert into {$this->tblPayrollList} ";
+            $sql .= "( payroll_list_payroll_id, ";
+            $sql .= "payroll_list_employee_name, ";
+            $sql .= "payroll_list_is_paid, ";
+            $sql .= "payroll_list_employee_id, ";
+            $sql .= "payroll_list_created, ";
+            $sql .= "payroll_list_datetime ) values ( ";
+            $sql .= ":payroll_list_payroll_id, ";
+            $sql .= ":payroll_list_employee_name, ";
+            $sql .= ":payroll_list_is_paid, ";
+            $sql .= ":payroll_list_employee_id, ";
+            $sql .= ":payroll_list_created, ";
+            $sql .= ":payroll_list_datetime ) ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "payroll_list_payroll_id" => $this->payroll_id,
+                "payroll_list_is_paid" => $this->payroll_is_paid,
+                "payroll_list_employee_name" => $this->payroll_list_employee_name,
+                "payroll_list_employee_id" => $this->payroll_list_employee_id,
+                "payroll_list_created" => $this->payroll_created,
+                "payroll_list_datetime" => $this->payroll_datetime,
+            ]);
+            $this->lastInsertedId = $this->connection->lastInsertId();
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
     // read all
     public function readAll()
     {
@@ -76,6 +115,7 @@ class Payroll
         }
         return $query;
     }
+
 
     public function readLimit()
     {
@@ -116,12 +156,14 @@ class Payroll
     public function readById()
     {
         try {
-            $sql = "select * from {$this->tblPayroll} ";
-            $sql .= "where payroll_aid = :payroll_aid  ";
-            $sql .= "order by payroll_is_paid desc ";
+            $sql = "select * from {$this->tblPayrollList} as payrollList, ";
+            $sql .= "{$this->tblPayroll} as payroll ";
+            $sql .= "where payroll.payroll_aid = :payroll_aid ";
+            $sql .= "and payrollList.payroll_list_payroll_id = payroll.payroll_id ";
+            $sql .= "order by payroll_list_employee_name asc ";
             $query = $this->connection->prepare($sql);
             $query->execute([
-                "payroll_aid " => $this->payroll_aid,
+                "payroll_aid" => $this->payroll_aid,
             ]);
         } catch (PDOException $ex) {
             $query = false;
@@ -181,10 +223,61 @@ class Payroll
         try {
             $sql = "delete from {$this->tblPayroll} ";
             $sql .= "where payroll_aid = :payroll_aid ";
+            $sql .= "and payroll_id = :payroll_id ";
             $query = $this->connection->prepare($sql);
             $query->execute([
                 "payroll_aid" => $this->payroll_aid,
+                "payroll_id" => $this->payroll_id,
             ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    // delete payroll list
+    public function deletePayrollList()
+    {
+        try {
+            $sql = "delete from {$this->tblPayrollList} ";
+            $sql .= "where payroll_list_payroll_id = :payroll_list_payroll_id ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "payroll_list_payroll_id" => $this->payroll_id,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    // name
+    public function checkEarningType()
+    {
+        try {
+            $sql = "select * from {$this->tblPayroll} ";
+            $sql .= "where payroll_earning_type = :payroll_earning_type ";
+            $sql .= "and payroll_is_paid = 0 ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "payroll_earning_type" => "{$this->payroll_earning_type}",
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    // read by draft
+    public function readByDraft()
+    {
+        try {
+            $sql = "select payroll_id, ";
+            $sql .= "payroll_start_date, ";
+            $sql .= "payroll_end_date ";
+            $sql .= "from {$this->tblPayroll} ";
+            $sql .= "where payroll_is_paid = 0 ";
+            $query = $this->connection->query($sql);
         } catch (PDOException $ex) {
             $query = false;
         }

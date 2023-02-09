@@ -1,14 +1,15 @@
 import React from "react";
-import { FaEdit, FaList, FaTrash } from "react-icons/fa";
 import { MdOutlineReceipt } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { setIsAdd, setIsRestore } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
 import useFetchDataLoadMore from "../../../custom-hooks/useFetchDataLoadMore";
+import useLoadPayroll from "../../../custom-hooks/useLoadPayroll";
 import {
   devApiUrl,
   devNavUrl,
   formatDate,
+  getUrlParam,
   UrlAdmin,
 } from "../../../helpers/functions-general";
 import Loadmore from "../../../partials/Loadmore";
@@ -17,14 +18,13 @@ import NoData from "../../../partials/NoData";
 import SearchBar from "../../../partials/SearchBar";
 import ServerError from "../../../partials/ServerError";
 import TableSpinner from "../../../partials/spinners/TableSpinner";
-import StatusActive from "../../../partials/status/StatusActive";
-import StatusInactive from "../../../partials/status/StatusInactive";
 
 const PayrollViewList = ({ setItemEdit }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [dataItem, setData] = React.useState(null);
   const [id, setId] = React.useState(null);
   const [isDel, setDel] = React.useState(false);
+  const pid = getUrlParam().get("payrollid");
   const search = React.useRef(null);
   const perPage = 10;
   const start = store.startIndex + 1;
@@ -38,26 +38,26 @@ const PayrollViewList = ({ setItemEdit }) => {
     handleSearch,
     handleChange,
   } = useFetchDataLoadMore(
-    `${devApiUrl}/v1/payroll/limit/${start}/${perPage}`,
-    `${devApiUrl}/v1/payroll`,
+    `${devApiUrl}/v1/payrollList/limit/${start}/${perPage}/${pid}`,
+    `${devApiUrl}/v1/payrollList/${pid}`,
     perPage,
     search
   );
 
-  const handleEdit = (item) => {
-    dispatch(setIsAdd(true));
-    setItemEdit(item);
-  };
-
-  const handleDelete = (item) => {
-    dispatch(setIsRestore(true));
-    setId(item.payroll_aid);
-    setData(item);
-    setDel(true);
-  };
-
   return (
     <>
+      <div className="xs:flex text-primary">
+        <p className="mr-8">
+          ID : <span className="font-light text-black">{pid}</span>
+        </p>
+        <p className="mr-8">
+          Pay Period :{" "}
+          <span className="font-light text-black"> Feb 1 - 15 2023</span>
+        </p>
+        <p className="">
+          Period Work Days: <span className="font-light text-black">11</span>
+        </p>
+      </div>
       <SearchBar
         search={search}
         handleSearch={handleSearch}
@@ -65,7 +65,7 @@ const PayrollViewList = ({ setItemEdit }) => {
         loading={loading}
         result={result}
         store={store}
-        url={`${devApiUrl}/v1/payroll/search/`}
+        url={`${devApiUrl}/v1/payrollList/search/${pid}/`}
       />
 
       <div className="relative text-center overflow-x-auto z-0 mb-16">
@@ -78,7 +78,7 @@ const PayrollViewList = ({ setItemEdit }) => {
               <th className="w-[8rem]">Gross</th>
               <th className="w-[8rem]">Deduction</th>
               <th className="w-[8srem]">Net Pay</th>
-              <th className="text-right">Actions</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -88,14 +88,14 @@ const PayrollViewList = ({ setItemEdit }) => {
                 return (
                   <tr key={key}>
                     <td className="text-center">{counter}.</td>
-                    <td>Lumabas, Cyrene</td>
-                    <td>100</td>
-                    <td>42</td>
-                    <td>42</td>
+                    <td>{item.payroll_list_employee_name}</td>
+                    <td> </td>
+                    <td></td>
+                    <td></td>
                     <td>
                       <div className="flex items-center justify-end gap-1 mr-2">
                         <Link
-                          to={`${devNavUrl}/${UrlAdmin}/payroll/list/payslip?payrollid=${item.payroll_aid}`}
+                          to={`${devNavUrl}/${UrlAdmin}/payroll/list/payslip?payslipid=${item.payroll_list_aid}`}
                           className="btn-action-table tooltip-action-table"
                           data-tooltip="Payslip"
                         >

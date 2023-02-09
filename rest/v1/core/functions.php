@@ -310,7 +310,7 @@ function checkExistence($count, $msg = "")
         exit;
     }
 }
- 
+
 // check association
 function isAssociated($object)
 {
@@ -326,7 +326,7 @@ function isNameExist($object, $name)
     $count = $query->rowCount();
     checkExistence($count, "{$name} already exist.");
 }
- 
+
 
 // check email
 function isEmailExist($object, $email)

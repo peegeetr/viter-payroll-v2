@@ -102,7 +102,7 @@ const PayrollList = ({ setItemEdit }) => {
                     </td>
                     <td>{formatDate(item.payroll_pay_date)}</td>
                     <td>{item.payroll_earning_type}</td>
-                    <td>42</td>
+                    <td>{totalResult}</td>
                     <td>4200</td>
                     <td>
                       {item.payroll_is_paid === 1 ? (
@@ -124,7 +124,7 @@ const PayrollList = ({ setItemEdit }) => {
                           </button>
                         )}
                         <Link
-                          to={`${devNavUrl}/${UrlAdmin}/payroll/list?payrollid=${item.payroll_aid}`}
+                          to={`${devNavUrl}/${UrlAdmin}/payroll/list?payrollid=${item.payroll_id}`}
                           className="btn-action-table tooltip-action-table"
                           onClick={() => dispatch(setStartIndex(0))}
                           data-tooltip="View"

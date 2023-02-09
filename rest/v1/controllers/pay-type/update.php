@@ -16,13 +16,13 @@ if (array_key_exists("paytypeid", $_GET)) {
     $payType->paytype_aid = $_GET['paytypeid'];
     $payType->paytype_name = addslashes(trim($data["paytype_name"]));
     $payType->paytype_description = addslashes(trim($data["paytype_description"]));
-    $payType->paytype_category = addslashes(trim($data["paytype_category"])); 
+    $payType->paytype_category = addslashes(trim($data["paytype_category"]));
     $payType->paytype_datetime = date("Y-m-d H:i:s");
-     
+
     $name_old = strtolower($data["paytype_name_old"]);
-    $column_name_old = strtolower(explode(" ",$data["paytype_name_old"])[0]);
+    $column_name_old = strtolower(explode(" ", $data["paytype_name_old"])[0]);
     // string value convert to lower case
-    $column_name = strtolower(explode(" ",$data["paytype_name"])[0]);
+    $column_name = strtolower(explode(" ", $data["paytype_name"])[0]);
     //check to see if task id in query string is not empty and is number, if not return json error
     checkId($payType->paytype_aid);
     // check name
@@ -33,7 +33,7 @@ if (array_key_exists("paytypeid", $_GET)) {
     checkUpdateColumnName($payType, $column_name, $column_name_old);
     $returnData["data"] = [];
     $returnData["count"] = $query->rowCount();
-    $returnData["role ID"] = $payType->paytype_aid;
+    $returnData["paytype ID"] = $payType->paytype_aid;
     $returnData["success"] = true;
     return $returnData;
 }

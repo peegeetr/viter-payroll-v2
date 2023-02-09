@@ -30,7 +30,7 @@ if (array_key_exists("earningsid", $_GET)) {
     $query = checkUpdate($earnings);
     $returnData["data"] = [];
     $returnData["count"] = $query->rowCount();
-    $returnData["role ID"] = $earnings->earnings_aid;
+    $returnData["earning ID"] = $earnings->earnings_aid;
     $returnData["success"] = true;
     return $returnData;
 }

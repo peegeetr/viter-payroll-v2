@@ -26,7 +26,7 @@ if (array_key_exists("payrollid", $_GET)) {
     $query = checkUpdate($payroll);
     $returnData["data"] = [];
     $returnData["count"] = $query->rowCount();
-    $returnData["role ID"] = $payroll->payroll_aid;
+    $returnData["payroll ID"] = $payroll->payroll_aid;
     $returnData["success"] = true;
     return $returnData;
 }

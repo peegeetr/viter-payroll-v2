@@ -17,8 +17,8 @@ const Payslip = () => {
     <>
       <Header />
       <Navigation menu="payroll" />
-      <div className="wrapper">
-        <div className="flex items-center mb-1 justify-between whitespace-nowrap overflow-auto gap-2">
+      <div className="wrapper print:pt-0">
+        <div className="flex items-center mb-1 justify-between whitespace-nowrap overflow-auto gap-2 print:hidden">
           <BreadCrumbs />
           <div className="flex items-center gap-1">
             <button type="button" className="btn-primary">

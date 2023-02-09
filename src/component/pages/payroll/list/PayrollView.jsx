@@ -1,5 +1,5 @@
 import React from "react";
-import { FaEnvelope } from "react-icons/fa";
+import { FaEnvelope, FaSave } from "react-icons/fa";
 import { ImPlay3 } from "react-icons/im";
 import { setIsAdd } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
@@ -37,37 +37,15 @@ const PayrollView = () => {
               <ImPlay3 />
               <span>Run</span>
             </button>
+            <button type="button" className="btn-primary" onClick={handleAdd}>
+              <FaSave />
+              <span>Mark Paid</span>
+            </button>
           </div>
         </div>
         <hr />
 
         <div className="w-full pt-2 pb-20">
-          <div className="xs:flex text-primary">
-            <p className="mr-8">
-              ID :{" "}
-              <span className="font-light text-black">
-                {/* {`${formatDate(item.payroll_start_date).split(" ")[0]} 
-                      ${formatDate(item.payroll_start_date).split(" ")[1]} - ${
-          formatDate(item.payroll_end_date).split(" ")[1]
-        } ${formatDate(item.payroll_end_date).split(" ")[2]}`} */}
-                PR-001
-              </span>
-            </p>
-            <p className="mr-8">
-              Pay Period :{" "}
-              <span className="font-light text-black">
-                {/* {item.payroll_id} */}
-                Jan 1 - 15 2023
-              </span>
-            </p>
-            <p className="">
-              Period Work Days:{" "}
-              <span className="font-light text-black">
-                {/* {item.payroll_id} */}
-                12
-              </span>
-            </p>
-          </div>
           <PayrollViewList setItemEdit={setItemEdit} />
         </div>
         <Footer />

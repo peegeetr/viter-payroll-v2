@@ -2,6 +2,7 @@ import React from "react";
 import { FaPlusCircle } from "react-icons/fa";
 import { setIsAdd } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
+import useLoadDraft from "../../../custom-hooks/useLoadDraft";
 import useLoadEmployee from "../../../custom-hooks/useLoadEmployee";
 import useLoadPayItem from "../../../custom-hooks/useLoadPayItem";
 import useLoadPayType from "../../../custom-hooks/useLoadPayType";
@@ -14,13 +15,14 @@ import ModalSuccess from "../../../partials/modals/ModalSuccess";
 import Navigation from "../../../partials/Navigation";
 import ManageEarningsList from "./ManageEarningsList";
 import ModalAddManageEarnings from "./ModalAddManageEarnings";
+import ModalNoPayrollId from "./ModalNoPayrollId";
 
 const ManageEarnings = () => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [itemEdit, setItemEdit] = React.useState(null);
 
   const { payType } = useLoadPayType(`${devApiUrl}/v1/paytype`, "get");
-  // const { payItem } = useLoadPayItem(`${devApiUrl}/v1/payitem`, "get");
+  const { draft } = useLoadDraft(`${devApiUrl}/v1/payroll/draft`, "get");
   const { employee } = useLoadEmployee(`${hrisDevApiUrl}/v1/employees`, "get");
 
   const handleAdd = () => {
@@ -49,15 +51,16 @@ const ManageEarnings = () => {
         </div>
         <Footer />
       </div>
-
-      {store.isAdd && (
-        <ModalAddManageEarnings
-          item={itemEdit}
-          payType={payType}
-          employee={employee}
-          // payItem={payItem}
-        />
-      )}
+      {draft.length > 0
+        ? store.isAdd && (
+            <ModalAddManageEarnings
+              item={itemEdit}
+              payType={payType}
+              employee={employee}
+              draft={draft}
+            />
+          )
+        : store.isAdd && <ModalNoPayrollId />}
       {store.success && <ModalSuccess />}
       {store.error && <ModalError />}
     </>

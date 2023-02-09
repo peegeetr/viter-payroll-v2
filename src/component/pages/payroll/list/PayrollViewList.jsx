@@ -52,18 +52,10 @@ const PayrollViewList = ({ setItemEdit }) => {
         </p>
         <p className="mr-8">
           Pay Period :{" "}
-          <span className="font-light text-black">
-            {/* {`${formatDate(item.payroll_start_date).split(" ")[1]} 
-                      ${formatDate(item.payroll_start_date).split(" ")[2]} - ${
-              formatDate(item.payroll_end_date).split(" ")[2]
-            },  ${formatDate(item.payroll_end_date).split(" ")[3]}`} */}
-          </span>
+          <span className="font-light text-black"> Feb 1 - 15 2023</span>
         </p>
         <p className="">
-          Period Work Days:{" "}
-          <span className="font-light text-black">
-            {/* {item.payroll_id} */}
-          </span>
+          Period Work Days: <span className="font-light text-black">11</span>
         </p>
       </div>
       <SearchBar
@@ -101,15 +93,17 @@ const PayrollViewList = ({ setItemEdit }) => {
                     <td></td>
                     <td></td>
                     <td>
-                      <div className="flex items-center justify-end gap-1 mr-2">
-                        <Link
-                          to={`${devNavUrl}/${UrlAdmin}/payroll/list/payslip?payslipid=${item.payroll_list_aid}`}
-                          className="btn-action-table tooltip-action-table"
-                          data-tooltip="Payslip"
-                        >
-                          <MdOutlineReceipt />
-                        </Link>
-                      </div>
+                      {item.payroll_list_is_run === 1 && (
+                        <div className="flex items-center justify-end gap-1 mr-2">
+                          <Link
+                            to={`${devNavUrl}/${UrlAdmin}/payroll/list/payslip?payslipid=${item.payroll_list_aid}`}
+                            className="btn-action-table tooltip-action-table"
+                            data-tooltip="Payslip"
+                          >
+                            <MdOutlineReceipt />
+                          </Link>
+                        </div>
+                      )}
                     </td>
                   </tr>
                 );

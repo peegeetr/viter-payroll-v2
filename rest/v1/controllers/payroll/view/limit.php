@@ -17,12 +17,11 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
     checkApiKey();
 
     if (
-        array_key_exists("start", $_GET) &&
-        array_key_exists("total", $_GET) &&
+        array_key_exists("start", $_GET) && array_key_exists("total", $_GET) &&
         array_key_exists("listpayrollid", $_GET)
     ) {
-        // // get payroll id
-        $payrollList->payroll_aid = $_GET['listpayrollid'];
+        // get payroll id 
+        $payrollList->payroll_list_payroll_id = $_GET['listpayrollid'];
         // get task id from query string
         $payrollList->payrollView_start = $_GET['start'];
         $payrollList->payrollView_total = $_GET['total'];

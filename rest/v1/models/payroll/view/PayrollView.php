@@ -41,8 +41,6 @@ class PayrollView
     public $payroll_list_tax;
     public $payroll_list_datetime;
 
-    public $payroll_aid;
-
     public $connection;
     public $payrollView_search;
     public $payrollView_start;
@@ -76,14 +74,15 @@ class PayrollView
     public function readById()
     {
         try {
-            $sql = "select * from {$this->tblPayrollList} as payrollList, ";
-            $sql .= "{$this->tblPayroll} as payroll ";
-            $sql .= "where payroll.payroll_aid = :payroll_aid ";
-            $sql .= "and payrollList.payroll_list_payroll_id = payroll.payroll_id ";
+            $sql = "select payroll_list_payroll_id, ";
+            $sql .= "payroll_list_aid, ";
+            $sql .= "payroll_list_employee_name ";
+            $sql .= "from {$this->tblPayrollList} as payrollList ";
+            $sql .= "where payroll_list_payroll_id = :payroll_list_payroll_id ";
             $sql .= "order by payroll_list_employee_name asc ";
             $query = $this->connection->prepare($sql);
             $query->execute([
-                "payroll_aid" => $this->payroll_aid,
+                "payroll_list_payroll_id" => $this->payroll_list_payroll_id,
             ]);
         } catch (PDOException $ex) {
             $query = false;
@@ -91,14 +90,14 @@ class PayrollView
         return $query;
     }
 
-
     public function readLimit()
     {
         try {
-            $sql = "select * from {$this->tblPayrollList} as payrollList, ";
-            $sql .= "{$this->tblPayroll} as payroll ";
-            $sql .= "where payroll.payroll_aid = :payroll_aid ";
-            $sql .= "and payrollList.payroll_list_payroll_id = payroll.payroll_id ";
+            $sql = "select payroll_list_payroll_id, ";
+            $sql .= "payroll_list_employee_name, ";
+            $sql .= "payroll_list_aid ";
+            $sql .= "from {$this->tblPayrollList} ";
+            $sql .= "where payroll_list_payroll_id = :payroll_list_payroll_id ";
             $sql .= "order by payroll_list_employee_name asc ";
             $sql .= "limit :start, ";
             $sql .= ":total ";
@@ -106,7 +105,7 @@ class PayrollView
             $query->execute([
                 "start" => $this->payrollView_start - 1,
                 "total" => $this->payrollView_total,
-                "payroll_aid" => $this->payroll_aid,
+                "payroll_list_payroll_id" => $this->payroll_list_payroll_id,
             ]);
         } catch (PDOException $ex) {
             $query = false;
@@ -119,11 +118,13 @@ class PayrollView
     {
         try {
             $sql = "select * from {$this->tblPayrollList} ";
-            $sql .= "where payroll_list_employee_name like :search ";
+            $sql .= "where payroll_list_payroll_id = :payroll_list_payroll_id ";
+            $sql .= "and payroll_list_employee_name like :search ";
             $sql .= "order by payroll_list_employee_name asc ";
             $query = $this->connection->prepare($sql);
             $query->execute([
                 "search" => "{$this->payrollView_search}%",
+                "payroll_list_payroll_id" => $this->payroll_list_payroll_id,
             ]);
         } catch (PDOException $ex) {
             $query = false;

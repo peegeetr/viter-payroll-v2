@@ -15,13 +15,14 @@ $response = new Response();
 // validate api key
 if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
     checkApiKey();
-    if (array_key_exists("search", $_GET)) {
+    if (array_key_exists("search", $_GET) && array_key_exists("listpayrollid", $_GET)) {
         // get data
+        $payrollList->payroll_list_payroll_id = $_GET['listpayrollid'];
         // get task id from query string
-        $payroll->payroll_search = $_GET['search'];
+        $payrollList->payrollView_search = $_GET['search'];
         //check to see if search keyword in query string is not empty and less than 50 chars
-        checkKeyword($payroll->payroll_search);
-        $query = checkSearch($payroll);
+        checkKeyword($payrollList->payrollView_search);
+        $query = checkSearch($payrollList);
         http_response_code(200);
         $returnData["data"] = getResultData($query);
         $returnData["count"] = $query->rowCount();

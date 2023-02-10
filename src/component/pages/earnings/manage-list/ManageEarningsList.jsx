@@ -18,6 +18,7 @@ import ModalDeleteRestore from "../../../partials/modals/ModalDeleteRestore";
 import NoData from "../../../partials/NoData";
 import SearchBar from "../../../partials/SearchBar";
 import ServerError from "../../../partials/ServerError";
+import TableSpinner from "../../../partials/spinners/TableSpinner";
 import StatusActive from "../../../partials/status/StatusActive";
 import StatusInactive from "../../../partials/status/StatusInactive";
 
@@ -83,10 +84,12 @@ const ManageEarningsList = ({ setItemEdit }) => {
         url={`${devApiUrl}/v1/earnings/search/`}
       />
       <div className="relative text-center overflow-x-auto z-0">
+        {loading && <TableSpinner />}
         <table>
           <thead>
             <tr>
               <th>#</th>
+              <th className="min-w-[5rem]">Payroll ID</th>
               <th className="min-w-[8rem]">Employeee</th>
               <th className="min-w-[5rem]">Pay Type</th>
               <th className="min-w-[5rem]">Pay Item</th>
@@ -106,6 +109,7 @@ const ManageEarningsList = ({ setItemEdit }) => {
                 return (
                   <tr key={key}>
                     <td>{counter}.</td>
+                    <td>{item.earnings_payroll_id}</td>
                     <td>{item.earnings_employee}</td>
                     <td>{item.paytype_name}</td>
                     <td>{item.payitem_name}</td>

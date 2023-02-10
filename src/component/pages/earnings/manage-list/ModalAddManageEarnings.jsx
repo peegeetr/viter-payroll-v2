@@ -87,7 +87,7 @@ const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
     // dispatch(setIsFinish(false));
     dispatch(setIsAdd(false));
   };
-
+  console.log(isInstallmet);
   const initVal = {
     earnings_employee: item ? item.earnings_employee : "",
     earnings_paytype_id: item ? item.earnings_paytype_id : "",
@@ -115,9 +115,9 @@ const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
     earnings_payitem_id: Yup.string().required("Required"),
     earnings_frequency: Yup.string().required("Required"),
     number_of_installment:
-      numberInsti === "2" && Yup.string().required("Required"),
-    startDate: numberInsti === "2" && Yup.string().required("Required"),
-    endDate: numberInsti === "2" && Yup.string().required("Required"),
+      isInstallmet === "2" && Yup.string().required("Required"),
+    startDate: isInstallmet === "2" && Yup.string().required("Required"),
+    endDate: isInstallmet === "2" && Yup.string().required("Required"),
     amount:
       ((payItem.length > 0 && payItem[0].payitem_is_hris === 0) ||
         (item && item.payitem_is_hris === 0)) &&
@@ -176,11 +176,13 @@ const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
             >
               {(props) => {
                 props.values.earnings_employee_id = employeeId;
-                props.values.earnings_amount =
+                props.values.earnings_amount = (
                   Number(props.values.amount) /
-                  (props.values.earnings_number_of_installment === "n/a"
+                  (props.values.earnings_number_of_installment === "n/a" ||
+                  props.values.earnings_number_of_installment === ""
                     ? "1"
-                    : Number(props.values.earnings_number_of_installment));
+                    : Number(props.values.earnings_number_of_installment))
+                ).toFixed(2);
                 props.values.earnings_payroll_id =
                   payrollDraft.length && payrollDraft[0].payroll_id;
                 props.values.earnings_number_of_installment =
@@ -322,11 +324,7 @@ const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
                               label="Amount"
                               type="text"
                               onKeyPress={handleNumOnly}
-                              name={
-                                isAmount === false
-                                  ? "amount"
-                                  : "earnings_amount"
-                              }
+                              name={!isAmount ? "amount" : "earnings_amount"}
                               disabled={loading}
                             />
                           </div>
@@ -398,7 +396,7 @@ const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
                       </button>
                       <button
                         type="reset"
-                        className="btn-modal-submit cursor-pointer"
+                        className="btn-modal-cancel cursor-pointer"
                         onClick={handleClose}
                         disabled={loading}
                       >

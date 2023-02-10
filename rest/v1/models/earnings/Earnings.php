@@ -95,20 +95,30 @@ class Earnings
     public function readAll()
     {
         try {
-            $sql = "select earnings.earnings_aid, earnings.earnings_is_paid, ";
-            $sql .= "earnings.earnings_employee, earnings.earnings_amount, ";
-            $sql .= "earnings.earnings_frequency, earnings.earnings_number_of_installment, ";
-            $sql .= "earnings.earnings_start_pay_date, earnings.earnings_end_pay_date, ";
-            $sql .= "earnings.earnings_payitem_id, earnings.earnings_paytype_id, ";
-            $sql .= "payitem.payitem_aid, paytype.paytype_aid, earnings.earnings_payroll_id, ";
-            $sql .= "payitem.payitem_is_hris, earnings.earnings_is_installment, ";
-            $sql .= "payitem.payitem_name, paytype.paytype_name ";
+            $sql = "select earnings.earnings_aid, ";
+            $sql .= " earnings.earnings_is_paid, ";
+            $sql .= "earnings.earnings_employee, ";
+            $sql .= "earnings.earnings_amount, ";
+            $sql .= "earnings.earnings_frequency, ";
+            $sql .= "earnings.earnings_number_of_installment, ";
+            $sql .= "earnings.earnings_start_pay_date, ";
+            $sql .= "earnings.earnings_end_pay_date, ";
+            $sql .= "earnings.earnings_payitem_id, ";
+            $sql .= "earnings.earnings_paytype_id, ";
+            $sql .= "payitem.payitem_aid, ";
+            $sql .= "paytype.paytype_aid, ";
+            $sql .= "earnings.earnings_payroll_id, ";
+            $sql .= "payitem.payitem_is_hris, ";
+            $sql .= "earnings.earnings_is_installment, ";
+            $sql .= "payitem.payitem_name, ";
+            $sql .= "paytype.paytype_name ";
             $sql .= "from {$this->tblEarnings} as earnings, ";
             $sql .= "{$this->tblPayType} as paytype, ";
             $sql .= "{$this->tblPayItem} as payitem ";
             $sql .= "where earnings.earnings_paytype_id = paytype.paytype_aid ";
             $sql .= "and earnings.earnings_payitem_id = payitem.payitem_aid ";
-            $sql .= "order by earnings.earnings_is_paid desc, ";
+            $sql .= "order by earnings.earnings_payroll_id desc, ";
+            $sql .= "DATE(earnings.earnings_end_pay_date) desc, ";
             $sql .= "earnings.earnings_employee asc ";
             $query = $this->connection->query($sql);
         } catch (PDOException $ex) {
@@ -120,20 +130,30 @@ class Earnings
     public function readLimit()
     {
         try {
-            $sql = "select earnings.earnings_aid, earnings.earnings_is_paid, ";
-            $sql .= "earnings.earnings_employee, earnings.earnings_amount, ";
-            $sql .= "earnings.earnings_frequency, earnings.earnings_number_of_installment, ";
-            $sql .= "earnings.earnings_start_pay_date, earnings.earnings_end_pay_date, ";
-            $sql .= "earnings.earnings_payitem_id, earnings.earnings_paytype_id, ";
-            $sql .= "payitem.payitem_aid, paytype.paytype_aid, earnings.earnings_payroll_id, ";
-            $sql .= "payitem.payitem_is_hris, earnings.earnings_is_installment, ";
-            $sql .= "payitem.payitem_name, paytype.paytype_name ";
+            $sql = "select earnings.earnings_aid, ";
+            $sql .= " earnings.earnings_is_paid, ";
+            $sql .= "earnings.earnings_employee, ";
+            $sql .= "earnings.earnings_amount, ";
+            $sql .= "earnings.earnings_frequency, ";
+            $sql .= "earnings.earnings_number_of_installment, ";
+            $sql .= "earnings.earnings_start_pay_date, ";
+            $sql .= "earnings.earnings_end_pay_date, ";
+            $sql .= "earnings.earnings_payitem_id, ";
+            $sql .= "earnings.earnings_paytype_id, ";
+            $sql .= "payitem.payitem_aid, ";
+            $sql .= "paytype.paytype_aid, ";
+            $sql .= "earnings.earnings_payroll_id, ";
+            $sql .= "payitem.payitem_is_hris, ";
+            $sql .= "earnings.earnings_is_installment, ";
+            $sql .= "payitem.payitem_name, ";
+            $sql .= "paytype.paytype_name ";
             $sql .= "from {$this->tblEarnings} as earnings, ";
             $sql .= "{$this->tblPayType} as paytype, ";
             $sql .= "{$this->tblPayItem} as payitem ";
             $sql .= "where earnings.earnings_paytype_id = paytype.paytype_aid ";
             $sql .= "and earnings.earnings_payitem_id = payitem.payitem_aid ";
-            $sql .= "order by earnings.earnings_is_paid desc, ";
+            $sql .= "order by earnings.earnings_payroll_id desc, ";
+            $sql .= "DATE(earnings.earnings_end_pay_date) desc, ";
             $sql .= "earnings.earnings_employee asc ";
             $sql .= "limit :start, ";
             $sql .= ":total ";

@@ -16,6 +16,7 @@ if (array_key_exists("ratesid", $_GET)) {
     $rates->rates_aid = $_GET['ratesid'];
     $rates->rates_name = checkIndex($data, "rates_name");
     $rates->rates_paytype_id = checkIndex($data, "rates_paytype_id");
+    $rates->rates_percent = checkIndex($data, "rates_percent");
     $rates->rates_payitems_id = checkIndex($data, "rates_payitems_id");
     $rates->rates_active = 1;
     $rates->rates_datetime = date("Y-m-d H:i:s");

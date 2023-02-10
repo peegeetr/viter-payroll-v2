@@ -50,15 +50,15 @@ export const getDateLength = (
 // get Date Length
 export const validatePayPeriod = (values, payrollDraft, dispatch) => {
   if (
-    new Date(values.earnings_start_pay_date) <
+    new Date(values.earnings_start_pay_date) >
       new Date(payrollDraft[0].payroll_start_date) &&
-    new Date(item.earnings_end_pay_date) >
+    new Date(values.earnings_end_pay_date) >
       new Date(payrollDraft[0].payroll_end_date)
   ) {
     dispatch(setError(true));
     dispatch(
       setMessage("Start date and end date is not avilable for pay date.")
     );
-    return;
+    return "Start date and end date is not avilable for pay date.";
   }
 };

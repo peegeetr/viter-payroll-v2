@@ -22,7 +22,7 @@ const ManageEarnings = () => {
   const [itemEdit, setItemEdit] = React.useState(null);
 
   const { payType } = useLoadPayType(`${devApiUrl}/v1/paytype`, "get");
-  const { draft } = useLoadDraft(`${devApiUrl}/v1/payroll/draft`, "get");
+  const { draft } = useLoadDraft(`${devApiUrl}/v1/payroll/list`, "get");
   const { employee } = useLoadEmployee(`${hrisDevApiUrl}/v1/employees`, "get");
 
   const handleAdd = () => {

@@ -184,18 +184,26 @@ export const getWorkingDaysInMonth = (date) => {
 
 // get working days between dates
 export const getWorkingDays = (startDate, endDate) => {
-  consoleLog(startDate, endDate);
-  // // clone date to avoid messing up original date and time
-  // let frD = new Date(startDate.getTime()),
-  //   toD = new Date(endDate.getTime()),
-  //   numOfWorkingDays = 0;
+  // clone date to avoid messing up original date and time
+  let frD = new Date(startDate.getTime()),
+    toD = new Date(endDate.getTime()),
+    numOfWorkingDays = 0;
 
-  // while (frD <= toD) {
-  //   let day = frD.getDay();
-  //   frD.setDate(frD.getDate() + 1);
-  //   if (day == 0 || day == 6) continue;
-  //   numOfWorkingDays++;
-  // }
+  while (frD <= toD) {
+    let day = frD.getDay();
+    frD.setDate(frD.getDate() + 1);
+    if (day == 0 || day == 6) continue;
+    numOfWorkingDays++;
+  }
 
-  // return numOfWorkingDays;
+  return numOfWorkingDays;
+};
+
+// get pay period working days between dates
+export const getPayPeriod = (result) => {
+  const mo = formatDate(result[0]?.payroll_start_date).split(" ")[1];
+  const startDay = formatDate(result[0]?.payroll_start_date).split(" ")[2];
+  const endDay = formatDate(result[0]?.payroll_end_date).split(" ")[2];
+  const year = formatDate(result[0]?.payroll_start_date).split(" ")[3];
+  return `${mo} ${startDay} - ${endDay}, ${year}`;
 };

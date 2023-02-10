@@ -30,7 +30,6 @@ const ModalEditRates = ({ itemEdit, payType }) => {
 
     if (results.data) {
       setLoading(false);
-      setPayItem("");
       setResult(results.data);
     }
   };
@@ -53,7 +52,7 @@ const ModalEditRates = ({ itemEdit, payType }) => {
     rates_aid: itemEdit ? itemEdit.rates_aid : "",
     rates_name: itemEdit ? itemEdit.rates_name : "",
     rates_paytype_id: itemEdit ? itemEdit.rates_paytype_id : "",
-    rates_payitems_id: itemEdit ? itemEdit.rates_paytype_id : "",
+    rates_payitems_id: "",
   };
 
   const yupSchema = Yup.object({

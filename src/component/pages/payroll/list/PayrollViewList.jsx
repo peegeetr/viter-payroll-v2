@@ -10,6 +10,7 @@ import {
   devNavUrl,
   formatDate,
   getUrlParam,
+  getWorkingDays,
   UrlAdmin,
 } from "../../../helpers/functions-general";
 import Loadmore from "../../../partials/Loadmore";
@@ -52,10 +53,16 @@ const PayrollViewList = ({ setItemEdit }) => {
         </p>
         <p className="mr-8">
           Pay Period :{" "}
-          <span className="font-light text-black"> Feb 1 - 15 2023</span>
+          <span className="font-light text-black">Feb 1 - 15 2023</span>
         </p>
         <p className="">
-          Period Work Days: <span className="font-light text-black">11</span>
+          Period Work Days:{" "}
+          <span className="font-light text-black">
+            {getWorkingDays(
+              result[0]?.payroll_start_date,
+              result[0]?.payroll_pay_date
+            )}{" "}
+          </span>
         </p>
       </div>
       <SearchBar

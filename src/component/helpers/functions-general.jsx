@@ -9,10 +9,10 @@ export const hrisdevBaseUrl = "https://hris.frontlinebusiness.com.ph/dev-app";
 export const hrisdevNavUrl = "/dev-app";
 
 // Online URL dev payroll
-// export const devApiUrl = "https://payroll-app.frontlinebusiness.com.ph/rest";
-// export const devBaseImgUrl = "https://payroll-app.frontlinebusiness.com.ph/img";
-// export const devBaseUrl = "https://payroll-app.frontlinebusiness.com.ph";
-// export const devNavUrl = "";
+export const devApiUrl = "https://payroll-app.frontlinebusiness.com.ph/rest";
+export const devBaseImgUrl = "https://payroll-app.frontlinebusiness.com.ph/img";
+export const devBaseUrl = "https://payroll-app.frontlinebusiness.com.ph";
+export const devNavUrl = "";
 
 // Local URL dev
 // export const devApiUrl = "http://localhost/react-vite/viter-hris-v3/rest";
@@ -29,9 +29,9 @@ export const hrisdevNavUrl = "/dev-app";
 // export const devNavUrl = "";
 
 // // cy url
-export const devApiUrl = "http://localhost/projects/viter-payroll-v2/rest";
-export const devBaseUrl = "http://localhost/projects/viter-payroll-v2/public";
-export const devNavUrl = "";
+// export const devApiUrl = "http://localhost/projects/viter-payroll-v2/rest";
+// export const devBaseUrl = "http://localhost/projects/viter-payroll-v2/public";
+// export const devNavUrl = "";
 
 export const UrlAdmin = "admin";
 
@@ -184,17 +184,18 @@ export const getWorkingDaysInMonth = (date) => {
 
 // get working days between dates
 export const getWorkingDays = (startDate, endDate) => {
-  // clone date to avoid messing up original date and time
-  let frD = new Date(startDate.getTime()),
-    toD = new Date(endDate.getTime()),
-    numOfWorkingDays = 0;
+  consoleLog(startDate, endDate);
+  // // clone date to avoid messing up original date and time
+  // let frD = new Date(startDate.getTime()),
+  //   toD = new Date(endDate.getTime()),
+  //   numOfWorkingDays = 0;
 
-  while (frD <= toD) {
-    let day = frD.getDay();
-    frD.setDate(frD.getDate() + 1);
-    if (day == 0 || day == 6) continue;
-    numOfWorkingDays++;
-  }
+  // while (frD <= toD) {
+  //   let day = frD.getDay();
+  //   frD.setDate(frD.getDate() + 1);
+  //   if (day == 0 || day == 6) continue;
+  //   numOfWorkingDays++;
+  // }
 
-  return numOfWorkingDays;
+  // return numOfWorkingDays;
 };

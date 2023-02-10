@@ -22,7 +22,7 @@ const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
   const [isAmount, setIsAmount] = React.useState(false);
   const [employeeId, setEmployeeId] = React.useState("");
   const [payItem, setPayItem] = React.useState("");
-  const [isInstallmet, setIsInstallmet] = React.useState("");
+  const [isInstallment, setIsInstallment] = React.useState("");
   const [numberInsti, setNumberInsti] = React.useState("");
   const [isStartDate, setIsStartDate] = React.useState("");
   const [isEndDate, setIsEndDate] = React.useState("");
@@ -59,20 +59,20 @@ const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
   };
 
   const handleIsInstallment = async (e) => {
-    let categoryIsInstallmet = e.target.value;
+    let categoryIsInstallment = e.target.value;
     // get employee id
-    setIsInstallmet(categoryIsInstallmet);
-    if (categoryIsInstallmet === "0") {
+    setIsInstallment(categoryIsInstallment);
+    if (categoryIsInstallment === "0") {
       setNumberInsti("n/a");
       setIsStartDate("n/a");
       setIsEndDate("n/a");
     }
-    if (categoryIsInstallmet === "1") {
+    if (categoryIsInstallment === "1") {
       setNumberInsti("1");
       setIsStartDate(payrollDraft.length && payrollDraft[0].payroll_start_date);
       setIsEndDate(payrollDraft.length && payrollDraft[0].payroll_end_date);
     }
-    if (categoryIsInstallmet === "2") {
+    if (categoryIsInstallment === "2") {
       setNumberInsti("");
       setIsStartDate("");
       setIsEndDate("");
@@ -80,6 +80,10 @@ const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
   };
 
   const handleAmount = () => {
+    setIsAmount(false);
+  };
+
+  const handleInstallment = () => {
     setIsAmount(true);
   };
 
@@ -87,7 +91,7 @@ const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
     // dispatch(setIsFinish(false));
     dispatch(setIsAdd(false));
   };
-  console.log(isInstallmet);
+  console.log(isInstallment);
   const initVal = {
     earnings_employee: item ? item.earnings_employee : "",
     earnings_paytype_id: item ? item.earnings_paytype_id : "",
@@ -115,9 +119,9 @@ const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
     earnings_payitem_id: Yup.string().required("Required"),
     earnings_frequency: Yup.string().required("Required"),
     number_of_installment:
-      isInstallmet === "2" && Yup.string().required("Required"),
-    startDate: isInstallmet === "2" && Yup.string().required("Required"),
-    endDate: isInstallmet === "2" && Yup.string().required("Required"),
+      isInstallment === "2" && Yup.string().required("Required"),
+    startDate: isInstallment === "2" && Yup.string().required("Required"),
+    endDate: isInstallment === "2" && Yup.string().required("Required"),
     amount:
       ((payItem.length > 0 && payItem[0].payitem_is_hris === 0) ||
         (item && item.payitem_is_hris === 0)) &&
@@ -272,7 +276,6 @@ const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
                       <div className="relative mb-5 ">
                         <InputSelect
                           label="Pay Item"
-                          onChange={handlePayItem}
                           name="earnings_payitem_id"
                           disabled={loading}
                           onFocus={(e) =>
@@ -324,6 +327,8 @@ const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
                               label="Amount"
                               type="text"
                               onKeyPress={handleNumOnly}
+                              onFocus={(e) => handleAmount(e)}
+                              onBlur={(e) => handleInstallment(e)}
                               name={!isAmount ? "amount" : "earnings_amount"}
                               disabled={loading}
                             />
@@ -348,13 +353,13 @@ const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
                             </InputSelect>
                           </div>
 
-                          {isInstallmet === "2" && (
+                          {isInstallment === "2" && (
                             <>
                               <div className="relative mb-5">
                                 <InputText
                                   label="No. of installment"
                                   type="number"
-                                  onBlur={(e) => handleAmount(e)}
+                                  onBlur={(e) => handleInstallment(e)}
                                   min="2"
                                   name="number_of_installment"
                                   disabled={loading}

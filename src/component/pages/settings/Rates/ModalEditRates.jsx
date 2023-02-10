@@ -38,7 +38,7 @@ const ModalEditRates = ({ itemEdit, payType }) => {
     }
   };
 
-  const handlePayItem = async (e, props) => {
+  const handlePayItems = async (e, props) => {
     let payitemid = e.target.value;
     setPayItem(payitemid);
   };
@@ -144,11 +144,12 @@ const ModalEditRates = ({ itemEdit, payType }) => {
                           </optgroup>
                         </InputSelect>
                       </div>
+
                       <div className="relative mb-5 ">
                         <InputSelect
                           label="Pay Item"
                           name="rates_payitems_id"
-                          onChange={handlePayItem}
+                          onChange={handlePayItems}
                           disabled={loading}
                           onFocus={(e) =>
                             e.target.parentElement.classList.add("focused")

@@ -62,7 +62,7 @@ const ManageEarnings = () => {
               item={itemEdit}
               payType={payType}
               employee={employee}
-              draft={draft}
+              payrollDraft={draft}
             />
           )
         : store.isAdd && <ModalNoPayrollId />}

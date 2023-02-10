@@ -21,7 +21,7 @@ import {
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 import { getDateLength } from "./function-manage-list";
 
-const ModalAddManageEarnings = ({ item, payType, employee, draft }) => {
+const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [loading, setLoading] = React.useState(false);
   const [isAmount, setIsAmount] = React.useState(false);
@@ -74,8 +74,8 @@ const ModalAddManageEarnings = ({ item, payType, employee, draft }) => {
     }
     if (categoryIsInstallmet === "1") {
       setNumberInsti("1");
-      setIsStartDate(draft.length && draft[0].payroll_start_date);
-      setIsEndDate(draft.length && draft[0].payroll_end_date);
+      setIsStartDate(payrollDraft.length && payrollDraft[0].payroll_start_date);
+      setIsEndDate(payrollDraft.length && payrollDraft[0].payroll_end_date);
     }
     if (categoryIsInstallmet === "2") {
       setNumberInsti("");
@@ -139,7 +139,7 @@ const ModalAddManageEarnings = ({ item, payType, employee, draft }) => {
           <div className="flex justify-between items-center bg-primary p-3 rounded-t-2xl">
             <h3 className="text-white text-sm">
               {item ? "Update" : "Add"} Earnings :
-              {draft.length && draft[0].payroll_id}
+              {payrollDraft.length && payrollDraft[0].payroll_id}
             </h3>
             <button
               type="button"
@@ -156,20 +156,13 @@ const ModalAddManageEarnings = ({ item, payType, employee, draft }) => {
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
                 consoleLog(values, employee);
-                consoleLog(
-                  getDateLength(
-                    values.earnings_start_pay_date,
-                    values.earnings_end_pay_date,
-                    draft[0].payroll_start_date,
-                    draft[0].payroll_end_date
-                  )
-                );
+                consoleLog(getDateLength(values, payrollDraft));
                 if (
                   getDateLength(
                     values.earnings_start_pay_date,
                     values.earnings_end_pay_date,
-                    draft[0].payroll_start_date,
-                    draft[0].payroll_end_date
+                    payrollDraft[0].payroll_start_date,
+                    payrollDraft[0].payroll_end_date
                   ) === false
                 ) {
                   dispatch(setError(true));
@@ -218,7 +211,7 @@ const ModalAddManageEarnings = ({ item, payType, employee, draft }) => {
                     ? "1"
                     : Number(props.values.earnings_number_of_installment));
                 props.values.earnings_payroll_id =
-                  draft.length && draft[0].payroll_id;
+                  payrollDraft.length && payrollDraft[0].payroll_id;
                 props.values.earnings_number_of_installment =
                   numberInsti || props.values.number_of_installment;
                 props.values.earnings_start_pay_date =

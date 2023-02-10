@@ -1,4 +1,4 @@
-// expiring services
+// get Date Length
 export const getDateLength = (
   inputStartDate,
   inputendDate,
@@ -45,3 +45,5 @@ export const getDateLength = (
     return `false2 ${startDateLength} - ${endDateLength} = ${PayDateLength}`;
   }
 };
+// get Date Length
+export const validatePayPeriod = (values, payrollDraft) => {};

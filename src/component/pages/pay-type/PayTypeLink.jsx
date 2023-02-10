@@ -92,8 +92,8 @@ const PayTypeLink = ({ setItemEdit }) => {
                           </span>
                         </p>
                       </div>
-                      <p className="ml-[35px] my-0 text-xs ">
-                        <span className="capitalize text-primary block mb-2">
+                      <p className="ml-[35px] my-0  ">
+                        <span className="capitalize text-primary block ">
                           {item.paytype_category}
                         </span>
 

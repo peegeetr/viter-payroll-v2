@@ -3,7 +3,7 @@ import { setIsSearch, setSave, setStartIndex } from "../../store/StoreAction";
 import { StoreContext } from "../../store/StoreContext";
 import fetchApi from "../helpers/fetchApi";
 import { fetchData } from "../helpers/fetchData";
-import { consoleLog, devApiUrl } from "../helpers/functions-general";
+import { consoleLog } from "../helpers/functions-general";
 
 const useFetchDataLoadMore = (url, url2, perPage, search) => {
   const { store, dispatch } = React.useContext(StoreContext);

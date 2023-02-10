@@ -47,6 +47,7 @@ const ModalAddManageEarnings = ({ item, payType, employee, draft }) => {
       setResult(results.data);
     }
   };
+
   const handlePayItem = async (e, props) => {
     let payitemid = e.target.value;
     setLoading(true);
@@ -88,8 +89,10 @@ const ModalAddManageEarnings = ({ item, payType, employee, draft }) => {
   };
 
   const handleClose = () => {
+    // dispatch(setIsFinish(false));
     dispatch(setIsAdd(false));
   };
+
   const initVal = {
     earnings_employee: item ? item.earnings_employee : "",
     earnings_paytype_id: item ? item.earnings_paytype_id : "",
@@ -199,7 +202,7 @@ const ModalAddManageEarnings = ({ item, payType, employee, draft }) => {
                   "", // additional error msg if needed
                   dispatch, // context api action
                   store, // context api state
-                  true, // boolean to show success modal
+                  false, // boolean to show success modal
                   false, // boolean to show load more functionality button
                   null, // navigate default value
                   item ? "put" : "post"
@@ -431,11 +434,12 @@ const ModalAddManageEarnings = ({ item, payType, employee, draft }) => {
                       </button>
                       <button
                         type="reset"
-                        className="btn-modal-cancel cursor-pointer"
+                        className="btn-modal-submit cursor-pointer"
                         onClick={handleClose}
+                        // onClick={handleFinish}
                         disabled={loading}
                       >
-                        Cancel
+                        Finish
                       </button>
                     </div>
                   </Form>

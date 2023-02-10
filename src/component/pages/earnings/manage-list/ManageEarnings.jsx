@@ -1,6 +1,6 @@
 import React from "react";
 import { FaPlusCircle } from "react-icons/fa";
-import { setIsAdd } from "../../../../store/StoreAction";
+import { setIsAdd, setIsFinish, setSave } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
 import useLoadDraft from "../../../custom-hooks/useLoadDraft";
 import useLoadEmployee from "../../../custom-hooks/useLoadEmployee";
@@ -27,6 +27,7 @@ const ManageEarnings = () => {
 
   const handleAdd = () => {
     dispatch(setIsAdd(true));
+    // dispatch(setIsFinish(true));
     setItemEdit(null);
   };
 
@@ -38,7 +39,11 @@ const ManageEarnings = () => {
         <div className="flex items-center mb-1 justify-between whitespace-nowrap overflow-auto gap-2">
           <BreadCrumbs />
           <div className="flex items-center gap-1">
-            <button type="button" className="btn-primary" onClick={handleAdd}>
+            <button
+              type="button"
+              className="btn-primary"
+              onClick={() => handleAdd()}
+            >
               <FaPlusCircle />
               <span>Add</span>
             </button>

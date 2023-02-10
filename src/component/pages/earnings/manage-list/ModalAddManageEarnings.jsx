@@ -19,7 +19,7 @@ import {
   handleNumOnly,
 } from "../../../helpers/functions-general";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
-import { getDateLength } from "./function-manage-list";
+import { getDateLength, validatePayPeriod } from "./function-manage-list";
 
 const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -156,23 +156,24 @@ const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
                 consoleLog(values, employee);
-                consoleLog(getDateLength(values, payrollDraft));
-                if (
-                  getDateLength(
-                    values.earnings_start_pay_date,
-                    values.earnings_end_pay_date,
-                    payrollDraft[0].payroll_start_date,
-                    payrollDraft[0].payroll_end_date
-                  ) === false
-                ) {
-                  dispatch(setError(true));
-                  dispatch(
-                    setMessage(
-                      "Start date and end date is not avilable for pay date."
-                    )
-                  );
-                  return;
-                }
+                validatePayPeriod(values, payrollDraft, dispatch);
+                // consoleLog(getDateLength(values, payrollDraft));
+                // if (
+                //   getDateLength(
+                //     values.earnings_start_pay_date,
+                //     values.earnings_end_pay_date,
+                //     payrollDraft[0].payroll_start_date,
+                //     payrollDraft[0].payroll_end_date
+                //   ) === false
+                // ) {
+                //   dispatch(setError(true));
+                //   dispatch(
+                //     setMessage(
+                //       "Start date and end date is not avilable for pay date."
+                //     )
+                //   );
+                //   return;
+                // }
                 // get data from HRIS
                 // if (
                 //   getDateLength(

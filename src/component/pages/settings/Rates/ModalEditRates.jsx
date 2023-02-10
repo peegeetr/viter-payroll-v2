@@ -103,6 +103,7 @@ const ModalEditRates = ({ itemEdit, payType }) => {
             >
               {(props) => {
                 props.values.rates_payitems_id = payItem;
+
                 return (
                   <Form>
                     <div className="max-h-[28rem]  p-4">

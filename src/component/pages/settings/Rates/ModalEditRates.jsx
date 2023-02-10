@@ -14,7 +14,6 @@ import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 const ModalEditRates = ({ itemEdit, payType }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [loading, setLoading] = React.useState(false);
-
   const [payItem, setPayItem] = React.useState(
     itemEdit ? itemEdit.rates_payitems_id : ""
   );
@@ -38,7 +37,7 @@ const ModalEditRates = ({ itemEdit, payType }) => {
     }
   };
 
-  const handlePayItems = async (e, props) => {
+  const handlePayItem = async (e, props) => {
     let payitemid = e.target.value;
     setPayItem(payitemid);
   };
@@ -149,7 +148,7 @@ const ModalEditRates = ({ itemEdit, payType }) => {
                         <InputSelect
                           label="Pay Item"
                           name="rates_payitems_id"
-                          onChange={handlePayItems}
+                          onChange={handlePayItem}
                           disabled={loading}
                           onFocus={(e) =>
                             e.target.parentElement.classList.add("focused")

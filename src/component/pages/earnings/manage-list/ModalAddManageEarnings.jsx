@@ -2,12 +2,7 @@ import { Form, Formik } from "formik";
 import React from "react";
 import { FaTimesCircle } from "react-icons/fa";
 import * as Yup from "yup";
-import {
-  setIsAdd,
-  setStartIndex,
-  setError,
-  setMessage,
-} from "../../../../store/StoreAction";
+import { setIsAdd, setStartIndex } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
 import useLoadAll from "../../../custom-hooks/useLoadAll";
 import fetchApi from "../../../helpers/fetchApi";
@@ -19,7 +14,7 @@ import {
   handleNumOnly,
 } from "../../../helpers/functions-general";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
-import { getDateLength, validatePayPeriod } from "./function-manage-list";
+import { validatePayPeriod } from "./function-manage-list";
 
 const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -115,22 +110,22 @@ const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
   };
 
   const yupSchema = Yup.object({
-    //   earnings_employee: Yup.string().required("Required"),
-    //   earnings_paytype_id: Yup.string().required("Required"),
-    //   earnings_payitem_id: Yup.string().required("Required"),
-    //   earnings_frequency: Yup.string().required("Required"),
-    //   number_of_installment:
-    //     numberInsti === "2" && Yup.string().required("Required"),
-    //   startDate: numberInsti === "2" && Yup.string().required("Required"),
-    //   endDate: numberInsti === "2" && Yup.string().required("Required"),
-    //   amount:
-    //     ((payItem.length > 0 && payItem[0].payitem_is_hris === 0) ||
-    //       (item && item.payitem_is_hris === 0)) &&
-    //     Yup.string().required("Required"),
-    //   earnings_is_installment:
-    //     ((payItem.length > 0 && payItem[0].payitem_is_hris === 0) ||
-    //       (item && item.payitem_is_hris === 0)) &&
-    //     Yup.string().required("Required"),
+    earnings_employee: Yup.string().required("Required"),
+    earnings_paytype_id: Yup.string().required("Required"),
+    earnings_payitem_id: Yup.string().required("Required"),
+    earnings_frequency: Yup.string().required("Required"),
+    number_of_installment:
+      numberInsti === "2" && Yup.string().required("Required"),
+    startDate: numberInsti === "2" && Yup.string().required("Required"),
+    endDate: numberInsti === "2" && Yup.string().required("Required"),
+    amount:
+      ((payItem.length > 0 && payItem[0].payitem_is_hris === 0) ||
+        (item && item.payitem_is_hris === 0)) &&
+      Yup.string().required("Required"),
+    earnings_is_installment:
+      ((payItem.length > 0 && payItem[0].payitem_is_hris === 0) ||
+        (item && item.payitem_is_hris === 0)) &&
+      Yup.string().required("Required"),
   });
   return (
     <>
@@ -155,29 +150,28 @@ const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
               initialValues={initVal}
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
-                consoleLog(values, employee);
-                consoleLog(
-                  validatePayPeriod(values, payrollDraft, dispatch),
-                  "123"
+                console.log(values, payrollDraft[0].payroll_start_date);
+
+                if (validatePayPeriod(values, payrollDraft, dispatch)) {
+                  return;
+                }
+                fetchData(
+                  setLoading,
+                  item
+                    ? `${devApiUrl}/v1/earnings/${item.earnings_aid}`
+                    : `${devApiUrl}/v1/earnings`,
+                  { ...values, employee }, // form data values
+                  null, // result set data
+                  item ? "Succesfully updated." : "Succesfully added.", // success msg
+                  "", // additional error msg if needed
+                  dispatch, // context api action
+                  store, // context api state
+                  true, // boolean to show success modal
+                  false, // boolean to show load more functionality button
+                  null, // navigate default value
+                  item ? "put" : "post"
                 );
-                //   validatePayPeriod(values, payrollDraft, dispatch);
-                //   fetchData(
-                //     setLoading,
-                //     item
-                //       ? `${devApiUrl}/v1/earnings/${item.earnings_aid}`
-                //       : `${devApiUrl}/v1/earnings`,
-                //     { ...values, employee }, // form data values
-                //     null, // result set data
-                //     item ? "Succesfully updated." : "Succesfully added.", // success msg
-                //     "", // additional error msg if needed
-                //     dispatch, // context api action
-                //     store, // context api state
-                //     false, // boolean to show success modal
-                //     false, // boolean to show load more functionality button
-                //     null, // navigate default value
-                //     item ? "put" : "post"
-                //   );
-                //   dispatch(setStartIndex(0));
+                dispatch(setStartIndex(0));
               }}
             >
               {(props) => {
@@ -406,10 +400,9 @@ const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
                         type="reset"
                         className="btn-modal-submit cursor-pointer"
                         onClick={handleClose}
-                        // onClick={handleFinish}
                         disabled={loading}
                       >
-                        Finish
+                        Cancel
                       </button>
                     </div>
                   </Form>

@@ -14,7 +14,9 @@ import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 const ModalEditRates = ({ itemEdit, payType }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [loading, setLoading] = React.useState(false);
-  const [payItem, setPayItem] = React.useState("");
+  const [payItem, setPayItem] = React.useState(
+    itemEdit ? itemEdit.rates_payitems_id : ""
+  );
 
   let payid = itemEdit ? `/${itemEdit.rates_paytype_id}` : `/${0}`;
 
@@ -30,18 +32,14 @@ const ModalEditRates = ({ itemEdit, payType }) => {
 
     if (results.data) {
       setLoading(false);
+      setPayItem("");
       setResult(results.data);
     }
   };
 
   const handlePayItem = async (e, props) => {
     let payitemid = e.target.value;
-    setLoading(true);
-    const results = await fetchApi(`${devApiUrl}/v1/payitem/${payitemid}`);
-    if (results.data) {
-      setLoading(false);
-      setPayItem(results.data[0].payitem_aid);
-    }
+    setPayItem(payitemid);
   };
 
   consoleLog(payItem);
@@ -83,27 +81,28 @@ const ModalEditRates = ({ itemEdit, payType }) => {
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
                 consoleLog(values);
-                // fetchData(
-                //   setLoading,
-                //   itemEdit
-                //     ? `${devApiUrl}/v1/rates/${itemEdit.rates_aid}`
-                //     : `${devApiUrl}/v1/rates`,
-                //   { ...values }, // form data values
-                //   null, // result set data
-                //   itemEdit ? "Succesfully updated." : "Succesfully added.", // success msg
-                //   "", // additional error msg if needed
-                //   dispatch, // context api action
-                //   store, // context api state
-                //   true, // boolean to show success modal
-                //   false, // boolean to show load more functionality button
-                //   null, // navigate default value
-                //   itemEdit ? "put" : "post"
-                // );
+                fetchData(
+                  setLoading,
+                  itemEdit
+                    ? `${devApiUrl}/v1/rates/${itemEdit.rates_aid}`
+                    : `${devApiUrl}/v1/rates`,
+                  { ...values }, // form data values
+                  null, // result set data
+                  itemEdit ? "Succesfully updated." : "Succesfully added.", // success msg
+                  "", // additional error msg if needed
+                  dispatch, // context api action
+                  store, // context api state
+                  true, // boolean to show success modal
+                  false, // boolean to show load more functionality button
+                  null, // navigate default value
+                  itemEdit ? "put" : "post"
+                );
                 dispatch(setStartIndex(0));
               }}
             >
               {(props) => {
                 props.values.rates_payitems_id = payItem;
+
                 return (
                   <Form>
                     <div className="max-h-[28rem]  p-4">
@@ -144,6 +143,7 @@ const ModalEditRates = ({ itemEdit, payType }) => {
                           </optgroup>
                         </InputSelect>
                       </div>
+
                       <div className="relative mb-5 ">
                         <InputSelect
                           label="Pay Item"

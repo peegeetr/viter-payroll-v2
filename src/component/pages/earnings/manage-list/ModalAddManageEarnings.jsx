@@ -277,6 +277,7 @@ const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
                         <InputSelect
                           label="Pay Item"
                           name="earnings_payitem_id"
+                          onChange={handlePayItem}
                           disabled={loading}
                           onFocus={(e) =>
                             e.target.parentElement.classList.add("focused")
@@ -288,7 +289,8 @@ const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
                               result.map((payitem, key) => {
                                 return (
                                   <option key={key} value={payitem.payitem_aid}>
-                                    {payitem.payitem_name}
+                                    {payitem.payitem_name}{" "}
+                                    {payitem.payitem_is_hris === 1 && "(HRIS)"}
                                   </option>
                                 );
                               })

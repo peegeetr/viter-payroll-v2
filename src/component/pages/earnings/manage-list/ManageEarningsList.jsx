@@ -1,10 +1,6 @@
 import React from "react";
 import { FaTrash } from "react-icons/fa";
-import {
-  setIsAdd,
-  setIsConfirm,
-  setIsRestore,
-} from "../../../../store/StoreAction";
+import { setIsRestore } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
 import useFetchDataLoadMore from "../../../custom-hooks/useFetchDataLoadMore";
 import {
@@ -22,7 +18,7 @@ import TableSpinner from "../../../partials/spinners/TableSpinner";
 import StatusActive from "../../../partials/status/StatusActive";
 import StatusInactive from "../../../partials/status/StatusInactive";
 
-const ManageEarningsList = ({ setItemEdit }) => {
+const ManageEarningsList = () => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [dataItem, setData] = React.useState(null);
   const [id, setId] = React.useState(null);
@@ -45,25 +41,6 @@ const ManageEarningsList = ({ setItemEdit }) => {
     perPage,
     search
   );
-
-  const handleEdit = (item) => {
-    dispatch(setIsAdd(true));
-    setItemEdit(item);
-  };
-
-  const handleArchive = (item) => {
-    dispatch(setIsConfirm(true));
-    setId(item.earnings_aid);
-    setData(item);
-    setDel(null);
-  };
-
-  const handleRestore = (item) => {
-    dispatch(setIsRestore(true));
-    setId(item.earnings_aid);
-    setData(item);
-    setDel(null);
-  };
 
   const handleDelete = (item) => {
     dispatch(setIsRestore(true));
@@ -144,30 +121,6 @@ const ManageEarningsList = ({ setItemEdit }) => {
                     </td>
                     <td>
                       <div className="flex items-center justify-end gap-2">
-                        {/* <button
-                          type="button"
-                          className="btn-action-table tooltip-action-table"
-                          data-tooltip="Edit"
-                          onClick={() => handleEdit(item)}
-                        >
-                          <FaEdit />
-                        </button>
-                        <button
-                          type="button"
-                          className="btn-action-table tooltip-action-table"
-                          data-tooltip="Archive"
-                          onClick={() => handleArchive(item)}
-                        >
-                          <FaArchive />
-                        </button>
-                        <button
-                          type="button"
-                          className="btn-action-table tooltip-action-table"
-                          data-tooltip="Restore"
-                          onClick={() => handleRestore(item)}
-                        >
-                          <FaHistory />
-                        </button> */}
                         <button
                           type="button"
                           className="btn-action-table tooltip-action-table"

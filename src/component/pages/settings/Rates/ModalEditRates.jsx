@@ -56,12 +56,14 @@ const ModalEditRates = ({ itemEdit, payType }) => {
   const initVal = {
     rates_aid: itemEdit ? itemEdit.rates_aid : "",
     rates_name: itemEdit ? itemEdit.rates_name : "",
+    rates_percent: itemEdit ? itemEdit.rates_percent : "",
     rates_paytype_id: itemEdit ? itemEdit.rates_paytype_id : "",
     rates_payitems_id: "",
   };
 
   const yupSchema = Yup.object({
     rates_name: Yup.string().required("Required"),
+    rates_percent: Yup.string().required("Required"),
     rates_paytype_id: Yup.string().required("Required"),
     rates_payitems_id: Yup.string().required("Required"),
   });
@@ -123,6 +125,14 @@ const ModalEditRates = ({ itemEdit, payType }) => {
                           label="Name"
                           type="text"
                           name="rates_name"
+                          disabled={loading}
+                        />
+                      </div>
+                      <div className="relative my-5 ">
+                        <InputText
+                          label="Percent"
+                          type="text"
+                          name="rates_percent"
                           disabled={loading}
                         />
                       </div>

@@ -23,10 +23,10 @@ export const devNavUrl = "";
 // export const devNavUrl = "/dev-app";
 
 // Local URL dev
-export const devApiUrl = "http://localhost/viter-payroll-v2/rest";
-export const devBaseUrl = "http://localhost/viter-payroll-v2/public";
-export const devBaseImgUrl = "http://localhost/viter-payroll-v2/public/img";
-export const devNavUrl = "";
+// export const devApiUrl = "http://localhost/viter-payroll-v2/rest";
+// export const devBaseUrl = "http://localhost/viter-payroll-v2/public";
+// export const devBaseImgUrl = "http://localhost/viter-payroll-v2/public/img";
+// export const devNavUrl = "";
 
 // // cy url
 // export const devApiUrl = "http://localhost/projects/viter-payroll-v2/rest";

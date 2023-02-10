@@ -276,6 +276,26 @@ class Earnings
         return $query;
     }
 
+    // name
+    public function checkName()
+    {
+        try {
+            $sql = "select * from {$this->tblEarnings} ";
+            $sql .= "where earnings_employee_id = :earnings_employee_id ";
+            $sql .= "and earnings_payitem_id = :earnings_payitem_id ";
+            $sql .= "and earnings_payroll_id = :earnings_payroll_id ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "earnings_employee_id" => "{$this->earnings_employee_id}",
+                "earnings_payitem_id" => "{$this->earnings_payitem_id}",
+                "earnings_payroll_id" => "{$this->earnings_payroll_id}",
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
     // delete
     public function delete()
     {

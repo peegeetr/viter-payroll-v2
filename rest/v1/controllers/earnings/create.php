@@ -32,6 +32,9 @@ $earnings->earnings_created = date("Y-m-d H:i:s");
 $earnings->earnings_datetime = date("Y-m-d H:i:s");
 
 $allEmployee = $data["employee"];
+$name = "Pay item for $earnings->earnings_employee is ";
+// check name
+isNameExist($earnings, $name);
 
 if ($earnings->earnings_employee == "all") {
     // create employee name and id

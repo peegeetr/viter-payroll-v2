@@ -12,11 +12,15 @@ class PayItem
     public $connection;
     public $lastInsertedId;
     public $tblPayItem;
+    public $tblEarnings;
+    public $tblRates;
 
     public function __construct($db)
     {
         $this->connection = $db;
         $this->tblPayItem = "prv2_payitem";
+        $this->tblEarnings = "prv2_earnings";
+        $this->tblRates = "prv2_settings_rates";
     }
 
     // create
@@ -65,6 +69,7 @@ class PayItem
         }
         return $query;
     }
+
 
     // read by id
     public function readById()
@@ -142,7 +147,6 @@ class PayItem
         return $query;
     }
 
-
     // name
     public function checkName()
     {
@@ -154,6 +158,42 @@ class PayItem
             $query->execute([
                 "payitem_name" => "{$this->payitem_name}",
                 "payitem_paytype_id" => "{$this->payitem_paytype_id}",
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    // validation before deleting
+    public function checkEarningsAssociatedToPayItem()
+    {
+        try {
+            $sql = "select * from {$this->tblPayItem} as payitem, ";
+            $sql .= "{$this->tblEarnings} as earnings ";
+            $sql .= "where payitem.payitem_aid = :payitem_aid ";
+            $sql .= "and earnings.earnings_payitem_id = payitem.payitem_aid ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "payitem_aid" => "{$this->payitem_aid}",
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    // validation before deleting
+    public function checkRateAssociatedToPayItem()
+    {
+        try {
+            $sql = "select * from {$this->tblPayItem} as payitem, ";
+            $sql .= "{$this->tblRates} as rates ";
+            $sql .= "where payitem.payitem_aid = :payitem_aid ";
+            $sql .= "and rates.rates_payitems_id = payitem.payitem_aid ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "payitem_aid" => "{$this->payitem_aid}",
             ]);
         } catch (PDOException $ex) {
             $query = false;

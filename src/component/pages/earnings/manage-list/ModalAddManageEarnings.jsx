@@ -5,6 +5,7 @@ import * as Yup from "yup";
 import { setIsAdd, setStartIndex } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
 import useLoadAll from "../../../custom-hooks/useLoadAll";
+import useLoadPayPeriod from "../../../custom-hooks/useLoadPayPeriod";
 import fetchApi from "../../../helpers/fetchApi";
 import { fetchData } from "../../../helpers/fetchData";
 import { InputSelect, InputText } from "../../../helpers/FormInputs";
@@ -12,6 +13,7 @@ import {
   consoleLog,
   devApiUrl,
   handleNumOnly,
+  hrisDevApiUrl,
 } from "../../../helpers/functions-general";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 import { validatePayPeriod } from "./function-manage-list";
@@ -27,6 +29,14 @@ const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
   const [isStartDate, setIsStartDate] = React.useState("");
   const [isEndDate, setIsEndDate] = React.useState("");
   let payid = item ? `/${item.earnings_paytype_id}` : `/${0}`;
+  let date1 = payrollDraft[0].payroll_start_date;
+  let date2 = payrollDraft[0].payroll_end_date;
+
+  const { payPeriod } = useLoadPayPeriod(
+    `${hrisDevApiUrl}/v1/leaves/period/approved/${date1}/${date2}`,
+    "get"
+  );
+  console.log(date1, date2, payPeriod);
 
   const { result, setResult } = useLoadAll(
     `${devApiUrl}/v1/paytype${payid}`,

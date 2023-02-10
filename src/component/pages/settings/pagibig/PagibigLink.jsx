@@ -14,7 +14,7 @@ const PagibigLink = () => {
           <span className="text-lg mr-4">
             <FaHeart />
           </span>
-          <span className="ont-bold">Pag-Ibig</span>
+          <span className="font-bold">Pag-Ibig</span>
         </div>
         <p className="ml-[35px] my-0">
           Manage what actions and capabilities every account are can perform in

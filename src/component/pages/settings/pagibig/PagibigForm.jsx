@@ -46,7 +46,7 @@ const PagibigForm = ({ itemEdit }) => {
               <Form>
                 <div className="relative mb-5">
                   <InputText
-                    label="Percentage"
+                    label="EE Amount"
                     type="text"
                     name="department_name"
                     disabled={loading}
@@ -55,16 +55,7 @@ const PagibigForm = ({ itemEdit }) => {
 
                 <div className="relative mb-5">
                   <InputText
-                    label="Min"
-                    type="text"
-                    name="department_name"
-                    disabled={loading}
-                  />
-                </div>
-
-                <div className="relative mb-5">
-                  <InputText
-                    label="Max"
+                    label="ER Amount"
                     type="text"
                     name="department_name"
                     disabled={loading}

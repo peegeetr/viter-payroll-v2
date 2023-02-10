@@ -92,8 +92,8 @@ const PayTypeLink = ({ setItemEdit }) => {
                           </span>
                         </p>
                       </div>
-                      <p className="ml-[35px] my-0">
-                        <span className="capitalize font-bold ">
+                      <p className="ml-[35px] my-0 text-xs leading-4">
+                        <span className="capitalize  ">
                           {item.paytype_category}
                         </span>
                         <br />
@@ -101,7 +101,7 @@ const PayTypeLink = ({ setItemEdit }) => {
                       </p>
                     </div>
                     <div className="ml-[35px] lg:m-0">
-                      <p className="font-bold">Status</p>
+                      <p className="font-bold text-xs">Status</p>
 
                       <p className="my-0">
                         {item.paytype_is_active === 1 ? (

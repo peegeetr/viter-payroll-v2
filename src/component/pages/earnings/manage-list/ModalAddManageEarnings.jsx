@@ -400,10 +400,9 @@ const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
                         type="reset"
                         className="btn-modal-submit cursor-pointer"
                         onClick={handleClose}
-                        // onClick={handleFinish}
                         disabled={loading}
                       >
-                        Finish
+                        Cancel
                       </button>
                     </div>
                   </Form>

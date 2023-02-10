@@ -14,6 +14,7 @@ import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 const ModalEditRates = ({ itemEdit, payType }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [loading, setLoading] = React.useState(false);
+
   const [payItem, setPayItem] = React.useState(
     itemEdit ? itemEdit.rates_payitems_id : ""
   );

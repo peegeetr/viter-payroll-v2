@@ -22,7 +22,10 @@ import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 const ModalEditRates = ({ itemEdit, payType }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [loading, setLoading] = React.useState(false);
-  const [payItem, setPayItem] = React.useState("");
+
+  const [payItem, setPayItem] = React.useState(
+    itemEdit ? itemEdit.rates_payitems_id : ""
+  );
 
   let payid = itemEdit ? `/${itemEdit.rates_paytype_id}` : `/${0}`;
 
@@ -50,7 +53,7 @@ const ModalEditRates = ({ itemEdit, payType }) => {
     rates_aid: itemEdit ? itemEdit.rates_aid : "",
     rates_name: itemEdit ? itemEdit.rates_name : "",
     rates_paytype_id: itemEdit ? itemEdit.rates_paytype_id : "",
-    rates_payitems_id: itemEdit ? itemEdit.rates_payitems_id : "",
+    rates_payitems_id: "",
   };
 
   const yupSchema = Yup.object({

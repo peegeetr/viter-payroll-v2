@@ -61,6 +61,13 @@ export const setIsAdd = (val) => {
   };
 };
 
+export const setIsFinish = (val) => {
+  return {
+    type: "IS_FINISH",
+    payload: val,
+  };
+};
+
 export const setIsSearch = (val) => {
   return {
     type: "IS_SEARCH",

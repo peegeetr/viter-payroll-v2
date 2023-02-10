@@ -2,12 +2,7 @@ import { Form, Formik } from "formik";
 import React from "react";
 import { FaTimesCircle } from "react-icons/fa";
 import * as Yup from "yup";
-import {
-  setIsAdd,
-  setStartIndex,
-  setError,
-  setMessage,
-} from "../../../../store/StoreAction";
+import { setIsAdd, setStartIndex } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
 import useLoadAll from "../../../custom-hooks/useLoadAll";
 import fetchApi from "../../../helpers/fetchApi";
@@ -19,9 +14,9 @@ import {
   handleNumOnly,
 } from "../../../helpers/functions-general";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
-import { getDateLength } from "./function-manage-list";
+import { validatePayPeriod } from "./function-manage-list";
 
-const ModalAddManageEarnings = ({ item, payType, employee, draft }) => {
+const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [loading, setLoading] = React.useState(false);
   const [isAmount, setIsAmount] = React.useState(false);
@@ -47,6 +42,7 @@ const ModalAddManageEarnings = ({ item, payType, employee, draft }) => {
       setResult(results.data);
     }
   };
+
   const handlePayItem = async (e, props) => {
     let payitemid = e.target.value;
     setLoading(true);
@@ -73,8 +69,8 @@ const ModalAddManageEarnings = ({ item, payType, employee, draft }) => {
     }
     if (categoryIsInstallmet === "1") {
       setNumberInsti("1");
-      setIsStartDate(draft.length && draft[0].payroll_start_date);
-      setIsEndDate(draft.length && draft[0].payroll_end_date);
+      setIsStartDate(payrollDraft.length && payrollDraft[0].payroll_start_date);
+      setIsEndDate(payrollDraft.length && payrollDraft[0].payroll_end_date);
     }
     if (categoryIsInstallmet === "2") {
       setNumberInsti("");
@@ -88,8 +84,10 @@ const ModalAddManageEarnings = ({ item, payType, employee, draft }) => {
   };
 
   const handleClose = () => {
+    // dispatch(setIsFinish(false));
     dispatch(setIsAdd(false));
   };
+
   const initVal = {
     earnings_employee: item ? item.earnings_employee : "",
     earnings_paytype_id: item ? item.earnings_paytype_id : "",
@@ -136,7 +134,7 @@ const ModalAddManageEarnings = ({ item, payType, employee, draft }) => {
           <div className="flex justify-between items-center bg-primary p-3 rounded-t-2xl">
             <h3 className="text-white text-sm">
               {item ? "Update" : "Add"} Earnings :
-              {draft.length && draft[0].payroll_id}
+              {payrollDraft.length && payrollDraft[0].payroll_id}
             </h3>
             <button
               type="button"
@@ -152,42 +150,11 @@ const ModalAddManageEarnings = ({ item, payType, employee, draft }) => {
               initialValues={initVal}
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
-                consoleLog(values, employee);
-                consoleLog(
-                  getDateLength(
-                    values.earnings_start_pay_date,
-                    values.earnings_end_pay_date,
-                    draft[0].payroll_start_date,
-                    draft[0].payroll_end_date
-                  )
-                );
-                if (
-                  getDateLength(
-                    values.earnings_start_pay_date,
-                    values.earnings_end_pay_date,
-                    draft[0].payroll_start_date,
-                    draft[0].payroll_end_date
-                  ) === false
-                ) {
-                  dispatch(setError(true));
-                  dispatch(
-                    setMessage(
-                      "Start date and end date is not avilable for pay date."
-                    )
-                  );
+                console.log(values, payrollDraft[0].payroll_start_date);
+
+                if (validatePayPeriod(values, payrollDraft, dispatch)) {
                   return;
                 }
-                // get data from HRIS
-                // if (
-                //   getDateLength(
-                //     values.earnings_start_pay_date,
-                //     values.earnings_end_pay_date
-                //   )
-                // ) {
-                //   // fetch data
-                //   // filter data based on payroll period
-                //   // set data filterd data to state and pass to server
-                // }
                 fetchData(
                   setLoading,
                   item
@@ -215,7 +182,7 @@ const ModalAddManageEarnings = ({ item, payType, employee, draft }) => {
                     ? "1"
                     : Number(props.values.earnings_number_of_installment));
                 props.values.earnings_payroll_id =
-                  draft.length && draft[0].payroll_id;
+                  payrollDraft.length && payrollDraft[0].payroll_id;
                 props.values.earnings_number_of_installment =
                   numberInsti || props.values.number_of_installment;
                 props.values.earnings_start_pay_date =
@@ -431,11 +398,12 @@ const ModalAddManageEarnings = ({ item, payType, employee, draft }) => {
                       </button>
                       <button
                         type="reset"
-                        className="btn-modal-cancel cursor-pointer"
+                        className="btn-modal-submit cursor-pointer"
                         onClick={handleClose}
+                        // onClick={handleFinish}
                         disabled={loading}
                       >
-                        Cancel
+                        Finish
                       </button>
                     </div>
                   </Form>

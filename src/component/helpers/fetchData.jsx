@@ -2,7 +2,6 @@ import fetchApi from "./fetchApi";
 
 import {
   consoleLog,
-  devApiUrl,
   devNavUrl,
   doList,
   doLoadmore,
@@ -18,6 +17,7 @@ import {
   setForgetPassSuccess,
   setIsAdd,
   setIsConfirm,
+  setIsFinish,
   setIsLogin,
   setIsRestore,
   setMessage,
@@ -78,6 +78,13 @@ export const fetchData = async (
       //this will refresh table list
       store.isSave ? dispatch(setSave(false)) : dispatch(setSave(true));
     }
+
+    // // add modal won't closed when used
+    // if (store.isFinish) {
+    //   //this will refresh table list
+    //   // store.isSave ? dispatch(setSave(false)) : dispatch(setSave(false));
+    //   dispatch(setSave(true));
+    // }
 
     // delete modal will be closed when used
     if (store.isConfirm) {

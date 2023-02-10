@@ -29,9 +29,9 @@ export const devNavUrl = "";
 // export const devNavUrl = "";
 
 // // cy url
-export const devApiUrl = "http://localhost/projects/viter-payroll-v2/rest";
-export const devBaseUrl = "http://localhost/projects/viter-payroll-v2/public";
-export const devNavUrl = "";
+// export const devApiUrl = "http://localhost/projects/viter-payroll-v2/rest";
+// export const devBaseUrl = "http://localhost/projects/viter-payroll-v2/public";
+// export const devNavUrl = "";
 
 export const UrlAdmin = "admin";
 

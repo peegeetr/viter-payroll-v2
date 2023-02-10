@@ -163,3 +163,38 @@ export const capitalFirstLetter = (val) => {
   const str2 = str.charAt(0).toUpperCase() + str.slice(1);
   return str2;
 };
+
+// get working days in a month
+export const getWorkingDaysInMonth = (date) => {
+  var d = new Date(date);
+  var currentDay = d.getDate();
+  var year = d.getYear() + 1900;
+  var month = d.getMonth();
+  var total = 0;
+  var done = 0;
+  for (var day = 1; day <= 31; day++) {
+    var t = new Date(year, month, day);
+    if (t.getMonth() > month) break; // month has less than 31 days
+    if (t.getDay() == 0 || t.getDay() == 6) continue; // no weekday
+    total++; // increase total
+    if (t.getDate() <= currentDay) done++; // increase past days
+  }
+  return total;
+};
+
+// get working days between dates
+export const getWorkingDays = (startDate, endDate) => {
+  // clone date to avoid messing up original date and time
+  let frD = new Date(startDate.getTime()),
+    toD = new Date(endDate.getTime()),
+    numOfWorkingDays = 0;
+
+  while (frD <= toD) {
+    let day = frD.getDay();
+    frD.setDate(frD.getDate() + 1);
+    if (day == 0 || day == 6) continue;
+    numOfWorkingDays++;
+  }
+
+  return numOfWorkingDays;
+};

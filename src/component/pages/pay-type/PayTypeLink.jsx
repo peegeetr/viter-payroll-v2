@@ -86,17 +86,17 @@ const PayTypeLink = ({ setItemEdit }) => {
                         <span className="text-lg mr-4">
                           <FaClipboardList />
                         </span>
-                        <p className="text-base font-bold my-0">
+                        <p className=" font-bold my-0">
                           <span className="capitalize">
                             {item.paytype_name}
                           </span>
                         </p>
                       </div>
-                      <p className="ml-[35px] my-0 text-xs leading-4">
-                        <span className="capitalize  ">
+                      <p className="ml-[35px] my-0 text-xs ">
+                        <span className="capitalize text-primary block mb-2">
                           {item.paytype_category}
                         </span>
-                        <br />
+
                         {item.paytype_description}
                       </p>
                     </div>

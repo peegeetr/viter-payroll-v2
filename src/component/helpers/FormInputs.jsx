@@ -43,6 +43,7 @@ export const InputSelect = ({ label, onChange, ...props }) => {
   if (
     props.name === "earnings_paytype_id" ||
     props.name === "rates_paytype_id" ||
+    props.name === "rates_payitems_id" ||
     props.name === "earnings_employee" ||
     props.name === "earnings_is_installment" ||
     props.name === "earnings_payitem_id"

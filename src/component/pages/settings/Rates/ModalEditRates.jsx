@@ -22,7 +22,6 @@ import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 const ModalEditRates = ({ itemEdit, payType }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [loading, setLoading] = React.useState(false);
-
   const [payItem, setPayItem] = React.useState(
     itemEdit ? itemEdit.rates_payitems_id : ""
   );
@@ -38,20 +37,19 @@ const ModalEditRates = ({ itemEdit, payType }) => {
     let paytypeid = e.target.value;
     setLoading(true);
     const results = await fetchApi(`${devApiUrl}/v1/paytype/${paytypeid}`);
-    console.log(results);
 
     if (results.data) {
       setLoading(false);
+      setPayItem("");
       setResult(results.data);
     }
   };
 
-  const handlePayItems = async (e, props) => {
+  const handlePayItem = async (e, props) => {
     let payitemid = e.target.value;
     setPayItem(payitemid);
   };
 
-  consoleLog(payItem);
   const handleClose = () => {
     dispatch(setIsAdd(false));
   };
@@ -117,7 +115,6 @@ const ModalEditRates = ({ itemEdit, payType }) => {
             >
               {(props) => {
                 props.values.rates_payitems_id = payItem;
-
                 return (
                   <Form>
                     <div className="max-h-[28rem]  p-4">
@@ -161,11 +158,8 @@ const ModalEditRates = ({ itemEdit, payType }) => {
                         <InputSelect
                           label="Pay Item"
                           name="rates_payitems_id"
-                          onChange={handlePayItems}
+                          onChange={handlePayItem}
                           disabled={loading}
-                          onFocus={(e) =>
-                            e.target.parentElement.classList.add("focused")
-                          }
                         >
                           <optgroup label="Pay Item">
                             <option value="" hidden></option>

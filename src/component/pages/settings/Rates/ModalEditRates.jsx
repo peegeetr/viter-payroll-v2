@@ -7,21 +7,14 @@ import { StoreContext } from "../../../../store/StoreContext";
 import useLoadAll from "../../../custom-hooks/useLoadAll";
 import fetchApi from "../../../helpers/fetchApi";
 import { fetchData } from "../../../helpers/fetchData";
-import {
-  InputSelect,
-  InputText,
-  MyCheckbox,
-} from "../../../helpers/FormInputs";
-import {
-  consoleLog,
-  devApiUrl,
-  handleNumOnly,
-} from "../../../helpers/functions-general";
+import { InputSelect, InputText } from "../../../helpers/FormInputs";
+import { consoleLog, devApiUrl } from "../../../helpers/functions-general";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 
 const ModalEditRates = ({ itemEdit, payType }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [loading, setLoading] = React.useState(false);
+  const [payItem, setPayItem] = React.useState("");
 
   let payid = itemEdit ? `/${itemEdit.rates_paytype_id}` : `/${0}`;
 
@@ -37,20 +30,22 @@ const ModalEditRates = ({ itemEdit, payType }) => {
 
     if (results.data) {
       setLoading(false);
+      setPayItem("");
       setResult(results.data);
     }
   };
 
-  // const handlePayItem = async (e, props) => {
-  //   let payitemid = e.target.value;
-  //   setLoading(true);
-  //   const results = await fetchApi(`${devApiUrl}/v1/payitem/${payitemid}`);
-  //   if (results.data) {
-  //     setLoading(false);
-  //     setPayItem(results.data);
-  //   }
-  // };
+  const handlePayItem = async (e, props) => {
+    let payitemid = e.target.value;
+    setLoading(true);
+    const results = await fetchApi(`${devApiUrl}/v1/payitem/${payitemid}`);
+    if (results.data) {
+      setLoading(false);
+      setPayItem(results.data[0].payitem_aid);
+    }
+  };
 
+  consoleLog(payItem);
   const handleClose = () => {
     dispatch(setIsAdd(false));
   };
@@ -58,7 +53,7 @@ const ModalEditRates = ({ itemEdit, payType }) => {
     rates_aid: itemEdit ? itemEdit.rates_aid : "",
     rates_name: itemEdit ? itemEdit.rates_name : "",
     rates_paytype_id: itemEdit ? itemEdit.rates_paytype_id : "",
-    rates_payitems_id: "",
+    rates_payitems_id: itemEdit ? itemEdit.rates_paytype_id : "",
   };
 
   const yupSchema = Yup.object({
@@ -89,33 +84,27 @@ const ModalEditRates = ({ itemEdit, payType }) => {
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
                 consoleLog(values);
-                // get data from HRIS
-                // if (payItem[0].payitem_is_hris === 1) {
-                // fetch data
-                // filter data based on payroll period
-                // set data filterd data to state and pass to server
-                //    }
-                fetchData(
-                  setLoading,
-                  itemEdit
-                    ? `${devApiUrl}/v1/rates/${itemEdit.rates_aid}`
-                    : `${devApiUrl}/v1/rates`,
-                  { ...values }, // form data values
-                  null, // result set data
-                  itemEdit ? "Succesfully updated." : "Succesfully added.", // success msg
-                  "", // additional error msg if needed
-                  dispatch, // context api action
-                  store, // context api state
-                  true, // boolean to show success modal
-                  false, // boolean to show load more functionality button
-                  null, // navigate default value
-                  itemEdit ? "put" : "post"
-                );
+                // fetchData(
+                //   setLoading,
+                //   itemEdit
+                //     ? `${devApiUrl}/v1/rates/${itemEdit.rates_aid}`
+                //     : `${devApiUrl}/v1/rates`,
+                //   { ...values }, // form data values
+                //   null, // result set data
+                //   itemEdit ? "Succesfully updated." : "Succesfully added.", // success msg
+                //   "", // additional error msg if needed
+                //   dispatch, // context api action
+                //   store, // context api state
+                //   true, // boolean to show success modal
+                //   false, // boolean to show load more functionality button
+                //   null, // navigate default value
+                //   itemEdit ? "put" : "post"
+                // );
                 dispatch(setStartIndex(0));
               }}
             >
               {(props) => {
-                // props.values.rates_payitems_id = payItem;
+                props.values.rates_payitems_id = payItem;
                 return (
                   <Form>
                     <div className="max-h-[28rem]  p-4">
@@ -159,15 +148,15 @@ const ModalEditRates = ({ itemEdit, payType }) => {
                       <div className="relative mb-5 ">
                         <InputSelect
                           label="Pay Item"
-                          // onChange={handlePayItem}
                           name="rates_payitems_id"
+                          onChange={handlePayItem}
                           disabled={loading}
                           onFocus={(e) =>
                             e.target.parentElement.classList.add("focused")
                           }
                         >
                           <optgroup label="Pay Item">
-                            <option value="" hidden></option>
+                            <option value="" hidden></option>;
                             {result.length > 0 ? (
                               result.map((payitem, key) => {
                                 return (

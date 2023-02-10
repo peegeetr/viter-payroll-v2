@@ -75,13 +75,19 @@ class PayrollList
     public function readById()
     {
         try {
-            $sql = "select payroll_list_payroll_id, ";
-            $sql .= "payroll_list_aid, ";
-            $sql .= "payroll_list_is_paid, ";
-            $sql .= "payroll_list_employee_name ";
-            $sql .= "from {$this->tblPayrollList} as payrollList ";
-            $sql .= "where payroll_list_payroll_id = :payroll_list_payroll_id ";
-            $sql .= "order by payroll_list_employee_name asc ";
+            $sql = "select payrollList.payroll_list_payroll_id, ";
+            $sql .= "payrollList.payroll_list_aid, ";
+            $sql .= "payrollList.payroll_list_is_paid, ";
+            $sql .= "payrollList.payroll_list_employee_name, ";
+            $sql .= "payroll.payroll_id, ";
+            $sql .= "payroll.payroll_start_date, ";
+            $sql .= "payroll.payroll_end_date, ";
+            $sql .= "payroll.payroll_pay_date ";
+            $sql .= "from {$this->tblPayrollList} as payrollList, ";
+            $sql .= "{$this->tblPayroll} as payroll ";
+            $sql .= "where payrollList.payroll_list_payroll_id = :payroll_list_payroll_id ";
+            $sql .= "and payroll.payroll_id = payrollList.payroll_list_payroll_id ";
+            $sql .= "order by payrollList.payroll_list_employee_name asc ";
             $query = $this->connection->prepare($sql);
             $query->execute([
                 "payroll_list_payroll_id" => $this->payroll_list_payroll_id,
@@ -95,13 +101,19 @@ class PayrollList
     public function readLimit()
     {
         try {
-            $sql = "select payroll_list_payroll_id, ";
-            $sql .= "payroll_list_employee_name, ";
-            $sql .= "payroll_list_is_paid, ";
-            $sql .= "payroll_list_aid ";
-            $sql .= "from {$this->tblPayrollList} ";
-            $sql .= "where payroll_list_payroll_id = :payroll_list_payroll_id ";
-            $sql .= "order by payroll_list_employee_name asc ";
+            $sql = "select payrollList.payroll_list_payroll_id, ";
+            $sql .= "payrollList.payroll_list_aid, ";
+            $sql .= "payrollList.payroll_list_is_paid, ";
+            $sql .= "payrollList.payroll_list_employee_name, ";
+            $sql .= "payroll.payroll_id, ";
+            $sql .= "payroll.payroll_start_date, ";
+            $sql .= "payroll.payroll_end_date, ";
+            $sql .= "payroll.payroll_pay_date ";
+            $sql .= "from {$this->tblPayrollList} as payrollList, ";
+            $sql .= "{$this->tblPayroll} as payroll ";
+            $sql .= "where payrollList.payroll_list_payroll_id = :payroll_list_payroll_id ";
+            $sql .= "and payroll.payroll_id = payrollList.payroll_list_payroll_id ";
+            $sql .= "order by payrollList.payroll_list_employee_name asc ";
             $sql .= "limit :start, ";
             $sql .= ":total ";
             $query = $this->connection->prepare($sql);

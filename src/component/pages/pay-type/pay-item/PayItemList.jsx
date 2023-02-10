@@ -78,20 +78,22 @@ const PayItemList = ({ setItemEdit }) => {
                 className="sm:flex justify-between py-3 items-center border-b-2 border-solid "
               >
                 <div className="flex mb-5 xs:mb-0 ">
-                  <FaRegListAlt className="h-8 w-8 xs:mx-5 mr-5" />
+                  <FaRegListAlt className="text-lg  mr-5 translate-y-1 " />
                   <div className="text-left grid grid-cols-[5rem_1fr] ">
-                    <p className="font-semibold text-base">Pay Item :</p>
-                    <p className="pl-2 text-base ">{item.payitem_name}</p>
-                    <p className="mb-0 font-semibold">Status :</p>
-                    <p className="mb-0  pl-2">
+                    <p className="font-semibold mb-0">Pay Item :</p>
+                    <p className="pl-2 mb-0 ">{item.payitem_name}</p>
+
+                    <p className="my-1  text-xs">Pay Type : </p>
+                    <p className="my-1 pl-2  text-xs ">{item.paytype_name}</p>
+
+                    <p className="mb-0 text-xs ">Status :</p>
+                    <p className="mb-0  pl-2 text-xs">
                       {item.payitem_is_active === 1 ? (
                         <StatusActive />
                       ) : (
                         <StatusInactive />
                       )}
                     </p>
-                    <p className="mb-0 font-semibold">Pay Type : </p>
-                    <p className="mb-0 pl-2">{item.paytype_name}</p>
                   </div>
                 </div>
                 <div className="flex sm:mt-0 mt-5 justify-center items-center gap-1">

@@ -50,7 +50,7 @@ const PhilhealthForm = ({ itemEdit }) => {
               <Form>
                 <div className="relative mb-5">
                   <InputText
-                    label="EE Amount"
+                    label="Percentage"
                     type="text"
                     name="department_name"
                     disabled={loading}
@@ -59,7 +59,16 @@ const PhilhealthForm = ({ itemEdit }) => {
 
                 <div className="relative mb-5">
                   <InputText
-                    label="ER Amount"
+                    label="Min"
+                    type="text"
+                    name="department_name"
+                    disabled={loading}
+                  />
+                </div>
+
+                <div className="relative mb-5">
+                  <InputText
+                    label="Max"
                     type="text"
                     name="department_name"
                     disabled={loading}

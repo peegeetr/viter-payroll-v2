@@ -7,8 +7,16 @@ import { StoreContext } from "../../../../store/StoreContext";
 import useLoadAll from "../../../custom-hooks/useLoadAll";
 import fetchApi from "../../../helpers/fetchApi";
 import { fetchData } from "../../../helpers/fetchData";
-import { InputSelect, InputText } from "../../../helpers/FormInputs";
-import { consoleLog, devApiUrl } from "../../../helpers/functions-general";
+import {
+  InputSelect,
+  InputText,
+  MyCheckbox,
+} from "../../../helpers/FormInputs";
+import {
+  consoleLog,
+  devApiUrl,
+  handleNumOnly,
+} from "../../../helpers/functions-general";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 
 const ModalEditRates = ({ itemEdit, payType }) => {
@@ -82,6 +90,12 @@ const ModalEditRates = ({ itemEdit, payType }) => {
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
                 consoleLog(values);
+                // get data from HRIS
+                // if (payItem[0].payitem_is_hris === 1) {
+                // fetch data
+                // filter data based on payroll period
+                // set data filterd data to state and pass to server
+                //    }
                 fetchData(
                   setLoading,
                   itemEdit
@@ -103,7 +117,6 @@ const ModalEditRates = ({ itemEdit, payType }) => {
             >
               {(props) => {
                 props.values.rates_payitems_id = payItem;
-
                 return (
                   <Form>
                     <div className="max-h-[28rem]  p-4">
@@ -135,9 +148,7 @@ const ModalEditRates = ({ itemEdit, payType }) => {
                           }
                         >
                           <optgroup label="Pay Type">
-                            <option value="Select" hidden>
-                              Select
-                            </option>
+                            <option value="" hidden></option>
                             {payType.length > 0 ? (
                               payType.map((paytype, key) => {
                                 return (
@@ -159,12 +170,9 @@ const ModalEditRates = ({ itemEdit, payType }) => {
                           name="rates_payitems_id"
                           onChange={handlePayItem}
                           disabled={loading}
-                          onFocus={(e) =>
-                            e.target.parentElement.classList.add("focused")
-                          }
                         >
                           <optgroup label="Pay Item">
-                            <option value="" hidden></option>;
+                            <option value="" hidden></option>
                             {result.length > 0 ? (
                               result.map((payitem, key) => {
                                 return (

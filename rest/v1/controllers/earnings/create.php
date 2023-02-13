@@ -70,7 +70,7 @@ if ($data["payitem_is_hris"] === "0" && $earnings->earnings_employee != "all") {
 // payitem 19 = leave
 if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === "19") {
     // check array length
-    if (count($allLeave) === 0) {
+    if (count($data["payLeave"]) === 0) {
         checkEnpoint();
     }
     for ($l = 0; $l < count($data["payLeave"]); $l++) {

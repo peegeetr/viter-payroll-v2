@@ -6,11 +6,7 @@ $conn = checkDbConnection();
 $taxMonthly = new TaxMonthly($conn);
 // get should not be present
 if (array_key_exists("taxmonthlyid", $_GET)) {
-    $response->setSuccess(false);
-    $error['code'] = "404";
-    $error['message'] = "Endpoint not found.";
-    $error["success"] = false;
-    return $error;
+    checkEnpoint();
 }
 // check data
 checkPayload($data);

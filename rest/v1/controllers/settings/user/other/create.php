@@ -8,11 +8,7 @@ $user_other = new UserOther($conn);
 $encrypt = new Encryption();
 // get should not be present
 if (array_key_exists("userotherid", $_GET)) {
-    $response->setSuccess(false);
-    $error['code'] = "404";
-    $error['error'] = "Endpoint not found.";
-    $error["success"] = false;
-    return $error;
+    checkEnpoint();
 }
 // check data
 checkPayload($data);

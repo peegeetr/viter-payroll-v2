@@ -6,11 +6,7 @@ $conn = checkDbConnection();
 $role = new Role($conn);
 // get should not be present
 if (array_key_exists("roleid", $_GET)) {
-    $response->setSuccess(false);
-    $error['code'] = "404";
-    $error['message'] = "Endpoint not found.";
-    $error["success"] = false;
-    return $error;
+    checkEnpoint();
 }
 // check data
 checkPayload($data);
@@ -21,7 +17,7 @@ $role->role_is_active = 1;
 $role->role_created = date("Y-m-d");
 $role->role_datetime = date("Y-m-d H:i:s");
 // string value convert to lower case
-$column_name = strtolower(explode(" ",$data["role_name"])[0]); 
+$column_name = strtolower(explode(" ", $data["role_name"])[0]);
 
 // check name
 isNameExist($role, $role->role_name);

@@ -4,7 +4,6 @@ $conn = null;
 $conn = checkDbConnection();
 // make instance of classes
 $earnings = new Earnings($conn);
-$response = new Response();
 // get should not be present
 if (array_key_exists("earningsid", $_GET)) {
     checkEnpoint();
@@ -46,13 +45,13 @@ if ($data["payitem_is_hris"] === "0" && $earnings->earnings_employee == "all") {
         $earnings->earnings_employee = "$employee_lname $employee_fname";
         $earnings->earnings_employee_id = $allEmployee[$e]["employee_aid"];
         $query = checkCreate($earnings);
-        // $returnData = [];
-        // $returnData["data"] = [];
-        // $returnData["count"] = $query->rowCount();
-        // $returnData["earning ID"] = $earnings->lastInsertedId;
-        // $returnData["success"] = true;
-        // return $returnData;
-        createSuccess($earnings, "Earnings", $query);
+        $returnData = [];
+        $returnData["data"] = [];
+        $returnData["count"] = $query->rowCount();
+        $returnData["earning ID"] = $earnings->lastInsertedId;
+        $returnData["success"] = true;
+        return $returnData;
+        // createSuccess($earnings, "earnings", $query);
     }
 }
 
@@ -61,13 +60,15 @@ if ($data["payitem_is_hris"] === "0" && $earnings->earnings_employee == "all") {
 if ($data["payitem_is_hris"] === "0" && $earnings->earnings_employee != "all") {
     // create if specific employee and not data from hris
     $query = checkCreate($earnings);
-    // $returnData = [];
-    // $returnData["data"] = [];
-    // $returnData["count"] = $query->rowCount();
-    // $returnData["earning ID"] = $earnings->lastInsertedId;
-    // $returnData["success"] = true;
-    // return $returnData;
-    createSuccess($earnings, "Earnings", $query);
+
+    $returnData = [];
+    $returnData["data"] = [];
+    $returnData["count"] = $query->rowCount();
+    $returnData["earning ID"] = $earnings->lastInsertedId;
+    $returnData["success"] = true;
+    return $returnData;
+
+    // createSuccess($earnings, "earnings", $query);
 }
 
 // create if data is from hris
@@ -85,13 +86,13 @@ if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === "19")
         $earnings->earnings_employee_id = $allLeave[$l]["leave_list_employee_id"];
         $query = checkCreate($earnings);
 
-        // $returnData = [];
-        // $returnData["data"] = [];
-        // $returnData["count"] = $query->rowCount();
-        // $returnData["earning ID"] = $earnings->lastInsertedId;
-        // $returnData["success"] = true;
-        // return $returnData;
+        $returnData = [];
+        $returnData["data"] = [];
+        $returnData["count"] = $query->rowCount();
+        $returnData["earning ID"] = $earnings->lastInsertedId;
+        $returnData["success"] = true;
+        return $returnData;
 
-        createSuccess($earnings, "Earnings", $query);
+        // createSuccess($earnings, "earnings", $query);
     }
 }

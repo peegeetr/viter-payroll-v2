@@ -8,16 +8,12 @@ $user_system = new UserSystem($conn);
 $encrypt = new Encryption();
 // get should not be present
 if (array_key_exists("usersystemid", $_GET)) {
-    $response->setSuccess(false);
-    $error['code'] = "404";
-    $error['error'] = "Endpoint not found.";
-    $error["success"] = false;
-    return $error;
+    checkEnpoint();
 }
 // check data
 checkPayload($data);
 // get data
-$user_system->user_system_name = addslashes(trim($data["user_system_name"])); 
+$user_system->user_system_name = addslashes(trim($data["user_system_name"]));
 $user_system->user_system_is_active = 1;
 $user_system->user_system_email = addslashes(trim($data["user_system_email"]));
 $user_system->user_system_role_id = addslashes(trim($data["user_system_role_id"]));

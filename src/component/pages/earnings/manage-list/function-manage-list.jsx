@@ -17,3 +17,10 @@ export const validatePayPeriod = (values, inputDate, dispatch) => {
   }
   return val;
 };
+
+// compute leave
+export const computedLeave = (leaveData) => {
+  let list = [];
+  const data = leaveData.filter((item) => {});
+  return list;
+};

@@ -38,6 +38,8 @@ const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
     "get"
   );
 
+  console.log(payLeave);
+
   const { result, setResult } = useLoadAll(
     `${devApiUrl}/v1/paytype${payid}`,
     "get"

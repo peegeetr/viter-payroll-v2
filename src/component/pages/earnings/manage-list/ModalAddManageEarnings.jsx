@@ -5,7 +5,7 @@ import * as Yup from "yup";
 import { setIsAdd, setStartIndex } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
 import useLoadAll from "../../../custom-hooks/useLoadAll";
-import useLoadPayPeriod from "../../../custom-hooks/useLoadPayPeriod";
+import useLoadPayLeave from "../../../custom-hooks/useLoadPayLeave";
 import fetchApi from "../../../helpers/fetchApi";
 import { fetchData } from "../../../helpers/fetchData";
 import { InputSelect, InputText } from "../../../helpers/FormInputs";
@@ -23,6 +23,7 @@ const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
   const [loading, setLoading] = React.useState(false);
   const [isAmount, setIsAmount] = React.useState(false);
   const [employeeId, setEmployeeId] = React.useState("");
+  const [isHris, setIsHris] = React.useState("");
   const [payItem, setPayItem] = React.useState("");
   const [isInstallment, setIsInstallment] = React.useState("");
   const [numberInsti, setNumberInsti] = React.useState("");
@@ -32,11 +33,10 @@ const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
   let date1 = payrollDraft[0].payroll_start_date;
   let date2 = payrollDraft[0].payroll_end_date;
 
-  const { payPeriod } = useLoadPayPeriod(
+  const { payLeave } = useLoadPayLeave(
     `${hrisDevApiUrl}/v1/leaves/period/approved/${date1}/${date2}`,
     "get"
   );
-  console.log(date1, date2, payPeriod);
 
   const { result, setResult } = useLoadAll(
     `${devApiUrl}/v1/paytype${payid}`,
@@ -55,14 +55,21 @@ const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
 
   const handlePayItem = async (e, props) => {
     let payitemid = e.target.value;
+    setIsHris(e.target.options[e.target.selectedIndex].id);
     setLoading(true);
     const results = await fetchApi(`${devApiUrl}/v1/payitem/${payitemid}`);
     if (results.data) {
       setLoading(false);
       setPayItem(results.data);
+      if (results.data[0].payitem_is_hris === 1) {
+        setNumberInsti("1");
+        setIsStartDate(date1);
+        setIsEndDate(date2);
+      }
     }
   };
 
+  consoleLog("123", payItem);
   const handleEmployee = async (e) => {
     // get employee id
     setEmployeeId(e.target.options[e.target.selectedIndex].id);
@@ -79,8 +86,8 @@ const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
     }
     if (categoryIsInstallment === "1") {
       setNumberInsti("1");
-      setIsStartDate(payrollDraft.length && payrollDraft[0].payroll_start_date);
-      setIsEndDate(payrollDraft.length && payrollDraft[0].payroll_end_date);
+      setIsStartDate(date1);
+      setIsEndDate(date2);
     }
     if (categoryIsInstallment === "2") {
       setNumberInsti("");
@@ -116,6 +123,7 @@ const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
     earnings_start_pay_date: item ? item.earnings_start_pay_date : "",
     earnings_end_pay_date: item ? item.earnings_end_pay_date : "",
     earnings_is_installment: item ? item.earnings_is_installment : "",
+    is_hris: "",
 
     amount: item ? item.earnings_amount : "",
     startDate: item ? item.earnings_start_pay_date : "",
@@ -169,12 +177,15 @@ const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
                 if (validatePayPeriod(values, payrollDraft, dispatch)) {
                   return;
                 }
+                if (validatePayPeriod(values, payLeave, dispatch)) {
+                  return;
+                }
                 fetchData(
                   setLoading,
                   item
                     ? `${devApiUrl}/v1/earnings/${item.earnings_aid}`
                     : `${devApiUrl}/v1/earnings`,
-                  { ...values, employee }, // form data values
+                  { ...values, employee, payLeave }, // form data values
                   null, // result set data
                   item ? "Succesfully updated." : "Succesfully added.", // success msg
                   "", // additional error msg if needed
@@ -189,6 +200,7 @@ const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
               }}
             >
               {(props) => {
+                props.values.is_hris = isHris;
                 props.values.earnings_employee_id = employeeId;
                 props.values.earnings_amount = (
                   Number(props.values.amount) /
@@ -298,7 +310,11 @@ const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
                             {result.length > 0 ? (
                               result.map((payitem, key) => {
                                 return (
-                                  <option key={key} value={payitem.payitem_aid}>
+                                  <option
+                                    key={key}
+                                    value={payitem.payitem_aid}
+                                    id={payitem.payitem_is_hris}
+                                  >
                                     {payitem.payitem_name}{" "}
                                     {payitem.payitem_is_hris === 1 && "(HRIS)"}
                                   </option>

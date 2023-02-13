@@ -3,10 +3,10 @@ import { StoreContext } from "../../store/StoreContext";
 import fetchApi from "../helpers/fetchApi";
 import { consoleLog } from "../helpers/functions-general";
 
-const useLoadPayPeriod = (url) => {
+const useLoadPayLeave = (url) => {
   const { store, dispatch } = React.useContext(StoreContext);
-  const [payPeriod, setResult] = React.useState([]);
-  const [payPeriodLoading, setLoading] = React.useState(false);
+  const [payLeave, setResult] = React.useState([]);
+  const [payLeaveLoading, setLoading] = React.useState(false);
 
   React.useEffect(() => {
     getData();
@@ -31,9 +31,9 @@ const useLoadPayPeriod = (url) => {
   };
 
   return {
-    payPeriodLoading,
-    payPeriod,
+    payLeaveLoading,
+    payLeave,
   };
 };
 
-export default useLoadPayPeriod;
+export default useLoadPayLeave;

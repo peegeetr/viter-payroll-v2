@@ -3,10 +3,10 @@ import React from "react";
 // // Online URL dev hris
 // export const hrisDevApiUrl =
 //   "https://hris.frontlinebusiness.com.ph/dev-app/rest";
-export const hrisDevBaseImgUrl =
-  "https://hris.frontlinebusiness.com.ph/dev-app/img";
 // export const hrisdevBaseUrl = "https://hris.frontlinebusiness.com.ph/dev-app";
 // export const hrisdevNavUrl = "/dev-app";
+export const hrisDevBaseImgUrl =
+  "https://hris.frontlinebusiness.com.ph/dev-app/img";
 
 // Online URL dev payroll
 // export const devApiUrl = "https://payroll-app.frontlinebusiness.com.ph/rest";

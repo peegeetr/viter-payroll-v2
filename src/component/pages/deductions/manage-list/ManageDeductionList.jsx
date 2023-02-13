@@ -1,168 +1,166 @@
 import React from "react";
-import { FaArchive, FaEdit, FaHistory, FaTrash } from "react-icons/fa";
-import {
-  setIsAdd,
-  setIsConfirm,
-  setIsRestore,
-} from "../../../../store/StoreAction";
+import { FaTrash } from "react-icons/fa";
+import { setIsRestore } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
+import useFetchDataLoadMore from "../../../custom-hooks/useFetchDataLoadMore";
 import { devApiUrl } from "../../../helpers/functions-general";
-import ModalConfirm from "../../../partials/modals/ModalConfirm";
+import Loadmore from "../../../partials/Loadmore";
 import ModalDeleteRestore from "../../../partials/modals/ModalDeleteRestore";
 import NoData from "../../../partials/NoData";
 import SearchBar from "../../../partials/SearchBar";
 import ServerError from "../../../partials/ServerError";
+import TableSpinner from "../../../partials/spinners/TableSpinner";
 import StatusActive from "../../../partials/status/StatusActive";
 import StatusInactive from "../../../partials/status/StatusInactive";
 
-const ManageDeductionList = ({ setItemEdit, handleSearch }) => {
+const ManageDeductionList = () => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [dataItem, setData] = React.useState(null);
   const [id, setId] = React.useState(null);
   const [isDel, setDel] = React.useState(false);
   const search = React.useRef(null);
+  const perPage = 10;
+  const start = store.startIndex + 1;
+  let counter = 0;
 
-  const handleEdit = (item) => {
-    dispatch(setIsAdd(true));
-    setItemEdit(item);
-  };
-
-  const handleArchive = (item) => {
-    dispatch(setIsConfirm(true));
-    setId(item.user_system_aid);
-    setData(item);
-    setDel(null);
-  };
-
-  const handleRestore = (item) => {
-    dispatch(setIsRestore(true));
-    setId(item.user_system_aid);
-    setData(item);
-    setDel(null);
-  };
+  const {
+    loading,
+    handleLoad,
+    totalResult,
+    result,
+    handleSearch,
+    handleChange,
+  } = useFetchDataLoadMore(
+    `${devApiUrl}/v1/deductions/limit/${start}/${perPage}`,
+    `${devApiUrl}/v1/deductions`,
+    perPage,
+    search
+  );
 
   const handleDelete = (item) => {
     dispatch(setIsRestore(true));
-    setId(item.user_system_aid);
+    setId(item.deduction_aid);
     setData(item);
     setDel(true);
   };
-
   return (
     <>
-      <SearchBar search={search} handleSearch={handleSearch} store={store} />
+      <SearchBar
+        search={search}
+        handleSearch={handleSearch}
+        handleChange={handleChange}
+        loading={loading}
+        result={result}
+        store={store}
+        url={`${devApiUrl}/v1/earnings/search/`}
+      />
       <div className="relative text-center overflow-x-auto z-0">
+        {loading && <TableSpinner />}
         <table>
           <thead>
             <tr>
               <th>#</th>
-              <th className="min-w-[12rem]">Employeee</th>
-              <th className="min-w-[7rem]">Pay Type</th>
-              <th className="min-w-[7rem]">Pay Item</th>
-              <th className="min-w-[7rem]">Amount</th>
-              <th className="min-w-[7rem]">Frequency</th>
+              <th className="min-w-[5rem]">Payroll ID</th>
+              <th className="min-w-[8rem]">Employeee</th>
+              <th className="min-w-[5rem]">Pay Type</th>
+              <th className="min-w-[5rem]">Pay Item</th>
+              <th className="min-w-[5rem]">Amount</th>
+              <th className="min-w-[5rem]">Frequency</th>
               <th className="min-w-[10rem]">No. of Installment</th>
-              <th className="min-w-[10rem]">Start Date</th>
-              <th className="min-w-[10rem]">End Date</th>
+              <th className="min-w-[8rem]">Start Date</th>
+              <th className="min-w-[8rem]">End Date</th>
               <th>Status</th>
-              <th>Actions</th>
+              <th className="text-right">Actions</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1.</td>
-              <td>Lumabas, Cyrene M.</td>
-              <td>Wages</td>
-              <td>Overtime Pay</td>
-              <td>00.00</td>
-              <td>monthly</td>
-              <td>1</td>
-              <td>Mon Jan 30, 2023</td>
-              <td>Mon Jan 30, 2023</td>
-              <td>{1 === 1 ? <StatusActive /> : <StatusInactive />}</td>
-              <td>
-                <div className="flex items-center gap-2">
-                  <button
-                    type="button"
-                    className="btn-action-table tooltip-action-table"
-                    data-tooltip="Edit"
-                    onClick={handleEdit}
-                  >
-                    <FaEdit />
-                  </button>
-                  <button
-                    type="button"
-                    className="btn-action-table tooltip-action-table"
-                    data-tooltip="Archive"
-                    onClick={handleArchive}
-                  >
-                    <FaArchive />
-                  </button>
-                  <button
-                    type="button"
-                    className="btn-action-table tooltip-action-table"
-                    data-tooltip="Restore"
-                    onClick={handleRestore}
-                  >
-                    <FaHistory />
-                  </button>
-                  <button
-                    type="button"
-                    className="btn-action-table tooltip-action-table"
-                    data-tooltip="Delete"
-                    onClick={handleDelete}
-                  >
-                    <FaTrash />
-                  </button>
-                </div>
-              </td>
-            </tr>
-            <tr className="text-center ">
-              <td colSpan="100%" className="p-10">
-                <ServerError />
-              </td>
-            </tr>
-            <tr className="text-center ">
-              <td colSpan="100%" className="p-10">
-                {/*{loading && <TableSpinner />}*/}
-                <NoData />
-              </td>
-            </tr>
+            {result.length > 0 ? (
+              result.map((item, key) => {
+                counter++;
+                return (
+                  <tr key={key}>
+                    <td>{counter}.</td>
+                    <td>{item.earnings_payroll_id}</td>
+                    <td>{item.earnings_employee}</td>
+                    <td>{item.paytype_name}</td>
+                    <td>{item.payitem_name}</td>
+                    <td>
+                      P
+                      {numberWithCommas(
+                        Number(item.earnings_amount).toFixed(2)
+                      )}
+                    </td>
+                    <td>
+                      {item.earnings_frequency === "sm"
+                        ? "Semi-monthly"
+                        : "Monthly"}
+                    </td>
+                    <td>{item.earnings_number_of_installment}</td>
+                    <td>
+                      {item.earnings_start_pay_date === "n/a"
+                        ? "N/A"
+                        : formatDate(item.earnings_start_pay_date)}
+                    </td>
+                    <td>
+                      {item.earnings_end_pay_date === "n/a"
+                        ? "N/A"
+                        : formatDate(item.earnings_end_pay_date)}
+                    </td>
+                    <td>
+                      {item.earnings_is_active === 1 ? (
+                        <StatusActive text="Paid" />
+                      ) : (
+                        <StatusInactive text="Draft" />
+                      )}
+                    </td>
+                    <td>
+                      <div className="flex items-center justify-end gap-2">
+                        <button
+                          type="button"
+                          className="btn-action-table tooltip-action-table"
+                          data-tooltip="Delete"
+                          onClick={() => handleDelete(item)}
+                        >
+                          <FaTrash />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })
+            ) : result === -1 ? (
+              <tr className="text-center ">
+                <td colSpan="100%" className="p-10">
+                  <ServerError />
+                </td>
+              </tr>
+            ) : (
+              <tr className="text-center ">
+                <td colSpan="100%" className="p-10">
+                  <NoData />
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
 
-        {/* {!store.isSearch && (
+        {!store.isSearch && (
           <Loadmore
             handleLoad={handleLoad}
             loading={loading}
             result={result}
             totalResult={totalResult}
           />
-        )} */}
+        )}
       </div>
-
-      {store.isConfirm && (
-        <ModalConfirm
-          id={id}
-          isDel={isDel}
-          mysqlApiArchive={`${devApiUrl}/v1/user-systems/active/${id}`}
-          msg={"Are you sure you want to archive "}
-          item={`${dataItem.user_system_email}`}
-        />
-      )}
 
       {store.isRestore && (
         <ModalDeleteRestore
           id={id}
           isDel={isDel}
-          mysqlApiDelete={`${devApiUrl}/v1/user-systems/${id}`}
-          mysqlApiRestore={`${devApiUrl}/v1/user-systems/active/${id}`}
-          msg={
-            isDel
-              ? "Are you sure you want to delete "
-              : "Are you sure you want to restore "
-          }
-          item={`${dataItem.user_system_email}`}
+          mysqlApiDelete={`${devApiUrl}/v1/earnings/${id}`}
+          msg={"Are you sure you want to delete this user"}
+          item={`${dataItem.earnings_employee}`}
         />
       )}
     </>

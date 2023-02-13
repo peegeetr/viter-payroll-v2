@@ -256,25 +256,6 @@ class Earnings
         return $query;
     }
 
-    // active
-    public function active()
-    {
-        try {
-            $sql = "update {$this->tblEarnings} set ";
-            $sql .= "earnings_is_paid = :earnings_is_paid, ";
-            $sql .= "earnings_datetime = :earnings_datetime ";
-            $sql .= "where earnings_aid = :earnings_aid ";
-            $query = $this->connection->prepare($sql);
-            $query->execute([
-                "earnings_is_paid" => $this->earnings_is_paid,
-                "earnings_datetime" => $this->earnings_datetime,
-                "earnings_aid" => $this->earnings_aid,
-            ]);
-        } catch (PDOException $ex) {
-            $query = false;
-        }
-        return $query;
-    }
 
     // name
     public function checkName()

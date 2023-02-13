@@ -52,14 +52,13 @@ const ManageEarnings = () => {
         <hr />
 
         <div className="w-full pt-5 pb-20">
-          <ManageEarningsList setItemEdit={setItemEdit} />
+          <ManageEarningsList />
         </div>
         <Footer />
       </div>
       {draft.length > 0
         ? store.isAdd && (
             <ModalAddManageEarnings
-              item={itemEdit}
               payType={payType}
               employee={employee}
               payrollDraft={draft}

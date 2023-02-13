@@ -40,8 +40,6 @@ const useLoadLastPayrollId = (url, param1 = null) => {
           id = id;
           result.data.length > 0 ? setLastId("PR-" + id) : setLastId("PR-001");
         }
-
-        // setResult(result.data);
       } else {
         setLastId("PR-001");
       }

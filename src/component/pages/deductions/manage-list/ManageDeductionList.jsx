@@ -3,7 +3,11 @@ import { FaTrash } from "react-icons/fa";
 import { setIsRestore } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
 import useFetchDataLoadMore from "../../../custom-hooks/useFetchDataLoadMore";
-import { devApiUrl } from "../../../helpers/functions-general";
+import {
+  devApiUrl,
+  formatDate,
+  numberWithCommas,
+} from "../../../helpers/functions-general";
 import Loadmore from "../../../partials/Loadmore";
 import ModalDeleteRestore from "../../../partials/modals/ModalDeleteRestore";
 import NoData from "../../../partials/NoData";
@@ -52,7 +56,7 @@ const ManageDeductionList = () => {
         loading={loading}
         result={result}
         store={store}
-        url={`${devApiUrl}/v1/earnings/search/`}
+        url={`${devApiUrl}/v1/deduction/search/`}
       />
       <div className="relative text-center overflow-x-auto z-0">
         {loading && <TableSpinner />}
@@ -80,34 +84,34 @@ const ManageDeductionList = () => {
                 return (
                   <tr key={key}>
                     <td>{counter}.</td>
-                    <td>{item.earnings_payroll_id}</td>
-                    <td>{item.earnings_employee}</td>
+                    <td>{item.deduction_payroll_id}</td>
+                    <td>{item.deduction_employee}</td>
                     <td>{item.paytype_name}</td>
                     <td>{item.payitem_name}</td>
                     <td>
                       P
                       {numberWithCommas(
-                        Number(item.earnings_amount).toFixed(2)
+                        Number(item.deduction_amount).toFixed(2)
                       )}
                     </td>
                     <td>
-                      {item.earnings_frequency === "sm"
+                      {item.deduction_frequency === "sm"
                         ? "Semi-monthly"
                         : "Monthly"}
                     </td>
-                    <td>{item.earnings_number_of_installment}</td>
+                    <td>{item.deduction_number_of_installment}</td>
                     <td>
-                      {item.earnings_start_pay_date === "n/a"
+                      {item.deduction_start_pay_date === "n/a"
                         ? "N/A"
-                        : formatDate(item.earnings_start_pay_date)}
+                        : formatDate(item.deduction_start_pay_date)}
                     </td>
                     <td>
-                      {item.earnings_end_pay_date === "n/a"
+                      {item.deduction_end_pay_date === "n/a"
                         ? "N/A"
-                        : formatDate(item.earnings_end_pay_date)}
+                        : formatDate(item.deduction_end_pay_date)}
                     </td>
                     <td>
-                      {item.earnings_is_active === 1 ? (
+                      {item.deduction_is_active === 1 ? (
                         <StatusActive text="Paid" />
                       ) : (
                         <StatusInactive text="Draft" />
@@ -158,9 +162,9 @@ const ManageDeductionList = () => {
         <ModalDeleteRestore
           id={id}
           isDel={isDel}
-          mysqlApiDelete={`${devApiUrl}/v1/earnings/${id}`}
+          mysqlApiDelete={`${devApiUrl}/v1/deductions/${id}`}
           msg={"Are you sure you want to delete this user"}
-          item={`${dataItem.earnings_employee}`}
+          item={`${dataItem.deduction_employee}`}
         />
       )}
     </>

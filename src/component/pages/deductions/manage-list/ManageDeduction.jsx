@@ -47,7 +47,7 @@ const ManageDeduction = () => {
         </div>
         <Footer />
       </div>
-      {draft.length > 0
+      {draft.length > 0 && draft[0].payroll_id !== ""
         ? store.isAdd && (
             <ModalAddManageDeduction
               payType={payType}

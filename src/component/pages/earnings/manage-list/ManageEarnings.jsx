@@ -56,7 +56,7 @@ const ManageEarnings = () => {
         </div>
         <Footer />
       </div>
-      {draft.length > 0
+      {draft.length > 0 && draft[0].payroll_id !== ""
         ? store.isAdd && (
             <ModalAddManageEarnings
               payType={payType}

@@ -36,19 +36,20 @@ isNameExist($earnings, "Pay item for $earnings->earnings_employee is ");
 
 // create if not data from hris and all employee
 if ($data["payitem_is_hris"] === "0" && $earnings->earnings_employee == "all") {
-    for ($e = 0; $e < count($allEmployee); $e++) {
+    for ($e = 0; $e < count($data["employee"]); $e++) {
         $employee_lname = $allEmployee[$e]["employee_lname"];
         $employee_fname = $allEmployee[$e]["employee_fname"];
 
         $earnings->earnings_employee = "$employee_lname $employee_fname";
         $earnings->earnings_employee_id = $allEmployee[$e]["employee_aid"];
         $query = checkCreate($earnings);
-        $returnData = [];
-        $returnData["data"] = [];
-        $returnData["count"] = $query->rowCount();
-        $returnData["earning ID"] = $earnings->lastInsertedId;
-        $returnData["success"] = true;
-        return $returnData;
+        // $returnData = [];
+        // $returnData["data"] = [];
+        // $returnData["count"] = $query->rowCount();
+        // $returnData["earning ID"] = $earnings->lastInsertedId;
+        // $returnData["success"] = true;
+        // return $returnData;
+        createSuccess($earnings, "Earnings", $query);
     }
 }
 
@@ -56,12 +57,13 @@ if ($data["payitem_is_hris"] === "0" && $earnings->earnings_employee == "all") {
 if ($data["payitem_is_hris"] === "0" && $earnings->earnings_employee != "all") {
     // create if specific employee and not data from hris
     $query = checkCreate($earnings);
-    $returnData = [];
-    $returnData["data"] = [];
-    $returnData["count"] = $query->rowCount();
-    $returnData["earning ID"] = $earnings->lastInsertedId;
-    $returnData["success"] = true;
-    return $returnData;
+    // $returnData = [];
+    // $returnData["data"] = [];
+    // $returnData["count"] = $query->rowCount();
+    // $returnData["earning ID"] = $earnings->lastInsertedId;
+    // $returnData["success"] = true;
+    // return $returnData;
+    createSuccess($earnings, "Earnings", $query);
 }
 
 // create if data is from hris
@@ -71,7 +73,7 @@ if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === "19")
     if (count($allLeave) === 0) {
         checkEnpoint();
     }
-    for ($l = 0; $l < count($allLeave); $l++) {
+    for ($l = 0; $l < count($data["payLeave"]); $l++) {
         $employee_lname = $allLeave[$l]["employee_lname"];
         $employee_fname = $allLeave[$l]["employee_fname"];
 
@@ -79,11 +81,13 @@ if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === "19")
         $earnings->earnings_employee_id = $allLeave[$l]["leave_list_employee_id"];
         $query = checkCreate($earnings);
 
-        $returnData = [];
-        $returnData["data"] = [];
-        $returnData["count"] = $query->rowCount();
-        $returnData["earning ID"] = $earnings->lastInsertedId;
-        $returnData["success"] = true;
-        return $returnData;
+        // $returnData = [];
+        // $returnData["data"] = [];
+        // $returnData["count"] = $query->rowCount();
+        // $returnData["earning ID"] = $earnings->lastInsertedId;
+        // $returnData["success"] = true;
+        // return $returnData;
+
+        createSuccess($earnings, "Earnings", $query);
     }
 }

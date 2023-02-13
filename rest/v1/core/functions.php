@@ -94,7 +94,21 @@ function checkIndex($jsonData, $index)
         invalidInput();
     }
 
-    return addslashes(trim($jsonData[$index]));
+    if (
+        !isset($jsonData[$index]) || gettype($jsonData[$index]) == "array"
+    ) {
+        if (
+            count($jsonData[$index]) == 0
+        ) {
+            invalidInput();
+        }
+    }
+
+    if (gettype($jsonData[$index]) != "array") {
+        return addslashes(trim($jsonData[$index]));
+    } else {
+        return $jsonData[$index];
+    }
 }
 
 // check id

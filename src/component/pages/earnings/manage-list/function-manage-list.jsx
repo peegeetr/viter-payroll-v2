@@ -23,6 +23,14 @@ export const validatePayPeriod = (values, inputDate, dispatch) => {
   }
   return val;
 };
+
+// compute leave
+export const computedLeave = (leaveData) => {
+  let list = [];
+  const data = leaveData.filter((item) => {});
+  return list;
+};
+
 // get Date Length
 export const validateDataIsNotEmpty = (payItem, hrisData, dispatch) => {
   let val = false;

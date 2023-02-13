@@ -4,13 +4,10 @@ $conn = null;
 $conn = checkDbConnection();
 // make instance of classes
 $earnings = new Earnings($conn);
+$response = new Response();
 // get should not be present
 if (array_key_exists("earningsid", $_GET)) {
-    $response->setSuccess(false);
-    $error['code'] = "404";
-    $error['message'] = "Endpoint not found.";
-    $error["success"] = false;
-    return $error;
+    checkEnpoint();
 }
 // check data
 checkPayload($data);
@@ -33,9 +30,13 @@ $earnings->earnings_datetime = date("Y-m-d H:i:s");
 
 $allEmployee = $data["employee"];
 $allLeave = $data["payLeave"];
-$name = "Pay item for $earnings->earnings_employee is ";
+
+// check array length
+if (count($allLeave) === 0) {
+    checkEnpoint();
+}
 // check name
-isNameExist($earnings, $name);
+isNameExist($earnings, "Pay item for $earnings->earnings_employee is ");
 
 // create if not data from hris and all employee
 if ($data["payitem_is_hris"] === "0" && $earnings->earnings_employee == "all") {
@@ -59,6 +60,14 @@ if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === "19")
         $earnings->earnings_employee = "$employee_lname $employee_fname";
         $earnings->earnings_employee_id = $allLeave[$l]["leave_list_employee_id"];
         $query = checkCreate($earnings);
+
+        $returnData = [];
+        $returnData["data"] = [];
+        $returnData["count"] = $query->rowCount();
+        $returnData["earning ID"] = $earnings->lastInsertedId;
+        $returnData["GET"] = $_GET;
+        $returnData["success"] = true;
+        return $returnData;
     }
 } else {
     // create if specific employee and not data from hris

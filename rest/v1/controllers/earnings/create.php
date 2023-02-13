@@ -34,8 +34,11 @@ $allLeave = checkIndex($data, "payLeave");
 // check name
 isNameExist($earnings, "Pay item for $earnings->earnings_employee is ");
 
+
+
 // create if not data from hris and all employee
 if ($data["payitem_is_hris"] === "0" && $earnings->earnings_employee == "all") {
+
     for ($e = 0; $e < count($data["employee"]); $e++) {
         $employee_lname = $allEmployee[$e]["employee_lname"];
         $employee_fname = $allEmployee[$e]["employee_fname"];
@@ -52,6 +55,7 @@ if ($data["payitem_is_hris"] === "0" && $earnings->earnings_employee == "all") {
         createSuccess($earnings, "Earnings", $query);
     }
 }
+
 
 // create if not data from hris and specific employee
 if ($data["payitem_is_hris"] === "0" && $earnings->earnings_employee != "all") {

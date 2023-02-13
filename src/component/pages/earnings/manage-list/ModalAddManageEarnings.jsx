@@ -30,6 +30,7 @@ const ModalAddManageEarnings = ({ payType, employee, payrollDraft }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [loading, setLoading] = React.useState(false);
   const [isAmount, setIsAmount] = React.useState(false);
+  const [isHris, setIsHri] = React.useState("");
   const [employeeId, setEmployeeId] = React.useState("");
   const [payItem, setPayItem] = React.useState("");
   const [isInstallment, setIsInstallment] = React.useState("");
@@ -64,6 +65,7 @@ const ModalAddManageEarnings = ({ payType, employee, payrollDraft }) => {
 
   const handlePayItem = async (e, props) => {
     let payitemid = e.target.value;
+    setIsHri(e.target.options[e.target.selectedIndex].id);
     setLoading(true);
 
     const results = await fetchApi(`${devApiUrl}/v1/payitem/${payitemid}`);
@@ -192,7 +194,11 @@ const ModalAddManageEarnings = ({ payType, employee, payrollDraft }) => {
                 fetchData(
                   setLoading,
                   `${devApiUrl}/v1/earnings`,
-                  { ...values, employee, payLeave }, // form data values
+                  {
+                    ...values,
+                    employee: employee.length > 0 ? employee : 0,
+                    payLeave: payLeave.length > 0 ? payLeave : 0,
+                  }, // form data values
                   null, // result set data
                   "Succesfully added.", // success msg
                   "", // additional error msg if needed
@@ -207,6 +213,7 @@ const ModalAddManageEarnings = ({ payType, employee, payrollDraft }) => {
               }}
             >
               {(props) => {
+                props.values.payitem_is_hris = isHris;
                 props.values.is_installment = isInstallment;
                 props.values.earnings_employee_id = employeeId;
                 props.values.earnings_amount = (

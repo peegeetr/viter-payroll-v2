@@ -32,13 +32,8 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
         checkId($payItem->payitem_aid);
         $query = checkActive($payItem);
         http_response_code(200);
-        $returnData["data"] = [];
-        $returnData["count"] = $query->rowCount();
-        $returnData["payitem ID"] = $payItem->payitem_aid;
-        $returnData["success"] = true;
-        $response->setData($returnData);
-        $response->send();
-        exit;
+
+        returnSuccess($payItem, "Payitem", $query);
     }
     // return 404 error if endpoint not available
     checkEnpoint();

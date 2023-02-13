@@ -9,31 +9,28 @@ $role = new Role($conn);
 $error = [];
 $returnData = [];
 if (array_key_exists("roleid", $_GET)) {
- 
+
     // get task id from query string
     $role->role_aid = $_GET['roleid'];
-    $column_name = strtolower(explode(" ",$data["column_name"])[0]);  
+    $column_name = strtolower(explode(" ", $data["column_name"])[0]);
     $is_developer = $data['isDeveloper'];
-    
+
     //check to see if task id in query string is not empty and is number, if not return json error
-    checkId($role->role_aid); 
-    
+    checkId($role->role_aid);
+
     // delete validation if role id exist  
     if ($is_developer == 1) {
         isUserSystemAssociated($role, "delete");
-    } 
+    }
     isUserOtherAssociated($role, "delete");
-    
+
     // drop column  
     checkDropColumnName($role, $column_name);
-    
+
     // delete
-    $query = checkDelete($role); 
-    $returnData["data"] = [];
-    $returnData["count"] = $query->rowCount();
-    $returnData["Role ID"] = $role->role_aid;
-    $returnData["success"] = true;
-    return $returnData;
+    $query = checkDelete($role);
+
+    returnSuccess($role, "Role", $query);
 }
 
 // return 404 error if endpoint not available

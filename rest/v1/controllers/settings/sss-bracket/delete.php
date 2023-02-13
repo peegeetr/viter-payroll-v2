@@ -15,11 +15,8 @@ if (array_key_exists("sssbracketid", $_GET)) {
     //check to see if task id in query string is not empty and is number, if not return json error
     checkId($sss_bracket->sss_bracket_aid);
     $query = checkDelete($sss_bracket);
-    $returnData["data"] = [];
-    $returnData["count"] = $query->rowCount();
-    $returnData["SSS Bracket ID"] = $sss_bracket->sss_bracket_aid;
-    $returnData["success"] = true;
-    return $returnData;
+
+    returnSuccess($sss_bracket, "SSS Bracket", $query);
 }
 
 // return 404 error if endpoint not available

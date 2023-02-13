@@ -25,9 +25,4 @@ isRangeFromExist($sss_bracket, $sss_bracket->sss_bracket_range_from);
 isRangeToExist($sss_bracket, $sss_bracket->sss_bracket_range_to);
 
 $query = checkCreate($sss_bracket);
-$returnData = [];
-$returnData["data"] = [];
-$returnData["count"] = $query->rowCount();
-$returnData["SSS Bracket ID"] = $sss_bracket->lastInsertedId;
-$returnData["success"] = true;
-return $returnData;
+returnSuccess($sss_bracket, "SSS Bracket", $query);

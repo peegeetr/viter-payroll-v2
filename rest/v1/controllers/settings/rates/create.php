@@ -26,10 +26,5 @@ $rates->rates_datetime = date("Y-m-d H:i:s");
 // create
 $query = checkCreate($rates);
 
-$returnData = [];
-$returnData["data"] = [];
-$returnData["count"] = $query->rowCount();
-$returnData["Rates ID"] = $rates->lastInsertedId;
-$returnData["GET"] = $_GET;
-$returnData["success"] = true;
-return $returnData;
+
+returnSuccess($rates, "Rates", $query);

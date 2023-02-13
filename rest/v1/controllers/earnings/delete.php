@@ -18,11 +18,7 @@ if (array_key_exists("earningsid", $_GET)) {
 
     // delete
     $query = checkDelete($earnings);
-    $returnData["data"] = [];
-    $returnData["count"] = $query->rowCount();
-    $returnData["earning ID"] = $earnings->earnings_aid;
-    $returnData["success"] = true;
-    return $returnData;
+    returnSuccess($earnings, "Earnings", $query);
 }
 
 // return 404 error if endpoint not available

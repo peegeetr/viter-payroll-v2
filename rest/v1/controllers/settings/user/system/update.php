@@ -14,24 +14,21 @@ if (array_key_exists("usersystemid", $_GET)) {
     // get data
     // get usersystemid from query string
     $user_system->user_system_aid = $_GET['usersystemid'];
-    $user_system->user_system_name = addslashes(trim($data["user_system_name"])); 
+    $user_system->user_system_name = addslashes(trim($data["user_system_name"]));
     $user_system->user_system_email = addslashes(trim($data["user_system_email"]));
     $user_system->user_system_datetime = date("Y-m-d H:i:s");
 
     $user_system_name_old = strtolower($data["user_system_name_old"]);
     $user_system_email_old = strtolower($data["user_system_email_old"]);
     //check to see if task id in query string is not empty and is number, if not return json error
-    checkId($user_system->user_system_aid); 
-    
+    checkId($user_system->user_system_aid);
+
     // check email
     compareEmail($user_system, $user_system_email_old, $user_system->user_system_email);
     // update
     $query = checkUpdate($user_system);
-    $returnData["data"] = [];
-    $returnData["count"] = $query->rowCount();
-    $returnData["user ID"] = $user_system->user_system_aid;
-    $returnData["success"] = true;
-    return $returnData;
+
+    returnSuccess($user_system, "User system", $query);
 }
 
 // return 404 error if endpoint not available

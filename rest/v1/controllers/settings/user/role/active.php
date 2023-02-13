@@ -31,25 +31,20 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
         $is_developer = $data['isDeveloper'];
         $role->role_datetime = date("Y-m-d H:i:s");
         //check to see if task id in query string is not empty and is number, if not return json error
-        checkId($role->role_aid);    
+        checkId($role->role_aid);
 
-        
+
 
         // archive validation if role id exist  
         if ($is_developer == 1) {
             isUserSystemAssociated($role, "archive");
-        } 
+        }
         isUserOtherAssociated($role, "archive");
-        
+
         $query = checkActive($role);
         http_response_code(200);
-        $returnData["data"] = [];
-        $returnData["count"] = $query->rowCount();
-        $returnData["role ID"] = $role->role_aid;
-        $returnData["success"] = true;
-        $response->setData($returnData);
-        $response->send();
-        exit;
+
+        returnSuccess($role, "Role", $query);
     }
     // return 404 error if endpoint not available
     checkEnpoint();

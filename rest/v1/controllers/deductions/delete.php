@@ -18,11 +18,7 @@ if (array_key_exists("deductionid", $_GET)) {
 
     // delete
     $query = checkDelete($deductions);
-    $returnData["data"] = [];
-    $returnData["count"] = $query->rowCount();
-    $returnData["earning ID"] = $deductions->deduction_aid;
-    $returnData["success"] = true;
-    return $returnData;
+    returnSuccess($deductions, "Deductions", $query);
 }
 
 // return 404 error if endpoint not available

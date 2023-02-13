@@ -24,9 +24,4 @@ isRangeFromExist($semiMonthly, $semiMonthly->semi_monthly_range_from);
 isRangeToExist($semiMonthly, $semiMonthly->semi_monthly_range_to);
 
 $query = checkCreate($semiMonthly);
-$returnData = [];
-$returnData["data"] = [];
-$returnData["count"] = $query->rowCount();
-$returnData["Semi Monthly ID"] = $semiMonthly->lastInsertedId;
-$returnData["success"] = true;
-return $returnData;
+returnSuccess($semiMonthly, "Semi Monthly", $query);

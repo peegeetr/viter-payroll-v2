@@ -26,11 +26,7 @@ if (array_key_exists("payitemid", $_GET)) {
     compareName($payItem, $name_old, $payItem->payitem_name);
     // update
     $query = checkUpdate($payItem);
-    $returnData["data"] = [];
-    $returnData["count"] = $query->rowCount();
-    $returnData["payitem ID"] = $payItem->payitem_aid;
-    $returnData["success"] = true;
-    return $returnData;
+    returnSuccess($payItem, "Payitem", $query);
 }
 
 // return 404 error if endpoint not available

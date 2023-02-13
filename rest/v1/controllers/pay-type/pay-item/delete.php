@@ -22,11 +22,7 @@ if (array_key_exists("payitemid", $_GET)) {
     isRateAssociatedToPayItem($payItem, $payItem->payitem_name);
     // delete
     $query = checkDelete($payItem);
-    $returnData["data"] = [];
-    $returnData["count"] = $query->rowCount();
-    $returnData["payitem ID"] = $payItem->payitem_aid;
-    $returnData["success"] = true;
-    return $returnData;
+    returnSuccess($payItem, "Payitem", $query);
 }
 
 // return 404 error if endpoint not available

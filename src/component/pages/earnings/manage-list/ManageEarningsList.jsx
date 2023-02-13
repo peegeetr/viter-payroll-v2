@@ -160,27 +160,12 @@ const ManageEarningsList = () => {
         )}
       </div>
 
-      {store.isConfirm && (
-        <ModalConfirm
-          id={id}
-          isDel={isDel}
-          mysqlApiArchive={`${devApiUrl}/v1/earnings/active/${id}`}
-          msg={"Are you sure you want to archive this user"}
-          item={`${dataItem.earnings_employee}`}
-        />
-      )}
-
       {store.isRestore && (
         <ModalDeleteRestore
           id={id}
           isDel={isDel}
           mysqlApiDelete={`${devApiUrl}/v1/earnings/${id}`}
-          mysqlApiRestore={`${devApiUrl}/v1/earnings/active/${id}`}
-          msg={
-            isDel
-              ? "Are you sure you want to delete this user"
-              : "Are you sure you want to restore this user"
-          }
+          msg={"Are you sure you want to delete this user"}
           item={`${dataItem.earnings_employee}`}
         />
       )}

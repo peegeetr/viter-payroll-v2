@@ -40,10 +40,15 @@ RewriteRule ^payrollList/search/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)$ controllers/pay
    
 #earnings
 RewriteRule ^earnings$ controllers/earnings/earnings.php [L]
-RewriteRule ^earnings/([0-9]+)$ controllers/earnings/earnings.php?earningsid=$1 [L]
-RewriteRule ^earnings/active/([0-9]+)$ controllers/earnings/active.php?earningsid=$1 [L]
+RewriteRule ^earnings/([0-9]+)$ controllers/earnings/earnings.php?earningsid=$1 [L] 
 RewriteRule ^earnings/limit/([0-9]+)/([0-9]+)$ controllers/earnings/limit.php?start=$1&total=$2 [L]
 RewriteRule ^earnings/search/([A-Za-z0-9-]+)$ controllers/earnings/search.php?search=$1 [L]
+   
+#deductions
+RewriteRule ^deductions$ controllers/deductions/deductions.php [L]
+RewriteRule ^deductions/([0-9]+)$ controllers/deductions/deductions.php?deductionid=$1 [L] 
+RewriteRule ^deductions/limit/([0-9]+)/([0-9]+)$ controllers/deductions/limit.php?start=$1&total=$2 [L]
+RewriteRule ^deductions/search/([A-Za-z0-9-]+)$ controllers/deductions/search.php?search=$1 [L]
   
 #payitem
 RewriteRule ^payitem$ controllers/pay-type/pay-item/payitem.php [L]

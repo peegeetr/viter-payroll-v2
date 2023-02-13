@@ -2,7 +2,12 @@ import { Form, Formik } from "formik";
 import React from "react";
 import { FaTimesCircle } from "react-icons/fa";
 import * as Yup from "yup";
-import { setIsAdd, setStartIndex } from "../../../../store/StoreAction";
+import {
+  setError,
+  setIsAdd,
+  setMessage,
+  setStartIndex,
+} from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
 import useLoadAll from "../../../custom-hooks/useLoadAll";
 import useLoadPayLeave from "../../../custom-hooks/useLoadPayLeave";
@@ -16,14 +21,16 @@ import {
   hrisDevApiUrl,
 } from "../../../helpers/functions-general";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
-import { validatePayPeriod } from "./function-manage-list";
+import {
+  validateDataIsNotEmpty,
+  validatePayPeriod,
+} from "./function-manage-list";
 
 const ModalAddManageEarnings = ({ payType, employee, payrollDraft }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [loading, setLoading] = React.useState(false);
   const [isAmount, setIsAmount] = React.useState(false);
   const [employeeId, setEmployeeId] = React.useState("");
-  const [isHris, setIsHris] = React.useState("");
   const [payItem, setPayItem] = React.useState("");
   const [isInstallment, setIsInstallment] = React.useState("");
   const [numberInsti, setNumberInsti] = React.useState("");
@@ -54,12 +61,19 @@ const ModalAddManageEarnings = ({ payType, employee, payrollDraft }) => {
 
   const handlePayItem = async (e, props) => {
     let payitemid = e.target.value;
-    setIsHris(e.target.options[e.target.selectedIndex].id);
     setLoading(true);
+
     const results = await fetchApi(`${devApiUrl}/v1/payitem/${payitemid}`);
     if (results.data) {
       setLoading(false);
       setPayItem(results.data);
+      // if Data in HRIS is empty
+      if (
+        validateDataIsNotEmpty(results.data[0].payitem_aid, payLeave, dispatch)
+      ) {
+        return;
+      }
+
       if (results.data[0].payitem_is_hris === 1) {
         setIsInstallment("3");
         setNumberInsti("1");
@@ -192,7 +206,6 @@ const ModalAddManageEarnings = ({ payType, employee, payrollDraft }) => {
               }}
             >
               {(props) => {
-                props.values.payitem_is_hris = isHris;
                 props.values.is_installment = isInstallment;
                 props.values.earnings_employee_id = employeeId;
                 props.values.earnings_amount = (

@@ -17,3 +17,15 @@ export const validatePayPeriod = (values, inputDate, dispatch) => {
   }
   return val;
 };
+// get Date Length
+export const validateDataIsNotEmpty = (payItem, hrisData, dispatch) => {
+  let val = false;
+  // payItem = 19 is leave
+  // payItem = 18 is OT
+  if (payItem === 19 && hrisData.length === 0) {
+    dispatch(setError(true));
+    dispatch(setMessage("No data found."));
+    val = true;
+  }
+  return val;
+};

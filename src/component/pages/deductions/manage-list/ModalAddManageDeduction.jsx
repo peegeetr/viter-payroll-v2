@@ -64,7 +64,7 @@ const ModalAddManageDeduction = ({ payType, employee, payrollDraft }) => {
       setIsEndDate("");
     }
   };
-
+  console.log(isInstallment);
   const handleAmount = () => {
     setIsAmount(false);
   };
@@ -139,8 +139,8 @@ const ModalAddManageDeduction = ({ payType, employee, payrollDraft }) => {
                 }
                 fetchData(
                   setLoading,
-                  `${devApiUrl}/v1/deduction`,
-                  { ...values, employee, payLeave }, // form data values
+                  `${devApiUrl}/v1/deductions`,
+                  { ...values, employee }, // form data values
                   null, // result set data
                   "Succesfully added.", // success msg
                   "", // additional error msg if needed
@@ -299,7 +299,7 @@ const ModalAddManageDeduction = ({ payType, employee, payrollDraft }) => {
                         <InputSelect
                           label={"Will be given"}
                           onChange={handleIsInstallment}
-                          name="deduction_is_installment"
+                          name="is_installment"
                           disabled={loading}
                           onFocus={(e) =>
                             e.target.parentElement.classList.add("focused")

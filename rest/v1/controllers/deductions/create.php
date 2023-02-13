@@ -32,20 +32,19 @@ $deductions->deduction_created = date("Y-m-d H:i:s");
 $deductions->deduction_datetime = date("Y-m-d H:i:s");
 
 $allEmployee = $data["employee"];
-$allLeave = $data["payLeave"];
 $name = "Pay item for $deductions->deduction_employee is ";
 // check name
 isNameExist($deductions, $name);
 
 // create if all employee
-if ($earnings->earnings_employee == "all") {
+if ($deductions->deduction_employee == "all") {
     for ($e = 0; $e < count($allEmployee); $e++) {
         $employee_lname = $allEmployee[$e]["employee_lname"];
         $employee_fname = $allEmployee[$e]["employee_fname"];
 
-        $earnings->earnings_employee = "$employee_lname $employee_fname";
-        $earnings->earnings_employee_id = $allEmployee[$e]["employee_aid"];
-        $query = checkCreate($earnings);
+        $deductions->deduction_employee = "$employee_lname $employee_fname";
+        $deductions->deduction_employee_id = $allEmployee[$e]["employee_aid"];
+        $query = checkCreate($deductions);
     }
 } else {
     // create if specific employee  

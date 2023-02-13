@@ -27,12 +27,12 @@ import FilterEarnings from "./component/pages/earnings/filter/FilterEarnings";
 import ManageEarnings from "./component/pages/earnings/manage-list/ManageEarnings";
 import JobDetails from "./component/pages/employee/job-details/JobDetails";
 import SalaryHistory from "./component/pages/employee/salary-history/SalaryHistory";
+import PayrollView from "./component/pages/payroll/list/PayrollView";
+import Payroll from "./component/pages/payroll/Payroll";
+import Payslip from "./component/pages/payroll/payslip/Payslip";
 import ReportsLink from "./component/pages/reports/ReportsLink";
 import { StoreProvider } from "./store/StoreContext";
-import Payroll from "./component/pages/payroll/Payroll";
-import PayrollView from "./component/pages/payroll/list/PayrollView";
-import Payslip from "./component/pages/payroll/payslip/Payslip";
-import Rates from "./component/pages/settings/Rates/Rates";
+import Rates from "./component/pages/settings/rates/Rates";
 
 function App() {
   // Create a client

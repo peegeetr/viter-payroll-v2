@@ -76,6 +76,7 @@ const ModalAddManageEarnings = ({ payType, employee, payrollDraft }) => {
       if (
         validateDataIsNotEmpty(results.data[0].payitem_aid, payLeave, dispatch)
       ) {
+        dispatch(setIsAdd(false));
         return;
       }
 

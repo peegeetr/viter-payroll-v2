@@ -93,22 +93,7 @@ function checkIndex($jsonData, $index)
     ) {
         invalidInput();
     }
-
-    if (
-        !isset($jsonData[$index]) || gettype($jsonData[$index]) == "array"
-    ) {
-        if (
-            count($jsonData[$index]) == 0
-        ) {
-            invalidInput();
-        }
-    }
-
-    if (gettype($jsonData[$index]) != "array") {
-        return addslashes(trim($jsonData[$index]));
-    } else {
-        return $jsonData[$index];
-    }
+    return addslashes(trim($jsonData[$index]));
 }
 
 // check id
@@ -163,12 +148,16 @@ function checkLimitId($start, $total)
 // create sucess
 function createSuccess($object, $name, $query)
 {
+    $response = new Response();
     $returnData = [];
     $returnData["data"] = [];
     $returnData["count"] = $query->rowCount();
     $returnData["{$name} ID"] = $object->lastInsertedId;
     $returnData["success"] = true;
-    return $returnData;
+    // return $returnData;
+    $response->setData($returnData);
+    $response->send();
+    exit;
 }
 
 // Create 

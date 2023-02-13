@@ -61,14 +61,14 @@ if ($data["payitem_is_hris"] === "0" && $earnings->earnings_employee != "all") {
     // create if specific employee and not data from hris
     $query = checkCreate($earnings);
 
-    $returnData = [];
-    $returnData["data"] = [];
-    $returnData["count"] = $query->rowCount();
-    $returnData["earning ID"] = $earnings->lastInsertedId;
-    $returnData["success"] = true;
-    return $returnData;
+    // $returnData = [];
+    // $returnData["data"] = [];
+    // $returnData["count"] = $query->rowCount();
+    // $returnData["earning ID"] = $earnings->lastInsertedId;
+    // $returnData["success"] = true;
+    // return $returnData;
 
-    // createSuccess($earnings, "earnings", $query);
+    createSuccess($earnings, "earnings", $query);
 }
 
 // create if data is from hris

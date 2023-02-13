@@ -18,7 +18,7 @@ import {
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 import { validatePayPeriod } from "./function-manage-list";
 
-const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
+const ModalAddManageEarnings = ({ payType, employee, payrollDraft }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [loading, setLoading] = React.useState(false);
   const [isAmount, setIsAmount] = React.useState(false);
@@ -109,7 +109,7 @@ const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
   };
 
   const initVal = {
-    earnings_employee: "",
+    payroll_employee: "",
     earnings_paytype_id: "",
     earnings_payitem_id: "",
     earnings_payroll_id: "",
@@ -119,7 +119,7 @@ const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
     earnings_number_of_installment: "",
     earnings_start_pay_date: "",
     earnings_end_pay_date: "",
-    earnings_is_installment: "",
+    is_installment: "",
     payitem_is_hris: "",
 
     // if installment this will work
@@ -130,7 +130,7 @@ const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
   };
 
   const yupSchema = Yup.object({
-    earnings_employee: Yup.string().required("Required"),
+    payroll_employee: Yup.string().required("Required"),
     earnings_paytype_id: Yup.string().required("Required"),
     earnings_payitem_id: Yup.string().required("Required"),
     earnings_frequency: Yup.string().required("Required"),
@@ -142,7 +142,7 @@ const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
       payItem.length > 0 &&
       payItem[0].payitem_is_hris === 0 &&
       Yup.string().required("Required"),
-    earnings_is_installment:
+    is_installment:
       payItem.length > 0 &&
       payItem[0].payitem_is_hris === 0 &&
       Yup.string().required("Required"),
@@ -193,7 +193,7 @@ const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
             >
               {(props) => {
                 props.values.payitem_is_hris = isHris;
-                props.values.earnings_is_installment = isInstallment;
+                props.values.is_installment = isInstallment;
                 props.values.earnings_employee_id = employeeId;
                 props.values.earnings_amount = (
                   Number(props.values.amount) /
@@ -217,7 +217,7 @@ const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
                       <div className="relative mb-5 mt-5">
                         <InputSelect
                           label="Employee"
-                          name="earnings_employee"
+                          name="payroll_employee"
                           disabled={loading}
                           onChange={handleEmployee}
                           onFocus={(e) =>
@@ -351,7 +351,7 @@ const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
                             <InputSelect
                               label={"Will be given"}
                               onChange={handleIsInstallment}
-                              name="earnings_is_installment"
+                              name="is_installment"
                               disabled={loading}
                               onFocus={(e) =>
                                 e.target.parentElement.classList.add("focused")

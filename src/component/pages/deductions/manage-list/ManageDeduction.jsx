@@ -2,22 +2,28 @@ import React from "react";
 import { FaPlusCircle } from "react-icons/fa";
 import { setIsAdd } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
+import useLoadDraft from "../../../custom-hooks/useLoadDraft";
+import useLoadEmployee from "../../../custom-hooks/useLoadEmployee";
+import useLoadPayType from "../../../custom-hooks/useLoadPayType";
+import { devApiUrl, hrisDevApiUrl } from "../../../helpers/functions-general";
 import BreadCrumbs from "../../../partials/BreadCrumbs";
 import Footer from "../../../partials/Footer";
 import Header from "../../../partials/Header";
 import ModalError from "../../../partials/modals/ModalError";
 import ModalSuccess from "../../../partials/modals/ModalSuccess";
 import Navigation from "../../../partials/Navigation";
+import ModalNoPayrollId from "../../earnings/manage-list/ModalNoPayrollId";
 import ManageDeductionList from "./ManageDeductionList";
 import ModalAddManageDeduction from "./ModalAddManageDeduction";
 
 const ManageDeduction = () => {
   const { store, dispatch } = React.useContext(StoreContext);
-  const [itemEdit, setItemEdit] = React.useState(null);
+  const { payType } = useLoadPayType(`${devApiUrl}/v1/paytype`, "get");
+  const { draft } = useLoadDraft(`${devApiUrl}/v1/payroll/list`, "get");
+  const { employee } = useLoadEmployee(`${hrisDevApiUrl}/v1/employees`, "get");
 
   const handleAdd = () => {
     dispatch(setIsAdd(true));
-    setItemEdit(null);
   };
 
   return (
@@ -41,8 +47,15 @@ const ManageDeduction = () => {
         </div>
         <Footer />
       </div>
-
-      {store.isAdd && <ModalAddManageDeduction itemEdit={itemEdit} />}
+      {draft.length > 0
+        ? store.isAdd && (
+            <ModalAddManageDeduction
+              payType={payType}
+              employee={employee}
+              payrollDraft={draft}
+            />
+          )
+        : store.isAdd && <ModalNoPayrollId />}
       {store.success && <ModalSuccess />}
       {store.error && <ModalError />}
     </>

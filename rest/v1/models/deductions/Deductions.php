@@ -29,7 +29,7 @@ class Deductions
     public function __construct($db)
     {
         $this->connection = $db;
-        $this->tblDeductions = "prv2_earnings";
+        $this->tblDeductions = "prv2_deduction";
         $this->tblPayType = "prv2_paytype";
         $this->tblPayItem = "prv2_payitem";
     }
@@ -105,11 +105,10 @@ class Deductions
             $sql .= "deduction.deduction_end_pay_date, ";
             $sql .= "deduction.deduction_payitem_id, ";
             $sql .= "deduction.deduction_paytype_id, ";
+            $sql .= "deduction.deduction_payroll_id, ";
+            $sql .= "deduction.deduction_is_installment, ";
             $sql .= "payitem.payitem_aid, ";
             $sql .= "paytype.paytype_aid, ";
-            $sql .= "deduction.deduction_payroll_id, ";
-            $sql .= "payitem.payitem_is_hris, ";
-            $sql .= "deduction.deduction_is_installment, ";
             $sql .= "payitem.payitem_name, ";
             $sql .= "paytype.paytype_name ";
             $sql .= "from {$this->tblDeductions} as deduction, ";
@@ -140,11 +139,10 @@ class Deductions
             $sql .= "deduction.deduction_end_pay_date, ";
             $sql .= "deduction.deduction_payitem_id, ";
             $sql .= "deduction.deduction_paytype_id, ";
+            $sql .= "deduction.deduction_payroll_id, ";
+            $sql .= "deduction.deduction_is_installment, ";
             $sql .= "payitem.payitem_aid, ";
             $sql .= "paytype.paytype_aid, ";
-            $sql .= "deduction.deduction_payroll_id, ";
-            $sql .= "payitem.payitem_is_hris, ";
-            $sql .= "deduction.deduction_is_installment, ";
             $sql .= "payitem.payitem_name, ";
             $sql .= "paytype.paytype_name ";
             $sql .= "from {$this->tblDeductions} as deduction, ";

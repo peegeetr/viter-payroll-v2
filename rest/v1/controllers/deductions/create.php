@@ -17,14 +17,14 @@ checkPayload($data);
 // get data
 
 $deductions->deduction_payroll_id = checkIndex($data, "deduction_payroll_id");
-$deductions->deduction_employee = checkIndex($data, "deduction_employee");
+$deductions->deduction_employee = checkIndex($data, "payroll_employee");
 $deductions->deduction_employee_id = checkIndex($data, "deduction_employee_id");
 $deductions->deduction_paytype_id = checkIndex($data, "deduction_paytype_id");
 $deductions->deduction_payitem_id = checkIndex($data, "deduction_payitem_id");
 $deductions->deduction_amount = checkIndex($data, "deduction_amount");
 $deductions->deduction_frequency = checkIndex($data, "deduction_frequency");
 $deductions->deduction_number_of_installment = checkIndex($data, "deduction_number_of_installment");
-$deductions->deduction_is_installment = checkIndex($data, "deduction_is_installment");
+$deductions->deduction_is_installment = checkIndex($data, "is_installment");
 $deductions->deduction_start_pay_date = checkIndex($data, "deduction_start_pay_date");
 $deductions->deduction_end_pay_date = checkIndex($data, "deduction_end_pay_date");
 $deductions->deduction_is_paid = 0;
@@ -37,8 +37,20 @@ $name = "Pay item for $deductions->deduction_employee is ";
 // check name
 isNameExist($deductions, $name);
 
-// create if by employee and not data from hris
-$query = checkCreate($deductions);
+// create if all employee
+if ($earnings->earnings_employee == "all") {
+    for ($e = 0; $e < count($allEmployee); $e++) {
+        $employee_lname = $allEmployee[$e]["employee_lname"];
+        $employee_fname = $allEmployee[$e]["employee_fname"];
+
+        $earnings->earnings_employee = "$employee_lname $employee_fname";
+        $earnings->earnings_employee_id = $allEmployee[$e]["employee_aid"];
+        $query = checkCreate($earnings);
+    }
+} else {
+    // create if specific employee  
+    $query = checkCreate($deductions);
+}
 
 $returnData = [];
 $returnData["data"] = [];

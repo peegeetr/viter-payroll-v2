@@ -8,7 +8,6 @@ import PayItem from "./component/pages/pay-type/pay-item/PayItem";
 import PayTypeLink from "./component/pages/pay-type/PayTypePage";
 import Pagibig from "./component/pages/settings/pagibig/Pagibig.jsx";
 import Philhealth from "./component/pages/settings/philhealth/philhealth.jsx";
-import Rates from "./component/pages/settings/rates/Rates.jsx";
 import SettingsLink from "./component/pages/settings/SettingsLink";
 import SssBracket from "./component/pages/settings/sss-bracket/SssBracket.jsx";
 import TaxMonthly from "./component/pages/settings/tax-bracket/tax-monthly/TaxMonthly.jsx";
@@ -33,6 +32,7 @@ import { StoreProvider } from "./store/StoreContext";
 import Payroll from "./component/pages/payroll/Payroll";
 import PayrollView from "./component/pages/payroll/list/PayrollView";
 import Payslip from "./component/pages/payroll/payslip/Payslip";
+import Rates from "./component/pages/settings/Rates/Rates";
 
 function App() {
   // Create a client

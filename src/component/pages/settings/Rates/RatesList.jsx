@@ -38,7 +38,7 @@ const RatesList = ({ setItemEdit }) => {
             <tr>
               <th>#</th>
               <th>Name</th>
-              <th>Percent</th>
+              <th>Percentage</th>
               <th>Pay Type</th>
               <th>Pay Item</th>
               <th>Actions</th>
@@ -52,7 +52,7 @@ const RatesList = ({ setItemEdit }) => {
                   <tr key={key}>
                     <td>{counter}</td>
                     <td>{item.rates_name}</td>
-                    <td>{item.rates_percent}</td>
+                    <td>{item.rates_percent}%</td>
                     <td>{item.paytype_name}</td>
                     <td>{item.payitem_name}</td>
 

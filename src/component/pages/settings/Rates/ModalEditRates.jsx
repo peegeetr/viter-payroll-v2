@@ -7,16 +7,8 @@ import { StoreContext } from "../../../../store/StoreContext";
 import useLoadAll from "../../../custom-hooks/useLoadAll";
 import fetchApi from "../../../helpers/fetchApi";
 import { fetchData } from "../../../helpers/fetchData";
-import {
-  InputSelect,
-  InputText,
-  MyCheckbox,
-} from "../../../helpers/FormInputs";
-import {
-  consoleLog,
-  devApiUrl,
-  handleNumOnly,
-} from "../../../helpers/functions-general";
+import { InputSelect, InputText } from "../../../helpers/FormInputs";
+import { devApiUrl } from "../../../helpers/functions-general";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 
 const ModalEditRates = ({ itemEdit, payType }) => {
@@ -89,13 +81,6 @@ const ModalEditRates = ({ itemEdit, payType }) => {
               initialValues={initVal}
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
-                consoleLog(values);
-                // get data from HRIS
-                // if (payItem[0].payitem_is_hris === 1) {
-                // fetch data
-                // filter data based on payroll period
-                // set data filterd data to state and pass to server
-                //    }
                 fetchData(
                   setLoading,
                   itemEdit

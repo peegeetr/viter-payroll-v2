@@ -31,7 +31,6 @@ $earnings->earnings_is_paid = 0;
 $earnings->earnings_created = date("Y-m-d H:i:s");
 $earnings->earnings_datetime = date("Y-m-d H:i:s");
 
-$is_hris = checkIndex($data, "is_hris");
 $allEmployee = $data["employee"];
 $allLeave = $data["payLeave"];
 $name = "Pay item for $earnings->earnings_employee is ";
@@ -39,29 +38,46 @@ $name = "Pay item for $earnings->earnings_employee is ";
 isNameExist($earnings, $name);
 
 // create if not data from hris and all employee
-if ($earnings->earnings_employee == "all" && $is_hris === "0") {
-    for ($i = 0; $i < count($allEmployee); $i++) {
-        $employee_lname = $allEmployee[$i]["employee_lname"];
-        $employee_fname = $allEmployee[$i]["employee_fname"];
+if ($data["payitem_is_hris"] === "0" && $earnings->earnings_employee == "all") {
+    for ($e = 0; $e < count($allEmployee); $e++) {
+        $employee_lname = $allEmployee[$e]["employee_lname"];
+        $employee_fname = $allEmployee[$e]["employee_fname"];
 
         $earnings->earnings_employee = "$employee_lname $employee_fname";
-        $earnings->earnings_employee_id = $allEmployee[$i]["employee_aid"];
+        $earnings->earnings_employee_id = $allEmployee[$e]["employee_aid"];
         $query = checkCreate($earnings);
     }
-} else if ($is_hris === "1") {
-    // create if data leave is from hris
+}
+
+// create if data is from hris
+// payitem 19 = leave
+if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === "19") {
     for ($l = 0; $l < count($allLeave); $l++) {
         $employee_lname = $allLeave[$l]["employee_lname"];
         $employee_fname = $allLeave[$l]["employee_fname"];
 
         $earnings->earnings_employee = "$employee_lname $employee_fname";
-        $earnings->earnings_employee_id = $allLeave[$i]["employee_aid"];
+        $earnings->earnings_employee_id = $allLeave[$l]["leave_list_employee_id"];
         $query = checkCreate($earnings);
     }
 } else {
     // create if by employee and not data from hris
     $query = checkCreate($earnings);
 }
+
+// // create if data is from hris
+// // payitem 18 = OT
+// if ($is_hris === "1" && $earnings->earnings_payitem_id === 18) {
+//     // create if data leave is from hris
+//     for ($l = 0; $l < count($allLeave); $l++) {
+//         $employee_lname = $allLeave[$l]["employee_lname"];
+//         $employee_fname = $allLeave[$l]["employee_fname"];
+
+//         $earnings->earnings_employee = "$employee_lname $employee_fname";
+//         $earnings->earnings_employee_id = $allLeave[$i]["employee_aid"];
+//         $query = checkCreate($earnings);
+//     }
+// }
 
 
 $returnData = [];

@@ -29,17 +29,16 @@ const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
   const [numberInsti, setNumberInsti] = React.useState("");
   const [isStartDate, setIsStartDate] = React.useState("");
   const [isEndDate, setIsEndDate] = React.useState("");
-  let payid = item ? `/${item.earnings_paytype_id}` : `/${0}`;
-  let date1 = payrollDraft[0].payroll_start_date;
-  let date2 = payrollDraft[0].payroll_end_date;
+  let payroll_start_date = payrollDraft[0].payroll_start_date;
+  let payroll_end_date = payrollDraft[0].payroll_end_date;
 
   const { payLeave } = useLoadPayLeave(
-    `${hrisDevApiUrl}/v1/leaves/period/approved/${date1}/${date2}`,
+    `${hrisDevApiUrl}/v1/leaves/period/approved/${payroll_start_date}/${payroll_end_date}`,
     "get"
   );
 
   const { result, setResult } = useLoadAll(
-    `${devApiUrl}/v1/paytype${payid}`,
+    `${devApiUrl}/v1/paytype/${0}`,
     "get"
   );
 
@@ -62,14 +61,14 @@ const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
       setLoading(false);
       setPayItem(results.data);
       if (results.data[0].payitem_is_hris === 1) {
+        setIsInstallment("3");
         setNumberInsti("1");
-        setIsStartDate(date1);
-        setIsEndDate(date2);
+        setIsStartDate(payroll_start_date);
+        setIsEndDate(payroll_end_date);
       }
     }
   };
 
-  consoleLog("123", payItem);
   const handleEmployee = async (e) => {
     // get employee id
     setEmployeeId(e.target.options[e.target.selectedIndex].id);
@@ -86,8 +85,8 @@ const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
     }
     if (categoryIsInstallment === "1") {
       setNumberInsti("1");
-      setIsStartDate(date1);
-      setIsEndDate(date2);
+      setIsStartDate(payroll_start_date);
+      setIsEndDate(payroll_end_date);
     }
     if (categoryIsInstallment === "2") {
       setNumberInsti("");
@@ -108,27 +107,26 @@ const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
     // dispatch(setIsFinish(false));
     dispatch(setIsAdd(false));
   };
-  console.log(isInstallment);
+
   const initVal = {
-    earnings_employee: item ? item.earnings_employee : "",
-    earnings_paytype_id: item ? item.earnings_paytype_id : "",
-    earnings_payitem_id: item ? item.earnings_payitem_id : "",
+    earnings_employee: "",
+    earnings_paytype_id: "",
+    earnings_payitem_id: "",
     earnings_payroll_id: "",
     earnings_employee_id: "",
-    earnings_frequency: item ? item.earnings_frequency : "",
-    earnings_amount: item ? item.earnings_amount : "",
-    earnings_number_of_installment: item
-      ? item.earnings_number_of_installment
-      : "",
-    earnings_start_pay_date: item ? item.earnings_start_pay_date : "",
-    earnings_end_pay_date: item ? item.earnings_end_pay_date : "",
-    earnings_is_installment: item ? item.earnings_is_installment : "",
-    is_hris: "",
+    earnings_frequency: "",
+    earnings_amount: "",
+    earnings_number_of_installment: "",
+    earnings_start_pay_date: "",
+    earnings_end_pay_date: "",
+    earnings_is_installment: "",
+    payitem_is_hris: "",
 
-    amount: item ? item.earnings_amount : "",
-    startDate: item ? item.earnings_start_pay_date : "",
-    endDate: item ? item.earnings_end_pay_date : "",
-    number_of_installment: item ? item.earnings_number_of_installment : "",
+    // if installment this will work
+    amount: "",
+    startDate: "",
+    endDate: "",
+    number_of_installment: "",
   };
 
   const yupSchema = Yup.object({
@@ -141,12 +139,12 @@ const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
     startDate: isInstallment === "2" && Yup.string().required("Required"),
     endDate: isInstallment === "2" && Yup.string().required("Required"),
     amount:
-      ((payItem.length > 0 && payItem[0].payitem_is_hris === 0) ||
-        (item && item.payitem_is_hris === 0)) &&
+      payItem.length > 0 &&
+      payItem[0].payitem_is_hris === 0 &&
       Yup.string().required("Required"),
     earnings_is_installment:
-      ((payItem.length > 0 && payItem[0].payitem_is_hris === 0) ||
-        (item && item.payitem_is_hris === 0)) &&
+      payItem.length > 0 &&
+      payItem[0].payitem_is_hris === 0 &&
       Yup.string().required("Required"),
   });
   return (
@@ -155,8 +153,7 @@ const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
         <div className="p-1 w-[350px] rounded-b-2xl">
           <div className="flex justify-between items-center bg-primary p-3 rounded-t-2xl">
             <h3 className="text-white text-sm">
-              {item ? "Update" : "Add"} Earnings :
-              {payrollDraft.length && payrollDraft[0].payroll_id}
+              Add Earnings :{payrollDraft[0].payroll_id}
             </h3>
             <button
               type="button"
@@ -173,34 +170,30 @@ const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
                 console.log(values, payrollDraft[0].payroll_start_date);
-
+                // payroll date validation
                 if (validatePayPeriod(values, payrollDraft, dispatch)) {
-                  return;
-                }
-                if (validatePayPeriod(values, payLeave, dispatch)) {
                   return;
                 }
                 fetchData(
                   setLoading,
-                  item
-                    ? `${devApiUrl}/v1/earnings/${item.earnings_aid}`
-                    : `${devApiUrl}/v1/earnings`,
+                  `${devApiUrl}/v1/earnings`,
                   { ...values, employee, payLeave }, // form data values
                   null, // result set data
-                  item ? "Succesfully updated." : "Succesfully added.", // success msg
+                  "Succesfully added.", // success msg
                   "", // additional error msg if needed
                   dispatch, // context api action
                   store, // context api state
                   true, // boolean to show success modal
                   false, // boolean to show load more functionality button
                   null, // navigate default value
-                  item ? "put" : "post"
+                  "post"
                 );
                 dispatch(setStartIndex(0));
               }}
             >
               {(props) => {
-                props.values.is_hris = isHris;
+                props.values.payitem_is_hris = isHris;
+                props.values.earnings_is_installment = isInstallment;
                 props.values.earnings_employee_id = employeeId;
                 props.values.earnings_amount = (
                   Number(props.values.amount) /
@@ -222,47 +215,40 @@ const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
                   <Form>
                     <div className="max-h-[28rem] overflow-y-scroll p-4">
                       <div className="relative mb-5 mt-5">
-                        {item ? (
-                          <p>
-                            <span className="text-primary">Employee: </span>
-                            {item.earnings_employee}
-                          </p>
-                        ) : (
-                          <InputSelect
-                            label="Employee"
-                            name="earnings_employee"
-                            disabled={loading}
-                            onChange={handleEmployee}
-                            onFocus={(e) =>
-                              e.target.parentElement.classList.add("focused")
-                            }
-                          >
-                            <optgroup label="Employee">
+                        <InputSelect
+                          label="Employee"
+                          name="earnings_employee"
+                          disabled={loading}
+                          onChange={handleEmployee}
+                          onFocus={(e) =>
+                            e.target.parentElement.classList.add("focused")
+                          }
+                        >
+                          <optgroup label="Employee">
+                            <option value="" hidden></option>
+                            {employee.length > 0 ? (
+                              <>
+                                <option value="all" id="0">
+                                  All
+                                </option>
+                                ;
+                                {employee.map((employee, key) => {
+                                  return (
+                                    <option
+                                      key={key}
+                                      value={`${employee.employee_lname} ${employee.employee_fname}`}
+                                      id={employee.employee_aid}
+                                    >
+                                      {`${employee.employee_lname}, ${employee.employee_fname}`}
+                                    </option>
+                                  );
+                                })}
+                              </>
+                            ) : (
                               <option value="" hidden></option>
-                              {employee.length > 0 ? (
-                                <>
-                                  <option value="all" id="0">
-                                    All
-                                  </option>
-                                  ;
-                                  {employee.map((employee, key) => {
-                                    return (
-                                      <option
-                                        key={key}
-                                        value={`${employee.employee_lname} ${employee.employee_fname}`}
-                                        id={employee.employee_aid}
-                                      >
-                                        {`${employee.employee_lname}, ${employee.employee_fname}`}
-                                      </option>
-                                    );
-                                  })}
-                                </>
-                              ) : (
-                                <option value="" hidden></option>
-                              )}
-                            </optgroup>
-                          </InputSelect>
-                        )}
+                            )}
+                          </optgroup>
+                        </InputSelect>
                       </div>
                       <div className="relative mb-5 ">
                         <InputSelect
@@ -342,9 +328,8 @@ const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
                           </optgroup>
                         </InputSelect>
                       </div>
-                      {(payItem.length > 0 &&
-                        payItem[0].payitem_is_hris === 1) ||
-                      (item && item.payitem_is_hris === 1) ? (
+                      {payItem.length > 0 &&
+                      payItem[0].payitem_is_hris === 1 ? (
                         <p className="text-primary text-center">
                           Data will be imported from HRIS.
                         </p>
@@ -425,7 +410,7 @@ const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
                         className="btn-modal-submit relative"
                       >
                         {loading && <ButtonSpinner />}
-                        {item ? "Save" : "Add"}
+                        Add
                       </button>
                       <button
                         type="reset"

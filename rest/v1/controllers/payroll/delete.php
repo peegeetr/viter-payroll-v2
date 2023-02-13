@@ -18,6 +18,8 @@ if (array_key_exists("payrollid", $_GET)) {
     checkId($payroll->payroll_aid);
 
     checkDeletePayrollList($payroll);
+    checkDeleteEarnings($payroll);
+    checkDeleteDeductions($payroll);
     // delete
     $query = checkDelete($payroll);
     $returnData["data"] = [];

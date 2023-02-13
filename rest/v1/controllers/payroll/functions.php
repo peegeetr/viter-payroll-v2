@@ -17,6 +17,22 @@ function checkDeletePayrollList($object)
     return $query;
 }
 
+// delete earnings 
+function checkDeleteEarnings($object)
+{
+    $query = $object->deleteEarnings();
+    checkQuery($query, "There's a problem processing your request. (delete earnings)");
+    return $query;
+}
+
+// delete deductions 
+function checkDeleteDeductions($object)
+{
+    $query = $object->deleteDeductions();
+    checkQuery($query, "There's a problem processing your request. (delete deductions)");
+    return $query;
+}
+
 // check name
 function isEarningType($object, $name)
 {

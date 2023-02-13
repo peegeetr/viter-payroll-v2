@@ -22,12 +22,16 @@ class Payroll
     public $payroll_search;
     public $tblPayroll;
     public $tblPayrollList;
+    public $tblEarnings;
+    public $tblDeductions;
 
     public function __construct($db)
     {
         $this->connection = $db;
         $this->tblPayroll = "prv2_payroll";
         $this->tblPayrollList = "prv2_payroll_list";
+        $this->tblEarnings = "prv2_earnings";
+        $this->tblDeductions = "prv2_deduction";
     }
 
     // create
@@ -217,7 +221,7 @@ class Payroll
         return $query;
     }
 
-    // delete
+    // delete payroll
     public function delete()
     {
         try {
@@ -227,6 +231,38 @@ class Payroll
             $query = $this->connection->prepare($sql);
             $query->execute([
                 "payroll_aid" => $this->payroll_aid,
+                "payroll_id" => $this->payroll_id,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    // delete Earnings
+    public function deleteEarnings()
+    {
+        try {
+            $sql = "delete from {$this->tblEarnings} ";
+            $sql .= "where earnings_payroll_id = :payroll_id ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "payroll_id" => $this->payroll_id,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    // delete Deductions
+    public function deleteDeductions()
+    {
+        try {
+            $sql = "delete from {$this->tblDeductions} ";
+            $sql .= "where deduction_payroll_id = :payroll_id ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
                 "payroll_id" => $this->payroll_id,
             ]);
         } catch (PDOException $ex) {

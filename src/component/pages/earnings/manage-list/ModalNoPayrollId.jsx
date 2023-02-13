@@ -27,7 +27,7 @@ const ModalNoPayrollId = () => {
               <FaExclamationTriangle className="my-0 mx-auto" />
             </span>
             <span className="text-base font-bold">Error!</span>
-            <p>You don't have any payroll draft to create earning.</p>
+            <p>Payroll draft is invalid or not created.</p>
             <div className="flex items-center gap-1 pt-5">
               <button
                 id="btnClose"

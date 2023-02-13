@@ -38,6 +38,7 @@ const ModalAddManageEarnings = ({ payType, employee, payrollDraft }) => {
   const [isEndDate, setIsEndDate] = React.useState("");
   let payroll_start_date = payrollDraft[0].payroll_start_date;
   let payroll_end_date = payrollDraft[0].payroll_end_date;
+  let payroll_id = payrollDraft[0].payroll_id;
 
   const { payLeave } = useLoadPayLeave(
     `${hrisDevApiUrl}/v1/leaves/period/approved/${payroll_start_date}/${payroll_end_date}`,
@@ -166,9 +167,7 @@ const ModalAddManageEarnings = ({ payType, employee, payrollDraft }) => {
       <div className="fixed top-0 right-0 bottom-0 left-0 flex items-center justify-center bg-dark bg-opacity-50 z-50">
         <div className="p-1 w-[350px] rounded-b-2xl">
           <div className="flex justify-between items-center bg-primary p-3 rounded-t-2xl">
-            <h3 className="text-white text-sm">
-              Add Earnings :{payrollDraft[0].payroll_id}
-            </h3>
+            <h3 className="text-white text-sm">Add Earnings :{payroll_id}</h3>
             <button
               type="button"
               className="text-gray-200 text-base"

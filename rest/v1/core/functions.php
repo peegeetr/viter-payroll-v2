@@ -160,6 +160,17 @@ function checkLimitId($start, $total)
     }
 }
 
+// create sucess
+function createSuccess($object, $name, $query)
+{
+    $returnData = [];
+    $returnData["data"] = [];
+    $returnData["count"] = $query->rowCount();
+    $returnData["{$name} ID"] = $object->lastInsertedId;
+    $returnData["success"] = true;
+    return $returnData;
+}
+
 // Create 
 function checkCreate($object)
 {

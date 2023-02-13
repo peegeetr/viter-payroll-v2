@@ -31,8 +31,6 @@ $allEmployee = $data["employee"];
 // validation if salary is draft 
 isEarningType($payroll, $payroll->payroll_earning_type);
 
-
-
 // create employee name and id
 for ($i = 0; $i < count($allEmployee); $i++) {
     $employee_lname = $allEmployee[$i]["employee_lname"];

@@ -5,6 +5,7 @@ import * as Yup from "yup";
 import { setIsAdd, setStartIndex } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
 import useLoadAll from "../../../custom-hooks/useLoadAll";
+import useLoadPayPeriod from "../../../custom-hooks/useLoadPayPeriod";
 import fetchApi from "../../../helpers/fetchApi";
 import { fetchData } from "../../../helpers/fetchData";
 import { InputSelect, InputText } from "../../../helpers/FormInputs";
@@ -12,6 +13,7 @@ import {
   consoleLog,
   devApiUrl,
   handleNumOnly,
+  hrisDevApiUrl,
 } from "../../../helpers/functions-general";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 import { validatePayPeriod } from "./function-manage-list";
@@ -22,11 +24,19 @@ const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
   const [isAmount, setIsAmount] = React.useState(false);
   const [employeeId, setEmployeeId] = React.useState("");
   const [payItem, setPayItem] = React.useState("");
-  const [isInstallmet, setIsInstallmet] = React.useState("");
+  const [isInstallment, setIsInstallment] = React.useState("");
   const [numberInsti, setNumberInsti] = React.useState("");
   const [isStartDate, setIsStartDate] = React.useState("");
   const [isEndDate, setIsEndDate] = React.useState("");
   let payid = item ? `/${item.earnings_paytype_id}` : `/${0}`;
+  let date1 = payrollDraft[0].payroll_start_date;
+  let date2 = payrollDraft[0].payroll_end_date;
+
+  const { payPeriod } = useLoadPayPeriod(
+    `${hrisDevApiUrl}/v1/leaves/period/approved/${date1}/${date2}`,
+    "get"
+  );
+  console.log(date1, date2, payPeriod);
 
   const { result, setResult } = useLoadAll(
     `${devApiUrl}/v1/paytype${payid}`,
@@ -59,20 +69,20 @@ const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
   };
 
   const handleIsInstallment = async (e) => {
-    let categoryIsInstallmet = e.target.value;
+    let categoryIsInstallment = e.target.value;
     // get employee id
-    setIsInstallmet(categoryIsInstallmet);
-    if (categoryIsInstallmet === "0") {
+    setIsInstallment(categoryIsInstallment);
+    if (categoryIsInstallment === "0") {
       setNumberInsti("n/a");
       setIsStartDate("n/a");
       setIsEndDate("n/a");
     }
-    if (categoryIsInstallmet === "1") {
+    if (categoryIsInstallment === "1") {
       setNumberInsti("1");
       setIsStartDate(payrollDraft.length && payrollDraft[0].payroll_start_date);
       setIsEndDate(payrollDraft.length && payrollDraft[0].payroll_end_date);
     }
-    if (categoryIsInstallmet === "2") {
+    if (categoryIsInstallment === "2") {
       setNumberInsti("");
       setIsStartDate("");
       setIsEndDate("");
@@ -80,6 +90,10 @@ const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
   };
 
   const handleAmount = () => {
+    setIsAmount(false);
+  };
+
+  const handleInstallment = () => {
     setIsAmount(true);
   };
 
@@ -87,7 +101,7 @@ const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
     // dispatch(setIsFinish(false));
     dispatch(setIsAdd(false));
   };
-
+  console.log(isInstallment);
   const initVal = {
     earnings_employee: item ? item.earnings_employee : "",
     earnings_paytype_id: item ? item.earnings_paytype_id : "",
@@ -115,9 +129,9 @@ const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
     earnings_payitem_id: Yup.string().required("Required"),
     earnings_frequency: Yup.string().required("Required"),
     number_of_installment:
-      numberInsti === "2" && Yup.string().required("Required"),
-    startDate: numberInsti === "2" && Yup.string().required("Required"),
-    endDate: numberInsti === "2" && Yup.string().required("Required"),
+      isInstallment === "2" && Yup.string().required("Required"),
+    startDate: isInstallment === "2" && Yup.string().required("Required"),
+    endDate: isInstallment === "2" && Yup.string().required("Required"),
     amount:
       ((payItem.length > 0 && payItem[0].payitem_is_hris === 0) ||
         (item && item.payitem_is_hris === 0)) &&
@@ -176,11 +190,13 @@ const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
             >
               {(props) => {
                 props.values.earnings_employee_id = employeeId;
-                props.values.earnings_amount =
+                props.values.earnings_amount = (
                   Number(props.values.amount) /
-                  (props.values.earnings_number_of_installment === "n/a"
+                  (props.values.earnings_number_of_installment === "n/a" ||
+                  props.values.earnings_number_of_installment === ""
                     ? "1"
-                    : Number(props.values.earnings_number_of_installment));
+                    : Number(props.values.earnings_number_of_installment))
+                ).toFixed(2);
                 props.values.earnings_payroll_id =
                   payrollDraft.length && payrollDraft[0].payroll_id;
                 props.values.earnings_number_of_installment =
@@ -270,8 +286,8 @@ const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
                       <div className="relative mb-5 ">
                         <InputSelect
                           label="Pay Item"
-                          onChange={handlePayItem}
                           name="earnings_payitem_id"
+                          onChange={handlePayItem}
                           disabled={loading}
                           onFocus={(e) =>
                             e.target.parentElement.classList.add("focused")
@@ -283,7 +299,8 @@ const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
                               result.map((payitem, key) => {
                                 return (
                                   <option key={key} value={payitem.payitem_aid}>
-                                    {payitem.payitem_name}
+                                    {payitem.payitem_name}{" "}
+                                    {payitem.payitem_is_hris === 1 && "(HRIS)"}
                                   </option>
                                 );
                               })
@@ -322,11 +339,9 @@ const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
                               label="Amount"
                               type="text"
                               onKeyPress={handleNumOnly}
-                              name={
-                                isAmount === false
-                                  ? "amount"
-                                  : "earnings_amount"
-                              }
+                              onFocus={(e) => handleAmount(e)}
+                              onBlur={(e) => handleInstallment(e)}
+                              name={!isAmount ? "amount" : "earnings_amount"}
                               disabled={loading}
                             />
                           </div>
@@ -350,13 +365,13 @@ const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
                             </InputSelect>
                           </div>
 
-                          {isInstallmet === "2" && (
+                          {isInstallment === "2" && (
                             <>
                               <div className="relative mb-5">
                                 <InputText
                                   label="No. of installment"
                                   type="number"
-                                  onBlur={(e) => handleAmount(e)}
+                                  onBlur={(e) => handleInstallment(e)}
                                   min="2"
                                   name="number_of_installment"
                                   disabled={loading}
@@ -398,7 +413,7 @@ const ModalAddManageEarnings = ({ item, payType, employee, payrollDraft }) => {
                       </button>
                       <button
                         type="reset"
-                        className="btn-modal-submit cursor-pointer"
+                        className="btn-modal-cancel cursor-pointer"
                         onClick={handleClose}
                         disabled={loading}
                       >

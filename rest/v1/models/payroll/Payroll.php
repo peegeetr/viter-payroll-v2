@@ -107,8 +107,8 @@ class Payroll
     {
         try {
             $sql = "select * from {$this->tblPayroll} ";
-            $sql .= "order by payroll_is_paid desc, ";
-            $sql .= "payroll_id asc ";
+            $sql .= "order by payroll_is_paid, ";
+            $sql .= "DATE(payroll_pay_date) desc ";
             $query = $this->connection->query($sql);
         } catch (PDOException $ex) {
             $query = false;
@@ -121,8 +121,8 @@ class Payroll
     {
         try {
             $sql = "select * from {$this->tblPayroll} ";
-            $sql .= "order by payroll_is_paid desc, ";
-            $sql .= "payroll_id asc ";
+            $sql .= "order by payroll_is_paid, ";
+            $sql .= "DATE(payroll_pay_date) desc ";
             $sql .= "limit :start, ";
             $sql .= ":total ";
             $query = $this->connection->prepare($sql);
@@ -256,11 +256,10 @@ class Payroll
     {
         try {
             $sql = "select * from {$this->tblPayroll} ";
-            $sql .= "where payroll_earning_type = :payroll_earning_type ";
-            $sql .= "and payroll_is_paid = 0 ";
+            $sql .= "where payroll_is_paid = :payroll_is_paid ";
             $query = $this->connection->prepare($sql);
             $query->execute([
-                "payroll_earning_type" => "{$this->payroll_earning_type}",
+                "payroll_is_paid" => "{$this->payroll_is_paid}",
             ]);
         } catch (PDOException $ex) {
             $query = false;

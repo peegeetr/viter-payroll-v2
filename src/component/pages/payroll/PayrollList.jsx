@@ -46,10 +46,12 @@ const PayrollList = ({ setItemEdit }) => {
   );
 
   const handleEdit = async (item) => {
-    const urlEarning = `${devApiUrl}/v1/earnings/validateId/${item.payroll_id}`;
-    const urlDeduction = `${devApiUrl}/v1/deductions/validateId/${item.payroll_id}`;
-    const vp = await validatePrId(urlEarning, urlDeduction);
+    let prId = item.payroll_id;
+    const urlEarning = `${devApiUrl}/v1/earnings/validateId/${prId}`;
+    const urlDeduction = `${devApiUrl}/v1/deductions/validateId/${prId}`;
+    const vp = await validatePrId(urlEarning, urlDeduction, dispatch, prId);
     if (vp) return;
+
     dispatch(setIsAdd(true));
     setItemEdit(item);
   };

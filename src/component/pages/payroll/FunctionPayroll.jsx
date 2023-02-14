@@ -1,17 +1,30 @@
+import { setError, setMessage } from "../../../store/StoreAction";
 import fetchApi from "../../helpers/fetchApi";
 
-export const validatePrId = async (urlEarning, urlDeduction) => {
+export const validatePrId = async (
+  urlEarning,
+  urlDeduction,
+  dispatch,
+  prId
+) => {
   let val = false;
   const earning = await fetchEarnings(urlEarning);
 
   const deduction = await fetchDeducations(urlDeduction);
 
   if (earning.length > 0 || deduction.length > 0) {
+    dispatch(setError(true));
+    dispatch(
+      setMessage(
+        `You cannot update ${prId} because it is already associated with other module.`
+      )
+    );
     val = true;
   }
 
   return val;
 };
+
 const fetchEarnings = async (urlEarning) => {
   let val = 0;
   // get total result of data

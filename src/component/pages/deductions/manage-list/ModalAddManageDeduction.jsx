@@ -275,7 +275,7 @@ const ModalAddManageDeduction = ({ payType, employee, payrollDraft }) => {
                         <InputSelect
                           name="deduction_frequency"
                           label="Frequency"
-                          //  disabled={!loading}
+                          disabled={loading}
                           onFocus={(e) =>
                             e.target.parentElement.classList.add("focused")
                           }

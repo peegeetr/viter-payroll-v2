@@ -77,24 +77,24 @@ const PayItemList = ({ setItemEdit }) => {
                 key={key}
                 className="sm:flex justify-between py-3 items-center border-b-2 border-solid "
               >
-                <div className="flex mb-5 xs:mb-0 ">
-                  <FaRegListAlt className="text-lg  mr-5 translate-y-1 " />
-                  <div className="text-left grid grid-cols-[5rem_1fr] ">
-                    <p className="font-semibold mb-0">Pay Item :</p>
-                    <p className="pl-2 mb-0 ">{item.payitem_name}</p>
-
-                    <p className="my-0  ">Pay Type : </p>
-                    <p className="my-0 pl-2   ">{item.paytype_name}</p>
-
-                    <p className="mb-0 ">Status :</p>
-                    <p className="mb-0  pl-2 ">
-                      {item.payitem_is_active === 1 ? (
-                        <StatusActive />
-                      ) : (
-                        <StatusInactive />
-                      )}
-                    </p>
+                <div>
+                  <div className="flex mb-0 ">
+                    <FaRegListAlt className="text-lg  mr-5 translate-y-1 " />
+                    <div className="text-left flex ">
+                      <p className="font-semibold mb-0">Pay Item :</p>
+                      <p className="pl-2 mb-0 ">{item.payitem_name}</p>
+                    </div>
                   </div>
+                  <p className="my-0 pl-[2.4rem] text-primary">
+                    {item.paytype_name}
+                  </p>
+                  <p className="mb-0 pl-[2.4rem]">
+                    {item.payitem_is_active === 1 ? (
+                      <StatusActive />
+                    ) : (
+                      <StatusInactive />
+                    )}
+                  </p>
                 </div>
                 <div className="flex sm:mt-0 mt-5 justify-center items-center gap-1">
                   {item.payitem_is_active === 1 ? (

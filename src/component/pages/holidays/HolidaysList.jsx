@@ -53,7 +53,7 @@ const HolidaysList = ({ setItemEdit }) => {
               <th className="min-w-[5rem]">Type</th>
               <th>Rate</th>
 
-              <th>Actions</th>
+              <th className="max-w-[5rem]">Actions</th>
             </tr>
           </thead>
           <tbody>

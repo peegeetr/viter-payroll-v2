@@ -35,7 +35,7 @@ isNameExist($earnings, "Pay item for $earnings->earnings_employee is ");
 
 // create if not data from hris and all employee
 
-if ($data["payitem_is_hris"] === "0" && $earnings->earnings_employee == "all") {
+if ($data["payitem_is_hris"] === "0" && $earnings->earnings_employee === "all") {
     // check array length
     if (count($allEmployee) === 0) {
         checkEnpoint();
@@ -47,13 +47,13 @@ if ($data["payitem_is_hris"] === "0" && $earnings->earnings_employee == "all") {
         $earnings->earnings_employee = "$employee_lname $employee_fname";
         $earnings->earnings_employee_id = $allEmployee[$e]["employee_aid"];
         $query = checkCreate($earnings);
-        returnSuccess($earnings, "Earnings", $query);
     }
+    returnSuccess($earnings, "Earnings", $query);
 }
 
 // create if not data from hris and specific employee
 
-if ($data["payitem_is_hris"] === "0" && $earnings->earnings_employee != "all") {
+if ($data["payitem_is_hris"] === "0" && $earnings->earnings_employee !== "all") {
     // create if specific employee and not data from hris
     $query = checkCreate($earnings);
     returnSuccess($earnings, "Earnings", $query);
@@ -74,6 +74,6 @@ if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === "19")
         $earnings->earnings_employee = "$employee_lname $employee_fname";
         $earnings->earnings_employee_id = $allLeave[$l]["leave_list_employee_id"];
         $query = checkCreate($earnings);
-        returnSuccess($earnings, "Earnings", $query);
     }
+    returnSuccess($earnings, "Earnings", $query);
 }

@@ -24,12 +24,8 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
         checkKeyword($payrollList->payrollList_search);
         $query = checkSearch($payrollList);
         http_response_code(200);
-        $returnData["data"] = getResultData($query);
-        $returnData["count"] = $query->rowCount();
-        $returnData["success"] = true;
-        $response->setData($returnData);
-        $response->send();
-        exit;
+
+        returnSuccess($payrollList, "Payroll List", $query);
     }
     // return 404 error if endpoint not available
     checkEnpoint();

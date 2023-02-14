@@ -31,13 +31,8 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
         checkId($user_system->user_system_aid);
         $query = checkActive($user_system);
         http_response_code(200);
-        $returnData["data"] = [];
-        $returnData["count"] = $query->rowCount();
-        $returnData["User system ID"] = $user_system->user_system_aid;
-        $returnData["success"] = true;
-        $response->setData($returnData);
-        $response->send();
-        exit;
+
+        returnSuccess($user_system, "User system", $query);
     }
     // return 404 error if endpoint not available
     checkEnpoint();

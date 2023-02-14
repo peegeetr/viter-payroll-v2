@@ -18,11 +18,8 @@ if (array_key_exists("ratesid", $_GET)) {
 
     // delete
     $query = checkDelete($rates);
-    $returnData["data"] = [];
-    $returnData["count"] = $query->rowCount();
-    $returnData["Rates ID"] = $rates->rates_aid;
-    $returnData["success"] = true;
-    return $returnData;
+
+    returnSuccess($rates, "Rates", $query);
 }
 
 // return 404 error if endpoint not available

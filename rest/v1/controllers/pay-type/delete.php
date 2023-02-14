@@ -24,11 +24,8 @@ if (array_key_exists("paytypeid", $_GET)) {
     checkDropColumnName($payType, $column_name);
     // delete
     $query = checkDelete($payType);
-    $returnData["data"] = [];
-    $returnData["count"] = $query->rowCount();
-    $returnData["paytype ID"] = $payType->paytype_aid;
-    $returnData["success"] = true;
-    return $returnData;
+
+    returnSuccess($payType, "Paytype", $query);
 }
 
 // return 404 error if endpoint not available

@@ -25,17 +25,14 @@ if (array_key_exists("semimonthlyid", $_GET)) {
     $semi_monthly_range_to_old = strtolower($data["semi_monthly_range_to_old"]);
 
     //check to see if task id in query string is not empty and is number, if not return json error
-    checkId($semiMonthly->semi_monthly_aid );
+    checkId($semiMonthly->semi_monthly_aid);
     // check name
     compareRangeFrom($semiMonthly, $semi_monthly_range_from_old, $semiMonthly->semi_monthly_range_from);
     compareRangeTo($semiMonthly, $semi_monthly_range_to_old, $semiMonthly->semi_monthly_range_to);
     // update
     $query = checkUpdate($semiMonthly);
-    $returnData["data"] = [];
-    $returnData["count"] = $query->rowCount();
-    $returnData["Semi Monthly ID"] = $semiMonthly->semi_monthly_aid;
-    $returnData["success"] = true;
-    return $returnData;
+
+    returnSuccess($semiMonthly, "Semi Monthly", $query);
 }
 
 // return 404 error if endpoint not available

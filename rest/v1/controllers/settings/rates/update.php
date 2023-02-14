@@ -27,11 +27,8 @@ if (array_key_exists("ratesid", $_GET)) {
     // compareName($department, $department_name_old, $department->department_name);
     // update
     $query = checkUpdate($rates);
-    $returnData["data"] = [];
-    $returnData["count"] = $query->rowCount();
-    $returnData["Rates ID"] = $rates->rates_aid;
-    $returnData["success"] = true;
-    return $returnData;
+
+    returnSuccess($rates, "Rates", $query);
 }
 
 // return 404 error if endpoint not available

@@ -27,10 +27,5 @@ $query = checkCreate($role);
 checkAddColumn($role, $column_name);
 // update column value after adding
 checkUpdateColumnValue($role, $column_name);
-$returnData = [];
-$returnData["data"] = [];
-$returnData["count"] = $query->rowCount();
-$returnData["Role ID"] = $role->lastInsertedId;
-$returnData["GET"] = $_GET;
-$returnData["success"] = true;
-return $returnData;
+
+returnSuccess($role, "Role", $query);

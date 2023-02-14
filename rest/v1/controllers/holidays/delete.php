@@ -18,11 +18,7 @@ if (array_key_exists("holidaysid", $_GET)) {
 
     // delete
     $query = checkDelete($holidays);
-    $returnData["data"] = [];
-    $returnData["count"] = $query->rowCount();
-    $returnData["Holidays ID"] = $holidays->holidays_aid;
-    $returnData["success"] = true;
-    return $returnData;
+    returnSuccess($holidays, "Holidays", $query);
 }
 
 // return 404 error if endpoint not available

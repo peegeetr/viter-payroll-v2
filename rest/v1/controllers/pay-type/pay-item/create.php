@@ -22,10 +22,4 @@ $payItem->payitem_datetime = date("Y-m-d H:i:s");
 isNameExist($payItem, $payItem->payitem_name);
 // create
 $query = checkCreate($payItem);
-$returnData = [];
-$returnData["data"] = [];
-$returnData["count"] = $query->rowCount();
-$returnData["payitem ID"] = $payItem->lastInsertedId;
-$returnData["GET"] = $_GET;
-$returnData["success"] = true;
-return $returnData;
+returnSuccess($payItem, "Payitem", $query);

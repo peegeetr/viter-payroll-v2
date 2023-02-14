@@ -24,10 +24,5 @@ $user_other->user_other_datetime = date("Y-m-d H:i:s");
 isEmailExist($user_other, $user_other->user_other_email);
 // create
 $query = checkCreate($user_other);
-$returnData = [];
-$returnData["data"] = [];
-$returnData["count"] = $query->rowCount();
-$returnData["User ID"] = $user_other->lastInsertedId;
-$returnData["GET"] = $_GET;
-$returnData["success"] = true;
-return $returnData;
+
+returnSuccess($user_other, "User other", $query);

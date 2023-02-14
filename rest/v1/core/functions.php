@@ -146,7 +146,7 @@ function checkLimitId($start, $total)
 }
 
 // create sucess
-function createSuccess($object, $name, $query)
+function returnSuccess($object, $name, $query)
 {
     $response = new Response();
     $returnData = [];

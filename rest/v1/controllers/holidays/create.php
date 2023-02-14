@@ -25,11 +25,4 @@ isHolidayDateExist($holidays, $holidays->holidays_date);
 
 // create
 $query = checkCreate($holidays);
-
-$returnData = [];
-$returnData["data"] = [];
-$returnData["count"] = $query->rowCount();
-$returnData["Holiday ID"] = $holidays->lastInsertedId;
-$returnData["GET"] = $_GET;
-$returnData["success"] = true;
-return $returnData;
+returnSuccess($holidays, "Holidays", $query);

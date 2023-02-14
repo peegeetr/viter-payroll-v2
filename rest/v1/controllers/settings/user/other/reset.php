@@ -28,21 +28,16 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
         // check data
         checkPayload($data);
         // get task id from query string
-        $user_other->user_other_aid = $_GET['userotherid']; 
+        $user_other->user_other_aid = $_GET['userotherid'];
         $user_other->user_other_email = trim($data["email"]);
-        $user_other->user_other_key = $encrypt->doHash(rand()); 
+        $user_other->user_other_key = $encrypt->doHash(rand());
         $user_other->user_other_datetime = date("Y-m-d H:i:s");
         //check to see if task id in query string is not empty and is number, if not return json error
         checkId($user_other->user_other_aid);
         $query = checkReset($user_other);
         http_response_code(200);
-        $returnData["data"] = [];
-        $returnData["count"] = $query->rowCount();
-        $returnData["User other ID"] = $user_other->user_other_aid;
-        $returnData["success"] = true;
-        $response->setData($returnData);
-        $response->send();
-        exit;
+
+        returnSuccess($user_other, "User other", $query);
     }
     // return 404 error if endpoint not available
     checkEnpoint();

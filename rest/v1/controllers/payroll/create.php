@@ -40,10 +40,5 @@ for ($i = 0; $i < count($allEmployee); $i++) {
 // create
 $query = checkCreate($payroll);
 
-$returnData = [];
-$returnData["data"] = [];
-$returnData["count"] = $query->rowCount();
-$returnData["payroll ID"] = $payroll->lastInsertedId;
-$returnData["GET"] = $_GET;
-$returnData["success"] = true;
-return $returnData;
+
+returnSuccess($payroll, "Payroll", $query);

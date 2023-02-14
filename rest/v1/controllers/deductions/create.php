@@ -28,9 +28,8 @@ $deductions->deduction_created = date("Y-m-d H:i:s");
 $deductions->deduction_datetime = date("Y-m-d H:i:s");
 
 $allEmployee = $data["employee"];
-$name = "Pay item for $deductions->deduction_employee is ";
 // check name
-isNameExist($deductions, $name);
+isNameExist($deductions, "Pay item for $deductions->deduction_employee is ");
 
 // create if all employee
 if ($deductions->deduction_employee == "all") {
@@ -47,10 +46,4 @@ if ($deductions->deduction_employee == "all") {
     $query = checkCreate($deductions);
 }
 
-$returnData = [];
-$returnData["data"] = [];
-$returnData["count"] = $query->rowCount();
-$returnData["earning ID"] = $deductions->lastInsertedId;
-$returnData["GET"] = $_GET;
-$returnData["success"] = true;
-return $returnData;
+returnSuccess($deductions, "Deductions", $query);

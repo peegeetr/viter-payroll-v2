@@ -27,72 +27,53 @@ $earnings->earnings_is_paid = 0;
 $earnings->earnings_created = date("Y-m-d H:i:s");
 $earnings->earnings_datetime = date("Y-m-d H:i:s");
 
-$allEmployee = checkIndex($data, "employee");
-$allLeave = checkIndex($data, "payLeave");
+$allEmployee = $data["employee"];
+$allLeave = $data["payLeave"];
 
 // check name
 isNameExist($earnings, "Pay item for $earnings->earnings_employee is ");
 
-
-
 // create if not data from hris and all employee
-if ($data["payitem_is_hris"] === "0" && $earnings->earnings_employee == "all") {
 
-    for ($e = 0; $e < count($data["employee"]); $e++) {
+if ($data["payitem_is_hris"] === "0" && $earnings->earnings_employee == "all") {
+    // check array length
+    if (count($allEmployee) === 0) {
+        checkEnpoint();
+    }
+    for ($e = 0; $e < count($allEmployee); $e++) {
         $employee_lname = $allEmployee[$e]["employee_lname"];
         $employee_fname = $allEmployee[$e]["employee_fname"];
 
         $earnings->earnings_employee = "$employee_lname $employee_fname";
         $earnings->earnings_employee_id = $allEmployee[$e]["employee_aid"];
         $query = checkCreate($earnings);
-        $returnData = [];
-        $returnData["data"] = [];
-        $returnData["count"] = $query->rowCount();
-        $returnData["earning ID"] = $earnings->lastInsertedId;
-        $returnData["success"] = true;
-        return $returnData;
-        // createSuccess($earnings, "earnings", $query);
+        returnSuccess($earnings, "Earnings", $query);
     }
 }
 
-
 // create if not data from hris and specific employee
+
 if ($data["payitem_is_hris"] === "0" && $earnings->earnings_employee != "all") {
     // create if specific employee and not data from hris
     $query = checkCreate($earnings);
-
-    // $returnData = [];
-    // $returnData["data"] = [];
-    // $returnData["count"] = $query->rowCount();
-    // $returnData["earning ID"] = $earnings->lastInsertedId;
-    // $returnData["success"] = true;
-    // return $returnData;
-
-    createSuccess($earnings, "earnings", $query);
+    returnSuccess($earnings, "Earnings", $query);
 }
 
 // create if data is from hris
 // payitem 19 = leave
+
 if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === "19") {
     // check array length
-    if (count($data["payLeave"]) === 0) {
+    if (count($allLeave) === 0) {
         checkEnpoint();
     }
-    for ($l = 0; $l < count($data["payLeave"]); $l++) {
+    for ($l = 0; $l < count($allLeave); $l++) {
         $employee_lname = $allLeave[$l]["employee_lname"];
         $employee_fname = $allLeave[$l]["employee_fname"];
 
         $earnings->earnings_employee = "$employee_lname $employee_fname";
         $earnings->earnings_employee_id = $allLeave[$l]["leave_list_employee_id"];
         $query = checkCreate($earnings);
-
-        $returnData = [];
-        $returnData["data"] = [];
-        $returnData["count"] = $query->rowCount();
-        $returnData["earning ID"] = $earnings->lastInsertedId;
-        $returnData["success"] = true;
-        return $returnData;
-
-        // createSuccess($earnings, "earnings", $query);
+        returnSuccess($earnings, "Earnings", $query);
     }
 }

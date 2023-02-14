@@ -28,10 +28,4 @@ $query = checkCreate($payType);
 checkAddColumn($payType, $column_name);
 // update column value after adding
 checkUpdateColumnValue($payType, $column_name);
-$returnData = [];
-$returnData["data"] = [];
-$returnData["count"] = $query->rowCount();
-$returnData["paytype ID"] = $payType->lastInsertedId;
-$returnData["GET"] = $_GET;
-$returnData["success"] = true;
-return $returnData;
+returnSuccess($payType, "Paytype", $query);

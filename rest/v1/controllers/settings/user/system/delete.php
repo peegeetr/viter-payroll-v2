@@ -16,11 +16,8 @@ if (array_key_exists("usersystemid", $_GET)) {
     checkId($user_system->user_system_aid);
     // delete
     $query = checkDelete($user_system);
-    $returnData["data"] = [];
-    $returnData["count"] = $query->rowCount();
-    $returnData["User ID"] = $user_system->user_system_aid;
-    $returnData["success"] = true;
-    return $returnData;
+
+    returnSuccess($user_system, "User system", $query);
 }
 
 // return 404 error if endpoint not available

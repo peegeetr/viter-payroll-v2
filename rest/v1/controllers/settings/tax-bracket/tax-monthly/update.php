@@ -23,22 +23,19 @@ if (array_key_exists("taxmonthlyid", $_GET)) {
 
     $tax_monthly_range_from_old = strtolower($data["tax_monthly_range_from_old"]);
     $tax_monthly_range_to_old = strtolower($data["tax_monthly_range_to_old"]);
-    
+
     //check to see if task id in query string is not empty and is number, if not return json error
-    checkId($taxMonthly->tax_monthly_aid );
+    checkId($taxMonthly->tax_monthly_aid);
 
     // check name
-    
+
     compareRangeFrom($taxMonthly, $tax_monthly_range_from_old, $taxMonthly->tax_monthly_range_from);
     compareRangeTo($taxMonthly, $tax_monthly_range_to_old, $taxMonthly->tax_monthly_range_to);
 
     // update
     $query = checkUpdate($taxMonthly);
-    $returnData["data"] = [];
-    $returnData["count"] =  $query->rowCount();
-    $returnData["Tax Monthly ID"] = $taxMonthly->tax_monthly_aid;
-    $returnData["success"] = true;
-    return $returnData;
+
+    returnSuccess($taxMonthly, "Tax Monthly", $query);
 }
 
 // return 404 error if endpoint not available

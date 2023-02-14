@@ -24,9 +24,4 @@ isRangeFromExist($taxMonthly, $taxMonthly->tax_monthly_range_from);
 isRangeToExist($taxMonthly, $taxMonthly->tax_monthly_range_to);
 
 $query = checkCreate($taxMonthly);
-$returnData = [];
-$returnData["data"] = [];
-$returnData["count"] = $query->rowCount();
-$returnData["Tax Monthly ID"] = $taxMonthly->lastInsertedId;
-$returnData["success"] = true;
-return $returnData;
+returnSuccess($taxMonthly, "Tax Monthly", $query);

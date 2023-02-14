@@ -88,7 +88,7 @@ const EmployeeList = () => {
               <th className="w-80">Work Email</th>
               <th className="w-32">Contact</th>
               <th>Status</th>
-              <th>Actions</th>
+              <th className="text-right">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -128,7 +128,7 @@ const EmployeeList = () => {
                       )}
                     </td>
                     <td>
-                      <div className="flex items-center gap-1">
+                      <div className="flex justify-end items-center gap-1">
                         <Link
                           to={`${devNavUrl}/${UrlAdmin}/employee/details?employeeid=${item.employee_aid}`}
                           className="btn-action-table tooltip-action-table"

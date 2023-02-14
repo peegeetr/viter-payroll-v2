@@ -22,11 +22,8 @@ if (array_key_exists("payrollid", $_GET)) {
     checkDeleteDeductions($payroll);
     // delete
     $query = checkDelete($payroll);
-    $returnData["data"] = [];
-    $returnData["count"] = $query->rowCount();
-    $returnData["payroll ID"] = $payroll->payroll_aid;
-    $returnData["success"] = true;
-    return $returnData;
+
+    returnSuccess($payroll, "Payroll", $query);
 }
 
 // return 404 error if endpoint not available

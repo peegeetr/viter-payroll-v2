@@ -32,13 +32,8 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
         checkId($payroll->payroll_aid);
         $query = checkActive($payroll);
         http_response_code(200);
-        $returnData["data"] = [];
-        $returnData["count"] = $query->rowCount();
-        $returnData["payroll ID"] = $payroll->payroll_aid;
-        $returnData["success"] = true;
-        $response->setData($returnData);
-        $response->send();
-        exit;
+
+        returnSuccess($payroll, "Payroll", $query);
     }
     // return 404 error if endpoint not available
     checkEnpoint();

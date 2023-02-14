@@ -28,11 +28,8 @@ if (array_key_exists("roleid", $_GET)) {
     $query = checkUpdate($role);
     // update column name
     checkUpdateColumnName($role, $column_name, $role_name_old);
-    $returnData["data"] = [];
-    $returnData["count"] = $query->rowCount();
-    $returnData["role ID"] = $role->role_aid;
-    $returnData["success"] = true;
-    return $returnData;
+
+    returnSuccess($role, "Role", $query);
 }
 
 // return 404 error if endpoint not available

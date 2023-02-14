@@ -25,10 +25,5 @@ $user_system->user_system_datetime = date("Y-m-d H:i:s");
 isEmailExist($user_system, $user_system->user_system_email);
 // create
 $query = checkCreate($user_system);
-$returnData = [];
-$returnData["data"] = [];
-$returnData["count"] = $query->rowCount();
-$returnData["User ID"] = $user_system->lastInsertedId;
-$returnData["GET"] = $_GET;
-$returnData["success"] = true;
-return $returnData;
+
+returnSuccess($user_system, "User system", $query);

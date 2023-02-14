@@ -15,6 +15,7 @@ import { validatePayPeriod } from "../../earnings/manage-list/function-manage-li
 const ModalAddManageDeduction = ({ payType, employee, payrollDraft }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [loading, setLoading] = React.useState(false);
+  const [loadingSel, setSelLoading] = React.useState(false);
   const [isAmount, setIsAmount] = React.useState(false);
   const [employeeId, setEmployeeId] = React.useState("");
   const [isInstallment, setIsInstallment] = React.useState("");
@@ -31,10 +32,10 @@ const ModalAddManageDeduction = ({ payType, employee, payrollDraft }) => {
 
   const handlePayType = async (e, props) => {
     let paytypeid = e.target.value;
-    setLoading(true);
+    setSelLoading(true);
     const results = await fetchApi(`${devApiUrl}/v1/paytype/${paytypeid}`);
     if (results.data) {
-      setLoading(false);
+      setSelLoading(false);
       setResult(results.data);
     }
   };
@@ -252,18 +253,21 @@ const ModalAddManageDeduction = ({ payType, employee, payrollDraft }) => {
                           }
                         >
                           <optgroup label="Pay Item">
+                            {loadingSel && <option value="">Loading...</option>}
                             <option value="" hidden></option>
-                            {result.length > 0 ? (
-                              result.map((payitem, key) => {
+                            {!loadingSel &&
+                              result?.map((payitem, key) => {
                                 return (
-                                  <option key={key} value={payitem.payitem_aid}>
-                                    {payitem.payitem_name}
+                                  <option
+                                    key={key}
+                                    value={payitem.payitem_aid}
+                                    id={payitem.payitem_is_hris}
+                                  >
+                                    {payitem.payitem_name}{" "}
+                                    {payitem.payitem_is_hris === 1 && "(HRIS)"}
                                   </option>
                                 );
-                              })
-                            ) : (
-                              <option value="" hidden></option>
-                            )}
+                              })}
                           </optgroup>
                         </InputSelect>
                       </div>

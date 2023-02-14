@@ -47,15 +47,18 @@ const ManageDeduction = () => {
         </div>
         <Footer />
       </div>
-      {draft.length > 0 && draft[0].payroll_id !== ""
-        ? store.isAdd && (
-            <ModalAddManageDeduction
-              payType={payType}
-              employee={employee}
-              payrollDraft={draft}
-            />
-          )
-        : store.isAdd && <ModalNoPayrollId />}
+      {draft.length > 0 &&
+      draft[0].payroll_id !== "" &&
+      employee.length > 0 &&
+      store.isAdd ? (
+        <ModalAddManageDeduction
+          payType={payType}
+          employee={employee}
+          payrollDraft={draft}
+        />
+      ) : (
+        store.isAdd && <ModalNoPayrollId />
+      )}
       {store.success && <ModalSuccess />}
       {store.error && <ModalError />}
     </>

@@ -326,18 +326,19 @@ const ModalAddManageEarnings = ({ payType, employee, payrollDraft }) => {
                           <optgroup label="Pay Item">
                             {loadingSel && <option value="">Loading...</option>}
                             <option value="" hidden></option>
-                            {result?.map((payitem, key) => {
-                              return (
-                                <option
-                                  key={key}
-                                  value={payitem.payitem_aid}
-                                  id={payitem.payitem_is_hris}
-                                >
-                                  {payitem.payitem_name}{" "}
-                                  {payitem.payitem_is_hris === 1 && "(HRIS)"}
-                                </option>
-                              );
-                            })}
+                            {!loadingSel &&
+                              result?.map((payitem, key) => {
+                                return (
+                                  <option
+                                    key={key}
+                                    value={payitem.payitem_aid}
+                                    id={payitem.payitem_is_hris}
+                                  >
+                                    {payitem.payitem_name}{" "}
+                                    {payitem.payitem_is_hris === 1 && "(HRIS)"}
+                                  </option>
+                                );
+                              })}
                           </optgroup>
                         </InputSelect>
                       </div>

@@ -44,7 +44,7 @@ if ($data["payitem_is_hris"] === "0" && $earnings->earnings_employee === "all") 
         $employee_lname = $allEmployee[$e]["employee_lname"];
         $employee_fname = $allEmployee[$e]["employee_fname"];
 
-        $earnings->earnings_employee = "$employee_lname $employee_fname";
+        $earnings->earnings_employee = "$employee_lname, $employee_fname";
         $earnings->earnings_employee_id = $allEmployee[$e]["employee_aid"];
         $query = checkCreate($earnings);
     }
@@ -68,11 +68,9 @@ if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === "19")
         checkEnpoint();
     }
     for ($l = 0; $l < count($allLeave); $l++) {
-        $employee_lname = $allLeave[$l]["employee_lname"];
-        $employee_fname = $allLeave[$l]["employee_fname"];
-
-        $earnings->earnings_employee = "$employee_lname $employee_fname";
-        $earnings->earnings_employee_id = $allLeave[$l]["leave_list_employee_id"];
+        $earnings->earnings_employee = $allLeave[$l]["name"];
+        $earnings->earnings_employee_id = $allLeave[$l]["employeId"];
+        $earnings->earnings_amount = $allLeave[$l]["amount"];
         $query = checkCreate($earnings);
     }
     returnSuccess($earnings, "Earnings", $query);

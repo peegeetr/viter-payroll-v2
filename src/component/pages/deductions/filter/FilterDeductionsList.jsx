@@ -1,6 +1,7 @@
 import { Form, Formik } from "formik";
 import React from "react";
 import * as Yup from "yup";
+import { MdFilterAlt } from "react-icons/md";
 import { StoreContext } from "../../../../store/StoreContext";
 import { fetchData } from "../../../helpers/fetchData";
 import { InputSelect, InputText } from "../../../helpers/FormInputs";
@@ -51,18 +52,18 @@ const FilterDeductionsList = () => {
         {(props) => {
           return (
             <Form>
-              <div className="grid sm:grid-cols-3 gap-3 mb-5">
+              <div className="grid sm:grid-cols-[1fr_1fr_1fr_150px] gap-3 mb-5">
                 <div className="relative label">
                   <InputSelect
                     label="Pay Item"
                     name="sample"
-                    //  disabled={!loading}
+                    // disabled={loading}
                     onFocus={(e) =>
                       e.target.parentElement.classList.add("focused")
                     }
                   >
                     <optgroup label="Pay Item">
-                      <option value="" disabled hidden></option>
+                      <option value="" hidden></option>
                       <option value="all">All</option>
                       <option value="sample">Lumabas, Cyrene M.</option>
                     </optgroup>
@@ -88,6 +89,11 @@ const FilterDeductionsList = () => {
                     // disabled={loading}
                   />
                 </div>
+
+                <button className="btn-primary">
+                  <MdFilterAlt className="text-lg" />
+                  <span>Filter</span>
+                </button>
               </div>
             </Form>
           );

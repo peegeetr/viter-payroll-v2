@@ -25,9 +25,20 @@ export const validatePayPeriod = (values, inputDate, dispatch) => {
 };
 
 // compute leave
-export const computedLeave = (leaveData) => {
+export const computeLeave = (leaveData, employee) => {
   let list = [];
-  const data = leaveData.filter((item) => {});
+  leaveData.map((lItem) => {
+    employee.map((eItem) => {
+      if (Number(lItem.leave_list_employee_id) === Number(eItem.employee_aid)) {
+        list.push({
+          name: `${eItem.employee_lname}, ${eItem.employee_fname}`,
+          // amount: Number(lItem.leave_list_days) * 500,
+          amount: Number(1) * 500,
+          employeId: eItem.employee_aid,
+        });
+      }
+    });
+  });
   return list;
 };
 

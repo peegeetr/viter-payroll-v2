@@ -22,6 +22,7 @@ import {
 } from "../../../helpers/functions-general";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 import {
+  computeLeave,
   validateDataIsNotEmpty,
   validatePayPeriod,
 } from "./function-manage-list";
@@ -29,10 +30,11 @@ import {
 const ModalAddManageEarnings = ({ payType, employee, payrollDraft }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [loading, setLoading] = React.useState(false);
+  const [loadingSel, setSelLoading] = React.useState(false);
   const [isAmount, setIsAmount] = React.useState(false);
   const [isHris, setIsHri] = React.useState("");
   const [employeeId, setEmployeeId] = React.useState("");
-  const [payItem, setPayItem] = React.useState("");
+  const [payItem, setPayItem] = React.useState([]);
   const [isInstallment, setIsInstallment] = React.useState("");
   const [numberInsti, setNumberInsti] = React.useState("");
   const [isStartDate, setIsStartDate] = React.useState("");
@@ -46,7 +48,7 @@ const ModalAddManageEarnings = ({ payType, employee, payrollDraft }) => {
     "get"
   );
 
-  console.log(payLeave);
+  console.log(payLeave, employee);
 
   const { result, setResult } = useLoadAll(
     `${devApiUrl}/v1/paytype/${0}`,
@@ -55,10 +57,10 @@ const ModalAddManageEarnings = ({ payType, employee, payrollDraft }) => {
 
   const handlePayType = async (e, props) => {
     let paytypeid = e.target.value;
-    setLoading(true);
+    setSelLoading(true);
     const results = await fetchApi(`${devApiUrl}/v1/paytype/${paytypeid}`);
     if (results.data) {
-      setLoading(false);
+      setSelLoading(false);
       setResult(results.data);
     }
   };
@@ -66,20 +68,12 @@ const ModalAddManageEarnings = ({ payType, employee, payrollDraft }) => {
   const handlePayItem = async (e, props) => {
     let payitemid = e.target.value;
     setIsHri(e.target.options[e.target.selectedIndex].id);
-    setLoading(true);
+    setSelLoading(true);
 
     const results = await fetchApi(`${devApiUrl}/v1/payitem/${payitemid}`);
     if (results.data) {
-      setLoading(false);
+      setSelLoading(false);
       setPayItem(results.data);
-      // if Data in HRIS is empty
-      if (
-        validateDataIsNotEmpty(results.data[0].payitem_aid, payLeave, dispatch)
-      ) {
-        dispatch(setIsAdd(false));
-        return;
-      }
-
       if (results.data[0].payitem_is_hris === 1) {
         setIsInstallment("3");
         setNumberInsti("1");
@@ -188,17 +182,33 @@ const ModalAddManageEarnings = ({ payType, employee, payrollDraft }) => {
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
                 console.log(values, payrollDraft[0].payroll_start_date);
+                // console.log(payItem);
                 // payroll date validation
                 if (validatePayPeriod(values, payrollDraft, dispatch)) {
                   return;
                 }
+
+                // if Data in HRIS is empty
+                if (
+                  validateDataIsNotEmpty(
+                    payItem[0].payitem_aid,
+                    payLeave,
+                    dispatch
+                  )
+                ) {
+                  return;
+                }
+
+                // get computed leave amount
+                const computedLeav = computeLeave(payLeave, employee);
+                // send data to server
                 fetchData(
                   setLoading,
                   `${devApiUrl}/v1/earnings`,
                   {
                     ...values,
                     employee: employee.length > 0 ? employee : 0,
-                    payLeave: payLeave.length > 0 ? payLeave : 0,
+                    payLeave: computedLeav.length > 0 ? computedLeav : 0,
                   }, // form data values
                   null, // result set data
                   "Succesfully added.", // success msg
@@ -314,23 +324,20 @@ const ModalAddManageEarnings = ({ payType, employee, payrollDraft }) => {
                           }
                         >
                           <optgroup label="Pay Item">
+                            {loadingSel && <option value="">Loading...</option>}
                             <option value="" hidden></option>
-                            {result.length > 0 ? (
-                              result.map((payitem, key) => {
-                                return (
-                                  <option
-                                    key={key}
-                                    value={payitem.payitem_aid}
-                                    id={payitem.payitem_is_hris}
-                                  >
-                                    {payitem.payitem_name}{" "}
-                                    {payitem.payitem_is_hris === 1 && "(HRIS)"}
-                                  </option>
-                                );
-                              })
-                            ) : (
-                              <option value="" hidden></option>
-                            )}
+                            {result?.map((payitem, key) => {
+                              return (
+                                <option
+                                  key={key}
+                                  value={payitem.payitem_aid}
+                                  id={payitem.payitem_is_hris}
+                                >
+                                  {payitem.payitem_name}{" "}
+                                  {payitem.payitem_is_hris === 1 && "(HRIS)"}
+                                </option>
+                              );
+                            })}
                           </optgroup>
                         </InputSelect>
                       </div>
@@ -338,7 +345,7 @@ const ModalAddManageEarnings = ({ payType, employee, payrollDraft }) => {
                         <InputSelect
                           name="earnings_frequency"
                           label="Frequency"
-                          //  disabled={!loading}
+                          disabled={loading}
                           onFocus={(e) =>
                             e.target.parentElement.classList.add("focused")
                           }
@@ -357,6 +364,7 @@ const ModalAddManageEarnings = ({ payType, employee, payrollDraft }) => {
                         </p>
                       ) : (
                         <>
+                          {/* show amount text */}
                           <div className="relative mb-5">
                             <InputText
                               label="Amount"
@@ -368,7 +376,7 @@ const ModalAddManageEarnings = ({ payType, employee, payrollDraft }) => {
                               disabled={loading}
                             />
                           </div>
-
+                          {/* show will be given select tag */}
                           <div className="relative mb-5 ">
                             <InputSelect
                               label={"Will be given"}
@@ -387,7 +395,7 @@ const ModalAddManageEarnings = ({ payType, employee, payrollDraft }) => {
                               </optgroup>
                             </InputSelect>
                           </div>
-
+                          {/* show installment select tag */}
                           {isInstallment === "2" && (
                             <>
                               <div className="relative mb-5">

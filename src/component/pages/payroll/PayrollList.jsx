@@ -26,6 +26,7 @@ const PayrollList = ({ setItemEdit }) => {
   const [dataItem, setData] = React.useState(null);
   const [id, setId] = React.useState(null);
   const [isDel, setDel] = React.useState(false);
+  const [editLoading, setLoading] = React.useState(false);
   const search = React.useRef(null);
   const perPage = 10;
   const start = store.startIndex + 1;
@@ -47,11 +48,12 @@ const PayrollList = ({ setItemEdit }) => {
 
   const handleEdit = async (item) => {
     let prId = item.payroll_id;
+    setLoading(true);
     const urlEarning = `${devApiUrl}/v1/earnings/validateId/${prId}`;
     const urlDeduction = `${devApiUrl}/v1/deductions/validateId/${prId}`;
     const vp = await validatePrId(urlEarning, urlDeduction, dispatch, prId);
     if (vp) return;
-
+    setLoading(false);
     dispatch(setIsAdd(true));
     setItemEdit(item);
   };
@@ -76,7 +78,7 @@ const PayrollList = ({ setItemEdit }) => {
       />
 
       <div className="relative text-center overflow-x-auto z-0">
-        {loading && <TableSpinner />}
+        {(loading || editLoading) && <TableSpinner />}
         <table>
           <thead>
             <tr>

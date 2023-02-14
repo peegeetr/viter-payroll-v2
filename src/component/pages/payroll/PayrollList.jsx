@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { setIsAdd, setIsRestore } from "../../../store/StoreAction";
 import { StoreContext } from "../../../store/StoreContext";
 import useFetchDataLoadMore from "../../custom-hooks/useFetchDataLoadMore";
+import useLoadAllPayroll from "../../custom-hooks/useLoadAllPayroll";
 import {
   devApiUrl,
   devNavUrl,
@@ -18,6 +19,7 @@ import ServerError from "../../partials/ServerError";
 import TableSpinner from "../../partials/spinners/TableSpinner";
 import StatusActive from "../../partials/status/StatusActive";
 import StatusInactive from "../../partials/status/StatusInactive";
+import { validatePrId } from "./FunctionPayroll";
 
 const PayrollList = ({ setItemEdit }) => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -43,7 +45,11 @@ const PayrollList = ({ setItemEdit }) => {
     search
   );
 
-  const handleEdit = (item) => {
+  const handleEdit = async (item) => {
+    const urlEarning = `${devApiUrl}/v1/earnings/validateId/${item.payroll_id}`;
+    const urlDeduction = `${devApiUrl}/v1/deductions/validateId/${item.payroll_id}`;
+    const vp = await validatePrId(urlEarning, urlDeduction);
+    if (vp) return;
     dispatch(setIsAdd(true));
     setItemEdit(item);
   };

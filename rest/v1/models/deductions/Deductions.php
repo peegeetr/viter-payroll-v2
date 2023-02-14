@@ -289,6 +289,24 @@ class Deductions
         return $query;
     }
 
+
+    // read pr id  in deduction
+    public function checkValidateId()
+    {
+        try {
+            $sql = "select deduction_payroll_id ";
+            $sql .= "from {$this->tblDeductions} ";
+            $sql .= "where deduction_payroll_id = :deduction_payroll_id ";
+            $sql .= "order by deduction_payroll_id desc ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "deduction_payroll_id" => "{$this->deduction_payroll_id}",
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
     // delete
     public function delete()
     {

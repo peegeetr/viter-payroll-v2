@@ -41,6 +41,7 @@ function isEarningType($object, $name)
     checkExistence($count, "You cannot create {$name} because you have already draft.");
 }
 
+
 // Read by draft
 function checkReadByDraft($object)
 {

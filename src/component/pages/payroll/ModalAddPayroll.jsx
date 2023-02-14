@@ -7,11 +7,7 @@ import { StoreContext } from "../../../store/StoreContext";
 import useLoadAll from "../../custom-hooks/useLoadAll";
 import useLoadLastPayrollId from "../../custom-hooks/useLoadLastPayrollId";
 import { fetchData } from "../../helpers/fetchData";
-import {
-  InputSelect,
-  InputText,
-  InputTextArea,
-} from "../../helpers/FormInputs";
+import { InputSelect, InputText } from "../../helpers/FormInputs";
 import {
   consoleLog,
   devApiUrl,

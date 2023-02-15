@@ -64,15 +64,15 @@ const ManageDeductionList = () => {
           <thead>
             <tr>
               <th>#</th>
-              <th className="min-w-[5rem]">Payroll ID</th>
-              <th className="min-w-[8rem]">Employeee</th>
-              <th className="min-w-[5rem]">Pay Type</th>
-              <th className="min-w-[5rem]">Pay Item</th>
+              {/* <th className="min-w-[5rem]">Payroll ID</th> */}
+              <th className="min-w-[9rem]">Employeee</th>
               <th className="min-w-[5rem]">Amount</th>
-              <th className="min-w-[5rem]">Frequency</th>
-              <th className="min-w-[10rem]">No. of Installment</th>
+              <th className="min-w-[5rem]">Installment</th>
               <th className="min-w-[8rem]">Start Date</th>
               <th className="min-w-[8rem]">End Date</th>
+              <th className="min-w-[8rem]">Pay Type</th>
+              <th className="min-w-[8rem]">Pay Item</th>
+              <th className="min-w-[8rem]">Frequency</th>
               <th>Status</th>
               <th className="text-right">Actions</th>
             </tr>
@@ -84,20 +84,13 @@ const ManageDeductionList = () => {
                 return (
                   <tr key={key}>
                     <td>{counter}.</td>
-                    <td>{item.deduction_payroll_id}</td>
+                    {/* <td>{item.deduction_payroll_id}</td> */}
                     <td>{item.deduction_employee}</td>
-                    <td>{item.paytype_name}</td>
-                    <td>{item.payitem_name}</td>
                     <td>
                       P
                       {numberWithCommas(
                         Number(item.deduction_amount).toFixed(2)
                       )}
-                    </td>
-                    <td>
-                      {item.deduction_frequency === "sm"
-                        ? "Semi-monthly"
-                        : "Monthly"}
                     </td>
                     <td>{item.deduction_number_of_installment}</td>
                     <td>
@@ -109,6 +102,13 @@ const ManageDeductionList = () => {
                       {item.deduction_end_pay_date === "n/a"
                         ? "N/A"
                         : formatDate(item.deduction_end_pay_date)}
+                    </td>
+                    <td>{item.paytype_name}</td>
+                    <td>{item.payitem_name}</td>
+                    <td>
+                      {item.deduction_frequency === "sm"
+                        ? "Semi-monthly"
+                        : "Monthly"}
                     </td>
                     <td>
                       {item.deduction_is_active === 1 ? (

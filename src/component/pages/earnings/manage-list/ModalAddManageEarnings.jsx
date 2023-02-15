@@ -200,7 +200,11 @@ const ModalAddManageEarnings = ({ payType, employee, payrollDraft }) => {
                 }
 
                 // get computed leave amount
-                const computedLeav = computeLeave(payLeave, employee);
+                const computedLeav = computeLeave(
+                  payLeave,
+                  employee,
+                  payrollDraft
+                );
                 // send data to server
                 fetchData(
                   setLoading,

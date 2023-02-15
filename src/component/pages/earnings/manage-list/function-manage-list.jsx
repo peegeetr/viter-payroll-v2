@@ -1,4 +1,5 @@
 import { setError, setMessage } from "../../../../store/StoreAction";
+import { getWorkingDays } from "../../../helpers/functions-general";
 import { employeeRate } from "../../../helpers/payroll-formula";
 
 // get Date Length
@@ -29,7 +30,11 @@ export const validatePayPeriod = (values, inputDate, dispatch) => {
 };
 
 // compute leave
-export const computeLeave = (leaveData, employee) => {
+export const computeLeave = (leaveData, employee, payrollDraft) => {
+  const days = getWorkingDays(
+    new Date(payrollDraft[0].payroll_start_date),
+    new Date(payrollDraft[0].payroll_end_date)
+  );
   let list = [];
   leaveData.map((lItem) => {
     employee.map((eItem) => {
@@ -38,7 +43,7 @@ export const computeLeave = (leaveData, employee) => {
           name: `${eItem.employee_lname}, ${eItem.employee_fname}`,
           amount:
             Number(lItem.leave_list_days) *
-            employeeRate(eItem.employee_job_salary, 11).daily,
+            employeeRate(eItem.employee_job_salary, days).daily,
           employeId: eItem.employee_aid,
         });
       }

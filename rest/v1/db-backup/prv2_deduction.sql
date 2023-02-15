@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Feb 15, 2023 at 04:19 AM
+-- Generation Time: Feb 15, 2023 at 07:23 AM
 -- Server version: 5.7.39-42-log
 -- PHP Version: 7.4.33
 
@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `prv2_deduction` (
   `deduction_aid` int(11) NOT NULL,
   `deduction_payroll_id` varchar(20) NOT NULL,
-  `deduction_num_pay` smallint(10) NOT NULL,
+  `deduction_num_pay` smallint(2) NOT NULL,
   `deduction_is_paid` tinyint(1) NOT NULL,
   `deduction_employee` varchar(20) NOT NULL,
   `deduction_employee_id` varchar(20) NOT NULL,
@@ -39,7 +39,7 @@ CREATE TABLE `prv2_deduction` (
   `deduction_amount` varchar(20) NOT NULL,
   `deduction_frequency` varchar(5) NOT NULL,
   `deduction_is_installment` varchar(5) NOT NULL,
-  `deduction_number_of_installment` varchar(5) NOT NULL,
+  `deduction_number_of_installment` smallint(2) NOT NULL,
   `deduction_start_pay_date` varchar(20) NOT NULL,
   `deduction_end_pay_date` varchar(20) NOT NULL,
   `deduction_created` datetime NOT NULL,
@@ -64,7 +64,7 @@ ALTER TABLE `prv2_deduction`
 -- AUTO_INCREMENT for table `prv2_deduction`
 --
 ALTER TABLE `prv2_deduction`
-  MODIFY `deduction_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `deduction_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

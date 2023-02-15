@@ -70,8 +70,8 @@ const ManageEarningsList = () => {
               <th className="min-w-[9rem]">Employeee</th>
               <th className="min-w-[5rem]">Amount</th>
               <th className="min-w-[5rem]">Installment</th>
-              <th className="min-w-[8rem]">Start Date</th>
-              <th className="min-w-[8rem]">End Date</th>
+              <th className="min-w-[5rem]">Start Date</th>
+              <th className="min-w-[5rem]">End Date</th>
               <th className="min-w-[8rem]">Pay Type</th>
               <th className="min-w-[8rem]">Pay Item</th>
               <th className="min-w-[8rem]">Frequency</th>
@@ -104,12 +104,28 @@ const ManageEarningsList = () => {
                     <td>
                       {item.earnings_start_pay_date === "n/a"
                         ? "N/A"
-                        : formatDate(item.earnings_start_pay_date)}
+                        : `${
+                            formatDate(item.earnings_start_pay_date).split(
+                              " "
+                            )[1]
+                          } 
+                        ${
+                          formatDate(item.earnings_start_pay_date).split(" ")[2]
+                        }
+                        ${
+                          formatDate(item.earnings_start_pay_date).split(" ")[3]
+                        }
+                        `}
                     </td>
                     <td>
                       {item.earnings_end_pay_date === "n/a"
                         ? "N/A"
-                        : formatDate(item.earnings_end_pay_date)}
+                        : `${
+                            formatDate(item.earnings_end_pay_date).split(" ")[1]
+                          } 
+                      ${formatDate(item.earnings_end_pay_date).split(" ")[2]}
+                      ${formatDate(item.earnings_end_pay_date).split(" ")[3]}
+                      `}
                     </td>
                     <td>{item.paytype_name}</td>
                     <td>{item.payitem_name}</td>

@@ -1,6 +1,8 @@
 import { setError, setMessage } from "../../../../store/StoreAction";
 import { getWorkingDays } from "../../../helpers/functions-general";
 import { employeeRate } from "../../../helpers/payroll-formula";
+import StatusActive from "../../../partials/status/StatusActive";
+import StatusOngoing from "../../../partials/status/StatusOngoing";
 
 // get Date Length
 export const validatePayPeriod = (values, inputDate, dispatch) => {
@@ -11,19 +13,13 @@ export const validatePayPeriod = (values, inputDate, dispatch) => {
     // earnings
     (new Date(values.earnings_start_pay_date) <
       new Date(inputDate[0].payroll_start_date) ||
-      new Date(values.earnings_end_pay_date) >
-        new Date(inputDate[0].payroll_end_date) ||
       // deductions
       new Date(values.deduction_start_pay_date) <
-        new Date(inputDate[0].payroll_start_date) ||
-      new Date(values.deduction_end_pay_date) >
-        new Date(inputDate[0].payroll_end_date)) &&
-    installment !== "2"
+        new Date(inputDate[0].payroll_start_date)) &&
+    installment === "2"
   ) {
     dispatch(setError(true));
-    dispatch(
-      setMessage("Start and End date is not match for payroll period date.")
-    );
+    dispatch(setMessage("Start date is out of payroll period date."));
     val = true;
   }
   return val;
@@ -62,5 +58,20 @@ export const validateDataIsNotEmpty = (payItem, hrisData, dispatch) => {
     dispatch(setMessage("No data found."));
     val = true;
   }
+  return val;
+};
+
+// check status of earnings
+
+export const getStatus = (item) => {
+  let val = "";
+  item.earnings_number_of_installment === 0 ||
+  item.deduction_number_of_installment === 0
+    ? (val = <StatusActive text="Recurring" />)
+    : item.earnings_number_of_installment !== item.earnings_num_pay ||
+      item.deduction_number_of_installment !== item.deduction_num_pay
+    ? (val = <StatusOngoing text="Ongoing" />)
+    : (val = <StatusActive text="Paid" />);
+
   return val;
 };

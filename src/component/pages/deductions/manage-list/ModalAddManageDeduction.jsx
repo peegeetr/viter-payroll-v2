@@ -50,7 +50,7 @@ const ModalAddManageDeduction = ({ payType, employee, payrollDraft }) => {
     // get employee id
     setIsInstallment(categoryIsInstallment);
     if (categoryIsInstallment === "0") {
-      setNumberInsti("n/a");
+      setNumberInsti("0");
       setIsStartDate("n/a");
       setIsEndDate("n/a");
     }
@@ -134,10 +134,11 @@ const ModalAddManageDeduction = ({ payType, employee, payrollDraft }) => {
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
                 console.log(values, payrollDraft[0].payroll_start_date);
-                // payroll date validation
+                // payroll date validation if installment
                 if (validatePayPeriod(values, payrollDraft, dispatch)) {
                   return;
                 }
+                // send data to server
                 fetchData(
                   setLoading,
                   `${devApiUrl}/v1/deductions`,
@@ -159,7 +160,7 @@ const ModalAddManageDeduction = ({ payType, employee, payrollDraft }) => {
                 props.values.deduction_employee_id = employeeId;
                 props.values.deduction_amount = (
                   Number(props.values.amount) /
-                  (props.values.deduction_number_of_installment === "n/a" ||
+                  (props.values.deduction_number_of_installment === "0" ||
                   props.values.deduction_number_of_installment === ""
                     ? "1"
                     : Number(props.values.deduction_number_of_installment))

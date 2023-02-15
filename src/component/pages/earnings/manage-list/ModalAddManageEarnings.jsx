@@ -75,7 +75,7 @@ const ModalAddManageEarnings = ({ payType, employee, payrollDraft }) => {
       setSelLoading(false);
       setPayItem(results.data);
       if (results.data[0].payitem_is_hris === 1) {
-        setIsInstallment("3");
+        setIsInstallment("3"); // hris is installment value
         setNumberInsti("1");
         setIsStartDate(payroll_start_date);
         setIsEndDate(payroll_end_date);
@@ -93,7 +93,7 @@ const ModalAddManageEarnings = ({ payType, employee, payrollDraft }) => {
     // get employee id
     setIsInstallment(categoryIsInstallment);
     if (categoryIsInstallment === "0") {
-      setNumberInsti("N/A");
+      setNumberInsti("0");
       setIsStartDate("n/a");
       setIsEndDate("n/a");
     }
@@ -182,8 +182,7 @@ const ModalAddManageEarnings = ({ payType, employee, payrollDraft }) => {
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
                 console.log(values, payrollDraft[0].payroll_start_date);
-                // console.log(payItem);
-                // payroll date validation
+                // payroll date validation if installment
                 if (validatePayPeriod(values, payrollDraft, dispatch)) {
                   return;
                 }
@@ -233,7 +232,7 @@ const ModalAddManageEarnings = ({ payType, employee, payrollDraft }) => {
                 props.values.earnings_employee_id = employeeId;
                 props.values.earnings_amount = (
                   Number(props.values.amount) /
-                  (props.values.earnings_number_of_installment === "N/A" ||
+                  (props.values.earnings_number_of_installment === "0" ||
                   props.values.earnings_number_of_installment === ""
                     ? "1"
                     : Number(props.values.earnings_number_of_installment))

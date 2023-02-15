@@ -16,6 +16,7 @@ import ServerError from "../../../partials/ServerError";
 import TableSpinner from "../../../partials/spinners/TableSpinner";
 import StatusActive from "../../../partials/status/StatusActive";
 import StatusInactive from "../../../partials/status/StatusInactive";
+import { getStatus } from "../../earnings/manage-list/function-manage-list";
 
 const ManageDeductionList = () => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -92,7 +93,12 @@ const ManageDeductionList = () => {
                         Number(item.deduction_amount).toFixed(2)
                       )}
                     </td>
-                    <td>{item.deduction_number_of_installment}</td>
+                    {/* <td>{item.deduction_number_of_installment}</td> */}
+                    <td>
+                      {item.deduction_number_of_installment === 0
+                        ? "N/A"
+                        : `${item.deduction_num_pay}/${item.deduction_number_of_installment}`}
+                    </td>
                     <td>
                       {item.deduction_start_pay_date === "n/a"
                         ? "N/A"
@@ -124,13 +130,7 @@ const ManageDeductionList = () => {
                         ? "Semi-monthly"
                         : "Monthly"}
                     </td>
-                    <td>
-                      {item.deduction_is_active === 1 ? (
-                        <StatusActive text="Paid" />
-                      ) : (
-                        <StatusInactive text="Draft" />
-                      )}
-                    </td>
+                    <td>{getStatus(item)}</td>
                     <td>
                       <div className="flex items-center justify-end gap-2">
                         <button

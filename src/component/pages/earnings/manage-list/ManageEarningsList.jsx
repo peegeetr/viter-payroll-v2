@@ -9,14 +9,12 @@ import {
   numberWithCommas,
 } from "../../../helpers/functions-general";
 import Loadmore from "../../../partials/Loadmore";
-import ModalConfirm from "../../../partials/modals/ModalConfirm";
 import ModalDeleteRestore from "../../../partials/modals/ModalDeleteRestore";
 import NoData from "../../../partials/NoData";
 import SearchBar from "../../../partials/SearchBar";
 import ServerError from "../../../partials/ServerError";
 import TableSpinner from "../../../partials/spinners/TableSpinner";
-import StatusActive from "../../../partials/status/StatusActive";
-import StatusInactive from "../../../partials/status/StatusInactive";
+import { getStatus } from "./function-manage-list";
 
 const ManageEarningsList = () => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -96,7 +94,7 @@ const ManageEarningsList = () => {
                       )}
                     </td>
                     <td>
-                      {item.earnings_start_pay_date === "n/a"
+                      {item.earnings_number_of_installment === 0
                         ? "N/A"
                         : `${item.earnings_num_pay}/${item.earnings_number_of_installment}`}
                     </td>
@@ -135,13 +133,7 @@ const ManageEarningsList = () => {
                         : "Monthly"}
                     </td>
 
-                    <td>
-                      {item.earnings_is_active === 1 ? (
-                        <StatusActive text="Paid" />
-                      ) : (
-                        <StatusInactive text="Draft" />
-                      )}
-                    </td>
+                    <td>{getStatus(item)}</td>
                     <td>
                       <div className="flex items-center justify-end gap-2">
                         <button

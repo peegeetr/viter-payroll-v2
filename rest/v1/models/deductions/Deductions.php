@@ -118,8 +118,9 @@ class Deductions
             $sql .= "{$this->tblPayItem} as payitem ";
             $sql .= "where deduction.deduction_paytype_id = paytype.paytype_aid ";
             $sql .= "and deduction.deduction_payitem_id = payitem.payitem_aid ";
-            $sql .= "order by deduction.deduction_payroll_id desc, ";
-            $sql .= "DATE(deduction.deduction_end_pay_date) desc, ";
+            $sql .= "order by ";
+            $sql .= "deduction.deduction_is_paid asc, ";
+            $sql .= "DATE(deduction.deduction_start_pay_date) desc, ";
             $sql .= "deduction.deduction_employee asc ";
             $query = $this->connection->query($sql);
         } catch (PDOException $ex) {
@@ -153,8 +154,9 @@ class Deductions
             $sql .= "{$this->tblPayItem} as payitem ";
             $sql .= "where deduction.deduction_paytype_id = paytype.paytype_aid ";
             $sql .= "and deduction.deduction_payitem_id = payitem.payitem_aid ";
-            $sql .= "order by deduction.deduction_payroll_id desc, ";
-            $sql .= "DATE(deduction.deduction_end_pay_date) desc, ";
+            $sql .= "order by ";
+            $sql .= "deduction.deduction_is_paid asc, ";
+            $sql .= "DATE(deduction.deduction_start_pay_date) desc, ";
             $sql .= "deduction.deduction_employee asc ";
             $sql .= "limit :start, ";
             $sql .= ":total ";
@@ -196,7 +198,9 @@ class Deductions
             $sql .= "where deduction.deduction_paytype_id = paytype.paytype_aid ";
             $sql .= "and deduction.deduction_payitem_id = payitem.payitem_aid ";
             $sql .= "and deduction.deduction_employee like :search ";
-            $sql .= "order by deduction.deduction_is_paid desc, ";
+            $sql .= "order by ";
+            $sql .= "deduction.deduction_is_paid asc, ";
+            $sql .= "DATE(deduction.deduction_start_pay_date) desc, ";
             $sql .= "deduction.deduction_employee asc ";
             $query = $this->connection->prepare($sql);
             $query->execute([

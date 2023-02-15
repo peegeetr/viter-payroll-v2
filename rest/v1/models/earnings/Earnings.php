@@ -119,8 +119,9 @@ class Earnings
             $sql .= "{$this->tblPayItem} as payitem ";
             $sql .= "where earnings.earnings_paytype_id = paytype.paytype_aid ";
             $sql .= "and earnings.earnings_payitem_id = payitem.payitem_aid ";
-            $sql .= "order by earnings.earnings_payroll_id desc, ";
-            $sql .= "DATE(earnings.earnings_end_pay_date) desc, ";
+            $sql .= "order by ";
+            $sql .= "earnings.earnings_is_paid asc, ";
+            $sql .= "DATE(earnings.earnings_start_pay_date) desc, ";
             $sql .= "earnings.earnings_employee asc ";
             $query = $this->connection->query($sql);
         } catch (PDOException $ex) {
@@ -155,8 +156,9 @@ class Earnings
             $sql .= "{$this->tblPayItem} as payitem ";
             $sql .= "where earnings.earnings_paytype_id = paytype.paytype_aid ";
             $sql .= "and earnings.earnings_payitem_id = payitem.payitem_aid ";
-            $sql .= "order by earnings.earnings_payroll_id desc, ";
-            $sql .= "DATE(earnings.earnings_end_pay_date) desc, ";
+            $sql .= "order by ";
+            $sql .= "earnings.earnings_is_paid asc, ";
+            $sql .= "DATE(earnings.earnings_start_pay_date) desc, ";
             $sql .= "earnings.earnings_employee asc ";
             $sql .= "limit :start, ";
             $sql .= ":total ";
@@ -188,7 +190,9 @@ class Earnings
             $sql .= "where earnings.earnings_paytype_id = paytype.paytype_aid ";
             $sql .= "and earnings.earnings_payitem_id = payitem.payitem_aid ";
             $sql .= "and earnings.earnings_employee like :search ";
-            $sql .= "order by earnings.earnings_is_paid desc, ";
+            $sql .= "order by ";
+            $sql .= "earnings.earnings_is_paid asc, ";
+            $sql .= "DATE(earnings.earnings_start_pay_date) desc, ";
             $sql .= "earnings.earnings_employee asc ";
             $query = $this->connection->prepare($sql);
             $query->execute([

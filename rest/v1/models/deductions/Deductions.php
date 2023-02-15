@@ -4,6 +4,7 @@ class Deductions
     public $deduction_aid;
     public $deduction_is_paid;
     public $deduction_payroll_id;
+    public $deduction_num_pay;
     public $deduction_employee;
     public $deduction_employee_id;
     public $deduction_paytype_id;
@@ -97,6 +98,7 @@ class Deductions
         try {
             $sql = "select deduction.deduction_aid, ";
             $sql .= "deduction.deduction_is_paid, ";
+            $sql .= "deduction.deduction_num_pay, ";
             $sql .= "deduction.deduction_employee, ";
             $sql .= "deduction.deduction_amount, ";
             $sql .= "deduction.deduction_frequency, ";
@@ -131,6 +133,7 @@ class Deductions
         try {
             $sql = "select deduction.deduction_aid, ";
             $sql .= "deduction.deduction_is_paid, ";
+            $sql .= "deduction.deduction_num_pay, ";
             $sql .= "deduction.deduction_employee, ";
             $sql .= "deduction.deduction_amount, ";
             $sql .= "deduction.deduction_frequency, ";
@@ -171,6 +174,7 @@ class Deductions
         try {
             $sql = "select deduction.deduction_aid, ";
             $sql .= "deduction.deduction_is_paid, ";
+            $sql .= "deduction.deduction_num_pay, ";
             $sql .= "deduction.deduction_employee, ";
             $sql .= "deduction.deduction_amount, ";
             $sql .= "deduction.deduction_frequency, ";
@@ -210,6 +214,7 @@ class Deductions
         try {
             $sql = "select deduction.deduction_aid, ";
             $sql .= "deduction.deduction_is_paid, ";
+            $sql .= "deduction.deduction_num_pay, ";
             $sql .= "deduction.deduction_employee,";
             $sql .= "deduction.deduction_amount, ";
             $sql .= "deduction.deduction_number_of_installment, ";

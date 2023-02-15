@@ -36,7 +36,9 @@ export const computeLeave = (leaveData, employee) => {
       if (Number(lItem.leave_list_employee_id) === Number(eItem.employee_aid)) {
         list.push({
           name: `${eItem.employee_lname}, ${eItem.employee_fname}`,
-          amount: Number(lItem.leave_list_days) * employeeRate(10000, 11).daily,
+          amount:
+            Number(lItem.leave_list_days) *
+            employeeRate(eItem.employee_job_salary, 11).daily,
           employeId: eItem.employee_aid,
         });
       }

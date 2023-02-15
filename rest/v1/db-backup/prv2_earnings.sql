@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.1.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Feb 08, 2023 at 01:19 AM
--- Server version: 10.4.22-MariaDB
--- PHP Version: 8.1.2
+-- Host: localhost
+-- Generation Time: Feb 15, 2023 at 04:21 AM
+-- Server version: 5.7.39-42-log
+-- PHP Version: 7.4.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `fbs_payroll_v2`
+-- Database: `dbg5s9r5osiott`
 --
 
 -- --------------------------------------------------------
@@ -31,6 +31,7 @@ CREATE TABLE `prv2_earnings` (
   `earnings_aid` int(11) NOT NULL,
   `earnings_payroll_id` varchar(20) NOT NULL,
   `earnings_is_paid` tinyint(1) NOT NULL,
+  `earnings_num_pay` smallint(10) NOT NULL,
   `earnings_employee` varchar(100) NOT NULL,
   `earnings_employee_id` varchar(20) NOT NULL,
   `earnings_paytype_id` varchar(20) NOT NULL,
@@ -63,7 +64,7 @@ ALTER TABLE `prv2_earnings`
 -- AUTO_INCREMENT for table `prv2_earnings`
 --
 ALTER TABLE `prv2_earnings`
-  MODIFY `earnings_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `earnings_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

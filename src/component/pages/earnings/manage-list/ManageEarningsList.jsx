@@ -95,7 +95,11 @@ const ManageEarningsList = () => {
                         Number(item.earnings_amount).toFixed(2)
                       )}
                     </td>
-                    <td>{item.earnings_number_of_installment}</td>
+                    <td>
+                      {item.earnings_start_pay_date === "n/a"
+                        ? "N/A"
+                        : `${item.earnings_num_pay}/${item.earnings_number_of_installment}`}
+                    </td>
 
                     <td>
                       {item.earnings_start_pay_date === "n/a"

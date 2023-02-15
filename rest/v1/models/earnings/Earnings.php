@@ -3,6 +3,7 @@ class Earnings
 {
     public $earnings_aid;
     public $earnings_is_paid;
+    public $earnings_num_pay;
     public $earnings_payroll_id;
     public $earnings_employee;
     public $earnings_employee_id;
@@ -97,6 +98,7 @@ class Earnings
         try {
             $sql = "select earnings.earnings_aid, ";
             $sql .= " earnings.earnings_is_paid, ";
+            $sql .= " earnings.earnings_num_pay, ";
             $sql .= "earnings.earnings_employee, ";
             $sql .= "earnings.earnings_amount, ";
             $sql .= "earnings.earnings_frequency, ";
@@ -132,6 +134,7 @@ class Earnings
         try {
             $sql = "select earnings.earnings_aid, ";
             $sql .= " earnings.earnings_is_paid, ";
+            $sql .= " earnings.earnings_num_pay, ";
             $sql .= "earnings.earnings_employee, ";
             $sql .= "earnings.earnings_amount, ";
             $sql .= "earnings.earnings_frequency, ";
@@ -171,7 +174,7 @@ class Earnings
     public function search()
     {
         try {
-            $sql = "select earnings.earnings_aid, earnings.earnings_is_paid, ";
+            $sql = "select earnings.earnings_aid, earnings.earnings_is_paid, earnings.earnings_num_pay, ";
             $sql .= "earnings.earnings_employee, earnings.earnings_amount, ";
             $sql .= "earnings.earnings_frequency, earnings.earnings_number_of_installment, ";
             $sql .= "earnings.earnings_start_pay_date, earnings.earnings_end_pay_date, ";
@@ -201,7 +204,7 @@ class Earnings
     public function readById()
     {
         try {
-            $sql = "select earnings.earnings_aid, earnings.earnings_is_paid, ";
+            $sql = "select earnings.earnings_aid, earnings.earnings_is_paid, earnings.earnings_num_pay, ";
             $sql .= "earnings.earnings_employee, earnings.earnings_amount, ";
             $sql .= "earnings.earnings_frequency, earnings.earnings_number_of_installment, ";
             $sql .= "earnings.earnings_start_pay_date, earnings.earnings_end_pay_date, ";

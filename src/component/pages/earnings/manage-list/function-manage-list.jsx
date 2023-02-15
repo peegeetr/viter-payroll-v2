@@ -1,23 +1,27 @@
 import { setError, setMessage } from "../../../../store/StoreAction";
+import { employeeRate } from "../../../helpers/payroll-formula";
 
 // get Date Length
 export const validatePayPeriod = (values, inputDate, dispatch) => {
   let val = false;
+  const installment = values.is_installment;
+  console.log(values.is_installment);
   if (
     // earnings
-    new Date(values.earnings_start_pay_date) <
+    (new Date(values.earnings_start_pay_date) <
       new Date(inputDate[0].payroll_start_date) ||
-    new Date(values.earnings_end_pay_date) >
-      new Date(inputDate[0].payroll_end_date) ||
-    // deductions
-    new Date(values.deduction_start_pay_date) <
-      new Date(inputDate[0].payroll_start_date) ||
-    new Date(values.deduction_end_pay_date) >
-      new Date(inputDate[0].payroll_end_date)
+      new Date(values.earnings_end_pay_date) >
+        new Date(inputDate[0].payroll_end_date) ||
+      // deductions
+      new Date(values.deduction_start_pay_date) <
+        new Date(inputDate[0].payroll_start_date) ||
+      new Date(values.deduction_end_pay_date) >
+        new Date(inputDate[0].payroll_end_date)) &&
+    installment !== "2"
   ) {
     dispatch(setError(true));
     dispatch(
-      setMessage("Start date and end date is not avilable for pay date.")
+      setMessage("Start and End date is not match for payroll period date.")
     );
     val = true;
   }
@@ -32,7 +36,7 @@ export const computeLeave = (leaveData, employee) => {
       if (Number(lItem.leave_list_employee_id) === Number(eItem.employee_aid)) {
         list.push({
           name: `${eItem.employee_lname}, ${eItem.employee_fname}`,
-          amount: Number(lItem.leave_list_days) * 500,
+          amount: Number(lItem.leave_list_days) * employeeRate(10000, 11).daily,
           employeId: eItem.employee_aid,
         });
       }

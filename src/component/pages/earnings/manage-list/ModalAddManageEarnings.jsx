@@ -93,7 +93,7 @@ const ModalAddManageEarnings = ({ payType, employee, payrollDraft }) => {
     // get employee id
     setIsInstallment(categoryIsInstallment);
     if (categoryIsInstallment === "0") {
-      setNumberInsti("n/a");
+      setNumberInsti("N/A");
       setIsStartDate("n/a");
       setIsEndDate("n/a");
     }
@@ -229,7 +229,7 @@ const ModalAddManageEarnings = ({ payType, employee, payrollDraft }) => {
                 props.values.earnings_employee_id = employeeId;
                 props.values.earnings_amount = (
                   Number(props.values.amount) /
-                  (props.values.earnings_number_of_installment === "n/a" ||
+                  (props.values.earnings_number_of_installment === "N/A" ||
                   props.values.earnings_number_of_installment === ""
                     ? "1"
                     : Number(props.values.earnings_number_of_installment))

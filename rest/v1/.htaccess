@@ -68,6 +68,7 @@ RewriteRule ^rates/([0-9]+)$ controllers/settings/rates/rates.php?ratesid=$1 [L]
 #SETTINGS PAYROLL TYPE
 RewriteRule ^payroll-type$ controllers/settings/payroll-type/payroll-type.php [L]
 RewriteRule ^payroll-type/([0-9]+)$ controllers/settings/payroll-type/payroll-type.php?payrolltypeid=$1 [L]
+RewriteRule ^payroll-type/active/([0-9]+)$ controllers/settings/payroll-type/active.php?payrolltypeid=$1 [L]
 
 #SETTINGS SEMI BRACKET
 RewriteRule ^tax/semi-monthly$ controllers/settings/tax-bracket/semi-monthly/semi-monthly.php [L]

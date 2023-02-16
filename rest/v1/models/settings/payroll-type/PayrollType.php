@@ -113,4 +113,24 @@ class PayrollType
     }
 
 
+    public function active()
+    {
+        try {
+            $sql = "update {$this->tblPayrollType} set ";
+            $sql .= "payroll_type_active = :payroll_type_active, ";
+            $sql .= "payroll_type_datetime = :payroll_type_datetime ";
+            $sql .= "where payroll_type_aid = :payroll_type_aid ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "payroll_type_active" => $this->payroll_type_active,
+                "payroll_type_datetime" => $this->payroll_type_datetime,
+                "payroll_type_aid" => $this->payroll_type_aid,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+
 }

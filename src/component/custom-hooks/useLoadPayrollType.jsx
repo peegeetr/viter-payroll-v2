@@ -1,5 +1,6 @@
 import React from "react";
 import { StoreContext } from "../../store/StoreContext";
+import fetchApi from "../helpers/fetchApi";
 import { fetchData } from "../helpers/fetchData";
 
 const useLoadPayrollType = (url, method = null) => {
@@ -12,20 +13,25 @@ const useLoadPayrollType = (url, method = null) => {
   }, [store.isSave]);
 
   const getData = async () => {
-    fetchData(
-      setLoading, // Boolean loading values optional
-      url,
-      {}, // form data values
-      setResult,
-      "", // success msg optional
-      "", // additional error msg if needed optional
-      dispatch, // context api action
-      store, // context api state
-      false, // boolean to show success modal
-      false, // boolean to show load more functionality button
-      null, // navigation
-      method
-    );
+    setLoading(true);
+    // get total result of data
+    const result = await fetchApi(url, {});
+    // consoleLog(result);
+
+    if (typeof result === "undefined") {
+      setLoading(false);
+      consoleLog("undefined");
+      return;
+    }
+    if (!result.data) {
+      setLoading(false);
+      setResult([]);
+      return;
+    }
+    if (result.data) {
+      setLoading(false);
+      setResult(result.data);
+    }
   };
 
   return {

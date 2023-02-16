@@ -6,6 +6,7 @@ import { setIsAdd, setStartIndex } from "../../../store/StoreAction";
 import { StoreContext } from "../../../store/StoreContext";
 import useLoadAll from "../../custom-hooks/useLoadAll";
 import useLoadLastPayrollId from "../../custom-hooks/useLoadLastPayrollId";
+import useLoadPayrollType from "../../custom-hooks/useLoadPayrollType";
 import { fetchData } from "../../helpers/fetchData";
 import { InputSelect, InputText } from "../../helpers/FormInputs";
 import {
@@ -15,9 +16,14 @@ import {
 } from "../../helpers/functions-general";
 import ButtonSpinner from "../../partials/spinners/ButtonSpinner";
 
-const ModalAddPayroll = ({ item, payrollType }) => {
+const ModalAddPayroll = ({ item }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [loading, setLoading] = React.useState(false);
+
+  const { payrollType, payrollTypeLoading } = useLoadPayrollType(
+    `${devApiUrl}/v1/payroll-type`,
+    "get"
+  );
 
   const { result } = useLoadAll(`${hrisDevApiUrl}/v1/employees`, "get");
 
@@ -97,20 +103,17 @@ const ModalAddPayroll = ({ item, payrollType }) => {
                         }
                       >
                         <optgroup label="Earning Type">
-                          <option value="" hidden></option>
-                          {payrollType.length > 0 ? (
-                            payrollType.map((type, key) => {
-                              return (
-                                type.payroll_type_active === 1 && (
-                                  <option key={key} value={type}>
-                                    {type.payroll_type_name}
-                                  </option>
-                                )
-                              );
-                            })
-                          ) : (
-                            <option value="" hidden></option>
+                          {payrollTypeLoading && (
+                            <option value="">Loading...</option>
                           )}
+                          <option value="" hidden></option>
+                          {payrollType?.map((type, key) => {
+                            return (
+                              <option key={key} value={type.payroll_type_name}>
+                                {type.payroll_type_name}
+                              </option>
+                            );
+                          })}
                         </optgroup>
                       </InputSelect>
                     </div>

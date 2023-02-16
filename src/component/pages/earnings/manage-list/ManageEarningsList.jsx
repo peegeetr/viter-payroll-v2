@@ -73,6 +73,7 @@ const ManageEarningsList = () => {
               <th className="min-w-[8rem]">Pay Type</th>
               <th className="min-w-[8rem]">Pay Item</th>
               <th className="min-w-[8rem]">Frequency</th>
+              {/* <th className="min-w-[8rem]">Details</th> */}
               <th>Status</th>
               <th className="text-right">Actions</th>
             </tr>
@@ -133,6 +134,7 @@ const ManageEarningsList = () => {
                         : "Monthly"}
                     </td>
 
+                    {/* <td>{item.earnings_details}</td> */}
                     <td>{getStatus(item)}</td>
                     <td>
                       <div className="flex items-center justify-end gap-2">

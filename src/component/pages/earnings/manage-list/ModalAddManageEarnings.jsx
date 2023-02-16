@@ -204,6 +204,8 @@ const ModalAddManageEarnings = ({ payType, employee, payrollDraft }) => {
                   employee,
                   payrollDraft
                 );
+
+                console.log(computedLeav);
                 // send data to server
                 fetchData(
                   setLoading,

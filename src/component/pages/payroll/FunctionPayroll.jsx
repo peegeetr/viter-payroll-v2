@@ -16,7 +16,7 @@ export const validatePrId = async (
     dispatch(setError(true));
     dispatch(
       setMessage(
-        `You cannot update ${prId} because it is already associated with other module.`
+        `You cannot update ${prId} because it is already associated with Earnings or Deductions.`
       )
     );
     val = true;

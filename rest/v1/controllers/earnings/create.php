@@ -71,6 +71,7 @@ if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === "19")
         $earnings->earnings_employee = $allLeave[$l]["name"];
         $earnings->earnings_employee_id = $allLeave[$l]["employeId"];
         $earnings->earnings_amount = $allLeave[$l]["amount"];
+        $earnings->earnings_details = $allLeave[$l]["details"];
         $query = checkCreate($earnings);
     }
     returnSuccess($earnings, "Earnings", $query);

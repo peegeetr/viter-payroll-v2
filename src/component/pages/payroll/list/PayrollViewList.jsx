@@ -105,17 +105,17 @@ const PayrollViewList = ({ setItemEdit }) => {
                     <td></td>
                     <td></td>
                     <td>
-                      {item.payroll_list_is_paid === 1 && (
-                        <div className="flex items-center justify-end gap-1 mr-2">
-                          <Link
-                            to={`${devNavUrl}/${UrlAdmin}/payroll/list/payslip?payslipid=${item.payroll_list_aid}`}
-                            className="btn-action-table tooltip-action-table"
-                            data-tooltip="Payslip"
-                          >
-                            <MdOutlineReceipt />
-                          </Link>
-                        </div>
-                      )}
+                      {/* {item.payroll_list_is_paid === 1 && ( */}
+                      <div className="flex items-center justify-end gap-1 mr-2">
+                        <Link
+                          to={`${devNavUrl}/${UrlAdmin}/payroll/list/payslip?payslipid=${item.payroll_list_aid}`}
+                          className="btn-action-table tooltip-action-table"
+                          data-tooltip="Payslip"
+                        >
+                          <MdOutlineReceipt />
+                        </Link>
+                      </div>
+                      {/* )} */}
                     </td>
                   </tr>
                 );

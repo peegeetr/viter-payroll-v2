@@ -1,5 +1,5 @@
 import { setError, setMessage } from "../../../../store/StoreAction";
-import { getWorkingDays } from "../../../helpers/functions-general";
+import { formatDate, getWorkingDays } from "../../../helpers/functions-general";
 import { employeeRate } from "../../../helpers/payroll-formula";
 import StatusActive from "../../../partials/status/StatusActive";
 import StatusOngoing from "../../../partials/status/StatusOngoing";
@@ -45,10 +45,14 @@ export const computeLeave = (leaveData, employee, payrollDraft) => {
             Number(lItem.leave_list_days) *
             employeeRate(eItem.employee_job_salary, days).daily,
           employeId: eItem.employee_aid,
+          details: `Leave (${formatDate(lItem.leave_list_start_date)})(${
+            lItem.leave_list_days
+          })`,
         });
       }
     });
   });
+  console.log(leaveData, list);
   return list;
 };
 

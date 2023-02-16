@@ -52,8 +52,8 @@ const PayrollList = ({ setItemEdit }) => {
     const urlEarning = `${devApiUrl}/v1/earnings/validateId/${prId}`;
     const urlDeduction = `${devApiUrl}/v1/deductions/validateId/${prId}`;
     const vp = await validatePrId(urlEarning, urlDeduction, dispatch, prId);
-    if (vp) return;
     setLoading(false);
+    if (vp) return;
     dispatch(setIsAdd(true));
     setItemEdit(item);
   };

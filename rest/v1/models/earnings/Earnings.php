@@ -10,6 +10,7 @@ class Earnings
     public $earnings_paytype_id;
     public $earnings_payitem_id;
     public $earnings_amount;
+    public $earnings_details;
     public $earnings_frequency;
     public $earnings_is_installment;
     public $earnings_number_of_installment;
@@ -47,6 +48,7 @@ class Earnings
             $sql .= "earnings_payitem_id, ";
             $sql .= "earnings_is_paid, ";
             $sql .= "earnings_amount, ";
+            $sql .= "earnings_details, ";
             $sql .= "earnings_frequency, ";
             $sql .= "earnings_is_installment, ";
             $sql .= "earnings_number_of_installment, ";
@@ -61,6 +63,7 @@ class Earnings
             $sql .= ":earnings_payitem_id, ";
             $sql .= ":earnings_is_paid, ";
             $sql .= ":earnings_amount, ";
+            $sql .= ":earnings_details, ";
             $sql .= ":earnings_frequency, ";
             $sql .= ":earnings_is_installment, ";
             $sql .= ":earnings_number_of_installment, ";
@@ -77,6 +80,7 @@ class Earnings
                 "earnings_payitem_id" => $this->earnings_payitem_id,
                 "earnings_is_paid" => $this->earnings_is_paid,
                 "earnings_amount" => $this->earnings_amount,
+                "earnings_details" => $this->earnings_details,
                 "earnings_frequency" => $this->earnings_frequency,
                 "earnings_is_installment" => $this->earnings_is_installment,
                 "earnings_number_of_installment" => $this->earnings_number_of_installment,
@@ -101,6 +105,7 @@ class Earnings
             $sql .= " earnings.earnings_num_pay, ";
             $sql .= "earnings.earnings_employee, ";
             $sql .= "earnings.earnings_amount, ";
+            $sql .= "earnings.earnings_details, ";
             $sql .= "earnings.earnings_frequency, ";
             $sql .= "earnings.earnings_number_of_installment, ";
             $sql .= "earnings.earnings_start_pay_date, ";
@@ -138,6 +143,7 @@ class Earnings
             $sql .= " earnings.earnings_num_pay, ";
             $sql .= "earnings.earnings_employee, ";
             $sql .= "earnings.earnings_amount, ";
+            $sql .= "earnings.earnings_details, ";
             $sql .= "earnings.earnings_frequency, ";
             $sql .= "earnings.earnings_number_of_installment, ";
             $sql .= "earnings.earnings_start_pay_date, ";
@@ -177,7 +183,7 @@ class Earnings
     {
         try {
             $sql = "select earnings.earnings_aid, earnings.earnings_is_paid, earnings.earnings_num_pay, ";
-            $sql .= "earnings.earnings_employee, earnings.earnings_amount, ";
+            $sql .= "earnings.earnings_employee, earnings.earnings_amount, earnings.earnings_details, ";
             $sql .= "earnings.earnings_frequency, earnings.earnings_number_of_installment, ";
             $sql .= "earnings.earnings_start_pay_date, earnings.earnings_end_pay_date, ";
             $sql .= "earnings.earnings_payitem_id, earnings.earnings_paytype_id, ";
@@ -209,7 +215,7 @@ class Earnings
     {
         try {
             $sql = "select earnings.earnings_aid, earnings.earnings_is_paid, earnings.earnings_num_pay, ";
-            $sql .= "earnings.earnings_employee, earnings.earnings_amount, ";
+            $sql .= "earnings.earnings_employee, earnings.earnings_amount, earnings.earnings_details, ";
             $sql .= "earnings.earnings_frequency, earnings.earnings_number_of_installment, ";
             $sql .= "earnings.earnings_start_pay_date, earnings.earnings_end_pay_date, ";
             $sql .= "payitem.payitem_name, paytype.paytype_name ";

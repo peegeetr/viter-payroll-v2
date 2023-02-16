@@ -1,9 +1,14 @@
 import React from "react";
-import { FaEdit, FaTrash } from "react-icons/fa";
-import { setIsAdd, setIsRestore } from "../../../../store/StoreAction.jsx";
+import { FaArchive, FaEdit, FaHistory, FaTrash } from "react-icons/fa";
+import {
+  setIsAdd,
+  setIsConfirm,
+  setIsRestore,
+} from "../../../../store/StoreAction.jsx";
 import { StoreContext } from "../../../../store/StoreContext.jsx";
 import useLoadPayrollType from "../../../custom-hooks/useLoadPayrollType.jsx";
 import { devApiUrl } from "../../../helpers/functions-general.jsx";
+import ModalConfirm from "../../../partials/modals/ModalConfirm.jsx";
 import ModalDeleteRestore from "../../../partials/modals/ModalDeleteRestore.jsx";
 import NoData from "../../../partials/NoData.jsx";
 import ServerError from "../../../partials/ServerError.jsx";
@@ -31,6 +36,20 @@ const PayrollTypeList = ({ setItemEdit }) => {
     setId(item.payroll_type_aid);
     setData(item);
     setDel(true);
+  };
+
+  const handleArchive = (item) => {
+    dispatch(setIsConfirm(true));
+    setId(item.payroll_type_aid);
+    setData(item);
+    setDel(null);
+  };
+
+  const handleRestore = (item) => {
+    dispatch(setIsRestore(true));
+    setId(item.payroll_type_aid);
+    setData(item);
+    setDel(null);
   };
 
   let counter = 0;
@@ -65,23 +84,47 @@ const PayrollTypeList = ({ setItemEdit }) => {
                     </td>
 
                     <td>
-                      <div className="flex items-center gap-3">
-                        <button
-                          type="button"
-                          className="btn-action-table tooltip-action-table"
-                          data-tooltip="Edit"
-                          onClick={() => handleEdit(item)}
-                        >
-                          <FaEdit />
-                        </button>
-                        <button
-                          type="button"
-                          className="btn-action-table tooltip-action-table"
-                          data-tooltip="Delete"
-                          onClick={() => handleDelete(item)}
-                        >
-                          <FaTrash />
-                        </button>
+                      <div className="flex items-center gap-2">
+                        {item.payroll_type_active === 1 ? (
+                          <>
+                            <button
+                              type="button"
+                              className="btn-action-table tooltip-action-table"
+                              data-tooltip="Edit"
+                              onClick={() => handleEdit(item)}
+                            >
+                              <FaEdit />
+                            </button>
+
+                            <button
+                              type="button"
+                              className="btn-action-table tooltip-action-table"
+                              data-tooltip="Archive"
+                              onClick={() => handleArchive(item)}
+                            >
+                              <FaArchive />
+                            </button>
+                          </>
+                        ) : (
+                          <>
+                            <button
+                              type="button"
+                              className="btn-action-table tooltip-action-table"
+                              data-tooltip="Restore"
+                              onClick={() => handleRestore(item)}
+                            >
+                              <FaHistory />
+                            </button>
+                            <button
+                              type="button"
+                              className="btn-action-table tooltip-action-table"
+                              data-tooltip="Delete"
+                              onClick={() => handleDelete(item)}
+                            >
+                              <FaTrash />
+                            </button>
+                          </>
+                        )}
                       </div>
                     </td>
                   </tr>
@@ -105,12 +148,27 @@ const PayrollTypeList = ({ setItemEdit }) => {
         </table>
       </div>
 
+      {store.isConfirm && (
+        <ModalConfirm
+          id={id}
+          isDel={isDel}
+          mysqlApiArchive={`${devApiUrl}/v1/payroll-type/active/${id}`}
+          msg={"Are you sure you want to archive this payroll type"}
+          item={`${dataItem.payroll_type_name}`}
+        />
+      )}
+
       {store.isRestore && (
         <ModalDeleteRestore
           id={id}
           isDel={isDel}
           mysqlApiDelete={`${devApiUrl}/v1/payroll-type/${id}`}
-          msg={"Are you sure you want to delete this payroll type"}
+          mysqlApiRestore={`${devApiUrl}/v1/payroll-type/active/${id}`}
+          msg={
+            isDel
+              ? "Are you sure you want to delete this payroll type"
+              : "Are you sure you want to restore this payroll type"
+          }
           item={`${dataItem.payroll_type_name}`}
         />
       )}

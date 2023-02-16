@@ -2,6 +2,8 @@ import React from "react";
 import { FaPlusCircle } from "react-icons/fa";
 import { setIsAdd } from "../../../store/StoreAction";
 import { StoreContext } from "../../../store/StoreContext";
+import useLoadPayrollType from "../../custom-hooks/useLoadPayrollType.jsx";
+import { devApiUrl } from "../../helpers/functions-general.jsx";
 import Footer from "../../partials/Footer";
 import Header from "../../partials/Header";
 import ModalError from "../../partials/modals/ModalError";
@@ -13,6 +15,10 @@ import PayrollList from "./PayrollList";
 const Payroll = () => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [itemEdit, setItemEdit] = React.useState(null);
+  const { payrollType } = useLoadPayrollType(
+    `${devApiUrl}/v1/payroll-type`,
+    "get"
+  );
 
   const handleAdd = () => {
     dispatch(setIsAdd(true));
@@ -41,7 +47,9 @@ const Payroll = () => {
         <Footer />
       </div>
 
-      {store.isAdd && <ModalAddPayroll item={itemEdit} />}
+      {store.isAdd && (
+        <ModalAddPayroll item={itemEdit} payrollType={payrollType} />
+      )}
       {store.success && <ModalSuccess />}
       {store.error && <ModalError />}
     </>

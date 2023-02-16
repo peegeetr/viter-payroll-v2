@@ -31,8 +31,9 @@ import PayrollView from "./component/pages/payroll/list/PayrollView";
 import Payroll from "./component/pages/payroll/Payroll";
 import Payslip from "./component/pages/payroll/payslip/Payslip";
 import ReportsLink from "./component/pages/reports/ReportsLink";
-import { StoreProvider } from "./store/StoreContext";
+import PayrollType from "./component/pages/settings/payroll-type/PayrollType.jsx";
 import Rates from "./component/pages/settings/rates/Rates";
+import { StoreProvider } from "./store/StoreContext";
 
 function App() {
   // Create a client
@@ -183,6 +184,11 @@ function App() {
             <Route
               path={`${devNavUrl}/${UrlAdmin}/settings/rates`}
               element={<Rates />}
+            />
+
+            <Route
+              path={`${devNavUrl}/${UrlAdmin}/settings/payroll-type`}
+              element={<PayrollType />}
             />
           </Routes>
         </Router>

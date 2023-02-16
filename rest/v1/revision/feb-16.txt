@@ -1,0 +1,15 @@
+*MON MON MON MON MON MON MON MON MON MON MON MON MON 
+
+    =>REST DB-BACKUP 
+        ->rest/db-backup/prv2_settings_payroll_type.sql
+
+    Controllers 
+        settings/payroll-type - all files 
+      
+    
+    Models
+        settings/payroll-type/payrollType.php
+    
+
+*MON MON MON MON MON MON MON MON MON MON MON MON MON 
+

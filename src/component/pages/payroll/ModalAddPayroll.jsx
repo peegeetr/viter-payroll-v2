@@ -15,13 +15,14 @@ import {
 } from "../../helpers/functions-general";
 import ButtonSpinner from "../../partials/spinners/ButtonSpinner";
 
-const ModalAddPayroll = ({ item }) => {
+const ModalAddPayroll = ({ item, payrollType }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [loading, setLoading] = React.useState(false);
 
   const { result } = useLoadAll(`${hrisDevApiUrl}/v1/employees`, "get");
 
   const { lastId } = useLoadLastPayrollId(`${devApiUrl}/v1/payroll`, "get");
+
   const handleClose = () => {
     dispatch(setIsAdd(false));
   };
@@ -97,9 +98,20 @@ const ModalAddPayroll = ({ item }) => {
                       >
                         <optgroup label="Earning Type">
                           <option value="" hidden></option>
-                          <option value="salary">Salary</option>
-                          <option value="bonuses">Bonuses</option>
-                          <option value="13th month">13th month</option>
+                          {payrollType.length > 0 ? (
+                            payrollType.map((type, key) => {
+                              return (
+                                <option
+                                  key={key}
+                                  value={type.payroll_type_name}
+                                >
+                                  {type.payroll_type_name}
+                                </option>
+                              );
+                            })
+                          ) : (
+                            <option value="" hidden></option>
+                          )}
                         </optgroup>
                       </InputSelect>
                     </div>

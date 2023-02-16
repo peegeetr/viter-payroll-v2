@@ -101,12 +101,11 @@ const ModalAddPayroll = ({ item, payrollType }) => {
                           {payrollType.length > 0 ? (
                             payrollType.map((type, key) => {
                               return (
-                                <option
-                                  key={key}
-                                  value={type.payroll_type_name}
-                                >
-                                  {type.payroll_type_name}
-                                </option>
+                                type.payroll_type_active === 1 && (
+                                  <option key={key} value={type}>
+                                    {type.payroll_type_name}
+                                  </option>
+                                )
                               );
                             })
                           ) : (

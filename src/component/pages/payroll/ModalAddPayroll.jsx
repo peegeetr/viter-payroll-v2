@@ -109,9 +109,14 @@ const ModalAddPayroll = ({ item }) => {
                           <option value="" hidden></option>
                           {payrollType?.map((type, key) => {
                             return (
-                              <option key={key} value={type.payroll_type_name}>
-                                {type.payroll_type_name}
-                              </option>
+                              type.payroll_type_active === 1 && (
+                                <option
+                                  key={key}
+                                  value={type.payroll_type_name}
+                                >
+                                  {type.payroll_type_name}
+                                </option>
+                              )
                             );
                           })}
                         </optgroup>

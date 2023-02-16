@@ -65,6 +65,10 @@ RewriteRule ^holidays/([0-9]+)$ controllers/holidays/holidays.php?holidaysid=$1 
 RewriteRule ^rates$ controllers/settings/rates/rates.php [L]
 RewriteRule ^rates/([0-9]+)$ controllers/settings/rates/rates.php?ratesid=$1 [L]
 
+#SETTINGS PAYROLL TYPE
+RewriteRule ^payroll-type$ controllers/settings/payroll-type/payroll-type.php [L]
+RewriteRule ^payroll-type/([0-9]+)$ controllers/settings/payroll-type/payroll-type.php?payrolltypeid=$1 [L]
+
 #SETTINGS SEMI BRACKET
 RewriteRule ^tax/semi-monthly$ controllers/settings/tax-bracket/semi-monthly/semi-monthly.php [L]
 RewriteRule ^tax/semi-monthly/([0-9]+)$ controllers/settings/tax-bracket/semi-monthly/semi-monthly.php?semimonthlyid=$1  [L]
@@ -72,6 +76,8 @@ RewriteRule ^tax/semi-monthly/([0-9]+)$ controllers/settings/tax-bracket/semi-mo
 #SETTINGS TAX BRACKET
 RewriteRule ^tax/monthly$ controllers/settings/tax-bracket/tax-monthly/tax-monthly.php [L]
 RewriteRule ^tax/monthly/([0-9]+)$ controllers/settings/tax-bracket/tax-monthly/tax-monthly.php?taxmonthlyid=$1  [L]
+
+
 
 #SETTINGS SSS BRACKET
 RewriteRule ^sss-bracket$ controllers/settings/sss-bracket/sss-bracket.php [L]

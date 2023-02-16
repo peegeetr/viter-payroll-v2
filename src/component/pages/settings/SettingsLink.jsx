@@ -4,6 +4,7 @@ import Footer from "../../partials/Footer.jsx";
 import Header from "../../partials/Header.jsx";
 import Navigation from "../../partials/Navigation.jsx";
 import PagibigLink from "./pagibig/PagibigLink.jsx";
+import PayrollTypeLink from "./payroll-type/PayrollTypeLink.jsx";
 import PhilhealthLink from "./philhealth/PhilhealthLink.jsx";
 import RatesLink from "./rates/RatesLink.jsx";
 import SssBracketLink from "./sss-bracket/SssBracketLink.jsx";
@@ -42,6 +43,10 @@ const SettingsLink = () => {
 
           <li className="py-2">
             <RatesLink />
+          </li>
+
+          <li className="py-2">
+            <PayrollTypeLink />
           </li>
         </ul>
         <Footer />

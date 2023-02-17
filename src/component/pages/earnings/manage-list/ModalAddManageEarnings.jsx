@@ -9,7 +9,10 @@ import {
   setStartIndex,
 } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
+import useLoadAbsences from "../../../custom-hooks/useLoadAbsences";
 import useLoadAll from "../../../custom-hooks/useLoadAll";
+import useLoadAllNightDiff from "../../../custom-hooks/useLoadAllNightDiff";
+import useLoadOvertime from "../../../custom-hooks/useLoadOvertime";
 import useLoadPayLeave from "../../../custom-hooks/useLoadPayLeave";
 import fetchApi from "../../../helpers/fetchApi";
 import { fetchData } from "../../../helpers/fetchData";
@@ -23,6 +26,8 @@ import {
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 import {
   computeLeave,
+  computeNightDiff,
+  computeOvertime,
   validateDataIsNotEmpty,
   validatePayPeriod,
 } from "./function-manage-list";
@@ -49,7 +54,23 @@ const ModalAddManageEarnings = ({ payType, employee, payrollDraft }) => {
     "get"
   );
 
-  console.log(payLeave, employee);
+  const { absences } = useLoadAbsences(
+    `${hrisDevApiUrl}/v1/leaves/absences/approved/${payroll_start_date}/${payroll_end_date}`,
+    "get"
+  );
+
+  const { overtime } = useLoadOvertime(
+    `${hrisDevApiUrl}/v1/tasks/overtime/approved/${payroll_start_date}/${payroll_end_date}`,
+    "get"
+  );
+
+  const { nightDiff } = useLoadAllNightDiff(
+    `${hrisDevApiUrl}/v1/employees/nightDifferential`,
+    "get"
+  );
+
+  // console.log("payLeave", payLeave, "overtime", overtime, "absences", absences);
+  console.log("nightDiff", nightDiff);
 
   const { result, setResult } = useLoadAll(
     `${devApiUrl}/v1/paytype/${0}`,
@@ -188,12 +209,14 @@ const ModalAddManageEarnings = ({ payType, employee, payrollDraft }) => {
                 if (validatePayPeriod(values, payrollDraft, dispatch)) {
                   return;
                 }
-
                 // if Data in HRIS is empty
                 if (
                   validateDataIsNotEmpty(
                     payItem[0].payitem_aid,
                     payLeave,
+                    absences,
+                    overtime,
+                    nightDiff,
                     dispatch
                   )
                 ) {
@@ -207,7 +230,25 @@ const ModalAddManageEarnings = ({ payType, employee, payrollDraft }) => {
                   payrollDraft
                 );
 
-                console.log(computedLeav);
+                // get computed leave amount
+                const computedUnpaid = computeLeave(
+                  absences,
+                  employee,
+                  payrollDraft
+                );
+
+                // get computed leave amount
+                const computedOT = computeOvertime(
+                  overtime,
+                  employee,
+                  payrollDraft
+                );
+                const computedNightDiff = computeNightDiff(
+                  nightDiff,
+                  employee,
+                  payrollDraft
+                );
+
                 // send data to server
                 fetchData(
                   setLoading,
@@ -216,6 +257,10 @@ const ModalAddManageEarnings = ({ payType, employee, payrollDraft }) => {
                     ...values,
                     employee: employee.length > 0 ? employee : 0,
                     payLeave: computedLeav.length > 0 ? computedLeav : 0,
+                    unPaidLeave: computedUnpaid.length > 0 ? computedUnpaid : 0,
+                    overtimeLeave: computedOT.length > 0 ? computedOT : 0,
+                    nightDiffeLeave:
+                      computedNightDiff.length > 0 ? computedNightDiff : 0,
                   }, // form data values
                   null, // result set data
                   "Succesfully added.", // success msg

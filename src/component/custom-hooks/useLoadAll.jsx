@@ -1,4 +1,5 @@
 import React from "react";
+import { setError } from "../../store/StoreAction";
 import { StoreContext } from "../../store/StoreContext";
 import fetchApi from "../helpers/fetchApi";
 import { consoleLog } from "../helpers/functions-general";
@@ -18,10 +19,12 @@ const useLoadAll = (url) => {
     // consoleLog(result);
 
     if (typeof result === "undefined") {
+      dispatch(setError(true));
       consoleLog("undefined");
       return;
     }
     if (!result.data) {
+      dispatch(setError(true));
       setResult([]);
       return;
     }

@@ -4,10 +4,10 @@ import { StoreContext } from "../../store/StoreContext";
 import fetchApi from "../helpers/fetchApi";
 import { consoleLog } from "../helpers/functions-general";
 
-const useLoadAllPayroll = (url) => {
+const useLoadOvertime = (url) => {
   const { store, dispatch } = React.useContext(StoreContext);
-  const [payroll, setResult] = React.useState([]);
-  const [payrollLoading, setLoading] = React.useState(false);
+  const [overtime, setResult] = React.useState([]);
+  const [overtimeLoading, setLoading] = React.useState(false);
 
   React.useEffect(() => {
     getData();
@@ -34,9 +34,9 @@ const useLoadAllPayroll = (url) => {
   };
 
   return {
-    payrollLoading,
-    payroll,
+    overtimeLoading,
+    overtime,
   };
 };
 
-export default useLoadAllPayroll;
+export default useLoadOvertime;

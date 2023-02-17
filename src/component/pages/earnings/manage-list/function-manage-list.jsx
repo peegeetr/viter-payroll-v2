@@ -52,16 +52,90 @@ export const computeLeave = (leaveData, employee, payrollDraft) => {
       }
     });
   });
-  console.log(leaveData, list);
+  // console.log(leaveData, list);
+  return list;
+};
+
+// compute Overtime
+export const computeOvertime = (overtimeData, employee, payrollDraft) => {
+  const days = getWorkingDays(
+    new Date(payrollDraft[0].payroll_start_date),
+    new Date(payrollDraft[0].payroll_end_date)
+  );
+  let list = [];
+  overtimeData.map((otItem) => {
+    employee.map((eItem) => {
+      if (Number(otItem.task_employee_id) === Number(eItem.employee_aid)) {
+        list.push({
+          name: `${eItem.employee_lname}, ${eItem.employee_fname}`,
+          amount:
+            Number(otItem.task_spent) *
+            employeeRate(eItem.employee_job_salary, days).hourly,
+          employeId: eItem.employee_aid,
+        });
+      }
+    });
+  });
+  console.log(overtimeData, list);
+  return list;
+};
+
+// compute Night Diff
+export const computeNightDiff = (nightDiffData, employee, payrollDraft) => {
+  const days = getWorkingDays(
+    new Date(payrollDraft[0].payroll_start_date),
+    new Date(payrollDraft[0].payroll_end_date)
+  );
+  let list = [];
+  nightDiffData.map((ndItem) => {
+    employee.map((eItem) => {
+      if (Number(ndItem.employee_aid) === Number(eItem.employee_aid)) {
+        list.push({
+          name: `${eItem.employee_lname}, ${eItem.employee_fname}`,
+          amount:
+            ndItem.employee_job_nd_per_day *
+            employeeRate(eItem.employee_job_salary, days).hourly,
+          employeId: eItem.employee_aid,
+        });
+      }
+    });
+  });
+  console.log(nightDiffData, list);
   return list;
 };
 
 // get Date Length
-export const validateDataIsNotEmpty = (payItem, hrisData, dispatch) => {
+export const validateDataIsNotEmpty = (
+  payItem,
+  payLeaveHrisData,
+  absencesHrisData,
+  overtimeHrisData,
+  nightDiffHrisData,
+  dispatch
+) => {
   let val = false;
   // payItem = 19 is leave
   // payItem = 18 is OT
-  if (payItem === 19 && hrisData.length === 0) {
+  // payItem = 36 is absences
+  // payItem = 43 is undertime
+  // payItem = 23 is nightDiff
+
+  if (payItem === 19 && payLeaveHrisData.length === 0) {
+    dispatch(setError(true));
+    dispatch(setMessage("No data found."));
+    val = true;
+  }
+  if (payItem === 36 && absencesHrisData.length === 0) {
+    dispatch(setError(true));
+    dispatch(setMessage("No data found."));
+    val = true;
+  }
+  if (payItem === 18 && overtimeHrisData.length === 0) {
+    dispatch(setError(true));
+    dispatch(setMessage("No data found."));
+    val = true;
+  }
+  if (payItem === 23 && nightDiffHrisData.length === 0) {
     dispatch(setError(true));
     dispatch(setMessage("No data found."));
     val = true;

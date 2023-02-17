@@ -1,4 +1,5 @@
 import React from "react";
+import { setError } from "../../store/StoreAction";
 import { StoreContext } from "../../store/StoreContext";
 import fetchApi from "../helpers/fetchApi";
 import { fetchData } from "../helpers/fetchData";
@@ -19,11 +20,13 @@ const useLoadPayrollType = (url, method = null) => {
     // consoleLog(result);
 
     if (typeof result === "undefined") {
+      dispatch(setError(true));
       setLoading(false);
       consoleLog("undefined");
       return;
     }
     if (!result.data) {
+      dispatch(setError(true));
       setLoading(false);
       setResult([]);
       return;

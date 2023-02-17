@@ -4,10 +4,10 @@ import { StoreContext } from "../../store/StoreContext";
 import fetchApi from "../helpers/fetchApi";
 import { consoleLog } from "../helpers/functions-general";
 
-const useLoadAllPayroll = (url) => {
+const useLoadAbsences = (url) => {
   const { store, dispatch } = React.useContext(StoreContext);
-  const [payroll, setResult] = React.useState([]);
-  const [payrollLoading, setLoading] = React.useState(false);
+  const [absences, setResult] = React.useState([]);
+  const [absencesLoading, setLoading] = React.useState(false);
 
   React.useEffect(() => {
     getData();
@@ -34,9 +34,9 @@ const useLoadAllPayroll = (url) => {
   };
 
   return {
-    payrollLoading,
-    payroll,
+    absencesLoading,
+    absences,
   };
 };
 
-export default useLoadAllPayroll;
+export default useLoadAbsences;

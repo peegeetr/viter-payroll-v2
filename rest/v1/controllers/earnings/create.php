@@ -30,6 +30,9 @@ $earnings->earnings_datetime = date("Y-m-d H:i:s");
 
 $allEmployee = $data["employee"];
 $allLeave = $data["payLeave"];
+$allUnPaidLeave = $data["unPaidLeave"];
+$allOvertimeLeave = $data["overtimeLeave"];
+$allNightDiff = $data["nightDiffeLeave"];
 
 // check name
 isNameExist($earnings, "Pay item for $earnings->earnings_employee is ");
@@ -62,8 +65,7 @@ if ($data["payitem_is_hris"] === "0" && $earnings->earnings_employee !== "all") 
 }
 
 // create if data is from hris
-// payitem 19 = leave
-
+// payitem 19 = leave 
 if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === "19") {
     // check array length
     if (count($allLeave) === 0) {
@@ -77,6 +79,65 @@ if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === "19")
         $earnings->earnings_employee_id = $allLeave[$l]["employeId"];
         $earnings->earnings_amount = $allLeave[$l]["amount"];
         $earnings->earnings_details = $allLeave[$l]["details"];
+        $query = checkCreate($earnings);
+    }
+    returnSuccess($earnings, "Earnings", $query);
+}
+
+// create if data is from hris
+// payitem 19 = leave 
+if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === "18") {
+    // check array length
+    if (count($allOvertimeLeave) === 0) {
+        checkEnpoint();
+    }
+    for ($l = 0; $l < count($allOvertimeLeave); $l++) {
+        // check name
+        $earnings->earnings_employee_id = $allOvertimeLeave[$l]["employeId"];
+        isNameExist($earnings, "HRIS Leave data for $earnings->earnings_payroll_id is ");
+        $earnings->earnings_employee = $allOvertimeLeave[$l]["name"];
+        $earnings->earnings_employee_id = $allOvertimeLeave[$l]["employeId"];
+        $earnings->earnings_amount = $allOvertimeLeave[$l]["amount"];
+        $earnings->earnings_details = $allOvertimeLeave[$l]["details"];
+        $query = checkCreate($earnings);
+    }
+    returnSuccess($earnings, "Earnings", $query);
+}
+
+// create if data is from hris
+// payitem 36 = absences 
+if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === "36") {
+    // check array length
+    if (count($allUnPaidLeave) === 0) {
+        checkEnpoint();
+    }
+    for ($u = 0; $u < count($allUnPaidLeave); $u++) {
+        // check name
+        $earnings->earnings_employee_id = $allUnPaidLeave[$u]["employeId"];
+        isNameExist($earnings, "HRIS Leave data for $earnings->earnings_payroll_id is ");
+        $earnings->earnings_employee = $allUnPaidLeave[$u]["name"];
+        $earnings->earnings_employee_id = $allUnPaidLeave[$u]["employeId"];
+        $earnings->earnings_amount = $allUnPaidLeave[$u]["amount"];
+        $earnings->earnings_details = $allUnPaidLeave[$u]["details"];
+        $query = checkCreate($earnings);
+    }
+    returnSuccess($earnings, "Earnings", $query);
+}
+
+// create if data is from hris
+// payitem 36 = absences 
+if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === "23") {
+    // check array length
+    if (count($allNightDiff) === 0) {
+        checkEnpoint();
+    }
+    for ($u = 0; $u < count($allNightDiff); $u++) {
+        // check name
+        $earnings->earnings_employee_id = $allNightDiff[$u]["employeId"];
+        isNameExist($earnings, "HRIS Leave data for $earnings->earnings_payroll_id is ");
+        $earnings->earnings_employee = $allNightDiff[$u]["name"];
+        $earnings->earnings_employee_id = $allNightDiff[$u]["employeId"];
+        $earnings->earnings_amount = $allNightDiff[$u]["amount"];
         $query = checkCreate($earnings);
     }
     returnSuccess($earnings, "Earnings", $query);

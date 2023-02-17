@@ -4,6 +4,7 @@ class Deductions
     public $deduction_aid;
     public $deduction_is_paid;
     public $deduction_payroll_id;
+    public $deduction_payroll_type_id;
     public $deduction_num_pay;
     public $deduction_employee;
     public $deduction_employee_id;
@@ -42,6 +43,7 @@ class Deductions
             $sql = "insert into {$this->tblDeductions} ";
             $sql .= "( deduction_employee, ";
             $sql .= "deduction_payroll_id, ";
+            $sql .= "deduction_payroll_type_id, ";
             $sql .= "deduction_employee_id, ";
             $sql .= "deduction_paytype_id, ";
             $sql .= "deduction_payitem_id, ";
@@ -56,6 +58,7 @@ class Deductions
             $sql .= "deduction_datetime ) values ( ";
             $sql .= ":deduction_employee, ";
             $sql .= ":deduction_payroll_id, ";
+            $sql .= ":deduction_payroll_type_id, ";
             $sql .= ":deduction_employee_id, ";
             $sql .= ":deduction_paytype_id, ";
             $sql .= ":deduction_payitem_id, ";
@@ -72,6 +75,7 @@ class Deductions
             $query->execute([
                 "deduction_employee" => $this->deduction_employee,
                 "deduction_payroll_id" => $this->deduction_payroll_id,
+                "deduction_payroll_type_id" => $this->deduction_payroll_type_id,
                 "deduction_employee_id" => $this->deduction_employee_id,
                 "deduction_paytype_id" => $this->deduction_paytype_id,
                 "deduction_payitem_id" => $this->deduction_payitem_id,
@@ -108,6 +112,7 @@ class Deductions
             $sql .= "deduction.deduction_payitem_id, ";
             $sql .= "deduction.deduction_paytype_id, ";
             $sql .= "deduction.deduction_payroll_id, ";
+            $sql .= "deduction.deduction_payroll_type_id, ";
             $sql .= "deduction.deduction_is_installment, ";
             $sql .= "payitem.payitem_aid, ";
             $sql .= "paytype.paytype_aid, ";
@@ -144,6 +149,7 @@ class Deductions
             $sql .= "deduction.deduction_payitem_id, ";
             $sql .= "deduction.deduction_paytype_id, ";
             $sql .= "deduction.deduction_payroll_id, ";
+            $sql .= "deduction.deduction_payroll_type_id, ";
             $sql .= "deduction.deduction_is_installment, ";
             $sql .= "payitem.payitem_aid, ";
             $sql .= "paytype.paytype_aid, ";
@@ -188,6 +194,7 @@ class Deductions
             $sql .= "payitem.payitem_aid, ";
             $sql .= "paytype.paytype_aid, ";
             $sql .= "deduction.deduction_payroll_id, ";
+            $sql .= "deduction.deduction_payroll_type_id, ";
             $sql .= "payitem.payitem_is_hris, ";
             $sql .= "deduction.deduction_is_installment, ";
             $sql .= "payitem.payitem_name, ";

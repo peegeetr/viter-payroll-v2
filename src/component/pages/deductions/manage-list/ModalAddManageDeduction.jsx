@@ -24,6 +24,7 @@ const ModalAddManageDeduction = ({ payType, employee, payrollDraft }) => {
   const [isEndDate, setIsEndDate] = React.useState("");
   let payroll_start_date = payrollDraft[0].payroll_start_date;
   let payroll_end_date = payrollDraft[0].payroll_end_date;
+  let payroll_type_id = payrollDraft[0].payroll_earning_type;
 
   const { result, setResult } = useLoadAll(
     `${devApiUrl}/v1/paytype/${0}`,
@@ -84,6 +85,7 @@ const ModalAddManageDeduction = ({ payType, employee, payrollDraft }) => {
     deduction_paytype_id: "",
     deduction_payitem_id: "",
     deduction_payroll_id: "",
+    deduction_payroll_type_id: payroll_type_id,
     deduction_employee_id: "",
     deduction_frequency: "",
     deduction_amount: "",

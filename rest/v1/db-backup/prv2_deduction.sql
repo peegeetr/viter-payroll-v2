@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Feb 15, 2023 at 07:23 AM
+-- Generation Time: Feb 17, 2023 at 02:21 AM
 -- Server version: 5.7.39-42-log
 -- PHP Version: 7.4.33
 
@@ -30,6 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `prv2_deduction` (
   `deduction_aid` int(11) NOT NULL,
   `deduction_payroll_id` varchar(20) NOT NULL,
+  `deduction_payroll_type_id` varchar(10) NOT NULL,
   `deduction_num_pay` smallint(2) NOT NULL,
   `deduction_is_paid` tinyint(1) NOT NULL,
   `deduction_employee` varchar(20) NOT NULL,

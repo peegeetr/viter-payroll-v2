@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Feb 15, 2023 at 07:23 AM
+-- Generation Time: Feb 17, 2023 at 02:21 AM
 -- Server version: 5.7.39-42-log
 -- PHP Version: 7.4.33
 
@@ -30,6 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `prv2_earnings` (
   `earnings_aid` int(11) NOT NULL,
   `earnings_payroll_id` varchar(20) NOT NULL,
+  `earnings_payroll_type_id` varchar(10) NOT NULL,
   `earnings_is_paid` tinyint(1) NOT NULL,
   `earnings_num_pay` smallint(2) NOT NULL,
   `earnings_employee` varchar(100) NOT NULL,
@@ -37,6 +38,7 @@ CREATE TABLE `prv2_earnings` (
   `earnings_paytype_id` varchar(20) NOT NULL,
   `earnings_payitem_id` varchar(20) NOT NULL,
   `earnings_amount` varchar(20) NOT NULL,
+  `earnings_details` varchar(100) NOT NULL,
   `earnings_frequency` varchar(5) NOT NULL,
   `earnings_is_installment` varchar(5) NOT NULL,
   `earnings_number_of_installment` smallint(2) NOT NULL,
@@ -64,7 +66,7 @@ ALTER TABLE `prv2_earnings`
 -- AUTO_INCREMENT for table `prv2_earnings`
 --
 ALTER TABLE `prv2_earnings`
-  MODIFY `earnings_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=96;
+  MODIFY `earnings_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=117;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

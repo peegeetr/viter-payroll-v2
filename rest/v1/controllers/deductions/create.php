@@ -13,6 +13,7 @@ checkPayload($data);
 // get data
 
 $deductions->deduction_payroll_id = checkIndex($data, "deduction_payroll_id");
+$deductions->deduction_payroll_type_id = checkIndex($data, "deduction_payroll_type_id");
 $deductions->deduction_employee = checkIndex($data, "payroll_employee");
 $deductions->deduction_employee_id = checkIndex($data, "deduction_employee_id");
 $deductions->deduction_paytype_id = checkIndex($data, "deduction_paytype_id");
@@ -37,12 +38,13 @@ if ($deductions->deduction_employee == "all") {
         $employee_lname = $allEmployee[$e]["employee_lname"];
         $employee_fname = $allEmployee[$e]["employee_fname"];
 
-        $deductions->deduction_employee = "$employee_lname $employee_fname";
+        $deductions->deduction_employee = "{$employee_lname}, {$employee_fname}";
         $deductions->deduction_employee_id = $allEmployee[$e]["employee_aid"];
         $query = checkCreate($deductions);
     }
 } else {
     // create if specific employee  
+    $deductions->deduction_employee = explode(" ", $data["payroll_employee"])[0] . ", " . explode(" ", $data["payroll_employee"])[1];
     $query = checkCreate($deductions);
 }
 

@@ -42,6 +42,7 @@ const ModalAddManageEarnings = ({ payType, employee, payrollDraft }) => {
   let payroll_start_date = payrollDraft[0].payroll_start_date;
   let payroll_end_date = payrollDraft[0].payroll_end_date;
   let payroll_id = payrollDraft[0].payroll_id;
+  let payroll_type_id = payrollDraft[0].payroll_earning_type;
 
   const { payLeave } = useLoadPayLeave(
     `${hrisDevApiUrl}/v1/leaves/period/approved/${payroll_start_date}/${payroll_end_date}`,
@@ -127,6 +128,7 @@ const ModalAddManageEarnings = ({ payType, employee, payrollDraft }) => {
     earnings_paytype_id: "",
     earnings_payitem_id: "",
     earnings_payroll_id: "",
+    earnings_payroll_type_id: payroll_type_id,
     earnings_employee_id: "",
     earnings_frequency: "",
     earnings_amount: "",

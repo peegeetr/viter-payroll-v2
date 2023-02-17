@@ -13,6 +13,7 @@ checkPayload($data);
 // get data
 
 $earnings->earnings_payroll_id = checkIndex($data, "earnings_payroll_id");
+$earnings->earnings_payroll_type_id = checkIndex($data, "earnings_payroll_type_id");
 $earnings->earnings_employee = checkIndex($data, "payroll_employee");
 $earnings->earnings_employee_id = checkIndex($data, "earnings_employee_id");
 $earnings->earnings_paytype_id = checkIndex($data, "earnings_paytype_id");
@@ -44,7 +45,7 @@ if ($data["payitem_is_hris"] === "0" && $earnings->earnings_employee === "all") 
         $employee_lname = $allEmployee[$e]["employee_lname"];
         $employee_fname = $allEmployee[$e]["employee_fname"];
 
-        $earnings->earnings_employee = "$employee_lname, $employee_fname";
+        $earnings->earnings_employee = "{$employee_lname}, {$employee_fname}";
         $earnings->earnings_employee_id = $allEmployee[$e]["employee_aid"];
         $query = checkCreate($earnings);
     }
@@ -55,6 +56,7 @@ if ($data["payitem_is_hris"] === "0" && $earnings->earnings_employee === "all") 
 
 if ($data["payitem_is_hris"] === "0" && $earnings->earnings_employee !== "all") {
     // create if specific employee and not data from hris
+    $earnings->earnings_employee = explode(" ", $data["payroll_employee"])[0] . ", " . explode(" ", $data["payroll_employee"])[1];
     $query = checkCreate($earnings);
     returnSuccess($earnings, "Earnings", $query);
 }
@@ -68,6 +70,9 @@ if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === "19")
         checkEnpoint();
     }
     for ($l = 0; $l < count($allLeave); $l++) {
+        // check name
+        $earnings->earnings_employee_id = $allLeave[$l]["employeId"];
+        isNameExist($earnings, "HRIS Leave data for $earnings->earnings_payroll_id is ");
         $earnings->earnings_employee = $allLeave[$l]["name"];
         $earnings->earnings_employee_id = $allLeave[$l]["employeId"];
         $earnings->earnings_amount = $allLeave[$l]["amount"];

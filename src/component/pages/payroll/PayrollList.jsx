@@ -84,9 +84,9 @@ const PayrollList = ({ setItemEdit }) => {
             <tr>
               <th className="text-center">#</th>
               <th>Payroll ID</th>
+              <th>Type</th>
               <th>Pay Date</th>
               <th>Pay period</th>
-              <th>Earning Type</th>
               <th>No. of Employee</th>
               <th>Total Amount</th>
               <th>Status</th>
@@ -101,17 +101,14 @@ const PayrollList = ({ setItemEdit }) => {
                   <tr key={key}>
                     <td className="text-center">{counter}.</td>
                     <td>{item.payroll_id}</td>
+                    <td>{item.payroll_type_name}</td>
                     <td>{formatDate(item.payroll_pay_date)}</td>
                     <td>
                       {`${formatDate(item.payroll_start_date).split(" ")[1]} 
                       ${formatDate(item.payroll_start_date).split(" ")[2]} - ${
                         formatDate(item.payroll_end_date).split(" ")[2]
                       },  ${formatDate(item.payroll_end_date).split(" ")[3]}`}
-                      <span className="inline-block text-[0] first-letter:text-sm">
-                        {item.payroll_mname}
-                      </span>
                     </td>
-                    <td>{item.payroll_earning_type}</td>
                     <td>{totalResult}</td>
                     <td>4200</td>
                     <td>

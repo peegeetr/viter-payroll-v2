@@ -24,6 +24,7 @@ class Payroll
     public $tblPayrollList;
     public $tblEarnings;
     public $tblDeductions;
+    public $tblPayrollType;
 
     public function __construct($db)
     {
@@ -32,6 +33,7 @@ class Payroll
         $this->tblPayrollList = "prv2_payroll_list";
         $this->tblEarnings = "prv2_earnings";
         $this->tblDeductions = "prv2_deduction";
+        $this->tblPayrollType = "prv2_settings_payroll_type";
     }
 
     // create
@@ -110,9 +112,13 @@ class Payroll
     public function readAll()
     {
         try {
-            $sql = "select * from {$this->tblPayroll} ";
-            $sql .= "order by payroll_is_paid, ";
-            $sql .= "DATE(payroll_pay_date) desc ";
+            $sql = "select * from ";
+            $sql .= "{$this->tblPayroll} as pr, ";
+            $sql .= "{$this->tblPayrollType} as prlist ";
+            $sql .= "where ";
+            $sql .= "pr.payroll_earning_type = prlist.payroll_type_aid ";
+            $sql .= "order by pr.payroll_is_paid, ";
+            $sql .= "DATE(pr.payroll_pay_date) desc ";
             $query = $this->connection->query($sql);
         } catch (PDOException $ex) {
             $query = false;
@@ -124,9 +130,13 @@ class Payroll
     public function readLimit()
     {
         try {
-            $sql = "select * from {$this->tblPayroll} ";
-            $sql .= "order by payroll_is_paid, ";
-            $sql .= "DATE(payroll_pay_date) desc ";
+            $sql = "select * from ";
+            $sql .= "{$this->tblPayroll} as pr, ";
+            $sql .= "{$this->tblPayrollType} as prlist ";
+            $sql .= "where ";
+            $sql .= "pr.payroll_earning_type = prlist.payroll_type_aid ";
+            $sql .= "order by pr.payroll_is_paid, ";
+            $sql .= "DATE(pr.payroll_pay_date) desc ";
             $sql .= "limit :start, ";
             $sql .= ":total ";
             $query = $this->connection->prepare($sql);
@@ -143,9 +153,13 @@ class Payroll
     public function search()
     {
         try {
-            $sql = "select * from {$this->tblPayroll} ";
-            $sql .= "where payroll_id like :search ";
-            $sql .= "order by payroll_is_paid desc ";
+            $sql = "select * from ";
+            $sql .= "{$this->tblPayroll} as pr, ";
+            $sql .= "{$this->tblPayrollType} as prlist ";
+            $sql .= "where ";
+            $sql .= "pr.payroll_earning_type = prlist.payroll_type_aid ";
+            $sql .= "and pr.payroll_id like :search ";
+            $sql .= "order by pr.payroll_is_paid desc ";
             $query = $this->connection->prepare($sql);
             $query->execute([
                 "search" => "{$this->payroll_search}%",
@@ -308,6 +322,7 @@ class Payroll
     {
         try {
             $sql = "select payroll_id, ";
+            $sql .= "payroll_earning_type, ";
             $sql .= "payroll_start_date, ";
             $sql .= "payroll_end_date ";
             $sql .= "from {$this->tblPayroll} ";

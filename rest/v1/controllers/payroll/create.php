@@ -24,7 +24,7 @@ $payroll->payroll_datetime = date("Y-m-d H:i:s");
 
 $allEmployee = $data["employee"];
 
-// validation if salary is draft 
+// check if there's an existing payroll draft
 isEarningType($payroll, $payroll->payroll_earning_type);
 
 // create employee name and id

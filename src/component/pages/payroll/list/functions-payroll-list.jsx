@@ -1,3 +1,10 @@
+import { computeOt } from "../../../helpers/payroll-formula";
+
 export const runPayroll = (employee) => {
-  employee.map((item) => console.log(item.payroll_list_employee_name));
+  let totalOt = 0;
+  let totalLeave = 0;
+  employee.map((item) => {
+    //inside if check
+    // totalOt += computeOt(payitemid)
+  });
 };

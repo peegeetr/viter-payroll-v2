@@ -91,7 +91,7 @@ const ModalAddPayroll = ({ item }) => {
             >
               {(props) => {
                 props.values.payroll_id = lastId;
-                setTypeName();
+                // setTypeName();
                 return (
                   <Form>
                     <div className="relative my-5 ">

@@ -38,6 +38,9 @@ RewriteRule ^payrollList/([A-Za-z0-9-]+)$ controllers/payroll/list/payrollView.p
 RewriteRule ^payrollList/limit/([0-9]+)/([0-9]+)/([A-Za-z0-9-]+)$ controllers/payroll/list/limit.php?start=$1&total=$2&listpayrollid=$3 [L]
 RewriteRule ^payrollList/search/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)$ controllers/payroll/list/search.php?listpayrollid=$1&search=$2 [L]
    
+#payroll earnings
+RewriteRule ^earnings/bypayrollId/([A-Za-z0-9-]+)$ controllers/earnings/byPayrollId.php?payrollid=$1 [L] 
+
 #earnings
 RewriteRule ^earnings$ controllers/earnings/earnings.php [L]
 RewriteRule ^earnings/([0-9]+)$ controllers/earnings/earnings.php?earningsid=$1 [L] 

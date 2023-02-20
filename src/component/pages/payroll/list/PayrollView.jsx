@@ -3,6 +3,7 @@ import { FaEnvelope, FaSave } from "react-icons/fa";
 import { ImPlay3 } from "react-icons/im";
 import { setIsAdd, setIsConfirm } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
+import useLoadPayrollEarnings from "../../../custom-hooks/useLoadPayrollEarnings";
 import useLoadPayrollList from "../../../custom-hooks/useLoadPayrollList";
 import { devApiUrl, getUrlParam } from "../../../helpers/functions-general";
 import BreadCrumbs from "../../../partials/BreadCrumbs";
@@ -21,6 +22,10 @@ const PayrollView = () => {
   const pid = getUrlParam().get("payrollid");
 
   const { payrollList } = useLoadPayrollList(
+    `${devApiUrl}/v1/payrollList/${pid}`,
+    "get"
+  );
+  const { payrollEarnings } = useLoadPayrollEarnings(
     `${devApiUrl}/v1/payrollList/${pid}`,
     "get"
   );

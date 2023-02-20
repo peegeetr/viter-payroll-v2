@@ -356,6 +356,25 @@ class Earnings
         }
         return $query;
     }
+
+    // read payroll id in earinings
+    public function checkEarningsPayrollId()
+    {
+        try {
+            $sql = "select earnings_payroll_id ";
+            $sql .= "from {$this->tblEarnings} ";
+            $sql .= "where earnings_payroll_id = :earnings_payroll_id ";
+            $sql .= "and earnings_is_installment = 0 ";
+            $sql .= "order by earnings_payroll_id desc ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "earnings_payroll_id" => "{$this->earnings_payroll_id}",
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
     // delete
     public function delete()
     {

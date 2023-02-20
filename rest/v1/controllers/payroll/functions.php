@@ -38,7 +38,7 @@ function isEarningType($object, $name)
 {
     $query = $object->checkEarningType();
     $count = $query->rowCount();
-    checkExistence($count, "You cannot create {$name} because you have already draft.");
+    checkExistence($count, "Payroll draft already exist. Please complete it first before creating a new draft.");
 }
 
 

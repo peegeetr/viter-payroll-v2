@@ -11,3 +11,9 @@ export const employeeRate = (salary, workingDays) => {
   console.log(list);
   return list;
 };
+
+export const computeOt = (item) => {
+  //   let amount = 0
+  //   if payitemid === 6
+  // amount += item.amouadf
+};

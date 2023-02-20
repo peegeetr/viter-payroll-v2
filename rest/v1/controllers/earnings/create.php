@@ -47,8 +47,14 @@ if ($data["payitem_is_hris"] === "0" && $earnings->earnings_employee === "all") 
 
         $earnings->earnings_employee = "{$employee_lname}, {$employee_fname}";
         $earnings->earnings_employee_id = $allEmployee[$e]["employee_aid"];
-        // check name
-        isNameExist($earnings, "Pay item for $earnings->earnings_payroll_id is ");
+
+        $query = $earnings->checkName();
+
+        if ($query->rowCount() !== count($allEmployee)) {
+            continue;
+        }
+
+        //     isNameExist($earnings, "Pay item for $earnings->earnings_payroll_id is ");
         $query = checkCreate($earnings);
     }
     returnSuccess($earnings, "Earnings", $query);
@@ -76,11 +82,10 @@ if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === "19")
     for ($l = 0; $l < count($allLeave); $l++) {
         // check name
         $earnings->earnings_employee_id = $allLeave[$l]["employeId"];
-        // isNameExist($earnings, "HRIS Leave data for $earnings->earnings_payroll_id is ");
         $earnings->earnings_employee = $allLeave[$l]["name"];
-        $earnings->earnings_employee_id = $allLeave[$l]["employeId"];
         $earnings->earnings_amount = $allLeave[$l]["amount"];
         $earnings->earnings_details = $allLeave[$l]["details"];
+        isHRISImportExist($earnings, "HRIS Leave data for $earnings->earnings_payroll_id is ");
         $query = checkCreate($earnings);
     }
     returnSuccess($earnings, "Earnings", $query);
@@ -96,11 +101,10 @@ if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === "18")
     for ($l = 0; $l < count($allOvertimeLeave); $l++) {
         // check name
         $earnings->earnings_employee_id = $allOvertimeLeave[$l]["employeId"];
-        // isNameExist($earnings, "HRIS Overtime data for $earnings->earnings_payroll_id is ");
         $earnings->earnings_employee = $allOvertimeLeave[$l]["name"];
-        $earnings->earnings_employee_id = $allOvertimeLeave[$l]["employeId"];
         $earnings->earnings_amount = $allOvertimeLeave[$l]["amount"];
         $earnings->earnings_details = $allOvertimeLeave[$l]["details"];
+        isHRISImportExist($earnings, "HRIS Overtime data for $earnings->earnings_payroll_id is ");
         $query = checkCreate($earnings);
     }
     returnSuccess($earnings, "Earnings", $query);
@@ -116,11 +120,10 @@ if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === "36")
     for ($u = 0; $u < count($allUnPaidLeave); $u++) {
         // check name
         $earnings->earnings_employee_id = $allUnPaidLeave[$u]["employeId"];
-        // isNameExist($earnings, "HRIS absences data for $earnings->earnings_payroll_id is ");
         $earnings->earnings_employee = $allUnPaidLeave[$u]["name"];
-        $earnings->earnings_employee_id = $allUnPaidLeave[$u]["employeId"];
         $earnings->earnings_amount = $allUnPaidLeave[$u]["amount"];
         $earnings->earnings_details = $allUnPaidLeave[$u]["unpaidDetails"];
+        isHRISImportExist($earnings, "HRIS absences data for $earnings->earnings_payroll_id is ");
         $query = checkCreate($earnings);
     }
     returnSuccess($earnings, "Earnings", $query);

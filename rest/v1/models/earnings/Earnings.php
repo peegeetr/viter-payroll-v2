@@ -316,6 +316,29 @@ class Earnings
         return $query;
     }
 
+
+    // DATA import from HRIS
+    public function checkHRISImportExist()
+    {
+        try {
+            $sql = "select * from {$this->tblEarnings} ";
+            $sql .= "where earnings_details = :earnings_details ";
+            $sql .= "and earnings_employee_id = :earnings_employee_id ";
+            $sql .= "and earnings_payitem_id = :earnings_payitem_id ";
+            $sql .= "and earnings_payroll_id = :earnings_payroll_id ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "earnings_employee_id" => "{$this->earnings_employee_id}",
+                "earnings_payitem_id" => "{$this->earnings_payitem_id}",
+                "earnings_payroll_id" => "{$this->earnings_payroll_id}",
+                "earnings_details" => "{$this->earnings_details}",
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
     // read pr id in earinings
     public function checkValidateId()
     {

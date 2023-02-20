@@ -7,3 +7,11 @@ function isEarningsValidateId($object)
     checkQuery($query, "Empty records (draft).");
     return $query;
 }
+
+// check name
+function isHRISImportExist($object, $name)
+{
+    $query = $object->checkHRISImportExist();
+    $count = $query->rowCount();
+    checkExistence($count, "{$name} already exist.");
+}

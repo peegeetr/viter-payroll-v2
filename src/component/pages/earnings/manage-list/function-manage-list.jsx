@@ -73,7 +73,9 @@ export const computeOvertime = (overtimeData, employee, payrollDraft) => {
             Number(otItem.task_spent) *
             employeeRate(eItem.employee_job_salary, days).hourly,
           employeId: eItem.employee_aid,
-          details: `Overtime (${formatDate(otItem.task_created)})`,
+          details: `Overtime (${formatDate(otItem.task_created)} ${
+            otItem.task_created.split(" ")[1]
+          })`,
         });
       }
     });

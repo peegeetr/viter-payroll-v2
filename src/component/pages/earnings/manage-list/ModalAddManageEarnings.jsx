@@ -16,12 +16,17 @@ import useLoadOvertime from "../../../custom-hooks/useLoadOvertime";
 import useLoadPayLeave from "../../../custom-hooks/useLoadPayLeave";
 import fetchApi from "../../../helpers/fetchApi";
 import { fetchData } from "../../../helpers/fetchData";
-import { InputSelect, InputText } from "../../../helpers/FormInputs";
+import {
+  InputSelect,
+  InputText,
+  InputTextArea,
+} from "../../../helpers/FormInputs";
 import {
   consoleLog,
   devApiUrl,
   handleNumOnly,
   hrisDevApiUrl,
+  nightDiffId,
 } from "../../../helpers/functions-general";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 import {
@@ -39,6 +44,8 @@ const ModalAddManageEarnings = ({ payType, employee, payrollDraft }) => {
   const [isAmount, setIsAmount] = React.useState(false);
   const [isHris, setIsHri] = React.useState("");
   const [employeeId, setEmployeeId] = React.useState("");
+  const [employeeName, setEmployeeName] = React.useState("");
+  const [deatils, setDeatils] = React.useState("");
   const [payItem, setPayItem] = React.useState([]);
   const [isInstallment, setIsInstallment] = React.useState("");
   const [numberInsti, setNumberInsti] = React.useState("");
@@ -69,9 +76,6 @@ const ModalAddManageEarnings = ({ payType, employee, payrollDraft }) => {
     "get"
   );
 
-  // console.log("payLeave", payLeave, "overtime", overtime, "absences", absences);
-  console.log("nightDiff", nightDiff);
-
   const { result, setResult } = useLoadAll(
     `${devApiUrl}/v1/paytype/${0}`,
     "get"
@@ -99,6 +103,9 @@ const ModalAddManageEarnings = ({ payType, employee, payrollDraft }) => {
       if (results.data[0].payitem_is_hris === 1) {
         setIsInstallment("3"); // hris is installment value
         setNumberInsti("1");
+        setEmployeeName("all");
+        setEmployeeId("0");
+        setDeatils("details");
         setIsStartDate(payroll_start_date);
         setIsEndDate(payroll_end_date);
       }
@@ -156,6 +163,8 @@ const ModalAddManageEarnings = ({ payType, employee, payrollDraft }) => {
     earnings_number_of_installment: "",
     earnings_start_pay_date: "",
     earnings_end_pay_date: "",
+    earnings_details: "",
+    deatils: "",
     is_installment: "",
     payitem_is_hris: "",
 
@@ -167,10 +176,12 @@ const ModalAddManageEarnings = ({ payType, employee, payrollDraft }) => {
   };
 
   const yupSchema = Yup.object({
-    payroll_employee: Yup.string().required("Required"),
+    payroll_employee:
+      isInstallment !== "3" && Yup.string().required("Required"),
     earnings_paytype_id: Yup.string().required("Required"),
     earnings_payitem_id: Yup.string().required("Required"),
     earnings_frequency: Yup.string().required("Required"),
+    deatils: isInstallment !== "3" && Yup.string().required("Required"),
     number_of_installment:
       isInstallment === "2" && Yup.string().required("Required"),
     startDate: isInstallment === "2" && Yup.string().required("Required"),
@@ -204,7 +215,7 @@ const ModalAddManageEarnings = ({ payType, employee, payrollDraft }) => {
               initialValues={initVal}
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
-                console.log(values, payrollDraft[0].payroll_start_date);
+                console.log(values);
                 // payroll date validation if installment
                 if (validatePayPeriod(values, payrollDraft, dispatch)) {
                   return;
@@ -216,7 +227,6 @@ const ModalAddManageEarnings = ({ payType, employee, payrollDraft }) => {
                     payLeave,
                     absences,
                     overtime,
-                    nightDiff,
                     dispatch
                   )
                 ) {
@@ -243,11 +253,11 @@ const ModalAddManageEarnings = ({ payType, employee, payrollDraft }) => {
                   employee,
                   payrollDraft
                 );
-                const computedNightDiff = computeNightDiff(
-                  nightDiff,
-                  employee,
-                  payrollDraft
-                );
+                // const computedNightDiff = computeNightDiff(
+                //   nightDiff,
+                //   employee,
+                //   payrollDraft
+                // );
 
                 // send data to server
                 fetchData(
@@ -259,8 +269,8 @@ const ModalAddManageEarnings = ({ payType, employee, payrollDraft }) => {
                     payLeave: computedLeav.length > 0 ? computedLeav : 0,
                     unPaidLeave: computedUnpaid.length > 0 ? computedUnpaid : 0,
                     overtimeLeave: computedOT.length > 0 ? computedOT : 0,
-                    nightDiffeLeave:
-                      computedNightDiff.length > 0 ? computedNightDiff : 0,
+                    // nightDiffeLeave:
+                    //   computedNightDiff.length > 0 ? computedNightDiff : 0,
                   }, // form data values
                   null, // result set data
                   "Succesfully added.", // success msg
@@ -276,7 +286,10 @@ const ModalAddManageEarnings = ({ payType, employee, payrollDraft }) => {
               }}
             >
               {(props) => {
+                props.values.earnings_employee =
+                  employeeName || props.values.payroll_employee;
                 props.values.payitem_is_hris = isHris;
+                props.values.earnings_details = deatils || props.values.deatils;
                 props.values.is_installment = isInstallment;
                 props.values.earnings_employee_id = employeeId;
                 props.values.earnings_amount = (
@@ -299,42 +312,6 @@ const ModalAddManageEarnings = ({ payType, employee, payrollDraft }) => {
                   <Form>
                     <div className="max-h-[28rem] overflow-y-scroll p-4">
                       <div className="relative mb-5 mt-5">
-                        <InputSelect
-                          label="Employee"
-                          name="payroll_employee"
-                          disabled={loading}
-                          onChange={handleEmployee}
-                          onFocus={(e) =>
-                            e.target.parentElement.classList.add("focused")
-                          }
-                        >
-                          <optgroup label="Employee">
-                            <option value="" hidden></option>
-                            {employee.length > 0 ? (
-                              <>
-                                <option value="all" id="0">
-                                  All
-                                </option>
-                                ;
-                                {employee.map((employee, key) => {
-                                  return (
-                                    <option
-                                      key={key}
-                                      value={`${employee.employee_lname} ${employee.employee_fname}`}
-                                      id={employee.employee_aid}
-                                    >
-                                      {`${employee.employee_lname}, ${employee.employee_fname}`}
-                                    </option>
-                                  );
-                                })}
-                              </>
-                            ) : (
-                              <option value="" hidden></option>
-                            )}
-                          </optgroup>
-                        </InputSelect>
-                      </div>
-                      <div className="relative mb-5 ">
                         <InputSelect
                           name="earnings_paytype_id"
                           label="Pay Type"
@@ -380,14 +357,16 @@ const ModalAddManageEarnings = ({ payType, employee, payrollDraft }) => {
                             <option value="" hidden></option>
                             {result?.map((payitem, key) => {
                               return (
-                                <option
-                                  key={key}
-                                  value={payitem.payitem_aid}
-                                  id={payitem.payitem_is_hris}
-                                >
-                                  {payitem.payitem_name}{" "}
-                                  {payitem.payitem_is_hris === 1 && "(HRIS)"}
-                                </option>
+                                payitem.payitem_aid !== nightDiffId && (
+                                  <option
+                                    key={key}
+                                    value={payitem.payitem_aid}
+                                    id={payitem.payitem_is_hris}
+                                  >
+                                    {payitem.payitem_name}{" "}
+                                    {payitem.payitem_is_hris === 1 && "(HRIS)"}
+                                  </option>
+                                )
                               );
                             })}
                           </optgroup>
@@ -409,13 +388,50 @@ const ModalAddManageEarnings = ({ payType, employee, payrollDraft }) => {
                           </optgroup>
                         </InputSelect>
                       </div>
+
                       {payItem.length > 0 &&
                       payItem[0].payitem_is_hris === 1 ? (
                         <p className="text-primary text-center">
-                          Data will be imported from HRIS.
+                          {`All Employee that have ${payItem[0].payitem_name} will be imported from HRIS.`}
                         </p>
                       ) : (
                         <>
+                          <div className="relative mb-5 mt-5">
+                            <InputSelect
+                              label="Employee"
+                              name="payroll_employee"
+                              disabled={loading}
+                              onChange={handleEmployee}
+                              onFocus={(e) =>
+                                e.target.parentElement.classList.add("focused")
+                              }
+                            >
+                              <optgroup label="Employee">
+                                <option value="" hidden></option>
+                                {employee.length > 0 ? (
+                                  <>
+                                    <option value="all" id="0">
+                                      All
+                                    </option>
+                                    ;
+                                    {employee.map((employee, key) => {
+                                      return (
+                                        <option
+                                          key={key}
+                                          value={`${employee.employee_lname} ${employee.employee_fname}`}
+                                          id={employee.employee_aid}
+                                        >
+                                          {`${employee.employee_lname}, ${employee.employee_fname}`}
+                                        </option>
+                                      );
+                                    })}
+                                  </>
+                                ) : (
+                                  <option value="" hidden></option>
+                                )}
+                              </optgroup>
+                            </InputSelect>
+                          </div>
                           {/* show amount text */}
                           <div className="relative mb-5">
                             <InputText
@@ -447,6 +463,14 @@ const ModalAddManageEarnings = ({ payType, employee, payrollDraft }) => {
                               </optgroup>
                             </InputSelect>
                           </div>
+                          <div className="relative mb-5 ">
+                            <InputTextArea
+                              label="Details"
+                              name="deatils"
+                              disabled={loading}
+                            />
+                          </div>
+
                           {/* show installment select tag */}
                           {isInstallment === "2" && (
                             <>

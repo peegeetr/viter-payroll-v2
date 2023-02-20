@@ -7,7 +7,11 @@ import { StoreContext } from "../../../../store/StoreContext";
 import useLoadAll from "../../../custom-hooks/useLoadAll";
 import fetchApi from "../../../helpers/fetchApi";
 import { fetchData } from "../../../helpers/fetchData";
-import { InputSelect, InputText } from "../../../helpers/FormInputs";
+import {
+  InputSelect,
+  InputText,
+  InputTextArea,
+} from "../../../helpers/FormInputs";
 import { devApiUrl, handleNumOnly } from "../../../helpers/functions-general";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 import { validatePayPeriod } from "../../earnings/manage-list/function-manage-list";
@@ -92,6 +96,7 @@ const ModalAddManageDeduction = ({ payType, employee, payrollDraft }) => {
     deduction_number_of_installment: "",
     deduction_start_pay_date: "",
     deduction_end_pay_date: "",
+    deduction_details: "",
     is_installment: "",
 
     // if installment this will work
@@ -102,6 +107,7 @@ const ModalAddManageDeduction = ({ payType, employee, payrollDraft }) => {
   };
 
   const yupSchema = Yup.object({
+    deduction_details: Yup.string().required("Required"),
     payroll_employee: Yup.string().required("Required"),
     deduction_paytype_id: Yup.string().required("Required"),
     deduction_payitem_id: Yup.string().required("Required"),
@@ -117,7 +123,7 @@ const ModalAddManageDeduction = ({ payType, employee, payrollDraft }) => {
     <>
       <div className="fixed top-0 right-0 bottom-0 left-0 flex items-center justify-center bg-dark bg-opacity-50 z-50">
         <div className="p-1 w-[350px] rounded-b-2xl">
-          <div className="flex justify-between items-center bg-primary p-3 rounded-t-2xl">
+          <div className="flex justify-between items-center bg-primary p-3 rounded-t-2xl ">
             <h3 className="text-white text-sm">
               Add Deducction :{payrollDraft[0].payroll_id}
             </h3>
@@ -180,42 +186,6 @@ const ModalAddManageDeduction = ({ payType, employee, payrollDraft }) => {
                   <Form>
                     <div className="max-h-[28rem] overflow-y-scroll p-4">
                       <div className="relative mb-5 mt-5">
-                        <InputSelect
-                          label="Employee"
-                          name="payroll_employee"
-                          disabled={loading}
-                          onChange={handleEmployee}
-                          onFocus={(e) =>
-                            e.target.parentElement.classList.add("focused")
-                          }
-                        >
-                          <optgroup label="Employee">
-                            <option value="" hidden></option>
-                            {employee.length > 0 ? (
-                              <>
-                                <option value="all" id="0">
-                                  All
-                                </option>
-                                ;
-                                {employee.map((employee, key) => {
-                                  return (
-                                    <option
-                                      key={key}
-                                      value={`${employee.employee_lname} ${employee.employee_fname}`}
-                                      id={employee.employee_aid}
-                                    >
-                                      {`${employee.employee_lname}, ${employee.employee_fname}`}
-                                    </option>
-                                  );
-                                })}
-                              </>
-                            ) : (
-                              <option value="" hidden></option>
-                            )}
-                          </optgroup>
-                        </InputSelect>
-                      </div>
-                      <div className="relative mb-5 ">
                         <InputSelect
                           name="deduction_paytype_id"
                           label="Pay Type"
@@ -291,6 +261,42 @@ const ModalAddManageDeduction = ({ payType, employee, payrollDraft }) => {
                         </InputSelect>
                       </div>
                       <div className="relative mb-5">
+                        <InputSelect
+                          label="Employee"
+                          name="payroll_employee"
+                          disabled={loading}
+                          onChange={handleEmployee}
+                          onFocus={(e) =>
+                            e.target.parentElement.classList.add("focused")
+                          }
+                        >
+                          <optgroup label="Employee">
+                            <option value="" hidden></option>
+                            {employee.length > 0 ? (
+                              <>
+                                <option value="all" id="0">
+                                  All
+                                </option>
+                                ;
+                                {employee.map((employee, key) => {
+                                  return (
+                                    <option
+                                      key={key}
+                                      value={`${employee.employee_lname} ${employee.employee_fname}`}
+                                      id={employee.employee_aid}
+                                    >
+                                      {`${employee.employee_lname}, ${employee.employee_fname}`}
+                                    </option>
+                                  );
+                                })}
+                              </>
+                            ) : (
+                              <option value="" hidden></option>
+                            )}
+                          </optgroup>
+                        </InputSelect>
+                      </div>
+                      <div className="relative mb-5">
                         <InputText
                           label="Amount"
                           type="text"
@@ -319,6 +325,14 @@ const ModalAddManageDeduction = ({ payType, employee, payrollDraft }) => {
                             <option value="2">Installment</option>
                           </optgroup>
                         </InputSelect>
+                      </div>
+
+                      <div className="relative mb-5 ">
+                        <InputTextArea
+                          label="Details"
+                          name="deduction_details"
+                          disabled={loading}
+                        />
                       </div>
 
                       {isInstallment === "2" && (

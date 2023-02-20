@@ -16,6 +16,7 @@ class Deductions
     public $deduction_number_of_installment;
     public $deduction_start_pay_date;
     public $deduction_end_pay_date;
+    public $deduction_details;
     public $deduction_created;
     public $deduction_datetime;
 
@@ -54,6 +55,7 @@ class Deductions
             $sql .= "deduction_number_of_installment, ";
             $sql .= "deduction_start_pay_date, ";
             $sql .= "deduction_end_pay_date, ";
+            $sql .= "deduction_details, ";
             $sql .= "deduction_created, ";
             $sql .= "deduction_datetime ) values ( ";
             $sql .= ":deduction_employee, ";
@@ -69,6 +71,7 @@ class Deductions
             $sql .= ":deduction_number_of_installment, ";
             $sql .= ":deduction_start_pay_date, ";
             $sql .= ":deduction_end_pay_date, ";
+            $sql .= ":deduction_details, ";
             $sql .= ":deduction_created, ";
             $sql .= ":deduction_datetime ) ";
             $query = $this->connection->prepare($sql);
@@ -86,6 +89,7 @@ class Deductions
                 "deduction_number_of_installment" => $this->deduction_number_of_installment,
                 "deduction_start_pay_date" => $this->deduction_start_pay_date,
                 "deduction_end_pay_date" => $this->deduction_end_pay_date,
+                "deduction_details" => $this->deduction_details,
                 "deduction_created" => $this->deduction_created,
                 "deduction_datetime" => $this->deduction_datetime,
             ]);
@@ -114,9 +118,10 @@ class Deductions
             $sql .= "deduction.deduction_payroll_id, ";
             $sql .= "deduction.deduction_payroll_type_id, ";
             $sql .= "deduction.deduction_is_installment, ";
+            $sql .= "deduction.deduction_details, ";
             $sql .= "payitem.payitem_aid, ";
-            $sql .= "paytype.paytype_aid, ";
             $sql .= "payitem.payitem_name, ";
+            $sql .= "paytype.paytype_aid, ";
             $sql .= "paytype.paytype_name ";
             $sql .= "from {$this->tblDeductions} as deduction, ";
             $sql .= "{$this->tblPayType} as paytype, ";
@@ -151,9 +156,10 @@ class Deductions
             $sql .= "deduction.deduction_payroll_id, ";
             $sql .= "deduction.deduction_payroll_type_id, ";
             $sql .= "deduction.deduction_is_installment, ";
+            $sql .= "deduction.deduction_details, ";
             $sql .= "payitem.payitem_aid, ";
-            $sql .= "paytype.paytype_aid, ";
             $sql .= "payitem.payitem_name, ";
+            $sql .= "paytype.paytype_aid, ";
             $sql .= "paytype.paytype_name ";
             $sql .= "from {$this->tblDeductions} as deduction, ";
             $sql .= "{$this->tblPayType} as paytype, ";
@@ -191,13 +197,14 @@ class Deductions
             $sql .= "deduction.deduction_end_pay_date, ";
             $sql .= "deduction.deduction_payitem_id, ";
             $sql .= "deduction.deduction_paytype_id, ";
-            $sql .= "payitem.payitem_aid, ";
-            $sql .= "paytype.paytype_aid, ";
             $sql .= "deduction.deduction_payroll_id, ";
             $sql .= "deduction.deduction_payroll_type_id, ";
-            $sql .= "payitem.payitem_is_hris, ";
             $sql .= "deduction.deduction_is_installment, ";
+            $sql .= "deduction.deduction_details, ";
+            $sql .= "payitem.payitem_aid, ";
+            $sql .= "payitem.payitem_is_hris, ";
             $sql .= "payitem.payitem_name, ";
+            $sql .= "paytype.paytype_aid, ";
             $sql .= "paytype.paytype_name ";
             $sql .= "from {$this->tblDeductions} as deduction, ";
             $sql .= "{$this->tblPayType} as paytype, ";
@@ -230,6 +237,7 @@ class Deductions
             $sql .= "deduction.deduction_amount, ";
             $sql .= "deduction.deduction_number_of_installment, ";
             $sql .= "deduction.deduction_end_pay_date, ";
+            $sql .= "deduction.deduction_details, ";
             $sql .= "payitem.payitem_name, ";
             $sql .= "deduction.deduction_frequency,  ";
             $sql .= "deduction.deduction_start_pay_date, ";

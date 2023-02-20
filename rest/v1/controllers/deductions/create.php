@@ -24,13 +24,12 @@ $deductions->deduction_number_of_installment = checkIndex($data, "deduction_numb
 $deductions->deduction_is_installment = checkIndex($data, "is_installment");
 $deductions->deduction_start_pay_date = checkIndex($data, "deduction_start_pay_date");
 $deductions->deduction_end_pay_date = checkIndex($data, "deduction_end_pay_date");
+$deductions->deduction_details = checkIndex($data, "deduction_details");
 $deductions->deduction_is_paid = 0;
 $deductions->deduction_created = date("Y-m-d H:i:s");
 $deductions->deduction_datetime = date("Y-m-d H:i:s");
 
 $allEmployee = $data["employee"];
-// check name
-isNameExist($deductions, "Pay item for $deductions->deduction_employee is ");
 
 // create if all employee
 if ($deductions->deduction_employee == "all") {
@@ -40,11 +39,15 @@ if ($deductions->deduction_employee == "all") {
 
         $deductions->deduction_employee = "{$employee_lname}, {$employee_fname}";
         $deductions->deduction_employee_id = $allEmployee[$e]["employee_aid"];
+        // check name
+        isNameExist($deductions, "Pay item for $deductions->deduction_payroll_id is ");
         $query = checkCreate($deductions);
     }
 } else {
     // create if specific employee  
     $deductions->deduction_employee = explode(" ", $data["payroll_employee"])[0] . ", " . explode(" ", $data["payroll_employee"])[1];
+    // check name
+    isNameExist($deductions, "Pay item for $deductions->deduction_employee is ");
     $query = checkCreate($deductions);
 }
 

@@ -50,7 +50,7 @@ class Earnings
             $sql .= "earnings_payitem_id, ";
             $sql .= "earnings_is_paid, ";
             $sql .= "earnings_amount, ";
-            // $sql .= "earnings_details, ";
+            $sql .= "earnings_details, ";
             $sql .= "earnings_frequency, ";
             $sql .= "earnings_is_installment, ";
             $sql .= "earnings_number_of_installment, ";
@@ -66,7 +66,7 @@ class Earnings
             $sql .= ":earnings_payitem_id, ";
             $sql .= ":earnings_is_paid, ";
             $sql .= ":earnings_amount, ";
-            // $sql .= ":earnings_details, ";
+            $sql .= ":earnings_details, ";
             $sql .= ":earnings_frequency, ";
             $sql .= ":earnings_is_installment, ";
             $sql .= ":earnings_number_of_installment, ";
@@ -84,7 +84,7 @@ class Earnings
                 "earnings_payitem_id" => $this->earnings_payitem_id,
                 "earnings_is_paid" => $this->earnings_is_paid,
                 "earnings_amount" => $this->earnings_amount,
-                // "earnings_details" => $this->earnings_details,
+                "earnings_details" => $this->earnings_details,
                 "earnings_frequency" => $this->earnings_frequency,
                 "earnings_is_installment" => $this->earnings_is_installment,
                 "earnings_number_of_installment" => $this->earnings_number_of_installment,
@@ -105,8 +105,8 @@ class Earnings
     {
         try {
             $sql = "select earnings.earnings_aid, ";
-            $sql .= " earnings.earnings_is_paid, ";
-            $sql .= " earnings.earnings_num_pay, ";
+            $sql .= "earnings.earnings_is_paid, ";
+            $sql .= "earnings.earnings_num_pay, ";
             $sql .= "earnings.earnings_employee, ";
             $sql .= "earnings.earnings_amount, ";
             $sql .= "earnings.earnings_details, ";
@@ -116,13 +116,14 @@ class Earnings
             $sql .= "earnings.earnings_end_pay_date, ";
             $sql .= "earnings.earnings_payitem_id, ";
             $sql .= "earnings.earnings_paytype_id, ";
-            $sql .= "payitem.payitem_aid, ";
-            $sql .= "paytype.paytype_aid, ";
+            $sql .= "earnings.earnings_details, ";
             $sql .= "earnings.earnings_payroll_id, ";
             $sql .= "earnings.earnings_payroll_type_id, ";
-            $sql .= "payitem.payitem_is_hris, ";
             $sql .= "earnings.earnings_is_installment, ";
+            $sql .= "payitem.payitem_aid, ";
+            $sql .= "payitem.payitem_is_hris, ";
             $sql .= "payitem.payitem_name, ";
+            $sql .= "paytype.paytype_aid, ";
             $sql .= "paytype.paytype_name ";
             $sql .= "from {$this->tblEarnings} as earnings, ";
             $sql .= "{$this->tblPayType} as paytype, ";
@@ -144,8 +145,8 @@ class Earnings
     {
         try {
             $sql = "select earnings.earnings_aid, ";
-            $sql .= " earnings.earnings_is_paid, ";
-            $sql .= " earnings.earnings_num_pay, ";
+            $sql .= "earnings.earnings_is_paid, ";
+            $sql .= "earnings.earnings_num_pay, ";
             $sql .= "earnings.earnings_employee, ";
             $sql .= "earnings.earnings_amount, ";
             $sql .= "earnings.earnings_details, ";
@@ -155,13 +156,13 @@ class Earnings
             $sql .= "earnings.earnings_end_pay_date, ";
             $sql .= "earnings.earnings_payitem_id, ";
             $sql .= "earnings.earnings_paytype_id, ";
-            $sql .= "payitem.payitem_aid, ";
-            $sql .= "paytype.paytype_aid, ";
             $sql .= "earnings.earnings_payroll_id, ";
             $sql .= "earnings.earnings_payroll_type_id, ";
-            $sql .= "payitem.payitem_is_hris, ";
             $sql .= "earnings.earnings_is_installment, ";
+            $sql .= "payitem.payitem_aid, ";
+            $sql .= "payitem.payitem_is_hris, ";
             $sql .= "payitem.payitem_name, ";
+            $sql .= "paytype.paytype_aid, ";
             $sql .= "paytype.paytype_name ";
             $sql .= "from {$this->tblEarnings} as earnings, ";
             $sql .= "{$this->tblPayType} as paytype, ";
@@ -188,15 +189,26 @@ class Earnings
     public function search()
     {
         try {
-            $sql = "select earnings.earnings_aid, earnings.earnings_is_paid, earnings.earnings_num_pay, ";
-            $sql .= "earnings.earnings_employee, earnings.earnings_amount, earnings.earnings_details, ";
-            $sql .= "earnings.earnings_frequency, earnings.earnings_number_of_installment, ";
-            $sql .= "earnings.earnings_start_pay_date, earnings.earnings_end_pay_date, ";
-            $sql .= "earnings.earnings_payitem_id, earnings.earnings_paytype_id, ";
-            $sql .= "payitem.payitem_aid, paytype.paytype_aid, earnings.earnings_payroll_id, ";
+            $sql = "select earnings.earnings_aid, ";
+            $sql .= "earnings.earnings_is_paid, ";
+            $sql .= "earnings.earnings_num_pay, ";
+            $sql .= "earnings.earnings_employee, ";
+            $sql .= "earnings.earnings_amount, ";
+            $sql .= "earnings.earnings_details, ";
+            $sql .= "earnings.earnings_frequency, ";
+            $sql .= "earnings.earnings_number_of_installment, ";
+            $sql .= "earnings.earnings_start_pay_date, ";
+            $sql .= "earnings.earnings_end_pay_date, ";
+            $sql .= "earnings.earnings_payitem_id, ";
+            $sql .= "earnings.earnings_paytype_id, ";
+            $sql .= "earnings.earnings_payroll_id, ";
             $sql .= "earnings.earnings_payroll_type_id, ";
-            $sql .= "payitem.payitem_is_hris, earnings.earnings_is_installment, ";
-            $sql .= "payitem.payitem_name, paytype.paytype_name ";
+            $sql .= "earnings.earnings_is_installment, ";
+            $sql .= "payitem.payitem_aid, ";
+            $sql .= "payitem.payitem_is_hris, ";
+            $sql .= "payitem.payitem_name, ";
+            $sql .= "paytype.paytype_aid, ";
+            $sql .= "paytype.paytype_name ";
             $sql .= "from {$this->tblEarnings} as earnings, ";
             $sql .= "{$this->tblPayType} as paytype, ";
             $sql .= "{$this->tblPayItem} as payitem ";
@@ -221,11 +233,18 @@ class Earnings
     public function readById()
     {
         try {
-            $sql = "select earnings.earnings_aid, earnings.earnings_is_paid, earnings.earnings_num_pay, ";
-            $sql .= "earnings.earnings_employee, earnings.earnings_amount, earnings.earnings_details, ";
-            $sql .= "earnings.earnings_frequency, earnings.earnings_number_of_installment, ";
-            $sql .= "earnings.earnings_start_pay_date, earnings.earnings_end_pay_date, ";
-            $sql .= "payitem.payitem_name, paytype.paytype_name ";
+            $sql = "select earnings.earnings_aid, ";
+            $sql .= "earnings.earnings_is_paid, ";
+            $sql .= "earnings.earnings_num_pay, ";
+            $sql .= "earnings.earnings_employee, ";
+            $sql .= "earnings.earnings_amount, ";
+            $sql .= "earnings.earnings_details, ";
+            $sql .= "earnings.earnings_frequency, ";
+            $sql .= "earnings.earnings_number_of_installment, ";
+            $sql .= "earnings.earnings_start_pay_date, ";
+            $sql .= "earnings.earnings_end_pay_date, ";
+            $sql .= "payitem.payitem_name, ";
+            $sql .= "paytype.paytype_name ";
             $sql .= "from {$this->tblEarnings} as earnings, ";
             $sql .= "{$this->tblPayType} as paytype, ";
             $sql .= "{$this->tblPayItem} as payitem ";

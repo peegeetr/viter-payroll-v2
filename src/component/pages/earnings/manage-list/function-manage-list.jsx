@@ -8,7 +8,6 @@ import StatusOngoing from "../../../partials/status/StatusOngoing";
 export const validatePayPeriod = (values, inputDate, dispatch) => {
   let val = false;
   const installment = values.is_installment;
-  console.log(values.is_installment);
   if (
     // earnings
     (new Date(values.earnings_start_pay_date) <
@@ -48,11 +47,13 @@ export const computeLeave = (leaveData, employee, payrollDraft) => {
           details: `Leave (${formatDate(lItem.leave_list_start_date)})(${
             lItem.leave_list_days
           })`,
+          unpaidDetails: `Unpaid Leave (${formatDate(
+            lItem.leave_list_start_date
+          )})(${lItem.leave_list_days})`,
         });
       }
     });
   });
-  // console.log(leaveData, list);
   return list;
 };
 
@@ -72,11 +73,11 @@ export const computeOvertime = (overtimeData, employee, payrollDraft) => {
             Number(otItem.task_spent) *
             employeeRate(eItem.employee_job_salary, days).hourly,
           employeId: eItem.employee_aid,
+          details: `Overtime (${formatDate(otItem.task_created)})`,
         });
       }
     });
   });
-  console.log(overtimeData, list);
   return list;
 };
 
@@ -96,6 +97,8 @@ export const computeNightDiff = (nightDiffData, employee, payrollDraft) => {
             ndItem.employee_job_nd_per_day *
             employeeRate(eItem.employee_job_salary, days).hourly,
           employeId: eItem.employee_aid,
+          details: `Night Differencial`,
+          // details: `Night Differencial (${formatDate(eItem.employee_created)})`,
         });
       }
     });
@@ -110,7 +113,6 @@ export const validateDataIsNotEmpty = (
   payLeaveHrisData,
   absencesHrisData,
   overtimeHrisData,
-  nightDiffHrisData,
   dispatch
 ) => {
   let val = false;

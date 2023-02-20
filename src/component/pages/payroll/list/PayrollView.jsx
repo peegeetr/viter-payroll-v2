@@ -3,7 +3,8 @@ import { FaEnvelope, FaSave } from "react-icons/fa";
 import { ImPlay3 } from "react-icons/im";
 import { setIsAdd, setIsConfirm } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
-import { getUrlParam } from "../../../helpers/functions-general";
+import useLoadPayrollList from "../../../custom-hooks/useLoadPayrollList";
+import { devApiUrl, getUrlParam } from "../../../helpers/functions-general";
 import BreadCrumbs from "../../../partials/BreadCrumbs";
 import Footer from "../../../partials/Footer";
 import Header from "../../../partials/Header";
@@ -18,6 +19,11 @@ const PayrollView = () => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [itemEdit, setItemEdit] = React.useState(null);
   const pid = getUrlParam().get("payrollid");
+
+  const { payrollList } = useLoadPayrollList(
+    `${devApiUrl}/v1/payrollList/${pid}`,
+    "get"
+  );
 
   const handleRun = () => {
     dispatch(setIsConfirm(true));
@@ -53,7 +59,7 @@ const PayrollView = () => {
         <Footer />
       </div>
 
-      {store.isConfirm && <ModalRun item={pid} />}
+      {store.isConfirm && <ModalRun item={pid} employees={payrollList} />}
       {store.success && <ModalSuccess />}
       {store.error && <ModalError />}
     </>

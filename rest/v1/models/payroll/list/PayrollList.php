@@ -79,6 +79,7 @@ class PayrollList
             $sql .= "payrollList.payroll_list_aid, ";
             $sql .= "payrollList.payroll_list_is_paid, ";
             $sql .= "payrollList.payroll_list_employee_name, ";
+            $sql .= "payrollList.payroll_list_employee_id, ";
             $sql .= "payroll.payroll_id, ";
             $sql .= "payroll.payroll_start_date, ";
             $sql .= "payroll.payroll_end_date, ";
@@ -105,6 +106,7 @@ class PayrollList
             $sql .= "payrollList.payroll_list_aid, ";
             $sql .= "payrollList.payroll_list_is_paid, ";
             $sql .= "payrollList.payroll_list_employee_name, ";
+            $sql .= "payrollList.payroll_list_employee_id, ";
             $sql .= "payroll.payroll_id, ";
             $sql .= "payroll.payroll_start_date, ";
             $sql .= "payroll.payroll_end_date, ";
@@ -134,6 +136,7 @@ class PayrollList
         try {
             $sql = "select payroll_list_payroll_id, ";
             $sql .= "payroll_list_employee_name, ";
+            $sql .= "payroll_list_employee_id, ";
             $sql .= "payroll_list_is_paid, ";
             $sql .= "payroll_list_aid ";
             $sql .= "from {$this->tblPayrollList} ";

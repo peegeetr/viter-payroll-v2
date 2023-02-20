@@ -3,9 +3,10 @@ import { FaQuestionCircle, FaTimesCircle } from "react-icons/fa";
 import { setIsConfirm, setStartIndex } from "../../../store/StoreAction";
 import { StoreContext } from "../../../store/StoreContext";
 import { fetchData } from "../../helpers/fetchData";
+import { runPayroll } from "../../pages/payroll/list/functions-payroll-list";
 import ButtonSpinner from "../spinners/ButtonSpinner";
 
-const ModalRun = ({ item }) => {
+const ModalRun = ({ item, employees }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [loading, setLoading] = React.useState(false);
 
@@ -14,6 +15,8 @@ const ModalRun = ({ item }) => {
   };
 
   const handleYes = async () => {
+    // run payroll
+    runPayroll(employees);
     // setLoading(true);
     // fetchData(
     //   setLoading,
@@ -44,7 +47,7 @@ const ModalRun = ({ item }) => {
             <span className="text-sm font-bold">Are you sure to run</span>{" "}
             <br />
             <span className="text-sm font-bold break-all">"{item}"?</span>
-            <p>You can't undo this action.</p>
+            {/* <p>You can't undo this action.</p> */}
             <div className="flex items-center gap-1 pt-5">
               <button
                 type="submit"

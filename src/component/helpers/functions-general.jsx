@@ -44,10 +44,6 @@ export const devNavUrl = "";
 export const UrlAdmin = "admin";
 export const is_developer = "is_developer";
 
-// payitem AID
-export const nightDiffId = "23";
-export const overtimeId = "18";
-
 export const devKey =
   "$2a$12$47wDvbLInZif/PVS8B6P3.7WxyJvUpBzZAWCsnWJUKq3nrn4qgmeO";
 

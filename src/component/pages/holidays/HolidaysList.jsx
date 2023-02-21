@@ -1,20 +1,13 @@
 import React from "react";
-import { FaArchive, FaEdit, FaHistory, FaTrash } from "react-icons/fa";
-import {
-  setIsAdd,
-  setIsConfirm,
-  setIsRestore,
-} from "../../../store/StoreAction";
+import { FaEdit, FaTrash } from "react-icons/fa";
+import { setIsAdd, setIsRestore } from "../../../store/StoreAction";
 import { StoreContext } from "../../../store/StoreContext";
 import useLoadHolidays from "../../custom-hooks/useLoadHolidays.jsx";
 import { devApiUrl, formatDate } from "../../helpers/functions-general";
-import ModalConfirm from "../../partials/modals/ModalConfirm";
 import ModalDeleteRestore from "../../partials/modals/ModalDeleteRestore";
 import NoData from "../../partials/NoData";
 import ServerError from "../../partials/ServerError";
 import TableSpinner from "../../partials/spinners/TableSpinner.jsx";
-import StatusActive from "../../partials/status/StatusActive";
-import StatusInactive from "../../partials/status/StatusInactive";
 
 const HolidaysList = ({ setItemEdit }) => {
   const { store, dispatch } = React.useContext(StoreContext);

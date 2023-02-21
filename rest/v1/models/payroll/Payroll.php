@@ -14,6 +14,8 @@ class Payroll
     public $payroll_list_aid;
     public $payroll_list_employee_name;
     public $payroll_list_employee_id;
+    public $payroll_list_employee_salary;
+    public $payroll_list_night_diff_per_day;
 
     public $connection;
     public $lastInsertedId;
@@ -84,12 +86,16 @@ class Payroll
             $sql .= "payroll_list_employee_name, ";
             $sql .= "payroll_list_is_paid, ";
             $sql .= "payroll_list_employee_id, ";
+            $sql .= "payroll_list_employee_salary, ";
+            $sql .= "payroll_list_night_diff_per_day, ";
             $sql .= "payroll_list_created, ";
             $sql .= "payroll_list_datetime ) values ( ";
             $sql .= ":payroll_list_payroll_id, ";
             $sql .= ":payroll_list_employee_name, ";
             $sql .= ":payroll_list_is_paid, ";
             $sql .= ":payroll_list_employee_id, ";
+            $sql .= ":payroll_list_employee_salary, ";
+            $sql .= ":payroll_list_night_diff_per_day, ";
             $sql .= ":payroll_list_created, ";
             $sql .= ":payroll_list_datetime ) ";
             $query = $this->connection->prepare($sql);
@@ -98,6 +104,8 @@ class Payroll
                 "payroll_list_is_paid" => $this->payroll_is_paid,
                 "payroll_list_employee_name" => $this->payroll_list_employee_name,
                 "payroll_list_employee_id" => $this->payroll_list_employee_id,
+                "payroll_list_employee_salary" => $this->payroll_list_employee_salary,
+                "payroll_list_night_diff_per_day" => $this->payroll_list_night_diff_per_day,
                 "payroll_list_created" => $this->payroll_created,
                 "payroll_list_datetime" => $this->payroll_datetime,
             ]);

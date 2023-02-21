@@ -108,6 +108,7 @@ class Earnings
             $sql .= "earnings.earnings_is_paid, ";
             $sql .= "earnings.earnings_num_pay, ";
             $sql .= "earnings.earnings_employee, ";
+            $sql .= "earnings.earnings_employee_id, ";
             $sql .= "earnings.earnings_amount, ";
             $sql .= "earnings.earnings_details, ";
             $sql .= "earnings.earnings_frequency, ";
@@ -148,6 +149,7 @@ class Earnings
             $sql .= "earnings.earnings_is_paid, ";
             $sql .= "earnings.earnings_num_pay, ";
             $sql .= "earnings.earnings_employee, ";
+            $sql .= "earnings.earnings_employee_id, ";
             $sql .= "earnings.earnings_amount, ";
             $sql .= "earnings.earnings_details, ";
             $sql .= "earnings.earnings_frequency, ";
@@ -357,29 +359,6 @@ class Earnings
         return $query;
     }
 
-    // read payroll id in earinings
-    public function checkEarningsPayrollId()
-    {
-        try {
-            $sql = "select earnings_payroll_id, ";
-            $sql .= "earnings_payroll_type_id, ";
-            $sql .= "earnings_employee_id, ";
-            $sql .= "earnings_aid, ";
-            $sql .= "earnings_payitem_id, ";
-            $sql .= "earnings_amount ";
-            $sql .= "from {$this->tblEarnings} ";
-            $sql .= "where earnings_payroll_id = :earnings_payroll_id ";
-            // $sql .= "and earnings_number_of_installment != 0 ";
-            $sql .= "order by earnings_payroll_id desc ";
-            $query = $this->connection->prepare($sql);
-            $query->execute([
-                "earnings_payroll_id" => "{$this->earnings_payroll_id}",
-            ]);
-        } catch (PDOException $ex) {
-            $query = false;
-        }
-        return $query;
-    }
     // delete
     public function delete()
     {

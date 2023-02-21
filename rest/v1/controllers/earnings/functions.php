@@ -8,14 +8,6 @@ function isEarningsValidateId($object)
     return $query;
 }
 
-// Read all Pr id in earnings
-function checkEarningsPayrollId($object)
-{
-    $query = $object->checkEarningsPayrollId();
-    checkQuery($query, "Empty records (earning payroll id).");
-    return $query;
-}
-
 // check name
 function isHRISImportExist($object, $name)
 {

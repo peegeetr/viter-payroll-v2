@@ -5,6 +5,7 @@ class PayrollList
     public $payroll_list_is_paid;
     public $payroll_list_employee_name;
     public $payroll_list_employee_id;
+    public $payroll_list_employee_salary;
     public $payroll_list_payroll_id;
     public $payroll_list_gross;
     public $payroll_list_deduction;
@@ -79,6 +80,8 @@ class PayrollList
             $sql .= "payrollList.payroll_list_aid, ";
             $sql .= "payrollList.payroll_list_is_paid, ";
             $sql .= "payrollList.payroll_list_employee_name, ";
+            $sql .= "payrollList.payroll_list_employee_salary, ";
+            $sql .= "payrollList.payroll_list_night_diff_per_day, ";
             $sql .= "payrollList.payroll_list_employee_id, ";
             $sql .= "payroll.payroll_earning_type, ";
             $sql .= "payroll.payroll_id, ";
@@ -107,6 +110,8 @@ class PayrollList
             $sql .= "payrollList.payroll_list_aid, ";
             $sql .= "payrollList.payroll_list_is_paid, ";
             $sql .= "payrollList.payroll_list_employee_name, ";
+            $sql .= "payrollList.payroll_list_employee_salary, ";
+            $sql .= "payrollList.payroll_list_night_diff_per_day, ";
             $sql .= "payrollList.payroll_list_employee_id, ";
             $sql .= "payroll.payroll_id, ";
             $sql .= "payroll.payroll_start_date, ";

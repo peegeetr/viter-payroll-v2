@@ -3,9 +3,15 @@ import { FaEnvelope, FaSave } from "react-icons/fa";
 import { ImPlay3 } from "react-icons/im";
 import { setIsAdd, setIsConfirm } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
+import useLoadAllNightDiff from "../../../custom-hooks/useLoadAllNightDiff";
+import useLoadHolidays from "../../../custom-hooks/useLoadHolidays";
 import useLoadPayrollEarnings from "../../../custom-hooks/useLoadPayrollEarnings";
 import useLoadPayrollList from "../../../custom-hooks/useLoadPayrollList";
-import { devApiUrl, getUrlParam } from "../../../helpers/functions-general";
+import {
+  devApiUrl,
+  getUrlParam,
+  hrisDevApiUrl,
+} from "../../../helpers/functions-general";
 import BreadCrumbs from "../../../partials/BreadCrumbs";
 import Footer from "../../../partials/Footer";
 import Header from "../../../partials/Header";
@@ -26,12 +32,12 @@ const PayrollView = () => {
     "get"
   );
   const { payrollEarnings } = useLoadPayrollEarnings(
-    `${devApiUrl}/v1/earnings/bypayrollId/${pid}`,
+    `${devApiUrl}/v1/earnings`,
     "get"
   );
+  const { holidays } = useLoadHolidays(`${devApiUrl}/v1/holidays`, "get");
 
-  console.log(payrollEarnings, payrollList);
-
+  console.log(payrollEarnings, holidays, payrollList);
   const handleRun = () => {
     dispatch(setIsConfirm(true));
   };
@@ -71,6 +77,7 @@ const PayrollView = () => {
           item={pid}
           employees={payrollList}
           payrollEarnings={payrollEarnings}
+          holidays={holidays}
         />
       )}
       {store.success && <ModalSuccess />}

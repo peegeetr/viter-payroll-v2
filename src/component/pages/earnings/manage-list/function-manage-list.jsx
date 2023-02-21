@@ -1,5 +1,11 @@
 import { setError, setMessage } from "../../../../store/StoreAction";
 import { formatDate, getWorkingDays } from "../../../helpers/functions-general";
+import {
+  absencesId,
+  leaveId,
+  nightDiffId,
+  overtimeId,
+} from "../../../helpers/functions-payitemId";
 import { employeeRate } from "../../../helpers/payroll-formula";
 import StatusActive from "../../../partials/status/StatusActive";
 import StatusOngoing from "../../../partials/status/StatusOngoing";
@@ -14,15 +20,19 @@ export const validatePayPeriod = (values, inputDate, dispatch) => {
       new Date(inputDate[0].payroll_start_date) ||
       new Date(values.earnings_start_pay_date) >
         new Date(inputDate[0].payroll_end_date) ||
+      new Date(values.earnings_end_pay_date) <
+        new Date(inputDate[0].payroll_end_date) ||
       // deductions
       new Date(values.deduction_start_pay_date) <
         new Date(inputDate[0].payroll_start_date) ||
       new Date(values.deduction_start_pay_date) >
+        new Date(inputDate[0].payroll_end_date) ||
+      new Date(values.deduction_end_pay_date) <
         new Date(inputDate[0].payroll_end_date)) &&
     installment === "2"
   ) {
     dispatch(setError(true));
-    dispatch(setMessage("Start date is out of payroll period date."));
+    dispatch(setMessage("Date range is out of payroll period date."));
     val = true;
   }
   return val;
@@ -83,32 +93,6 @@ export const computeOvertime = (overtimeData, employee, payrollDraft) => {
   return list;
 };
 
-// compute Night Diff
-export const computeNightDiff = (nightDiffData, employee, payrollDraft) => {
-  const days = getWorkingDays(
-    new Date(payrollDraft[0].payroll_start_date),
-    new Date(payrollDraft[0].payroll_end_date)
-  );
-  let list = [];
-  nightDiffData.map((ndItem) => {
-    employee.map((eItem) => {
-      if (Number(ndItem.employee_aid) === Number(eItem.employee_aid)) {
-        list.push({
-          name: `${eItem.employee_lname}, ${eItem.employee_fname}`,
-          amount:
-            ndItem.employee_job_nd_per_day *
-            employeeRate(eItem.employee_job_salary, days).hourly,
-          employeId: eItem.employee_aid,
-          details: `Night Differencial`,
-          // details: `Night Differencial (${formatDate(eItem.employee_created)})`,
-        });
-      }
-    });
-  });
-  console.log(nightDiffData, list);
-  return list;
-};
-
 // get Date Length
 export const validateDataIsNotEmpty = (
   payItem,
@@ -118,28 +102,28 @@ export const validateDataIsNotEmpty = (
   dispatch
 ) => {
   let val = false;
-  // payItem = 19 is leave
-  // payItem = 18 is OT
-  // payItem = 36 is absences
+  // leaveId = 19 is leave
+  // overtimeId = 18 is OT
+  // absencesId = 36 is absences
+  // nightDiffId = 23 is nightDiff
   // payItem = 43 is undertime
-  // payItem = 23 is nightDiff
 
-  if (payItem === 19 && payLeaveHrisData.length === 0) {
+  if (payItem === Number(leaveId) && payLeaveHrisData.length === 0) {
     dispatch(setError(true));
     dispatch(setMessage("No data found."));
     val = true;
   }
-  if (payItem === 36 && absencesHrisData.length === 0) {
+  if (payItem === Number(absencesId) && absencesHrisData.length === 0) {
     dispatch(setError(true));
     dispatch(setMessage("No data found."));
     val = true;
   }
-  if (payItem === 18 && overtimeHrisData.length === 0) {
+  if (payItem === Number(overtimeId) && overtimeHrisData.length === 0) {
     dispatch(setError(true));
     dispatch(setMessage("No data found."));
     val = true;
   }
-  if (payItem === 23 && nightDiffHrisData.length === 0) {
+  if (payItem === Number(nightDiffId) && nightDiffHrisData.length === 0) {
     dispatch(setError(true));
     dispatch(setMessage("No data found."));
     val = true;

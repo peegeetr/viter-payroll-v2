@@ -1,17 +1,11 @@
-import { Form, Formik } from "formik";
 import React from "react";
-import { FaTimesCircle } from "react-icons/fa";
+import { Form, Formik } from "formik";
 import * as Yup from "yup";
-import {
-  setError,
-  setIsAdd,
-  setMessage,
-  setStartIndex,
-} from "../../../../store/StoreAction";
+import { FaTimesCircle } from "react-icons/fa";
+import { setIsAdd, setStartIndex } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
 import useLoadAbsences from "../../../custom-hooks/useLoadAbsences";
 import useLoadAll from "../../../custom-hooks/useLoadAll";
-import useLoadAllNightDiff from "../../../custom-hooks/useLoadAllNightDiff";
 import useLoadOvertime from "../../../custom-hooks/useLoadOvertime";
 import useLoadPayLeave from "../../../custom-hooks/useLoadPayLeave";
 import fetchApi from "../../../helpers/fetchApi";
@@ -22,20 +16,18 @@ import {
   InputTextArea,
 } from "../../../helpers/FormInputs";
 import {
-  consoleLog,
   devApiUrl,
   handleNumOnly,
   hrisDevApiUrl,
-  nightDiffId,
 } from "../../../helpers/functions-general";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 import {
   computeLeave,
-  computeNightDiff,
   computeOvertime,
   validateDataIsNotEmpty,
   validatePayPeriod,
 } from "./function-manage-list";
+import { holidayId, nightDiffId } from "../../../helpers/functions-payitemId";
 
 const ModalAddManageEarnings = ({ payType, employee, payrollDraft }) => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -68,11 +60,6 @@ const ModalAddManageEarnings = ({ payType, employee, payrollDraft }) => {
 
   const { overtime } = useLoadOvertime(
     `${hrisDevApiUrl}/v1/tasks/overtime/approved/${payroll_start_date}/${payroll_end_date}`,
-    "get"
-  );
-
-  const { nightDiff } = useLoadAllNightDiff(
-    `${hrisDevApiUrl}/v1/employees/nightDifferential`,
     "get"
   );
 
@@ -253,11 +240,6 @@ const ModalAddManageEarnings = ({ payType, employee, payrollDraft }) => {
                   employee,
                   payrollDraft
                 );
-                // const computedNightDiff = computeNightDiff(
-                //   nightDiff,
-                //   employee,
-                //   payrollDraft
-                // );
 
                 // send data to server
                 fetchData(
@@ -357,7 +339,8 @@ const ModalAddManageEarnings = ({ payType, employee, payrollDraft }) => {
                             <option value="" hidden></option>
                             {result?.map((payitem, key) => {
                               return (
-                                payitem.payitem_aid !== nightDiffId && (
+                                payitem.payitem_aid !== Number(nightDiffId) &&
+                                payitem.payitem_aid !== Number(holidayId) && (
                                   <option
                                     key={key}
                                     value={payitem.payitem_aid}

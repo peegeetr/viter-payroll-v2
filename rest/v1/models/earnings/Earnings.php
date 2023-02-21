@@ -361,10 +361,15 @@ class Earnings
     public function checkEarningsPayrollId()
     {
         try {
-            $sql = "select earnings_payroll_id ";
+            $sql = "select earnings_payroll_id, ";
+            $sql .= "earnings_payroll_type_id, ";
+            $sql .= "earnings_employee_id, ";
+            $sql .= "earnings_aid, ";
+            $sql .= "earnings_payitem_id, ";
+            $sql .= "earnings_amount ";
             $sql .= "from {$this->tblEarnings} ";
             $sql .= "where earnings_payroll_id = :earnings_payroll_id ";
-            $sql .= "and earnings_is_installment = 0 ";
+            // $sql .= "and earnings_number_of_installment != 0 ";
             $sql .= "order by earnings_payroll_id desc ";
             $query = $this->connection->prepare($sql);
             $query->execute([

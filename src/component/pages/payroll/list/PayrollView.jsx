@@ -26,9 +26,11 @@ const PayrollView = () => {
     "get"
   );
   const { payrollEarnings } = useLoadPayrollEarnings(
-    `${devApiUrl}/v1/payrollList/${pid}`,
+    `${devApiUrl}/v1/earnings/bypayrollId/${pid}`,
     "get"
   );
+
+  console.log(payrollEarnings, payrollList);
 
   const handleRun = () => {
     dispatch(setIsConfirm(true));
@@ -64,7 +66,13 @@ const PayrollView = () => {
         <Footer />
       </div>
 
-      {store.isConfirm && <ModalRun item={pid} employees={payrollList} />}
+      {store.isConfirm && (
+        <ModalRun
+          item={pid}
+          employees={payrollList}
+          payrollEarnings={payrollEarnings}
+        />
+      )}
       {store.success && <ModalSuccess />}
       {store.error && <ModalError />}
     </>

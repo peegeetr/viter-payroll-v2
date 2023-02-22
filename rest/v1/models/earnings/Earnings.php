@@ -17,6 +17,7 @@ class Earnings
     public $earnings_number_of_installment;
     public $earnings_start_pay_date;
     public $earnings_end_pay_date;
+    public $earnings_hris_date;
     public $earnings_created;
     public $earnings_datetime;
 
@@ -56,6 +57,7 @@ class Earnings
             $sql .= "earnings_number_of_installment, ";
             $sql .= "earnings_start_pay_date, ";
             $sql .= "earnings_end_pay_date, ";
+            $sql .= "earnings_hris_date, ";
             $sql .= "earnings_created, ";
             $sql .= "earnings_datetime ) values ( ";
             $sql .= ":earnings_employee, ";
@@ -72,6 +74,7 @@ class Earnings
             $sql .= ":earnings_number_of_installment, ";
             $sql .= ":earnings_start_pay_date, ";
             $sql .= ":earnings_end_pay_date, ";
+            $sql .= ":earnings_hris_date, ";
             $sql .= ":earnings_created, ";
             $sql .= ":earnings_datetime ) ";
             $query = $this->connection->prepare($sql);
@@ -90,6 +93,7 @@ class Earnings
                 "earnings_number_of_installment" => $this->earnings_number_of_installment,
                 "earnings_start_pay_date" => $this->earnings_start_pay_date,
                 "earnings_end_pay_date" => $this->earnings_end_pay_date,
+                "earnings_hris_date" => $this->earnings_hris_date,
                 "earnings_created" => $this->earnings_created,
                 "earnings_datetime" => $this->earnings_datetime,
             ]);
@@ -121,6 +125,7 @@ class Earnings
             $sql .= "earnings.earnings_payroll_id, ";
             $sql .= "earnings.earnings_payroll_type_id, ";
             $sql .= "earnings.earnings_is_installment, ";
+            $sql .= "earnings.earnings_hris_date, ";
             $sql .= "payitem.payitem_aid, ";
             $sql .= "payitem.payitem_is_hris, ";
             $sql .= "payitem.payitem_name, ";
@@ -243,6 +248,7 @@ class Earnings
             $sql .= "earnings.earnings_details, ";
             $sql .= "earnings.earnings_frequency, ";
             $sql .= "earnings.earnings_number_of_installment, ";
+            $sql .= "earnings.earnings_hris_date, ";
             $sql .= "earnings.earnings_start_pay_date, ";
             $sql .= "earnings.earnings_end_pay_date, ";
             $sql .= "payitem.payitem_name, ";

@@ -37,8 +37,8 @@ export const runPayroll = (employee, payrollEarnings, holidays) => {
         new Date(emp.payroll_end_date) <=
           new Date(earning.earnings_end_pay_date) // payroll end date
       ) {
-        totalOtAmount += payComputeOt(earning);
-        totalLeaveAmount += payComputeLeave(earning);
+        totalOtAmount += payComputeOt(earning, holidays, emp);
+        totalLeaveAmount += payComputeLeave(earning, holidays);
         totalAbsencesAmount += payComputeAbsences(earning);
         totalHazardPayAmount += payComputeHazardPay(earning);
         totalInflationAmount += payComputeInflationAdjustmen(earning);
@@ -48,14 +48,13 @@ export const runPayroll = (employee, payrollEarnings, holidays) => {
     //  loop each holiday for each employee
     holidays.map((holidaysItem) => {
       if (
-        new Date(emp.payroll_start_date) <=
-          new Date(holidaysItem.holidays_date) &&
-        new Date(emp.payroll_end_date) >= new Date(holidaysItem.holidays_date)
+        new Date(holidaysItem.holidays_date) >=
+          new Date(emp.payroll_start_date) &&
+        new Date(holidaysItem.holidays_date) <= new Date(emp.payroll_end_date)
       ) {
         totalHolidayAmount += computeHoliday(emp, holidaysItem);
       }
     });
-    console.log(totalHolidayAmount, emp.payroll_list_employee_name);
     // night diffirencial
     totalNightDiffAmount += computeNightDiff(emp);
 
@@ -80,6 +79,7 @@ export const runPayroll = (employee, payrollEarnings, holidays) => {
       payroll_list_hazard_pay: totalHazardPayAmount.toFixed(2),
       payroll_list_inlfation_adjustment: totalInflationAmount.toFixed(2),
       payroll_list_adjustment_pay: totalAdjustmentAmount.toFixed(2),
+      payroll_list_holiday: totalHolidayAmount.toFixed(2),
       payroll_list_gross: grossAmount,
       payroll_list_deduction: 0,
       payroll_list_net_pay: 0,

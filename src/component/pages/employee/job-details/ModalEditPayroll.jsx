@@ -38,6 +38,8 @@ const ModalEditPayroll = ({ itemEdit }) => {
       itemEdit.employee_job_phil_health_deduc === 1 ? true : false,
     employee_job_work_reg_hol:
       itemEdit.employee_job_work_reg_hol === 1 ? true : false,
+    employee_job_none_work_reg_hol:
+      itemEdit.employee_job_none_work_reg_hol === 1 ? true : false,
     employee_job_nd_per_day:
       itemEdit.employee_job_nd_per_day !== ""
         ? itemEdit.employee_job_nd_per_day
@@ -84,7 +86,7 @@ const ModalEditPayroll = ({ itemEdit }) => {
                   console.log(values);
                   fetchData(
                     setLoading,
-                    `${hrisDevApiUrl}/v1/employees/payroll/${itemEdit.employee_aid}`,
+                    `/v1/employees/payroll/${itemEdit.employee_aid}`,
                     values, // form data values
                     null, // result set data
                     "Succesfully updated.", // success msg
@@ -102,7 +104,7 @@ const ModalEditPayroll = ({ itemEdit }) => {
                 {(props) => {
                   return (
                     <Form>
-                      <div className="relative my-5 px-5 flex items-center">
+                      <div className="relative mb-3 pt-5 flex items-center">
                         <p className="w-1/2 m-0">Payroll Elegibility</p>
                         <span>
                           <MyCheckbox
@@ -146,6 +148,19 @@ const ModalEditPayroll = ({ itemEdit }) => {
                       </div>
 
                       <div className="relative mb-3 flex items-center">
+                        <p className="w-1/2 m-0">
+                          Work on none working holiday?
+                        </p>
+                        <span>
+                          <MyCheckbox
+                            type="checkbox"
+                            name="employee_job_none_work_reg_hol"
+                            disabled={loading}
+                          />
+                        </span>
+                      </div>
+
+                      <div className="relative mb-3 flex items-center">
                         <p className="w-1/2 m-0">Work on regular holiday?</p>
                         <span>
                           <MyCheckbox
@@ -173,6 +188,7 @@ const ModalEditPayroll = ({ itemEdit }) => {
                           type="text"
                           name="employee_job_salary"
                           disabled={loading}
+                          onKeyPress={handleNumOnly}
                         />
                       </div>
 
@@ -205,6 +221,7 @@ const ModalEditPayroll = ({ itemEdit }) => {
                           type="text"
                           name="employee_job_starting_pay"
                           disabled={loading}
+                          onKeyPress={handleNumOnly}
                         />
                       </div>
 
@@ -214,7 +231,7 @@ const ModalEditPayroll = ({ itemEdit }) => {
                           disabled={loading || !props.dirty}
                           className="btn-modal-submit relative"
                         >
-                          {loading && <ButtonSpinner />} Save
+                          {loading ? <ButtonSpinner /> : "Save"}
                         </button>
                         <button
                           type="reset"

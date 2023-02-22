@@ -55,53 +55,94 @@ const JobDetailsList = () => {
               <div key={key} className="relative w-full max-w-[650px]  ">
                 <div className="bg-gray-200 p-2 mb-5 flex justify-between items-center mt-5">
                   <h4>Employment Status</h4>
-                  <button
-                    type="button"
-                    className="tooltip-action-table"
-                    data-tooltip="Edit"
-                    onClick={() => handleEdit(item)}
-                  >
-                    <FaEdit />
-                  </button>
+                  {eid === null ? (
+                    ""
+                  ) : (
+                    <button
+                      type="button"
+                      className="tooltip-action-table"
+                      data-tooltip="Edit"
+                      onClick={() => handleEdit(item)}
+                    >
+                      <FaEdit />
+                    </button>
+                  )}
                 </div>
-                <div className="text-left grid grid-cols-2 md:md:grid-cols-[1fr_2fr] mb-5 xs:pl-5 pl-2">
+                <div className="text-left grid grid-cols-2 md:md:grid-cols-[1fr_1.5fr] mb-5 xs:pl-5 pl-2">
+                  <p className="font-semibold">Employee Number :</p>
+                  <p className="pl-2">{item.employee_job_number}</p>
+                  <p className="font-semibold">Department :</p>
+                  <p className="pl-2">{item.department_name}</p>
+                  <p className="font-semibold">Job Title :</p>
+                  <p className="pl-2">{item.job_title_name}</p>
+                  <p className="font-semibold">Status :</p>
+                  <p className="pl-2 capitalize">{item.employee_job_status}</p>
+                  <p className="font-semibold">Leave type :</p>
+                  <p className="pl-2 capitalize">
+                    {/* {item.leavetype_name} ({item.leavetype_days} days) */}
+                    {item.leavetype_name}
+                  </p>
+                  <p className="font-semibold">Supervisor :</p>
+                  <p className="pl-2">{item.employee_job_supervisor_name}</p>
+                  <p className="font-semibold">Work Start Time :</p>
+                  <p className="pl-2">
+                    {item.employee_job_start_time === "ft"
+                      ? "Flexible"
+                      : item.employee_job_start_time === ""
+                      ? ""
+                      : `${item.employee_job_start_time} AM`}
+                  </p>
+                  <p className="font-semibold">Work Email :</p>
+                  <p className="pl-2 break-all">{item.employee_email}</p>
                   <p className="font-semibold">Date Employed :</p>
                   <p className="pl-2">
                     {item.employee_job_hired_date === ""
                       ? ""
                       : formatDate(item.employee_job_hired_date)}
                   </p>
-                  <p className="font-semibold">Employee Number :</p>
-                  <p className="pl-2">{item.employee_job_number}</p>
+                  <p className="font-semibold">Regularized on :</p>
+                  <p className="pl-2">
+                    {item.employee_job_regularized === ""
+                      ? ""
+                      : formatDate(item.employee_job_regularized)}
+                  </p>
+                  <p className="font-semibold">Date separated :</p>
+                  <p className="pl-2">
+                    {item.employee_job_separated === ""
+                      ? ""
+                      : formatDate(item.employee_job_separated)}
+                  </p>
                   <p className="font-semibold">TIN :</p>
                   <p className="pl-2">{item.employee_job_tin}</p>
-                  <p className="font-semibold">Status :</p>
-                  <p className="pl-2">{item.employee_job_status}</p>
-                  <p className="font-semibold">Department :</p>
-                  <p className="pl-2">{item.department_name}</p>
-                  <p className="font-semibold">Job Title :</p>
-                  <p className="pl-2">{item.job_title_name}</p>
-                  <p className="font-semibold">Supervisor :</p>
-                  <p className="pl-2">{item.employee_job_supervisor_id}</p>
-                  <p className="font-semibold">Work Email :</p>
-                  <p className="pl-2 break-all">{item.employee_email}</p>
                   <p className="font-semibold">Drive Link :</p>
-                  <p className="pl-2">{item.employee_job_drive_link}</p>
+                  <p className="pl-2 underline text-blue-600">
+                    <a href={`${item.employee_job_drive_link}`} target="_blank">
+                      View on G-Drive
+                    </a>
+                  </p>
                   <p className="font-semibold">Comment :</p>
                   <p className="pl-2">{item.employee_job_comments}</p>
                 </div>
                 <div className="bg-gray-200 p-2 mb-5 flex justify-between items-center">
                   <h4>Payroll Details</h4>
-                  <button
-                    type="button"
-                    className="tooltip-action-table"
-                    data-tooltip="Edit"
-                    onClick={() => handleEditPayroll(item)}
-                  >
-                    <FaEdit />
-                  </button>
+                  {eid === null ? (
+                    ""
+                  ) : (
+                    <button
+                      type="button"
+                      className="tooltip-action-table"
+                      data-tooltip="Edit"
+                      onClick={() => handleEditPayroll(item)}
+                    >
+                      <FaEdit />
+                    </button>
+                  )}
                 </div>
-                <div className="text-left grid grid-cols-2 md:md:grid-cols-[1fr_2fr] mb-5 xs:pl-5 pl-2">
+                <div className="text-left grid grid-cols-2 md:md:grid-cols-[1fr_1.5fr] mb-5 xs:pl-5 pl-2">
+                  <p className="font-semibold">Payroll Elegibility</p>
+                  <p className="pl-2">
+                    {item.employee_job_payroll_elegibility === 1 ? "Yes" : "No"}
+                  </p>
                   <p className="font-semibold">With SSS deduction?</p>
                   <p className="pl-2">
                     {item.employee_job_sss_deduc === 1 ? "Yes" : "No"}
@@ -113,6 +154,10 @@ const JobDetailsList = () => {
                   <p className="font-semibold">With PhilHealth deduction?</p>
                   <p className="pl-2">
                     {item.employee_job_phil_health_deduc === 1 ? "Yes" : "No"}
+                  </p>
+                  <p className="font-semibold">Work on none working holiday?</p>
+                  <p className="pl-2">
+                    {item.employee_job_none_work_reg_hol === 1 ? "Yes" : "No"}{" "}
                   </p>
                   <p className="font-semibold">Work on regular holiday?</p>
                   <p className="pl-2">
@@ -130,7 +175,9 @@ const JobDetailsList = () => {
                   </p>
                   <p className="font-semibold">Pay frequency</p>
                   <p className="pl-2 capitalize">
-                    {item.employee_job_pay_freq}
+                    {item.employee_job_pay_freq === "m"
+                      ? "Monthly"
+                      : "Semi-Monthly"}
                   </p>
                   <p className="font-semibold">Account number</p>
                   <p className="pl-2">{item.employee_job_account_number}</p>
@@ -155,10 +202,12 @@ const JobDetailsList = () => {
       </div>
 
       {store.isAdd && (
-        <ModalEditJobDetails
+        <ModalEditJob
           itemEdit={itemEdit}
           jobTitle={jobTitle}
           department={department}
+          supervisor={supervisor}
+          leave={leave}
         />
       )}
 

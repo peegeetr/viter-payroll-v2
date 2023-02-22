@@ -41,9 +41,9 @@ const HolidaysList = ({ setItemEdit }) => {
           <thead>
             <tr>
               <th>#</th>
-              <th className="min-w-[10rem]">Holidays</th>
-              <th className="min-w-[10rem]">Date</th>
-              <th className="min-w-[5rem]">Type</th>
+              <th className="min-w-[10rem] w-[10rem]">Holidays</th>
+              <th className="min-w-[10rem] w-[10rem]">Date</th>
+              <th className="min-w-[5rem] w-[10rem]">Type</th>
               <th>Rate</th>
 
               <th className="max-w-[5rem]">Actions</th>
@@ -64,8 +64,8 @@ const HolidaysList = ({ setItemEdit }) => {
                       ${formatDate(item.holidays_date).split(" ")[3]}
                       `}
                     </td>
-                    <td>{item.holidays_type}</td>
-                    <td>{item.holidays_rate}</td>
+                    <td className="capitalize">{item.holidays_type} Holiday</td>
+                    <td>{item.holidays_rate}%</td>
 
                     <td>
                       <div className="flex items-center gap-2">

@@ -86,6 +86,7 @@ if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === "19")
         $earnings->earnings_employee = $allLeave[$l]["name"];
         $earnings->earnings_amount = $allLeave[$l]["amount"];
         $earnings->earnings_details = $allLeave[$l]["details"];
+        $earnings->earnings_hris_date = $allLeave[$l]["hrisDate"];
         isHRISImportExist($earnings, "HRIS Leave data for $earnings->earnings_payroll_id is ");
         $query = checkCreate($earnings);
     }
@@ -99,12 +100,13 @@ if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === "18")
     if (count($allOvertimeLeave) === 0) {
         checkEnpoint();
     }
-    for ($l = 0; $l < count($allOvertimeLeave); $l++) {
+    for ($o = 0; $o < count($allOvertimeLeave); $o++) {
         // check name
-        $earnings->earnings_employee_id = $allOvertimeLeave[$l]["employeId"];
-        $earnings->earnings_employee = $allOvertimeLeave[$l]["name"];
-        $earnings->earnings_amount = $allOvertimeLeave[$l]["amount"];
-        $earnings->earnings_details = $allOvertimeLeave[$l]["details"];
+        $earnings->earnings_employee_id = $allOvertimeLeave[$o]["employeId"];
+        $earnings->earnings_employee = $allOvertimeLeave[$o]["name"];
+        $earnings->earnings_amount = $allOvertimeLeave[$o]["amount"];
+        $earnings->earnings_details = $allOvertimeLeave[$o]["details"];
+        $earnings->earnings_hris_date = $allOvertimeLeave[$o]["hrisDate"];
         isHRISImportExist($earnings, "HRIS Overtime data for $earnings->earnings_payroll_id is ");
         $query = checkCreate($earnings);
     }
@@ -123,6 +125,7 @@ if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === "36")
         $earnings->earnings_employee_id = $allUnPaidLeave[$u]["employeId"];
         $earnings->earnings_employee = $allUnPaidLeave[$u]["name"];
         $earnings->earnings_amount = $allUnPaidLeave[$u]["amount"];
+        $earnings->earnings_hris_date = $allUnPaidLeave[$u]["hrisDate"];
         $earnings->earnings_details = $allUnPaidLeave[$u]["unpaidDetails"];
         isHRISImportExist($earnings, "HRIS absences data for $earnings->earnings_payroll_id is ");
         $query = checkCreate($earnings);

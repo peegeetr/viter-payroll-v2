@@ -57,7 +57,8 @@ export const computeLeave = (leaveData, employee, payrollDraft) => {
           details: `Leave (${formatDate(lItem.leave_list_start_date)})(${
             lItem.leave_list_days
           })`,
-          unpaidDetails: `Unpaid Leave (${formatDate(
+          hrisDate: lItem.leave_list_start_date,
+          unpaidDetails: `Unpaid-Leave (${formatDate(
             lItem.leave_list_start_date
           )})(${lItem.leave_list_days})`,
         });
@@ -83,6 +84,7 @@ export const computeOvertime = (overtimeData, employee, payrollDraft) => {
             Number(otItem.task_spent) *
             employeeRate(eItem.employee_job_salary, days).hourly,
           employeId: eItem.employee_aid,
+          hrisDate: otItem.task_created.split(" ")[0],
           details: `Overtime (${formatDate(otItem.task_created)} ${
             otItem.task_created.split(" ")[1]
           })`,

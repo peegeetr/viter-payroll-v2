@@ -22,91 +22,113 @@ export const employeeRate = (salary, workingDays) => {
   return list;
 };
 
+export const otHolidayComputed = (earning, holidayRate, rate) => {
+  let totalHolidayAmount = 0;
+  let totalAmount = 0;
+  let finalAmount = 0;
+  let regularAmount = Number(earning.earnings_amount);
+  // 100% or 30% additional holiday
+  totalHolidayAmount = regularAmount * holidayRate - regularAmount;
+  // additional rate ot or night diff
+  totalAmount = regularAmount * rate - regularAmount;
+  // total of additional salary
+  finalAmount = totalHolidayAmount + totalAmount;
+  return finalAmount;
+};
+
 export const payComputeOt = (earning, holidays, emp) => {
-  let rate = 125 / 100;
+  let rate25 = 125 / 100;
+  let restRate30 = 130 / 100;
   let isHoliday = false;
+  let isRestDay = false;
   let ratedAmount = 0;
   let regularAmount = 0;
   let finalAmount = 0;
-  let totalAmount = 0;
+  let totalOtAmount25 = 0;
+  let totalOtHolidayRestAmount = 0;
+  let totalOtRestAmount = 0;
   let totalOtHolidayAmount = 0;
 
   holidays.map((holidaysItem) => {
     // if overtime and holiday is same date
     if (
       earning.earnings_payitem_id === overtimeId &&
-      holidaysItem.holidays_date === earning.earnings_hris_date
+      holidaysItem.holidays_date === earning.earnings_hris_date.split(" ")[0]
     ) {
       let holidayRate = holidaysItem.holidays_rate / 100;
+      let otDate = earning.earnings_hris_date.split(" ")[0];
+      let otTime = earning.earnings_hris_date.split(" ")[1];
+      let otTimeHr = otTime.split(":")[0];
 
-      //100% additional if overtime is regular day
-      if (holidaysItem.holidays_type === "regular") {
-        regularAmount += Number(earning.earnings_amount);
-        ratedAmount += Number(earning.earnings_amount) * holidayRate;
-        totalAmount += Number(earning.earnings_amount) * rate - regularAmount;
+      //if overtime is regular or special holiday day and restday
+      if (new Date(otDate).getDay() == 0 || new Date(otDate).getDay() == 6) {
+        totalOtHolidayRestAmount = otHolidayComputed(
+          earning,
+          holidayRate,
+          restRate30
+        );
         isHoliday = true;
+        isRestDay = true;
+
+        console.log(
+          "otTimeHr",
+          otTimeHr,
+          otTime,
+          emp.payroll_list_employee_name
+        );
       }
 
-      //30% additional if overtime is regular day
-      if (holidaysItem.holidays_type === "special") {
-        regularAmount += Number(earning.earnings_amount);
-        ratedAmount += Number(earning.earnings_amount) * holidayRate;
-        totalAmount += Number(earning.earnings_amount) * rate - regularAmount;
+      //if overtime is regular or special holiday day
+      if (!isRestDay) {
+        totalOtHolidayAmount = otHolidayComputed(earning, holidayRate, rate25);
         isHoliday = true;
       }
-      totalOtHolidayAmount = ratedAmount - regularAmount + totalAmount;
     }
   });
 
-  if (earning.earnings_payitem_id === overtimeId) {
-    //if dont have holiday
-    //25% additional if overtime is regular day
-    regularAmount += Number(earning.earnings_amount);
-    ratedAmount += Number(earning.earnings_amount) * rate;
-    totalAmount = ratedAmount - regularAmount;
-  }
-  // OT + holiday (special or Regular)
-  finalAmount = isHoliday ? totalOtHolidayAmount : totalAmount;
+  // if Overtime and not holiday
+  if (earning.earnings_payitem_id === overtimeId && !isHoliday) {
+    let otDate = earning.earnings_hris_date.split(" ")[0];
 
-  console.log(
-    "ot",
-    finalAmount,
-    totalAmount,
-    totalOtHolidayAmount,
-    emp.payroll_list_employee_name
-  );
+    // if overtime and saturday or sunday
+    if (new Date(otDate).getDay() == 0 || new Date(otDate).getDay() == 6) {
+      //if dont have holiday and saturday or sunday
+      regularAmount = Number(earning.earnings_amount);
+      ratedAmount = regularAmount * restRate30;
+      //total of 30% additional
+      totalOtRestAmount = ratedAmount - regularAmount;
+      isRestDay = true;
+    }
+
+    // if overtime is normal day
+    if (!isRestDay) {
+      // if dont have holiday and not saturday or sunday
+      regularAmount = Number(earning.earnings_amount);
+      ratedAmount = regularAmount * rate25;
+      //total of 25% additional
+      totalOtAmount25 = ratedAmount - regularAmount;
+    }
+  }
+
+  // OT + holiday + restday (special or Regular) with or without leave
+  finalAmount += isHoliday && isRestDay && totalOtHolidayRestAmount;
+  // OT + holiday (special or Regular) with or without leave
+  finalAmount += isHoliday && !isRestDay && totalOtHolidayAmount;
+  // OT + restday with or without leave
+  finalAmount += !isHoliday && isRestDay && totalOtRestAmount;
+  // OT normal day with or without leave
+  finalAmount += !isHoliday && !isRestDay && totalOtAmount25;
+
   return finalAmount;
 };
 
-export const payComputeLeave = (earning, holidays) => {
+export const payComputeLeave = (earning) => {
   let finalAmount = 0;
-  let totalLeaveHolidayAmount = 0;
-  let totalAmount = 0;
-  let regularAmount = 0;
-  let ratedAmount = 0;
-  let val = false;
 
-  holidays.map((holidaysItem) => {
-    // if overtime and holiday is same date
-    if (
-      earning.earnings_payitem_id === leaveId &&
-      holidaysItem.holidays_date === earning.earnings_hris_date
-    ) {
-      let holidayRate = holidaysItem.holidays_rate / 100;
-      //30% additional if overtime is regular day
-      if (holidaysItem.holidays_type === "special") {
-        regularAmount += Number(earning.earnings_amount);
-        ratedAmount += Number(earning.earnings_amount) * holidayRate;
-        val = true;
-      }
-      totalLeaveHolidayAmount = ratedAmount - regularAmount;
-    }
-  });
   if (earning.earnings_payitem_id === leaveId) {
     //dont have additional leave
-    totalAmount += 0;
+    finalAmount += 0;
   }
-  finalAmount = val === false ? totalAmount : totalLeaveHolidayAmount;
   return finalAmount;
 };
 
@@ -119,12 +141,12 @@ export const payComputeAbsences = (earning) => {
 };
 
 // compute Night Diffirencial
-export const computeNightDiff = (emp) => {
+export const payComputeNightDiff = (emp) => {
   const days = getWorkingDays(
     new Date(emp.payroll_start_date),
     new Date(emp.payroll_end_date)
   );
-  let rate = 110 / 100;
+  let rate10 = 110 / 100;
   let ratedAmount = 0;
   let regularAmount = 0;
   let finalAmount = 0;
@@ -133,7 +155,8 @@ export const computeNightDiff = (emp) => {
   );
 
   if (emp.payroll_list_night_diff_per_day > 0) {
-    ratedAmount += emp.payroll_list_night_diff_per_day * hourRate * days * rate;
+    ratedAmount +=
+      emp.payroll_list_night_diff_per_day * hourRate * days * rate10;
     regularAmount += emp.payroll_list_night_diff_per_day * hourRate * days;
   }
   finalAmount = ratedAmount - regularAmount;
@@ -177,7 +200,7 @@ export const payComputeAdjustment = (earning) => {
 };
 
 // compute holiday
-export const computeHoliday = (emp, holiday) => {
+export const payComputeHoliday = (emp, holiday) => {
   const days = getWorkingDays(
     new Date(emp.payroll_start_date),
     new Date(emp.payroll_end_date)

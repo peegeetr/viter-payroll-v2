@@ -1,6 +1,6 @@
 import {
-  computeHoliday,
-  computeNightDiff,
+  payComputeHoliday,
+  payComputeNightDiff,
   payComputeAbsences,
   payComputeAdjustment,
   payComputeHazardPay,
@@ -52,11 +52,12 @@ export const runPayroll = (employee, payrollEarnings, holidays) => {
           new Date(emp.payroll_start_date) &&
         new Date(holidaysItem.holidays_date) <= new Date(emp.payroll_end_date)
       ) {
-        totalHolidayAmount += computeHoliday(emp, holidaysItem);
+        totalHolidayAmount += payComputeHoliday(emp, holidaysItem);
       }
     });
     // night diffirencial
-    totalNightDiffAmount += computeNightDiff(emp);
+    totalNightDiffAmount += payComputeNightDiff(emp, holidays);
+    // console.log("ot", totalOtAmount, emp.payroll_list_employee_name);
 
     grossAmount =
       totalNightDiffAmount +

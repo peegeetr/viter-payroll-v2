@@ -62,7 +62,6 @@ const ModalAddManageEarnings = ({ payType, employee, payrollDraft }) => {
     `${hrisDevApiUrl}/v1/tasks/overtime/approved/${payroll_start_date}/${payroll_end_date}`,
     "get"
   );
-
   const { result, setResult } = useLoadAll(
     `${devApiUrl}/v1/paytype/${0}`,
     "get"

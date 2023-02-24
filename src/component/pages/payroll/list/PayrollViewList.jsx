@@ -1,14 +1,11 @@
 import React from "react";
 import { MdOutlineReceipt } from "react-icons/md";
 import { Link } from "react-router-dom";
-import { setIsAdd, setIsRestore } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
 import useFetchDataLoadMore from "../../../custom-hooks/useFetchDataLoadMore";
-import useLoadPayroll from "../../../custom-hooks/useLoadPayroll";
 import {
   devApiUrl,
   devNavUrl,
-  formatDate,
   getPayPeriod,
   getUrlParam,
   getWorkingDays,

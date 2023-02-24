@@ -14,7 +14,6 @@ import {
 import NoData from "../../../partials/NoData";
 import ServerError from "../../../partials/ServerError";
 import TableSpinner from "../../../partials/spinners/TableSpinner";
-import ModalEditJobDetails from "./ModalEditJobDetails";
 import ModalEditPayroll from "./ModalEditPayroll";
 
 const JobDetailsList = () => {
@@ -155,11 +154,7 @@ const JobDetailsList = () => {
                   <p className="pl-2">
                     {item.employee_job_phil_health_deduc === 1 ? "Yes" : "No"}
                   </p>
-                  <p className="font-semibold">Work on none working holiday?</p>
-                  <p className="pl-2">
-                    {item.employee_job_none_work_reg_hol === 1 ? "Yes" : "No"}{" "}
-                  </p>
-                  <p className="font-semibold">Work on regular holiday?</p>
+                  <p className="font-semibold">Work on holiday?</p>
                   <p className="pl-2">
                     {item.employee_job_work_reg_hol === 1 ? "Yes" : "No"}{" "}
                   </p>
@@ -202,7 +197,7 @@ const JobDetailsList = () => {
       </div>
 
       {store.isAdd && (
-        <ModalEditJob
+        <ModalEditJobDetails
           itemEdit={itemEdit}
           jobTitle={jobTitle}
           department={department}

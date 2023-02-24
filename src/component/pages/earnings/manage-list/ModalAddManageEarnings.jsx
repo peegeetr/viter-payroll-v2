@@ -29,7 +29,12 @@ import {
 } from "./function-manage-list";
 import { holidayId, nightDiffId } from "../../../helpers/functions-payitemId";
 
-const ModalAddManageEarnings = ({ payType, employee, payrollDraft }) => {
+const ModalAddManageEarnings = ({
+  payType,
+  employee,
+  payrollDraft,
+  holidays,
+}) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [loading, setLoading] = React.useState(false);
   const [loadingSel, setSelLoading] = React.useState(false);
@@ -237,7 +242,8 @@ const ModalAddManageEarnings = ({ payType, employee, payrollDraft }) => {
                 const computedOT = computeOvertime(
                   overtime,
                   employee,
-                  payrollDraft
+                  payrollDraft,
+                  holidays
                 );
 
                 // send data to server

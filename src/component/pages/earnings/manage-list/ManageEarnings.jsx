@@ -4,6 +4,7 @@ import { setIsAdd, setIsFinish, setSave } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
 import useLoadDraft from "../../../custom-hooks/useLoadDraft";
 import useLoadEmployee from "../../../custom-hooks/useLoadEmployee";
+import useLoadHolidays from "../../../custom-hooks/useLoadHolidays";
 import useLoadPayItem from "../../../custom-hooks/useLoadPayItem";
 import useLoadPayType from "../../../custom-hooks/useLoadPayType";
 import { devApiUrl, hrisDevApiUrl } from "../../../helpers/functions-general";
@@ -24,7 +25,9 @@ const ManageEarnings = () => {
   const { payType } = useLoadPayType(`${devApiUrl}/v1/paytype`, "get");
   const { draft } = useLoadDraft(`${devApiUrl}/v1/payroll/list`, "get");
   const { employee } = useLoadEmployee(`${hrisDevApiUrl}/v1/employees`, "get");
+  const { holidays } = useLoadHolidays(`${devApiUrl}/v1/holidays`, "get");
 
+  console.log(draft);
   const handleAdd = () => {
     dispatch(setIsAdd(true));
     // dispatch(setIsFinish(true));
@@ -64,6 +67,7 @@ const ManageEarnings = () => {
           payType={payType}
           employee={employee}
           payrollDraft={draft}
+          holidays={holidays}
         />
       ) : (
         store.isAdd && <ModalNoPayrollId />

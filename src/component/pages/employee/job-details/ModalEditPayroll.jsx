@@ -15,7 +15,10 @@ import {
   InputTextArea,
   MyCheckbox,
 } from "../../../helpers/FormInputs";
-import { hrisDevApiUrl } from "../../../helpers/functions-general";
+import {
+  handleNumOnly,
+  hrisDevApiUrl,
+} from "../../../helpers/functions-general";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 
 const ModalEditPayroll = ({ itemEdit }) => {
@@ -38,8 +41,6 @@ const ModalEditPayroll = ({ itemEdit }) => {
       itemEdit.employee_job_phil_health_deduc === 1 ? true : false,
     employee_job_work_reg_hol:
       itemEdit.employee_job_work_reg_hol === 1 ? true : false,
-    employee_job_none_work_reg_hol:
-      itemEdit.employee_job_none_work_reg_hol === 1 ? true : false,
     employee_job_nd_per_day:
       itemEdit.employee_job_nd_per_day !== ""
         ? itemEdit.employee_job_nd_per_day
@@ -78,32 +79,32 @@ const ModalEditPayroll = ({ itemEdit }) => {
           </div>
 
           <div className="bg-white rounded-b-2xl overflow-hidden">
-            <div className="max-h-[28rem] overflow-y-scroll p-4">
-              <Formik
-                initialValues={initVal}
-                validationSchema={yupSchema}
-                onSubmit={async (values, { setSubmitting, resetForm }) => {
-                  console.log(values);
-                  fetchData(
-                    setLoading,
-                    `/v1/employees/payroll/${itemEdit.employee_aid}`,
-                    values, // form data values
-                    null, // result set data
-                    "Succesfully updated.", // success msg
-                    "", // additional error msg if needed
-                    dispatch, // context api action
-                    store, // context api state
-                    true, // boolean to show success modal
-                    false, // boolean to show load more functionality button
-                    null,
-                    "put" // method
-                  );
-                  dispatch(setStartIndex(0));
-                }}
-              >
-                {(props) => {
-                  return (
-                    <Form>
+            <Formik
+              initialValues={initVal}
+              validationSchema={yupSchema}
+              onSubmit={async (values, { setSubmitting, resetForm }) => {
+                console.log(values);
+                fetchData(
+                  setLoading,
+                  `/v1/employees/payroll/${itemEdit.employee_aid}`,
+                  values, // form data values
+                  null, // result set data
+                  "Succesfully updated.", // success msg
+                  "", // additional error msg if needed
+                  dispatch, // context api action
+                  store, // context api state
+                  true, // boolean to show success modal
+                  false, // boolean to show load more functionality button
+                  null,
+                  "put" // method
+                );
+                dispatch(setStartIndex(0));
+              }}
+            >
+              {(props) => {
+                return (
+                  <Form>
+                    <div className="max-h-[28rem] overflow-y-scroll p-4">
                       <div className="relative mb-3 pt-5 flex items-center">
                         <p className="w-1/2 m-0">Payroll Elegibility</p>
                         <span>
@@ -142,19 +143,6 @@ const ModalEditPayroll = ({ itemEdit }) => {
                           <MyCheckbox
                             type="checkbox"
                             name="employee_job_phil_health_deduc"
-                            disabled={loading}
-                          />
-                        </span>
-                      </div>
-
-                      <div className="relative mb-3 flex items-center">
-                        <p className="w-1/2 m-0">
-                          Work on none working holiday?
-                        </p>
-                        <span>
-                          <MyCheckbox
-                            type="checkbox"
-                            name="employee_job_none_work_reg_hol"
                             disabled={loading}
                           />
                         </span>
@@ -224,29 +212,29 @@ const ModalEditPayroll = ({ itemEdit }) => {
                           onKeyPress={handleNumOnly}
                         />
                       </div>
+                    </div>
 
-                      <div className="flex items-center gap-1 pt-5">
-                        <button
-                          type="submit"
-                          disabled={loading || !props.dirty}
-                          className="btn-modal-submit relative"
-                        >
-                          {loading ? <ButtonSpinner /> : "Save"}
-                        </button>
-                        <button
-                          type="reset"
-                          className="btn-modal-cancel"
-                          onClick={handleClose}
-                          disabled={loading}
-                        >
-                          Cancel
-                        </button>
-                      </div>
-                    </Form>
-                  );
-                }}
-              </Formik>
-            </div>
+                    <div className="flex items-center gap-1 p-5">
+                      <button
+                        type="submit"
+                        disabled={loading || !props.dirty}
+                        className="btn-modal-submit relative"
+                      >
+                        {loading ? <ButtonSpinner /> : "Save"}
+                      </button>
+                      <button
+                        type="reset"
+                        className="btn-modal-cancel"
+                        onClick={handleClose}
+                        disabled={loading}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </Form>
+                );
+              }}
+            </Formik>
           </div>
         </div>
       </div>

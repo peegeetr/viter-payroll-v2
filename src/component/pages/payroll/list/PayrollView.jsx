@@ -1,17 +1,12 @@
 import React from "react";
 import { FaEnvelope, FaSave } from "react-icons/fa";
 import { ImPlay3 } from "react-icons/im";
-import { setIsAdd, setIsConfirm } from "../../../../store/StoreAction";
+import { setIsConfirm } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
-import useLoadAllNightDiff from "../../../custom-hooks/useLoadAllNightDiff";
 import useLoadHolidays from "../../../custom-hooks/useLoadHolidays";
 import useLoadPayrollEarnings from "../../../custom-hooks/useLoadPayrollEarnings";
 import useLoadPayrollList from "../../../custom-hooks/useLoadPayrollList";
-import {
-  devApiUrl,
-  getUrlParam,
-  hrisDevApiUrl,
-} from "../../../helpers/functions-general";
+import { devApiUrl, getUrlParam } from "../../../helpers/functions-general";
 import BreadCrumbs from "../../../partials/BreadCrumbs";
 import Footer from "../../../partials/Footer";
 import Header from "../../../partials/Header";
@@ -19,7 +14,6 @@ import ModalError from "../../../partials/modals/ModalError";
 import ModalRun from "../../../partials/modals/ModalRun";
 import ModalSuccess from "../../../partials/modals/ModalSuccess";
 import Navigation from "../../../partials/Navigation";
-import ModalAddPayroll from "../ModalAddPayroll";
 import PayrollViewList from "./PayrollViewList";
 
 const PayrollView = () => {

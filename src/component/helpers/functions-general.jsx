@@ -1,6 +1,6 @@
 import React from "react";
 
-// // Online URL dev hris
+// Online URL dev hris
 export const hrisDevBaseImgUrl =
   "https://hris.frontlinebusiness.com.ph/dev-app/img";
 export const hrisDevApiUrl =
@@ -8,7 +8,7 @@ export const hrisDevApiUrl =
 export const hrisdevBaseUrl = "https://hris.frontlinebusiness.com.ph/dev-app";
 export const hrisdevNavUrl = "/dev-app";
 
-// // Online URL dev payroll
+// Online URL dev payroll
 export const devBaseImgUrl = "https://payroll-app.frontlinebusiness.com.ph/img";
 export const devApiUrl = "https://payroll-app.frontlinebusiness.com.ph/rest";
 export const devBaseUrl = "https://payroll-app.frontlinebusiness.com.ph";

@@ -8,7 +8,7 @@ $user_system = new UserSystem($conn);
 $encrypt = new Encryption();
 // get should not be present
 if (array_key_exists("usersystemid", $_GET)) {
-    checkEnpoint();
+    checkEndpoint();
 }
 // check data
 checkPayload($data);

@@ -32,4 +32,4 @@ if (empty($_GET)) {
 }
 
 // return 404 error if endpoint not available
-checkEnpoint();
+checkEndpoint();

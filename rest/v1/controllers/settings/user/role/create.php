@@ -6,7 +6,7 @@ $conn = checkDbConnection();
 $role = new Role($conn);
 // get should not be present
 if (array_key_exists("roleid", $_GET)) {
-    checkEnpoint();
+    checkEndpoint();
 }
 // check data
 checkPayload($data);

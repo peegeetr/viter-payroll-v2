@@ -6,7 +6,7 @@ $conn = checkDbConnection();
 $payItem = new PayItem($conn);
 // get should not be present
 if (array_key_exists("payitemid", $_GET)) {
-    checkEnpoint();
+    checkEndpoint();
 }
 // check data
 checkPayload($data);

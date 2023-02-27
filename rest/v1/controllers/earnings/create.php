@@ -6,7 +6,7 @@ $conn = checkDbConnection();
 $earnings = new Earnings($conn);
 // get should not be present
 if (array_key_exists("earningsid", $_GET)) {
-    checkEnpoint();
+    checkEndpoint();
 }
 // check data
 checkPayload($data);
@@ -39,7 +39,7 @@ $allOvertimeLeave = $data["overtimeLeave"];
 if ($data["payitem_is_hris"] === "0" && $earnings->earnings_employee === "all") {
     // check array length
     if (count($allEmployee) === 0) {
-        checkEnpoint();
+        checkEndpoint();
     }
     for ($e = 0; $e < count($allEmployee); $e++) {
         $employee_lname = $allEmployee[$e]["employee_lname"];
@@ -47,6 +47,7 @@ if ($data["payitem_is_hris"] === "0" && $earnings->earnings_employee === "all") 
 
         $earnings->earnings_employee = "{$employee_lname}, {$employee_fname}";
         $earnings->earnings_employee_id = $allEmployee[$e]["employee_aid"];
+        $earnings->earnings_hris_date =  date("Y-m-d");
 
         // $query = $earnings->checkName(); 
         // if ($query->rowCount() > 0) {
@@ -66,6 +67,7 @@ if ($data["payitem_is_hris"] === "0" && $earnings->earnings_employee === "all") 
 if ($data["payitem_is_hris"] === "0" && $earnings->earnings_employee !== "all") {
     // create if specific employee and not data from hris
     $earnings->earnings_employee = explode(" ", $data["earnings_employee"])[0] . ", " . explode(" ", $data["earnings_employee"])[1];
+    $earnings->earnings_hris_date =  date("Y-m-d");
     // check name
     isNameExist($earnings, "Pay item for $earnings->earnings_employee is ");
 
@@ -78,7 +80,7 @@ if ($data["payitem_is_hris"] === "0" && $earnings->earnings_employee !== "all") 
 if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === "19") {
     // check array length
     if (count($allLeave) === 0) {
-        checkEnpoint();
+        checkEndpoint();
     }
     for ($l = 0; $l < count($allLeave); $l++) {
         // check name
@@ -98,7 +100,7 @@ if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === "19")
 if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === "18") {
     // check array length
     if (count($allOvertimeLeave) === 0) {
-        checkEnpoint();
+        checkEndpoint();
     }
     for ($o = 0; $o < count($allOvertimeLeave); $o++) {
         // check name
@@ -118,7 +120,7 @@ if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === "18")
 if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === "36") {
     // check array length
     if (count($allUnPaidLeave) === 0) {
-        checkEnpoint();
+        checkEndpoint();
     }
     for ($u = 0; $u < count($allUnPaidLeave); $u++) {
         // check name

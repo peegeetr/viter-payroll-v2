@@ -32,4 +32,4 @@ if (array_key_exists("ratesid", $_GET)) {
 }
 
 // return 404 error if endpoint not available
-checkEnpoint();
+checkEndpoint();

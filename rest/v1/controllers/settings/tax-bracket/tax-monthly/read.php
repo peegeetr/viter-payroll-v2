@@ -12,7 +12,7 @@ if (array_key_exists("taxmonthlyid", $_GET)) {
     // get task id from query string
     $taxMonthly->tax_monthly_aid  = $_GET['taxmonthlyid'];
     //check to see if task id in query string is not empty and is number, if not return json error
-    checkId($taxMonthly->tax_monthly_aid );
+    checkId($taxMonthly->tax_monthly_aid);
     $query = checkReadById($taxMonthly);
     http_response_code(200);
     $returnData["data"] = getResultData($query);
@@ -32,4 +32,4 @@ if (empty($_GET)) {
 }
 
 // return 404 error if endpoint not available
-checkEnpoint();
+checkEndpoint();

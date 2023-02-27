@@ -6,7 +6,7 @@ $conn = checkDbConnection();
 $deductions = new Deductions($conn);
 // get should not be present
 if (array_key_exists("deductionsid", $_GET)) {
-    checkEnpoint();
+    checkEndpoint();
 }
 // check data
 checkPayload($data);

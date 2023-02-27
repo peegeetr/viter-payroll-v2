@@ -6,7 +6,7 @@ $conn = checkDbConnection();
 $payrollType = new PayrollType($conn);
 // get should not be present
 if (array_key_exists("payrolltypeid", $_GET)) {
-    checkEnpoint();
+    checkEndpoint();
 }
 // check data
 checkPayload($data);

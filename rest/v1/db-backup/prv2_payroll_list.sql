@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 21, 2023 at 03:57 AM
+-- Generation Time: Feb 27, 2023 at 02:40 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -33,6 +33,9 @@ CREATE TABLE `prv2_payroll_list` (
   `payroll_list_employee_name` varchar(100) NOT NULL,
   `payroll_list_employee_id` varchar(20) NOT NULL,
   `payroll_list_employee_salary` varchar(50) NOT NULL,
+  `payroll_list_employee_work_none_working_holiday` smallint(2) NOT NULL,
+  `payroll_list_employee_work_on_holiday` smallint(2) NOT NULL,
+  `payroll_list_night_diff_per_day` smallint(2) NOT NULL,
   `payroll_list_payroll_id` varchar(50) NOT NULL,
   `payroll_list_gross` varchar(50) NOT NULL,
   `payroll_list_deduction` varchar(50) NOT NULL,

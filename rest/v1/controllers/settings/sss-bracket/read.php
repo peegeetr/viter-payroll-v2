@@ -3,7 +3,7 @@
 $conn = null;
 $conn = checkDbConnection();
 // make instance of classes
-$sss_bracket = new SssBracket ($conn);
+$sss_bracket = new SssBracket($conn);
 // get $_GET data
 // check if departmentid is in the url e.g. /department/1
 $error = [];
@@ -32,4 +32,4 @@ if (empty($_GET)) {
 }
 
 // return 404 error if endpoint not available
-checkEnpoint();
+checkEndpoint();

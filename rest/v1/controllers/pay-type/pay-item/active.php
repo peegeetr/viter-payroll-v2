@@ -36,7 +36,7 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
         returnSuccess($payItem, "Payitem", $query);
     }
     // return 404 error if endpoint not available
-    checkEnpoint();
+    checkEndpoint();
 }
 
 http_response_code(200);

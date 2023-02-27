@@ -36,4 +36,4 @@ if (array_key_exists("paytypeid", $_GET)) {
 }
 
 // return 404 error if endpoint not available
-checkEnpoint();
+checkEndpoint();

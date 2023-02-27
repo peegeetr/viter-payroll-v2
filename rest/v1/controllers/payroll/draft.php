@@ -25,7 +25,7 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
     $response->send();
     exit;
     // return 404 error if endpoint not available
-    checkEnpoint();
+    checkEndpoint();
 }
 
 http_response_code(200);

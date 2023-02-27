@@ -6,7 +6,7 @@ $conn = checkDbConnection();
 $sss_bracket = new SssBracket($conn);
 // get should not be present
 if (array_key_exists("sssbracketid", $_GET)) {
-    checkEnpoint();
+    checkEndpoint();
 }
 // check data
 checkPayload($data);

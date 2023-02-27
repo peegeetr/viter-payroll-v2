@@ -20,4 +20,4 @@ if (array_key_exists("taxmonthlyid", $_GET)) {
 }
 
 // return 404 error if endpoint not available
-checkEnpoint();
+checkEndpoint();

@@ -6,7 +6,7 @@ $conn = checkDbConnection();
 $rates = new Rates($conn);
 // get should not be present
 if (array_key_exists("ratesid", $_GET)) {
-    checkEnpoint();
+    checkEndpoint();
 }
 // check data
 checkPayload($data);

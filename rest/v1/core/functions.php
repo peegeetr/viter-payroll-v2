@@ -295,7 +295,7 @@ function checkAccess()
 }
 
 // check endpoint
-function checkEnpoint()
+function checkEndpoint()
 {
     $response = new Response();
     $error = [];

@@ -26,7 +26,7 @@ if (array_key_exists("payrolltypeid", $_GET)) {
     //check to see if task id in query string is not empty and is number, if not return json error
     checkId($payrollType->payroll_type_aid);
     // check name
-  
+
     compareName($payrollType, $payroll_type_name_old, $payrollType->payroll_type_name);
     // update
     $query = checkUpdate($payrollType);
@@ -35,4 +35,4 @@ if (array_key_exists("payrolltypeid", $_GET)) {
 }
 
 // return 404 error if endpoint not available
-checkEnpoint();
+checkEndpoint();

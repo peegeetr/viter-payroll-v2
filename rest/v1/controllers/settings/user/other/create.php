@@ -8,7 +8,7 @@ $user_other = new UserOther($conn);
 $encrypt = new Encryption();
 // get should not be present
 if (array_key_exists("userotherid", $_GET)) {
-    checkEnpoint();
+    checkEndpoint();
 }
 // check data
 checkPayload($data);

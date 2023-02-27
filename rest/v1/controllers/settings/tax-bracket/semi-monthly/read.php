@@ -12,7 +12,7 @@ if (array_key_exists("semimonthlyid", $_GET)) {
     // get task id from query string
     $semiMonthly->semi_monthly_aid  = $_GET['semimonthlyid'];
     //check to see if task id in query string is not empty and is number, if not return json error
-    checkId($semiMonthly->semi_monthly_aid );
+    checkId($semiMonthly->semi_monthly_aid);
     $query = checkReadById($semiMonthly);
     http_response_code(200);
     $returnData["data"] = getResultData($query);
@@ -32,4 +32,4 @@ if (empty($_GET)) {
 }
 
 // return 404 error if endpoint not available
-checkEnpoint();
+checkEndpoint();

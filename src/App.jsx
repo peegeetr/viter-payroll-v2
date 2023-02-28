@@ -34,6 +34,7 @@ import ReportsLink from "./component/pages/reports/ReportsLink";
 import PayrollType from "./component/pages/settings/payroll-type/PayrollType.jsx";
 import Rates from "./component/pages/settings/rates/Rates";
 import { StoreProvider } from "./store/StoreContext";
+import SystemLogin from "./component/pages/access/login/SystemLogin";
 
 function App() {
   // Create a client
@@ -189,6 +190,11 @@ function App() {
             <Route
               path={`${devNavUrl}/${UrlAdmin}/settings/payroll-type`}
               element={<PayrollType />}
+            />
+
+            <Route
+              path={`${devNavUrl}/${UrlAdmin}/login`}
+              element={<SystemLogin />}
             />
           </Routes>
         </Router>

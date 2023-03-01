@@ -7,7 +7,7 @@ import { setStartIndex } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
 import { fetchData } from "../../../helpers/fetchData";
 import { InputText } from "../../../helpers/FormInputs";
-import { devNavUrl } from "../../../helpers/functions-general";
+import { devApiUrl, devNavUrl } from "../../../helpers/functions-general";
 import ModalError from "../../../partials/modals/ModalError";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 import TableSpinner from "../../../partials/spinners/TableSpinner";
@@ -26,12 +26,12 @@ const OtherLogin = () => {
   };
 
   const initVal = {
-    employee_email: "",
+    user_other_email: "",
     password: "",
   };
 
   const yupSchema = Yup.object({
-    employee_email: Yup.string().required("Required").email("Invalid email"),
+    user_other_email: Yup.string().required("Required").email("Invalid email"),
     password: Yup.string().required("Required"),
   });
 
@@ -48,16 +48,18 @@ const OtherLogin = () => {
             <div className="flex justify-center">
               <FbsLogoLg />
             </div>
-            <h3 className="my-5 text-lg font-bold">LOGIN</h3>
+            <h3 className="my-5 text-lg font-bold text-center">
+              ONLINE PAYROLL LOGIN
+            </h3>
             <Formik
               initialValues={initVal}
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
                 // console.log(values);
-                localStorage.removeItem("hrisv3token");
+                localStorage.removeItem("fbsPayroll");
                 fetchData(
                   setLoading,
-                  `/v1/user-others/login`,
+                  `${devApiUrl}/v1/user-others/login`,
                   values, // form data values
                   null, // result set data
                   "", // success msg
@@ -79,7 +81,7 @@ const OtherLogin = () => {
                       <InputText
                         label="Email"
                         type="text"
-                        name="employee_email"
+                        name="user_other_email"
                         disabled={loading}
                       />
                     </div>
@@ -88,7 +90,9 @@ const OtherLogin = () => {
                         label="Password"
                         type={passwordShown ? "text" : "password"}
                         name="password"
-                        disabled={loading || props.values.employee_email === ""}
+                        disabled={
+                          loading || props.values.user_other_email === ""
+                        }
                       />
                       {props.values.password && (
                         <span

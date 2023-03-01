@@ -15,17 +15,17 @@ $response = new Response();
 $body = file_get_contents("php://input");
 $data = json_decode($body, true);
 // get $_GET data
-// check if user_systemempid is in the url e.g. /user_systememp/1
+// check if userotherkey is in the url e.g. /userotherkey/1
 $error = [];
 $returnData = [];
 // validate api key
 if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
     checkApiKey();
-    if (array_key_exists("usersystemkey", $_GET)) {
+    if (array_key_exists("userotherkey", $_GET)) {
         // check data
         // get task id from query string
-        $user_other->user_other_key = $_GET['usersystemkey'];
-        //check to see if user_system employee id in query string is not empty and is number, if not return json error
+        $user_other->user_other_key = $_GET['userotherkey'];
+        //check to see if user_other employee id in query string is not empty and is number, if not return json error
         $query = checkReadKey($user_other);
         http_response_code(200);
         getQueriedData($query);

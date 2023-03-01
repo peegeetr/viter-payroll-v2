@@ -51,8 +51,14 @@ function App() {
         <Router>
           <Routes>
             <Route path={`*`} element={<PageNotFound />} />
-            <Route path={`/${devNavUrl}`} element={<div>Payroll</div>} />
+            <Route path={`/${devNavUrl}`} element={<OtherLogin />} />
 
+            <Route path={`${devNavUrl}/login`} element={<OtherLogin />} />
+
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/login`}
+              element={<SystemLogin />}
+            />
             {/* Payroll Page */}
             <Route
               path={`${devNavUrl}/payroll`}
@@ -316,13 +322,6 @@ function App() {
                   <PayrollType />
                 </ProtectedRoute>
               }
-            />
-
-            <Route path={`${devNavUrl}/login`} element={<OtherLogin />} />
-
-            <Route
-              path={`${devNavUrl}/${UrlSystem}/login`}
-              element={<SystemLogin />}
             />
           </Routes>
         </Router>

@@ -27,8 +27,8 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
     if (array_key_exists("userotherid", $_GET)) {
         // check data
         checkPayload($data);
-        // get task id from query string
-        $user_other->user_other_aid = $_GET['userotherid'];
+        // get task id from query string 
+        $password_link = checkIndex($data, "password_link");
         $user_other->user_other_email = trim($data["email"]);
         $user_other->user_other_key = $encrypt->doHash(rand());
         $user_other->user_other_datetime = date("Y-m-d H:i:s");

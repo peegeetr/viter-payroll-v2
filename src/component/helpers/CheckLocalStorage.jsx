@@ -1,11 +1,11 @@
 export const checkLocalStorage = () => {
-  let lcsstoken = null;
+  let fbsPayroll = null;
   try {
-    lcsstoken = JSON.parse(localStorage.getItem("lcsstoken"));
+    fbsPayroll = JSON.parse(localStorage.getItem("fbsPayroll"));
     // console.log(hrisv3token);
   } catch (error) {
-    lcsstoken = null;
+    fbsPayroll = null;
   }
 
-  return lcsstoken;
+  return fbsPayroll;
 };

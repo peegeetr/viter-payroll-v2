@@ -14,7 +14,9 @@ const useSystemIsLogin = (navigate) => {
     setLoading(true);
     const fetchLogin = async () => {
       const login = await fetchApi(
-        devApiUrl + "/v1/user-systems/token",
+        store.credentials.data.role_is_developer === 1
+          ? devApiUrl + "/v1/user-systems/token"
+          : devApiUrl + "/v1/user-systems/token",
         {
           token: checkLocalStorage().token,
         },
@@ -23,7 +25,7 @@ const useSystemIsLogin = (navigate) => {
       );
 
       if (typeof login === "undefined" || !login.success) {
-        localStorage.removeItem("hrisv3token");
+        localStorage.removeItem("fbsPayroll");
         setLoading(false);
       } else {
         setLoading(false);

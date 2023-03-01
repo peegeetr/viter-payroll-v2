@@ -25,12 +25,7 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
         checkLimitId($sss_bracket->sss_bracket_start, $sss_bracket->sss_bracket_total);
         $query = checkReadLimit($sss_bracket);
         http_response_code(200);
-        $returnData["data"] = getResultData($query);
-        $returnData["count"] = $query->rowCount();
-        $returnData["success"] = true;
-        $response->setData($returnData);
-        $response->send();
-        exit;
+        getQueriedData($query);
     }
     // return 404 error if endpoint not available
     checkEndpoint();

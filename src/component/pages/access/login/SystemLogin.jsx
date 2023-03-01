@@ -8,7 +8,7 @@ import { StoreContext } from "../../../../store/StoreContext";
 import useSystemIsLogin from "../../../custom-hooks/useSystemIsLogin";
 import { fetchData } from "../../../helpers/fetchData";
 import { InputText } from "../../../helpers/FormInputs";
-import { devNavUrl } from "../../../helpers/functions-general";
+import { devApiUrl, devNavUrl } from "../../../helpers/functions-general";
 import ModalError from "../../../partials/modals/ModalError";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 import TableSpinner from "../../../partials/spinners/TableSpinner";
@@ -42,24 +42,24 @@ const SystemLogin = () => {
       ) : (
         <div
           className="flex justify-center items-center"
-          style={{ transform: "translateY(clamp(5rem,17vw,22rem))" }}
+          style={{ transform: "translateY(clamp(5rem,12vw,15rem))" }}
         >
           <div className="w-96 p-6">
             <div className="flex justify-center">
               <FbsLogoLg />
             </div>
             <h3 className="my-5 text-lg font-bold text-center">
-              ONLINE PAYROLL LOGIN
+              ONLINE PAYROLL LOGIN <br /> SYSTEM
             </h3>
             <Formik
               initialValues={initVal}
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
                 // console.log(values);
-                localStorage.removeItem("hrisv3token");
+                localStorage.removeItem("fbsPayroll");
                 fetchData(
                   setLoading,
-                  `/v1/user-systems/login`,
+                  `${devApiUrl}/v1/user-systems/login`,
                   values, // form data values
                   null, // result set data
                   "", // success msg

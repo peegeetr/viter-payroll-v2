@@ -12,7 +12,7 @@ import { GiReceiveMoney } from "react-icons/gi";
 import { Link } from "react-router-dom";
 import { setIsShow, setStartIndex } from "../../store/StoreAction";
 import { StoreContext } from "../../store/StoreContext";
-import { devNavUrl } from "../helpers/functions-general";
+import { devNavUrl, UrlAdmin } from "../helpers/functions-general";
 
 const Navigation = ({ menu }) => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -38,7 +38,7 @@ const Navigation = ({ menu }) => {
             }
           >
             <Link
-              to={`${devNavUrl}/admin/payroll`}
+              to={`${devNavUrl}/${UrlAdmin}`}
               className="w-full flex items-center !p-4 md:justify-center lg:justify-start tooltip-navigation"
               onClick={handleShow}
               data-tooltip="Payroll"
@@ -55,7 +55,7 @@ const Navigation = ({ menu }) => {
             }
           >
             <Link
-              to={`${devNavUrl}/admin/employee`}
+              to={`${devNavUrl}/${UrlAdmin}/employee`}
               className="w-full flex items-center !p-4 md:justify-center lg:justify-start tooltip-navigation"
               onClick={handleShow}
               data-tooltip="Employee"
@@ -72,7 +72,7 @@ const Navigation = ({ menu }) => {
             }
           >
             <Link
-              to={`${devNavUrl}/admin/earnings`}
+              to={`${devNavUrl}/${UrlAdmin}/earnings`}
               className="w-full flex items-center !p-4 md:justify-center lg:justify-start tooltip-navigation"
               onClick={handleShow}
               data-tooltip="Earnings"
@@ -89,7 +89,7 @@ const Navigation = ({ menu }) => {
             }
           >
             <Link
-              to={`${devNavUrl}/admin/deductions`}
+              to={`${devNavUrl}/${UrlAdmin}/deductions`}
               className="w-full flex items-center !p-4 md:justify-center lg:justify-start tooltip-navigation"
               onClick={handleShow}
               data-tooltip="Deductions"
@@ -106,7 +106,7 @@ const Navigation = ({ menu }) => {
             }
           >
             <Link
-              to={`${devNavUrl}/admin/pay-type`}
+              to={`${devNavUrl}/${UrlAdmin}/pay-type`}
               className="w-full flex items-center !p-4 md:justify-center lg:justify-start tooltip-navigation"
               onClick={handleShow}
               data-tooltip="Pay Type"
@@ -123,7 +123,7 @@ const Navigation = ({ menu }) => {
             }
           >
             <Link
-              to={`${devNavUrl}/admin/holidays`}
+              to={`${devNavUrl}/${UrlAdmin}/holidays`}
               className="w-full flex items-center !p-4 md:justify-center lg:justify-start tooltip-navigation"
               onClick={handleShow}
               data-tooltip="Holidays"
@@ -140,7 +140,7 @@ const Navigation = ({ menu }) => {
             }
           >
             <Link
-              to={`${devNavUrl}/admin/reports`}
+              to={`${devNavUrl}/${UrlAdmin}/reports`}
               className="w-full flex items-center !p-4 md:justify-center lg:justify-start tooltip-navigation"
               onClick={handleShow}
               data-tooltip="Reports"
@@ -157,7 +157,7 @@ const Navigation = ({ menu }) => {
             }
           >
             <Link
-              to={`${devNavUrl}/admin/settings`}
+              to={`${devNavUrl}/${UrlAdmin}/settings`}
               className="w-full flex items-center !p-4 md:justify-center lg:justify-start tooltip-navigation"
               onClick={handleShow}
               data-tooltip="Settings"

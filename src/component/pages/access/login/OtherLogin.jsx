@@ -5,7 +5,6 @@ import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { setStartIndex } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
-import useOtherIsLogin from "../../../custom-hooks/useOtherIsLogin";
 import { fetchData } from "../../../helpers/fetchData";
 import { InputText } from "../../../helpers/FormInputs";
 import { devNavUrl } from "../../../helpers/functions-general";
@@ -13,13 +12,14 @@ import ModalError from "../../../partials/modals/ModalError";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 import TableSpinner from "../../../partials/spinners/TableSpinner";
 import FbsLogoLg from "../../../svg/FbsLogoLg";
+import useSystemIsLogin from "../../../custom-hooks/useSystemIsLogin";
 
 const OtherLogin = () => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [loading, setLoading] = React.useState(false);
   const [passwordShown, setPasswordShown] = React.useState(false);
   const navigate = useNavigate();
-  const { loginLoading } = useOtherIsLogin(navigate);
+  const { loginLoading } = useSystemIsLogin(navigate);
 
   const togglePassword = () => {
     setPasswordShown(!passwordShown);

@@ -15,20 +15,14 @@ if (array_key_exists("semimonthlyid", $_GET)) {
     checkId($semiMonthly->semi_monthly_aid);
     $query = checkReadById($semiMonthly);
     http_response_code(200);
-    $returnData["data"] = getResultData($query);
-    $returnData["count"] = $query->rowCount();
-    $returnData["success"] = true;
-    return $returnData;
+    getQueriedData($query);
 }
 
 // if request is a GET e.g. /department
 if (empty($_GET)) {
     $query = checkReadAll($semiMonthly);
     http_response_code(200);
-    $returnData["data"] = getResultData($query);
-    $returnData["count"] = $query->rowCount();
-    $returnData["success"] = true;
-    return $returnData;
+    getQueriedData($query);
 }
 
 // return 404 error if endpoint not available

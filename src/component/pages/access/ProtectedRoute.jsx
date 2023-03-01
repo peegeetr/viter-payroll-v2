@@ -4,21 +4,22 @@ import { setCredentials, setError } from "../../../store/StoreAction";
 import { StoreContext } from "../../../store/StoreContext";
 import fetchApi from "../../helpers/fetchApi";
 import { devApiUrl, devNavUrl } from "../../helpers/functions-general";
-import ModalError from "../../partials/modals/ModalError";
 import TableSpinner from "../../partials/spinners/TableSpinner";
 
-const ProtectedRouteSystem = ({ children }) => {
+const ProtectedRoute = ({ children }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [loading, setLoading] = React.useState(true);
   const [isAuth, setIsAuth] = React.useState("");
-  const hrisv3token = JSON.parse(localStorage.getItem("hrisv3token"));
+  const fbsPayroll = JSON.parse(localStorage.getItem("fbsPayroll"));
 
   React.useEffect(() => {
     const fetchLogin = async () => {
       const login = await fetchApi(
-        devApiUrl + "/v1/user-systems/token",
+        store.credentials.data.role_is_developer === 1
+          ? devApiUrl + "/v1/user-systems/token"
+          : devApiUrl + "/v1/user-systems/token",
         {
-          token: hrisv3token.token,
+          token: fbsPayroll.token,
         },
         null,
         "post"
@@ -41,11 +42,11 @@ const ProtectedRouteSystem = ({ children }) => {
       delete login.data.role_datetime;
     };
 
-    if (hrisv3token !== null) {
+    if (fbsPayroll !== null) {
       fetchLogin();
     } else {
       setLoading(false);
-      localStorage.removeItem("hrisv3token");
+      localStorage.removeItem("fbsPayroll");
       setIsAuth("456");
     }
   }, [dispatch]);
@@ -61,4 +62,4 @@ const ProtectedRouteSystem = ({ children }) => {
   );
 };
 
-export default ProtectedRouteSystem;
+export default ProtectedRoute;

@@ -93,6 +93,10 @@ RewriteRule ^user-systems$ controllers/settings/user/system/system.php [L]
 RewriteRule ^user-systems/([0-9]+)$ controllers/settings/user/system/system.php?usersystemid=$1 [L]
 RewriteRule ^user-systems/active/([0-9]+)$ controllers/settings/user/system/active.php?usersystemid=$1 [L] 
 RewriteRule ^user-systems/reset/([0-9]+)$ controllers/settings/user/system/reset.php?usersystemid=$1 [L] 
+RewriteRule ^user-systems/key/([A-Za-z0-9-]+)$ controllers/settings/user/system/key.php?usersystemkey=$1 [L]
+RewriteRule ^user-systems/password$ controllers/settings/user/system/set-password.php [L]
+RewriteRule ^user-systems/login$ controllers/settings/user/system/login.php [L]
+RewriteRule ^user-systems/token$ controllers/settings/user/system/token.php [L]
 
 #SETTINGS USER OTHER
 RewriteRule ^user-others$ controllers/settings/user/other/other.php [L]

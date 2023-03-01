@@ -1,6 +1,8 @@
 <?php
 // check database connection
 require '../../../../core/Encryption.php';
+// use notification template
+require '../../../../notification/verify-account.php';
 $conn = null;
 $conn = checkDbConnection();
 // make instance of classes
@@ -21,8 +23,16 @@ $user_system->user_system_key = $encrypt->doHash(rand());
 $user_system->user_system_created = date("Y-m-d");
 $user_system->user_system_datetime = date("Y-m-d H:i:s");
 
+$password_link = checkIndex($data, "password_link");
 // check email
 isEmailExist($user_system, $user_system->user_system_email);
+// send email notification
+sendEmail(
+    $password_link,
+    $user_system->user_system_name,
+    $user_system->user_system_email,
+    $user_system->user_system_key
+);
 // create
 $query = checkCreate($user_system);
 

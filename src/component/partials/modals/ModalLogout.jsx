@@ -1,51 +1,37 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React from "react";
 import { FaQuestionCircle, FaTimesCircle } from "react-icons/fa";
-import { setIsConfirm, setStartIndex } from "../../../store/StoreAction";
+import { setIsLogout } from "../../../store/StoreAction";
 import { StoreContext } from "../../../store/StoreContext";
-import { fetchData } from "../../helpers/fetchData";
-import { queryData } from "../../helpers/queryData";
+import { checkLocalStorage } from "../../helpers/CheckLocalStorage";
+import {
+  devNavUrl,
+  UrlAdmin,
+  UrlSystem,
+} from "../../helpers/functions-general";
 import ButtonSpinner from "../spinners/ButtonSpinner";
 
-const ModalConfirm = ({
-  id,
-  isDel,
-  mysqlApiReset,
-  mysqlApiArchive,
-  msg,
-  item,
-  isDeveloper,
-}) => {
+const ModalLogout = () => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [loading, setLoading] = React.useState(false);
-  let password_link = "/system/create-password";
+
+  // console.log(store.credentials.data.role_is_developer);
 
   const handleClose = () => {
-    dispatch(setIsConfirm(false));
+    dispatch(setIsLogout(false));
   };
 
   const handleYes = async () => {
     setLoading(true);
-    fetchData(
-      setLoading,
-      isDel ? mysqlApiReset : mysqlApiArchive,
-      {
-        isActive: 0,
-        email: item,
-        isDeveloper: isDeveloper,
-        password_link,
-      },
-      null,
-      isDel ? "Please check your email to continue resetting password." : "",
-      "",
-      dispatch,
-      store,
-      isDel ? true : false,
-      false,
-      null,
-      isDel ? "delete" : "put"
-    );
-    dispatch(setStartIndex(0));
+    setTimeout(() => {
+      if (checkLocalStorage() !== null) {
+        localStorage.removeItem("fbsPayroll");
+        store.credentials.data.role_is_developer === 1
+          ? window.location.replace(`${devNavUrl}/${UrlSystem}/login`)
+          : window.location.replace(`${devNavUrl}/${UrlAdmin}/login`);
+        return;
+      }
+      setLoading(false);
+    }, 400);
   };
 
   return (
@@ -65,9 +51,11 @@ const ModalConfirm = ({
             <span className="text-5xl text-red-700 ">
               <FaQuestionCircle className="my-0 mx-auto" />
             </span>
-            <span className="text-sm font-bold">{msg}</span> <br />
-            <span className="text-sm font-bold break-all">"{item}" ?</span>
-            <p>You can't undo this action.</p>
+            <span className="text-sm font-bold">
+              {"Are you sure you want to logout?"}
+            </span>{" "}
+            <br />
+            <p className="">You can't undo this action.</p>
             <div className="flex items-center gap-1 pt-5">
               <button
                 type="submit"
@@ -93,4 +81,4 @@ const ModalConfirm = ({
   );
 };
 
-export default ModalConfirm;
+export default ModalLogout;

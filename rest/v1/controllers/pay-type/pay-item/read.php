@@ -15,20 +15,14 @@ if (array_key_exists("payitemid", $_GET)) {
     checkId($payItem->payitem_aid);
     $query = checkReadById($payItem);
     http_response_code(200);
-    $returnData["data"] = getResultData($query);
-    $returnData["count"] = $query->rowCount();
-    $returnData["success"] = true;
-    return $returnData;
+    getQueriedData($query);
 }
 
 // if request is a GET e.g. /role
 if (empty($_GET)) {
     $query = checkReadAll($payItem);
     http_response_code(200);
-    $returnData["data"] = getResultData($query);
-    $returnData["count"] = $query->rowCount();
-    $returnData["success"] = true;
-    return $returnData;
+    getQueriedData($query);
 }
 
 // return 404 error if endpoint not available

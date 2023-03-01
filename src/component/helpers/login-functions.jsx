@@ -1,13 +1,9 @@
-import { consoleLog, devNavUrl, UrlAdmin } from "./functions-general";
+import { devNavUrl, UrlAdmin } from "./functions-general";
 
 export const checkRoleToRedirect = (navigate, data) => {
-  consoleLog(data);
-  switch (data.account_role_is_admin) {
-    case "1":
-      navigate(`${devNavUrl}/${UrlAdmin}/home`);
-      break;
-    default:
-      // navigate(`${devNavUrl}/${UrlTrainee}/home`);
-      break;
-  }
+  data.role_is_developer === 1
+    ? navigate(`${devNavUrl}/payroll`)
+    : data.role_is_admin === 1
+    ? navigate(`${devNavUrl}/${UrlAdmin}/payroll`)
+    : navigate(`${devNavUrl}/nopage`);
 };

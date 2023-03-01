@@ -28,7 +28,7 @@ export const devNavUrl = "";
 // export const devBaseImgUrl = "http://localhost/viter-payroll-v2/public/img";
 // export const devNavUrl = "";
 
-// // cy url
+// // // cy url
 // export const devBaseImgUrl = "https://payroll-app.frontlinebusiness.com.ph/img";
 // export const devApiUrl = "http://localhost/projects/viter-payroll-v2/rest";
 // export const devBaseUrl = "http://localhost/projects/viter-payroll-v2/public";
@@ -42,6 +42,7 @@ export const devNavUrl = "";
 // export const hrisdevNavUrl = "/dev-app";
 
 export const UrlAdmin = "";
+export const UrlSystem = "system";
 export const is_developer = "is_developer";
 
 export const devKey =
@@ -112,10 +113,7 @@ export const fetchFormData = (url, fd = {}) => {
 
 // storage after login
 export function setStorageRoute(jwt, data) {
-  localStorage.setItem(
-    "fwcdonationtoken",
-    JSON.stringify({ token: jwt, data })
-  );
+  localStorage.setItem("fbsPayroll", JSON.stringify({ token: jwt, data }));
 }
 
 // formatting date

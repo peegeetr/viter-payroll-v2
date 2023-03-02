@@ -51,7 +51,7 @@ const OtherLogin = () => {
             <h3 className="my-2 text-lg font-bold text-center text-primary">
               ONLINE PAYROLL SYSTEM
             </h3>
-            <h3 className="mt-8 mb-5 text-lg font-bold">LOGIN</h3>
+            <p className="mt-8 mb-5 text-lg font-bold">LOGIN</p>
             <Formik
               initialValues={initVal}
               validationSchema={yupSchema}

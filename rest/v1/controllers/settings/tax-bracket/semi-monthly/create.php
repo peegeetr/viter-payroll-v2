@@ -17,7 +17,7 @@ $semiMonthly->semi_monthly_less_amount = checkIndex($data, "semi_monthly_less_am
 $semiMonthly->semi_monthly_rate = checkIndex($data, "semi_monthly_rate");
 $semiMonthly->semi_monthly_additional_amount = checkIndex($data, "semi_monthly_additional_amount");
 $semiMonthly->semi_monthly_active = 1;
-$semiMonthly->semi_monthly_created = date("Y-m-d");
+$semiMonthly->semi_monthly_created = date("Y-m-d H:i:s");
 $semiMonthly->semi_monthly_datetime = date("Y-m-d H:i:s");
 // check name
 isRangeFromExist($semiMonthly, $semiMonthly->semi_monthly_range_from);

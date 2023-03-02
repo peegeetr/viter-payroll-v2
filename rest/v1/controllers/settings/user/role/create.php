@@ -14,7 +14,7 @@ checkPayload($data);
 $role->role_name = addslashes(trim($data["role_name"]));
 $role->role_description = addslashes(trim($data["role_description"]));
 $role->role_is_active = 1;
-$role->role_created = date("Y-m-d");
+$role->role_created = date("Y-m-d H:i:s");
 $role->role_datetime = date("Y-m-d H:i:s");
 // string value convert to lower case
 $column_name = strtolower(explode(" ", $data["role_name"])[0]);

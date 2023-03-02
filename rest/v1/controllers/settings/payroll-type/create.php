@@ -13,7 +13,7 @@ checkPayload($data);
 // get data
 $payrollType->payroll_type_name = checkIndex($data, "payroll_type_name");
 $payrollType->payroll_type_active = 1;
-$payrollType->payroll_type_created = date("Y-m-d");
+$payrollType->payroll_type_created = date("Y-m-d H:i:s");
 $payrollType->payroll_type_datetime = date("Y-m-d H:i:s");
 // check name
 

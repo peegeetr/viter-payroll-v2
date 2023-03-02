@@ -1,13 +1,17 @@
+import React from "react";
 import { BsCalendar2MonthFill } from "react-icons/bs";
 import { SlArrowRight } from "react-icons/sl";
 import { Link } from "react-router-dom";
-import { devNavUrl, UrlAdmin } from "../../../../helpers/functions-general";
+import { StoreContext } from "../../../../../store/StoreContext";
+import { getUserType } from "../../../../helpers/functions-general";
 
 const TaxSemiLink = () => {
+  const { store, dispatch } = React.useContext(StoreContext);
+  const link = getUserType(store.credentials.data.role_is_developer === 1);
   return (
     <div className="group flex items-center justify-between border-b border-solid border-gray-300">
       <Link
-        to={`${devNavUrl}/${UrlAdmin}/settings/tax-bracket/semi-monthly`}
+        to={`${link}/settings/tax-bracket/semi-monthly`}
         className="w-full py-1"
       >
         <div className="flex items-center">
@@ -23,7 +27,7 @@ const TaxSemiLink = () => {
       </Link>
 
       <Link
-        to={`${devNavUrl}/${UrlAdmin}/settings/tax-bracket/semi-monthly`}
+        to={`${link}/settings/tax-bracket/semi-monthly`}
         className="btn-action-table group-hover:bg-primary group-hover:text-white"
       >
         <SlArrowRight className="inline" />

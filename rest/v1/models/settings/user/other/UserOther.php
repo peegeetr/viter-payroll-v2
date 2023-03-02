@@ -17,13 +17,13 @@ class UserOther
     public $user_other_total;
     public $user_other_search;
     public $tblUserOther;
-    public $tblRole; 
+    public $tblRole;
 
     public function __construct($db)
     {
         $this->connection = $db;
         $this->tblUserOther = "prv2_settings_user_other";
-        $this->tblRole = "prv2_settings_role"; 
+        $this->tblRole = "prv2_settings_role";
     }
 
     // create
@@ -67,15 +67,15 @@ class UserOther
     {
         try {
             $sql = "select user.user_other_name, ";
-            $sql .= "user.user_other_email, "; 
+            $sql .= "user.user_other_email, ";
             $sql .= "user.user_other_is_active, ";
             $sql .= "user.user_other_role_id, ";
             $sql .= "user.user_other_aid, ";
             $sql .= "role.role_aid, ";
-            $sql .= "role.role_name ";  
+            $sql .= "role.role_name ";
             $sql .= "from {$this->tblUserOther} as user, ";
             $sql .= "{$this->tblRole} as role ";
-            $sql .= "where user.user_other_role_id = role.role_aid "; 
+            $sql .= "where user.user_other_role_id = role.role_aid ";
             $sql .= "order by user.user_other_is_active desc, ";
             $sql .= "user.user_other_name asc ";
             $query = $this->connection->query($sql);
@@ -84,7 +84,7 @@ class UserOther
         }
         return $query;
     }
- 
+
     // read by id
     public function readById()
     {
@@ -106,13 +106,13 @@ class UserOther
     public function update()
     {
         try {
-            $sql = "update {$this->tblUserOther} set "; 
+            $sql = "update {$this->tblUserOther} set ";
             $sql .= "user_other_name = :user_other_name, ";
             $sql .= "user_other_email = :user_other_email, ";
             $sql .= "user_other_datetime = :user_other_datetime ";
             $sql .= "where user_other_aid  = :user_other_aid ";
             $query = $this->connection->prepare($sql);
-            $query->execute([ 
+            $query->execute([
                 "user_other_name" => $this->user_other_name,
                 "user_other_email" => $this->user_other_email,
                 "user_other_datetime" => $this->user_other_datetime,
@@ -151,12 +151,12 @@ class UserOther
             $sql = "update {$this->tblUserOther} set ";
             $sql .= "user_other_key = :user_other_key, ";
             $sql .= "user_other_datetime = :user_other_datetime ";
-            $sql .= "where user_other_aid = :user_other_aid ";
+            $sql .= "where user_other_email = :user_other_email ";
             $query = $this->connection->prepare($sql);
             $query->execute([
                 "user_other_key" => $this->user_other_key,
                 "user_other_datetime" => $this->user_other_datetime,
-                "user_other_aid" => $this->user_other_aid,
+                "user_other_email" => $this->user_other_email,
             ]);
         } catch (PDOException $ex) {
             $query = false;
@@ -164,6 +164,26 @@ class UserOther
         return $query;
     }
 
+    // set password
+    public function setPassword()
+    {
+        try {
+            $sql = "update {$this->tblUserOther} set ";
+            $sql .= "user_other_password = :user_other_password, ";
+            $sql .= "user_other_key = '', ";
+            $sql .= "user_other_datetime = :user_other_datetime ";
+            $sql .= "where user_other_key = :user_other_key ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "user_other_password" => $this->user_other_password,
+                "user_other_datetime" => $this->user_other_datetime,
+                "user_other_key" => $this->user_other_key,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
     // delete
     public function delete()
     {
@@ -179,7 +199,7 @@ class UserOther
         }
         return $query;
     }
-  
+
     // name
     public function checkName()
     {
@@ -205,6 +225,47 @@ class UserOther
             $query = $this->connection->prepare($sql);
             $query->execute([
                 "user_other_email" => "{$this->user_other_email}",
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    // read login
+    public function readLogin()
+    {
+        try {
+            $sql = "select otherUser.user_other_aid, ";
+            $sql .= "otherUser.user_other_is_active, ";
+            $sql .= "otherUser.user_other_name, ";
+            $sql .= "otherUser.user_other_email, ";
+            $sql .= "otherUser.user_other_password, ";
+            $sql .= "role.* ";
+            $sql .= "from {$this->tblUserOther} as otherUser, ";
+            $sql .= "{$this->tblRole} as role ";
+            $sql .= "where otherUser.user_other_role_id = role.role_aid ";
+            $sql .= "and otherUser.user_other_email like :user_other_email ";
+            $sql .= "and otherUser.user_other_is_active = 1 ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "user_other_email" => $this->user_other_email,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    // read key
+    public function readKey()
+    {
+        try {
+            $sql = "select user_other_key from {$this->tblUserOther} ";
+            $sql .= "where user_other_key = :user_other_key ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "user_other_key" => $this->user_other_key,
             ]);
         } catch (PDOException $ex) {
             $query = false;

@@ -89,16 +89,9 @@ export const setCreatePassSuccess = (val) => {
   };
 };
 
-export const setForgetPassSuccess = (val) => {
+export const setForgotPassSuccess = (val) => {
   return {
-    type: "IS_FORGET_PASS_SUCCCESS",
-    payload: val,
-  };
-};
-
-export const setAdminForgetPassSuccess = (val) => {
-  return {
-    type: "IS_ADMIN_FORGET_PASS_SUCCCESS",
+    type: "IS_FORGOT_PASS_SUCCCESS",
     payload: val,
   };
 };
@@ -117,43 +110,11 @@ export const setIsLogout = (val) => {
   };
 };
 
-export const setCredentials = (
-  settings_account_aid,
-  settings_account_email,
-  settings_account_user_id,
-  fname,
-  lname,
-  don_member_address,
-  don_member_city,
-  don_member_state,
-  don_member_zipcode,
-  don_member_cus_id,
-  account_role_aid,
-  account_role_name,
-  account_role_is_admin,
-  account_role_is_member,
-  payment_method,
-  default_source
-) => {
+export const setCredentials = (data) => {
   return {
     type: "CREDENTIALS",
     payload: {
-      settings_account_aid,
-      settings_account_email,
-      settings_account_user_id,
-      fname,
-      lname,
-      don_member_address,
-      don_member_city,
-      don_member_state,
-      don_member_zipcode,
-      don_member_cus_id,
-      account_role_aid,
-      account_role_name,
-      account_role_is_admin,
-      account_role_is_member,
-      payment_method,
-      default_source,
+      data,
     },
   };
 };

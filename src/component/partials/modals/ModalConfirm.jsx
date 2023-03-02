@@ -1,9 +1,16 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React from "react";
 import { FaQuestionCircle, FaTimesCircle } from "react-icons/fa";
-import { setIsConfirm, setStartIndex } from "../../../store/StoreAction";
+import {
+  setIsConfirm,
+  setIsFinish,
+  setIsLogout,
+  setStartIndex,
+} from "../../../store/StoreAction";
 import { StoreContext } from "../../../store/StoreContext";
+import { checkLocalStorage } from "../../helpers/CheckLocalStorage";
 import { fetchData } from "../../helpers/fetchData";
+import { getUserType } from "../../helpers/functions-general";
 import { queryData } from "../../helpers/queryData";
 import ButtonSpinner from "../spinners/ButtonSpinner";
 
@@ -18,32 +25,22 @@ const ModalConfirm = ({
 }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [loading, setLoading] = React.useState(false);
-  // const queryClient = useQueryClient();
-
-  // const mutation = useMutation({
-  //   mutationFn: (values) =>
-  //     queryData(isDel ? mysqlApiDelete : mysqlApiArchive, "put", values),
-  //   onSuccess: () => {
-  //     // Invalidate and refetch
-  //     queryClient.invalidateQueries({ queryKey: ["leavetype"] });
-  //     dispatch(setIsConfirm(false));
-  //   },
-  // });
+  const link = getUserType(store.credentials.data.role_is_developer === 1);
 
   const handleClose = () => {
     dispatch(setIsConfirm(false));
   };
 
   const handleYes = async () => {
-    // // mutate data
-    // mutation.mutate({
-    //   isActive: 0,
-    // });
     setLoading(true);
     fetchData(
       setLoading,
       isDel ? mysqlApiReset : mysqlApiArchive,
-      { isActive: 0, email: item, isDeveloper: isDeveloper },
+      {
+        isActive: 0,
+        email: item,
+        isDeveloper: isDeveloper,
+      },
       null,
       isDel ? "Please check your email to continue resetting password." : "",
       "",
@@ -55,6 +52,10 @@ const ModalConfirm = ({
       isDel ? "delete" : "put"
     );
     dispatch(setStartIndex(0));
+    if (mysqlApiReset) {
+      setLoading(true);
+      dispatch(setIsFinish(true));
+    }
   };
 
   return (

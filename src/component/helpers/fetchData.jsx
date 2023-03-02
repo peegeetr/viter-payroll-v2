@@ -6,18 +6,15 @@ import {
   doList,
   doLoadmore,
   setStorageRoute,
-  UrlAdmin,
 } from "./functions-general";
 
 import {
-  setAdminForgetPassSuccess,
   setCreatePassSuccess,
   setCredentials,
   setError,
-  setForgetPassSuccess,
+  setForgotPassSuccess,
   setIsAdd,
   setIsConfirm,
-  setIsFinish,
   setIsLogin,
   setIsRestore,
   setMessage,
@@ -106,64 +103,29 @@ export const fetchData = async (
     }
 
     // redirect to other page after request forgot password
-    if (store.isForgetPassSuccess) {
-      dispatch(setForgetPassSuccess(false));
+    if (store.isForgotPassSuccess) {
+      dispatch(setForgotPassSuccess(false));
       window.location.replace(`${devNavUrl}/reset-password-success`);
-    }
-
-    // redirect to other page after request forgot password for admin
-    if (store.isAdminForgetPassSuccess) {
-      dispatch(setAdminForgetPassSuccess(false));
-      window.location.replace(
-        `${devNavUrl}/${UrlAdmin}/reset-password-success`
-      );
     }
 
     // redirect to other page after request forgot password
     if (store.isCreatePassSuccess) {
       dispatch(setCreatePassSuccess(false));
-      navigate(`${devNavUrl}/create-password-success`);
+      navigate(`${devNavUrl}${fd.redirect_link}`);
     }
 
     // redirect to other page after login
     if (store.isLogin) {
-      // dispatch(setCredentials(data.mail));
-      dispatch(
-        setCredentials(
-          data.mail.settings_account_aid,
-          data.mail.settings_account_email,
-          data.mail.settings_account_user_id,
-          data.mail.don_member_name === undefined
-            ? data.mail.don_admin_fname
-            : data.mail.don_member_name,
-          data.mail.don_admin_fname === undefined
-            ? ""
-            : data.mail.don_admin_fname,
-          data.mail.don_member_address === undefined
-            ? ""
-            : data.mail.don_member_address,
-          data.mail.don_member_city === undefined
-            ? ""
-            : data.mail.don_member_city,
-          data.mail.don_member_state === undefined
-            ? ""
-            : data.mail.don_member_state,
-          data.mail.don_member_zipcode === undefined
-            ? ""
-            : data.mail.don_member_zipcode,
-          data.mail.don_member_cus_id === undefined
-            ? ""
-            : data.mail.don_member_cus_id,
-          data.mail.account_role_aid,
-          data.mail.account_role_name,
-          data.mail.account_role_is_admin,
-          data.mail.account_role_is_member
-        )
-      );
-      setStorageRoute(data.data);
-      // setStorageRoute(data.data, data.mail);
+      delete data.data[0].user_other_password;
+      delete data.data[0].role_description;
+      delete data.data[0].role_created;
+      delete data.data[0].role_datetime;
+
+      dispatch(setCredentials(data.data[0]));
+
+      setStorageRoute(data.data[1]);
       dispatch(setIsLogin(false));
-      checkRoleToRedirect(navigate, data.mail);
+      checkRoleToRedirect(navigate, data.data[0]);
     }
   }
 };

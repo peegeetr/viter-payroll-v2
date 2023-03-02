@@ -19,6 +19,7 @@ import useLoadPayType from "../../custom-hooks/useLoadPayType";
 import {
   devApiUrl,
   devNavUrl,
+  getUserType,
   UrlAdmin,
 } from "../../helpers/functions-general";
 import ModalConfirm from "../../partials/modals/ModalConfirm";
@@ -31,6 +32,7 @@ import StatusInactive from "../../partials/status/StatusInactive";
 
 const PayTypeLink = ({ setItemEdit }) => {
   const { store, dispatch } = React.useContext(StoreContext);
+  const link = getUserType(store.credentials.data.role_is_developer === 1);
   const [dataItem, setData] = React.useState(null);
   const [id, setId] = React.useState(null);
   const [isDel, setDel] = React.useState(false);
@@ -76,7 +78,7 @@ const PayTypeLink = ({ setItemEdit }) => {
             <li key={key} className="py-2">
               <div className="group flex items-center justify-between border-b border-solid border-gray-300 ">
                 <Link
-                  to={`${devNavUrl}/${UrlAdmin}/pay-type/pay-item?paytypeid=${item.paytype_aid}`}
+                  to={`${devNavUrl}/pay-type/pay-item?paytypeid=${item.paytype_aid}`}
                   className="w-full py-1"
                   onClick={() => dispatch(setStartIndex(0))}
                 >
@@ -116,7 +118,7 @@ const PayTypeLink = ({ setItemEdit }) => {
 
                 <div className="flex items-center gap-1">
                   <Link
-                    to={`${devNavUrl}/${UrlAdmin}/pay-type/pay-item?paytypeid=${item.paytype_aid}`}
+                    to={`${link}/pay-type/pay-item?paytypeid=${item.paytype_aid}`}
                     className="btn-action-table tooltip-action-table "
                     data-tooltip="View"
                     onClick={() => dispatch(setStartIndex(0))}
@@ -126,7 +128,7 @@ const PayTypeLink = ({ setItemEdit }) => {
                   {item.paytype_is_active === 1 ? (
                     <>
                       <button
-                        to={`${devNavUrl}/${UrlAdmin}/employees/details`}
+                        to={`${link}/employees/details`}
                         type="button"
                         className="btn-action-table tooltip-action-table"
                         data-tooltip="Edit"

@@ -28,20 +28,21 @@ export const devNavUrl = "";
 // export const devBaseImgUrl = "http://localhost/viter-payroll-v2/public/img";
 // export const devNavUrl = "";
 
-// cy url
+// // cy url
 // export const devBaseImgUrl = "https://payroll-app.frontlinebusiness.com.ph/img";
 // export const devApiUrl = "http://localhost/projects/viter-payroll-v2/rest";
 // export const devBaseUrl = "http://localhost/projects/viter-payroll-v2/public";
 // export const devNavUrl = "";
 
-// local URL dev hris
+// // local URL dev hris
 // export const hrisDevBaseImgUrl =
 //   "https://hris.frontlinebusiness.com.ph/dev-app/img";
 // export const hrisDevApiUrl = "http://localhost/projects/viter-hris-v3/rest";
 // export const hrisdevBaseUrl = "http://localhost/projects/viter-hris-v3/public";
 // export const hrisdevNavUrl = "/dev-app";
 
-export const UrlAdmin = "admin";
+export const UrlAdmin = "";
+export const UrlSystem = "system";
 export const is_developer = "is_developer";
 
 export const devKey =
@@ -112,10 +113,7 @@ export const fetchFormData = (url, fd = {}) => {
 
 // storage after login
 export function setStorageRoute(jwt, data) {
-  localStorage.setItem(
-    "fwcdonationtoken",
-    JSON.stringify({ token: jwt, data })
-  );
+  localStorage.setItem("fbsPayroll", JSON.stringify({ token: jwt, data }));
 }
 
 // formatting date
@@ -213,4 +211,11 @@ export const getPayPeriod = (result) => {
   const endDay = formatDate(result[0]?.payroll_end_date).split(" ")[2];
   const year = formatDate(result[0]?.payroll_start_date).split(" ")[3];
   return `${mo} ${startDay} - ${endDay}, ${year}`;
+};
+
+// get user type
+export const getUserType = (developer) => {
+  let link = "";
+  developer ? (link = `${devNavUrl}/${UrlSystem}`) : (link = `${devNavUrl}`);
+  return link;
 };

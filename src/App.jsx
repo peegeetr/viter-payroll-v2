@@ -1,6 +1,10 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { devNavUrl, UrlAdmin } from "./component/helpers/functions-general";
+import {
+  devNavUrl,
+  UrlAdmin,
+  UrlSystem,
+} from "./component/helpers/functions-general";
 import Employee from "./component/pages/employee/Employee";
 import EmployeeLink from "./component/pages/employee/EmployeeLink";
 import Holidays from "./component/pages/holidays/Holidays";
@@ -19,6 +23,7 @@ import SystemUser from "./component/pages/settings/users/system/SystemUser";
 import UserPage from "./component/pages/settings/users/UserPage";
 import PageNotFound from "./component/partials/PageNotFound";
 
+import SystemLogin from "./component/pages/access/login/SystemLogin";
 import DeductionsPage from "./component/pages/deductions/DeductionsPage";
 import FilterDeductions from "./component/pages/deductions/filter/FilterDeductions";
 import ManageDeduction from "./component/pages/deductions/manage-list/ManageDeduction";
@@ -34,6 +39,15 @@ import ReportsLink from "./component/pages/reports/ReportsLink";
 import PayrollType from "./component/pages/settings/payroll-type/PayrollType.jsx";
 import Rates from "./component/pages/settings/rates/Rates";
 import { StoreProvider } from "./store/StoreContext";
+import OtherLogin from "./component/pages/access/login/OtherLogin";
+import ProtectedRouteOther from "./component/pages/access/ProtectedRouteOther";
+import ProtectedRouteSystem from "./component/pages/access/ProtectedRouteSystem";
+import CreateOtherPassword from "./component/pages/access/create-password/CreateOtherPassword";
+import CreateSystemPassword from "./component/pages/access/create-password/CreateSystemPassword";
+import CreatePasswordSuccess from "./component/pages/access/create-password/CreatePasswordSuccess";
+import ForgotPassword from "./component/pages/access/forgot-password/ForgotPassword";
+import ForgotPasswordVerification from "./component/pages/access/forgot-password/ForgotPasswordVerification";
+import ForgotPasswordSystem from "./component/pages/access/forgot-password/ForgotPasswordSystem";
 
 function App() {
   // Create a client
@@ -44,151 +58,578 @@ function App() {
         <Router>
           <Routes>
             <Route path={`*`} element={<PageNotFound />} />
-            <Route path={`/${devNavUrl}`} element={<div>Payroll</div>} />
-
-            {/* Payroll Page */}
             <Route
-              path={`${devNavUrl}/${UrlAdmin}/payroll`}
-              element={<Payroll />}
+              path={`${devNavUrl}/create-password-success`}
+              element={<CreatePasswordSuccess />}
             />
             <Route
-              path={`${devNavUrl}/${UrlAdmin}/payroll/list`}
-              element={<PayrollView />}
-            />
-            <Route
-              path={`${devNavUrl}/${UrlAdmin}/payroll/list/payslip`}
-              element={<Payslip />}
+              path={`${devNavUrl}/reset-password-success`}
+              element={<ForgotPasswordVerification />}
             />
 
-            {/* Employee Page */}
+            {/* OTHER LOGIN */}
+            {/* OTHER LOGIN */}
+            {/* OTHER LOGIN */}
+
+            <Route path={`/${devNavUrl}`} element={<OtherLogin />} />
+            <Route path={`${devNavUrl}/login`} element={<OtherLogin />} />
             <Route
-              path={`${devNavUrl}/${UrlAdmin}/employee`}
-              element={<Employee />}
+              path={`${devNavUrl}/create-password`}
+              element={<CreateOtherPassword />}
+            />
+            <Route
+              path={`${devNavUrl}/forgot-password`}
+              element={<ForgotPassword />}
+            />
+
+            {/* SYSTEM LOGIN */}
+            {/* SYSTEM LOGIN */}
+            {/* SYSTEM LOGIN */}
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/login`}
+              element={<SystemLogin />}
+            />
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/create-password`}
+              element={<CreateSystemPassword />}
+            />
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/forgot-password`}
+              element={<ForgotPasswordSystem />}
+            />
+            {/* Payroll Page ADMIN*/}
+            <Route
+              path={`${devNavUrl}/payroll`}
+              element={
+                <ProtectedRouteOther>
+                  <Payroll />
+                </ProtectedRouteOther>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/payroll/list`}
+              element={
+                <ProtectedRouteOther>
+                  <PayrollView />
+                </ProtectedRouteOther>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/payroll/list/payslip`}
+              element={
+                <ProtectedRouteOther>
+                  <Payslip />
+                </ProtectedRouteOther>
+              }
+            />
+
+            {/* Employee Page ADMIN*/}
+            <Route
+              path={`${devNavUrl}/employee`}
+              element={
+                <ProtectedRouteOther>
+                  <Employee />
+                </ProtectedRouteOther>
+              }
             />
 
             <Route
-              path={`${devNavUrl}/${UrlAdmin}/employee/details`}
-              element={<EmployeeLink />}
+              path={`${devNavUrl}/employee/details`}
+              element={
+                <ProtectedRouteOther>
+                  <EmployeeLink />
+                </ProtectedRouteOther>
+              }
             />
             <Route
-              path={`${devNavUrl}/${UrlAdmin}/employee/details/job`}
-              element={<JobDetails />}
+              path={`${devNavUrl}/employee/details/job`}
+              element={
+                <ProtectedRouteOther>
+                  <JobDetails />
+                </ProtectedRouteOther>
+              }
             />
             <Route
-              path={`${devNavUrl}/${UrlAdmin}/employee/details/salary-history`}
-              element={<SalaryHistory />}
+              path={`${devNavUrl}/employee/details/salary-history`}
+              element={
+                <ProtectedRouteOther>
+                  <SalaryHistory />
+                </ProtectedRouteOther>
+              }
             />
 
-            {/* Earnings Page */}
+            {/* Earnings Page ADMIN*/}
             <Route
-              path={`${devNavUrl}/${UrlAdmin}/earnings`}
-              element={<EarningsPage />}
+              path={`${devNavUrl}/earnings`}
+              element={
+                <ProtectedRouteOther>
+                  <EarningsPage />
+                </ProtectedRouteOther>
+              }
             />
             <Route
-              path={`${devNavUrl}/${UrlAdmin}/earnings/manage`}
-              element={<ManageEarnings />}
+              path={`${devNavUrl}/earnings/manage`}
+              element={
+                <ProtectedRouteOther>
+                  <ManageEarnings />
+                </ProtectedRouteOther>
+              }
             />
             <Route
-              path={`${devNavUrl}/${UrlAdmin}/earnings/filter`}
-              element={<FilterEarnings />}
+              path={`${devNavUrl}/earnings/filter`}
+              element={
+                <ProtectedRouteOther>
+                  <FilterEarnings />
+                </ProtectedRouteOther>
+              }
             />
 
             {/* Deductions Page */}
             <Route
-              path={`${devNavUrl}/${UrlAdmin}/deductions`}
-              element={<DeductionsPage />}
+              path={`${devNavUrl}/deductions`}
+              element={
+                <ProtectedRouteOther>
+                  <DeductionsPage />
+                </ProtectedRouteOther>
+              }
             />
             <Route
-              path={`${devNavUrl}/${UrlAdmin}/deductions/manage`}
-              element={<ManageDeduction />}
+              path={`${devNavUrl}/deductions/manage`}
+              element={
+                <ProtectedRouteOther>
+                  <ManageDeduction />
+                </ProtectedRouteOther>
+              }
             />
             <Route
-              path={`${devNavUrl}/${UrlAdmin}/deductions/filter`}
-              element={<FilterDeductions />}
+              path={`${devNavUrl}/deductions/filter`}
+              element={
+                <ProtectedRouteOther>
+                  <FilterDeductions />
+                </ProtectedRouteOther>
+              }
             />
 
             {/* Pay Type Page */}
             <Route
-              path={`${devNavUrl}/${UrlAdmin}/pay-type`}
-              element={<PayTypeLink />}
+              path={`${devNavUrl}/pay-type`}
+              element={
+                <ProtectedRouteOther>
+                  <PayTypeLink />
+                </ProtectedRouteOther>
+              }
             />
             <Route
-              path={`${devNavUrl}/${UrlAdmin}/pay-type/pay-item`}
-              element={<PayItem />}
+              path={`${devNavUrl}/pay-type/pay-item`}
+              element={
+                <ProtectedRouteOther>
+                  <PayItem />
+                </ProtectedRouteOther>
+              }
             />
 
             {/* Holidays Page */}
             <Route
-              path={`${devNavUrl}/${UrlAdmin}/holidays`}
-              element={<Holidays />}
+              path={`${devNavUrl}/holidays`}
+              element={
+                <ProtectedRouteOther>
+                  <Holidays />
+                </ProtectedRouteOther>
+              }
             />
 
             {/* Reports Page */}
             <Route
-              path={`${devNavUrl}/${UrlAdmin}/reports`}
-              element={<ReportsLink />}
+              path={`${devNavUrl}/reports`}
+              element={
+                <ProtectedRouteOther>
+                  <ReportsLink />
+                </ProtectedRouteOther>
+              }
             />
 
             {/* Settings Page */}
             <Route
-              path={`${devNavUrl}/${UrlAdmin}/settings`}
-              element={<SettingsLink />}
+              path={`${devNavUrl}/settings`}
+              element={
+                <ProtectedRouteOther>
+                  <SettingsLink />
+                </ProtectedRouteOther>
+              }
             />
             <Route
-              path={`${devNavUrl}/${UrlAdmin}/settings/users`}
-              element={<UserPage />}
+              path={`${devNavUrl}/settings/users`}
+              element={
+                <ProtectedRouteOther>
+                  <UserPage />
+                </ProtectedRouteOther>
+              }
             />
             <Route
-              path={`${devNavUrl}/${UrlAdmin}/settings/users/system`}
-              element={<SystemUser />}
+              path={`${devNavUrl}/settings/users/system`}
+              element={
+                <ProtectedRouteOther>
+                  <SystemUser />
+                </ProtectedRouteOther>
+              }
             />
             <Route
-              path={`${devNavUrl}/${UrlAdmin}/settings/users/other`}
-              element={<OtherUser />}
+              path={`${devNavUrl}/settings/users/other`}
+              element={
+                <ProtectedRouteOther>
+                  <OtherUser />
+                </ProtectedRouteOther>
+              }
             />
             <Route
-              path={`${devNavUrl}/${UrlAdmin}/settings/users/role`}
-              element={<Role />}
-            />
-
-            <Route
-              path={`${devNavUrl}/${UrlAdmin}/settings/tax-bracket`}
-              element={<TaxBracket />}
-            />
-
-            <Route
-              path={`${devNavUrl}/${UrlAdmin}/settings/tax-bracket/monthly`}
-              element={<TaxMonthly />}
-            />
-
-            <Route
-              path={`${devNavUrl}/${UrlAdmin}/settings/tax-bracket/semi-monthly`}
-              element={<TaxSemi />}
-            />
-
-            <Route
-              path={`${devNavUrl}/${UrlAdmin}/settings/pagibig`}
-              element={<Pagibig />}
-            />
-
-            <Route
-              path={`${devNavUrl}/${UrlAdmin}/settings/philhealth`}
-              element={<Philhealth />}
+              path={`${devNavUrl}/settings/users/role`}
+              element={
+                <ProtectedRouteOther>
+                  <Role />
+                </ProtectedRouteOther>
+              }
             />
 
             <Route
-              path={`${devNavUrl}/${UrlAdmin}/settings/sss-bracket`}
-              element={<SssBracket />}
+              path={`${devNavUrl}/settings/tax-bracket`}
+              element={
+                <ProtectedRouteOther>
+                  <TaxBracket />
+                </ProtectedRouteOther>
+              }
             />
 
             <Route
-              path={`${devNavUrl}/${UrlAdmin}/settings/rates`}
-              element={<Rates />}
+              path={`${devNavUrl}/settings/tax-bracket/monthly`}
+              element={
+                <ProtectedRouteOther>
+                  <TaxMonthly />
+                </ProtectedRouteOther>
+              }
             />
 
             <Route
-              path={`${devNavUrl}/${UrlAdmin}/settings/payroll-type`}
-              element={<PayrollType />}
+              path={`${devNavUrl}/settings/tax-bracket/semi-monthly`}
+              element={
+                <ProtectedRouteOther>
+                  <TaxSemi />
+                </ProtectedRouteOther>
+              }
+            />
+
+            <Route
+              path={`${devNavUrl}/settings/pagibig`}
+              element={
+                <ProtectedRouteOther>
+                  <Pagibig />
+                </ProtectedRouteOther>
+              }
+            />
+
+            <Route
+              path={`${devNavUrl}/settings/philhealth`}
+              element={
+                <ProtectedRouteOther>
+                  <Philhealth />
+                </ProtectedRouteOther>
+              }
+            />
+
+            <Route
+              path={`${devNavUrl}/settings/sss-bracket`}
+              element={
+                <ProtectedRouteOther>
+                  <SssBracket />
+                </ProtectedRouteOther>
+              }
+            />
+
+            <Route
+              path={`${devNavUrl}/settings/rates`}
+              element={
+                <ProtectedRouteOther>
+                  <Rates />
+                </ProtectedRouteOther>
+              }
+            />
+
+            <Route
+              path={`${devNavUrl}/settings/payroll-type`}
+              element={
+                <ProtectedRouteOther>
+                  <PayrollType />
+                </ProtectedRouteOther>
+              }
+            />
+
+            {/* SYSTEM PAGE */}
+            {/* SYSTEM PAGE */}
+            {/* SYSTEM PAGE */}
+            {/* SYSTEM PAGE */}
+            {/* SYSTEM PAGE */}
+            {/* Payroll Page ADMIN*/}
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/payroll`}
+              element={
+                <ProtectedRouteSystem>
+                  <Payroll />
+                </ProtectedRouteSystem>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/payroll/list`}
+              element={
+                <ProtectedRouteSystem>
+                  <PayrollView />
+                </ProtectedRouteSystem>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/payroll/list/payslip`}
+              element={
+                <ProtectedRouteSystem>
+                  <Payslip />
+                </ProtectedRouteSystem>
+              }
+            />
+
+            {/* Employee Page ADMIN*/}
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/employee`}
+              element={
+                <ProtectedRouteSystem>
+                  <Employee />
+                </ProtectedRouteSystem>
+              }
+            />
+
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/employee/details`}
+              element={
+                <ProtectedRouteSystem>
+                  <EmployeeLink />
+                </ProtectedRouteSystem>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/employee/details/job`}
+              element={
+                <ProtectedRouteSystem>
+                  <JobDetails />
+                </ProtectedRouteSystem>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/employee/details/salary-history`}
+              element={
+                <ProtectedRouteSystem>
+                  <SalaryHistory />
+                </ProtectedRouteSystem>
+              }
+            />
+
+            {/* Earnings Page ADMIN*/}
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/earnings`}
+              element={
+                <ProtectedRouteSystem>
+                  <EarningsPage />
+                </ProtectedRouteSystem>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/earnings/manage`}
+              element={
+                <ProtectedRouteSystem>
+                  <ManageEarnings />
+                </ProtectedRouteSystem>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/earnings/filter`}
+              element={
+                <ProtectedRouteSystem>
+                  <FilterEarnings />
+                </ProtectedRouteSystem>
+              }
+            />
+
+            {/* Deductions Page */}
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/deductions`}
+              element={
+                <ProtectedRouteSystem>
+                  <DeductionsPage />
+                </ProtectedRouteSystem>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/deductions/manage`}
+              element={
+                <ProtectedRouteSystem>
+                  <ManageDeduction />
+                </ProtectedRouteSystem>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/deductions/filter`}
+              element={
+                <ProtectedRouteSystem>
+                  <FilterDeductions />
+                </ProtectedRouteSystem>
+              }
+            />
+
+            {/* Pay Type Page */}
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/pay-type`}
+              element={
+                <ProtectedRouteSystem>
+                  <PayTypeLink />
+                </ProtectedRouteSystem>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/pay-type/pay-item`}
+              element={
+                <ProtectedRouteSystem>
+                  <PayItem />
+                </ProtectedRouteSystem>
+              }
+            />
+
+            {/* Holidays Page */}
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/holidays`}
+              element={
+                <ProtectedRouteSystem>
+                  <Holidays />
+                </ProtectedRouteSystem>
+              }
+            />
+
+            {/* Reports Page */}
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/reports`}
+              element={
+                <ProtectedRouteSystem>
+                  <ReportsLink />
+                </ProtectedRouteSystem>
+              }
+            />
+
+            {/* Settings Page */}
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/settings`}
+              element={
+                <ProtectedRouteSystem>
+                  <SettingsLink />
+                </ProtectedRouteSystem>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/settings/users`}
+              element={
+                <ProtectedRouteSystem>
+                  <UserPage />
+                </ProtectedRouteSystem>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/settings/users/system`}
+              element={
+                <ProtectedRouteSystem>
+                  <SystemUser />
+                </ProtectedRouteSystem>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/settings/users/other`}
+              element={
+                <ProtectedRouteSystem>
+                  <OtherUser />
+                </ProtectedRouteSystem>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/settings/users/role`}
+              element={
+                <ProtectedRouteSystem>
+                  <Role />
+                </ProtectedRouteSystem>
+              }
+            />
+
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/settings/tax-bracket`}
+              element={
+                <ProtectedRouteSystem>
+                  <TaxBracket />
+                </ProtectedRouteSystem>
+              }
+            />
+
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/settings/tax-bracket/monthly`}
+              element={
+                <ProtectedRouteSystem>
+                  <TaxMonthly />
+                </ProtectedRouteSystem>
+              }
+            />
+
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/settings/tax-bracket/semi-monthly`}
+              element={
+                <ProtectedRouteSystem>
+                  <TaxSemi />
+                </ProtectedRouteSystem>
+              }
+            />
+
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/settings/pagibig`}
+              element={
+                <ProtectedRouteSystem>
+                  <Pagibig />
+                </ProtectedRouteSystem>
+              }
+            />
+
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/settings/philhealth`}
+              element={
+                <ProtectedRouteSystem>
+                  <Philhealth />
+                </ProtectedRouteSystem>
+              }
+            />
+
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/settings/sss-bracket`}
+              element={
+                <ProtectedRouteSystem>
+                  <SssBracket />
+                </ProtectedRouteSystem>
+              }
+            />
+
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/settings/rates`}
+              element={
+                <ProtectedRouteSystem>
+                  <Rates />
+                </ProtectedRouteSystem>
+              }
+            />
+
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/settings/payroll-type`}
+              element={
+                <ProtectedRouteSystem>
+                  <PayrollType />
+                </ProtectedRouteSystem>
+              }
             />
           </Routes>
         </Router>

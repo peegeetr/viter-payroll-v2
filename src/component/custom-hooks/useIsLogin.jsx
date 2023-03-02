@@ -1,13 +1,9 @@
 import React from "react";
-import {
-  setAdminForgetPassSuccess,
-  setForgetPassSuccess,
-  setIsLogin,
-} from "../../store/StoreAction";
+import { setIsLogin } from "../../store/StoreAction";
 import { StoreContext } from "../../store/StoreContext";
 import { checkLocalStorage } from "../helpers/CheckLocalStorage";
 import fetchApi from "../helpers/fetchApi";
-import { devApiUrl, devNavUrl, UrlDonor } from "../helpers/functions-general";
+import { devApiUrl } from "../helpers/functions-general";
 import { checkRoleToRedirect } from "../helpers/login-functions";
 
 const useIsLogin = (navigate) => {

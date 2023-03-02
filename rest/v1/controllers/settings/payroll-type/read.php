@@ -15,20 +15,14 @@ if (array_key_exists("payrolltypeid", $_GET)) {
     checkId($payrollType->payroll_type_aid);
     $query = checkReadById($payrollType);
     http_response_code(200);
-    $returnData["data"] = getResultData($query);
-    $returnData["count"] = $query->rowCount();
-    $returnData["success"] = true;
-    return $returnData;
+    getQueriedData($query);
 }
 
 // if request is a GET e.g. /rate
 if (empty($_GET)) {
     $query = checkReadAll($payrollType);
     http_response_code(200);
-    $returnData["data"] = getResultData($query);
-    $returnData["count"] = $query->rowCount();
-    $returnData["success"] = true;
-    return $returnData;
+    getQueriedData($query);
 }
 
 // return 404 error if endpoint not available

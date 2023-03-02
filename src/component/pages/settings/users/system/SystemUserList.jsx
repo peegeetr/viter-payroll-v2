@@ -169,7 +169,7 @@ const SystemUserList = ({ setItemEdit }) => {
         <ModalConfirm
           id={id}
           isDel={isDel}
-          mysqlApiReset={`${devApiUrl}/v1/user-systems/reset/${id}`}
+          mysqlApiReset={`${devApiUrl}/v1/user-systems/reset`}
           mysqlApiArchive={`${devApiUrl}/v1/user-systems/active/${id}`}
           msg={
             isDel

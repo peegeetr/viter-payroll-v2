@@ -78,16 +78,10 @@ export const StoreReducer = (state, action) => {
         isCreatePassSuccess: action.payload,
       };
 
-    case "IS_FORGET_PASS_SUCCCESS":
+    case "IS_FORGOT_PASS_SUCCCESS":
       return {
         ...state,
-        isForgetPassSuccess: action.payload,
-      };
-
-    case "IS_ADMIN_FORGET_PASS_SUCCCESS":
-      return {
-        ...state,
-        isAdminForgetPassSuccess: action.payload,
+        isForgotPassSuccess: action.payload,
       };
 
     case "IS_LOGIN":

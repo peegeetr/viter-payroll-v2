@@ -12,7 +12,11 @@ import { GiReceiveMoney } from "react-icons/gi";
 import { Link } from "react-router-dom";
 import { setIsShow, setStartIndex } from "../../store/StoreAction";
 import { StoreContext } from "../../store/StoreContext";
-import { devNavUrl } from "../helpers/functions-general";
+import {
+  devNavUrl,
+  getUserType,
+  UrlSystem,
+} from "../helpers/functions-general";
 
 const Navigation = ({ menu }) => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -22,6 +26,7 @@ const Navigation = ({ menu }) => {
     dispatch(setStartIndex(0));
   };
 
+  const link = getUserType(store.credentials.data.role_is_developer === 1);
   return (
     <>
       <nav
@@ -38,7 +43,7 @@ const Navigation = ({ menu }) => {
             }
           >
             <Link
-              to={`${devNavUrl}/admin/payroll`}
+              to={`${link}/payroll`}
               className="w-full flex items-center !p-4 md:justify-center lg:justify-start tooltip-navigation"
               onClick={handleShow}
               data-tooltip="Payroll"
@@ -55,7 +60,7 @@ const Navigation = ({ menu }) => {
             }
           >
             <Link
-              to={`${devNavUrl}/admin/employee`}
+              to={`${link}/employee`}
               className="w-full flex items-center !p-4 md:justify-center lg:justify-start tooltip-navigation"
               onClick={handleShow}
               data-tooltip="Employee"
@@ -72,7 +77,7 @@ const Navigation = ({ menu }) => {
             }
           >
             <Link
-              to={`${devNavUrl}/admin/earnings`}
+              to={`${link}/earnings`}
               className="w-full flex items-center !p-4 md:justify-center lg:justify-start tooltip-navigation"
               onClick={handleShow}
               data-tooltip="Earnings"
@@ -89,7 +94,7 @@ const Navigation = ({ menu }) => {
             }
           >
             <Link
-              to={`${devNavUrl}/admin/deductions`}
+              to={`${link}/deductions`}
               className="w-full flex items-center !p-4 md:justify-center lg:justify-start tooltip-navigation"
               onClick={handleShow}
               data-tooltip="Deductions"
@@ -106,7 +111,7 @@ const Navigation = ({ menu }) => {
             }
           >
             <Link
-              to={`${devNavUrl}/admin/pay-type`}
+              to={`${link}/pay-type`}
               className="w-full flex items-center !p-4 md:justify-center lg:justify-start tooltip-navigation"
               onClick={handleShow}
               data-tooltip="Pay Type"
@@ -123,7 +128,7 @@ const Navigation = ({ menu }) => {
             }
           >
             <Link
-              to={`${devNavUrl}/admin/holidays`}
+              to={`${link}/holidays`}
               className="w-full flex items-center !p-4 md:justify-center lg:justify-start tooltip-navigation"
               onClick={handleShow}
               data-tooltip="Holidays"
@@ -140,7 +145,7 @@ const Navigation = ({ menu }) => {
             }
           >
             <Link
-              to={`${devNavUrl}/admin/reports`}
+              to={`${link}/reports`}
               className="w-full flex items-center !p-4 md:justify-center lg:justify-start tooltip-navigation"
               onClick={handleShow}
               data-tooltip="Reports"
@@ -157,7 +162,7 @@ const Navigation = ({ menu }) => {
             }
           >
             <Link
-              to={`${devNavUrl}/admin/settings`}
+              to={`${link}/settings`}
               className="w-full flex items-center !p-4 md:justify-center lg:justify-start tooltip-navigation"
               onClick={handleShow}
               data-tooltip="Settings"

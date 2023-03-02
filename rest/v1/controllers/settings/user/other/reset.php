@@ -5,6 +5,8 @@ require '../../../../core/header.php';
 require '../../../../core/functions.php';
 // use needed classes
 require '../../../../models/settings/user/other/UserOther.php';
+// use notification template
+require '../../../../notification/reset-password.php';
 // check database connection
 require '../../../../core/Encryption.php';
 // check database connection
@@ -24,21 +26,34 @@ $returnData = [];
 // validate api key
 if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
     checkApiKey();
-    if (array_key_exists("userotherid", $_GET)) {
-        // check data
-        checkPayload($data);
-        // get task id from query string
-        $user_other->user_other_aid = $_GET['userotherid'];
-        $user_other->user_other_email = trim($data["email"]);
-        $user_other->user_other_key = $encrypt->doHash(rand());
-        $user_other->user_other_datetime = date("Y-m-d H:i:s");
-        //check to see if task id in query string is not empty and is number, if not return json error
-        checkId($user_other->user_other_aid);
-        $query = checkReset($user_other);
-        http_response_code(200);
+    // check data
+    checkPayload($data);
+    // get task id from query string 
+    $password_link = "/create-password";
+    $user_other->user_other_email = trim($data["email"]);
+    $user_other->user_other_key = $encrypt->doHash(rand());
+    $user_other->user_other_datetime = date("Y-m-d H:i:s");
 
-        returnSuccess($user_other, "User other", $query);
+    $query = $user_other->readLogin();
+    if ($query->rowCount() == 0) {
+        $response->setSuccess(false);
+        $error["count"] = 0;
+        $error["success"] = false;
+        $error['error'] = "Invalid email. Please use a registered one.";
+        $response->setData($error);
+        $response->send();
+        exit;
     }
+
+    sendEmail(
+        $password_link,
+        $user_other->user_other_email,
+        $user_other->user_other_key
+    );
+    $query = checkReset($user_other);
+    http_response_code(200);
+
+    returnSuccess($user_other, "User other", $query);
     // return 404 error if endpoint not available
     checkEndpoint();
 }

@@ -2,15 +2,15 @@ import React from "react";
 import { FaUserCog } from "react-icons/fa";
 import { SlArrowRight } from "react-icons/sl";
 import { Link } from "react-router-dom";
-import { devNavUrl, UrlAdmin } from "../../../../helpers/functions-general";
+import { StoreContext } from "../../../../../store/StoreContext";
+import { getUserType } from "../../../../helpers/functions-general";
 
 const SystemUserLink = () => {
+  const { store, dispatch } = React.useContext(StoreContext);
+  const link = getUserType(store.credentials.data.role_is_developer === 1);
   return (
     <div className="group flex items-center justify-between border-b border-solid border-gray-300">
-      <Link
-        to={`${devNavUrl}/${UrlAdmin}/settings/users/system`}
-        className="w-full py-1"
-      >
+      <Link to={`${link}/settings/users/system`} className="w-full py-1">
         <div className="flex items-center">
           <span className="text-lg mr-4">
             <FaUserCog />
@@ -24,7 +24,7 @@ const SystemUserLink = () => {
       </Link>
 
       <Link
-        to={`${devNavUrl}/${UrlAdmin}/settings/users/system`}
+        to={`${link}/settings/users/system`}
         className="btn-action-table group-hover:bg-primary group-hover:text-white"
       >
         <SlArrowRight className="inline" />

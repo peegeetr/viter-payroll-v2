@@ -8,6 +8,7 @@ import {
   devNavUrl,
   getPayPeriod,
   getUrlParam,
+  getUserType,
   getWorkingDays,
   UrlAdmin,
 } from "../../../helpers/functions-general";
@@ -20,6 +21,7 @@ import TableSpinner from "../../../partials/spinners/TableSpinner";
 
 const PayrollViewList = ({ setItemEdit }) => {
   const { store, dispatch } = React.useContext(StoreContext);
+  const link = getUserType(store.credentials.data.role_is_developer === 1);
   const [dataItem, setData] = React.useState(null);
   const [id, setId] = React.useState(null);
   const [isDel, setDel] = React.useState(false);
@@ -105,7 +107,7 @@ const PayrollViewList = ({ setItemEdit }) => {
                       {/* {item.payroll_list_is_paid === 1 && ( */}
                       <div className="flex items-center justify-end gap-1 mr-2">
                         <Link
-                          to={`${devNavUrl}/${UrlAdmin}/payroll/list/payslip?payslipid=${item.payroll_list_aid}`}
+                          to={`${link}/payroll/list/payslip?payslipid=${item.payroll_list_aid}`}
                           className="btn-action-table tooltip-action-table"
                           data-tooltip="Payslip"
                         >

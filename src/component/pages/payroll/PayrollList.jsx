@@ -9,6 +9,7 @@ import {
   devApiUrl,
   devNavUrl,
   formatDate,
+  getUserType,
   UrlAdmin,
 } from "../../helpers/functions-general";
 import Loadmore from "../../partials/Loadmore";
@@ -27,6 +28,7 @@ const PayrollList = ({ setItemEdit }) => {
   const [id, setId] = React.useState(null);
   const [isDel, setDel] = React.useState(false);
   const [editLoading, setLoading] = React.useState(false);
+  const link = getUserType(store.credentials.data.role_is_developer === 1);
   const search = React.useRef(null);
   const perPage = 10;
   const start = store.startIndex + 1;
@@ -131,7 +133,7 @@ const PayrollList = ({ setItemEdit }) => {
                           </button>
                         )}
                         <Link
-                          to={`${devNavUrl}/${UrlAdmin}/payroll/list?payrollid=${item.payroll_id}`}
+                          to={`${link}/payroll/list?payrollid=${item.payroll_id}`}
                           className="btn-action-table tooltip-action-table"
                           onClick={() => dispatch(setStartIndex(0))}
                           data-tooltip="View"

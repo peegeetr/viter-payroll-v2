@@ -1,5 +1,7 @@
 <?php
 
+use \Firebase\JWT\JWT;
+
 require "Database.php";
 require "Response.php";
 
@@ -168,6 +170,124 @@ function checkCreate($object)
     return $query;
 }
 
+// Login
+function checkLogin($object)
+{
+    $response = new Response();
+    $query = $object->readLogin();
+    if ($query->rowCount() == 0) {
+        $response->setSuccess(false);
+        $error["count"] = 0;
+        $error["success"] = false;
+        $error['error'] = "Invalid account. Please use a registered one.";
+        $response->setData($error);
+        $response->send();
+        exit;
+    }
+    return $query;
+}
+
+// Set password
+function checkSetPassword($object)
+{
+    $query = $object->setPassword();
+    checkQuery($query, "There's a problem processing your request. (set password)");
+    return $query;
+}
+
+
+// Login access
+function loginAccess(
+    $password,
+    $hash_password,
+    $employee_email,
+    $row,
+    $result,
+    $key
+) {
+    $response = new Response();
+    $error = [];
+    $returnData = [];
+    if (password_verify($password, $hash_password)) {
+        $payload = array(
+            "iss" => "localhost", // A string containing the name or identifier of the issuer application.
+            "aud" => "hris",
+            "iat" => time(),  // timestamp of token issuing.
+            "data" => array("email" => $employee_email, "data" => $row), // App payload
+        );
+        $jwt = JWT::encode($payload, $key, 'HS256');
+
+        http_response_code(200);
+        $returnData["data"] = [$row, $jwt];
+        $returnData["count"] = $result->rowCount();
+        $returnData["success"] = true;
+        $returnData["message"] = "Access granted.";
+        $response->setData($returnData);
+        $response->send();
+        return $returnData;
+    } else {
+        $response->setSuccess(false);
+        $error["count"] = 0;
+        $error["success"] = false;
+        $error['error'] = "Access denied.";
+        $response->setData($error);
+        $response->send();
+        exit;
+    }
+    checkEndpoint();
+    http_response_code(200);
+    checkAccess();
+}
+
+// Token
+function token(
+    $object,
+    $token,
+    $key
+) {
+    $response = new Response();
+    $error = [];
+    $returnData = [];
+
+    if (!empty($token)) {
+        try {
+            $decoded = JWT::decode($token, $key, array('HS256'));
+            ($object->user_system_email = $decoded->data->email
+                | $object->user_other_email = $decoded->data->email);
+            $result = checkLogin($object);
+            $row = $result->fetch(PDO::FETCH_ASSOC);
+
+            http_response_code(200);
+            $returnData["data"] = $row;
+            $returnData["count"] = $result->rowCount();
+            $returnData["success"] = true;
+            $returnData["message"] = "Access granted.";
+            $response->setData($returnData);
+            $response->send();
+            return $returnData;
+        } catch (Exception $ex) {
+            $response->setSuccess(false);
+            $error["count"] = 0;
+            $error["success"] = false;
+            $error['error'] = "Catch no token found.";
+            $response->setData($error);
+            $response->send();
+            exit;
+        }
+    } else {
+        $response->setSuccess(false);
+        $error["count"] = 0;
+        $error["success"] = false;
+        $error['error'] = "No token found.";
+        $response->setData($error);
+        $response->send();
+        exit;
+    }
+    checkEndpoint();
+    http_response_code(200);
+    checkAccess();
+}
+
 // Read all
 function checkReadAll($object)
 {
@@ -200,6 +320,13 @@ function checkReadById($object)
     return $query;
 }
 
+// Read by id
+function checkReadKey($object)
+{
+    $query = $object->readKey();
+    checkQuery($query, "Empty records. (key)");
+    return $query;
+}
 // Update 
 function checkUpdate($object)
 {
@@ -372,4 +499,17 @@ function compareTwoValues($object, $name_old, $name, $id_old, $id)
     if (strtolower($name_old) !=  strtolower($name) || $id_old !=  $id) {
         isNameExist($object, $name);
     }
+}
+
+// return success
+function getQueriedData($query)
+{
+    $response = new Response();
+    $returnData = [];
+    $returnData["data"] = getResultData($query);
+    $returnData["count"] = $query->rowCount();
+    $returnData["success"] = true;
+    $response->setData($returnData);
+    $response->send();
+    exit;
 }

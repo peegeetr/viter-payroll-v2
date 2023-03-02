@@ -25,12 +25,7 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
         checkLimitId($earnings->earnings_start, $earnings->earnings_total);
         $query = checkReadLimit($earnings);
         http_response_code(200);
-        $returnData["data"] = getResultData($query);
-        $returnData["count"] = $query->rowCount();
-        $returnData["success"] = true;
-        $response->setData($returnData);
-        $response->send();
-        exit;
+        getQueriedData($query);
     }
     // return 404 error if endpoint not available
     checkEndpoint();

@@ -18,6 +18,7 @@ const ModalConfirm = ({
   msg,
   item,
   isDeveloper,
+  isUser,
 }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const link = getUserType(store.credentials.data.role_is_developer === 1);
@@ -53,7 +54,7 @@ const ModalConfirm = ({
     dispatch(setStartIndex(0));
     // if reseting your own password
     if (
-      store.credentials.data.user_system_email === item ||
+      (isUser && store.credentials.data.user_system_email === item) ||
       store.credentials.data.user_other_email === item
     ) {
       setLoading(true);

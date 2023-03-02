@@ -22,6 +22,7 @@ const OtherUserList = ({ setItemEdit }) => {
   const [dataItem, setData] = React.useState(null);
   const [id, setId] = React.useState(null);
   const [isDel, setDel] = React.useState(false);
+  const [isUser, setisUser] = React.useState(false);
   let counter = 0;
 
   const { users, usersLoading } = useLoadUsers(
@@ -39,6 +40,7 @@ const OtherUserList = ({ setItemEdit }) => {
     setId(item.user_other_aid);
     setData(item);
     setDel(null);
+    setisUser(true);
   };
 
   const handleReset = (item) => {
@@ -46,6 +48,7 @@ const OtherUserList = ({ setItemEdit }) => {
     setId(item.user_other_aid);
     setData(item);
     setDel(true);
+    setisUser(true);
   };
 
   const handleRestore = (item) => {
@@ -173,6 +176,7 @@ const OtherUserList = ({ setItemEdit }) => {
           mysqlApiArchive={`${devApiUrl}/v1/user-others/active/${id}`}
           msg={"Are you sure you want to archive this user"}
           item={`${dataItem.user_other_email}`}
+          isUser={isUser}
         />
       )}
 

@@ -4,6 +4,7 @@ import { MdPassword } from "react-icons/md";
 import {
   setIsAdd,
   setIsConfirm,
+  setIsLogout,
   setIsRestore,
 } from "../../../../../store/StoreAction";
 import { StoreContext } from "../../../../../store/StoreContext";
@@ -169,7 +170,7 @@ const OtherUserList = ({ setItemEdit }) => {
         <ModalConfirm
           id={id}
           isDel={isDel}
-          mysqlApiReset={`${devApiUrl}/v1/user-others/reset/${id}`}
+          mysqlApiReset={`${devApiUrl}/v1/user-others/reset`}
           mysqlApiArchive={`${devApiUrl}/v1/user-others/active/${id}`}
           msg={"Are you sure you want to archive this user"}
           item={`${dataItem.user_other_email}`}

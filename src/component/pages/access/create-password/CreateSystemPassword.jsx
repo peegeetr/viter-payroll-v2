@@ -11,7 +11,7 @@ import { StoreContext } from "../../../../store/StoreContext";
 import useLoadKey from "../../../custom-hooks/useLoadKey";
 import { fetchData } from "../../../helpers/fetchData";
 import { InputText } from "../../../helpers/FormInputs";
-import { getUrlParam } from "../../../helpers/functions-general";
+import { devApiUrl, getUrlParam } from "../../../helpers/functions-general";
 import PageNotFound from "../../../partials/PageNotFound";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 import ContentSpinner from "../../../partials/spinners/ContentSpinner";
@@ -26,7 +26,7 @@ const CreateSystemPassword = () => {
   const paramKey = getUrlParam().get("key");
 
   const { key, keyLoading } = useLoadKey(
-    `/v1/user-systems/key/${paramKey}`,
+    `${devApiUrl}/v1/user-systems/key/${paramKey}`,
     "get"
   );
 
@@ -71,7 +71,7 @@ const CreateSystemPassword = () => {
       ) : (
         <div
           className="relative"
-          style={{ transform: "translateY(clamp(5rem,17vw,22rem))" }}
+          style={{ transform: "translateY(clamp(5rem,12vw,15rem))" }}
         >
           <div className="flex justify-center items-center ">
             <div className="w-96 p-6">
@@ -85,7 +85,7 @@ const CreateSystemPassword = () => {
                 onSubmit={async (values, { setSubmitting, resetForm }) => {
                   fetchData(
                     setLoading,
-                    `/v1/user-systems/password`,
+                    `${devApiUrl}/v1/user-systems/password`,
                     values, // form data values
                     null, // result set data
                     "", // success msg

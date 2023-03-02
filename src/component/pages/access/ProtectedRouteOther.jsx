@@ -6,7 +6,7 @@ import fetchApi from "../../helpers/fetchApi";
 import { devApiUrl, devNavUrl } from "../../helpers/functions-general";
 import TableSpinner from "../../partials/spinners/TableSpinner";
 
-const ProtectedRoute = ({ children }) => {
+const ProtectedRouteOther = ({ children }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [loading, setLoading] = React.useState(true);
   const [isAuth, setIsAuth] = React.useState("");
@@ -15,9 +15,7 @@ const ProtectedRoute = ({ children }) => {
   React.useEffect(() => {
     const fetchLogin = async () => {
       const login = await fetchApi(
-        store.credentials.data.role_is_developer === 1
-          ? devApiUrl + "/v1/user-systems/token"
-          : devApiUrl + "/v1/user-systems/token",
+        devApiUrl + "/v1/user-others/token",
         {
           token: fbsPayroll.token,
         },
@@ -36,7 +34,7 @@ const ProtectedRoute = ({ children }) => {
         setIsAuth("123");
         setLoading(false);
       }
-      delete login.data.user_system_password;
+      delete login.data.user_other_password;
       delete login.data.role_description;
       delete login.data.role_created;
       delete login.data.role_datetime;
@@ -62,4 +60,4 @@ const ProtectedRoute = ({ children }) => {
   );
 };
 
-export default ProtectedRoute;
+export default ProtectedRouteOther;

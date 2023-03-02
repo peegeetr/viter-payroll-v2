@@ -212,3 +212,10 @@ export const getPayPeriod = (result) => {
   const year = formatDate(result[0]?.payroll_start_date).split(" ")[3];
   return `${mo} ${startDay} - ${endDay}, ${year}`;
 };
+
+// get user type
+export const getUserType = (developer) => {
+  let link = "";
+  developer ? (link = `${devNavUrl}/${UrlSystem}`) : (link = `${devNavUrl}`);
+  return link;
+};

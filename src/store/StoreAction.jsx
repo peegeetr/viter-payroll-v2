@@ -89,16 +89,9 @@ export const setCreatePassSuccess = (val) => {
   };
 };
 
-export const setForgetPassSuccess = (val) => {
+export const setForgotPassSuccess = (val) => {
   return {
-    type: "IS_FORGET_PASS_SUCCCESS",
-    payload: val,
-  };
-};
-
-export const setAdminForgetPassSuccess = (val) => {
-  return {
-    type: "IS_ADMIN_FORGET_PASS_SUCCCESS",
+    type: "IS_FORGOT_PASS_SUCCCESS",
     payload: val,
   };
 };

@@ -19,8 +19,8 @@ const Header = () => {
 
   const name =
     store.credentials.data.role_is_developer === 1
-      ? store.credentials.data.user_system_name.split(" ")[1]
-      : store.credentials.data.user_other_name.split(" ")[1];
+      ? store.credentials.data.user_system_name.split(" ")[0]
+      : store.credentials.data.user_other_name.split(" ")[0];
 
   return (
     <>
@@ -35,7 +35,7 @@ const Header = () => {
         <div className="flex justify-between items-center gap-3">
           <FaUserCircle className="w-9 h-9 text-gray-500 hidden md:block" />
           <div className="hidden md:block leading-normal">
-            <h4 className="text-primary">
+            <h4 className="text-primary capitalize">
               Hi <span>{name},</span>
             </h4>
             <span>{store.credentials.data.role_name}</span>

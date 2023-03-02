@@ -6,18 +6,15 @@ import {
   doList,
   doLoadmore,
   setStorageRoute,
-  UrlAdmin,
 } from "./functions-general";
 
 import {
-  setAdminForgetPassSuccess,
   setCreatePassSuccess,
   setCredentials,
   setError,
-  setForgetPassSuccess,
+  setForgotPassSuccess,
   setIsAdd,
   setIsConfirm,
-  setIsFinish,
   setIsLogin,
   setIsRestore,
   setMessage,
@@ -106,23 +103,15 @@ export const fetchData = async (
     }
 
     // redirect to other page after request forgot password
-    if (store.isForgetPassSuccess) {
-      dispatch(setForgetPassSuccess(false));
+    if (store.isForgotPassSuccess) {
+      dispatch(setForgotPassSuccess(false));
       window.location.replace(`${devNavUrl}/reset-password-success`);
-    }
-
-    // redirect to other page after request forgot password for admin
-    if (store.isAdminForgetPassSuccess) {
-      dispatch(setAdminForgetPassSuccess(false));
-      window.location.replace(
-        `${devNavUrl}/${UrlAdmin}/reset-password-success`
-      );
     }
 
     // redirect to other page after request forgot password
     if (store.isCreatePassSuccess) {
       dispatch(setCreatePassSuccess(false));
-      navigate(`${devNavUrl}/create-password-success`);
+      navigate(`${devNavUrl}${fd.redirect_link}`);
     }
 
     // redirect to other page after login

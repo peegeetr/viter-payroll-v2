@@ -13,12 +13,7 @@ import {
 } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
 import useLoadPayItem from "../../../custom-hooks/useLoadPayItem";
-import {
-  devApiUrl,
-  devNavUrl,
-  getUrlParam,
-  UrlAdmin,
-} from "../../../helpers/functions-general";
+import { devApiUrl, getUrlParam } from "../../../helpers/functions-general";
 import ModalConfirm from "../../../partials/modals/ModalConfirm";
 import ModalDeleteRestore from "../../../partials/modals/ModalDeleteRestore";
 import NoData from "../../../partials/NoData";
@@ -100,7 +95,6 @@ const PayItemList = ({ setItemEdit }) => {
                   {item.payitem_is_active === 1 ? (
                     <>
                       <button
-                        to={`${devNavUrl}/${UrlAdmin}/employees/details`}
                         type="button"
                         className="btn-action-table tooltip-action-table"
                         data-tooltip="Edit"

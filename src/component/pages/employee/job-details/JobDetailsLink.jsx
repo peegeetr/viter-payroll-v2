@@ -2,18 +2,22 @@ import React from "react";
 import { FaUserCog } from "react-icons/fa";
 import { SlArrowRight } from "react-icons/sl";
 import { Link } from "react-router-dom";
+import { StoreContext } from "../../../../store/StoreContext.jsx";
 import {
   devNavUrl,
   getUrlParam,
+  getUserType,
   UrlAdmin,
 } from "../../../helpers/functions-general.jsx";
 
 const JobDetailsLink = () => {
+  const { store, dispatch } = React.useContext(StoreContext);
   const eid = getUrlParam().get("employeeid");
+  const link = getUserType(store.credentials.data.role_is_developer === 1);
   return (
     <div className="group flex items-center justify-between border-b border-solid border-gray-300">
       <Link
-        to={`${devNavUrl}/${UrlAdmin}/employee/details/job?employeeid=${eid}`}
+        to={`${link}/employee/details/job?employeeid=${eid}`}
         className="w-full py-1"
       >
         <div className="flex items-center">
@@ -29,7 +33,7 @@ const JobDetailsLink = () => {
       </Link>
 
       <Link
-        to={`${devNavUrl}/${UrlAdmin}/employee/details/job?employeeid=${eid}`}
+        to={`${link}/employee/details/job?employeeid=${eid}`}
         className="btn-action-table group-hover:bg-primary group-hover:text-white"
       >
         <SlArrowRight className="inline" />

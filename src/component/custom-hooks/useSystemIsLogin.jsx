@@ -14,9 +14,7 @@ const useSystemIsLogin = (navigate) => {
     setLoading(true);
     const fetchLogin = async () => {
       const login = await fetchApi(
-        store.credentials.data.role_is_developer === 1
-          ? devApiUrl + "/v1/user-systems/token"
-          : devApiUrl + "/v1/user-systems/token",
+        devApiUrl + "/v1/user-systems/token",
         {
           token: checkLocalStorage().token,
         },

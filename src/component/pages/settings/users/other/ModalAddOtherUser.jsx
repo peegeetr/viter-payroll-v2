@@ -59,7 +59,9 @@ const ModalAddOtherUser = ({ item, roleId }) => {
                     : `${devApiUrl}/v1/user-others`,
                   values, // form data values
                   null, // result set data
-                  item ? "Succesfully updated." : "Succesfully added.", // success msg
+                  item
+                    ? "Succesfully updated."
+                    : "Succesfully added, please check your email for verification.", // success msg
                   "", // additional error msg if needed
                   dispatch, // context api action
                   store, // context api state

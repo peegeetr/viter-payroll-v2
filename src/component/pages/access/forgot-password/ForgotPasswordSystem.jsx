@@ -14,7 +14,7 @@ import ModalError from "../../../partials/modals/ModalError";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 import FbsLogoLg from "../../../svg/FbsLogoLg";
 
-const ForgotPassword = () => {
+const ForgotPasswordSystem = () => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [loading, setLoading] = React.useState(false);
   let navigate = useNavigate();
@@ -49,7 +49,7 @@ const ForgotPassword = () => {
               // console.log(values.user_system_email);
               fetchData(
                 setLoading,
-                `${devApiUrl}/v1/user-others/reset`,
+                `${devApiUrl}/v1/user-systems/reset`,
                 values, // form data values
                 null, // result set data
                 "Please check your email to continue resetting password.", // success msg
@@ -108,4 +108,4 @@ const ForgotPassword = () => {
   );
 };
 
-export default ForgotPassword;
+export default ForgotPasswordSystem;

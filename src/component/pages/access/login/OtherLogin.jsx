@@ -12,14 +12,14 @@ import ModalError from "../../../partials/modals/ModalError";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 import TableSpinner from "../../../partials/spinners/TableSpinner";
 import FbsLogoLg from "../../../svg/FbsLogoLg";
-import useSystemIsLogin from "../../../custom-hooks/useSystemIsLogin";
+import useOtherIsLogin from "../../../custom-hooks/useOtherIsLogin";
 
 const OtherLogin = () => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [loading, setLoading] = React.useState(false);
   const [passwordShown, setPasswordShown] = React.useState(false);
   const navigate = useNavigate();
-  const { loginLoading } = useSystemIsLogin(navigate);
+  const { loginLoading } = useOtherIsLogin(navigate);
 
   const togglePassword = () => {
     setPasswordShown(!passwordShown);
@@ -42,15 +42,16 @@ const OtherLogin = () => {
       ) : (
         <div
           className="flex justify-center items-center"
-          style={{ transform: "translateY(clamp(5rem,17vw,22rem))" }}
+          style={{ transform: "translateY(clamp(5rem,12vw,15rem))" }}
         >
           <div className="w-96 p-6">
             <div className="flex justify-center">
               <FbsLogoLg />
             </div>
-            <h3 className="my-5 text-lg font-bold text-center">
-              ONLINE PAYROLL LOGIN
+            <h3 className="my-2 text-lg font-bold text-center text-primary">
+              ONLINE PAYROLL SYSTEM
             </h3>
+            <h3 className="mt-8 mb-5 text-lg font-bold">LOGIN</h3>
             <Formik
               initialValues={initVal}
               validationSchema={yupSchema}

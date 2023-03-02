@@ -6,30 +6,30 @@ import fetchApi from "../helpers/fetchApi";
 import { devApiUrl } from "../helpers/functions-general";
 import { checkRoleToRedirect } from "../helpers/login-functions";
 
-const useIsLogin = (navigate) => {
+const useOtherIsLogin = (navigate) => {
   const { store, dispatch } = React.useContext(StoreContext);
-  const [loading, setLoading] = React.useState(false);
+  const [loginLoading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
     setLoading(true);
     const fetchLogin = async () => {
       const login = await fetchApi(
-        devApiUrl + "/admin/settings/account/read-account-token.php",
+        devApiUrl + "/v1/user-others/token",
         {
           token: checkLocalStorage().token,
-          memberId: store.credentials.account_role_is_admin === "1" ? "0" : "1",
-        }
+        },
+        null,
+        "post"
       );
 
-      if (typeof login === "undefined" || !login.status) {
-        localStorage.removeItem("fwcdonationtoken");
+      if (typeof login === "undefined" || !login.success) {
+        localStorage.removeItem("fbsPayroll");
         setLoading(false);
       } else {
         setLoading(false);
         checkRoleToRedirect(navigate, login.data);
       }
     };
-
     if (
       checkLocalStorage() !== null &&
       checkLocalStorage().token !== undefined
@@ -42,7 +42,7 @@ const useIsLogin = (navigate) => {
     }
   }, []);
 
-  return { loading };
+  return { loginLoading };
 };
 
-export default useIsLogin;
+export default useOtherIsLogin;

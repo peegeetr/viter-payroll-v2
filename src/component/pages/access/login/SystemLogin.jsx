@@ -8,7 +8,11 @@ import { StoreContext } from "../../../../store/StoreContext";
 import useSystemIsLogin from "../../../custom-hooks/useSystemIsLogin";
 import { fetchData } from "../../../helpers/fetchData";
 import { InputText } from "../../../helpers/FormInputs";
-import { devApiUrl, devNavUrl } from "../../../helpers/functions-general";
+import {
+  devApiUrl,
+  devNavUrl,
+  UrlSystem,
+} from "../../../helpers/functions-general";
 import ModalError from "../../../partials/modals/ModalError";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 import TableSpinner from "../../../partials/spinners/TableSpinner";
@@ -41,16 +45,17 @@ const SystemLogin = () => {
         <TableSpinner />
       ) : (
         <div
-          className="flex justify-center items-center"
+          className="flex justify-center items-center "
           style={{ transform: "translateY(clamp(5rem,12vw,15rem))" }}
         >
           <div className="w-96 p-6">
             <div className="flex justify-center">
               <FbsLogoLg />
             </div>
-            <h3 className="my-5 text-lg font-bold text-center">
-              ONLINE PAYROLL LOGIN <br /> SYSTEM
+            <h3 className="my-2 text-lg font-bold text-center text-primary">
+              ONLINE PAYROLL SYSTEM
             </h3>
+            <p className="mt-8 mb-5 text-lg font-bold">DEVOPS LOGIN</p>
             <Formik
               initialValues={initVal}
               validationSchema={yupSchema}
@@ -119,7 +124,7 @@ const SystemLogin = () => {
             <p className="mt-5">
               Did you forget your password?{" "}
               <Link
-                to={`${devNavUrl}/forgot-password`}
+                to={`${devNavUrl}/${UrlSystem}/forgot-password`}
                 className="w-full text-primary"
               >
                 <u> Forgot password</u>

@@ -1,13 +1,11 @@
-import React from "react";
 import { FaCheck } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { StoreContext } from "../../../../store/StoreContext";
 import { devNavUrl, getUrlParam } from "../../../helpers/functions-general.jsx";
 const CreatePasswordSuccess = () => {
-  const { store, dispatch } = React.useContext(StoreContext);
-  const [loading, setLoading] = React.useState(false);
   const redirect = getUrlParam().get("redirect");
-
+  const removeItem = () => {
+    localStorage.removeItem("fbsPayroll");
+  };
   return (
     <>
       <div
@@ -21,7 +19,11 @@ const CreatePasswordSuccess = () => {
             Your password has been successfully set! You can now login using
             your new password
           </p>
-          <Link to={`${devNavUrl}${redirect}`} className="btn-primary">
+          <Link
+            to={`${devNavUrl}${redirect}`}
+            onClick={removeItem}
+            className="btn-primary"
+          >
             Proceed to Login
           </Link>
         </div>

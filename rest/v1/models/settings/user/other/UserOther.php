@@ -164,6 +164,26 @@ class UserOther
         return $query;
     }
 
+    // set password
+    public function setPassword()
+    {
+        try {
+            $sql = "update {$this->tblUserOther} set ";
+            $sql .= "user_other_password = :user_other_password, ";
+            $sql .= "user_other_key = '', ";
+            $sql .= "user_other_datetime = :user_other_datetime ";
+            $sql .= "where user_other_key = :user_other_key ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "user_other_password" => $this->user_other_password,
+                "user_other_datetime" => $this->user_other_datetime,
+                "user_other_key" => $this->user_other_key,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
     // delete
     public function delete()
     {

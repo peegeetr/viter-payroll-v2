@@ -29,7 +29,7 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
     // check data
     checkPayload($data);
     // get task id from query string 
-    $password_link = checkIndex($data, "password_link");
+    $password_link = "/system/create-password";
     $user_system->user_system_email = trim($data["email"]);
     $user_system->user_system_key = $encrypt->doHash(rand());
     $user_system->user_system_datetime = date("Y-m-d H:i:s");

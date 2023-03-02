@@ -5,6 +5,7 @@ import { StoreContext } from "../../../store/StoreContext";
 import { checkLocalStorage } from "../../helpers/CheckLocalStorage";
 import {
   devNavUrl,
+  getUserType,
   UrlAdmin,
   UrlSystem,
 } from "../../helpers/functions-general";
@@ -12,9 +13,8 @@ import ButtonSpinner from "../spinners/ButtonSpinner";
 
 const ModalLogout = () => {
   const { store, dispatch } = React.useContext(StoreContext);
+  const link = getUserType(store.credentials.data.role_is_developer === 1);
   const [loading, setLoading] = React.useState(false);
-
-  // console.log(store.credentials.data.role_is_developer);
 
   const handleClose = () => {
     dispatch(setIsLogout(false));
@@ -26,8 +26,8 @@ const ModalLogout = () => {
       if (checkLocalStorage() !== null) {
         localStorage.removeItem("fbsPayroll");
         store.credentials.data.role_is_developer === 1
-          ? window.location.replace(`${devNavUrl}/${UrlSystem}/login`)
-          : window.location.replace(`${devNavUrl}/${UrlAdmin}/login`);
+          ? window.location.replace(`${link}/login`)
+          : window.location.replace(`${link}/login`);
         return;
       }
       setLoading(false);

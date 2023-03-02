@@ -6,6 +6,7 @@ import { StoreContext } from "../../../store/StoreContext";
 import useFetchDataLoadMore from "../../custom-hooks/useFetchDataLoadMore";
 import {
   devNavUrl,
+  getUserType,
   hrisDevApiUrl,
   UrlAdmin,
 } from "../../helpers/functions-general";
@@ -28,6 +29,7 @@ const EmployeeList = () => {
   const perPage = 10;
   const start = store.startIndex + 1;
   let counter = 0;
+  const link = getUserType(store.credentials.data.role_is_developer === 1);
 
   const {
     loading,
@@ -130,7 +132,7 @@ const EmployeeList = () => {
                     <td>
                       <div className="flex justify-end items-center gap-1">
                         <Link
-                          to={`${devNavUrl}/${UrlAdmin}/employee/details?employeeid=${item.employee_aid}`}
+                          to={`${link}/employee/details?employeeid=${item.employee_aid}`}
                           className="btn-action-table tooltip-action-table"
                           data-tooltip="Edit"
                         >

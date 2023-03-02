@@ -40,7 +40,14 @@ import PayrollType from "./component/pages/settings/payroll-type/PayrollType.jsx
 import Rates from "./component/pages/settings/rates/Rates";
 import { StoreProvider } from "./store/StoreContext";
 import OtherLogin from "./component/pages/access/login/OtherLogin";
-import ProtectedRoute from "./component/pages/access/ProtectedRoute";
+import ProtectedRouteOther from "./component/pages/access/ProtectedRouteOther";
+import ProtectedRouteSystem from "./component/pages/access/ProtectedRouteSystem";
+import CreateOtherPassword from "./component/pages/access/create-password/CreateOtherPassword";
+import CreateSystemPassword from "./component/pages/access/create-password/CreateSystemPassword";
+import CreatePasswordSuccess from "./component/pages/access/create-password/CreatePasswordSuccess";
+import ForgotPassword from "./component/pages/access/forgot-password/ForgotPassword";
+import ForgotPasswordVerification from "./component/pages/access/forgot-password/ForgotPasswordVerification";
+import ForgotPasswordSystem from "./component/pages/access/forgot-password/ForgotPasswordSystem";
 
 function App() {
   // Create a client
@@ -51,98 +58,129 @@ function App() {
         <Router>
           <Routes>
             <Route path={`*`} element={<PageNotFound />} />
+            <Route
+              path={`${devNavUrl}/create-password-success`}
+              element={<CreatePasswordSuccess />}
+            />
+            <Route
+              path={`${devNavUrl}/reset-password-success`}
+              element={<ForgotPasswordVerification />}
+            />
+
+            {/* OTHER LOGIN */}
+            {/* OTHER LOGIN */}
+            {/* OTHER LOGIN */}
+
             <Route path={`/${devNavUrl}`} element={<OtherLogin />} />
-
             <Route path={`${devNavUrl}/login`} element={<OtherLogin />} />
+            <Route
+              path={`${devNavUrl}/create-password`}
+              element={<CreateOtherPassword />}
+            />
+            <Route
+              path={`${devNavUrl}/forgot-password`}
+              element={<ForgotPassword />}
+            />
 
+            {/* SYSTEM LOGIN */}
+            {/* SYSTEM LOGIN */}
+            {/* SYSTEM LOGIN */}
             <Route
               path={`${devNavUrl}/${UrlSystem}/login`}
               element={<SystemLogin />}
             />
-            {/* Payroll Page */}
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/create-password`}
+              element={<CreateSystemPassword />}
+            />
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/forgot-password`}
+              element={<ForgotPasswordSystem />}
+            />
+            {/* Payroll Page ADMIN*/}
             <Route
               path={`${devNavUrl}/payroll`}
               element={
-                <ProtectedRoute>
+                <ProtectedRouteOther>
                   <Payroll />
-                </ProtectedRoute>
+                </ProtectedRouteOther>
               }
             />
             <Route
-              path={`${devNavUrl}/list`}
+              path={`${devNavUrl}/payroll/list`}
               element={
-                <ProtectedRoute>
+                <ProtectedRouteOther>
                   <PayrollView />
-                </ProtectedRoute>
+                </ProtectedRouteOther>
               }
             />
             <Route
-              path={`${devNavUrl}/list/payslip`}
+              path={`${devNavUrl}/payroll/list/payslip`}
               element={
-                <ProtectedRoute>
+                <ProtectedRouteOther>
                   <Payslip />
-                </ProtectedRoute>
+                </ProtectedRouteOther>
               }
             />
 
-            {/* Employee Page */}
+            {/* Employee Page ADMIN*/}
             <Route
               path={`${devNavUrl}/employee`}
               element={
-                <ProtectedRoute>
+                <ProtectedRouteOther>
                   <Employee />
-                </ProtectedRoute>
+                </ProtectedRouteOther>
               }
             />
 
             <Route
               path={`${devNavUrl}/employee/details`}
               element={
-                <ProtectedRoute>
+                <ProtectedRouteOther>
                   <EmployeeLink />
-                </ProtectedRoute>
+                </ProtectedRouteOther>
               }
             />
             <Route
               path={`${devNavUrl}/employee/details/job`}
               element={
-                <ProtectedRoute>
+                <ProtectedRouteOther>
                   <JobDetails />
-                </ProtectedRoute>
+                </ProtectedRouteOther>
               }
             />
             <Route
               path={`${devNavUrl}/employee/details/salary-history`}
               element={
-                <ProtectedRoute>
+                <ProtectedRouteOther>
                   <SalaryHistory />
-                </ProtectedRoute>
+                </ProtectedRouteOther>
               }
             />
 
-            {/* Earnings Page */}
+            {/* Earnings Page ADMIN*/}
             <Route
               path={`${devNavUrl}/earnings`}
               element={
-                <ProtectedRoute>
+                <ProtectedRouteOther>
                   <EarningsPage />
-                </ProtectedRoute>
+                </ProtectedRouteOther>
               }
             />
             <Route
               path={`${devNavUrl}/earnings/manage`}
               element={
-                <ProtectedRoute>
+                <ProtectedRouteOther>
                   <ManageEarnings />
-                </ProtectedRoute>
+                </ProtectedRouteOther>
               }
             />
             <Route
               path={`${devNavUrl}/earnings/filter`}
               element={
-                <ProtectedRoute>
+                <ProtectedRouteOther>
                   <FilterEarnings />
-                </ProtectedRoute>
+                </ProtectedRouteOther>
               }
             />
 
@@ -150,25 +188,25 @@ function App() {
             <Route
               path={`${devNavUrl}/deductions`}
               element={
-                <ProtectedRoute>
+                <ProtectedRouteOther>
                   <DeductionsPage />
-                </ProtectedRoute>
+                </ProtectedRouteOther>
               }
             />
             <Route
               path={`${devNavUrl}/deductions/manage`}
               element={
-                <ProtectedRoute>
+                <ProtectedRouteOther>
                   <ManageDeduction />
-                </ProtectedRoute>
+                </ProtectedRouteOther>
               }
             />
             <Route
               path={`${devNavUrl}/deductions/filter`}
               element={
-                <ProtectedRoute>
+                <ProtectedRouteOther>
                   <FilterDeductions />
-                </ProtectedRoute>
+                </ProtectedRouteOther>
               }
             />
 
@@ -176,17 +214,17 @@ function App() {
             <Route
               path={`${devNavUrl}/pay-type`}
               element={
-                <ProtectedRoute>
+                <ProtectedRouteOther>
                   <PayTypeLink />
-                </ProtectedRoute>
+                </ProtectedRouteOther>
               }
             />
             <Route
               path={`${devNavUrl}/pay-type/pay-item`}
               element={
-                <ProtectedRoute>
+                <ProtectedRouteOther>
                   <PayItem />
-                </ProtectedRoute>
+                </ProtectedRouteOther>
               }
             />
 
@@ -194,9 +232,9 @@ function App() {
             <Route
               path={`${devNavUrl}/holidays`}
               element={
-                <ProtectedRoute>
+                <ProtectedRouteOther>
                   <Holidays />
-                </ProtectedRoute>
+                </ProtectedRouteOther>
               }
             />
 
@@ -204,9 +242,9 @@ function App() {
             <Route
               path={`${devNavUrl}/reports`}
               element={
-                <ProtectedRoute>
+                <ProtectedRouteOther>
                   <ReportsLink />
-                </ProtectedRoute>
+                </ProtectedRouteOther>
               }
             />
 
@@ -214,113 +252,383 @@ function App() {
             <Route
               path={`${devNavUrl}/settings`}
               element={
-                <ProtectedRoute>
+                <ProtectedRouteOther>
                   <SettingsLink />
-                </ProtectedRoute>
+                </ProtectedRouteOther>
               }
             />
             <Route
               path={`${devNavUrl}/settings/users`}
               element={
-                <ProtectedRoute>
+                <ProtectedRouteOther>
                   <UserPage />
-                </ProtectedRoute>
+                </ProtectedRouteOther>
               }
             />
             <Route
               path={`${devNavUrl}/settings/users/system`}
               element={
-                <ProtectedRoute>
+                <ProtectedRouteOther>
                   <SystemUser />
-                </ProtectedRoute>
+                </ProtectedRouteOther>
               }
             />
             <Route
               path={`${devNavUrl}/settings/users/other`}
               element={
-                <ProtectedRoute>
+                <ProtectedRouteOther>
                   <OtherUser />
-                </ProtectedRoute>
+                </ProtectedRouteOther>
               }
             />
             <Route
               path={`${devNavUrl}/settings/users/role`}
               element={
-                <ProtectedRoute>
+                <ProtectedRouteOther>
                   <Role />
-                </ProtectedRoute>
+                </ProtectedRouteOther>
               }
             />
 
             <Route
               path={`${devNavUrl}/settings/tax-bracket`}
               element={
-                <ProtectedRoute>
+                <ProtectedRouteOther>
                   <TaxBracket />
-                </ProtectedRoute>
+                </ProtectedRouteOther>
               }
             />
 
             <Route
               path={`${devNavUrl}/settings/tax-bracket/monthly`}
               element={
-                <ProtectedRoute>
+                <ProtectedRouteOther>
                   <TaxMonthly />
-                </ProtectedRoute>
+                </ProtectedRouteOther>
               }
             />
 
             <Route
               path={`${devNavUrl}/settings/tax-bracket/semi-monthly`}
               element={
-                <ProtectedRoute>
+                <ProtectedRouteOther>
                   <TaxSemi />
-                </ProtectedRoute>
+                </ProtectedRouteOther>
               }
             />
 
             <Route
               path={`${devNavUrl}/settings/pagibig`}
               element={
-                <ProtectedRoute>
+                <ProtectedRouteOther>
                   <Pagibig />
-                </ProtectedRoute>
+                </ProtectedRouteOther>
               }
             />
 
             <Route
               path={`${devNavUrl}/settings/philhealth`}
               element={
-                <ProtectedRoute>
+                <ProtectedRouteOther>
                   <Philhealth />
-                </ProtectedRoute>
+                </ProtectedRouteOther>
               }
             />
 
             <Route
               path={`${devNavUrl}/settings/sss-bracket`}
               element={
-                <ProtectedRoute>
+                <ProtectedRouteOther>
                   <SssBracket />
-                </ProtectedRoute>
+                </ProtectedRouteOther>
               }
             />
 
             <Route
               path={`${devNavUrl}/settings/rates`}
               element={
-                <ProtectedRoute>
+                <ProtectedRouteOther>
                   <Rates />
-                </ProtectedRoute>
+                </ProtectedRouteOther>
               }
             />
 
             <Route
               path={`${devNavUrl}/settings/payroll-type`}
               element={
-                <ProtectedRoute>
+                <ProtectedRouteOther>
                   <PayrollType />
-                </ProtectedRoute>
+                </ProtectedRouteOther>
+              }
+            />
+
+            {/* SYSTEM PAGE */}
+            {/* SYSTEM PAGE */}
+            {/* SYSTEM PAGE */}
+            {/* SYSTEM PAGE */}
+            {/* SYSTEM PAGE */}
+            {/* Payroll Page ADMIN*/}
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/payroll`}
+              element={
+                <ProtectedRouteSystem>
+                  <Payroll />
+                </ProtectedRouteSystem>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/payroll/list`}
+              element={
+                <ProtectedRouteSystem>
+                  <PayrollView />
+                </ProtectedRouteSystem>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/payroll/list/payslip`}
+              element={
+                <ProtectedRouteSystem>
+                  <Payslip />
+                </ProtectedRouteSystem>
+              }
+            />
+
+            {/* Employee Page ADMIN*/}
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/employee`}
+              element={
+                <ProtectedRouteSystem>
+                  <Employee />
+                </ProtectedRouteSystem>
+              }
+            />
+
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/employee/details`}
+              element={
+                <ProtectedRouteSystem>
+                  <EmployeeLink />
+                </ProtectedRouteSystem>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/employee/details/job`}
+              element={
+                <ProtectedRouteSystem>
+                  <JobDetails />
+                </ProtectedRouteSystem>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/employee/details/salary-history`}
+              element={
+                <ProtectedRouteSystem>
+                  <SalaryHistory />
+                </ProtectedRouteSystem>
+              }
+            />
+
+            {/* Earnings Page ADMIN*/}
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/earnings`}
+              element={
+                <ProtectedRouteSystem>
+                  <EarningsPage />
+                </ProtectedRouteSystem>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/earnings/manage`}
+              element={
+                <ProtectedRouteSystem>
+                  <ManageEarnings />
+                </ProtectedRouteSystem>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/earnings/filter`}
+              element={
+                <ProtectedRouteSystem>
+                  <FilterEarnings />
+                </ProtectedRouteSystem>
+              }
+            />
+
+            {/* Deductions Page */}
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/deductions`}
+              element={
+                <ProtectedRouteSystem>
+                  <DeductionsPage />
+                </ProtectedRouteSystem>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/deductions/manage`}
+              element={
+                <ProtectedRouteSystem>
+                  <ManageDeduction />
+                </ProtectedRouteSystem>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/deductions/filter`}
+              element={
+                <ProtectedRouteSystem>
+                  <FilterDeductions />
+                </ProtectedRouteSystem>
+              }
+            />
+
+            {/* Pay Type Page */}
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/pay-type`}
+              element={
+                <ProtectedRouteSystem>
+                  <PayTypeLink />
+                </ProtectedRouteSystem>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/pay-type/pay-item`}
+              element={
+                <ProtectedRouteSystem>
+                  <PayItem />
+                </ProtectedRouteSystem>
+              }
+            />
+
+            {/* Holidays Page */}
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/holidays`}
+              element={
+                <ProtectedRouteSystem>
+                  <Holidays />
+                </ProtectedRouteSystem>
+              }
+            />
+
+            {/* Reports Page */}
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/reports`}
+              element={
+                <ProtectedRouteSystem>
+                  <ReportsLink />
+                </ProtectedRouteSystem>
+              }
+            />
+
+            {/* Settings Page */}
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/settings`}
+              element={
+                <ProtectedRouteSystem>
+                  <SettingsLink />
+                </ProtectedRouteSystem>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/settings/users`}
+              element={
+                <ProtectedRouteSystem>
+                  <UserPage />
+                </ProtectedRouteSystem>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/settings/users/system`}
+              element={
+                <ProtectedRouteSystem>
+                  <SystemUser />
+                </ProtectedRouteSystem>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/settings/users/other`}
+              element={
+                <ProtectedRouteSystem>
+                  <OtherUser />
+                </ProtectedRouteSystem>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/settings/users/role`}
+              element={
+                <ProtectedRouteSystem>
+                  <Role />
+                </ProtectedRouteSystem>
+              }
+            />
+
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/settings/tax-bracket`}
+              element={
+                <ProtectedRouteSystem>
+                  <TaxBracket />
+                </ProtectedRouteSystem>
+              }
+            />
+
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/settings/tax-bracket/monthly`}
+              element={
+                <ProtectedRouteSystem>
+                  <TaxMonthly />
+                </ProtectedRouteSystem>
+              }
+            />
+
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/settings/tax-bracket/semi-monthly`}
+              element={
+                <ProtectedRouteSystem>
+                  <TaxSemi />
+                </ProtectedRouteSystem>
+              }
+            />
+
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/settings/pagibig`}
+              element={
+                <ProtectedRouteSystem>
+                  <Pagibig />
+                </ProtectedRouteSystem>
+              }
+            />
+
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/settings/philhealth`}
+              element={
+                <ProtectedRouteSystem>
+                  <Philhealth />
+                </ProtectedRouteSystem>
+              }
+            />
+
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/settings/sss-bracket`}
+              element={
+                <ProtectedRouteSystem>
+                  <SssBracket />
+                </ProtectedRouteSystem>
+              }
+            />
+
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/settings/rates`}
+              element={
+                <ProtectedRouteSystem>
+                  <Rates />
+                </ProtectedRouteSystem>
+              }
+            />
+
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/settings/payroll-type`}
+              element={
+                <ProtectedRouteSystem>
+                  <PayrollType />
+                </ProtectedRouteSystem>
               }
             />
           </Routes>

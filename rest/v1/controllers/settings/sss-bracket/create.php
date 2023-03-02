@@ -17,7 +17,7 @@ $sss_bracket->sss_bracket_er = checkIndex($data, "sss_bracket_er");
 $sss_bracket->sss_bracket_ee = checkIndex($data, "sss_bracket_ee");
 $sss_bracket->sss_bracket_total = checkIndex($data, "sss_bracket_total");
 $sss_bracket->sss_bracket_active = 1;
-$sss_bracket->sss_bracket_created = date("Y-m-d");
+$sss_bracket->sss_bracket_created = date("Y-m-d H:i:s");
 $sss_bracket->sss_bracket_datetime = date("Y-m-d H:i:s");
 // check name
 

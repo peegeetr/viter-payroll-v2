@@ -41,7 +41,10 @@ const ForgotPassword = () => {
           <div className="flex justify-center">
             <FbsLogoLg />
           </div>
-          <h3 className="my-5 text-lg font-bold">FORGOT PASSWORD</h3>
+          <h3 className="my-2 text-lg font-bold text-center text-primary">
+            ONLINE PAYROLL SYSTEM
+          </h3>
+          <p className="mt-8 mb-5 text-lg font-bold">FORGOT PASSWORD</p>
           <Formik
             initialValues={initVal}
             validationSchema={yupSchema}

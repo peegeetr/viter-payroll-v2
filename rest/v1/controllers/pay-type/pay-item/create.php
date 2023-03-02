@@ -15,7 +15,7 @@ $payItem->payitem_name = addslashes(trim($data["payitem_name"]));
 $payItem->payitem_paytype_id = checkIndex($data, "payitem_paytype_id");
 $payItem->payitem_is_hris = addslashes(trim($data["payitem_is_hris"]));
 $payItem->payitem_is_active = 1;
-$payItem->payitem_created = date("Y-m-d");
+$payItem->payitem_created = date("Y-m-d H:i:s");
 $payItem->payitem_datetime = date("Y-m-d H:i:s");
 
 // check name

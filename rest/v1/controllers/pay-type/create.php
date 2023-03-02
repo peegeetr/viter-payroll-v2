@@ -15,7 +15,7 @@ $payType->paytype_name = addslashes(trim($data["paytype_name"]));
 $payType->paytype_description = addslashes(trim($data["paytype_description"]));
 $payType->paytype_category = addslashes(trim($data["paytype_category"]));
 $payType->paytype_is_active = 1;
-$payType->paytype_created = date("Y-m-d");
+$payType->paytype_created = date("Y-m-d H:i:s");
 $payType->paytype_datetime = date("Y-m-d H:i:s");
 // string value convert to lower case and get first word
 $column_name = strtolower(explode(" ", $data["paytype_name"])[0]);

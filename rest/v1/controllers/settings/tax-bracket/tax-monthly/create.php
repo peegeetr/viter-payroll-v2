@@ -17,7 +17,7 @@ $taxMonthly->tax_monthly_less_amount = checkIndex($data, "tax_monthly_less_amoun
 $taxMonthly->tax_monthly_rate = checkIndex($data, "tax_monthly_rate");
 $taxMonthly->tax_monthly_additional_amount = checkIndex($data, "tax_monthly_additional_amount");
 $taxMonthly->tax_monthly_active = 1;
-$taxMonthly->tax_monthly_created = date("Y-m-d");
+$taxMonthly->tax_monthly_created = date("Y-m-d H:i:s");
 $taxMonthly->tax_monthly_datetime = date("Y-m-d H:i:s");
 // check name
 isRangeFromExist($taxMonthly, $taxMonthly->tax_monthly_range_from);

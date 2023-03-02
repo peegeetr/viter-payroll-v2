@@ -152,6 +152,7 @@ class UserSystem
             $sql .= "user_system_key = :user_system_key, ";
             $sql .= "user_system_datetime = :user_system_datetime ";
             $sql .= "where user_system_email = :user_system_email ";
+            $sql .= "and user_system_is_active = 1 ";
             $query = $this->connection->prepare($sql);
             $query->execute([
                 "user_system_key" => $this->user_system_key,

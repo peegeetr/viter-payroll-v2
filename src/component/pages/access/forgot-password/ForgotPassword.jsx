@@ -21,6 +21,7 @@ const ForgotPassword = () => {
 
   const initVal = {
     email: "",
+    redirect_link: "/reset-password-success?redirect=/login",
   };
 
   const yupSchema = Yup.object({

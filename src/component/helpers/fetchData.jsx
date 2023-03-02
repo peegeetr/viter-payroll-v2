@@ -105,12 +105,14 @@ export const fetchData = async (
     // redirect to other page after request forgot password
     if (store.isForgotPassSuccess) {
       dispatch(setForgotPassSuccess(false));
-      window.location.replace(`${devNavUrl}/reset-password-success`);
+      localStorage.removeItem("fbsPayroll");
+      window.location.replace(`${devNavUrl}${fd.redirect_link}`);
     }
 
     // redirect to other page after request forgot password
     if (store.isCreatePassSuccess) {
       dispatch(setCreatePassSuccess(false));
+      localStorage.removeItem("fbsPayroll");
       navigate(`${devNavUrl}${fd.redirect_link}`);
     }
 

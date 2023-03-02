@@ -1,17 +1,13 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React from "react";
 import { FaQuestionCircle, FaTimesCircle } from "react-icons/fa";
 import {
   setIsConfirm,
   setIsFinish,
-  setIsLogout,
   setStartIndex,
 } from "../../../store/StoreAction";
 import { StoreContext } from "../../../store/StoreContext";
-import { checkLocalStorage } from "../../helpers/CheckLocalStorage";
 import { fetchData } from "../../helpers/fetchData";
 import { getUserType } from "../../helpers/functions-general";
-import { queryData } from "../../helpers/queryData";
 import ButtonSpinner from "../spinners/ButtonSpinner";
 
 const ModalConfirm = ({
@@ -24,8 +20,11 @@ const ModalConfirm = ({
   isDeveloper,
 }) => {
   const { store, dispatch } = React.useContext(StoreContext);
-  const [loading, setLoading] = React.useState(false);
   const link = getUserType(store.credentials.data.role_is_developer === 1);
+  const [loading, setLoading] = React.useState(false);
+  let message = isDel
+    ? "Reseting your own password will make you automatically logged out."
+    : "Suspending your own account will make you unable to login and use the system.";
 
   const handleClose = () => {
     dispatch(setIsConfirm(false));
@@ -46,15 +45,23 @@ const ModalConfirm = ({
       "",
       dispatch,
       store,
-      isDel ? true : false,
+      false,
       false,
       null,
       isDel ? "delete" : "put"
     );
     dispatch(setStartIndex(0));
-    if (mysqlApiReset) {
+    // if reseting your own password
+    if (
+      store.credentials.data.user_system_email === item ||
+      store.credentials.data.user_other_email === item
+    ) {
       setLoading(true);
-      dispatch(setIsFinish(true));
+      localStorage.removeItem("fbsPayroll");
+      store.credentials.data.role_is_developer === 1
+        ? window.location.replace(`${link}/login`)
+        : window.location.replace(`${link}/login`);
+      return;
     }
   };
 
@@ -75,8 +82,19 @@ const ModalConfirm = ({
             <span className="text-5xl text-red-700 ">
               <FaQuestionCircle className="my-0 mx-auto" />
             </span>
-            <span className="text-sm font-bold">{msg}</span> <br />
-            <span className="text-sm font-bold break-all">"{item}" ?</span>
+            {store.credentials.data.user_system_email === item ||
+            store.credentials.data.user_other_email === item ? (
+              <span className="text-sm font-bold">
+                {message} <br />
+                Do you still want to proceed?
+              </span>
+            ) : (
+              <>
+                <span className="text-sm font-bold">{msg}</span>
+                <br />
+                <span className="text-sm font-bold break-all">"{item}" ?</span>
+              </>
+            )}
             <p>You can't undo this action.</p>
             <div className="flex items-center gap-1 pt-5">
               <button

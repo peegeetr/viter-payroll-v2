@@ -173,7 +173,7 @@ const SystemUserList = ({ setItemEdit }) => {
           mysqlApiArchive={`${devApiUrl}/v1/user-systems/active/${id}`}
           msg={
             isDel
-              ? "Are you sure you want to reset "
+              ? "Are you sure you want to reset password"
               : "Are you sure you want to archive "
           }
           item={`${dataItem.user_system_email}`}

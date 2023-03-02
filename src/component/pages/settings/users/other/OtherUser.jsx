@@ -1,9 +1,14 @@
 import React from "react";
 import { FaPlusCircle } from "react-icons/fa";
+import { Link } from "react-router-dom";
 import { setIsAdd } from "../../../../../store/StoreAction";
 import { StoreContext } from "../../../../../store/StoreContext";
 import useLoadRole from "../../../../custom-hooks/useLoadRole";
-import { devApiUrl } from "../../../../helpers/functions-general";
+import {
+  devApiUrl,
+  devNavUrl,
+  UrlSystem,
+} from "../../../../helpers/functions-general";
 import BreadCrumbs from "../../../../partials/BreadCrumbs";
 import Footer from "../../../../partials/Footer";
 import Header from "../../../../partials/Header";
@@ -33,12 +38,14 @@ const OtherUser = () => {
       <div className="wrapper">
         <div className="flex items-center justify-between mb-3 whitespace-nowrap overflow-auto gap-2">
           <BreadCrumbs />
-          <div className="flex items-center gap-1">
-            <button type="button" className="btn-primary" onClick={handleAdd}>
-              <FaPlusCircle />
-              <span>Add</span>
-            </button>
-          </div>
+          {getRoleIdAdmin(role) !== -1 && (
+            <div className="flex items-center gap-1">
+              <button type="button" className="btn-primary" onClick={handleAdd}>
+                <FaPlusCircle />
+                <span>Add</span>
+              </button>
+            </div>
+          )}
         </div>
         <hr />
 
@@ -46,7 +53,24 @@ const OtherUser = () => {
           {roleLoading ? (
             <TableSpinner />
           ) : getRoleIdAdmin(role) === -1 ? (
-            <ServerError />
+            <p className="flex-col p-2">
+              There's no created role for admin.
+              {store.credentials.data.role_is_developer === 1 ? (
+                <>
+                  {" "}
+                  Please{" "}
+                  <Link
+                    to={`${devNavUrl}/${UrlSystem}/settings/users/role`}
+                    className="underline text-primary"
+                  >
+                    create one
+                  </Link>{" "}
+                  first.
+                </>
+              ) : (
+                ""
+              )}
+            </p>
           ) : (
             <OtherUserList setItemEdit={setItemEdit} />
           )}

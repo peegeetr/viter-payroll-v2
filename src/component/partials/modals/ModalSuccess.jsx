@@ -1,25 +1,15 @@
 import React from "react";
 import { FaCheck, FaTimesCircle } from "react-icons/fa";
-import { setIsFinish, setSuccess } from "../../../store/StoreAction";
+import { setSuccess } from "../../../store/StoreAction";
 import { StoreContext } from "../../../store/StoreContext";
 import { GetFocus, getUserType } from "../../helpers/functions-general";
 
 const ModalSuccess = () => {
   const { store, dispatch } = React.useContext(StoreContext);
-  const link = getUserType(store.credentials.data.role_is_developer === 1);
   GetFocus("btnClose");
 
   const handleClose = () => {
     dispatch(setSuccess(false));
-
-    if (store.isFinish) {
-      localStorage.removeItem("fbsPayroll");
-      store.credentials.data.role_is_developer === 1
-        ? window.location.replace(`${link}/login`)
-        : window.location.replace(`${link}/login`);
-      dispatch(setIsFinish(false));
-      return;
-    }
   };
 
   return (

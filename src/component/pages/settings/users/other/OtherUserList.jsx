@@ -4,7 +4,6 @@ import { MdPassword } from "react-icons/md";
 import {
   setIsAdd,
   setIsConfirm,
-  setIsLogout,
   setIsRestore,
 } from "../../../../../store/StoreAction";
 import { StoreContext } from "../../../../../store/StoreContext";

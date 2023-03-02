@@ -68,9 +68,14 @@ const CreateOtherPassword = () => {
 
   return (
     <>
-      {key.length === 0 || paramKey === null || paramKey === "" ? (
+      {keyLoading ? (
         <div className="relative h-screen">
-          {keyLoading ? <ContentSpinner /> : <PageNotFound />}
+          <ContentSpinner />
+        </div>
+      ) : keyLoading &&
+        (key.length === 0 || paramKey === null || paramKey === "") ? (
+        <div className="relative h-screen">
+          <PageNotFound />
         </div>
       ) : (
         <div
@@ -160,8 +165,8 @@ const CreateOtherPassword = () => {
                   );
                 }}
               </Formik>
-              <ul className="pt-5 list-disc ml-5">
-                <h3>Password must contain:</h3>
+              <h3 className="mt-5">Password must contain:</h3>
+              <ul className="list-disc ml-5">
                 <li className="text-xs italic">At least 8 characters</li>
                 <li className="text-xs italic">
                   At least one lowercase letter

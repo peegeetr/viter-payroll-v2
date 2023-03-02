@@ -152,6 +152,7 @@ class UserOther
             $sql .= "user_other_key = :user_other_key, ";
             $sql .= "user_other_datetime = :user_other_datetime ";
             $sql .= "where user_other_email = :user_other_email ";
+            $sql .= "and user_other_is_active = 1 ";
             $query = $this->connection->prepare($sql);
             $query->execute([
                 "user_other_key" => $this->user_other_key,

@@ -10,10 +10,7 @@ const PageNotFound = () => {
         </span>
         <h3 className="text-6xl">404</h3>
         <h2 className="font-bold text-2xl">Page not found</h2>
-        <p className="text-sm m-0">
-          You don't have access to this page or you enter the wrong path.
-        </p>
-        <p>Plase check your URL</p>
+        <p className="text-sm m-0"> Plase check your URL</p>
       </div>
     </>
   );

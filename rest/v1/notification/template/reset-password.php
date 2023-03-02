@@ -38,7 +38,7 @@ function getHtmlResetPassword(
   "
 >
   <div style="width: 100%; max-width: 500px; margin: 10px auto">
-  <div style="padding: 10px 10px 0px; text-align: center">
+  <div style="padding: 10px 10px 0px">
       <div
         style="
           background-image: url(https://demo.frontlinebusiness.com.ph/dev/notification-images/bg-white.jpg);
@@ -59,7 +59,7 @@ function getHtmlResetPassword(
           padding-bottom: 20px;
           line-height: 1.2;
           margin: 20px 0 0px;
-          font-size: 23px;
+          font-size: 20px;
           width: 70%;
           color: black;
         "

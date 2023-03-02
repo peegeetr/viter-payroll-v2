@@ -64,9 +64,14 @@ const CreateSystemPassword = () => {
 
   return (
     <>
-      {key.length === 0 || paramKey === null || paramKey === "" ? (
+      {keyLoading ? (
         <div className="relative h-screen">
-          {keyLoading ? <ContentSpinner /> : <PageNotFound />}
+          <ContentSpinner />
+        </div>
+      ) : keyLoading &&
+        (key.length === 0 || paramKey === null || paramKey === "") ? (
+        <div className="relative h-screen">
+          <PageNotFound />
         </div>
       ) : (
         <div
@@ -81,7 +86,9 @@ const CreateSystemPassword = () => {
               <h3 className="my-2 text-lg font-bold text-center text-primary">
                 ONLINE PAYROLL SYSTEM
               </h3>
-              <p className="mt-8 mb-5 text-lg font-bold">CREATE PASSWORD</p>
+              <p className="mt-8 mb-5 text-lg font-bold">
+                DEVOPS CREATE PASSWORD
+              </p>
               <Formik
                 initialValues={initVal}
                 validationSchema={yupSchema}
@@ -156,8 +163,8 @@ const CreateSystemPassword = () => {
                   );
                 }}
               </Formik>
-              <ul className="pt-5 list-disc ml-5">
-                <h3>Password must contain:</h3>
+              <h3 className="mt-5">Password must contain:</h3>
+              <ul className="list-disc ml-5">
                 <li className="text-xs italic">At least 8 characters</li>
                 <li className="text-xs italic">
                   At least one lowercase letter

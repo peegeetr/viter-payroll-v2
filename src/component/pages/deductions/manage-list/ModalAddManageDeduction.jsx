@@ -2,7 +2,12 @@ import { Form, Formik } from "formik";
 import React from "react";
 import { FaTimesCircle } from "react-icons/fa";
 import * as Yup from "yup";
-import { setIsAdd, setStartIndex } from "../../../../store/StoreAction";
+import {
+  setError,
+  setIsAdd,
+  setMessage,
+  setStartIndex,
+} from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
 import useLoadAll from "../../../custom-hooks/useLoadAll";
 import fetchApi from "../../../helpers/fetchApi";
@@ -15,6 +20,8 @@ import {
 import { devApiUrl, handleNumOnly } from "../../../helpers/functions-general";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 import { validatePayPeriod } from "../../earnings/manage-list/function-manage-list";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { queryData } from "../../../helpers/queryData";
 
 const ModalAddManageDeduction = ({ payType, employee, payrollDraft }) => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -34,6 +41,23 @@ const ModalAddManageDeduction = ({ payType, employee, payrollDraft }) => {
     `${devApiUrl}/v1/paytype/${0}`,
     "get"
   );
+
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: (values) =>
+      queryData(`${devApiUrl}/v1/deductions`, "post", values),
+    onSuccess: (data) => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries({ queryKey: ["deduction"] });
+
+      // show error box
+      if (!data.success) {
+        dispatch(setError(true));
+        dispatch(setMessage(data.error));
+      }
+    },
+  });
 
   const handlePayType = async (e, props) => {
     let paytypeid = e.target.value;
@@ -147,21 +171,23 @@ const ModalAddManageDeduction = ({ payType, employee, payrollDraft }) => {
                   return;
                 }
                 // send data to server
-                fetchData(
-                  setLoading,
-                  `${devApiUrl}/v1/deductions`,
-                  { ...values, employee }, // form data values
-                  null, // result set data
-                  "Succesfully added.", // success msg
-                  "", // additional error msg if needed
-                  dispatch, // context api action
-                  store, // context api state
-                  true, // boolean to show success modal
-                  false, // boolean to show load more functionality button
-                  null, // navigate default value
-                  "post"
-                );
-                dispatch(setStartIndex(0));
+                // fetchData(
+                //   setLoading,
+                //   `${devApiUrl}/v1/deductions`,
+                //   { ...values, employee }, // form data values
+                //   null, // result set data
+                //   "Succesfully added.", // success msg
+                //   "", // additional error msg if needed
+                //   dispatch, // context api action
+                //   store, // context api state
+                //   true, // boolean to show success modal
+                //   false, // boolean to show load more functionality button
+                //   null, // navigate default value
+                //   "post"
+                // );
+                // dispatch(setStartIndex(0));
+                // mutate data
+                mutation.mutate({ ...values, employee });
               }}
             >
               {(props) => {

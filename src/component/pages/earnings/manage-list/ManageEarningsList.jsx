@@ -66,13 +66,13 @@ const ManageEarningsList = () => {
               <th>#</th>
               {/* <th className="min-w-[5rem]">Payroll ID</th> */}
               <th className="min-w-[10rem]">Employeee</th>
+              <th className="min-w-[7rem]">Pay Item</th>
               <th className="min-w-[12rem]">Details</th>
               <th className="min-w-[5rem]">Amount</th>
               <th>Installment</th>
               <th className="min-w-[6rem]">Start Date</th>
               <th className="min-w-[6rem]">End Date</th>
               <th className="min-w-[7rem]">Pay Type</th>
-              <th className="min-w-[7rem]">Pay Item</th>
               <th className="min-w-[7rem]">Frequency</th>
               {/* <th className="min-w-[8rem]">Details</th> */}
               <th>Status</th>
@@ -88,7 +88,7 @@ const ManageEarningsList = () => {
                     <td>{counter}.</td>
                     {/* <td>{item.earnings_payroll_id}</td> */}
                     <td>{item.earnings_employee}</td>
-
+                    <td>{item.payitem_name}</td>
                     <td>{item.earnings_details}</td>
                     <td>
                       P
@@ -129,7 +129,6 @@ const ManageEarningsList = () => {
                       `}
                     </td>
                     <td>{item.paytype_name}</td>
-                    <td>{item.payitem_name}</td>
                     <td>
                       {item.earnings_frequency === "sm"
                         ? "Semi-monthly"

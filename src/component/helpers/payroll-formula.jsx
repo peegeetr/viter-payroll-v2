@@ -6,6 +6,7 @@ import {
   leaveId,
   overtimeId,
   payAdjustmentId,
+  undertimeId,
 } from "./functions-payitemId";
 
 export const employeeRate = (salary, workingDays) => {
@@ -45,6 +46,14 @@ export const payComputeLeave = (earning) => {
 export const payComputeAbsences = (earning) => {
   let finalAmount = 0;
   if (earning.earnings_payitem_id === absencesId) {
+    finalAmount += Number(earning.earnings_amount);
+  }
+  return finalAmount;
+};
+
+export const payComputeUndertime = (earning) => {
+  let finalAmount = 0;
+  if (earning.earnings_payitem_id === undertimeId) {
     finalAmount += Number(earning.earnings_amount);
   }
   return finalAmount;
@@ -145,8 +154,6 @@ export const payComputeHoliday = (emp, holidays) => {
     new Date(emp.payroll_end_date)
   );
   let workOnHoliday = emp.payroll_list_employee_work_on_holiday;
-  let workOnNoneWorkingHoliday =
-    emp.payroll_list_employee_work_none_working_holiday;
   let ratedAmount = 0;
   let regularAmount = 0;
   let finalAmount = 0;

@@ -33,6 +33,7 @@ $allEmployee = $data["employee"];
 $allLeave = $data["payLeave"];
 $allUnPaidLeave = $data["unPaidLeave"];
 $allOvertimeLeave = $data["overtimeLeave"];
+$allUndertime = $data["undertime"];
 
 // create if not data from hris and all employee
 
@@ -53,7 +54,6 @@ if ($data["payitem_is_hris"] === "0" && $earnings->earnings_employee === "all") 
         if ($query->rowCount() > 0) {
             continue;
         } else {
-            isNameExist($earnings, "Pay item for $earnings->earnings_payroll_id is ");
             $query = checkCreate($earnings);
         }
         // isNameExist($earnings, "Pay item for $earnings->earnings_payroll_id is ");
@@ -122,13 +122,33 @@ if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === "36")
     if (count($allUnPaidLeave) === 0) {
         checkEndpoint();
     }
-    for ($u = 0; $u < count($allUnPaidLeave); $u++) {
+    for ($unp = 0; $unp < count($allUnPaidLeave); $unp++) {
         // check name
-        $earnings->earnings_employee_id = $allUnPaidLeave[$u]["employeId"];
-        $earnings->earnings_employee = $allUnPaidLeave[$u]["name"];
-        $earnings->earnings_amount = $allUnPaidLeave[$u]["amount"];
-        $earnings->earnings_hris_date = $allUnPaidLeave[$u]["hrisDate"];
-        $earnings->earnings_details = $allUnPaidLeave[$u]["unpaidDetails"];
+        $earnings->earnings_employee_id = $allUnPaidLeave[$unp]["employeId"];
+        $earnings->earnings_employee = $allUnPaidLeave[$unp]["name"];
+        $earnings->earnings_amount = $allUnPaidLeave[$unp]["amount"];
+        $earnings->earnings_hris_date = $allUnPaidLeave[$unp]["hrisDate"];
+        $earnings->earnings_details = $allUnPaidLeave[$unp]["unpaidDetails"];
+        isHRISImportExist($earnings, "HRIS absences data for $earnings->earnings_payroll_id is ");
+        $query = checkCreate($earnings);
+    }
+    returnSuccess($earnings, "Earnings", $query);
+}
+
+// create if data is from hris
+// payitem 43 = undertime 
+if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === "43") {
+    // check array length
+    if (count($allUndertime) === 0) {
+        checkEndpoint();
+    }
+    for ($u = 0; $u < count($allUndertime); $u++) {
+        // check name
+        $earnings->earnings_employee_id = $allUndertime[$u]["employeId"];
+        $earnings->earnings_employee = $allUndertime[$u]["name"];
+        $earnings->earnings_amount = $allUndertime[$u]["amount"];
+        $earnings->earnings_hris_date = $allUndertime[$u]["hrisDate"];
+        $earnings->earnings_details = $allUndertime[$u]["details"];
         isHRISImportExist($earnings, "HRIS absences data for $earnings->earnings_payroll_id is ");
         $query = checkCreate($earnings);
     }

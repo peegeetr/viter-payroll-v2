@@ -37,6 +37,43 @@ export const validatePayPeriod = (values, inputDate, dispatch) => {
   }
   return val;
 };
+export const getUnderTimeSpent = (item) => {
+  const totalHrs = Number(item);
+  const totalMins = Number(totalHrs * 60);
+  const hrs = Math.floor(totalMins / 60);
+  const mins = totalMins % 60;
+
+  // // get total time
+  // getTotalTimeSpent(mins.toFixed(), hrs);
+
+  return `${hrs}h ${mins.toFixed()}m`;
+};
+// compute undertime
+export const computeUndertime = (undertimeData, employee, payrollDraft) => {
+  const days = getWorkingDays(
+    new Date(payrollDraft[0].payroll_start_date),
+    new Date(payrollDraft[0].payroll_end_date)
+  );
+  let list = [];
+  undertimeData.map((uItem) => {
+    employee.map((eItem) => {
+      if (uItem.employee_aid === eItem.employee_aid) {
+        list.push({
+          name: `${eItem.employee_lname}, ${eItem.employee_fname}`,
+          amount:
+            Number(uItem.undertime_spent) *
+            employeeRate(eItem.employee_job_salary, days).hourly,
+          employeId: eItem.employee_aid,
+          details: `${formatDate(uItem.undertime_date)} (${getUnderTimeSpent(
+            uItem.undertime_spent
+          )})`,
+          hrisDate: uItem.undertime_date,
+        });
+      }
+    });
+  });
+  return list;
+};
 
 // compute leave
 export const computeLeave = (leaveData, employee, payrollDraft) => {
@@ -54,13 +91,13 @@ export const computeLeave = (leaveData, employee, payrollDraft) => {
             Number(lItem.leave_list_days) *
             employeeRate(eItem.employee_job_salary, days).daily,
           employeId: eItem.employee_aid,
-          details: `Leave (${formatDate(lItem.leave_list_start_date)})(${
-            lItem.leave_list_days
-          })`,
-          hrisDate: lItem.leave_list_start_date,
-          unpaidDetails: `Unpaid-Leave (${formatDate(
+          details: `${formatDate(
             lItem.leave_list_start_date
-          )})(${lItem.leave_list_days})`,
+          )}, number of days (${lItem.leave_list_days})`,
+          hrisDate: lItem.leave_list_start_date,
+          unpaidDetails: `${formatDate(
+            lItem.leave_list_start_date
+          )}, number of days (${lItem.leave_list_days}) `,
         });
       }
     });
@@ -84,9 +121,9 @@ export const computeOvertime = (
           amount: Number(otFinalAmount(otItem, eItem, holidays, payrollDraft)),
           employeId: eItem.employee_aid,
           hrisDate: otItem.task_created,
-          details: `Overtime (${formatDate(otItem.task_created)} ${
-            otItem.task_created.split(" ")[1]
-          })`,
+          details: `${formatDate(otItem.task_created)} (${getUnderTimeSpent(
+            otItem.task_spent
+          )})`,
         });
       }
     });

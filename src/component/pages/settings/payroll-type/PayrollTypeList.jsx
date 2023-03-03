@@ -7,6 +7,7 @@ import {
 } from "../../../../store/StoreAction.jsx";
 import { StoreContext } from "../../../../store/StoreContext.jsx";
 import useLoadPayrollType from "../../../custom-hooks/useLoadPayrollType.jsx";
+import useQueryData from "../../../custom-hooks/useQueryData.jsx";
 import { devApiUrl } from "../../../helpers/functions-general.jsx";
 import ModalConfirm from "../../../partials/modals/ModalConfirm.jsx";
 import ModalDeleteRestore from "../../../partials/modals/ModalDeleteRestore.jsx";
@@ -18,6 +19,8 @@ import StatusInactive from "../../../partials/status/StatusInactive.jsx";
 
 const PayrollTypeList = ({ setItemEdit }) => {
   const { store, dispatch } = React.useContext(StoreContext);
+
+  // const { tardyCount } = useLoadTardyCount(`/v1/tardiness/count`, "get");
   const { payrollType, payrollTypeLoading } = useLoadPayrollType(
     `${devApiUrl}/v1/payroll-type`,
     "get"
@@ -64,7 +67,7 @@ const PayrollTypeList = ({ setItemEdit }) => {
               <th>Name</th>
               <th>Status</th>
 
-              <th>Actions</th>
+              <th className="max-w-[2rem]">Actions</th>
             </tr>
           </thead>
           <tbody>

@@ -24,10 +24,12 @@ import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 import {
   computeLeave,
   computeOvertime,
+  computeUndertime,
   validateDataIsNotEmpty,
   validatePayPeriod,
 } from "./function-manage-list";
 import { holidayId, nightDiffId } from "../../../helpers/functions-payitemId";
+import useLoadAllUndertime from "../../../custom-hooks/useLoadAllUndertime";
 
 const ModalAddManageEarnings = ({
   payType,
@@ -53,6 +55,11 @@ const ModalAddManageEarnings = ({
   let payroll_id = payrollDraft[0].payroll_id;
   let payroll_type_id = payrollDraft[0].payroll_earning_type;
 
+  const { undertime } = useLoadAllUndertime(
+    `${hrisDevApiUrl}/v1/undertime/pay-undertime/${payroll_start_date}/${payroll_end_date}`,
+    "get"
+  );
+  console.log("test", undertime, employee);
   const { payLeave } = useLoadPayLeave(
     `${hrisDevApiUrl}/v1/leaves/period/approved/${payroll_start_date}/${payroll_end_date}`,
     "get"
@@ -225,6 +232,13 @@ const ModalAddManageEarnings = ({
                 }
 
                 // get computed leave amount
+                const computedUndertime = computeUndertime(
+                  undertime,
+                  employee,
+                  payrollDraft
+                );
+
+                // get computed leave amount
                 const computedLeav = computeLeave(
                   payLeave,
                   employee,
@@ -256,6 +270,8 @@ const ModalAddManageEarnings = ({
                     payLeave: computedLeav.length > 0 ? computedLeav : 0,
                     unPaidLeave: computedUnpaid.length > 0 ? computedUnpaid : 0,
                     overtimeLeave: computedOT.length > 0 ? computedOT : 0,
+                    undertime:
+                      computedUndertime.length > 0 ? computedUndertime : 0,
                     // nightDiffeLeave:
                     //   computedNightDiff.length > 0 ? computedNightDiff : 0,
                   }, // form data values

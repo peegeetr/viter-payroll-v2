@@ -20,8 +20,8 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
         // get task id from query string
         $deductions->deduction_search = $_GET['search'];
         //check to see if search keyword in query string is not empty and less than 50 chars
-        checkKeyword($deduction->deduction_search);
-        $query = checkSearch($deduction);
+        checkKeyword($deductions->deduction_search);
+        $query = checkSearch($deductions);
         http_response_code(200);
         getQueriedData($query);
     }

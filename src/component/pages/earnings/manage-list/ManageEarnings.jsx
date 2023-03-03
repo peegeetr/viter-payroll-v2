@@ -1,11 +1,10 @@
 import React from "react";
 import { FaPlusCircle } from "react-icons/fa";
-import { setIsAdd, setIsFinish, setSave } from "../../../../store/StoreAction";
+import { setIsAdd } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
 import useLoadDraft from "../../../custom-hooks/useLoadDraft";
 import useLoadEmployee from "../../../custom-hooks/useLoadEmployee";
 import useLoadHolidays from "../../../custom-hooks/useLoadHolidays";
-import useLoadPayItem from "../../../custom-hooks/useLoadPayItem";
 import useLoadPayType from "../../../custom-hooks/useLoadPayType";
 import { devApiUrl, hrisDevApiUrl } from "../../../helpers/functions-general";
 import BreadCrumbs from "../../../partials/BreadCrumbs";
@@ -20,18 +19,15 @@ import ModalNoPayrollId from "./ModalNoPayrollId";
 
 const ManageEarnings = () => {
   const { store, dispatch } = React.useContext(StoreContext);
-  const [itemEdit, setItemEdit] = React.useState(null);
 
   const { payType } = useLoadPayType(`${devApiUrl}/v1/paytype`, "get");
   const { draft } = useLoadDraft(`${devApiUrl}/v1/payroll/list`, "get");
   const { employee } = useLoadEmployee(`${hrisDevApiUrl}/v1/employees`, "get");
   const { holidays } = useLoadHolidays(`${devApiUrl}/v1/holidays`, "get");
 
-  console.log(draft);
   const handleAdd = () => {
     dispatch(setIsAdd(true));
     // dispatch(setIsFinish(true));
-    setItemEdit(null);
   };
 
   return (

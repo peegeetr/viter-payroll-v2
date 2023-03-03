@@ -1,4 +1,5 @@
 import React from "react";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { FaTrash } from "react-icons/fa";
 import { setIsRestore } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
@@ -8,6 +9,7 @@ import {
   formatDate,
   numberWithCommas,
 } from "../../../helpers/functions-general";
+import { queryDataInfinite } from "../../../helpers/queryDataInfinite";
 import Loadmore from "../../../partials/Loadmore";
 import ModalDeleteRestore from "../../../partials/modals/ModalDeleteRestore";
 import NoData from "../../../partials/NoData";
@@ -17,30 +19,69 @@ import TableSpinner from "../../../partials/spinners/TableSpinner";
 import StatusActive from "../../../partials/status/StatusActive";
 import StatusInactive from "../../../partials/status/StatusInactive";
 import { getStatus } from "../../earnings/manage-list/function-manage-list";
+import { useInView } from "react-intersection-observer";
+import SearchBarRq from "../../../partials/SearchBarRq";
+import FetchingSpinner from "../../../partials/spinners/FetchingSpinner";
+import ModalDeleteRestoreRq from "../../../partials/modals/ModalDeleteRestoreRq";
+import LoadmoreRq from "../../../partials/LoadmoreRq";
 
 const ManageDeductionList = () => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [dataItem, setData] = React.useState(null);
-  const [id, setId] = React.useState(null);
   const [isDel, setDel] = React.useState(false);
+  const [id, setId] = React.useState(null);
+  const [onSearch, setOnSearch] = React.useState(false);
+  const [page, setPage] = React.useState(1);
   const search = React.useRef(null);
-  const perPage = 10;
-  const start = store.startIndex + 1;
-  let counter = 0;
+  let counter = 1;
+  const { ref, inView } = useInView();
 
+  // const {
+  //   loading,
+  //   handleLoad,
+  //   totalResult,
+  //   result,
+  //   handleSearch,
+  //   handleChange,
+  // } = useFetchDataLoadMore(
+  //   `${devApiUrl}/v1/deductions/limit/${start}/${perPage}`,
+  //   `${devApiUrl}/v1/deductions`,
+  //   perPage,
+  //   search
+  // );
+
+  // use if with loadmore button and search bar
   const {
-    loading,
-    handleLoad,
-    totalResult,
-    result,
-    handleSearch,
-    handleChange,
-  } = useFetchDataLoadMore(
-    `${devApiUrl}/v1/deductions/limit/${start}/${perPage}`,
-    `${devApiUrl}/v1/deductions`,
-    perPage,
-    search
-  );
+    data: result,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+    isFetchingNextPage,
+    status,
+  } = useInfiniteQuery({
+    queryKey: ["deduction", onSearch, store.isSearch],
+    queryFn: async ({ pageParam = 1 }) =>
+      await queryDataInfinite(
+        `${devApiUrl}/v1/deductions/search/${search.current.value}`, // search endpoint
+        `${devApiUrl}/v1/deductions/page/${pageParam}`, // list endpoint
+        store.isSearch // search boolean
+      ),
+    getNextPageParam: (lastPage) => {
+      if (lastPage.page < lastPage.total) {
+        return lastPage.page + lastPage.count;
+      }
+      return;
+    },
+    refetchOnWindowFocus: false,
+  });
+
+  React.useEffect(() => {
+    if (inView) {
+      setPage((prev) => prev + 1);
+      fetchNextPage();
+    }
+  }, [inView]);
 
   const handleDelete = (item) => {
     dispatch(setIsRestore(true));
@@ -50,17 +91,20 @@ const ManageDeductionList = () => {
   };
   return (
     <>
-      <SearchBar
+      <SearchBarRq
         search={search}
-        handleSearch={handleSearch}
-        handleChange={handleChange}
-        loading={loading}
-        result={result}
+        dispatch={dispatch}
         store={store}
-        url={`${devApiUrl}/v1/deduction/search/`}
+        result={result?.pages}
+        isFetching={isFetching}
+        setOnSearch={setOnSearch}
+        onSearch={onSearch}
       />
       <div className="relative text-center overflow-x-auto z-0">
-        {loading && <TableSpinner />}
+        {/* {loading && <TableSpinner />} */}
+        {isFetching && !isFetchingNextPage && status !== "loading" && (
+          <FetchingSpinner />
+        )}
         <table>
           <thead>
             <tr>
@@ -80,12 +124,26 @@ const ManageDeductionList = () => {
             </tr>
           </thead>
           <tbody>
-            {result.length > 0 ? (
-              result.map((item, key) => {
-                counter++;
-                return (
+            {(status === "loading" || result?.pages[0].data.length === 0) && (
+              <tr className="text-center ">
+                <td colSpan="100%" className="p-10">
+                  {status === "loading" && <TableSpinner />}
+                  <NoData />
+                </td>
+              </tr>
+            )}
+            {error && (
+              <tr className="text-center ">
+                <td colSpan="100%" className="p-10">
+                  <ServerError />
+                </td>
+              </tr>
+            )}
+            {result?.pages.map((page, key) => (
+              <React.Fragment key={key}>
+                {page.data.map((item, key) => (
                   <tr key={key}>
-                    <td>{counter}.</td>
+                    <td>{counter++}.</td>
                     {/* <td>{item.deduction_payroll_id}</td> */}
                     <td>{item.deduction_employee}</td>
                     <td>{item.deduction_details}</td>
@@ -146,41 +204,30 @@ const ManageDeductionList = () => {
                       </div>
                     </td>
                   </tr>
-                );
-              })
-            ) : result === -1 ? (
-              <tr className="text-center ">
-                <td colSpan="100%" className="p-10">
-                  <ServerError />
-                </td>
-              </tr>
-            ) : (
-              <tr className="text-center ">
-                <td colSpan="100%" className="p-10">
-                  <NoData />
-                </td>
-              </tr>
-            )}
+                ))}
+              </React.Fragment>
+            ))}
           </tbody>
         </table>
-
-        {!store.isSearch && (
-          <Loadmore
-            handleLoad={handleLoad}
-            loading={loading}
-            result={result}
-            totalResult={totalResult}
-          />
-        )}
+        <LoadmoreRq
+          fetchNextPage={fetchNextPage}
+          isFetchingNextPage={isFetchingNextPage}
+          hasNextPage={hasNextPage}
+          result={result?.pages[0]}
+          setPage={setPage}
+          page={page}
+          refView={ref}
+        />
       </div>
 
       {store.isRestore && (
-        <ModalDeleteRestore
+        <ModalDeleteRestoreRq
           id={id}
           isDel={isDel}
           mysqlApiDelete={`${devApiUrl}/v1/deductions/${id}`}
           msg={"Are you sure you want to delete this user"}
           item={`${dataItem.deduction_employee}`}
+          arrKey="deduction"
         />
       )}
     </>

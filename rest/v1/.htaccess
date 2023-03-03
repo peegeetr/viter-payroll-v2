@@ -52,6 +52,7 @@ RewriteRule ^deductions/([0-9]+)$ controllers/deductions/deductions.php?deductio
 RewriteRule ^deductions/limit/([0-9]+)/([0-9]+)$ controllers/deductions/limit.php?start=$1&total=$2 [L]
 RewriteRule ^deductions/search/([A-Za-z0-9-]+)$ controllers/deductions/search.php?search=$1 [L]
 RewriteRule ^deductions/validateId/([A-Za-z0-9-]+)$ controllers/deductions/validateId.php?prid=$1 [L]
+RewriteRule ^deductions/page/([0-9]+)$ controllers/deductions/page.php?start=$1 [L]
   
 #payitem
 RewriteRule ^payitem$ controllers/pay-type/pay-item/payitem.php [L]

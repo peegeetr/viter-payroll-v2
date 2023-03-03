@@ -49,15 +49,15 @@ if ($data["payitem_is_hris"] === "0" && $earnings->earnings_employee === "all") 
         $earnings->earnings_employee_id = $allEmployee[$e]["employee_aid"];
         $earnings->earnings_hris_date =  date("Y-m-d");
 
-        // $query = $earnings->checkName(); 
-        // if ($query->rowCount() > 0) {
-        //     continue;
-        // } else { 
-        //     //     isNameExist($earnings, "Pay item for $earnings->earnings_payroll_id is ");
-        //     $query = checkCreate($earnings);
-        // }
-        isNameExist($earnings, "Pay item for $earnings->earnings_payroll_id is ");
-        $query = checkCreate($earnings);
+        $query = $earnings->checkName();
+        if ($query->rowCount() > 0) {
+            continue;
+        } else {
+            isNameExist($earnings, "Pay item for $earnings->earnings_payroll_id is ");
+            $query = checkCreate($earnings);
+        }
+        // isNameExist($earnings, "Pay item for $earnings->earnings_payroll_id is ");
+        // $query = checkCreate($earnings);
     }
     returnSuccess($earnings, "Earnings", $query);
 }

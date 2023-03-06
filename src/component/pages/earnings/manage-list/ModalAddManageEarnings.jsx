@@ -1,15 +1,12 @@
-import React from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Form, Formik } from "formik";
-import * as Yup from "yup";
+import React from "react";
 import { FaTimesCircle } from "react-icons/fa";
-import { setIsAdd, setStartIndex } from "../../../../store/StoreAction";
+import * as Yup from "yup";
+import { setError, setIsAdd, setMessage } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
-import useLoadAbsences from "../../../custom-hooks/useLoadAbsences";
-import useLoadAll from "../../../custom-hooks/useLoadAll";
-import useLoadOvertime from "../../../custom-hooks/useLoadOvertime";
-import useLoadPayLeave from "../../../custom-hooks/useLoadPayLeave";
+import useQueryData from "../../../custom-hooks/useQueryData";
 import fetchApi from "../../../helpers/fetchApi";
-import { fetchData } from "../../../helpers/fetchData";
 import {
   InputSelect,
   InputText,
@@ -20,6 +17,8 @@ import {
   handleNumOnly,
   hrisDevApiUrl,
 } from "../../../helpers/functions-general";
+import { holidayId, nightDiffId } from "../../../helpers/functions-payitemId";
+import { queryData } from "../../../helpers/queryData";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 import {
   computeLeave,
@@ -28,8 +27,6 @@ import {
   validateDataIsNotEmpty,
   validatePayPeriod,
 } from "./function-manage-list";
-import { holidayId, nightDiffId } from "../../../helpers/functions-payitemId";
-import useLoadAllUndertime from "../../../custom-hooks/useLoadAllUndertime";
 
 const ModalAddManageEarnings = ({
   payType,
@@ -46,37 +43,61 @@ const ModalAddManageEarnings = ({
   const [employeeName, setEmployeeName] = React.useState("");
   const [deatils, setDeatils] = React.useState("");
   const [payItem, setPayItem] = React.useState([]);
+  const [isPayItem, setIsPayItem] = React.useState([]);
   const [isInstallment, setIsInstallment] = React.useState("");
   const [numberInsti, setNumberInsti] = React.useState("");
   const [isStartDate, setIsStartDate] = React.useState("");
   const [isEndDate, setIsEndDate] = React.useState("");
-  let payroll_start_date = payrollDraft[0].payroll_start_date;
-  let payroll_end_date = payrollDraft[0].payroll_end_date;
-  let payroll_id = payrollDraft[0].payroll_id;
-  let payroll_type_id = payrollDraft[0].payroll_earning_type;
+  let payroll_start_date = payrollDraft?.data[0].payroll_start_date;
+  let payroll_end_date = payrollDraft?.data[0].payroll_end_date;
+  let payroll_id = payrollDraft?.data[0].payroll_id;
+  let payroll_type_id = payrollDraft?.data[0].payroll_earning_type;
 
-  const { undertime } = useLoadAllUndertime(
-    `${hrisDevApiUrl}/v1/undertime/pay-undertime/${payroll_start_date}/${payroll_end_date}`,
-    "get"
-  );
-  console.log("test", undertime, employee);
-  const { payLeave } = useLoadPayLeave(
-    `${hrisDevApiUrl}/v1/leaves/period/approved/${payroll_start_date}/${payroll_end_date}`,
-    "get"
+  console.log(employee);
+
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: (values) =>
+      queryData(`${devApiUrl}/v1/earnings`, "post", values),
+    onSuccess: (data) => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries({ queryKey: ["earnings"] });
+
+      // show error box
+      if (!data.success) {
+        dispatch(setError(true));
+        dispatch(setMessage(data.error));
+      }
+    },
+  });
+
+  // use if not loadmore button undertime
+  const { data: undertime } = useQueryData(
+    `${hrisDevApiUrl}/v1/undertime/pay-undertime/${payroll_start_date}/${payroll_end_date}`, // endpoint
+    "get", // method
+    "undertime" // key
   );
 
-  const { absences } = useLoadAbsences(
-    `${hrisDevApiUrl}/v1/leaves/absences/approved/${payroll_start_date}/${payroll_end_date}`,
-    "get"
+  // use if not loadmore button payLeave
+  const { data: payLeave } = useQueryData(
+    `${hrisDevApiUrl}/v1/leaves/period/approved/${payroll_start_date}/${payroll_end_date}`, // endpoint
+    "get", // method
+    "payLeave" // key
   );
 
-  const { overtime } = useLoadOvertime(
-    `${hrisDevApiUrl}/v1/tasks/overtime/approved/${payroll_start_date}/${payroll_end_date}`,
-    "get"
+  // use if not loadmore button absences
+  const { data: absences } = useQueryData(
+    `${hrisDevApiUrl}/v1/leaves/absences/approved/${payroll_start_date}/${payroll_end_date}`, // endpoint
+    "get", // method
+    "absences" // key
   );
-  const { result, setResult } = useLoadAll(
-    `${devApiUrl}/v1/paytype/${0}`,
-    "get"
+
+  // use if not loadmore button overtime
+  const { data: overtime } = useQueryData(
+    `${hrisDevApiUrl}/v1/tasks/overtime/approved/${payroll_start_date}/${payroll_end_date}`, // endpoint
+    "get", // method
+    "overtime" // key
   );
 
   const handlePayType = async (e, props) => {
@@ -85,10 +106,9 @@ const ModalAddManageEarnings = ({
     const results = await fetchApi(`${devApiUrl}/v1/paytype/${paytypeid}`);
     if (results.data) {
       setSelLoading(false);
-      setResult(results.data);
+      setIsPayItem(results.data);
     }
   };
-
   const handlePayItem = async (e, props) => {
     let payitemid = e.target.value;
     setIsHri(e.target.options[e.target.selectedIndex].id);
@@ -259,33 +279,16 @@ const ModalAddManageEarnings = ({
                   payrollDraft,
                   holidays
                 );
-
-                // send data to server
-                fetchData(
-                  setLoading,
-                  `${devApiUrl}/v1/earnings`,
-                  {
-                    ...values,
-                    employee: employee.length > 0 ? employee : 0,
-                    payLeave: computedLeav.length > 0 ? computedLeav : 0,
-                    unPaidLeave: computedUnpaid.length > 0 ? computedUnpaid : 0,
-                    overtimeLeave: computedOT.length > 0 ? computedOT : 0,
-                    undertime:
-                      computedUndertime.length > 0 ? computedUndertime : 0,
-                    // nightDiffeLeave:
-                    //   computedNightDiff.length > 0 ? computedNightDiff : 0,
-                  }, // form data values
-                  null, // result set data
-                  "Succesfully added.", // success msg
-                  "", // additional error msg if needed
-                  dispatch, // context api action
-                  store, // context api state
-                  true, // boolean to show success modal
-                  false, // boolean to show load more functionality button
-                  null, // navigate default value
-                  "post"
-                );
-                dispatch(setStartIndex(0));
+                console.log("123", computedUnpaid, employee.data);
+                mutation.mutate({
+                  ...values,
+                  employee: employee.data,
+                  payLeave: computedLeav.length > 0 ? computedLeav : 0,
+                  unPaidLeave: computedUnpaid.length > 0 ? computedUnpaid : 0,
+                  overtimeLeave: computedOT.length > 0 ? computedOT : 0,
+                  undertime:
+                    computedUndertime.length > 0 ? computedUndertime : 0,
+                });
               }}
             >
               {(props) => {
@@ -303,7 +306,7 @@ const ModalAddManageEarnings = ({
                     : Number(props.values.earnings_number_of_installment))
                 ).toFixed(2);
                 props.values.earnings_payroll_id =
-                  payrollDraft.length && payrollDraft[0].payroll_id;
+                  payrollDraft?.data[0].payroll_id;
                 props.values.earnings_number_of_installment =
                   numberInsti || props.values.number_of_installment;
                 props.values.earnings_start_pay_date =
@@ -326,22 +329,15 @@ const ModalAddManageEarnings = ({
                         >
                           <optgroup label="Pay Type">
                             <option value="" hidden></option>
-                            {payType.length > 0 ? (
-                              payType.map((paytype, key) => {
-                                return (
-                                  paytype.paytype_category === "earnings" && (
-                                    <option
-                                      key={key}
-                                      value={paytype.paytype_aid}
-                                    >
-                                      {paytype.paytype_name}
-                                    </option>
-                                  )
-                                );
-                              })
-                            ) : (
-                              <option value="" hidden></option>
-                            )}
+                            {payType?.data.map((paytype, key) => {
+                              return (
+                                paytype.paytype_category === "earnings" && (
+                                  <option key={key} value={paytype.paytype_aid}>
+                                    {paytype.paytype_name}
+                                  </option>
+                                )
+                              );
+                            })}
                           </optgroup>
                         </InputSelect>
                       </div>
@@ -358,7 +354,7 @@ const ModalAddManageEarnings = ({
                           <optgroup label="Pay Item">
                             {loadingSel && <option value="">Loading...</option>}
                             <option value="" hidden></option>
-                            {result?.map((payitem, key) => {
+                            {isPayItem?.map((payitem, key) => {
                               return (
                                 payitem.payitem_aid !== Number(nightDiffId) &&
                                 payitem.payitem_aid !== Number(holidayId) && (
@@ -412,27 +408,20 @@ const ModalAddManageEarnings = ({
                             >
                               <optgroup label="Employee">
                                 <option value="" hidden></option>
-                                {employee.length > 0 ? (
-                                  <>
-                                    <option value="all" id="0">
-                                      All
+                                <option value="all" id="0">
+                                  All
+                                </option>
+                                {employee?.data.map((employee, key) => {
+                                  return (
+                                    <option
+                                      key={key}
+                                      value={`${employee.employee_lname} ${employee.employee_fname}`}
+                                      id={employee.employee_aid}
+                                    >
+                                      {`${employee.employee_lname}, ${employee.employee_fname}`}
                                     </option>
-                                    ;
-                                    {employee.map((employee, key) => {
-                                      return (
-                                        <option
-                                          key={key}
-                                          value={`${employee.employee_lname} ${employee.employee_fname}`}
-                                          id={employee.employee_aid}
-                                        >
-                                          {`${employee.employee_lname}, ${employee.employee_fname}`}
-                                        </option>
-                                      );
-                                    })}
-                                  </>
-                                ) : (
-                                  <option value="" hidden></option>
-                                )}
+                                  );
+                                })}
                               </optgroup>
                             </InputSelect>
                           </div>

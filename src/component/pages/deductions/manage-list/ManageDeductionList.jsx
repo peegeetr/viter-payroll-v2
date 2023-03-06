@@ -1,29 +1,23 @@
 import React from "react";
-import { useInfiniteQuery } from "@tanstack/react-query";
 import { FaTrash } from "react-icons/fa";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { useInView } from "react-intersection-observer";
 import { setIsRestore } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
-import useFetchDataLoadMore from "../../../custom-hooks/useFetchDataLoadMore";
 import {
   devApiUrl,
   formatDate,
   numberWithCommas,
 } from "../../../helpers/functions-general";
 import { queryDataInfinite } from "../../../helpers/queryDataInfinite";
-import Loadmore from "../../../partials/Loadmore";
-import ModalDeleteRestore from "../../../partials/modals/ModalDeleteRestore";
-import NoData from "../../../partials/NoData";
-import SearchBar from "../../../partials/SearchBar";
-import ServerError from "../../../partials/ServerError";
-import TableSpinner from "../../../partials/spinners/TableSpinner";
-import StatusActive from "../../../partials/status/StatusActive";
-import StatusInactive from "../../../partials/status/StatusInactive";
-import { getStatus } from "../../earnings/manage-list/function-manage-list";
-import { useInView } from "react-intersection-observer";
-import SearchBarRq from "../../../partials/SearchBarRq";
-import FetchingSpinner from "../../../partials/spinners/FetchingSpinner";
-import ModalDeleteRestoreRq from "../../../partials/modals/ModalDeleteRestoreRq";
 import LoadmoreRq from "../../../partials/LoadmoreRq";
+import ModalDeleteRestoreRq from "../../../partials/modals/ModalDeleteRestoreRq";
+import NoData from "../../../partials/NoData";
+import SearchBarRq from "../../../partials/SearchBarRq";
+import ServerError from "../../../partials/ServerError";
+import FetchingSpinner from "../../../partials/spinners/FetchingSpinner";
+import TableSpinner from "../../../partials/spinners/TableSpinner";
+import { getStatus } from "../../earnings/manage-list/function-manage-list";
 
 const ManageDeductionList = () => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -35,20 +29,6 @@ const ManageDeductionList = () => {
   const search = React.useRef(null);
   let counter = 1;
   const { ref, inView } = useInView();
-
-  // const {
-  //   loading,
-  //   handleLoad,
-  //   totalResult,
-  //   result,
-  //   handleSearch,
-  //   handleChange,
-  // } = useFetchDataLoadMore(
-  //   `${devApiUrl}/v1/deductions/limit/${start}/${perPage}`,
-  //   `${devApiUrl}/v1/deductions`,
-  //   perPage,
-  //   search
-  // );
 
   // use if with loadmore button and search bar
   const {

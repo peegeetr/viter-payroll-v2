@@ -6,6 +6,7 @@ import useLoadDraft from "../../../custom-hooks/useLoadDraft";
 import useLoadEmployee from "../../../custom-hooks/useLoadEmployee";
 import useLoadHolidays from "../../../custom-hooks/useLoadHolidays";
 import useLoadPayType from "../../../custom-hooks/useLoadPayType";
+import useQueryData from "../../../custom-hooks/useQueryData";
 import { devApiUrl, hrisDevApiUrl } from "../../../helpers/functions-general";
 import BreadCrumbs from "../../../partials/BreadCrumbs";
 import Footer from "../../../partials/Footer";
@@ -20,10 +21,33 @@ import ModalNoPayrollId from "./ModalNoPayrollId";
 const ManageEarnings = () => {
   const { store, dispatch } = React.useContext(StoreContext);
 
-  const { payType } = useLoadPayType(`${devApiUrl}/v1/paytype`, "get");
-  const { draft } = useLoadDraft(`${devApiUrl}/v1/payroll/list`, "get");
-  const { employee } = useLoadEmployee(`${hrisDevApiUrl}/v1/employees`, "get");
-  const { holidays } = useLoadHolidays(`${devApiUrl}/v1/holidays`, "get");
+  // use if not loadmore button undertime
+  const { data: payType } = useQueryData(
+    `${devApiUrl}/v1/paytype`, // endpoint
+    "get", // method
+    "payType" // key
+  );
+
+  // use if not loadmore button undertime
+  const { data: draft } = useQueryData(
+    `${devApiUrl}/v1/payroll/list`, // endpoint
+    "get", // method
+    "draft" // key
+  );
+
+  // use if not loadmore button undertime
+  const { data: employee } = useQueryData(
+    `${hrisDevApiUrl}/v1/employees`, // endpoint
+    "get", // method
+    "employee" // key
+  );
+
+  // use if not loadmore button undertime
+  const { data: holidays } = useQueryData(
+    `${devApiUrl}/v1/holidays`, // endpoint
+    "get", // method
+    "holidays" // key
+  );
 
   const handleAdd = () => {
     dispatch(setIsAdd(true));
@@ -55,9 +79,9 @@ const ManageEarnings = () => {
         </div>
         <Footer />
       </div>
-      {draft.length > 0 &&
-      draft[0].payroll_id !== "" &&
-      employee.length > 0 &&
+      {draft?.count > 0 &&
+      draft?.data[0].payroll_id !== "" &&
+      employee?.count > 0 &&
       store.isAdd ? (
         <ModalAddManageEarnings
           payType={payType}

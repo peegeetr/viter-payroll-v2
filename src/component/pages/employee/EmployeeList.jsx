@@ -85,10 +85,10 @@ const EmployeeList = () => {
             <tr>
               <th className="text-center">#</th>
               <th className="w-12"></th>
-              <th className="w-52">Full Name</th>
-              <th className="w-28">Emp. No.</th>
-              <th className="w-80">Work Email</th>
-              <th className="w-32">Contact</th>
+              <th className="w-52">Name</th>
+              <th className="w-28">ID No.</th>
+              <th className="w-[24rem]">Work Email</th>
+              <th className="w-32">Direct report</th>
               <th>Status</th>
               <th className="text-right">Actions</th>
             </tr>
@@ -113,15 +113,14 @@ const EmployeeList = () => {
                         </span>
                       )}
                     </td>
-                    <td>
-                      {`${item.employee_lname}, ${item.employee_fname}`}{" "}
-                      <span className="inline-block text-[0] first-letter:text-sm">
-                        {item.employee_mname}
-                      </span>
-                    </td>
-                    <td>{"item.EmpNo"}</td>
+                    <td>{item.fullname}</td>
+                    <td>{item.employee_job_number}</td>
                     <td>{item.employee_email}</td>
-                    <td>{item.employee_mobile_number}</td>
+                    <td>
+                      {item.supervisor === null
+                        ? "Not assigned"
+                        : item.supervisor}
+                    </td>
                     <td>
                       {item.employee_is_active === 1 ? (
                         <StatusActive />

@@ -330,7 +330,7 @@ class Earnings
     {
         try {
             $sql = "select * from {$this->tblEarnings} ";
-            $sql .= "where earnings_details = :earnings_details ";
+            $sql .= "where earnings_hris_date = :earnings_hris_date ";
             $sql .= "and earnings_employee_id = :earnings_employee_id ";
             $sql .= "and earnings_payitem_id = :earnings_payitem_id ";
             $sql .= "and earnings_payroll_id = :earnings_payroll_id ";
@@ -339,7 +339,7 @@ class Earnings
                 "earnings_employee_id" => "{$this->earnings_employee_id}",
                 "earnings_payitem_id" => "{$this->earnings_payitem_id}",
                 "earnings_payroll_id" => "{$this->earnings_payroll_id}",
-                "earnings_details" => "{$this->earnings_details}",
+                "earnings_hris_date" => "{$this->earnings_hris_date}",
             ]);
         } catch (PDOException $ex) {
             $query = false;

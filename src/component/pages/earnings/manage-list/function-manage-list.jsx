@@ -17,18 +17,18 @@ export const validatePayPeriod = (values, inputDate, dispatch) => {
   if (
     // earnings
     (new Date(values.earnings_start_pay_date) <
-      new Date(inputDate[0].payroll_start_date) ||
+      new Date(inputDate?.data[0].payroll_start_date) ||
       new Date(values.earnings_start_pay_date) >
-        new Date(inputDate[0].payroll_end_date) ||
+        new Date(inputDate?.data[0].payroll_end_date) ||
       new Date(values.earnings_end_pay_date) <
-        new Date(inputDate[0].payroll_end_date) ||
+        new Date(inputDate?.data[0].payroll_end_date) ||
       // deductions
       new Date(values.deduction_start_pay_date) <
-        new Date(inputDate[0].payroll_start_date) ||
+        new Date(inputDate?.data[0].payroll_start_date) ||
       new Date(values.deduction_start_pay_date) >
-        new Date(inputDate[0].payroll_end_date) ||
+        new Date(inputDate?.data[0].payroll_end_date) ||
       new Date(values.deduction_end_pay_date) <
-        new Date(inputDate[0].payroll_end_date)) &&
+        new Date(inputDate?.data[0].payroll_end_date)) &&
     installment === "2"
   ) {
     dispatch(setError(true));
@@ -51,12 +51,12 @@ export const getUnderTimeSpent = (item) => {
 // compute undertime
 export const computeUndertime = (undertimeData, employee, payrollDraft) => {
   const days = getWorkingDays(
-    new Date(payrollDraft[0].payroll_start_date),
-    new Date(payrollDraft[0].payroll_end_date)
+    new Date(payrollDraft?.data[0].payroll_start_date),
+    new Date(payrollDraft?.data[0].payroll_end_date)
   );
   let list = [];
-  undertimeData.map((uItem) => {
-    employee.map((eItem) => {
+  undertimeData?.data.map((uItem) => {
+    employee?.data.map((eItem) => {
       if (uItem.employee_aid === eItem.employee_aid) {
         list.push({
           name: `${eItem.employee_lname}, ${eItem.employee_fname}`,
@@ -78,12 +78,12 @@ export const computeUndertime = (undertimeData, employee, payrollDraft) => {
 // compute leave
 export const computeLeave = (leaveData, employee, payrollDraft) => {
   const days = getWorkingDays(
-    new Date(payrollDraft[0].payroll_start_date),
-    new Date(payrollDraft[0].payroll_end_date)
+    new Date(payrollDraft?.data[0].payroll_start_date),
+    new Date(payrollDraft?.data[0].payroll_end_date)
   );
   let list = [];
-  leaveData.map((lItem) => {
-    employee.map((eItem) => {
+  leaveData?.data.map((lItem) => {
+    employee?.data.map((eItem) => {
       if (Number(lItem.leave_list_employee_id) === Number(eItem.employee_aid)) {
         list.push({
           name: `${eItem.employee_lname}, ${eItem.employee_fname}`,
@@ -113,17 +113,17 @@ export const computeOvertime = (
   holidays
 ) => {
   let list = [];
-  employee.map((eItem) => {
-    overtimeData.map((otItem) => {
+  employee?.data.map((eItem) => {
+    overtimeData?.data.map((otItem) => {
       if (Number(otItem.task_employee_id) === Number(eItem.employee_aid)) {
         list.push({
           name: `${eItem.employee_lname}, ${eItem.employee_fname}`,
           amount: Number(otFinalAmount(otItem, eItem, holidays, payrollDraft)),
           employeId: eItem.employee_aid,
           hrisDate: otItem.task_created,
-          details: `${formatDate(otItem.task_created)} (${getUnderTimeSpent(
-            otItem.task_spent
-          )})`,
+          details: `${formatDate(otItem.task_created)} ${
+            otItem.task_created.split(" ")[1]
+          } (${getUnderTimeSpent(otItem.task_spent)})`,
         });
       }
     });
@@ -200,8 +200,8 @@ export const otHolidayComputed = (regularAmount, holidayRate, rate) => {
 // computation amount of OT, OT + holiday, and OT + holiday + restday
 export const otFinalAmount = (otItem, eItem, holidays, payrollDraft) => {
   const days = getWorkingDays(
-    new Date(payrollDraft[0].payroll_start_date),
-    new Date(payrollDraft[0].payroll_end_date)
+    new Date(payrollDraft?.data[0].payroll_start_date),
+    new Date(payrollDraft?.data[0].payroll_end_date)
   );
   let rate25 = 125 / 100;
   let restRate30 = 130 / 100;
@@ -219,7 +219,7 @@ export const otFinalAmount = (otItem, eItem, holidays, payrollDraft) => {
   let otDate = otItem.task_created.split(" ")[0];
   let otTime = otItem.task_created.split(" ")[1];
   let otTimeHr = otTime.split(":")[0];
-  holidays.map((holidaysItem) => {
+  holidays?.data.map((holidaysItem) => {
     // if overtime and holiday is same date
     if (holidaysItem.holidays_date === otDate) {
       let holidayRate = holidaysItem.holidays_rate / 100;

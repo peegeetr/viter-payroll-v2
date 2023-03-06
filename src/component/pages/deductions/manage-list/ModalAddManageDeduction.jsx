@@ -1,27 +1,20 @@
 import { Form, Formik } from "formik";
 import React from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { FaTimesCircle } from "react-icons/fa";
 import * as Yup from "yup";
-import {
-  setError,
-  setIsAdd,
-  setMessage,
-  setStartIndex,
-} from "../../../../store/StoreAction";
+import { setError, setIsAdd, setMessage } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
-import useLoadAll from "../../../custom-hooks/useLoadAll";
 import fetchApi from "../../../helpers/fetchApi";
-import { fetchData } from "../../../helpers/fetchData";
 import {
   InputSelect,
   InputText,
   InputTextArea,
 } from "../../../helpers/FormInputs";
 import { devApiUrl, handleNumOnly } from "../../../helpers/functions-general";
+import { queryData } from "../../../helpers/queryData";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 import { validatePayPeriod } from "../../earnings/manage-list/function-manage-list";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { queryData } from "../../../helpers/queryData";
 
 const ModalAddManageDeduction = ({ payType, employee, payrollDraft }) => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -32,15 +25,11 @@ const ModalAddManageDeduction = ({ payType, employee, payrollDraft }) => {
   const [isInstallment, setIsInstallment] = React.useState("");
   const [numberInsti, setNumberInsti] = React.useState("");
   const [isStartDate, setIsStartDate] = React.useState("");
+  const [isPayItem, setIsPayItem] = React.useState([]);
   const [isEndDate, setIsEndDate] = React.useState("");
-  let payroll_start_date = payrollDraft[0].payroll_start_date;
-  let payroll_end_date = payrollDraft[0].payroll_end_date;
-  let payroll_type_id = payrollDraft[0].payroll_earning_type;
-
-  const { result, setResult } = useLoadAll(
-    `${devApiUrl}/v1/paytype/${0}`,
-    "get"
-  );
+  let payroll_start_date = payrollDraft?.data[0].payroll_start_date;
+  let payroll_end_date = payrollDraft?.data[0].payroll_end_date;
+  let payroll_type_id = payrollDraft?.data[0].payroll_earning_type;
 
   const queryClient = useQueryClient();
 
@@ -65,10 +54,10 @@ const ModalAddManageDeduction = ({ payType, employee, payrollDraft }) => {
     const results = await fetchApi(`${devApiUrl}/v1/paytype/${paytypeid}`);
     if (results.data) {
       setSelLoading(false);
-      setResult(results.data);
+      setIsPayItem(results.data);
     }
   };
-
+  console.log("payitem", isPayItem);
   const handleEmployee = async (e) => {
     // get employee id
     setEmployeeId(e.target.options[e.target.selectedIndex].id);
@@ -94,7 +83,6 @@ const ModalAddManageDeduction = ({ payType, employee, payrollDraft }) => {
       setIsEndDate("");
     }
   };
-  console.log(isInstallment);
   const handleAmount = () => {
     setIsAmount(false);
   };
@@ -149,7 +137,7 @@ const ModalAddManageDeduction = ({ payType, employee, payrollDraft }) => {
         <div className="p-1 w-[350px] rounded-b-2xl">
           <div className="flex justify-between items-center bg-primary p-3 rounded-t-2xl ">
             <h3 className="text-white text-sm">
-              Add Deducction :{payrollDraft[0].payroll_id}
+              Add Deducction :{payrollDraft?.data[0].payroll_id}
             </h3>
             <button
               type="button"
@@ -165,29 +153,12 @@ const ModalAddManageDeduction = ({ payType, employee, payrollDraft }) => {
               initialValues={initVal}
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
-                console.log(values, payrollDraft[0].payroll_start_date);
+                console.log(values);
                 // payroll date validation if installment
                 if (validatePayPeriod(values, payrollDraft, dispatch)) {
                   return;
                 }
-                // send data to server
-                // fetchData(
-                //   setLoading,
-                //   `${devApiUrl}/v1/deductions`,
-                //   { ...values, employee }, // form data values
-                //   null, // result set data
-                //   "Succesfully added.", // success msg
-                //   "", // additional error msg if needed
-                //   dispatch, // context api action
-                //   store, // context api state
-                //   true, // boolean to show success modal
-                //   false, // boolean to show load more functionality button
-                //   null, // navigate default value
-                //   "post"
-                // );
-                // dispatch(setStartIndex(0));
-                // mutate data
-                mutation.mutate({ ...values, employee });
+                mutation.mutate({ ...values, employee: employee.data });
               }}
             >
               {(props) => {
@@ -200,7 +171,7 @@ const ModalAddManageDeduction = ({ payType, employee, payrollDraft }) => {
                     : Number(props.values.deduction_number_of_installment))
                 ).toFixed(2);
                 props.values.deduction_payroll_id =
-                  payrollDraft.length && payrollDraft[0].payroll_id;
+                  payrollDraft?.data[0].payroll_id;
                 props.values.deduction_number_of_installment =
                   numberInsti || props.values.number_of_installment;
                 props.values.deduction_start_pay_date =
@@ -223,22 +194,15 @@ const ModalAddManageDeduction = ({ payType, employee, payrollDraft }) => {
                         >
                           <optgroup label="Pay Type">
                             <option value="" hidden></option>
-                            {payType.length > 0 ? (
-                              payType.map((paytype, key) => {
-                                return (
-                                  paytype.paytype_category === "deductions" && (
-                                    <option
-                                      key={key}
-                                      value={paytype.paytype_aid}
-                                    >
-                                      {paytype.paytype_name}
-                                    </option>
-                                  )
-                                );
-                              })
-                            ) : (
-                              <option value="" hidden></option>
-                            )}
+                            {payType?.data.map((paytype, key) => {
+                              return (
+                                paytype.paytype_category === "deductions" && (
+                                  <option key={key} value={paytype.paytype_aid}>
+                                    {paytype.paytype_name}
+                                  </option>
+                                )
+                              );
+                            })}
                           </optgroup>
                         </InputSelect>
                       </div>
@@ -255,7 +219,7 @@ const ModalAddManageDeduction = ({ payType, employee, payrollDraft }) => {
                             {loadingSel && <option value="">Loading...</option>}
                             <option value="" hidden></option>
                             {!loadingSel &&
-                              result?.map((payitem, key) => {
+                              isPayItem?.map((payitem, key) => {
                                 return (
                                   <option
                                     key={key}
@@ -298,27 +262,20 @@ const ModalAddManageDeduction = ({ payType, employee, payrollDraft }) => {
                         >
                           <optgroup label="Employee">
                             <option value="" hidden></option>
-                            {employee.length > 0 ? (
-                              <>
-                                <option value="all" id="0">
-                                  All
+                            <option value="all" id="0">
+                              All
+                            </option>
+                            {employee?.data.map((employee, key) => {
+                              return (
+                                <option
+                                  key={key}
+                                  value={`${employee.employee_lname} ${employee.employee_fname}`}
+                                  id={employee.employee_aid}
+                                >
+                                  {`${employee.employee_lname}, ${employee.employee_fname}`}
                                 </option>
-                                ;
-                                {employee.map((employee, key) => {
-                                  return (
-                                    <option
-                                      key={key}
-                                      value={`${employee.employee_lname} ${employee.employee_fname}`}
-                                      id={employee.employee_aid}
-                                    >
-                                      {`${employee.employee_lname}, ${employee.employee_fname}`}
-                                    </option>
-                                  );
-                                })}
-                              </>
-                            ) : (
-                              <option value="" hidden></option>
-                            )}
+                              );
+                            })}
                           </optgroup>
                         </InputSelect>
                       </div>

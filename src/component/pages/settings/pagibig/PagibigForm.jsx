@@ -7,7 +7,7 @@ import { InputText } from "../../../helpers/FormInputs.jsx";
 import { devApiUrl } from "../../../helpers/functions-general.jsx";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner.jsx";
 
-const PagibigForm = ({ itemEdit }) => {
+const PagibigForm = () => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [loading, setLoading] = React.useState(false);
 
@@ -65,10 +65,10 @@ const PagibigForm = ({ itemEdit }) => {
                 <div className="flex items-center gap-1 pt-5 w-2/5 mx-auto">
                   <button
                     type="submit"
-                    disabled={!loading || !props.dirty}
+                    disabled={loading || !props.dirty}
                     className="btn-modal-submit relative"
                   >
-                    {!loading && <ButtonSpinner />}
+                    {loading && <ButtonSpinner />}
                     Apply
                   </button>
                 </div>

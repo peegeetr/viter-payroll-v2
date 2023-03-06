@@ -3,23 +3,23 @@
 $conn = null;
 $conn = checkDbConnection();
 // make instance of classes
-$rates = new Rates($conn);
+$pagibig = new Pagibig($conn);
 // get $_GET data
 // check if holidaysid is in the url e.g. /jobtitle/1
 $error = [];
 $returnData = [];
-if (array_key_exists("ratesid", $_GET)) {
+if (array_key_exists("pagibigId", $_GET)) {
 
     // get task id from query string
-    $rates->rates_aid = $_GET['ratesid'];
+    $pagibig->pagibig_aid = $_GET['pagibigId'];
 
     //check to see if task id in query string is not empty and is number, if not return json error
-    checkId($rates->rates_aid);
+    checkId($pagibig->pagibig_aid);
 
     // delete
-    $query = checkDelete($rates);
+    $query = checkDelete($pagibig);
 
-    returnSuccess($rates, "Rates", $query);
+    returnSuccess($pagibig, "Pagibig", $query);
 }
 
 // return 404 error if endpoint not available

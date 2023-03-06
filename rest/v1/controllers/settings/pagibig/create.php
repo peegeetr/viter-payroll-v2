@@ -3,28 +3,21 @@
 $conn = null;
 $conn = checkDbConnection();
 // make instance of classes
-$rates = new Rates($conn);
+$pagibig = new Pagibig($conn);
 // get should not be present
-if (array_key_exists("ratesid", $_GET)) {
+if (array_key_exists("pagibigId", $_GET)) {
     checkEndpoint();
 }
 // check data
 checkPayload($data);
 // get data
 
-$rates->rates_name = checkIndex($data, "rates_name");
-$rates->rates_paytype_id = checkIndex($data, "rates_paytype_id");
-$rates->rates_percent = checkIndex($data, "rates_percent");
-$rates->rates_payitems_id = checkIndex($data, "rates_payitems_id");
-$rates->rates_active = 1;
-$rates->rates_created = date("Y-m-d H:i:s");
-$rates->rates_datetime = date("Y-m-d H:i:s");
-
-// isHolidayNameExist($rates, $rates->rates_name);
-// isHolidayDateExist($rates, $rates->rates_date);
+$pagibig->pagibig_er_amount = checkIndex($data, "pagibig_er_amount");
+$pagibig->pagibig_ee_amount = checkIndex($data, "pagibig_ee_amount");
+$pagibig->pagibig_created = date("Y-m-d H:i:s");
+$pagibig->pagibig_datetime = date("Y-m-d H:i:s");
 
 // create
-$query = checkCreate($rates);
+$query = checkCreate($pagibig);
 
-
-returnSuccess($rates, "Rates", $query);
+returnSuccess($pagibig, "Pagibig", $query);

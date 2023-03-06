@@ -1,15 +1,16 @@
 import React from "react";
 import { FaCheck, FaTimesCircle } from "react-icons/fa";
-import { setSuccess } from "../../../store/StoreAction";
+import { setIsAdd, setSuccess } from "../../../store/StoreAction";
 import { StoreContext } from "../../../store/StoreContext";
-import { GetFocus, getUserType } from "../../helpers/functions-general";
+import { GetFocus } from "../../helpers/functions-general";
 
-const ModalSuccess = () => {
+const ModalSuccess = ({ close }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   GetFocus("btnClose");
 
   const handleClose = () => {
     dispatch(setSuccess(false));
+    close === "close" && dispatch(setIsAdd(false));
   };
 
   return (

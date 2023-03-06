@@ -49,7 +49,7 @@ class Pagibig
             $sql = "select pagibig_er_amount, pagibig_ee_amount, ";
             $sql .= "pagibig_aid ";
             $sql .= "from {$this->tblPagibig} ";
-            $sql .= "order by rates.pagibig_er_amount desc ";
+            $sql .= "order by pagibig_aid desc ";
             $query = $this->connection->query($sql);
         } catch (PDOException $ex) {
             $query = false;

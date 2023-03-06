@@ -493,7 +493,6 @@ function compareEmail($object, $email_old, $email)
     }
 }
 
-
 function compareTwoValues($object, $name_old, $name, $id_old, $id)
 {
     if (strtolower($name_old) !=  strtolower($name) || $id_old !=  $id) {

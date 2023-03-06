@@ -45,6 +45,7 @@ const HolidaysList = ({ setItemEdit }) => {
               <th className="min-w-[10rem] w-[10rem]">Date</th>
               <th className="min-w-[5rem] w-[10rem]">Type</th>
               <th>Rate</th>
+              <th>Remarks</th>
 
               <th className="max-w-[5rem]">Actions</th>
             </tr>
@@ -66,6 +67,9 @@ const HolidaysList = ({ setItemEdit }) => {
                     </td>
                     <td className="capitalize">{item.holidays_type} Holiday</td>
                     <td>{item.holidays_rate}%</td>
+                    <td>
+                      {item.holidays_observed ? "Observed" : "Not observed"}
+                    </td>
 
                     <td>
                       <div className="flex items-center gap-2">

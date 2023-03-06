@@ -9,6 +9,7 @@ import {
   InputSelect,
   InputText,
   InputTextArea,
+  MyCheckbox,
 } from "../../helpers/FormInputs";
 import { devApiUrl } from "../../helpers/functions-general";
 import ButtonSpinner from "../../partials/spinners/ButtonSpinner";
@@ -27,6 +28,7 @@ const ModalAddHolidays = ({ item }) => {
     holidays_date: item ? item.holidays_date : "",
     holidays_type: item ? item.holidays_type : "",
     holidays_rate: item ? item.holidays_rate : "",
+    holidays_observed: item ? (item.holidays_observed ? true : false) : "",
 
     holidays_name_old: item ? item.holidays_name : "",
     holidays_date_old: item ? item.holidays_date : "",
@@ -60,6 +62,7 @@ const ModalAddHolidays = ({ item }) => {
               initialValues={initVal}
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
+                console.log(values);
                 fetchData(
                   setLoading,
                   item
@@ -123,6 +126,14 @@ const ModalAddHolidays = ({ item }) => {
                         name="holidays_rate"
                         disabled={loading}
                       />
+                    </div>
+                    <div className="relative mb-5 grid grid-cols-[1fr_8fr] items-center justify-center ">
+                      <MyCheckbox
+                        type="checkbox"
+                        name="holidays_observed"
+                        disabled={loading}
+                      />
+                      <p className="mb-0">Is this holiday observed?</p>
                     </div>
                     <div className="flex items-center gap-1 pt-5">
                       <button

@@ -321,7 +321,7 @@ const ModalAddManageEarnings = ({
                         <InputSelect
                           name="earnings_paytype_id"
                           label="Pay Type"
-                          disabled={loading}
+                          disabled={mutation.isLoading}
                           onChange={handlePayType}
                           onFocus={(e) =>
                             e.target.parentElement.classList.add("focused")
@@ -346,7 +346,7 @@ const ModalAddManageEarnings = ({
                           label="Pay Item"
                           name="earnings_payitem_id"
                           onChange={handlePayItem}
-                          disabled={loading}
+                          disabled={mutation.isLoading}
                           onFocus={(e) =>
                             e.target.parentElement.classList.add("focused")
                           }
@@ -376,7 +376,7 @@ const ModalAddManageEarnings = ({
                         <InputSelect
                           name="earnings_frequency"
                           label="Frequency"
-                          disabled={loading}
+                          disabled={mutation.isLoading}
                           onFocus={(e) =>
                             e.target.parentElement.classList.add("focused")
                           }
@@ -400,7 +400,7 @@ const ModalAddManageEarnings = ({
                             <InputSelect
                               label="Employee"
                               name="payroll_employee"
-                              disabled={loading}
+                              disabled={mutation.isLoading}
                               onChange={handleEmployee}
                               onFocus={(e) =>
                                 e.target.parentElement.classList.add("focused")
@@ -434,7 +434,7 @@ const ModalAddManageEarnings = ({
                               onFocus={(e) => handleAmount(e)}
                               onBlur={(e) => handleInstallment(e)}
                               name={!isAmount ? "amount" : "earnings_amount"}
-                              disabled={loading}
+                              disabled={mutation.isLoading}
                             />
                           </div>
                           {/* show will be given select tag */}
@@ -443,7 +443,7 @@ const ModalAddManageEarnings = ({
                               label={"Will be given"}
                               onChange={handleIsInstallment}
                               name="is_installment"
-                              disabled={loading}
+                              disabled={mutation.isLoading}
                               onFocus={(e) =>
                                 e.target.parentElement.classList.add("focused")
                               }
@@ -460,7 +460,7 @@ const ModalAddManageEarnings = ({
                             <InputTextArea
                               label="Details"
                               name="deatils"
-                              disabled={loading}
+                              disabled={mutation.isLoading}
                             />
                           </div>
 
@@ -474,7 +474,7 @@ const ModalAddManageEarnings = ({
                                   onBlur={(e) => handleInstallment(e)}
                                   min="2"
                                   name="number_of_installment"
-                                  disabled={loading}
+                                  disabled={mutation.isLoading}
                                 />
                               </div>
                               <div className="relative mb-5">
@@ -484,7 +484,7 @@ const ModalAddManageEarnings = ({
                                   onFocus={(e) => (e.target.type = "date")}
                                   onBlur={(e) => (e.target.type = "date")}
                                   name="startDate"
-                                  disabled={loading}
+                                  disabled={mutation.isLoading}
                                 />
                               </div>
                               <div className="relative mb-5">
@@ -494,7 +494,7 @@ const ModalAddManageEarnings = ({
                                   onFocus={(e) => (e.target.type = "date")}
                                   onBlur={(e) => (e.target.type = "date")}
                                   name="endDate"
-                                  disabled={loading}
+                                  disabled={mutation.isLoading}
                                 />
                               </div>
                             </>
@@ -505,17 +505,16 @@ const ModalAddManageEarnings = ({
                     <div className="flex items-center gap-1 p-4 ">
                       <button
                         type="submit"
-                        disabled={loading || !props.dirty}
+                        disabled={mutation.isLoading || !props.dirty}
                         className="btn-modal-submit relative"
                       >
-                        {loading && <ButtonSpinner />}
+                        {mutation.isLoading && <ButtonSpinner />}
                         Add
                       </button>
                       <button
                         type="reset"
                         className="btn-modal-cancel cursor-pointer"
                         onClick={handleClose}
-                        disabled={loading}
                       >
                         Cancel
                       </button>

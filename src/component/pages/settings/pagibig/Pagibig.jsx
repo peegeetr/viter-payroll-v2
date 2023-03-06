@@ -1,10 +1,10 @@
 import React from "react";
-import { FaPlusCircle } from "react-icons/fa";
-import { setIsAdd } from "../../../../store/StoreAction.jsx";
 import { StoreContext } from "../../../../store/StoreContext.jsx";
 import BreadCrumbs from "../../../partials/BreadCrumbs.jsx";
 import Footer from "../../../partials/Footer.jsx";
 import Header from "../../../partials/Header.jsx";
+import ModalError from "../../../partials/modals/ModalError.jsx";
+import ModalSuccess from "../../../partials/modals/ModalSuccess.jsx";
 import Navigation from "../../../partials/Navigation.jsx";
 import PagibigForm from "./PagibigForm.jsx";
 
@@ -28,7 +28,7 @@ const Pagibig = () => {
         <Footer />
       </div>
 
-      {store.success && <ModalSuccess />}
+      {store.success && <ModalSuccess close={"close"} />}
       {store.error && <ModalError />}
     </>
   );

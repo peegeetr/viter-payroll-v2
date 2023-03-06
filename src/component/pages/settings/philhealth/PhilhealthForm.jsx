@@ -1,95 +1,71 @@
-import { Form, Formik } from "formik";
 import React from "react";
-import * as Yup from "yup";
-import { setStartIndex } from "../../../../store/StoreAction.jsx";
 import { StoreContext } from "../../../../store/StoreContext.jsx";
+import useQueryData from "../../../custom-hooks/useQueryData.jsx";
 import {
-  InputSelect,
-  InputText,
-  InputTextArea,
-} from "../../../helpers/FormInputs.jsx";
-import { devApiUrl } from "../../../helpers/functions-general.jsx";
-import ButtonSpinner from "../../../partials/spinners/ButtonSpinner.jsx";
+  devApiUrl,
+  numberWithCommas,
+} from "../../../helpers/functions-general.jsx";
+import { FaEdit } from "react-icons/fa";
+import ModalUpdatePhilhealth from "./ModalUpdatePhilhealth.jsx";
+import { setIsAdd } from "../../../../store/StoreAction.jsx";
 
 const PhilhealthForm = ({ itemEdit }) => {
   const { store, dispatch } = React.useContext(StoreContext);
-  const [loading, setLoading] = React.useState(false);
+  const [item, setItems] = React.useState(null);
+  const [percentage, setPercentage] = React.useState(0);
+  const [min, setMin] = React.useState(0);
+  const [max, setMax] = React.useState(0);
 
-  const initVal = {};
+  // use if not loadmore button undertime
+  const { data: philhealth } = useQueryData(
+    `${devApiUrl}/v1/philhealth`, // endpoint
+    "get", // method
+    "philhealth" // key
+  );
 
-  const yupSchema = Yup.object({});
+  React.useEffect(() => {
+    if (philhealth?.count > 0) {
+      setPercentage(philhealth.data[0].philhealth_percentage);
+      setMin(philhealth.data[0].philhealth_min);
+      setMax(philhealth.data[0].philhealth_max);
+    }
+  }, [philhealth]);
+
+  const handleEdit = (item) => {
+    const data = item?.count > 0 ? item.data[0] : 0;
+    setItems(data);
+    dispatch(setIsAdd(true));
+  };
   return (
     <>
-      <div className=" py-5 w-full max-w-[420px]">
-        <Formik
-          initialValues={initVal}
-          validationSchema={yupSchema}
-          onSubmit={async (values, { setSubmitting, resetForm }) => {
-            console.log();
-            fetchData(
-              setLoading,
-              itemEdit
-                ? `${devApiUrl}/v1/departments`
-                : `${devApiUrl}/v1/departments`,
-              values, // form data values
-              null, // result set data
-              itemEdit ? "Succesfully updated." : "Succesfully added.", // success msg
-              "", // additional error msg if needed
-              dispatch, // context api action
-              store, // context api state
-              true, // boolean to show success modal
-              false, // boolean to show load more functionality button
-              null,
-              itemEdit ? "put" : "post" // method
-            );
-            dispatch(setStartIndex(0));
-          }}
-        >
-          {(props) => {
-            return (
-              <Form>
-                <div className="relative mb-5">
-                  <InputText
-                    label="Percentage"
-                    type="text"
-                    name="department_name"
-                    disabled={loading}
-                  />
-                </div>
-
-                <div className="relative mb-5">
-                  <InputText
-                    label="Min"
-                    type="text"
-                    name="department_name"
-                    disabled={loading}
-                  />
-                </div>
-
-                <div className="relative mb-5">
-                  <InputText
-                    label="Max"
-                    type="text"
-                    name="department_name"
-                    disabled={loading}
-                  />
-                </div>
-
-                <div className="flex items-center gap-1 pt-5 w-2/5 mx-auto">
-                  <button
-                    type="submit"
-                    disabled={!loading || !props.dirty}
-                    className="btn-modal-submit relative"
-                  >
-                    {!loading && <ButtonSpinner />}
-                    Apply
-                  </button>
-                </div>
-              </Form>
-            );
-          }}
-        </Formik>
+      <div className="relative w-full max-w-[650px] ">
+        <div className="bg-gray-200 p-2 mb-5 flex justify-between items-center">
+          <h4>Update Amount</h4>
+          <button
+            type="button"
+            className="tooltip-action-table"
+            data-tooltip="Edit"
+            onClick={() => handleEdit(philhealth)}
+          >
+            <FaEdit />
+          </button>
+        </div>
+        <p className="font-semibold mb-5 xs:pl-5 pl-2">
+          Percentage :
+          <span className="font-light pl-2">
+            {numberWithCommas(percentage)}%
+          </span>
+        </p>
+        <p className="font-semibold xs:pl-5 pl-2">
+          Minimum :
+          <span className="font-light pl-2">{numberWithCommas(min)}</span>
+        </p>
+        <p className="font-semibold xs:pl-5 pl-2">
+          Maximum :
+          <span className="font-light pl-2">{numberWithCommas(max)}</span>
+        </p>
       </div>
+      {store.isAdd && <ModalUpdatePhilhealth item={item} />}
     </>
   );
 };

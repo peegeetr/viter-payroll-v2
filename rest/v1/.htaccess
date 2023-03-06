@@ -86,8 +86,7 @@ RewriteRule ^sss-bracket$ controllers/settings/sss-bracket/sss-bracket.php [L]
 RewriteRule ^sss-bracket/([0-9]+)$ controllers/settings/sss-bracket/sss-bracket.php?sssbracketid=$1 [L]
 RewriteRule ^sss-bracket/limit/([0-9]+)/([0-9]+)$ controllers/settings/sss-bracket/limit.php?start=$1&total=$2 [L]
 RewriteRule ^sss-bracket/search/([A-Za-z0-9-]+)$ controllers/settings/sss-bracket/search.php?search=$1 [L]
-
-
+ 
 #SETTINGS USER SYSTEM
 RewriteRule ^user-systems$ controllers/settings/user/system/system.php [L]
 RewriteRule ^user-systems/([0-9]+)$ controllers/settings/user/system/system.php?usersystemid=$1 [L]
@@ -111,5 +110,9 @@ RewriteRule ^user-others/token$ controllers/settings/user/other/token.php [L]
 #SETTINGS PAG-IBIG
 RewriteRule ^pagibig$ controllers/settings/pagibig/pagibig.php [L]
 RewriteRule ^pagibig/([0-9]+)$ controllers/settings/pagibig/pagibig.php?pagibigId=$1 [L]
+ 
+#SETTINGS PHILHEALTH
+RewriteRule ^philhealth$ controllers/settings/philhealth/philhealth.php [L]
+RewriteRule ^philhealth/([0-9]+)$ controllers/settings/philhealth/philhealth.php?philhealthId=$1 [L]
 
 

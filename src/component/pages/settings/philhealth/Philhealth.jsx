@@ -3,6 +3,8 @@ import { StoreContext } from "../../../../store/StoreContext.jsx";
 import BreadCrumbs from "../../../partials/BreadCrumbs.jsx";
 import Footer from "../../../partials/Footer.jsx";
 import Header from "../../../partials/Header.jsx";
+import ModalError from "../../../partials/modals/ModalError.jsx";
+import ModalSuccess from "../../../partials/modals/ModalSuccess.jsx";
 import Navigation from "../../../partials/Navigation.jsx";
 import PhilhealthForm from "./PhilhealthForm.jsx";
 
@@ -26,7 +28,7 @@ const Philhealth = () => {
         <Footer />
       </div>
 
-      {store.success && <ModalSuccess />}
+      {store.success && <ModalSuccess close={"close"} />}
       {store.error && <ModalError />}
     </>
   );

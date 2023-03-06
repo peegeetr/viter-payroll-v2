@@ -5,6 +5,7 @@ import { StoreContext } from "../../../../store/StoreContext";
 import useLoadDepartment from "../../../custom-hooks/useLoadDepartment";
 import useLoadEmployee from "../../../custom-hooks/useLoadEmployee";
 import useLoadJobTitle from "../../../custom-hooks/useLoadJobTitle";
+import useLoadPayLeave from "../../../custom-hooks/useLoadPayLeave";
 import {
   formatDate,
   getUrlParam,
@@ -14,6 +15,7 @@ import {
 import NoData from "../../../partials/NoData";
 import ServerError from "../../../partials/ServerError";
 import TableSpinner from "../../../partials/spinners/TableSpinner";
+import ModalEditJobDetails from "./ModalEditJobDetails";
 import ModalEditPayroll from "./ModalEditPayroll";
 
 const JobDetailsList = () => {
@@ -29,6 +31,7 @@ const JobDetailsList = () => {
   );
 
   const { jobTitle } = useLoadJobTitle(`${hrisDevApiUrl}/v1/job-titles`, "get");
+  const { leave } = useLoadPayLeave(`${hrisDevApiUrl}/v1/supervisors`, "get");
 
   const { department } = useLoadDepartment(
     `${hrisDevApiUrl}/v1/departments`,
@@ -201,7 +204,7 @@ const JobDetailsList = () => {
           itemEdit={itemEdit}
           jobTitle={jobTitle}
           department={department}
-          supervisor={supervisor}
+          supervisor={leave}
           leave={leave}
         />
       )}

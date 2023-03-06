@@ -186,7 +186,7 @@ const ModalAddManageDeduction = ({ payType, employee, payrollDraft }) => {
                         <InputSelect
                           name="deduction_paytype_id"
                           label="Pay Type"
-                          disabled={loading}
+                          disabled={mutation.isLoading}
                           onChange={handlePayType}
                           onFocus={(e) =>
                             e.target.parentElement.classList.add("focused")
@@ -210,7 +210,7 @@ const ModalAddManageDeduction = ({ payType, employee, payrollDraft }) => {
                         <InputSelect
                           label="Pay Item"
                           name="deduction_payitem_id"
-                          disabled={loading}
+                          disabled={mutation.isLoading}
                           onFocus={(e) =>
                             e.target.parentElement.classList.add("focused")
                           }
@@ -238,7 +238,7 @@ const ModalAddManageDeduction = ({ payType, employee, payrollDraft }) => {
                         <InputSelect
                           name="deduction_frequency"
                           label="Frequency"
-                          disabled={loading}
+                          disabled={mutation.isLoading}
                           onFocus={(e) =>
                             e.target.parentElement.classList.add("focused")
                           }
@@ -254,7 +254,7 @@ const ModalAddManageDeduction = ({ payType, employee, payrollDraft }) => {
                         <InputSelect
                           label="Employee"
                           name="payroll_employee"
-                          disabled={loading}
+                          disabled={mutation.isLoading}
                           onChange={handleEmployee}
                           onFocus={(e) =>
                             e.target.parentElement.classList.add("focused")
@@ -287,7 +287,7 @@ const ModalAddManageDeduction = ({ payType, employee, payrollDraft }) => {
                           onFocus={(e) => handleAmount(e)}
                           onBlur={(e) => handleInstallment(e)}
                           name={!isAmount ? "amount" : "deduction_amount"}
-                          disabled={loading}
+                          disabled={mutation.isLoading}
                         />
                       </div>
 
@@ -296,7 +296,7 @@ const ModalAddManageDeduction = ({ payType, employee, payrollDraft }) => {
                           label={"Will be given"}
                           onChange={handleIsInstallment}
                           name="is_installment"
-                          disabled={loading}
+                          disabled={mutation.isLoading}
                           onFocus={(e) =>
                             e.target.parentElement.classList.add("focused")
                           }
@@ -314,7 +314,7 @@ const ModalAddManageDeduction = ({ payType, employee, payrollDraft }) => {
                         <InputTextArea
                           label="Details"
                           name="deduction_details"
-                          disabled={loading}
+                          disabled={mutation.isLoading}
                         />
                       </div>
 
@@ -327,7 +327,7 @@ const ModalAddManageDeduction = ({ payType, employee, payrollDraft }) => {
                               onBlur={(e) => handleInstallment(e)}
                               min="2"
                               name="number_of_installment"
-                              disabled={loading}
+                              disabled={mutation.isLoading}
                             />
                           </div>
                           <div className="relative mb-5">
@@ -337,7 +337,7 @@ const ModalAddManageDeduction = ({ payType, employee, payrollDraft }) => {
                               onFocus={(e) => (e.target.type = "date")}
                               onBlur={(e) => (e.target.type = "date")}
                               name="startDate"
-                              disabled={loading}
+                              disabled={mutation.isLoading}
                             />
                           </div>
                           <div className="relative mb-5">
@@ -347,7 +347,7 @@ const ModalAddManageDeduction = ({ payType, employee, payrollDraft }) => {
                               onFocus={(e) => (e.target.type = "date")}
                               onBlur={(e) => (e.target.type = "date")}
                               name="endDate"
-                              disabled={loading}
+                              disabled={mutation.isLoading}
                             />
                           </div>
                         </>
@@ -356,17 +356,16 @@ const ModalAddManageDeduction = ({ payType, employee, payrollDraft }) => {
                     <div className="flex items-center gap-1 p-4 ">
                       <button
                         type="submit"
-                        disabled={loading || !props.dirty}
+                        disabled={mutation.isLoading || !props.dirty}
                         className="btn-modal-submit relative"
                       >
-                        {loading && <ButtonSpinner />}
+                        {mutation.isLoading && <ButtonSpinner />}
                         Add
                       </button>
                       <button
                         type="reset"
                         className="btn-modal-cancel cursor-pointer"
                         onClick={handleClose}
-                        disabled={loading}
                       >
                         Cancel
                       </button>

@@ -13,7 +13,13 @@ import {
 import { hrisDevApiUrl } from "../../../helpers/functions-general";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 
-const ModalEditJobDetails = ({ itemEdit, jobTitle, department }) => {
+const ModalEditJobDetails = ({
+  itemEdit,
+  jobTitle,
+  department,
+  supervisor,
+  leave,
+}) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [loading, setLoading] = React.useState(false);
 

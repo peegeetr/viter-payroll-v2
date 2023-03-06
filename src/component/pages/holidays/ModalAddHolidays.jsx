@@ -28,7 +28,7 @@ const ModalAddHolidays = ({ item }) => {
     holidays_date: item ? item.holidays_date : "",
     holidays_type: item ? item.holidays_type : "",
     holidays_rate: item ? item.holidays_rate : "",
-    holidays_observed: item ? (item.holidays_observed ? true : false) : "",
+    holidays_observed: item ? (item.holidays_observed ? true : false) : true,
 
     holidays_name_old: item ? item.holidays_name : "",
     holidays_date_old: item ? item.holidays_date : "",

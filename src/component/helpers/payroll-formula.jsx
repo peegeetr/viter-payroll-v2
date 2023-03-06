@@ -171,21 +171,32 @@ export const payComputeHoliday = (emp, holidays) => {
       new Date(holidayDate).getDay() != 6
     ) {
       if (holidaysItem.holidays_type === "regular") {
-        if (workOnHoliday === 0) {
+        if (workOnHoliday === 0 && holidaysItem.holidays_observed === 0) {
           // no additional
           finalAmount = 0;
+          return;
         }
         // 100% additional pay for working holiday
-        if (workOnHoliday === 1) {
+        if (workOnHoliday === 1 || holidaysItem.holidays_observed === 1) {
           regularAmount += dailyRate;
           ratedAmount += dailyRate * rate;
+          return;
         }
       }
 
       // 30% additional pay for working special holiday
       if (holidaysItem.holidays_type === "special") {
-        regularAmount += dailyRate;
-        ratedAmount += dailyRate * rate;
+        if (workOnHoliday === 0 && holidaysItem.holidays_observed === 0) {
+          // no additional
+          finalAmount = 0;
+          return;
+        }
+        if (workOnHoliday === 1 || holidaysItem.holidays_observed === 1) {
+          // 30% additional
+          regularAmount += dailyRate;
+          ratedAmount += dailyRate * rate;
+          return;
+        }
       }
     }
   });

@@ -278,8 +278,8 @@ export const otFinalAmount = (otItem, eItem, holidays, payrollDraft) => {
 
   // if overtime and saturday or sunday
   if (
-    new Date(otDate).getDay() == 0 ||
-    (new Date(otDate).getDay() == 6 && !isHoliday)
+    (new Date(otDate).getDay() == 0 || new Date(otDate).getDay() == 6) &&
+    !isHoliday
   ) {
     regularAmount =
       Number(otItem.task_spent) *

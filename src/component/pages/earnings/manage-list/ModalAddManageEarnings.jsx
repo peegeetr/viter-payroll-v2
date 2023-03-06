@@ -53,8 +53,6 @@ const ModalAddManageEarnings = ({
   let payroll_id = payrollDraft?.data[0].payroll_id;
   let payroll_type_id = payrollDraft?.data[0].payroll_earning_type;
 
-  console.log(employee);
-
   const queryClient = useQueryClient();
 
   const mutation = useMutation({

@@ -1,11 +1,12 @@
 <?php
 class Holidays
 {
-    public $holidays_aid  ;
+    public $holidays_aid;
     public $holidays_name;
     public $holidays_date;
     public $holidays_type;
     public $holidays_rate;
+    public $holidays_observed;
     public $holidays_is_active;
     public $holidays_created;
     public $holidays_datetime;
@@ -31,6 +32,7 @@ class Holidays
             $sql .= "holidays_date, ";
             $sql .= "holidays_type, ";
             $sql .= "holidays_rate, ";
+            $sql .= "holidays_observed, ";
             $sql .= "holidays_is_active, ";
             $sql .= "holidays_created, ";
             $sql .= "holidays_datetime ) values ( ";
@@ -38,6 +40,7 @@ class Holidays
             $sql .= ":holidays_date, ";
             $sql .= ":holidays_type, ";
             $sql .= ":holidays_rate, ";
+            $sql .= ":holidays_observed, ";
             $sql .= ":holidays_is_active, ";
             $sql .= ":holidays_created, ";
             $sql .= ":holidays_datetime ) ";
@@ -47,6 +50,7 @@ class Holidays
                 "holidays_date" => $this->holidays_date,
                 "holidays_type" => $this->holidays_type,
                 "holidays_rate" => $this->holidays_rate,
+                "holidays_observed" => $this->holidays_observed,
                 "holidays_is_active" => $this->holidays_is_active,
                 "holidays_created" => $this->holidays_created,
                 "holidays_datetime" => $this->holidays_datetime,
@@ -64,7 +68,7 @@ class Holidays
             $sql = "select * ";
             $sql .= "from {$this->tblHolidays} ";
             $sql .= "order by holidays_is_active desc ";
-            
+
             $query = $this->connection->query($sql);
         } catch (PDOException $ex) {
             $query = false;
@@ -72,13 +76,15 @@ class Holidays
         return $query;
     }
 
-    public function update() {    
+    public function update()
+    {
         try {
             $sql = "update {$this->tblHolidays} set ";
             $sql .= "holidays_name = :holidays_name, ";
             $sql .= "holidays_date = :holidays_date, ";
             $sql .= "holidays_type = :holidays_type, ";
             $sql .= "holidays_rate = :holidays_rate, ";
+            $sql .= "holidays_observed = :holidays_observed, ";
             $sql .= "holidays_is_active = :holidays_is_active, ";
             $sql .= "holidays_datetime = :holidays_datetime ";
             $sql .= "where holidays_aid  = :holidays_aid ";
@@ -88,6 +94,7 @@ class Holidays
                 "holidays_date" => $this->holidays_date,
                 "holidays_type" => $this->holidays_type,
                 "holidays_rate" => $this->holidays_rate,
+                "holidays_observed" => $this->holidays_observed,
                 "holidays_is_active" => $this->holidays_is_active,
                 "holidays_datetime" => $this->holidays_datetime,
                 "holidays_aid" => $this->holidays_aid,
@@ -98,7 +105,7 @@ class Holidays
         return $query;
     }
 
-    
+
     public function delete()
     {
         try {
@@ -151,7 +158,7 @@ class Holidays
         return $query;
     }
 
-  
+
     public function checkHolidayName()
     {
         try {
@@ -182,6 +189,3 @@ class Holidays
         return $query;
     }
 }
-
-
-

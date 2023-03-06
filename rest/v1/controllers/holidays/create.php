@@ -16,6 +16,7 @@ $holidays->holidays_name = checkIndex($data, "holidays_name");
 $holidays->holidays_date = checkIndex($data, "holidays_date");
 $holidays->holidays_type = checkIndex($data, "holidays_type");
 $holidays->holidays_rate = checkIndex($data, "holidays_rate");
+$holidays->holidays_observed = checkIndex($data, "holidays_observed");
 $holidays->holidays_is_active = 1;
 $holidays->holidays_created = date("Y-m-d H:i:s");
 $holidays->holidays_datetime = date("Y-m-d H:i:s");

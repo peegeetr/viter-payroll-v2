@@ -64,10 +64,13 @@ export const computeUndertime = (undertimeData, employee, payrollDraft) => {
             Number(uItem.undertime_spent) *
             employeeRate(eItem.employee_job_salary, days).hourly,
           employeId: eItem.employee_aid,
-          details: `${formatDate(uItem.undertime_date)} (${getUnderTimeSpent(
+          details: `${formatDate(uItem.undertime_date)}(${getUnderTimeSpent(
             uItem.undertime_spent
           )})`,
           hrisDate: uItem.undertime_date,
+          hrisUndertimeOut: `${uItem.undertime_time_out} ${getUnderTimeSpent(
+            uItem.undertime_spent
+          )}`,
         });
       }
     });
@@ -94,7 +97,8 @@ export const computeLeave = (leaveData, employee, payrollDraft) => {
           details: `${formatDate(
             lItem.leave_list_start_date
           )}, number of days (${lItem.leave_list_days})`,
-          hrisDate: lItem.leave_list_start_date,
+          hrisStartDate: lItem.leave_list_start_date,
+          hrisEndDate: lItem.leave_list_return_date,
           unpaidDetails: `${formatDate(
             lItem.leave_list_start_date
           )}, number of days (${lItem.leave_list_days}) `,

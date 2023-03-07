@@ -18,6 +18,7 @@ class Earnings
     public $earnings_start_pay_date;
     public $earnings_end_pay_date;
     public $earnings_hris_date;
+    public $earnings_hris_undertime_out;
     public $earnings_created;
     public $earnings_datetime;
 
@@ -52,6 +53,7 @@ class Earnings
             $sql .= "earnings_is_paid, ";
             $sql .= "earnings_amount, ";
             $sql .= "earnings_details, ";
+            $sql .= "earnings_hris_undertime_out, ";
             $sql .= "earnings_frequency, ";
             $sql .= "earnings_is_installment, ";
             $sql .= "earnings_number_of_installment, ";
@@ -69,6 +71,7 @@ class Earnings
             $sql .= ":earnings_is_paid, ";
             $sql .= ":earnings_amount, ";
             $sql .= ":earnings_details, ";
+            $sql .= ":earnings_hris_undertime_out, ";
             $sql .= ":earnings_frequency, ";
             $sql .= ":earnings_is_installment, ";
             $sql .= ":earnings_number_of_installment, ";
@@ -94,6 +97,7 @@ class Earnings
                 "earnings_start_pay_date" => $this->earnings_start_pay_date,
                 "earnings_end_pay_date" => $this->earnings_end_pay_date,
                 "earnings_hris_date" => $this->earnings_hris_date,
+                "earnings_hris_undertime_out" => $this->earnings_hris_undertime_out,
                 "earnings_created" => $this->earnings_created,
                 "earnings_datetime" => $this->earnings_datetime,
             ]);
@@ -126,6 +130,7 @@ class Earnings
             $sql .= "earnings.earnings_payroll_type_id, ";
             $sql .= "earnings.earnings_is_installment, ";
             $sql .= "earnings.earnings_hris_date, ";
+            $sql .= "earnings.earnings_hris_undertime_out, ";
             $sql .= "payitem.payitem_aid, ";
             $sql .= "payitem.payitem_is_hris, ";
             $sql .= "payitem.payitem_name, ";
@@ -168,6 +173,7 @@ class Earnings
             $sql .= "earnings.earnings_is_installment, ";
             $sql .= "payitem.payitem_aid, ";
             $sql .= "payitem.payitem_is_hris, ";
+            $sql .= "earnings.earnings_hris_undertime_out, ";
             $sql .= "payitem.payitem_name, ";
             $sql .= "paytype.paytype_aid, ";
             $sql .= "paytype.paytype_name ";

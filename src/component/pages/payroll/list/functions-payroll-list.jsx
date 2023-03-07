@@ -36,11 +36,11 @@ export const runPayroll = (employee, payrollEarnings, holidays) => {
         emp.payroll_list_employee_id === earning.earnings_employee_id && // employee id
         new Date(emp.payroll_end_date) >=
           new Date(earning.earnings_start_pay_date) && // payroll end date
-        new Date(emp.payroll_end_date) <=
+        new Date(emp.payroll_end_date) >=
           new Date(earning.earnings_end_pay_date) // payroll end date
       ) {
         totalOtAmount += payComputeOt(earning);
-        totalLeaveAmount += payComputeLeave(earning, holidays);
+        totalLeaveAmount += payComputeLeave(earning);
         totalUndertimeAmount += payComputeUndertime(earning);
         totalAbsencesAmount += payComputeAbsences(earning);
         totalHazardPayAmount += payComputeHazardPay(earning);
@@ -49,10 +49,10 @@ export const runPayroll = (employee, payrollEarnings, holidays) => {
       }
     });
     //  holiday for each employee
-    totalHolidayAmount += payComputeHoliday(emp, holidays);
+    totalHolidayAmount += payComputeHoliday(emp, holidays, payrollEarnings);
 
     // night diffirencial
-    totalNightDiffAmount += payComputeNightDiff(emp, holidays);
+    totalNightDiffAmount += payComputeNightDiff(emp, holidays, payrollEarnings);
     // console.log("ot", totalOtAmount, emp.payroll_list_employee_name);
     grossAmount =
       totalNightDiffAmount +

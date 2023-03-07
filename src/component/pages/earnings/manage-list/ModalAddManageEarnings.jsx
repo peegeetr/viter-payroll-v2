@@ -98,6 +98,7 @@ const ModalAddManageEarnings = ({
     "overtime" // key
   );
 
+  console.log(undertime);
   const handlePayType = async (e, props) => {
     let paytypeid = e.target.value;
     setSelLoading(true);

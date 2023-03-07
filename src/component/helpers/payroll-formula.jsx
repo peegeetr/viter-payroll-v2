@@ -1,4 +1,4 @@
-import { formatDate, getWorkingDays } from "./functions-general";
+import { getWorkingDays } from "./functions-general";
 import {
   absencesId,
   hazardPayId,
@@ -60,13 +60,17 @@ export const payComputeUndertime = (earning) => {
 };
 
 // compute Night Diffirencial
-export const payComputeNightDiff = (emp, holidays) => {
+export const payComputeNightDiff = (emp, holidays, payrollEarnings) => {
   const days = getWorkingDays(
     new Date(emp.payroll_start_date),
     new Date(emp.payroll_end_date)
   );
+  let workOnHoliday = emp.payroll_list_employee_work_on_holiday;
   let rate10 = 110 / 100;
   let ratedNdAmount = 0;
+  let ndLeave = 0;
+  let totalMinusHrs = 0;
+  let ndUndertime = 0;
   let ratedDailyNdAmount = 0;
   let regularAmount = 0;
   let finalAmount = 0;
@@ -86,6 +90,7 @@ export const payComputeNightDiff = (emp, holidays) => {
 
       let holidayRate = holidaysItem.holidays_rate / 100;
       if (
+        (workOnHoliday === 1 || holidaysItem.holidays_observed === 1) &&
         new Date(holidaysItem.holidays_date) >=
           new Date(emp.payroll_start_date) &&
         new Date(holidaysItem.holidays_date) <=
@@ -99,9 +104,41 @@ export const payComputeNightDiff = (emp, holidays) => {
       }
     });
 
+    payrollEarnings.map((earning) => {
+      if (
+        emp.payroll_earning_type === earning.earnings_payroll_type_id && // payroll type
+        emp.payroll_list_payroll_id === earning.earnings_payroll_id && // payroll id
+        emp.payroll_list_employee_id === earning.earnings_employee_id &&
+        new Date(emp.payroll_end_date) >=
+          new Date(earning.earnings_start_pay_date) && // payroll end date
+        new Date(emp.payroll_end_date) >=
+          new Date(earning.earnings_end_pay_date) // employee id
+      ) {
+        if (
+          earning.earnings_payitem_id === absencesId ||
+          earning.earnings_payitem_id === leaveId
+        ) {
+          // minus 5 hours
+          ndLeave += 5;
+        }
+
+        let spentHr = earning.earnings_hris_undertime_out.split(" ")[1];
+        let undertimeOut = earning.earnings_hris_undertime_out.split(" ")[0];
+        let undertimeOutHr = undertimeOut.split(":")[0];
+        if (
+          earning.earnings_payitem_id === undertimeId &&
+          undertimeOutHr >= 0 &&
+          undertimeOutHr <= 6
+        ) {
+          // minus 5 hours
+          ndUndertime += spentHr.slice(0, 1);
+        }
+      }
+      totalMinusHrs = ndLeave + Number(ndUndertime);
+    });
     // night diff
     let totalHrs = emp.payroll_list_night_diff_per_day * days;
-    regularAmount = totalHrs * hourRate;
+    regularAmount = (totalHrs - totalMinusHrs) * hourRate;
     ratedNdAmount = regularAmount * rate10;
     // 10% additional
     totalNDAmount += ratedNdAmount - regularAmount;
@@ -147,22 +184,14 @@ export const payComputeAdjustment = (earning) => {
   return finalAmount;
 };
 
-// compute holiday
-export const payComputeHoliday = (emp, holidays) => {
-  const days = getWorkingDays(
-    new Date(emp.payroll_start_date),
-    new Date(emp.payroll_end_date)
-  );
-  let workOnHoliday = emp.payroll_list_employee_work_on_holiday;
-  let ratedAmount = 0;
-  let regularAmount = 0;
+// compute holiday with leave
+export const payComputeHoliday = (emp, holidays, payrollEarnings) => {
   let finalAmount = 0;
-  let dailyRate = Number(
-    employeeRate(emp.payroll_list_employee_salary, days).daily
-  );
+  let holidayLeaveAmount = 0;
+  let holidayAmount = 0;
   holidays.map((holidaysItem) => {
     let holidayDate = holidaysItem.holidays_date;
-    let rate = holidaysItem.holidays_rate / 100;
+
     if (
       new Date(holidaysItem.holidays_date) >=
         new Date(emp.payroll_start_date) &&
@@ -170,36 +199,72 @@ export const payComputeHoliday = (emp, holidays) => {
       new Date(holidayDate).getDay() != 0 &&
       new Date(holidayDate).getDay() != 6
     ) {
-      if (holidaysItem.holidays_type === "regular") {
-        if (workOnHoliday === 0 && holidaysItem.holidays_observed === 0) {
-          // no additional
-          finalAmount = 0;
-          return;
+      payrollEarnings.map((earning) => {
+        if (
+          emp.payroll_earning_type === earning.earnings_payroll_type_id && // payroll type
+          emp.payroll_list_payroll_id === earning.earnings_payroll_id && // payroll id
+          emp.payroll_list_employee_id === earning.earnings_employee_id && // employee id
+          new Date(holidaysItem.holidays_date) >=
+            new Date(earning.earnings_start_pay_date) &&
+          new Date(holidaysItem.holidays_date) <=
+            new Date(earning.earnings_end_pay_date)
+        ) {
+          if (
+            earning.earnings_payitem_id === absencesId ||
+            earning.earnings_payitem_id === leaveId
+          ) {
+            // no additional
+            holidayLeaveAmount += holidayTotalAmount(emp, holidaysItem);
+          }
         }
-        // 100% additional pay for working holiday
-        if (workOnHoliday === 1 || holidaysItem.holidays_observed === 1) {
-          regularAmount += dailyRate;
-          ratedAmount += dailyRate * rate;
-          return;
-        }
-      }
-
-      // 30% additional pay for working special holiday
-      if (holidaysItem.holidays_type === "special") {
-        if (workOnHoliday === 0 && holidaysItem.holidays_observed === 0) {
-          // no additional
-          finalAmount = 0;
-          return;
-        }
-        if (workOnHoliday === 1 || holidaysItem.holidays_observed === 1) {
-          // 30% additional
-          regularAmount += dailyRate;
-          ratedAmount += dailyRate * rate;
-          return;
-        }
-      }
+      });
+      holidayAmount += holidayTotalAmount(emp, holidaysItem);
     }
   });
+
+  finalAmount = holidayAmount - holidayLeaveAmount;
+  return finalAmount;
+};
+
+// compute holiday
+export const holidayTotalAmount = (emp, holidaysItem) => {
+  const days = getWorkingDays(
+    new Date(emp.payroll_start_date),
+    new Date(emp.payroll_end_date)
+  );
+
+  let rate = holidaysItem.holidays_rate / 100;
+  let workOnHoliday = emp.payroll_list_employee_work_on_holiday;
+  let ratedAmount = 0;
+  let regularAmount = 0;
+  let finalAmount = 0;
+  let dailyRate = Number(
+    employeeRate(emp.payroll_list_employee_salary, days).daily
+  );
+  if (holidaysItem.holidays_type === "regular") {
+    if (workOnHoliday === 0 && holidaysItem.holidays_observed === 0) {
+      // no additional
+      finalAmount = 0;
+    }
+    // 100% additional pay for working holiday
+    if (workOnHoliday === 1 || holidaysItem.holidays_observed === 1) {
+      regularAmount += dailyRate;
+      ratedAmount += dailyRate * rate;
+    }
+  }
+
+  // 30% additional pay for working special holiday
+  if (holidaysItem.holidays_type === "special") {
+    if (workOnHoliday === 0 && holidaysItem.holidays_observed === 0) {
+      // no additional
+      finalAmount = 0;
+    }
+    if (workOnHoliday === 1 || holidaysItem.holidays_observed === 1) {
+      // 30% additional
+      regularAmount += dailyRate;
+      ratedAmount += dailyRate * rate;
+    }
+  }
 
   finalAmount += ratedAmount - regularAmount;
   return finalAmount;

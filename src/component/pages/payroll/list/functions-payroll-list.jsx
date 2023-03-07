@@ -59,7 +59,6 @@ export const runPayroll = (employee, payrollEarnings, holidays) => {
       totalHolidayAmount +
       totalBasicPay +
       totalOtAmount +
-      totalLeaveAmount +
       totalHazardPayAmount +
       totalInflationAmount +
       totalAdjustmentAmount -

@@ -5,6 +5,7 @@ import {
   leaveId,
   nightDiffId,
   overtimeId,
+  undertimeId,
 } from "../../../helpers/functions-payitemId";
 import { employeeRate } from "../../../helpers/payroll-formula";
 import StatusActive from "../../../partials/status/StatusActive";
@@ -141,6 +142,7 @@ export const validateDataIsNotEmpty = (
   payLeaveHrisData,
   absencesHrisData,
   overtimeHrisData,
+  undertimeHrisData,
   dispatch
 ) => {
   let val = false;
@@ -148,7 +150,7 @@ export const validateDataIsNotEmpty = (
   // overtimeId = 18 is OT
   // absencesId = 36 is absences
   // nightDiffId = 23 is nightDiff
-  // payItem = 43 is undertime
+  // undertimeId = 43 is undertime
 
   if (payItem === Number(leaveId) && payLeaveHrisData.length === 0) {
     dispatch(setError(true));
@@ -166,6 +168,11 @@ export const validateDataIsNotEmpty = (
     val = true;
   }
   if (payItem === Number(nightDiffId) && nightDiffHrisData.length === 0) {
+    dispatch(setError(true));
+    dispatch(setMessage("No data found."));
+    val = true;
+  }
+  if (payItem === Number(undertimeId) && undertimeHrisData.length === 0) {
     dispatch(setError(true));
     dispatch(setMessage("No data found."));
     val = true;

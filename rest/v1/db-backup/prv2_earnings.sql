@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 02, 2023 at 07:42 AM
+-- Generation Time: Mar 08, 2023 at 12:31 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -45,6 +45,7 @@ CREATE TABLE `prv2_earnings` (
   `earnings_start_pay_date` varchar(20) NOT NULL,
   `earnings_end_pay_date` varchar(20) NOT NULL,
   `earnings_hris_date` varchar(20) NOT NULL,
+  `earnings_hris_undertime_out` varchar(10) NOT NULL,
   `earnings_created` datetime NOT NULL,
   `earnings_datetime` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -67,7 +68,7 @@ ALTER TABLE `prv2_earnings`
 -- AUTO_INCREMENT for table `prv2_earnings`
 --
 ALTER TABLE `prv2_earnings`
-  MODIFY `earnings_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `earnings_aid` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

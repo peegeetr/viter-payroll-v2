@@ -244,6 +244,7 @@ const ModalAddManageEarnings = ({
                     payLeave,
                     absences,
                     overtime,
+                    undertime,
                     dispatch
                   )
                 ) {

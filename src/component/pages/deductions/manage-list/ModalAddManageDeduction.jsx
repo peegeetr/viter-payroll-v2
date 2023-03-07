@@ -18,7 +18,6 @@ import { validatePayPeriod } from "../../earnings/manage-list/function-manage-li
 
 const ModalAddManageDeduction = ({ payType, employee, payrollDraft }) => {
   const { store, dispatch } = React.useContext(StoreContext);
-  const [loading, setLoading] = React.useState(false);
   const [loadingSel, setSelLoading] = React.useState(false);
   const [isAmount, setIsAmount] = React.useState(false);
   const [employeeId, setEmployeeId] = React.useState("");

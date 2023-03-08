@@ -22,6 +22,7 @@ const ModalEditJobDetails = ({
 }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [loading, setLoading] = React.useState(false);
+  const [supId, setSupId] = React.useState(itemEdit.employee_job_supervisor_id);
 
   const handleClose = () => {
     dispatch(setIsAdd(false));
@@ -69,6 +70,10 @@ const ModalEditJobDetails = ({
     employee_job_supervisor_name: Yup.string().required("Required"),
   });
 
+  const handleGetSupervisorId = (e) => {
+    setSupId(e.target.options[e.target.selectedIndex].id);
+  };
+
   return (
     <>
       <div className="fixed top-0 right-0 bottom-0 left-0 flex items-center justify-center bg-dark bg-opacity-50 z-50">
@@ -89,7 +94,7 @@ const ModalEditJobDetails = ({
               initialValues={initVal}
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
-                console.log();
+                console.log(values);
                 fetchData(
                   setLoading,
                   `${hrisDevApiUrl}/v1/employees/employment/${itemEdit.employee_aid}`,
@@ -108,6 +113,8 @@ const ModalEditJobDetails = ({
               }}
             >
               {(props) => {
+                // set state for supervisor id
+                props.values.employee_job_supervisor_id = supId;
                 return (
                   <Form>
                     <div className="max-h-[28rem] overflow-y-scroll p-4">
@@ -209,7 +216,7 @@ const ModalEditJobDetails = ({
                       {/* supervisor */}
                       <div className="relative mb-5">
                         <InputSelect
-                          label="Supervisor"
+                          label="Supervisors"
                           name="employee_job_supervisor_name"
                           disabled={loading}
                           onChange={(e) => handleGetSupervisorId(e)}
@@ -256,7 +263,7 @@ const ModalEditJobDetails = ({
                             <option value="9">9 AM</option>
                             <option value="0">12 AM</option>
                             <option value="1">1 AM</option>
-                            <option value="ft">Flexible</option>
+                            <option value="ft">Flexitime</option>
                           </optgroup>
                         </InputSelect>
                       </div>

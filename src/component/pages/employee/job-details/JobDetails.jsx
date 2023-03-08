@@ -22,7 +22,7 @@ const JobDetails = () => {
       <div className="wrapper">
         <BreadCrumbs />
         <hr />
-
+        pat
         <div className="w-full pt-5 pb-20">
           <JobDetailsList />
         </div>

@@ -14,6 +14,7 @@ const EmployeeLink = () => {
       <div className="wrapper ">
         <BreadCrumbs />
         <hr />
+        pat
         <ul className="pt-5 pb-20 relative">
           <li className="py-2">
             <DetailsLink />

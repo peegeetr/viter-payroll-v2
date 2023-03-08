@@ -3,6 +3,7 @@ import { FaPlusCircle } from "react-icons/fa";
 import { setIsAdd } from "../../../../../store/StoreAction";
 import { StoreContext } from "../../../../../store/StoreContext";
 import useLoadRole from "../../../../custom-hooks/useLoadRole";
+import useQueryData from "../../../../custom-hooks/useQueryData";
 import { devApiUrl } from "../../../../helpers/functions-general";
 import BreadCrumbs from "../../../../partials/BreadCrumbs";
 import Footer from "../../../../partials/Footer";
@@ -20,8 +21,16 @@ const SystemUser = () => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [itemEdit, setItemEdit] = React.useState(null);
 
-  const { role, roleLoading } = useLoadRole(`${devApiUrl}/v1/roles`, "get");
-
+  // use if not loadmore button undertime
+  const {
+    isLoading,
+    isFetching,
+    data: role,
+  } = useQueryData(
+    `${devApiUrl}/v1/roles`, // endpoint
+    "get", // method
+    "role" // key
+  );
   // consoleLog(result);
 
   const handleAdd = () => {
@@ -47,9 +56,9 @@ const SystemUser = () => {
 
         <div className="w-full pt-5 pb-20">
           {" "}
-          {roleLoading ? (
+          {isFetching && !isLoading ? (
             <TableSpinner />
-          ) : getRoleIdDev(role) === -1 ? (
+          ) : getRoleIdDev(role?.data) === -1 ? (
             <ServerError />
           ) : (
             <SystemUserList setItemEdit={setItemEdit} />
@@ -59,7 +68,7 @@ const SystemUser = () => {
       </div>
 
       {store.isAdd && (
-        <ModalAddSystemUser item={itemEdit} roleId={getRoleIdDev(role)} />
+        <ModalAddSystemUser item={itemEdit} roleId={getRoleIdDev(role?.data)} />
       )}
       {store.success && <ModalSuccess />}
       {store.error && <ModalError />}

@@ -7,12 +7,13 @@ import {
   setIsRestore,
 } from "../../../../../store/StoreAction";
 import { StoreContext } from "../../../../../store/StoreContext";
-import useLoadUsers from "../../../../custom-hooks/useLoadUsers";
+import useQueryData from "../../../../custom-hooks/useQueryData";
 import { devApiUrl } from "../../../../helpers/functions-general";
-import ModalConfirm from "../../../../partials/modals/ModalConfirm";
-import ModalDeleteRestore from "../../../../partials/modals/ModalDeleteRestore";
+import ModalConfirmRq from "../../../../partials/modals/ModalConfirmRq";
+import ModalDeleteRestoreRq from "../../../../partials/modals/ModalDeleteRestoreRq";
 import NoData from "../../../../partials/NoData";
 import ServerError from "../../../../partials/ServerError";
+import FetchingSpinner from "../../../../partials/spinners/FetchingSpinner";
 import TableSpinner from "../../../../partials/spinners/TableSpinner";
 import StatusActive from "../../../../partials/status/StatusActive";
 import StatusInactive from "../../../../partials/status/StatusInactive";
@@ -24,9 +25,16 @@ const SystemUserList = ({ setItemEdit }) => {
   const [isDel, setDel] = React.useState(false);
   let counter = 0;
 
-  const { users, usersLoading } = useLoadUsers(
-    `${devApiUrl}/v1/user-systems`,
-    "get"
+  // use if not loadmore button undertime
+  const {
+    isLoading,
+    isFetching,
+    error,
+    data: users,
+  } = useQueryData(
+    `${devApiUrl}/v1/user-systems`, // endpoint
+    "get", // method
+    "users" // key
   );
 
   const handleEdit = (item) => {
@@ -65,6 +73,7 @@ const SystemUserList = ({ setItemEdit }) => {
   return (
     <>
       <div className="relative text-center overflow-x-auto z-0">
+        {isFetching && !isLoading && <FetchingSpinner />}
         <table>
           <thead>
             <tr>
@@ -77,96 +86,96 @@ const SystemUserList = ({ setItemEdit }) => {
             </tr>
           </thead>
           <tbody>
-            {users.length > 0 ? (
-              users.map((item, key) => {
-                counter++;
-                return (
-                  <tr key={key}>
-                    <td>{counter}.</td>
-                    <td>{item.user_system_name}</td>
-                    <td>{item.user_system_email}</td>
-                    <td>{item.role_name}</td>
-                    <td>
-                      {item.user_system_is_active === 1 ? (
-                        <StatusActive />
-                      ) : (
-                        <StatusInactive />
-                      )}
-                    </td>
-                    <td>
-                      <div className="flex items-center gap-2">
-                        {item.user_system_is_active === 1 ? (
-                          <>
-                            <button
-                              type="button"
-                              className="btn-action-table tooltip-action-table"
-                              data-tooltip="Edit"
-                              onClick={() => handleEdit(item)}
-                            >
-                              <FaEdit />
-                            </button>
-                            <button
-                              type="button"
-                              className="btn-action-table tooltip-action-table"
-                              data-tooltip="Reset"
-                              onClick={() => handleReset(item)}
-                            >
-                              <MdPassword />
-                            </button>
-                            <button
-                              type="button"
-                              className="btn-action-table tooltip-action-table"
-                              data-tooltip="Suspend"
-                              onClick={() => handleSuspend(item)}
-                            >
-                              <FaUserSlash />
-                            </button>
-                          </>
-                        ) : (
-                          <>
-                            <button
-                              type="button"
-                              className="btn-action-table tooltip-action-table"
-                              data-tooltip="Restore"
-                              onClick={() => handleRestore(item)}
-                            >
-                              <FaHistory />
-                            </button>
-                            <button
-                              type="button"
-                              className="btn-action-table tooltip-action-table"
-                              data-tooltip="Delete"
-                              onClick={() => handleDelete(item)}
-                            >
-                              <FaTrash />
-                            </button>
-                          </>
-                        )}
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })
-            ) : users === -1 ? (
+            {(isLoading || users?.data.length === 0) && (
+              <tr className="text-center ">
+                <td colSpan="100%" className="p-10">
+                  {status === "loading" && <TableSpinner />}
+                  <NoData />
+                </td>
+              </tr>
+            )}
+            {error && (
               <tr className="text-center ">
                 <td colSpan="100%" className="p-10">
                   <ServerError />
                 </td>
               </tr>
-            ) : (
-              <tr className="text-center ">
-                <td colSpan="100%" className="p-10">
-                  {usersLoading && <TableSpinner />}
-                  <NoData />
-                </td>
-              </tr>
             )}
+            {users?.data.map((item, key) => {
+              counter++;
+              return (
+                <tr key={key}>
+                  <td>{counter}.</td>
+                  <td>{item.user_system_name}</td>
+                  <td>{item.user_system_email}</td>
+                  <td>{item.role_name}</td>
+                  <td>
+                    {item.user_system_is_active === 1 ? (
+                      <StatusActive />
+                    ) : (
+                      <StatusInactive />
+                    )}
+                  </td>
+                  <td>
+                    <div className="flex items-center gap-2">
+                      {item.user_system_is_active === 1 ? (
+                        <>
+                          <button
+                            type="button"
+                            className="btn-action-table tooltip-action-table"
+                            data-tooltip="Edit"
+                            onClick={() => handleEdit(item)}
+                          >
+                            <FaEdit />
+                          </button>
+                          <button
+                            type="button"
+                            className="btn-action-table tooltip-action-table"
+                            data-tooltip="Reset"
+                            onClick={() => handleReset(item)}
+                          >
+                            <MdPassword />
+                          </button>
+                          <button
+                            type="button"
+                            className="btn-action-table tooltip-action-table"
+                            data-tooltip="Suspend"
+                            onClick={() => handleSuspend(item)}
+                          >
+                            <FaUserSlash />
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          <button
+                            type="button"
+                            className="btn-action-table tooltip-action-table"
+                            data-tooltip="Restore"
+                            onClick={() => handleRestore(item)}
+                          >
+                            <FaHistory />
+                          </button>
+                          <button
+                            type="button"
+                            className="btn-action-table tooltip-action-table"
+                            data-tooltip="Delete"
+                            onClick={() => handleDelete(item)}
+                          >
+                            <FaTrash />
+                          </button>
+                        </>
+                      )}
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
 
       {store.isConfirm && (
-        <ModalConfirm
+        <ModalConfirmRq
           id={id}
           isDel={isDel}
           mysqlApiReset={`${devApiUrl}/v1/user-systems/reset`}
@@ -177,11 +186,12 @@ const SystemUserList = ({ setItemEdit }) => {
               : "Are you sure you want to archive "
           }
           item={`${dataItem.user_system_email}`}
+          arrKey="users"
         />
       )}
 
       {store.isRestore && (
-        <ModalDeleteRestore
+        <ModalDeleteRestoreRq
           id={id}
           isDel={isDel}
           mysqlApiDelete={`${devApiUrl}/v1/user-systems/${id}`}
@@ -192,6 +202,7 @@ const SystemUserList = ({ setItemEdit }) => {
               : "Are you sure you want to restore "
           }
           item={`${dataItem.user_system_email}`}
+          arrKey="users"
         />
       )}
     </>

@@ -6,12 +6,25 @@ import { StoreContext } from "../../../store/StoreContext";
 import { queryData } from "../../helpers/queryData";
 import ButtonSpinner from "../spinners/ButtonSpinner";
 
-const ModalConfirmRq = ({ mysqlApiArchive, msg, item, arrKey }) => {
+const ModalConfirmRq = ({
+  isDel,
+  mysqlApiReset,
+  mysqlApiArchive,
+  msg,
+  item,
+  isDeveloper,
+  arrKey,
+}) => {
   const { dispatch } = React.useContext(StoreContext);
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: (values) => queryData(mysqlApiArchive, "put", values),
+    mutationFn: (values) =>
+      queryData(isDel ? mysqlApiReset : mysqlApiArchive, "put", {
+        ...values,
+        email: item,
+        isDeveloper: isDeveloper,
+      }),
     onSuccess: () => {
       // Invalidate and refetch
       queryClient.invalidateQueries({ queryKey: [arrKey] });

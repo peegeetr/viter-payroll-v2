@@ -6,7 +6,6 @@ import {
   setIsRestore,
 } from "../../../../store/StoreAction.jsx";
 import { StoreContext } from "../../../../store/StoreContext.jsx";
-import useLoadPayrollType from "../../../custom-hooks/useLoadPayrollType.jsx";
 import useQueryData from "../../../custom-hooks/useQueryData.jsx";
 import { devApiUrl } from "../../../helpers/functions-general.jsx";
 import ModalConfirmRq from "../../../partials/modals/ModalConfirmRq.jsx";
@@ -35,7 +34,6 @@ const PayrollTypeList = ({ setItemEdit }) => {
     "get", // method
     "payrollType" // key
   );
-  console.log("payrollType", payrollType);
   const handleEdit = (item) => {
     setItemEdit(item);
     dispatch(setIsAdd(true));

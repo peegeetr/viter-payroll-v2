@@ -1,30 +1,53 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Form, Formik } from "formik";
 import React from "react";
 import { FaTimesCircle } from "react-icons/fa";
 import * as Yup from "yup";
 import {
-  setIsAdd,
+  setError,
   setIsRestore,
-  setStartIndex,
+  setMessage,
+  setSuccess,
 } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
-import { fetchData } from "../../../helpers/fetchData";
 import {
   InputSelect,
   InputText,
-  InputTextArea,
   MyCheckbox,
 } from "../../../helpers/FormInputs";
 import {
   handleNumOnly,
   hrisDevApiUrl,
 } from "../../../helpers/functions-general";
+import { queryData } from "../../../helpers/queryData";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 
 const ModalEditPayroll = ({ itemEdit }) => {
   const { store, dispatch } = React.useContext(StoreContext);
-  const [loading, setLoading] = React.useState(false);
 
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: (values) =>
+      queryData(
+        `${hrisDevApiUrl}/v1/employees/payroll/${itemEdit.employee_aid}`,
+        "put",
+        values
+      ),
+    onSuccess: (data) => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries({ queryKey: ["employee"] });
+      // show success box
+      if (data.success) {
+        dispatch(setSuccess(true));
+        dispatch(setMessage(`Successfuly updated`));
+      }
+      // show error box
+      if (!data.success) {
+        dispatch(setError(true));
+        dispatch(setMessage(data.error));
+      }
+    },
+  });
   const handleClose = () => {
     dispatch(setIsRestore(false));
   };
@@ -89,22 +112,9 @@ const ModalEditPayroll = ({ itemEdit }) => {
               initialValues={initVal}
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
-                console.log(values);
-                fetchData(
-                  setLoading,
-                  `/v1/employees/payroll/${itemEdit.employee_aid}`,
-                  values, // form data values
-                  null, // result set data
-                  "Succesfully updated.", // success msg
-                  "", // additional error msg if needed
-                  dispatch, // context api action
-                  store, // context api state
-                  true, // boolean to show success modal
-                  false, // boolean to show load more functionality button
-                  null,
-                  "put" // method
-                );
-                dispatch(setStartIndex(0));
+                // console.log(values);
+
+                mutation.mutate(values);
               }}
             >
               {(props) => {
@@ -117,7 +127,7 @@ const ModalEditPayroll = ({ itemEdit }) => {
                           <MyCheckbox
                             type="checkbox"
                             name="employee_job_payroll_elegibility"
-                            disabled={loading}
+                            disabled={mutation.isLoading}
                           />
                         </span>
                       </div>
@@ -127,7 +137,7 @@ const ModalEditPayroll = ({ itemEdit }) => {
                           <MyCheckbox
                             type="checkbox"
                             name="employee_job_sss_deduc"
-                            disabled={loading}
+                            disabled={mutation.isLoading}
                           />
                         </span>
                       </div>
@@ -138,7 +148,7 @@ const ModalEditPayroll = ({ itemEdit }) => {
                           <MyCheckbox
                             type="checkbox"
                             name="employee_job_pag_ibig_deduc"
-                            disabled={loading}
+                            disabled={mutation.isLoading}
                           />
                         </span>
                       </div>
@@ -149,7 +159,7 @@ const ModalEditPayroll = ({ itemEdit }) => {
                           <MyCheckbox
                             type="checkbox"
                             name="employee_job_phil_health_deduc"
-                            disabled={loading}
+                            disabled={mutation.isLoading}
                           />
                         </span>
                       </div>
@@ -160,7 +170,7 @@ const ModalEditPayroll = ({ itemEdit }) => {
                           <MyCheckbox
                             type="checkbox"
                             name="employee_job_work_reg_hol"
-                            disabled={loading}
+                            disabled={mutation.isLoading}
                           />
                         </span>
                       </div>
@@ -172,7 +182,7 @@ const ModalEditPayroll = ({ itemEdit }) => {
                         <InputText
                           type="text"
                           name="employee_job_nd_per_day"
-                          disabled={loading}
+                          disabled={mutation.isLoading}
                         />
                       </div>
 
@@ -181,7 +191,7 @@ const ModalEditPayroll = ({ itemEdit }) => {
                         <InputText
                           type="text"
                           name="employee_job_pagibig_amount"
-                          disabled={loading}
+                          disabled={mutation.isLoading}
                         />
                       </div>
 
@@ -190,7 +200,7 @@ const ModalEditPayroll = ({ itemEdit }) => {
                         <InputText
                           type="text"
                           name="employee_job_salary"
-                          disabled={loading}
+                          disabled={mutation.isLoading}
                           onKeyPress={handleNumOnly}
                         />
                       </div>
@@ -199,7 +209,7 @@ const ModalEditPayroll = ({ itemEdit }) => {
                         <p className="w-full m-0">Pay frequency</p>
                         <InputSelect
                           name="employee_job_pay_freq"
-                          disabled={loading}
+                          disabled={mutation.isLoading}
                         >
                           <optgroup label="Pay frequency">
                             <option value="" hidden></option>
@@ -214,7 +224,7 @@ const ModalEditPayroll = ({ itemEdit }) => {
                         <InputText
                           type="text"
                           name="employee_job_account_number"
-                          disabled={loading}
+                          disabled={mutation.isLoading}
                         />
                       </div>
 
@@ -223,7 +233,7 @@ const ModalEditPayroll = ({ itemEdit }) => {
                         <InputText
                           type="text"
                           name="employee_job_starting_pay"
-                          disabled={loading}
+                          disabled={mutation.isLoading}
                           onKeyPress={handleNumOnly}
                         />
                       </div>
@@ -231,16 +241,16 @@ const ModalEditPayroll = ({ itemEdit }) => {
                     <div className="flex items-center gap-1 p-4">
                       <button
                         type="submit"
-                        disabled={loading || !props.dirty}
+                        disabled={mutation.isLoading || !props.dirty}
                         className="btn-modal-submit relative"
                       >
-                        {loading ? <ButtonSpinner /> : "Save"}
+                        {mutation.isLoading ? <ButtonSpinner /> : "Save"}
                       </button>
                       <button
                         type="reset"
                         className="btn-modal-cancel"
                         onClick={handleClose}
-                        disabled={loading}
+                        disabled={mutation.isLoading}
                       >
                         Cancel
                       </button>

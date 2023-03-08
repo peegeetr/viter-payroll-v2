@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React from "react";
 import { FaQuestionCircle, FaTimesCircle } from "react-icons/fa";
 import {
+  setError,
   setIsConfirm,
   setMessage,
   setSuccess,
@@ -31,15 +32,20 @@ const ModalConfirmRq = ({
   const mutation = useMutation({
     mutationFn: (values) =>
       queryData(isDel ? mysqlApiReset : mysqlApiArchive, "put", values),
-    onSuccess: () => {
+    onSuccess: (data) => {
       // Invalidate and refetch
       queryClient.invalidateQueries({ queryKey: [arrKey] });
       // show success box
-      if (isDel === true) {
+      if (data.success && isDel === true) {
         dispatch(setSuccess(true));
         dispatch(
           setMessage(`Please check your email to continue resetting password.`)
         );
+      }
+      // show error box
+      if (!data.success) {
+        dispatch(setError(true));
+        dispatch(setMessage(data.error));
       }
       dispatch(setIsConfirm(false));
     },

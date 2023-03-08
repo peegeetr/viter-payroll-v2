@@ -15,7 +15,7 @@ import SalaryHistoryLink from "./salary-history/SalaryHistoryLink.jsx";
 const EmployeeLink = () => {
   const employeeid = getUrlParam().get("employeeid");
   // use if not loadmore button undertime
-  const { data: employee } = useQueryData(
+  const { isLoading, data: employee } = useQueryData(
     `${hrisDevApiUrl}/v1/employees/${employeeid}`, // endpoint
     "get", // method
     "employee" // key
@@ -33,10 +33,10 @@ const EmployeeLink = () => {
             <p className="font-semibold py-4 m-0">
               Name :{" "}
               <span className="font-light">
-                {employee?.data.length
-                  ? `${employee?.data[0].employee_lname}, 
-            ${employee?.data[0].employee_fname}`
-                  : "NO DATA"}
+                {isLoading
+                  ? "Loading..."
+                  : `${employee?.data[0].employee_lname}, 
+            ${employee?.data[0].employee_fname}`}
               </span>
             </p>
 

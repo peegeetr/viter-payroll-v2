@@ -1,16 +1,22 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Form, Formik } from "formik";
 import React from "react";
 import { FaTimesCircle } from "react-icons/fa";
 import * as Yup from "yup";
-import { setIsAdd, setStartIndex } from "../../../../store/StoreAction";
+import {
+  setError,
+  setIsAdd,
+  setMessage,
+  setSuccess,
+} from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
-import { fetchData } from "../../../helpers/fetchData";
 import {
   InputSelect,
   InputText,
   InputTextArea,
 } from "../../../helpers/FormInputs";
 import { hrisDevApiUrl } from "../../../helpers/functions-general";
+import { queryData } from "../../../helpers/queryData";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 
 const ModalEditJobDetails = ({
@@ -21,13 +27,31 @@ const ModalEditJobDetails = ({
   leave,
 }) => {
   const { store, dispatch } = React.useContext(StoreContext);
-  const [loading, setLoading] = React.useState(false);
   const [supId, setSupId] = React.useState(itemEdit.employee_job_supervisor_id);
 
-  const handleClose = () => {
-    dispatch(setIsAdd(false));
-  };
-
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: (values) =>
+      queryData(
+        `${hrisDevApiUrl}/v1/employees/employment/${itemEdit.employee_aid}`,
+        "put",
+        values
+      ),
+    onSuccess: (data) => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries({ queryKey: ["employee"] });
+      // show success box
+      if (data.success) {
+        dispatch(setSuccess(true));
+        dispatch(setMessage(`Successfuly updated`));
+      }
+      // show error box
+      if (!data.success) {
+        dispatch(setError(true));
+        dispatch(setMessage(data.error));
+      }
+    },
+  });
   const initVal = {
     employee_aid: itemEdit ? itemEdit.employee_aid : "",
     employee_job_hired_date: itemEdit ? itemEdit.employee_job_hired_date : "",
@@ -67,11 +91,16 @@ const ModalEditJobDetails = ({
     employee_job_drive_link: Yup.string().required("Required"),
     employee_job_start_time: Yup.string().required("Required"),
     employee_job_leave_type_id: Yup.string().required("Required"),
-    employee_job_supervisor_name: Yup.string().required("Required"),
+    // employee_job_supervisor_name: Yup.string().required("Required"),
   });
 
   const handleGetSupervisorId = (e) => {
+    console.log(123);
     setSupId(e.target.options[e.target.selectedIndex].id);
+  };
+
+  const handleClose = () => {
+    dispatch(setIsAdd(false));
   };
 
   return (
@@ -94,22 +123,9 @@ const ModalEditJobDetails = ({
               initialValues={initVal}
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
-                console.log(values);
-                fetchData(
-                  setLoading,
-                  `${hrisDevApiUrl}/v1/employees/employment/${itemEdit.employee_aid}`,
-                  values, // form data values
-                  null, // result set data
-                  "Succesfully updated.", // success msg
-                  "", // additional error msg if needed
-                  dispatch, // context api action
-                  store, // context api state
-                  true, // boolean to show success modal
-                  false, // boolean to show load more functionality button
-                  null,
-                  "put" // method
-                );
-                dispatch(setStartIndex(0));
+                // console.log(values);
+
+                mutation.mutate(values);
               }}
             >
               {(props) => {
@@ -123,26 +139,19 @@ const ModalEditJobDetails = ({
                         <InputSelect
                           name="employee_job_department_id"
                           label="Department"
-                          disabled={loading}
+                          disabled={mutation.isLoading}
                         >
                           <optgroup label="Department">
                             <option value="" hidden></option>
-                            {department.length > 0 ? (
-                              department.map((item, key) => {
-                                return (
-                                  item.department_active === 1 && (
-                                    <option
-                                      key={key}
-                                      value={item.department_aid}
-                                    >
-                                      {item.department_name}
-                                    </option>
-                                  )
-                                );
-                              })
-                            ) : (
-                              <option value="">No data</option>
-                            )}
+                            {department?.data.map((item, key) => {
+                              return (
+                                item.department_active === 1 && (
+                                  <option key={key} value={item.department_aid}>
+                                    {item.department_name}
+                                  </option>
+                                )
+                              );
+                            })}
                           </optgroup>
                         </InputSelect>
                       </div>
@@ -154,22 +163,15 @@ const ModalEditJobDetails = ({
                         >
                           <optgroup label="Job Title">
                             <option value="" hidden></option>
-                            {jobTitle.length > 0 ? (
-                              jobTitle.map((item, key) => {
-                                return (
-                                  item.job_title_is_active === 1 && (
-                                    <option
-                                      key={key}
-                                      value={item.job_title_aid}
-                                    >
-                                      {item.job_title_name}
-                                    </option>
-                                  )
-                                );
-                              })
-                            ) : (
-                              <option value="">No data</option>
-                            )}
+                            {jobTitle?.data.map((item, key) => {
+                              return (
+                                item.job_title_is_active === 1 && (
+                                  <option key={key} value={item.job_title_aid}>
+                                    {item.job_title_name}
+                                  </option>
+                                )
+                              );
+                            })}
                           </optgroup>
                         </InputSelect>
                       </div>
@@ -192,57 +194,44 @@ const ModalEditJobDetails = ({
                         >
                           <optgroup label="Leave type">
                             <option value="" hidden></option>
-                            {leave.length > 0 ? (
-                              leave.map((item, key) => {
-                                return (
-                                  item.leavetype_active === 1 && (
-                                    <option
-                                      key={key}
-                                      value={item.leavetype_aid}
-                                    >
-                                      {/* {item.leavetype_name} (
+                            {leave?.data.map((item, key) => {
+                              return (
+                                item.leavetype_active === 1 && (
+                                  <option key={key} value={item.leavetype_aid}>
+                                    {/* {item.leavetype_name} (
                                       {item.leavetype_days} days) */}
-                                      {item.leavetype_name}
-                                    </option>
-                                  )
-                                );
-                              })
-                            ) : (
-                              <option value="">No data</option>
-                            )}
+                                    {item.leavetype_name}
+                                  </option>
+                                )
+                              );
+                            })}
                           </optgroup>
                         </InputSelect>
                       </div>
                       {/* supervisor */}
                       <div className="relative mb-5">
                         <InputSelect
-                          label="Supervisors"
+                          label="Supervisor"
                           name="employee_job_supervisor_name"
-                          disabled={loading}
+                          disabled={mutation.isLoading}
                           onChange={(e) => handleGetSupervisorId(e)}
                         >
                           <optgroup label="Supervisor">
                             <option value="" hidden></option>
-                            {supervisor.length > 0 ? (
-                              supervisor.map((item, key) => {
-                                return (
-                                  item.supervisor_is_active === 1 &&
-                                  itemEdit.employee_aid !==
-                                    item.employee_aid && (
-                                    <option
-                                      id={item.employee_aid}
-                                      value={`${item.employee_lname}, ${item.employee_fname}`}
-                                      key={key}
-                                    >
-                                      {item.employee_lname},{" "}
-                                      {item.employee_fname}
-                                    </option>
-                                  )
-                                );
-                              })
-                            ) : (
-                              <option value="">No data</option>
-                            )}
+                            {supervisor?.data.map((item, key) => {
+                              return (
+                                item.supervisor_is_active === 1 &&
+                                itemEdit.employee_aid !== item.employee_aid && (
+                                  <option
+                                    id={item.employee_aid}
+                                    value={`${item.employee_lname}, ${item.employee_fname}`}
+                                    key={key}
+                                  >
+                                    {item.employee_lname}, {item.employee_fname}
+                                  </option>
+                                )
+                              );
+                            })}
                           </optgroup>
                         </InputSelect>
                       </div>
@@ -254,7 +243,7 @@ const ModalEditJobDetails = ({
                       >
                         <InputSelect
                           name="employee_job_start_time"
-                          disabled={loading}
+                          disabled={mutation.isLoading}
                           label="Work start time"
                         >
                           <optgroup label="Work start time">
@@ -273,7 +262,7 @@ const ModalEditJobDetails = ({
                           label="Work Email"
                           type="text"
                           name="employee_email"
-                          disabled={loading}
+                          disabled={mutation.isLoading}
                         />
                       </div>
                       {/* date employed */}
@@ -284,7 +273,7 @@ const ModalEditJobDetails = ({
                           onFocus={(e) => (e.target.type = "date")}
                           onBlur={(e) => (e.target.type = "text")}
                           name="employee_job_hired_date"
-                          disabled={loading}
+                          disabled={mutation.isLoading}
                         />
                       </div>
                       {/* regularized on */}
@@ -295,7 +284,7 @@ const ModalEditJobDetails = ({
                           onFocus={(e) => (e.target.type = "date")}
                           onBlur={(e) => (e.target.type = "text")}
                           name="employee_job_regularized"
-                          disabled={loading}
+                          disabled={mutation.isLoading}
                         />
                       </div>
                       {/* date separated */}
@@ -306,7 +295,7 @@ const ModalEditJobDetails = ({
                           onFocus={(e) => (e.target.type = "date")}
                           onBlur={(e) => (e.target.type = "text")}
                           name="employee_job_separated"
-                          disabled={loading}
+                          disabled={mutation.isLoading}
                         />
                       </div>
                       {/* TIN */}
@@ -315,7 +304,7 @@ const ModalEditJobDetails = ({
                           label="TIN"
                           type="text"
                           name="employee_job_tin"
-                          disabled={loading}
+                          disabled={mutation.isLoading}
                         />
                       </div>
                       {/* Drive link */}
@@ -324,7 +313,7 @@ const ModalEditJobDetails = ({
                           label="Drive Link"
                           type="text"
                           name="employee_job_drive_link"
-                          disabled={loading}
+                          disabled={mutation.isLoading}
                         />
                       </div>
                       {/* Comments */}
@@ -333,23 +322,23 @@ const ModalEditJobDetails = ({
                           label="Comment"
                           type="text"
                           name="employee_job_comments"
-                          disabled={loading}
+                          disabled={mutation.isLoading}
                         />
                       </div>
                     </div>
                     <div className="flex items-center gap-1 p-4">
                       <button
                         type="submit"
-                        disabled={loading || !props.dirty}
+                        disabled={mutation.isLoading || !props.dirty}
                         className="btn-modal-submit relative"
                       >
-                        {loading ? <ButtonSpinner /> : "Save"}
+                        {mutation.isLoading ? <ButtonSpinner /> : "Save"}
                       </button>
                       <button
                         type="reset"
                         className="btn-modal-cancel"
                         onClick={handleClose}
-                        disabled={loading}
+                        disabled={mutation.isLoading}
                       >
                         Cancel
                       </button>

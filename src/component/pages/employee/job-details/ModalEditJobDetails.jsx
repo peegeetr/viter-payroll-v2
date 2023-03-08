@@ -30,6 +30,10 @@ const ModalEditJobDetails = ({
   const initVal = {
     employee_aid: itemEdit ? itemEdit.employee_aid : "",
     employee_job_hired_date: itemEdit ? itemEdit.employee_job_hired_date : "",
+    employee_job_regularized: itemEdit
+      ? itemEdit.employee_job_regularized
+      : "na",
+    employee_job_separated: itemEdit ? itemEdit.employee_job_separated : "na",
     employee_job_number: itemEdit ? itemEdit.employee_job_number : "",
     employee_job_tin: itemEdit ? itemEdit.employee_job_tin : "",
     employee_job_status: itemEdit ? itemEdit.employee_job_status : "",
@@ -40,23 +44,29 @@ const ModalEditJobDetails = ({
     employee_job_supervisor_id: itemEdit
       ? itemEdit.employee_job_supervisor_id
       : "",
+    employee_job_supervisor_name: itemEdit
+      ? itemEdit.employee_job_supervisor_name
+      : "",
     employee_email: itemEdit ? itemEdit.employee_email : "",
     employee_job_drive_link: itemEdit ? itemEdit.employee_job_drive_link : "",
     employee_job_start_time: itemEdit ? itemEdit.employee_job_start_time : "",
+    employee_job_leave_type_id: itemEdit
+      ? itemEdit.employee_job_leave_type_id
+      : "",
     employee_job_comments: itemEdit ? itemEdit.employee_job_comments : "",
   };
 
   const yupSchema = Yup.object({
     employee_job_hired_date: Yup.string().required("Required"),
-    employee_job_number: Yup.string().required("Required"),
     employee_job_tin: Yup.string().required("Required"),
     employee_job_status: Yup.string().required("Required"),
     employee_job_department_id: Yup.string().required("Required"),
     employee_job_title_id: Yup.string().required("Required"),
-    employee_job_supervisor_id: Yup.string().required("Required"),
     employee_email: Yup.string().required("Required").email("Invalid email"),
     employee_job_drive_link: Yup.string().required("Required"),
-    employee_job_comments: Yup.string().required("Required"),
+    employee_job_start_time: Yup.string().required("Required"),
+    employee_job_leave_type_id: Yup.string().required("Required"),
+    employee_job_supervisor_name: Yup.string().required("Required"),
   });
 
   return (
@@ -101,7 +111,166 @@ const ModalEditJobDetails = ({
                 return (
                   <Form>
                     <div className="max-h-[28rem] overflow-y-scroll p-4">
-                      <div className="relative my-5 ">
+                      {/* department */}
+                      <div className="relative my-5">
+                        <InputSelect
+                          name="employee_job_department_id"
+                          label="Department"
+                          disabled={loading}
+                        >
+                          <optgroup label="Department">
+                            <option value="" hidden></option>
+                            {department.length > 0 ? (
+                              department.map((item, key) => {
+                                return (
+                                  item.department_active === 1 && (
+                                    <option
+                                      key={key}
+                                      value={item.department_aid}
+                                    >
+                                      {item.department_name}
+                                    </option>
+                                  )
+                                );
+                              })
+                            ) : (
+                              <option value="">No data</option>
+                            )}
+                          </optgroup>
+                        </InputSelect>
+                      </div>
+                      {/* job title */}
+                      <div className="relative mb-5">
+                        <InputSelect
+                          name="employee_job_title_id"
+                          label="Job Title"
+                        >
+                          <optgroup label="Job Title">
+                            <option value="" hidden></option>
+                            {jobTitle.length > 0 ? (
+                              jobTitle.map((item, key) => {
+                                return (
+                                  item.job_title_is_active === 1 && (
+                                    <option
+                                      key={key}
+                                      value={item.job_title_aid}
+                                    >
+                                      {item.job_title_name}
+                                    </option>
+                                  )
+                                );
+                              })
+                            ) : (
+                              <option value="">No data</option>
+                            )}
+                          </optgroup>
+                        </InputSelect>
+                      </div>
+                      {/* status */}
+                      <div className="relative mb-5">
+                        <InputSelect name="employee_job_status" label="Status">
+                          <optgroup label="Status">
+                            <option value="" hidden></option>
+                            <option value="contructual">Contructual</option>
+                            <option value="probationary">Probationary</option>
+                            <option value="regular">Regular</option>
+                          </optgroup>
+                        </InputSelect>
+                      </div>
+                      {/* leave type */}
+                      <div className="relative mb-5">
+                        <InputSelect
+                          name="employee_job_leave_type_id"
+                          label="Leave type"
+                        >
+                          <optgroup label="Leave type">
+                            <option value="" hidden></option>
+                            {leave.length > 0 ? (
+                              leave.map((item, key) => {
+                                return (
+                                  item.leavetype_active === 1 && (
+                                    <option
+                                      key={key}
+                                      value={item.leavetype_aid}
+                                    >
+                                      {/* {item.leavetype_name} (
+                                      {item.leavetype_days} days) */}
+                                      {item.leavetype_name}
+                                    </option>
+                                  )
+                                );
+                              })
+                            ) : (
+                              <option value="">No data</option>
+                            )}
+                          </optgroup>
+                        </InputSelect>
+                      </div>
+                      {/* supervisor */}
+                      <div className="relative mb-5">
+                        <InputSelect
+                          label="Supervisor"
+                          name="employee_job_supervisor_name"
+                          disabled={loading}
+                          onChange={(e) => handleGetSupervisorId(e)}
+                        >
+                          <optgroup label="Supervisor">
+                            <option value="" hidden></option>
+                            {supervisor.length > 0 ? (
+                              supervisor.map((item, key) => {
+                                return (
+                                  item.supervisor_is_active === 1 &&
+                                  itemEdit.employee_aid !==
+                                    item.employee_aid && (
+                                    <option
+                                      id={item.employee_aid}
+                                      value={`${item.employee_lname}, ${item.employee_fname}`}
+                                      key={key}
+                                    >
+                                      {item.employee_lname},{" "}
+                                      {item.employee_fname}
+                                    </option>
+                                  )
+                                );
+                              })
+                            ) : (
+                              <option value="">No data</option>
+                            )}
+                          </optgroup>
+                        </InputSelect>
+                      </div>
+                      {/* work start time */}
+                      <div
+                        className={
+                          itemEdit ? "relative mb-5 " : "relative mb-5 label"
+                        }
+                      >
+                        <InputSelect
+                          name="employee_job_start_time"
+                          disabled={loading}
+                          label="Work start time"
+                        >
+                          <optgroup label="Work start time">
+                            <option value="" hidden></option>
+                            <option value="7">7 AM</option>
+                            <option value="9">9 AM</option>
+                            <option value="0">12 AM</option>
+                            <option value="1">1 AM</option>
+                            <option value="ft">Flexible</option>
+                          </optgroup>
+                        </InputSelect>
+                      </div>
+                      {/* work email */}
+                      <div className="relative mb-5">
+                        <InputText
+                          label="Work Email"
+                          type="text"
+                          name="employee_email"
+                          disabled={loading}
+                        />
+                      </div>
+                      {/* date employed */}
+                      <div className="relative mb-6 mt-5">
                         <InputText
                           label="Date Employed"
                           type="text"
@@ -111,6 +280,29 @@ const ModalEditJobDetails = ({
                           disabled={loading}
                         />
                       </div>
+                      {/* regularized on */}
+                      <div className="relative mb-6">
+                        <InputText
+                          label="Regularized on"
+                          type="text"
+                          onFocus={(e) => (e.target.type = "date")}
+                          onBlur={(e) => (e.target.type = "text")}
+                          name="employee_job_regularized"
+                          disabled={loading}
+                        />
+                      </div>
+                      {/* date separated */}
+                      <div className="relative mb-6">
+                        <InputText
+                          label="Date separated"
+                          type="text"
+                          onFocus={(e) => (e.target.type = "date")}
+                          onBlur={(e) => (e.target.type = "text")}
+                          name="employee_job_separated"
+                          disabled={loading}
+                        />
+                      </div>
+                      {/* TIN */}
                       <div className="relative mb-5">
                         <InputText
                           label="TIN"
@@ -119,90 +311,7 @@ const ModalEditJobDetails = ({
                           disabled={loading}
                         />
                       </div>
-                      <div className="relative mb-5">
-                        <InputText
-                          label="Status"
-                          type="text"
-                          name="employee_job_status"
-                          disabled={loading}
-                        />
-                      </div>
-
-                      <div className="relative mb-5">
-                        <InputSelect
-                          label="Department"
-                          name="employee_job_department_id"
-                          disabled={loading}
-                          onFocus={(e) =>
-                            e.target.parentElement.classList.add("focused")
-                          }
-                        >
-                          <optgroup label="Department">
-                            <option value="" hidden></option>
-                            {department.length > 0 ? (
-                              department.map((item, key) => {
-                                return (
-                                  <option key={key} value={item.department_aid}>
-                                    {item.department_name}
-                                  </option>
-                                );
-                              })
-                            ) : (
-                              <option value="">No data</option>
-                            )}
-                          </optgroup>
-                        </InputSelect>
-                      </div>
-
-                      <div className="relative mb-5">
-                        <InputSelect
-                          label="Job Title"
-                          name="employee_job_title_id"
-                          disabled={loading}
-                          onFocus={(e) =>
-                            e.target.parentElement.classList.add("focused")
-                          }
-                        >
-                          <optgroup label="Job Title">
-                            <option value="" hidden></option>
-                            {jobTitle.length > 0 ? (
-                              jobTitle.map((item, key) => {
-                                return (
-                                  <option key={key} value={item.job_title_aid}>
-                                    {item.job_title_name}
-                                  </option>
-                                );
-                              })
-                            ) : (
-                              <option value="">No data</option>
-                            )}
-                          </optgroup>
-                        </InputSelect>
-                      </div>
-                      <div className="relative mb-5">
-                        <InputSelect
-                          label="Supervisor"
-                          name="employee_job_supervisor_id"
-                          disabled={loading}
-                          onFocus={(e) =>
-                            e.target.parentElement.classList.add("focused")
-                          }
-                        >
-                          <optgroup label="Supervisor">
-                            <option value="" hidden></option>
-                            <option value="vivo">Project Manager</option>
-                            <option value="vivo">Full Stack Developer</option>
-                          </optgroup>
-                        </InputSelect>
-                      </div>
-                      <div className="relative mb-5">
-                        <InputText
-                          label="Work Email"
-                          type="text"
-                          name="employee_email"
-                          disabled={loading}
-                        />
-                      </div>
+                      {/* Drive link */}
                       <div className="relative mb-5">
                         <InputTextArea
                           label="Drive Link"
@@ -211,7 +320,8 @@ const ModalEditJobDetails = ({
                           disabled={loading}
                         />
                       </div>
-                      <div className="relative ">
+                      {/* Comments */}
+                      <div className="relative mb-5">
                         <InputTextArea
                           label="Comment"
                           type="text"

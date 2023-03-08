@@ -1,4 +1,5 @@
 import { Form, Formik } from "formik";
+import { NumericFormat } from "react-number-format";
 import React from "react";
 import { FaTimesCircle } from "react-icons/fa";
 import * as Yup from "yup";
@@ -6,10 +7,13 @@ import { setIsAdd, setStartIndex } from "../../../../store/StoreAction.jsx";
 import { StoreContext } from "../../../../store/StoreContext.jsx";
 import { fetchData } from "../../../helpers/fetchData.jsx";
 import { InputText } from "../../../helpers/FormInputs.jsx";
-import { devApiUrl } from "../../../helpers/functions-general.jsx";
+import {
+  devApiUrl,
+  handleNumOnly,
+} from "../../../helpers/functions-general.jsx";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner.jsx";
 
-const ModalSssBracket = ({ itemEdit }) => {
+const ModalSssBracket = ({ itemEdit, itemNum }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [loading, setLoading] = React.useState(false);
   const [data, setData] = React.useState([]);
@@ -17,8 +21,6 @@ const ModalSssBracket = ({ itemEdit }) => {
   const handleClose = () => {
     dispatch(setIsAdd(false));
   };
-
-  console.log(itemEdit);
 
   const initVal = {
     sss_bracket_aid: itemEdit ? itemEdit.sss_bracket_aid : "",
@@ -83,12 +85,18 @@ const ModalSssBracket = ({ itemEdit }) => {
               {(props) => {
                 return (
                   <Form>
+                    {/* <div className="relative my-5">
+                      <p className="w-1/2 m-0">
+                        Item #: {itemEdit ? itemNum : itemEdit + 1}
+                      </p>
+                    </div> */}
                     <div className="relative my-5">
                       <InputText
                         label="Range From"
                         type="text"
                         name="sss_bracket_range_from"
                         disabled={loading}
+                        onKeyPress={(e) => handleNumOnly(e)}
                       />
                     </div>
 
@@ -98,6 +106,7 @@ const ModalSssBracket = ({ itemEdit }) => {
                         type="text"
                         name="sss_bracket_range_to"
                         disabled={loading}
+                        onKeyPress={(e) => handleNumOnly(e)}
                       />
                     </div>
 
@@ -107,6 +116,7 @@ const ModalSssBracket = ({ itemEdit }) => {
                         type="text"
                         name="sss_bracket_er"
                         disabled={loading}
+                        onKeyPress={(e) => handleNumOnly(e)}
                       />
                     </div>
 
@@ -116,6 +126,7 @@ const ModalSssBracket = ({ itemEdit }) => {
                         type="text"
                         name="sss_bracket_ee"
                         disabled={loading}
+                        onKeyPress={(e) => handleNumOnly(e)}
                       />
                     </div>
 
@@ -125,6 +136,7 @@ const ModalSssBracket = ({ itemEdit }) => {
                         type="text"
                         name="sss_bracket_total"
                         disabled={loading}
+                        onKeyPress={(e) => handleNumOnly(e)}
                       />
                     </div>
 

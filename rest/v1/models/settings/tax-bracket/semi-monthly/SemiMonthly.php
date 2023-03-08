@@ -68,7 +68,7 @@ class SemiMonthly
             $sql = "select *  ";
             $sql .= "from {$this->tblSemiMonthly} ";
             $sql .= "order by semi_monthly_active desc, ";
-            $sql .= "semi_monthly_range_from asc ";
+            $sql .= "CAST(semi_monthly_range_from AS DECIMAL(20,2)) asc ";
             $query = $this->connection->query($sql);
         } catch (PDOException $ex) {
             $query = false;
@@ -76,7 +76,7 @@ class SemiMonthly
         return $query;
     }
 
-   
+
     public function update()
     {
         try {
@@ -104,7 +104,7 @@ class SemiMonthly
         return $query;
     }
 
-   
+
 
     public function delete()
     {
@@ -152,5 +152,4 @@ class SemiMonthly
         }
         return $query;
     }
-
 }

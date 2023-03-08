@@ -2,7 +2,7 @@ import React from "react";
 
 const StatusActive = ({ text = "Active" }) => {
   return (
-    <span className="bg-green-200 text-green-800 text-[10px] font-medium mr-2 px-2 py-0.2 rounded-full ">
+    <span className="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full">
       {text}
     </span>
   );

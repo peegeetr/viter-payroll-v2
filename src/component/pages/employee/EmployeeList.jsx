@@ -88,7 +88,7 @@ const EmployeeList = () => {
               <th className="w-52">Name</th>
               <th className="w-28">ID No.</th>
               <th className="w-[24rem]">Work Email</th>
-              <th className="w-32">Direct report</th>
+              <th className="w-[12rem]">Direct report</th>
               <th>Status</th>
               <th className="text-right">Actions</th>
             </tr>

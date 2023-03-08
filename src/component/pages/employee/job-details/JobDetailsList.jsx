@@ -173,6 +173,10 @@ const JobDetailsList = () => {
                   <p className="pl-2">
                     {numberWithCommas(item.employee_job_nd_per_day)}
                   </p>
+                  <p className="font-semibold">Pag-ibig addtl. amount</p>
+                  <p className="pl-2">
+                    {numberWithCommas(item.employee_job_pagibig_amount)}
+                  </p>
                   <p className="font-semibold">Salary</p>
                   <p className="pl-2">
                     {numberWithCommas(item.employee_job_salary)}
@@ -204,7 +208,6 @@ const JobDetailsList = () => {
           </div>
         )}
       </div>
-
       {store.isAdd && (
         <ModalEditJobDetails
           itemEdit={itemEdit}

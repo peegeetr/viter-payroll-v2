@@ -17,9 +17,7 @@ const Employee = () => {
       <Header />
       <Navigation menu="employee" />
       <div className="wrapper">
-        <div className="flex items-center justify-between mb-3 whitespace-nowrap overflow-auto gap-2 min-h-[32.75px]">
-          <h4 className="text-xl">Employee</h4>
-        </div>
+        <h4 className="text-xl mb-3">Employee</h4>
         <hr />
 
         <div className="w-full pt-5 pb-20">

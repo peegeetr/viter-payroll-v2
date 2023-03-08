@@ -41,9 +41,15 @@ const ModalEditPayroll = ({ itemEdit }) => {
       itemEdit.employee_job_phil_health_deduc === 1 ? true : false,
     employee_job_work_reg_hol:
       itemEdit.employee_job_work_reg_hol === 1 ? true : false,
+    employee_job_none_work_reg_hol:
+      itemEdit.employee_job_none_work_reg_hol === 1 ? true : false,
     employee_job_nd_per_day:
       itemEdit.employee_job_nd_per_day !== ""
         ? itemEdit.employee_job_nd_per_day
+        : 0,
+    employee_job_pagibig_amount:
+      itemEdit.employee_job_pagibig_amount !== ""
+        ? itemEdit.employee_job_pagibig_amount
         : 0,
     employee_job_salary:
       itemEdit.employee_job_salary !== "" ? itemEdit.employee_job_salary : 0,
@@ -171,6 +177,15 @@ const ModalEditPayroll = ({ itemEdit }) => {
                       </div>
 
                       <div className="relative mb-3 flex items-center gap-2">
+                        <p className="w-full m-0">Pag-ibig addtl. amount</p>
+                        <InputText
+                          type="text"
+                          name="employee_job_pagibig_amount"
+                          disabled={loading}
+                        />
+                      </div>
+
+                      <div className="relative mb-3 flex items-center gap-2">
                         <p className="w-full m-0">Salary</p>
                         <InputText
                           type="text"
@@ -213,8 +228,7 @@ const ModalEditPayroll = ({ itemEdit }) => {
                         />
                       </div>
                     </div>
-
-                    <div className="flex items-center gap-1 p-5">
+                    <div className="flex items-center gap-1 p-4">
                       <button
                         type="submit"
                         disabled={loading || !props.dirty}

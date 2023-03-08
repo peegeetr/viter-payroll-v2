@@ -30,11 +30,11 @@ const SystemUserList = ({ setItemEdit }) => {
     isLoading,
     isFetching,
     error,
-    data: users,
+    data: userSystems,
   } = useQueryData(
     `${devApiUrl}/v1/user-systems`, // endpoint
     "get", // method
-    "users" // key
+    "userSystems" // key
   );
 
   const handleEdit = (item) => {
@@ -86,7 +86,7 @@ const SystemUserList = ({ setItemEdit }) => {
             </tr>
           </thead>
           <tbody>
-            {(isLoading || users?.data.length === 0) && (
+            {(isLoading || userSystems?.data.length === 0) && (
               <tr className="text-center ">
                 <td colSpan="100%" className="p-10">
                   {status === "loading" && <TableSpinner />}
@@ -101,7 +101,7 @@ const SystemUserList = ({ setItemEdit }) => {
                 </td>
               </tr>
             )}
-            {users?.data.map((item, key) => {
+            {userSystems?.data.map((item, key) => {
               counter++;
               return (
                 <tr key={key}>
@@ -186,7 +186,7 @@ const SystemUserList = ({ setItemEdit }) => {
               : "Are you sure you want to archive "
           }
           item={`${dataItem.user_system_email}`}
-          arrKey="users"
+          arrKey="userSystems"
         />
       )}
 
@@ -202,7 +202,7 @@ const SystemUserList = ({ setItemEdit }) => {
               : "Are you sure you want to restore "
           }
           item={`${dataItem.user_system_email}`}
-          arrKey="users"
+          arrKey="userSystems"
         />
       )}
     </>

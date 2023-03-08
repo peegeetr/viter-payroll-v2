@@ -2,7 +2,6 @@ import React from "react";
 import { FaPlusCircle } from "react-icons/fa";
 import { setIsAdd } from "../../../../../store/StoreAction";
 import { StoreContext } from "../../../../../store/StoreContext";
-import useLoadRole from "../../../../custom-hooks/useLoadRole";
 import useQueryData from "../../../../custom-hooks/useQueryData";
 import { devApiUrl } from "../../../../helpers/functions-general";
 import BreadCrumbs from "../../../../partials/BreadCrumbs";
@@ -12,7 +11,7 @@ import ModalError from "../../../../partials/modals/ModalError";
 import ModalSuccess from "../../../../partials/modals/ModalSuccess";
 import Navigation from "../../../../partials/Navigation";
 import ServerError from "../../../../partials/ServerError";
-import TableSpinner from "../../../../partials/spinners/TableSpinner";
+import FetchingSpinner from "../../../../partials/spinners/FetchingSpinner";
 import { getRoleIdDev } from "../function-users";
 import ModalAddSystemUser from "./ModalAddSystemUser";
 import SystemUserList from "./SystemUserList";
@@ -31,7 +30,6 @@ const SystemUser = () => {
     "get", // method
     "role" // key
   );
-  // consoleLog(result);
 
   const handleAdd = () => {
     dispatch(setIsAdd(true));
@@ -43,7 +41,7 @@ const SystemUser = () => {
       <Header />
       <Navigation menu="settings" />
       <div className="wrapper">
-        <div className="flex items-center justify-between mb-3 whitespace-nowrap overflow-auto gap-2">
+        <div className="flex items-center justify-between whitespace-nowrap overflow-auto gap-2">
           <BreadCrumbs />
           <div className="flex items-center gap-1">
             <button type="button" className="btn-primary" onClick={handleAdd}>
@@ -55,9 +53,8 @@ const SystemUser = () => {
         <hr />
 
         <div className="w-full pt-5 pb-20">
-          {" "}
           {isFetching && !isLoading ? (
-            <TableSpinner />
+            <FetchingSpinner />
           ) : getRoleIdDev(role?.data) === -1 ? (
             <ServerError />
           ) : (

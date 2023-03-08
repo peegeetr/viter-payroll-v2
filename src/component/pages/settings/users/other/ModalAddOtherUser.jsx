@@ -2,17 +2,57 @@ import { Form, Formik } from "formik";
 import React from "react";
 import { FaTimesCircle } from "react-icons/fa";
 import * as Yup from "yup";
-import { setIsAdd, setStartIndex } from "../../../../../store/StoreAction";
+import {
+  setError,
+  setIsAdd,
+  setMessage,
+  setStartIndex,
+  setSuccess,
+} from "../../../../../store/StoreAction";
 import { StoreContext } from "../../../../../store/StoreContext";
 import { fetchData } from "../../../../helpers/fetchData";
 import { InputText } from "../../../../helpers/FormInputs";
 import { devApiUrl } from "../../../../helpers/functions-general";
+import { queryData } from "../../../../helpers/queryData";
 import ButtonSpinner from "../../../../partials/spinners/ButtonSpinner";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const ModalAddOtherUser = ({ item, roleId }) => {
   const { store, dispatch } = React.useContext(StoreContext);
-  const [loading, setLoading] = React.useState(false);
 
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: (values) =>
+      queryData(
+        item
+          ? `${devApiUrl}/v1/user-others/${item.user_other_aid}`
+          : `${devApiUrl}/v1/user-others`,
+        item ? "put" : "post",
+        values
+      ),
+    onSuccess: (data) => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries({ queryKey: ["otherUsers"] });
+      // show success box
+      if (data.success) {
+        dispatch(setSuccess(true));
+        dispatch(
+          setMessage(
+            `Successfuly ${
+              item
+                ? "updated."
+                : "added, please check your email for verification."
+            }`
+          )
+        );
+      }
+      // show error box
+      if (!data.success) {
+        dispatch(setError(true));
+        dispatch(setMessage(data.error));
+      }
+    },
+  });
   const handleClose = () => {
     dispatch(setIsAdd(false));
   };
@@ -52,25 +92,8 @@ const ModalAddOtherUser = ({ item, roleId }) => {
               initialValues={initVal}
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
-                fetchData(
-                  setLoading,
-                  item
-                    ? `${devApiUrl}/v1/user-others/${item.user_other_aid}`
-                    : `${devApiUrl}/v1/user-others`,
-                  values, // form data values
-                  null, // result set data
-                  item
-                    ? "Succesfully updated."
-                    : "Succesfully added, please check your email for verification.", // success msg
-                  "", // additional error msg if needed
-                  dispatch, // context api action
-                  store, // context api state
-                  true, // boolean to show success modal
-                  false, // boolean to show load more functionality button
-                  null, // navigate default value
-                  item ? "put" : "post"
-                );
-                dispatch(setStartIndex(0));
+                console.log(values);
+                mutation.mutate(values);
               }}
             >
               {(props) => {
@@ -81,7 +104,7 @@ const ModalAddOtherUser = ({ item, roleId }) => {
                         label="Name"
                         type="text"
                         name="user_other_name"
-                        disabled={loading}
+                        disabled={mutation.isLoading}
                       />
                     </div>
                     <div className="relative mb-5 mt-5">
@@ -89,24 +112,24 @@ const ModalAddOtherUser = ({ item, roleId }) => {
                         label="Email"
                         type="text"
                         name="user_other_email"
-                        disabled={loading}
+                        disabled={mutation.isLoading}
                       />
                     </div>
 
                     <div className="flex items-center gap-1 pt-5">
                       <button
                         type="submit"
-                        disabled={loading || !props.dirty}
+                        disabled={mutation.isLoading || !props.dirty}
                         className="btn-modal-submit relative"
                       >
-                        {loading && <ButtonSpinner />}
+                        {mutation.isLoading && <ButtonSpinner />}
                         {item ? "Save" : "Add"}
                       </button>
                       <button
                         type="reset"
                         className="btn-modal-cancel cursor-pointer"
                         onClick={handleClose}
-                        disabled={loading}
+                        disabled={mutation.isLoading}
                       >
                         Cancel
                       </button>

@@ -1,3 +1,4 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Form, Formik } from "formik";
 import React from "react";
 import { FaTimesCircle } from "react-icons/fa";
@@ -6,22 +7,16 @@ import {
   setError,
   setIsAdd,
   setMessage,
-  setStartIndex,
   setSuccess,
 } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
-import useLoadAll from "../../../custom-hooks/useLoadAll";
-import fetchApi from "../../../helpers/fetchApi";
-import { fetchData } from "../../../helpers/fetchData";
-import { InputSelect, InputText } from "../../../helpers/FormInputs";
+import { InputText } from "../../../helpers/FormInputs";
 import { devApiUrl } from "../../../helpers/functions-general";
 import { queryData } from "../../../helpers/queryData";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const ModalPayrollType = ({ itemEdit }) => {
   const { store, dispatch } = React.useContext(StoreContext);
-  const [loading, setLoading] = React.useState(false);
 
   const queryClient = useQueryClient();
   const mutation = useMutation({

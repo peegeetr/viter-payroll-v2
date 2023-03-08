@@ -5,7 +5,9 @@ import { StoreContext } from "../../../../store/StoreContext";
 import useLoadDepartment from "../../../custom-hooks/useLoadDepartment";
 import useLoadEmployee from "../../../custom-hooks/useLoadEmployee";
 import useLoadJobTitle from "../../../custom-hooks/useLoadJobTitle";
+import useLoadLeave from "../../../custom-hooks/useLoadLeave";
 import useLoadPayLeave from "../../../custom-hooks/useLoadPayLeave";
+import useLoadSupervisor from "../../../custom-hooks/useLoadSupervisor";
 import {
   formatDate,
   getUrlParam,
@@ -30,8 +32,12 @@ const JobDetailsList = () => {
     "get"
   );
 
+  const { supervisor } = useLoadSupervisor(
+    `${hrisDevApiUrl}/v1/supervisors`,
+    "get"
+  );
   const { jobTitle } = useLoadJobTitle(`${hrisDevApiUrl}/v1/job-titles`, "get");
-  const { leave } = useLoadPayLeave(`${hrisDevApiUrl}/v1/supervisors`, "get");
+  const { leave } = useLoadLeave(`${hrisDevApiUrl}/v1/leave/types`, "get");
 
   const { department } = useLoadDepartment(
     `${hrisDevApiUrl}/v1/departments`,
@@ -104,14 +110,14 @@ const JobDetailsList = () => {
                   </p>
                   <p className="font-semibold">Regularized on :</p>
                   <p className="pl-2">
-                    {item.employee_job_regularized === ""
-                      ? ""
+                    {item.employee_job_regularized === "na"
+                      ? "n/a"
                       : formatDate(item.employee_job_regularized)}
                   </p>
                   <p className="font-semibold">Date separated :</p>
                   <p className="pl-2">
-                    {item.employee_job_separated === ""
-                      ? ""
+                    {item.employee_job_separated === "na"
+                      ? "n/a"
                       : formatDate(item.employee_job_separated)}
                   </p>
                   <p className="font-semibold">TIN :</p>
@@ -204,7 +210,7 @@ const JobDetailsList = () => {
           itemEdit={itemEdit}
           jobTitle={jobTitle}
           department={department}
-          supervisor={leave}
+          supervisor={supervisor}
           leave={leave}
         />
       )}

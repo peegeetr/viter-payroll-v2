@@ -7,7 +7,10 @@ import {
 } from "../../../../store/StoreAction.jsx";
 import { StoreContext } from "../../../../store/StoreContext.jsx";
 import useFetchDataLoadMore from "../../../custom-hooks/useFetchDataLoadMore.jsx";
-import { devApiUrl } from "../../../helpers/functions-general.jsx";
+import {
+  devApiUrl,
+  numberWithCommas,
+} from "../../../helpers/functions-general.jsx";
 import Loadmore from "../../../partials/Loadmore.jsx";
 import ModalConfirm from "../../../partials/modals/ModalConfirm.jsx";
 import ModalDeleteRestore from "../../../partials/modals/ModalDeleteRestore.jsx";
@@ -16,14 +19,14 @@ import SearchBar from "../../../partials/SearchBar.jsx";
 import ServerError from "../../../partials/ServerError.jsx";
 import TableSpinner from "../../../partials/spinners/TableSpinner.jsx";
 import ModalSssBracket from "./ModalSssBracket.jsx";
-const SssBracketList = ({ setItemEdit }) => {
+const SssBracketList = ({ setItemEdit, setItemNum }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const search = React.useRef(null);
   const [id, setId] = React.useState(null);
   const [isDel, setDel] = React.useState(false);
   const [dataItem, setData] = React.useState(null);
 
-  const perPage = 10;
+  const perPage = 25;
   const start = store.startIndex + 1;
   let counter = 0;
 
@@ -41,9 +44,10 @@ const SssBracketList = ({ setItemEdit }) => {
     search
   );
 
-  const handleEdit = (item) => {
+  const handleEdit = (item, counter) => {
     dispatch(setIsAdd(true));
     setItemEdit(item);
+    setItemNum(counter);
   };
 
   const handleDelete = (item) => {
@@ -84,19 +88,35 @@ const SssBracketList = ({ setItemEdit }) => {
                 counter++;
                 return (
                   <tr key={key}>
-                    <td>{counter}.</td>
-                    <td>{item.sss_bracket_range_from}</td>
-                    <td>{item.sss_bracket_range_to}</td>
-                    <td>{item.sss_bracket_er}</td>
-                    <td>{item.sss_bracket_ee}</td>
-                    <td>{item.sss_bracket_total}</td>
+                    <td>{key + 1}.</td>
+                    <td>
+                      {numberWithCommas(
+                        Number(item.sss_bracket_range_from).toFixed(2)
+                      )}
+                    </td>
+                    <td>
+                      {numberWithCommas(
+                        Number(item.sss_bracket_range_to).toFixed(2)
+                      )}
+                    </td>
+                    <td>
+                      {numberWithCommas(Number(item.sss_bracket_er).toFixed(2))}
+                    </td>
+                    <td>
+                      {numberWithCommas(Number(item.sss_bracket_ee).toFixed(2))}
+                    </td>
+                    <td>
+                      {numberWithCommas(
+                        Number(item.sss_bracket_total).toFixed(2)
+                      )}
+                    </td>
                     <td>
                       <div className="flex items-center gap-3">
                         <button
                           type="button"
                           className="btn-action-table tooltip-action-table"
                           data-tooltip="Edit"
-                          onClick={() => handleEdit(item)}
+                          onClick={() => handleEdit(item, key + 1)}
                         >
                           <FaEdit />
                         </button>

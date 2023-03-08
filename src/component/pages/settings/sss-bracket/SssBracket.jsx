@@ -14,6 +14,7 @@ import SssBracketList from "./SssBracketList.jsx";
 const SssBracket = () => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [itemEdit, setItemEdit] = React.useState(null);
+  const [itemNum, setItemNum] = React.useState(null);
   const handleAdd = () => {
     dispatch(setIsAdd(true));
     setItemEdit(null);
@@ -35,12 +36,12 @@ const SssBracket = () => {
 
         <hr />
         <div className="w-full pt-5 pb-20">
-          <SssBracketList setItemEdit={setItemEdit} />
+          <SssBracketList setItemEdit={setItemEdit} setItemNum={setItemNum} />
         </div>
         <Footer />
       </div>
 
-      {store.isAdd && <ModalSssBracket itemEdit={itemEdit} />}
+      {store.isAdd && <ModalSssBracket itemEdit={itemEdit} itemNum={itemNum} />}
       {store.success && <ModalSuccess />}
       {store.error && <ModalError />}
     </>

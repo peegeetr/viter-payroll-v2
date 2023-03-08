@@ -6,7 +6,10 @@ import { setIsAdd, setStartIndex } from "../../../../../store/StoreAction.jsx";
 import { StoreContext } from "../../../../../store/StoreContext.jsx";
 import { fetchData } from "../../../../helpers/fetchData.jsx";
 import { InputText } from "../../../../helpers/FormInputs.jsx";
-import { devApiUrl } from "../../../../helpers/functions-general.jsx";
+import {
+  devApiUrl,
+  handleNumOnly,
+} from "../../../../helpers/functions-general.jsx";
 import ButtonSpinner from "../../../../partials/spinners/ButtonSpinner.jsx";
 
 const ModalAddTaxMonthly = ({ itemEdit }) => {
@@ -87,6 +90,7 @@ const ModalAddTaxMonthly = ({ itemEdit }) => {
                         type="text"
                         name="tax_monthly_range_from"
                         disabled={loading}
+                        onKeyPress={(e) => handleNumOnly(e)}
                       />
                     </div>
 
@@ -96,6 +100,7 @@ const ModalAddTaxMonthly = ({ itemEdit }) => {
                         type="text"
                         name="tax_monthly_range_to"
                         disabled={loading}
+                        onKeyPress={(e) => handleNumOnly(e)}
                       />
                     </div>
 
@@ -105,6 +110,7 @@ const ModalAddTaxMonthly = ({ itemEdit }) => {
                         type="text"
                         name="tax_monthly_less_amount"
                         disabled={loading}
+                        onKeyPress={(e) => handleNumOnly(e)}
                       />
                     </div>
 
@@ -114,6 +120,7 @@ const ModalAddTaxMonthly = ({ itemEdit }) => {
                         type="text"
                         name="tax_monthly_rate"
                         disabled={loading}
+                        onKeyPress={(e) => handleNumOnly(e)}
                       />
                     </div>
 
@@ -123,6 +130,7 @@ const ModalAddTaxMonthly = ({ itemEdit }) => {
                         type="text"
                         name="tax_monthly_additional_amount"
                         disabled={loading}
+                        onKeyPress={(e) => handleNumOnly(e)}
                       />
                     </div>
 

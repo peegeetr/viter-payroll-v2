@@ -1,7 +1,7 @@
 <?php
 class SssBracket
 {
-    public $sss_bracket_aid ;
+    public $sss_bracket_aid;
     public $sss_bracket_active;
     public $sss_bracket_range_from;
     public $sss_bracket_range_to;
@@ -53,7 +53,7 @@ class SssBracket
                 "sss_bracket_total" => $this->sss_bracket_total,
                 "sss_bracket_created" => $this->sss_bracket_created,
                 "sss_bracket_datetime" => $this->sss_bracket_datetime,
-                
+
             ]);
             $this->lastInsertedId = $this->connection->lastInsertId();
         } catch (PDOException $ex) {
@@ -67,8 +67,8 @@ class SssBracket
         try {
             $sql = "select * ";
             $sql .= "from {$this->tblSssBracket} ";
-            $sql .= "order by sss_bracket_active desc ";
-            
+            $sql .= "order by sss_bracket_active desc, ";
+            $sql .= "CAST(sss_bracket_range_from AS DECIMAL(20,2)) asc ";
             $query = $this->connection->query($sql);
         } catch (PDOException $ex) {
             $query = false;
@@ -76,7 +76,8 @@ class SssBracket
         return $query;
     }
 
-    public function update() {    
+    public function update()
+    {
         try {
             $sql = "update {$this->tblSssBracket} set ";
             $sql .= "sss_bracket_range_from = :sss_bracket_range_from, ";
@@ -102,7 +103,7 @@ class SssBracket
         return $query;
     }
 
-    
+
     public function delete()
     {
         try {
@@ -123,7 +124,8 @@ class SssBracket
         try {
             $sql = "select * from {$this->tblSssBracket} ";
             $sql .= "where sss_bracket_range_from like :search ";
-            $sql .= "order by sss_bracket_range_from asc ";
+            $sql .= "order by sss_bracket_active desc, ";
+            $sql .= "CAST(sss_bracket_range_from AS DECIMAL(20,2)) asc ";
             $query = $this->connection->prepare($sql);
             $query->execute([
                 "search" => "{$this->sss_bracket_search}%",
@@ -141,7 +143,7 @@ class SssBracket
             $sql = "select * ";
             $sql .= "from {$this->tblSssBracket} ";
             $sql .= "order by sss_bracket_active desc, ";
-            $sql .= "sss_bracket_range_from asc ";
+            $sql .= "CAST(sss_bracket_range_from AS DECIMAL(20,2)) asc ";
             $sql .= "limit :start, ";
             $sql .= ":total ";
             $query = $this->connection->prepare($sql);
@@ -184,6 +186,4 @@ class SssBracket
         }
         return $query;
     }
-
-
 }

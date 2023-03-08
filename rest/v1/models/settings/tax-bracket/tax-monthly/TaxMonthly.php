@@ -68,7 +68,8 @@ class TaxMonthly
             $sql = "select *  ";
             $sql .= "from {$this->tbltaxMonthly} ";
             $sql .= "order by tax_monthly_active desc, ";
-            $sql .= "tax_monthly_range_from asc ";
+            // $sql .= "tax_monthly_range_from asc ";
+            $sql .= "CAST(tax_monthly_range_from AS DECIMAL(20,2)) asc ";
             $query = $this->connection->query($sql);
         } catch (PDOException $ex) {
             $query = false;
@@ -76,7 +77,7 @@ class TaxMonthly
         return $query;
     }
 
-   
+
     public function update()
     {
         try {
@@ -104,7 +105,7 @@ class TaxMonthly
         return $query;
     }
 
-   
+
 
     public function delete()
     {
@@ -150,6 +151,4 @@ class TaxMonthly
         }
         return $query;
     }
-
-
 }

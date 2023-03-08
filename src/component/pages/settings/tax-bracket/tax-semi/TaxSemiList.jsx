@@ -3,7 +3,10 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 import { setIsAdd, setIsRestore } from "../../../../../store/StoreAction.jsx";
 import { StoreContext } from "../../../../../store/StoreContext.jsx";
 import useLoadSemiMonthly from "../../../../custom-hooks/useLoadSemiMonthly.jsx";
-import { devApiUrl } from "../../../../helpers/functions-general.jsx";
+import {
+  devApiUrl,
+  numberWithCommas,
+} from "../../../../helpers/functions-general.jsx";
 import ModalDeleteRestore from "../../../../partials/modals/ModalDeleteRestore.jsx";
 import NoData from "../../../../partials/NoData.jsx";
 import ServerError from "../../../../partials/ServerError.jsx";
@@ -54,11 +57,32 @@ const TaxSemiList = ({ setItemEdit, item }) => {
                 return (
                   <tr key={key}>
                     <td>{counter}</td>
-                    <td>{item.semi_monthly_range_from}</td>
-                    <td>{item.semi_monthly_range_to}</td>
-                    <td>{item.semi_monthly_less_amount}</td>
-                    <td>{item.semi_monthly_rate}</td>
-                    <td>{item.semi_monthly_additional_amount}</td>
+                    <td>
+                      {numberWithCommas(
+                        Number(item.semi_monthly_range_from).toFixed(2)
+                      )}
+                    </td>
+                    <td>
+                      {numberWithCommas(
+                        Number(item.semi_monthly_range_to).toFixed(2)
+                      )}
+                    </td>
+                    <td>
+                      {numberWithCommas(
+                        Number(item.semi_monthly_less_amount).toFixed(2)
+                      )}
+                    </td>
+                    <td>
+                      {numberWithCommas(
+                        Number(item.semi_monthly_rate).toFixed(2)
+                      )}
+                      %
+                    </td>
+                    <td>
+                      {numberWithCommas(
+                        Number(item.semi_monthly_additional_amount).toFixed(2)
+                      )}
+                    </td>
                     <td>
                       <div className="flex items-center gap-3">
                         <button

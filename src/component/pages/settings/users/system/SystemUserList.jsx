@@ -89,7 +89,7 @@ const SystemUserList = ({ setItemEdit }) => {
             {(isLoading || userSystems?.data.length === 0) && (
               <tr className="text-center ">
                 <td colSpan="100%" className="p-10">
-                  {status === "loading" && <TableSpinner />}
+                  {isLoading && <TableSpinner />}
                   <NoData />
                 </td>
               </tr>
@@ -186,6 +186,7 @@ const SystemUserList = ({ setItemEdit }) => {
               : "Are you sure you want to archive "
           }
           item={`${dataItem.user_system_email}`}
+          role_id={`${dataItem.user_system_role_id}`}
           arrKey="userSystems"
         />
       )}
@@ -202,6 +203,7 @@ const SystemUserList = ({ setItemEdit }) => {
               : "Are you sure you want to restore "
           }
           item={`${dataItem.user_system_email}`}
+          role_id={`${dataItem.user_system_role_id}`}
           arrKey="userSystems"
         />
       )}

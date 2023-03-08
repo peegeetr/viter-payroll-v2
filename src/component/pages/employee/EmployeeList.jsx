@@ -1,21 +1,16 @@
+import { useInfiniteQuery } from "@tanstack/react-query";
 import React from "react";
 import { FaEdit, FaUserCircle } from "react-icons/fa";
+import { useInView } from "react-intersection-observer";
 import { Link } from "react-router-dom";
-import { setIsConfirm, setIsRestore } from "../../../store/StoreAction";
 import { StoreContext } from "../../../store/StoreContext";
-import useFetchDataLoadMore from "../../custom-hooks/useFetchDataLoadMore";
-import {
-  devNavUrl,
-  getUserType,
-  hrisDevApiUrl,
-  UrlAdmin,
-} from "../../helpers/functions-general";
-import Loadmore from "../../partials/Loadmore";
-import ModalConfirm from "../../partials/modals/ModalConfirm";
-import ModalDeleteRestore from "../../partials/modals/ModalDeleteRestore";
+import { getUserType, hrisDevApiUrl } from "../../helpers/functions-general";
+import { queryDataInfinite } from "../../helpers/queryDataInfinite";
+import LoadmoreRq from "../../partials/LoadmoreRq";
 import NoData from "../../partials/NoData";
-import SearchBar from "../../partials/SearchBar";
+import SearchBarRq from "../../partials/SearchBarRq";
 import ServerError from "../../partials/ServerError";
+import FetchingSpinner from "../../partials/spinners/FetchingSpinner";
 import TableSpinner from "../../partials/spinners/TableSpinner";
 import StatusActive from "../../partials/status/StatusActive";
 import StatusInactive from "../../partials/status/StatusInactive";
@@ -25,173 +20,159 @@ const EmployeeList = () => {
   const [dataItem, setData] = React.useState(null);
   const [id, setId] = React.useState(null);
   const [isDel, setDel] = React.useState(false);
-  const search = React.useRef(null);
-  const perPage = 10;
-  const start = store.startIndex + 1;
-  let counter = 0;
-  const link = getUserType(store.credentials.data.role_is_developer === 1);
 
-  const {
-    loading,
-    handleLoad,
-    totalResult,
-    result,
-    handleSearch,
-    handleChange,
-  } = useFetchDataLoadMore(
-    `${hrisDevApiUrl}/v1/employees/limit/${start}/${perPage}`,
-    `${hrisDevApiUrl}/v1/employees`,
-    perPage,
-    search
+  const [onSearch, setOnSearch] = React.useState(false);
+  const [page, setPage] = React.useState(1);
+  const search = React.useRef(null);
+  let counter = 1;
+  const { ref, inView } = useInView();
+  const link = getUserType(
+    store.credentials.data.role_is_developer === 1,
+    store.credentials.data.role_is_admin === 1,
+    store.credentials.data.role_is_contributor === 1
   );
 
-  const handleArchive = (item) => {
-    dispatch(setIsConfirm(true));
-    setId(item.employee_aid);
-    setData(item);
-    setDel(null);
-  };
+  // use if with loadmore button and search bar
+  const {
+    data: result,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+    isFetchingNextPage,
+    status,
+  } = useInfiniteQuery({
+    queryKey: ["employee", onSearch, store.isSearch],
+    queryFn: async ({ pageParam = 1 }) =>
+      await queryDataInfinite(
+        `${hrisDevApiUrl}/v1/employees/search/${search.current.value}`, // search endpoint
+        `${hrisDevApiUrl}/v1/employees/page/${pageParam}`, // list endpoint
+        store.isSearch // search boolean
+      ),
+    getNextPageParam: (lastPage) => {
+      if (lastPage.page < lastPage.total) {
+        return lastPage.page + lastPage.count;
+      }
+      return;
+    },
+    refetchOnWindowFocus: false,
+  });
 
-  const handleRestore = (item) => {
-    dispatch(setIsRestore(true));
-    setId(item.employee_aid);
-    setData(item);
-    setDel(null);
-  };
-
-  const handleDelete = (item) => {
-    dispatch(setIsRestore(true));
-    setId(item.employee_aid);
-    setData(item);
-    setDel(true);
-  };
+  React.useEffect(() => {
+    if (inView) {
+      setPage((prev) => prev + 1);
+      fetchNextPage();
+    }
+  }, [inView]);
 
   return (
     <>
-      <SearchBar
+      <SearchBarRq
         search={search}
-        handleSearch={handleSearch}
-        handleChange={handleChange}
-        loading={loading}
-        result={result}
+        dispatch={dispatch}
         store={store}
-        url={`${hrisDevApiUrl}/v1/employees/search/`}
+        result={result?.pages}
+        isFetching={isFetching}
+        setOnSearch={setOnSearch}
+        onSearch={onSearch}
       />
 
-      <div className="relative text-center overflow-x-auto z-0">
-        {loading && <TableSpinner />}
-        <table>
-          <thead>
-            <tr>
-              <th className="text-center">#</th>
-              <th className="w-12"></th>
-              <th className="w-52">Name</th>
-              <th className="w-28">ID No.</th>
-              <th className="w-[24rem]">Work Email</th>
-              <th className="w-[12rem]">Direct report</th>
-              <th>Status</th>
-              <th className="text-right">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {result.length > 0 ? (
-              result.map((item, key) => {
-                counter++;
-                return (
-                  <tr key={key}>
-                    <td className="text-center">{counter}.</td>
-                    <td>
-                      {item.employee_photo > 0 ? (
-                        <img
-                          src="https://hris.frontlinebusiness.com.ph/img/abrigo.jpg"
-                          alt="employee photo"
-                          className="rounded-full h-8 w-8 object-cover object-center mx-auto"
-                        />
-                      ) : (
-                        <span className="text-3xl text-gray-400">
-                          <FaUserCircle />
-                        </span>
-                      )}
-                    </td>
-                    <td>{item.fullname}</td>
-                    <td>{item.employee_job_number}</td>
-                    <td>{item.employee_email}</td>
-                    <td>
-                      {item.supervisor === null
-                        ? "Not assigned"
-                        : item.supervisor}
-                    </td>
-                    <td>
-                      {item.employee_is_active === 1 ? (
-                        <StatusActive />
-                      ) : (
-                        <StatusInactive />
-                      )}
-                    </td>
-                    <td>
-                      <div className="flex justify-end items-center gap-1">
-                        <Link
-                          to={`${link}/employee/details?employeeid=${item.employee_aid}`}
-                          className="btn-action-table tooltip-action-table"
-                          data-tooltip="Edit"
-                        >
-                          <FaEdit />
-                        </Link>
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })
-            ) : result === -1 ? (
-              <tr className="text-center ">
-                <td colSpan="100%" className="p-10">
-                  <ServerError />
-                </td>
-              </tr>
-            ) : (
-              <tr className="text-center ">
-                <td colSpan="100%" className="p-10">
-                  <NoData />
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-
-        {!store.isSearch && (
-          <Loadmore
-            handleLoad={handleLoad}
-            loading={loading}
-            result={result}
-            totalResult={totalResult}
-          />
+      <div className="relative text-center">
+        {isFetching && !isFetchingNextPage && status !== "loading" && (
+          <FetchingSpinner />
         )}
+        <div className=" overflow-x-auto z-0">
+          <table>
+            <thead>
+              <tr>
+                <th className="text-center">#</th>
+                <th className="w-12"></th>
+                <th className="w-52">Name</th>
+                <th className="w-28">ID No.</th>
+                <th className="w-[24rem]">Work Email</th>
+                <th className="w-[12rem]">Direct report</th>
+                <th>Status</th>
+                <th className="text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {(status === "loading" || result?.pages[0].data.length === 0) && (
+                <tr className="text-center ">
+                  <td colSpan="100%" className="p-10">
+                    {status === "loading" && <TableSpinner />}
+                    <NoData />
+                  </td>
+                </tr>
+              )}
+              {error && (
+                <tr className="text-center ">
+                  <td colSpan="100%" className="p-10">
+                    <ServerError />
+                  </td>
+                </tr>
+              )}
+
+              {result?.pages.map((page, key) => (
+                <React.Fragment key={key}>
+                  {page.data.map((item, key) => (
+                    <tr key={key}>
+                      <td className="text-center">{counter++}.</td>
+                      <td>
+                        {item.employee_photo > 0 ? (
+                          <img
+                            src="https://hris.frontlinebusiness.com.ph/img/abrigo.jpg"
+                            alt="employee photo"
+                            className="rounded-full h-8 w-8 object-cover object-center mx-auto"
+                          />
+                        ) : (
+                          <span className="text-3xl text-gray-400">
+                            <FaUserCircle />
+                          </span>
+                        )}
+                      </td>
+                      <td>{item.fullname}</td>
+                      <td>{item.employee_job_number}</td>
+                      <td>{item.employee_email}</td>
+                      <td>
+                        {item.supervisor === null
+                          ? "Not assigned"
+                          : item.supervisor}
+                      </td>
+                      <td>
+                        {item.employee_is_active === 1 ? (
+                          <StatusActive />
+                        ) : (
+                          <StatusInactive />
+                        )}
+                      </td>
+                      <td>
+                        <div className="flex justify-end items-center gap-1">
+                          <Link
+                            to={`${link}/employee/details?employeeid=${item.employee_aid}`}
+                            className="btn-action-table tooltip-action-table"
+                            data-tooltip="Edit"
+                          >
+                            <FaEdit />
+                          </Link>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </React.Fragment>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <LoadmoreRq
+          fetchNextPage={fetchNextPage}
+          isFetchingNextPage={isFetchingNextPage}
+          hasNextPage={hasNextPage}
+          result={result?.pages[0]}
+          setPage={setPage}
+          page={page}
+          refView={ref}
+        />
       </div>
-
-      {store.isConfirm && (
-        <ModalConfirm
-          id={id}
-          isDel={isDel}
-          mysqlApiArchive={`${hrisDevApiUrl}/v1/employees/active/${id}`}
-          msg={"Are you sure you want to archive this employee"}
-          item={`"${dataItem.employee_lname}, ${dataItem.employee_fname}"`}
-        />
-      )}
-
-      {store.isRestore && (
-        <ModalDeleteRestore
-          id={id}
-          isDel={isDel}
-          mysqlApiDelete={`${hrisDevApiUrl}/v1/employees/${id}`}
-          mysqlApiRestore={`${hrisDevApiUrl}/v1/employees/active/${id}`}
-          msg={
-            isDel
-              ? "Are you sure you want to delete this employee"
-              : "Are you sure you want to restore this employee"
-          }
-          item={`"${dataItem.employee_lname}, ${dataItem.employee_fname}"`}
-        />
-      )}
     </>
   );
 };

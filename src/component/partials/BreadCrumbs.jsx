@@ -4,7 +4,7 @@ import { setStartIndex } from "../../store/StoreAction";
 import { StoreContext } from "../../store/StoreContext";
 import { devNavUrl, getUserType, UrlAdmin } from "../helpers/functions-general";
 
-const BreadCrumbs = () => {
+const BreadCrumbs = ({ param = "" }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const location = useLocation();
 
@@ -16,7 +16,7 @@ const BreadCrumbs = () => {
     .split("/")
     .filter((crumb) => crumb !== "")
     .map((crumb, key) => {
-      currentLink += `${crumb}/`;
+      currentLink += `/${crumb}`;
 
       return (
         <li
@@ -25,7 +25,7 @@ const BreadCrumbs = () => {
           onClick={() => dispatch(setStartIndex(0))}
         >
           <Link
-            to={`${link}/${currentLink}`}
+            to={`${link}${currentLink}${param}`}
             className="mr-2 text-base font-medium hover:text-primary capitalize"
           >
             {crumb}

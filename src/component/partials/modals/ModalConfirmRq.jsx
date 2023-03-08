@@ -18,6 +18,7 @@ const ModalConfirmRq = ({
   msg,
   item,
   isDeveloper,
+  role_id,
   arrKey,
 }) => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -43,11 +44,9 @@ const ModalConfirmRq = ({
       dispatch(setIsConfirm(false));
     },
   });
-
   const handleClose = () => {
     dispatch(setIsConfirm(false));
   };
-
   const handleYes = async () => {
     // // mutate data
     mutation.mutate({
@@ -59,6 +58,7 @@ const ModalConfirmRq = ({
     // if reseting your own password
     if (
       (arrKey === "userSystems" || arrKey === "otherUsers") &&
+      store.credentials.data.role_aid === Number(role_id) &&
       (store.credentials.data.user_system_email === item ||
         store.credentials.data.user_other_email === item)
     ) {
@@ -87,8 +87,9 @@ const ModalConfirmRq = ({
             <span className="text-5xl text-red-700 ">
               <FaQuestionCircle className="my-0 mx-auto" />
             </span>
-            {store.credentials.data.user_system_email === item ||
-            store.credentials.data.user_other_email === item ? (
+            {store.credentials.data.role_aid === Number(role_id) &&
+            (store.credentials.data.user_system_email === item ||
+              store.credentials.data.user_other_email === item) ? (
               <span className="text-sm font-bold">
                 {message} <br />
                 Do you still want to proceed?

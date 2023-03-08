@@ -93,7 +93,7 @@ const OtherUserList = ({ setItemEdit }) => {
             {(isLoading || otherUsers?.data.length === 0) && (
               <tr className="text-center ">
                 <td colSpan="100%" className="p-10">
-                  {status === "loading" && <TableSpinner />}
+                  {isLoading && <TableSpinner />}
                   <NoData />
                 </td>
               </tr>
@@ -184,8 +184,13 @@ const OtherUserList = ({ setItemEdit }) => {
           isDel={isDel}
           mysqlApiReset={`${devApiUrl}/v1/user-others/reset`}
           mysqlApiArchive={`${devApiUrl}/v1/user-others/active/${id}`}
-          msg={"Are you sure you want to archive this user"}
+          msg={
+            isDel
+              ? "Are you sure you want to reset this user"
+              : "Are you sure you want to archive this user"
+          }
           item={`${dataItem.user_other_email}`}
+          role_id={`${dataItem.user_other_role_id}`}
           arrKey="otherUsers"
         />
       )}
@@ -202,6 +207,7 @@ const OtherUserList = ({ setItemEdit }) => {
               : "Are you sure you want to restore this user"
           }
           item={`${dataItem.user_other_email}`}
+          role_id={`${dataItem.user_other_role_id}`}
           arrKey="otherUsers"
         />
       )}

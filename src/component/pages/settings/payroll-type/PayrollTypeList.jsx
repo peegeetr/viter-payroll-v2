@@ -80,7 +80,7 @@ const PayrollTypeList = ({ setItemEdit }) => {
             {(isLoading || payrollType?.data.length === 0) && (
               <tr className="text-center ">
                 <td colSpan="100%" className="p-10">
-                  {status === "loading" && <TableSpinner />}
+                  {isLoading && <TableSpinner />}
                   <NoData />
                 </td>
               </tr>

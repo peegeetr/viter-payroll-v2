@@ -2,7 +2,6 @@ import React from "react";
 import { FaPlusCircle } from "react-icons/fa";
 import { setIsAdd } from "../../../../store/StoreAction.jsx";
 import { StoreContext } from "../../../../store/StoreContext.jsx";
-import useLoadPayType from "../../../custom-hooks/useLoadPayType.jsx";
 import useQueryData from "../../../custom-hooks/useQueryData.jsx";
 import { devApiUrl } from "../../../helpers/functions-general.jsx";
 import BreadCrumbs from "../../../partials/BreadCrumbs.jsx";

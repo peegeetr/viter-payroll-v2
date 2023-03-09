@@ -84,7 +84,7 @@ RewriteRule ^tax/monthly/([0-9]+)$ controllers/settings/tax-bracket/tax-monthly/
 #SETTINGS SSS BRACKET
 RewriteRule ^sss-bracket$ controllers/settings/sss-bracket/sss-bracket.php [L]
 RewriteRule ^sss-bracket/([0-9]+)$ controllers/settings/sss-bracket/sss-bracket.php?sssbracketid=$1 [L]
-RewriteRule ^sss-bracket/limit/([0-9]+)/([0-9]+)$ controllers/settings/sss-bracket/limit.php?start=$1&total=$2 [L]
+RewriteRule ^sss-bracket/page/([0-9]+)$ controllers/settings/sss-bracket/page.php?start=$1 [L]
 RewriteRule ^sss-bracket/search/([A-Za-z0-9-]+)$ controllers/settings/sss-bracket/search.php?search=$1 [L]
  
 #SETTINGS USER SYSTEM

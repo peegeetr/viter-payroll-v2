@@ -15,7 +15,6 @@ import ModalDeleteRestoreRq from "../../../partials/modals/ModalDeleteRestoreRq"
 import NoData from "../../../partials/NoData";
 import SearchBarRq from "../../../partials/SearchBarRq";
 import ServerError from "../../../partials/ServerError";
-import FetchingSpinner from "../../../partials/spinners/FetchingSpinner";
 import TableSpinner from "../../../partials/spinners/TableSpinner";
 import { getStatus } from "./function-manage-list";
 

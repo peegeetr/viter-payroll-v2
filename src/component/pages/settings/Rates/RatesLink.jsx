@@ -4,11 +4,7 @@ import { SlArrowRight } from "react-icons/sl";
 import { Link } from "react-router-dom";
 import { setStartIndex } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
-import {
-  devNavUrl,
-  getUserType,
-  UrlAdmin,
-} from "../../../helpers/functions-general";
+import { getUserType } from "../../../helpers/functions-general";
 
 const RatesLink = () => {
   const { store, dispatch } = React.useContext(StoreContext);

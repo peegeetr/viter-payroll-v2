@@ -1,22 +1,51 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Form, Formik } from "formik";
 import React from "react";
 import { FaTimesCircle } from "react-icons/fa";
 import * as Yup from "yup";
-import { setIsAdd, setStartIndex } from "../../../../../store/StoreAction.jsx";
+import {
+  setError,
+  setIsAdd,
+  setMessage,
+  setSuccess,
+} from "../../../../../store/StoreAction.jsx";
 import { StoreContext } from "../../../../../store/StoreContext.jsx";
-import { fetchData } from "../../../../helpers/fetchData.jsx";
 import { InputText } from "../../../../helpers/FormInputs.jsx";
 import {
   devApiUrl,
   handleNumOnly,
 } from "../../../../helpers/functions-general.jsx";
+import { queryData } from "../../../../helpers/queryData.jsx";
 import ButtonSpinner from "../../../../partials/spinners/ButtonSpinner.jsx";
 
 const ModalAddTaxMonthly = ({ itemEdit }) => {
   const { store, dispatch } = React.useContext(StoreContext);
-  const [loading, setLoading] = React.useState(false);
-  const [data, setData] = React.useState([]);
 
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: (values) =>
+      queryData(
+        itemEdit
+          ? `${devApiUrl}/v1/tax/monthly/${itemEdit.tax_monthly_aid}`
+          : `${devApiUrl}/v1/tax/monthly`,
+        itemEdit ? "put" : "post",
+        values
+      ),
+    onSuccess: (data) => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries({ queryKey: ["monthly"] });
+      // show success box
+      if (data.success) {
+        dispatch(setSuccess(true));
+        dispatch(setMessage(`Successfuly ${itemEdit ? "updated." : "added."}`));
+      }
+      // show error box
+      if (!data.success) {
+        dispatch(setError(true));
+        dispatch(setMessage(data.error));
+      }
+    },
+  });
   const handleClose = () => {
     dispatch(setIsAdd(false));
   };
@@ -62,23 +91,9 @@ const ModalAddTaxMonthly = ({ itemEdit }) => {
               initialValues={initVal}
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
-                fetchData(
-                  setLoading,
-                  itemEdit
-                    ? `${devApiUrl}/v1/tax/monthly/${itemEdit.tax_monthly_aid}`
-                    : `${devApiUrl}/v1/tax/monthly`,
-                  values, // form data values
-                  null, // result set data
-                  itemEdit ? "Succesfully updated." : "Succesfully added.", // success msg
-                  "", // additional error msg if needed
-                  dispatch, // context api action
-                  store, // context api state
-                  true, // boolean to show success modal
-                  false, // boolean to show load more functionality button
-                  null, // navigate default value
-                  itemEdit ? "put" : "post"
-                );
-                dispatch(setStartIndex(0));
+                console.log(values);
+
+                mutation.mutate(values);
               }}
             >
               {(props) => {
@@ -89,7 +104,7 @@ const ModalAddTaxMonthly = ({ itemEdit }) => {
                         label="Range From"
                         type="text"
                         name="tax_monthly_range_from"
-                        disabled={loading}
+                        disabled={mutation.isLoading}
                         onKeyPress={(e) => handleNumOnly(e)}
                       />
                     </div>
@@ -99,7 +114,7 @@ const ModalAddTaxMonthly = ({ itemEdit }) => {
                         label="Range To"
                         type="text"
                         name="tax_monthly_range_to"
-                        disabled={loading}
+                        disabled={mutation.isLoading}
                         onKeyPress={(e) => handleNumOnly(e)}
                       />
                     </div>
@@ -109,7 +124,7 @@ const ModalAddTaxMonthly = ({ itemEdit }) => {
                         label="Less Amount"
                         type="text"
                         name="tax_monthly_less_amount"
-                        disabled={loading}
+                        disabled={mutation.isLoading}
                         onKeyPress={(e) => handleNumOnly(e)}
                       />
                     </div>
@@ -119,7 +134,7 @@ const ModalAddTaxMonthly = ({ itemEdit }) => {
                         label="Rate %"
                         type="text"
                         name="tax_monthly_rate"
-                        disabled={loading}
+                        disabled={mutation.isLoading}
                         onKeyPress={(e) => handleNumOnly(e)}
                       />
                     </div>
@@ -129,7 +144,7 @@ const ModalAddTaxMonthly = ({ itemEdit }) => {
                         label="Addt'l Amount"
                         type="text"
                         name="tax_monthly_additional_amount"
-                        disabled={loading}
+                        disabled={mutation.isLoading}
                         onKeyPress={(e) => handleNumOnly(e)}
                       />
                     </div>
@@ -137,10 +152,10 @@ const ModalAddTaxMonthly = ({ itemEdit }) => {
                     <div className="flex items-center gap-1 pt-5">
                       <button
                         type="submit"
-                        disabled={loading || !props.dirty}
+                        disabled={mutation.isLoading || !props.dirty}
                         className="btn-modal-submit relative"
                       >
-                        {loading ? (
+                        {mutation.isLoading ? (
                           <ButtonSpinner />
                         ) : itemEdit ? (
                           "Save"
@@ -152,7 +167,7 @@ const ModalAddTaxMonthly = ({ itemEdit }) => {
                         type="reset"
                         className="btn-modal-cancel cursor-pointer"
                         onClick={handleClose}
-                        disabled={loading}
+                        disabled={mutation.isLoading}
                       >
                         Cancel
                       </button>

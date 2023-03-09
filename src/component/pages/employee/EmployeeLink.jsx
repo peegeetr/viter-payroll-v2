@@ -9,6 +9,7 @@ import Footer from "../../partials/Footer.jsx";
 import Header from "../../partials/Header.jsx";
 import Navigation from "../../partials/Navigation.jsx";
 import NoData from "../../partials/NoData.jsx";
+import TableSpinner from "../../partials/spinners/TableSpinner.jsx";
 import DetailsLink from "./job-details/JobDetailsLink.jsx";
 import SalaryHistoryLink from "./salary-history/SalaryHistoryLink.jsx";
 
@@ -51,6 +52,7 @@ const EmployeeLink = () => {
           </>
         ) : (
           <div className="relative w-full min-h-[616px] grid place-items-center">
+            {isLoading && <TableSpinner />}
             <NoData />
           </div>
         )}

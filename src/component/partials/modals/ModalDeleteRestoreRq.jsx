@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React from "react";
 import { FaQuestionCircle, FaTimesCircle } from "react-icons/fa";
-import { setIsRestore } from "../../../store/StoreAction";
+import { setError, setIsRestore, setMessage } from "../../../store/StoreAction";
 import { StoreContext } from "../../../store/StoreContext";
 import { queryData } from "../../helpers/queryData";
 import ButtonSpinner from "../spinners/ButtonSpinner";
@@ -12,6 +12,7 @@ const ModalDeleteRestoreRq = ({
   mysqlApiRestore,
   msg,
   item,
+  isDeveloper,
   arrKey,
 }) => {
   const { dispatch } = React.useContext(StoreContext);
@@ -24,10 +25,15 @@ const ModalDeleteRestoreRq = ({
         isDel ? "delete" : "put",
         values
       ),
-    onSuccess: () => {
+    onSuccess: (data) => {
       // Invalidate and refetch
       queryClient.invalidateQueries({ queryKey: [arrKey] });
       dispatch(setIsRestore(false));
+      // show error box
+      if (!data.success) {
+        dispatch(setError(true));
+        dispatch(setMessage(data.error));
+      }
     },
   });
 
@@ -39,6 +45,8 @@ const ModalDeleteRestoreRq = ({
     // // mutate data
     mutation.mutate({
       isActive: 1,
+      column_name: item,
+      isDeveloper: isDeveloper,
     });
   };
 

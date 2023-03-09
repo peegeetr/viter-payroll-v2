@@ -3,6 +3,7 @@ import { FaPlusCircle } from "react-icons/fa";
 import { setIsAdd } from "../../../../store/StoreAction.jsx";
 import { StoreContext } from "../../../../store/StoreContext.jsx";
 import useLoadPayType from "../../../custom-hooks/useLoadPayType.jsx";
+import useQueryData from "../../../custom-hooks/useQueryData.jsx";
 import { devApiUrl } from "../../../helpers/functions-general.jsx";
 import BreadCrumbs from "../../../partials/BreadCrumbs.jsx";
 import Footer from "../../../partials/Footer.jsx";
@@ -16,8 +17,13 @@ import RatesList from "./RatesList.jsx";
 const Rates = () => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [itemEdit, setItemEdit] = React.useState(null);
-  const { payType } = useLoadPayType(`${devApiUrl}/v1/paytype`, "get");
 
+  // use if not loadmore button and handle change
+  const { data: payType } = useQueryData(
+    `${devApiUrl}/v1/paytype`, // endpoint
+    "get", // method
+    "payType" // key
+  );
   const handleAdd = () => {
     dispatch(setIsAdd(true));
     setItemEdit(null);

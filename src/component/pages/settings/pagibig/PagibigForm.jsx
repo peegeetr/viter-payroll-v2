@@ -48,14 +48,13 @@ const PagibigForm = () => {
             <FaEdit />
           </button>
         </div>
-        <p className="font-semibold mb-5 xs:pl-5 pl-2">
-          EE Amount :
-          <span className="font-light pl-2">{numberWithCommas(eeAmount)}</span>
-        </p>
-        <p className="font-semibold xs:pl-5 pl-2">
-          ER Amount :
-          <span className="font-light pl-2">{numberWithCommas(erAmount)}</span>
-        </p>
+
+        <div className="text-left grid grid-cols-[6rem_1fr] mb-5 xs:pl-5 pl-2">
+          <p className="font-semibold">EE Amount :</p>
+          <p className="pl-2">{numberWithCommas(eeAmount)}</p>
+          <p className="font-semibold">ER Amount :</p>
+          <p className="pl-2">{numberWithCommas(erAmount)}</p>
+        </div>
       </div>
       {store.isAdd && <ModalUpdatePagibig item={item} />}
     </>

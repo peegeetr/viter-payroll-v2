@@ -52,7 +52,7 @@ const EmployeeList = () => {
       return;
     },
     refetchOnWindowFocus: false,
-    cacheTime: 1000,
+    // cacheTime: 1000,
   });
 
   React.useEffect(() => {

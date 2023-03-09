@@ -7,8 +7,10 @@ import { setIsAdd, setIsRestore } from "../../../store/StoreAction";
 import { StoreContext } from "../../../store/StoreContext";
 import {
   devApiUrl,
+  devNavUrl,
   formatDate,
   getUserType,
+  UrlSystem,
 } from "../../helpers/functions-general";
 import { queryDataInfinite } from "../../helpers/queryDataInfinite";
 import LoadmoreRq from "../../partials/LoadmoreRq";
@@ -98,9 +100,9 @@ const PayrollList = ({ setItemEdit }) => {
       />
 
       <div className="relative text-center">
-        {isFetching && !isFetchingNextPage && status !== "loading" && (
+        {/* {isFetching && !isFetchingNextPage && status !== "loading" && (
           <FetchingSpinner />
-        )}
+        )} */}
         <div className=" overflow-x-auto z-0">
           <table>
             <thead>
@@ -170,7 +172,6 @@ const PayrollList = ({ setItemEdit }) => {
                           <Link
                             to={`${link}/payroll/list?payrollid=${item.payroll_id}`}
                             className="btn-action-table tooltip-action-table"
-                            onClick={() => dispatch(setStartIndex(0))}
                             data-tooltip="View"
                           >
                             <FaList />

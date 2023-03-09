@@ -2,22 +2,50 @@ import { Form, Formik } from "formik";
 import React from "react";
 import { FaTimesCircle } from "react-icons/fa";
 import * as Yup from "yup";
-import { setIsAdd, setStartIndex } from "../../../store/StoreAction";
+import {
+  setError,
+  setIsAdd,
+  setMessage,
+  setStartIndex,
+  setSuccess,
+} from "../../../store/StoreAction";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { StoreContext } from "../../../store/StoreContext";
 import { fetchData } from "../../helpers/fetchData";
-import {
-  InputSelect,
-  InputText,
-  InputTextArea,
-  MyCheckbox,
-} from "../../helpers/FormInputs";
+import { InputSelect, InputText, MyCheckbox } from "../../helpers/FormInputs";
 import { devApiUrl } from "../../helpers/functions-general";
+import { queryData } from "../../helpers/queryData";
 import ButtonSpinner from "../../partials/spinners/ButtonSpinner";
 
 const ModalAddHolidays = ({ item }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [loading, setLoading] = React.useState(false);
 
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: (values) =>
+      queryData(
+        item
+          ? `${devApiUrl}/v1/holidays/${item.holidays_aid}`
+          : `${devApiUrl}/v1/holidays`,
+        item ? "put" : "post",
+        values
+      ),
+    onSuccess: (data) => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries({ queryKey: ["holidays"] });
+      // show success box
+      if (data.success) {
+        dispatch(setSuccess(true));
+        dispatch(setMessage(`Successfuly ${item ? "updated." : "added."}`));
+      }
+      // show error box
+      if (!data.success) {
+        dispatch(setError(true));
+        dispatch(setMessage(data.error));
+      }
+    },
+  });
   const handleClose = () => {
     dispatch(setIsAdd(false));
   };
@@ -62,24 +90,9 @@ const ModalAddHolidays = ({ item }) => {
               initialValues={initVal}
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
-                console.log(values);
-                fetchData(
-                  setLoading,
-                  item
-                    ? `${devApiUrl}/v1/holidays/${item.holidays_aid}`
-                    : `${devApiUrl}/v1/holidays`,
-                  values, // form data values
-                  null, // result set data
-                  item ? "Succesfully updated." : "Succesfully added.", // success msg
-                  "", // additional error msg if needed
-                  dispatch, // context api action
-                  store, // context api state
-                  true, // boolean to show success modal
-                  false, // boolean to show load more functionality button
-                  null, // navigate default value
-                  item ? "put" : "post"
-                );
-                dispatch(setStartIndex(0));
+                // console.log(values);
+
+                mutation.mutate(values);
               }}
             >
               {(props) => {

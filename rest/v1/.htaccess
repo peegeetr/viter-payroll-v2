@@ -29,13 +29,13 @@ RewriteRule ^payroll$ controllers/payroll/payroll.php [L]
 RewriteRule ^payroll/list$ controllers/payroll/draft.php [L]
 RewriteRule ^payroll/([0-9]+)$ controllers/payroll/payroll.php?payrollid=$1 [L]
 RewriteRule ^payroll/active/([0-9]+)$ controllers/payroll/active.php?payrollid=$1 [L]
-RewriteRule ^payroll/limit/([0-9]+)/([0-9]+)$ controllers/payroll/limit.php?start=$1&total=$2 [L]
+RewriteRule ^payroll/page/([0-9]+)$ controllers/payroll/page.php?start=$1 [L]
 RewriteRule ^payroll/search/([A-Za-z0-9-]+)$ controllers/payroll/search.php?search=$1 [L]
    
 #payroll list
 RewriteRule ^payrollList$ controllers/payroll/list/payrollView.php [L]
 RewriteRule ^payrollList/([A-Za-z0-9-]+)$ controllers/payroll/list/payrollView.php?listpayrollid=$1 [L] 
-RewriteRule ^payrollList/limit/([0-9]+)/([0-9]+)/([A-Za-z0-9-]+)$ controllers/payroll/list/limit.php?start=$1&total=$2&listpayrollid=$3 [L]
+RewriteRule ^payrollList/page/([A-Za-z0-9-]+)/([0-9]+)$ controllers/payroll/list/page.php?listpayrollid=$1&start=$2 [L]
 RewriteRule ^payrollList/search/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)$ controllers/payroll/list/search.php?listpayrollid=$1&search=$2 [L]
     
 

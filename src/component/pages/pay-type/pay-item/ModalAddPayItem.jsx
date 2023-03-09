@@ -1,16 +1,18 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Form, Formik } from "formik";
 import React from "react";
 import { FaTimesCircle } from "react-icons/fa";
 import * as Yup from "yup";
-import { setIsAdd, setStartIndex } from "../../../../store/StoreAction";
-import { StoreContext } from "../../../../store/StoreContext";
-import { fetchData } from "../../../helpers/fetchData";
-import { InputText, MyCheckbox } from "../../../helpers/FormInputs";
 import {
-  consoleLog,
-  devApiUrl,
-  getUrlParam,
-} from "../../../helpers/functions-general";
+  setError,
+  setIsAdd,
+  setMessage,
+  setSuccess,
+} from "../../../../store/StoreAction";
+import { StoreContext } from "../../../../store/StoreContext";
+import { InputText, MyCheckbox } from "../../../helpers/FormInputs";
+import { devApiUrl, getUrlParam } from "../../../helpers/functions-general";
+import { queryData } from "../../../helpers/queryData";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 
 const ModalAddPayItem = ({ item }) => {
@@ -18,6 +20,31 @@ const ModalAddPayItem = ({ item }) => {
   const [loading, setLoading] = React.useState(false);
   const paytypeid = getUrlParam().get("paytypeid");
 
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: (values) =>
+      queryData(
+        item
+          ? `${devApiUrl}/v1/payitem/${item.payitem_aid}`
+          : `${devApiUrl}/v1/payitem`,
+        item ? "put" : "post",
+        values
+      ),
+    onSuccess: (data) => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries({ queryKey: ["payItem"] });
+      // show success box
+      if (data.success) {
+        dispatch(setSuccess(true));
+        dispatch(setMessage(`Successfuly ${item ? "updated." : "added."}`));
+      }
+      // show error box
+      if (!data.success) {
+        dispatch(setError(true));
+        dispatch(setMessage(data.error));
+      }
+    },
+  });
   const handleClose = () => {
     dispatch(setIsAdd(false));
   };
@@ -55,24 +82,9 @@ const ModalAddPayItem = ({ item }) => {
               initialValues={initVal}
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
-                consoleLog(values);
-                fetchData(
-                  setLoading,
-                  item
-                    ? `${devApiUrl}/v1/payitem//${item.payitem_aid}`
-                    : `${devApiUrl}/v1/payitem`,
-                  values, // form data values
-                  null, // result set data
-                  item ? "Succesfully updated." : "Succesfully added.", // success msg
-                  "", // additional error msg if needed
-                  dispatch, // context api action
-                  store, // context api state
-                  true, // boolean to show success modal
-                  false, // boolean to show load more functionality button
-                  null, // navigate default value
-                  item ? "put" : "post"
-                );
-                dispatch(setStartIndex(0));
+                // console.log(values);
+
+                mutation.mutate(values);
               }}
             >
               {(props) => {
@@ -83,7 +95,7 @@ const ModalAddPayItem = ({ item }) => {
                         label="Name"
                         type="text"
                         name="payitem_name"
-                        disabled={loading}
+                        disabled={mutation.isLoading}
                       />
                     </div>
                     <div className="relative mb-3 flex items-center">
@@ -95,23 +107,29 @@ const ModalAddPayItem = ({ item }) => {
                           type="checkbox"
                           name="payitem_is_hris"
                           id="Is data from HRIS?"
-                          disabled={loading}
+                          disabled={mutation.isLoading}
                         />
                       </span>
                     </div>
                     <div className="flex items-center gap-1 pt-5">
                       <button
                         type="submit"
-                        disabled={loading || !props.dirty}
+                        disabled={mutation.isLoading || !props.dirty}
                         className="btn-modal-submit relative"
                       >
-                        {loading ? <ButtonSpinner /> : item ? "Save" : "Add"}
+                        {mutation.isLoading ? (
+                          <ButtonSpinner />
+                        ) : item ? (
+                          "Save"
+                        ) : (
+                          "Add"
+                        )}
                       </button>
                       <button
                         type="reset"
                         className="btn-modal-cancel cursor-pointer"
                         onClick={handleClose}
-                        disabled={loading}
+                        disabled={mutation.isLoading}
                       >
                         Cancel
                       </button>

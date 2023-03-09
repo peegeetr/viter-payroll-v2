@@ -6,6 +6,7 @@ import { StoreContext } from "../../../../store/StoreContext";
 import useLoadHolidays from "../../../custom-hooks/useLoadHolidays";
 import useLoadPayrollEarnings from "../../../custom-hooks/useLoadPayrollEarnings";
 import useLoadPayrollList from "../../../custom-hooks/useLoadPayrollList";
+import useQueryData from "../../../custom-hooks/useQueryData";
 import { devApiUrl, getUrlParam } from "../../../helpers/functions-general";
 import BreadCrumbs from "../../../partials/BreadCrumbs";
 import Footer from "../../../partials/Footer";
@@ -21,15 +22,26 @@ const PayrollView = () => {
   const [itemEdit, setItemEdit] = React.useState(null);
   const pid = getUrlParam().get("payrollid");
 
-  const { payrollList } = useLoadPayrollList(
-    `${devApiUrl}/v1/payrollList/${pid}`,
-    "get"
+  // use if not loadmore button undertime
+  const { data: payrollList } = useQueryData(
+    `${devApiUrl}/v1/payrollList/${pid}`, // endpoint
+    "get", // method
+    "payrollList" // key
   );
-  const { payrollEarnings } = useLoadPayrollEarnings(
-    `${devApiUrl}/v1/earnings`,
-    "get"
+
+  // use if not loadmore button undertime
+  const { data: payrollEarnings } = useQueryData(
+    `${devApiUrl}/v1/earnings`, // endpoint
+    "get", // method
+    "payrollEarnings" // key
   );
-  const { holidays } = useLoadHolidays(`${devApiUrl}/v1/holidays`, "get");
+
+  // use if not loadmore button undertime
+  const { data: holidays } = useQueryData(
+    `${devApiUrl}/v1/holidays`, // endpoint
+    "get", // method
+    "holidays" // key
+  );
 
   console.log(payrollEarnings, holidays, payrollList);
   const handleRun = () => {
@@ -69,9 +81,9 @@ const PayrollView = () => {
       {store.isConfirm && (
         <ModalRun
           item={pid}
-          employees={payrollList}
-          payrollEarnings={payrollEarnings}
-          holidays={holidays}
+          employees={payrollList?.data}
+          payrollEarnings={payrollEarnings?.data}
+          holidays={holidays?.data}
         />
       )}
       {store.success && <ModalSuccess />}

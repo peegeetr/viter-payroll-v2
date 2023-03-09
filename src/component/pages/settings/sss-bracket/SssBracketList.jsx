@@ -125,7 +125,7 @@ const SssBracketList = ({ setItemEdit, setItemNum }) => {
                 <React.Fragment key={key}>
                   {page.data.map((item, key) => (
                     <tr key={key}>
-                      <td>{key + 1}.</td>
+                      <td>{counter++}.</td>
                       <td>
                         {numberWithCommas(
                           Number(item.sss_bracket_range_from).toFixed(2)

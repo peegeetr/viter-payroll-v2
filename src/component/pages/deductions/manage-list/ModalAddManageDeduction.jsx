@@ -1,11 +1,10 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Form, Formik } from "formik";
 import React from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { FaTimesCircle } from "react-icons/fa";
 import * as Yup from "yup";
 import { setError, setIsAdd, setMessage } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
-import fetchApi from "../../../helpers/fetchApi";
 import {
   InputSelect,
   InputText,
@@ -50,7 +49,7 @@ const ModalAddManageDeduction = ({ payType, employee, payrollDraft }) => {
   const handlePayType = async (e, props) => {
     let paytypeid = e.target.value;
     setSelLoading(true);
-    const results = await fetchApi(`${devApiUrl}/v1/paytype/${paytypeid}`);
+    const results = await queryData(`${devApiUrl}/v1/paytype/${paytypeid}`);
     if (results.data) {
       setSelLoading(false);
       setIsPayItem(results.data);

@@ -2,7 +2,13 @@ import { Form, Formik } from "formik";
 import React from "react";
 import { FaTimesCircle } from "react-icons/fa";
 import * as Yup from "yup";
-import { setIsAdd, setStartIndex } from "../../../store/StoreAction";
+import {
+  setError,
+  setIsAdd,
+  setMessage,
+  setStartIndex,
+  setSuccess,
+} from "../../../store/StoreAction";
 import { StoreContext } from "../../../store/StoreContext";
 import { fetchData } from "../../helpers/fetchData";
 import {
@@ -11,12 +17,38 @@ import {
   InputTextArea,
 } from "../../helpers/FormInputs";
 import { devApiUrl } from "../../helpers/functions-general";
+import { queryData } from "../../helpers/queryData";
 import ButtonSpinner from "../../partials/spinners/ButtonSpinner";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const ModalAddPayType = ({ item }) => {
   const { store, dispatch } = React.useContext(StoreContext);
-  const [loading, setLoading] = React.useState(false);
 
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: (values) =>
+      queryData(
+        item
+          ? `${devApiUrl}/v1/paytype/${item.paytype_aid}`
+          : `${devApiUrl}/v1/paytype`,
+        item ? "put" : "post",
+        values
+      ),
+    onSuccess: (data) => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries({ queryKey: ["payType"] });
+      // show success box
+      if (data.success) {
+        dispatch(setSuccess(true));
+        dispatch(setMessage(`Successfuly ${item ? "updated." : "added."}`));
+      }
+      // show error box
+      if (!data.success) {
+        dispatch(setError(true));
+        dispatch(setMessage(data.error));
+      }
+    },
+  });
   const handleClose = () => {
     dispatch(setIsAdd(false));
   };
@@ -57,23 +89,9 @@ const ModalAddPayType = ({ item }) => {
               initialValues={initVal}
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
-                fetchData(
-                  setLoading,
-                  item
-                    ? `${devApiUrl}/v1/paytype/${item.paytype_aid}`
-                    : `${devApiUrl}/v1/paytype`,
-                  values, // form data values
-                  null, // result set data
-                  item ? "Succesfully updated." : "Succesfully added.", // success msg
-                  "", // additional error msg if needed
-                  dispatch, // context api action
-                  store, // context api state
-                  true, // boolean to show success modal
-                  false, // boolean to show load more functionality button
-                  null, // navigate default value
-                  item ? "put" : "post"
-                );
-                dispatch(setStartIndex(0));
+                console.log(values);
+
+                mutation.mutate(values);
               }}
             >
               {(props) => {
@@ -83,7 +101,7 @@ const ModalAddPayType = ({ item }) => {
                       <InputSelect
                         label="Category"
                         name="paytype_category"
-                        disabled={loading}
+                        disabled={mutation.isLoading}
                         onFocus={(e) =>
                           e.target.parentElement.classList.add("focused")
                         }
@@ -101,7 +119,7 @@ const ModalAddPayType = ({ item }) => {
                         label="Name"
                         type="text"
                         name="paytype_name"
-                        disabled={loading}
+                        disabled={mutation.isLoading}
                       />
                     </div>
                     <div className="relative mb-5">
@@ -109,22 +127,28 @@ const ModalAddPayType = ({ item }) => {
                         label="Description"
                         type="text"
                         name="paytype_description"
-                        disabled={loading}
+                        disabled={mutation.isLoading}
                       />
                     </div>
                     <div className="flex items-center gap-1 pt-5">
                       <button
                         type="submit"
-                        disabled={loading || !props.dirty}
+                        disabled={mutation.isLoading || !props.dirty}
                         className="btn-modal-submit relative"
                       >
-                        {loading ? <ButtonSpinner /> : item ? "Save" : "Add"}
+                        {mutation.isLoading ? (
+                          <ButtonSpinner />
+                        ) : item ? (
+                          "Save"
+                        ) : (
+                          "Add"
+                        )}
                       </button>
                       <button
                         type="reset"
                         className="btn-modal-cancel cursor-pointer"
                         onClick={handleClose}
-                        disabled={loading}
+                        disabled={mutation.isLoading}
                       >
                         Cancel
                       </button>

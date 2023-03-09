@@ -65,26 +65,26 @@ export const runPayroll = (employee, payrollEarnings, holidays) => {
       totalAbsencesAmount -
       totalUndertimeAmount;
 
-    // loop each deductions for each employee
-    payrollEarnings.map((deduction) => {
-      if (
-        emp.payroll_earning_type === earning.earnings_payroll_type_id && // payroll type
-        emp.payroll_list_payroll_id === earning.earnings_payroll_id && // payroll id
-        emp.payroll_list_employee_id === earning.earnings_employee_id && // employee id
-        new Date(emp.payroll_end_date) >=
-          new Date(earning.earnings_start_pay_date) && // payroll end date
-        new Date(emp.payroll_end_date) >=
-          new Date(earning.earnings_end_pay_date) // payroll end date
-      ) {
-        // totalOtAmount += payComputeOt(earning);
-        // totalLeaveAmount += payComputeLeave(earning);
-        // totalUndertimeAmount += payComputeUndertime(earning);
-        // totalAbsencesAmount += payComputeAbsences(earning);
-        // totalHazardPayAmount += payComputeHazardPay(earning);
-        // totalInflationAmount += payComputeInflationAdjustmen(earning);
-        // totalAdjustmentAmount += payComputeAdjustment(earning);
-      }
-    });
+    // // loop each deductions for each employee
+    // payrollEarnings.map((deduction) => {
+    //   if (
+    //     emp.payroll_earning_type === earning.earnings_payroll_type_id && // payroll type
+    //     emp.payroll_list_payroll_id === earning.earnings_payroll_id && // payroll id
+    //     emp.payroll_list_employee_id === earning.earnings_employee_id && // employee id
+    //     new Date(emp.payroll_end_date) >=
+    //       new Date(earning.earnings_start_pay_date) && // payroll end date
+    //     new Date(emp.payroll_end_date) >=
+    //       new Date(earning.earnings_end_pay_date) // payroll end date
+    //   ) {
+    //     // totalOtAmount += payComputeOt(earning);
+    //     // totalLeaveAmount += payComputeLeave(earning);
+    //     // totalUndertimeAmount += payComputeUndertime(earning);
+    //     // totalAbsencesAmount += payComputeAbsences(earning);
+    //     // totalHazardPayAmount += payComputeHazardPay(earning);
+    //     // totalInflationAmount += payComputeInflationAdjustmen(earning);
+    //     // totalAdjustmentAmount += payComputeAdjustment(earning);
+    //   }
+    // });
     // data to send to server
     payrollList.push({
       payroll_list_employee_id: emp.payroll_list_employee_id,

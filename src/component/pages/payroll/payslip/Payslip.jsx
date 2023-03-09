@@ -19,7 +19,7 @@ const Payslip = () => {
       <Navigation menu="payroll" />
       <div className="wrapper print:pt-0">
         <div className="flex items-center mb-1 justify-between whitespace-nowrap overflow-auto gap-2 print:hidden">
-          <BreadCrumbs />
+          <BreadCrumbs param={`${location.search}`} />
           <div className="flex items-center gap-1">
             <button type="button" className="btn-primary">
               <FaEnvelope />

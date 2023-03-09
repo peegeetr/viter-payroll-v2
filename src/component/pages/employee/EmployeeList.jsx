@@ -10,16 +10,12 @@ import LoadmoreRq from "../../partials/LoadmoreRq";
 import NoData from "../../partials/NoData";
 import SearchBarRq from "../../partials/SearchBarRq";
 import ServerError from "../../partials/ServerError";
-import FetchingSpinner from "../../partials/spinners/FetchingSpinner";
 import TableSpinner from "../../partials/spinners/TableSpinner";
 import StatusActive from "../../partials/status/StatusActive";
 import StatusInactive from "../../partials/status/StatusInactive";
 
 const EmployeeList = () => {
   const { store, dispatch } = React.useContext(StoreContext);
-  const [dataItem, setData] = React.useState(null);
-  const [id, setId] = React.useState(null);
-  const [isDel, setDel] = React.useState(false);
 
   const [onSearch, setOnSearch] = React.useState(false);
   const [page, setPage] = React.useState(1);

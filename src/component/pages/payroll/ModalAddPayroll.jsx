@@ -1,34 +1,66 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Form, Formik } from "formik";
 import React from "react";
 import { FaTimesCircle } from "react-icons/fa";
 import * as Yup from "yup";
-import { setIsAdd, setStartIndex } from "../../../store/StoreAction";
-import { StoreContext } from "../../../store/StoreContext";
-import useLoadAll from "../../custom-hooks/useLoadAll";
-import useLoadLastPayrollId from "../../custom-hooks/useLoadLastPayrollId";
-import useLoadPayrollType from "../../custom-hooks/useLoadPayrollType";
-import { fetchData } from "../../helpers/fetchData";
-import { InputSelect, InputText } from "../../helpers/FormInputs";
 import {
-  consoleLog,
-  devApiUrl,
-  hrisDevApiUrl,
-} from "../../helpers/functions-general";
+  setError,
+  setIsAdd,
+  setMessage,
+  setSuccess,
+} from "../../../store/StoreAction";
+import { StoreContext } from "../../../store/StoreContext";
+import useLoadLastPayrollId from "../../custom-hooks/useLoadLastPayrollId";
+import useQueryData from "../../custom-hooks/useQueryData";
+import { InputSelect, InputText } from "../../helpers/FormInputs";
+import { devApiUrl, hrisDevApiUrl } from "../../helpers/functions-general";
+import { queryData } from "../../helpers/queryData";
 import ButtonSpinner from "../../partials/spinners/ButtonSpinner";
 
 const ModalAddPayroll = ({ item }) => {
   const { store, dispatch } = React.useContext(StoreContext);
-  const [loading, setLoading] = React.useState(false);
 
-  const { payrollType, payrollTypeLoading } = useLoadPayrollType(
-    `${devApiUrl}/v1/payroll-type`,
-    "get"
+  // use if not loadmore button undertime
+  const { isLoading, data: payrollType } = useQueryData(
+    `${devApiUrl}/v1/payroll-type`, // endpoint
+    "get", // method
+    "payrollType" // key
   );
 
-  const { result } = useLoadAll(`${hrisDevApiUrl}/v1/employees`, "get");
+  // use if not loadmore button undertime
+  const { data: result } = useQueryData(
+    `${hrisDevApiUrl}/v1/employees`, // endpoint
+    "get", // method
+    "result" // key
+  );
 
   const { lastId } = useLoadLastPayrollId(`${devApiUrl}/v1/payroll`, "get");
 
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: (values) =>
+      queryData(
+        item
+          ? `${devApiUrl}/v1/payroll/${item.payroll_aid}`
+          : `${devApiUrl}/v1/payroll`,
+        item ? "put" : "post",
+        values
+      ),
+    onSuccess: (data) => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries({ queryKey: ["payroll"] });
+      // show success box
+      if (data.success) {
+        dispatch(setSuccess(true));
+        dispatch(setMessage(`Successfuly ${item ? "updated." : "added."}`));
+      }
+      // show error box
+      if (!data.success) {
+        dispatch(setError(true));
+        dispatch(setMessage(data.error));
+      }
+    },
+  });
   const handleClose = () => {
     dispatch(setIsAdd(false));
   };
@@ -69,46 +101,31 @@ const ModalAddPayroll = ({ item }) => {
               initialValues={initVal}
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
-                consoleLog(values);
-                fetchData(
-                  setLoading,
-                  item
-                    ? `${devApiUrl}/v1/payroll/${item.payroll_aid}`
-                    : `${devApiUrl}/v1/payroll`,
-                  { ...values, employee: result }, // form data values
-                  null, // result set data
-                  item ? "Succesfully updated." : "Succesfully added.", // success msg
-                  "", // additional error msg if needed
-                  dispatch, // context api action
-                  store, // context api state
-                  true, // boolean to show success modal
-                  false, // boolean to show load more functionality button
-                  null, // navigate default value
-                  item ? "put" : "post"
-                );
-                dispatch(setStartIndex(0));
+                // consoleLog(values);
+
+                mutation.mutate({
+                  ...values,
+                  employee: result.data,
+                });
               }}
             >
               {(props) => {
                 props.values.payroll_id = lastId;
-                // setTypeName();
                 return (
                   <Form>
                     <div className="relative my-5 ">
                       <InputSelect
                         label="Earning Type"
                         name="payroll_earning_type"
-                        disabled={loading}
+                        disabled={mutation.isLoading}
                         onFocus={(e) =>
                           e.target.parentElement.classList.add("focused")
                         }
                       >
                         <optgroup label="Earning Type">
-                          {payrollTypeLoading && (
-                            <option value="">Loading...</option>
-                          )}
+                          {isLoading && <option value="">Loading...</option>}
                           <option value="" hidden></option>
-                          {payrollType?.map((type, key) => {
+                          {payrollType?.data.map((type, key) => {
                             return (
                               type.payroll_type_active === 1 && (
                                 <option key={key} value={type.payroll_type_aid}>
@@ -128,7 +145,7 @@ const ModalAddPayroll = ({ item }) => {
                         onFocus={(e) => (e.target.type = "date")}
                         onBlur={(e) => (e.target.type = "date")}
                         name="payroll_start_date"
-                        disabled={loading}
+                        disabled={mutation.isLoading}
                       />
                     </div>
                     <div className="relative mb-5">
@@ -138,7 +155,7 @@ const ModalAddPayroll = ({ item }) => {
                         onFocus={(e) => (e.target.type = "date")}
                         onBlur={(e) => (e.target.type = "date")}
                         name="payroll_end_date"
-                        disabled={loading}
+                        disabled={mutation.isLoading}
                       />
                     </div>
                     <div className="relative mb-5">
@@ -148,23 +165,29 @@ const ModalAddPayroll = ({ item }) => {
                         onFocus={(e) => (e.target.type = "date")}
                         onBlur={(e) => (e.target.type = "date")}
                         name="payroll_pay_date"
-                        disabled={loading}
+                        disabled={mutation.isLoading}
                       />
                     </div>
 
                     <div className="flex items-center gap-1 pt-5">
                       <button
                         type="submit"
-                        disabled={loading || !props.dirty}
+                        disabled={mutation.isLoading || !props.dirty}
                         className="btn-modal-submit relative"
                       >
-                        {loading ? <ButtonSpinner /> : item ? "Save" : "Add"}
+                        {mutation.isLoading ? (
+                          <ButtonSpinner />
+                        ) : item ? (
+                          "Save"
+                        ) : (
+                          "Add"
+                        )}
                       </button>
                       <button
                         type="reset"
                         className="btn-modal-cancel cursor-pointer"
                         onClick={handleClose}
-                        disabled={loading}
+                        disabled={mutation.isLoading}
                       >
                         Cancel
                       </button>

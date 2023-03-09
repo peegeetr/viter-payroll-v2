@@ -1,5 +1,5 @@
 import { setError, setMessage } from "../../../store/StoreAction";
-import fetchApi from "../../helpers/fetchApi";
+import { queryData } from "../../helpers/queryData";
 
 export const validatePrId = async (
   urlEarning,
@@ -28,14 +28,14 @@ export const validatePrId = async (
 const fetchEarnings = async (urlEarning) => {
   let val = 0;
   // get total result of data
-  const result = await fetchApi(urlEarning, {});
+  const result = await queryData(urlEarning, {});
 
   return getResult(result);
 };
 
 const fetchDeducations = async (urlDeduction) => {
   // get total result of data
-  const result = await fetchApi(urlDeduction, {});
+  const result = await queryData(urlDeduction, {});
 
   return getResult(result);
 };

@@ -16,6 +16,7 @@ import {
 } from "../../../store/StoreAction";
 import { StoreContext } from "../../../store/StoreContext";
 import useLoadPayType from "../../custom-hooks/useLoadPayType";
+import useQueryData from "../../custom-hooks/useQueryData";
 import {
   devApiUrl,
   devNavUrl,
@@ -23,7 +24,9 @@ import {
   UrlAdmin,
 } from "../../helpers/functions-general";
 import ModalConfirm from "../../partials/modals/ModalConfirm";
+import ModalConfirmRq from "../../partials/modals/ModalConfirmRq";
 import ModalDeleteRestore from "../../partials/modals/ModalDeleteRestore";
+import ModalDeleteRestoreRq from "../../partials/modals/ModalDeleteRestoreRq";
 import NoData from "../../partials/NoData";
 import ServerError from "../../partials/ServerError";
 import TableSpinner from "../../partials/spinners/TableSpinner";
@@ -37,11 +40,16 @@ const PayTypeLink = ({ setItemEdit }) => {
   const [id, setId] = React.useState(null);
   const [isDel, setDel] = React.useState(false);
 
-  const { payType, payTypeLoading } = useLoadPayType(
-    `${devApiUrl}/v1/paytype`,
-    "get"
+  // use if not loadmore button undertime
+  const {
+    isLoading,
+    error,
+    data: payType,
+  } = useQueryData(
+    `${devApiUrl}/v1/paytype`, // endpoint
+    "get", // method
+    "payType" // key
   );
-
   const handleEdit = (item) => {
     dispatch(setIsAdd(true));
     setItemEdit(item);
@@ -70,133 +78,134 @@ const PayTypeLink = ({ setItemEdit }) => {
 
   return (
     <>
-      {payTypeLoading && <TableSpinner />}
+      {isLoading && <TableSpinner />}
 
-      {payType.length > 0 ? (
-        payType.map((item, key) => {
-          return (
-            <li key={key} className="py-2">
-              <div className="group flex items-center justify-between border-b border-solid border-gray-300 ">
-                <Link
-                  to={`${devNavUrl}/pay-type/pay-item?paytypeid=${item.paytype_aid}`}
-                  className="w-full py-1"
-                  onClick={() => dispatch(setStartIndex(0))}
-                >
-                  <div className="text-left grid lg:grid-cols-[3fr_1fr] ">
-                    <div className="">
-                      <div className="flex items-center">
-                        <span className="text-lg mr-4">
-                          <FaClipboardList />
-                        </span>
-                        <p className=" font-bold my-0">
-                          <span className="capitalize">
-                            {item.paytype_name}
-                          </span>
-                        </p>
-                      </div>
-                      <p className="ml-[35px] my-0  ">
-                        <span className="capitalize text-primary block ">
-                          {item.paytype_category}
-                        </span>
-
-                        {item.paytype_description}
-                      </p>
-                    </div>
-                    <div className="ml-[35px] lg:m-0">
-                      <p className="font-bold text-xs">Status</p>
-
-                      <p className="my-0">
-                        {item.paytype_is_active === 1 ? (
-                          <StatusActive />
-                        ) : (
-                          <StatusInactive />
-                        )}
-                      </p>
-                    </div>
-                  </div>
-                </Link>
-
-                <div className="flex items-center gap-1">
-                  <Link
-                    to={`${link}/pay-type/pay-item?paytypeid=${item.paytype_aid}`}
-                    className="btn-action-table tooltip-action-table "
-                    data-tooltip="View"
-                    onClick={() => dispatch(setStartIndex(0))}
-                  >
-                    <FaList className="inline " />
-                  </Link>
-                  {item.paytype_is_active === 1 ? (
-                    <>
-                      <button
-                        to={`${link}/employees/details`}
-                        type="button"
-                        className="btn-action-table tooltip-action-table"
-                        data-tooltip="Edit"
-                        onClick={() => handleEdit(item)}
-                      >
-                        <FaEdit />
-                      </button>
-                      <button
-                        type="button"
-                        className="btn-action-table tooltip-action-table"
-                        data-tooltip="Archive"
-                        onClick={() => handleArchive(item)}
-                      >
-                        <FaArchive />
-                      </button>
-                    </>
-                  ) : (
-                    <>
-                      <button
-                        type="button"
-                        className="btn-action-table tooltip-action-table"
-                        data-tooltip="Restore"
-                        onClick={() => handleRestore(item)}
-                      >
-                        <FaHistory />
-                      </button>
-
-                      <button
-                        type="button"
-                        className="btn-action-table tooltip-action-table"
-                        data-tooltip="Delete"
-                        onClick={() => handleDelete(item)}
-                      >
-                        <FaTrash />
-                      </button>
-                    </>
-                  )}
-                </div>
-              </div>
-            </li>
-          );
-        })
-      ) : payType === -1 ? (
+      {(isLoading || payType?.data.length === 0) && (
+        <li className="text-center ">
+          <div colSpan="100%" className="p-10">
+            {isLoading && <TableSpinner />}
+            <NoData />
+          </div>
+        </li>
+      )}
+      {error && (
         <li className="text-center ">
           <div colSpan="100%" className="p-10">
             <ServerError />
           </div>
         </li>
-      ) : (
-        <li className="text-center ">
-          <div colSpan="100%" className="p-10">
-            <NoData />
-          </div>
-        </li>
       )}
 
+      {payType?.data.map((item, key) => {
+        return (
+          <li key={key} className="py-2">
+            <div className="group flex items-center justify-between border-b border-solid border-gray-300 ">
+              <Link
+                to={`${devNavUrl}/pay-type/pay-item?paytypeid=${item.paytype_aid}`}
+                className="w-full py-1"
+                onClick={() => dispatch(setStartIndex(0))}
+              >
+                <div className="text-left grid lg:grid-cols-[3fr_1fr] ">
+                  <div className="">
+                    <div className="flex items-center">
+                      <span className="text-lg mr-4">
+                        <FaClipboardList />
+                      </span>
+                      <p className=" font-bold my-0">
+                        <span className="capitalize">{item.paytype_name}</span>
+                      </p>
+                    </div>
+                    <p className="ml-[35px] my-0  ">
+                      <span className="capitalize text-primary block ">
+                        {item.paytype_category}
+                      </span>
+
+                      {item.paytype_description}
+                    </p>
+                  </div>
+                  <div className="ml-[35px] lg:m-0">
+                    <p className="font-bold text-xs">Status</p>
+
+                    <p className="my-0">
+                      {item.paytype_is_active === 1 ? (
+                        <StatusActive />
+                      ) : (
+                        <StatusInactive />
+                      )}
+                    </p>
+                  </div>
+                </div>
+              </Link>
+
+              <div className="flex items-center gap-1">
+                <Link
+                  to={`${link}/pay-type/pay-item?paytypeid=${item.paytype_aid}`}
+                  className="btn-action-table tooltip-action-table "
+                  data-tooltip="View"
+                  onClick={() => dispatch(setStartIndex(0))}
+                >
+                  <FaList className="inline " />
+                </Link>
+                {item.paytype_is_active === 1 ? (
+                  <>
+                    <button
+                      to={`${link}/employees/details`}
+                      type="button"
+                      className="btn-action-table tooltip-action-table"
+                      data-tooltip="Edit"
+                      onClick={() => handleEdit(item)}
+                    >
+                      <FaEdit />
+                    </button>
+                    <button
+                      type="button"
+                      className="btn-action-table tooltip-action-table"
+                      data-tooltip="Archive"
+                      onClick={() => handleArchive(item)}
+                    >
+                      <FaArchive />
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <button
+                      type="button"
+                      className="btn-action-table tooltip-action-table"
+                      data-tooltip="Restore"
+                      onClick={() => handleRestore(item)}
+                    >
+                      <FaHistory />
+                    </button>
+
+                    <button
+                      type="button"
+                      className="btn-action-table tooltip-action-table"
+                      data-tooltip="Delete"
+                      onClick={() => handleDelete(item)}
+                    >
+                      <FaTrash />
+                    </button>
+                  </>
+                )}
+              </div>
+            </div>
+          </li>
+        );
+      })}
+
       {store.isConfirm && (
-        <ModalConfirm
+        <ModalConfirmRq
           id={id}
           isDel={isDel}
           mysqlApiArchive={`${devApiUrl}/v1/paytype/active/${id}`}
           msg={"Are you sure you want to archive "}
           item={`${dataItem.paytype_name}`}
+          arrKey="payType"
         />
       )}
 
       {store.isRestore && (
-        <ModalDeleteRestore
+        <ModalDeleteRestoreRq
           id={id}
           isDel={isDel}
           mysqlApiDelete={`${devApiUrl}/v1/paytype/${id}`}
@@ -207,6 +216,7 @@ const PayTypeLink = ({ setItemEdit }) => {
               : "Are you sure you want to restore "
           }
           item={`${dataItem.paytype_name}`}
+          arrKey="payType"
         />
       )}
     </>

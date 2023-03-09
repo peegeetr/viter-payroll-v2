@@ -10,6 +10,7 @@ import { MdFilterAlt } from "react-icons/md";
 import ServerError from "../../../partials/ServerError";
 import StatusActive from "../../../partials/status/StatusActive";
 import StatusInactive from "../../../partials/status/StatusInactive";
+import { queryData } from "../../../helpers/queryData";
 
 const FilterEarningsList = () => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -32,7 +33,7 @@ const FilterEarningsList = () => {
         onSubmit={async (values, { setSubmitting, resetForm }) => {
           // console.log(values);
           setLoading(true);
-          const result = await fetchApi(
+          const result = await queryData(
             values == "all" //admin location = empty
               ? devApiUrl +
                   "/admin/admin-attendance/admin-attendance-members/read-attendance-members-by-civil-id.php" // admin specific civil status

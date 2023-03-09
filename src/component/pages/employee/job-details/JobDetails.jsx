@@ -21,7 +21,6 @@ const JobDetails = () => {
   // use if not loadmore button undertime
   const {
     isLoading,
-    isFetching,
     error,
     data: employee,
   } = useQueryData(
@@ -51,7 +50,6 @@ const JobDetails = () => {
         <div className="w-full pb-20">
           <JobDetailsList
             isLoading={isLoading}
-            isFetching={isFetching}
             error={error}
             employee={employee}
           />

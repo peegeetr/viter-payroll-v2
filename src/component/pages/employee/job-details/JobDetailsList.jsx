@@ -2,12 +2,7 @@ import React from "react";
 import { FaEdit } from "react-icons/fa";
 import { setIsAdd, setIsRestore } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
-import useLoadDepartment from "../../../custom-hooks/useLoadDepartment";
-import useLoadEmployee from "../../../custom-hooks/useLoadEmployee";
-import useLoadJobTitle from "../../../custom-hooks/useLoadJobTitle";
-import useLoadLeave from "../../../custom-hooks/useLoadLeave";
-import useLoadPayLeave from "../../../custom-hooks/useLoadPayLeave";
-import useLoadSupervisor from "../../../custom-hooks/useLoadSupervisor";
+import useQueryData from "../../../custom-hooks/useQueryData";
 import {
   formatDate,
   getUrlParam,
@@ -20,23 +15,39 @@ import TableSpinner from "../../../partials/spinners/TableSpinner";
 import ModalEditJobDetails from "./ModalEditJobDetails";
 import ModalEditPayroll from "./ModalEditPayroll";
 
-const JobDetailsList = ({ isLoading, isFetching, error, employee }) => {
+const JobDetailsList = ({ isLoading, error, employee }) => {
   const { store, dispatch } = React.useContext(StoreContext);
 
   const [itemEdit, setItemEdit] = React.useState(null);
 
   const eid = getUrlParam().get("employeeid");
 
-  const { supervisor } = useLoadSupervisor(
-    `${hrisDevApiUrl}/v1/supervisors`,
-    "get"
+  // use if not loadmore button undertime
+  const { isLoading: loadingSup, data: supervisor } = useQueryData(
+    `${hrisDevApiUrl}/v1/supervisors`, // endpoint
+    "get", // method
+    "supervisor" // key
   );
-  const { jobTitle } = useLoadJobTitle(`${hrisDevApiUrl}/v1/job-titles`, "get");
-  const { leave } = useLoadLeave(`${hrisDevApiUrl}/v1/leave/types`, "get");
 
-  const { department } = useLoadDepartment(
-    `${hrisDevApiUrl}/v1/departments`,
-    "get"
+  // use if not loadmore button undertime
+  const { isLoading: loadingJob, data: jobTitle } = useQueryData(
+    `${hrisDevApiUrl}/v1/job-titles`, // endpoint
+    "get", // method
+    "jobTitle" // key
+  );
+
+  // use if not loadmore button undertime
+  const { isLoading: loadingDep, data: department } = useQueryData(
+    `${hrisDevApiUrl}/v1/departments`, // endpoint
+    "get", // method
+    "department" // key
+  );
+
+  // use if not loadmore button undertime
+  const { isLoading: loadingLeave, data: leave } = useQueryData(
+    `${hrisDevApiUrl}/v1/leave/types`, // endpoint
+    "get", // method
+    "leave" // key
   );
 
   const handleEdit = (item) => {
@@ -51,11 +62,11 @@ const JobDetailsList = ({ isLoading, isFetching, error, employee }) => {
 
   return (
     <>
-      <div className="text-center overflow-x-auto z-0">
+      <div className="text-center overflow-x-auto z-0 ">
         {employee?.data.map((item, key) => {
           return (
-            <div key={key} className="relative w-full max-w-[650px]  ">
-              <div className="bg-gray-200 p-2 mb-5 flex justify-between items-center mt-5">
+            <div key={key} className="relative w-full max-w-[650px] pt-5 ">
+              <div className="bg-gray-200 p-2 mb-5 flex justify-between items-center ">
                 <h4>Employment Status</h4>
                 {eid === null ? (
                   ""
@@ -74,22 +85,31 @@ const JobDetailsList = ({ isLoading, isFetching, error, employee }) => {
                 <p className="font-semibold">Employee Number :</p>
                 <p className="pl-2">{item.employee_job_number}</p>
                 <p className="font-semibold">Department :</p>
-                <p className="pl-2">{item.department_name}</p>
+                <p className="pl-2">
+                  {loadingDep ? "Loading..." : item.department_name}
+                </p>
                 <p className="font-semibold">Job Title :</p>
-                <p className="pl-2">{item.job_title_name}</p>
+                <p className="pl-2">
+                  {loadingJob ? "Loading..." : item.job_title_name}
+                </p>
                 <p className="font-semibold">Status :</p>
                 <p className="pl-2 capitalize">{item.employee_job_status}</p>
                 <p className="font-semibold">Leave type :</p>
                 <p className="pl-2 capitalize">
-                  {/* {item.leavetype_name} ({item.leavetype_days} days) */}
-                  {item.leavetype_name}
+                  {loadingLeave ? "Loading..." : item.leavetype_name}
                 </p>
                 <p className="font-semibold">Supervisor :</p>
-                <p className="pl-2">{item.employee_job_supervisor_name}</p>
+                <p className="pl-2">
+                  {loadingSup
+                    ? "Loading..."
+                    : item.employee_job_supervisor_name === "na"
+                    ? "n/a"
+                    : item.employee_job_supervisor_name}
+                </p>
                 <p className="font-semibold">Work Start Time :</p>
                 <p className="pl-2">
                   {item.employee_job_start_time === "ft"
-                    ? "Flexible"
+                    ? "Flexitime"
                     : item.employee_job_start_time === ""
                     ? ""
                     : `${item.employee_job_start_time} AM`}

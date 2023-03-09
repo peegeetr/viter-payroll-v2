@@ -106,14 +106,14 @@ const PayrollList = ({ setItemEdit }) => {
             <thead>
               <tr>
                 <th className="text-center">#</th>
-                <th>Payroll ID</th>
-                <th>Type</th>
-                <th>Pay Date</th>
-                <th>Pay period</th>
-                <th>No. of Employee</th>
-                <th>Total Amount</th>
-                <th>Status</th>
-                <th>Actions</th>
+                <th className="min-w-[7rem]">Payroll ID</th>
+                <th className="min-w-[10rem]">Type</th>
+                <th className="min-w-[10rem]">Pay Date</th>
+                <th className="min-w-[10rem]">Pay period</th>
+                <th className="min-w-[10rem]">No. of Employee</th>
+                <th className="min-w-[10rem]">Total Amount</th>
+                <th className="min-w-[10rem]">Status</th>
+                <th className="min-w-[10rem]">Actions</th>
               </tr>
             </thead>
             <tbody>

@@ -28,14 +28,14 @@ export const validatePrId = async (
 const fetchEarnings = async (urlEarning) => {
   let val = 0;
   // get total result of data
-  const result = await queryData(urlEarning, {});
+  const result = await queryData(urlEarning, "get");
 
   return getResult(result);
 };
 
 const fetchDeducations = async (urlDeduction) => {
   // get total result of data
-  const result = await queryData(urlDeduction, {});
+  const result = await queryData(urlDeduction, "get");
 
   return getResult(result);
 };

@@ -10,7 +10,6 @@ import {
   setSuccess,
 } from "../../../store/StoreAction";
 import { StoreContext } from "../../../store/StoreContext";
-import useLoadLastPayrollId from "../../custom-hooks/useLoadLastPayrollId";
 import useQueryData from "../../custom-hooks/useQueryData";
 import { InputSelect, InputText } from "../../helpers/FormInputs";
 import { devApiUrl, hrisDevApiUrl } from "../../helpers/functions-general";
@@ -33,8 +32,6 @@ const ModalAddPayroll = ({ item }) => {
     "get", // method
     "result" // key
   );
-
-  const { lastId } = useLoadLastPayrollId(`${devApiUrl}/v1/payroll`, "get");
 
   const queryClient = useQueryClient();
   const mutation = useMutation({
@@ -66,7 +63,6 @@ const ModalAddPayroll = ({ item }) => {
   };
 
   const initVal = {
-    payroll_id: "",
     payroll_start_date: item ? item.payroll_start_date : "",
     payroll_end_date: item ? item.payroll_end_date : "",
     payroll_pay_date: item ? item.payroll_pay_date : "",
@@ -110,7 +106,6 @@ const ModalAddPayroll = ({ item }) => {
               }}
             >
               {(props) => {
-                props.values.payroll_id = lastId;
                 return (
                   <Form>
                     <div className="relative my-5 ">

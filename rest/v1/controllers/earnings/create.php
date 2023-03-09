@@ -39,6 +39,7 @@ $allUndertime = $data["undertime"];
 // create if not data from hris and all employee
 
 if ($data["payitem_is_hris"] === "0" && $earnings->earnings_employee === "all") {
+    $newCount = 0;
     // check array length
     if (count($allEmployee) === 0) {
         checkEndpoint();
@@ -55,12 +56,13 @@ if ($data["payitem_is_hris"] === "0" && $earnings->earnings_employee === "all") 
         if ($query->rowCount() > 0) {
             continue;
         } else {
+            $newCount++;
             $query = checkCreate($earnings);
         }
         // isNameExist($earnings, "Pay item for $earnings->earnings_payroll_id is ");
         // $query = checkCreate($earnings);
     }
-    returnSuccess($earnings, "Earnings", $query);
+    returnSuccess($earnings, "Earnings", $query, $newCount);
 }
 
 // create if not data from hris and specific employee

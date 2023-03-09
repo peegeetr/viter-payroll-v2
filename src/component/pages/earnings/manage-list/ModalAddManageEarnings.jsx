@@ -98,7 +98,7 @@ const ModalAddManageEarnings = ({
     "overtime" // key
   );
 
-  console.log(undertime);
+  console.log(overtime);
   const handlePayType = async (e, props) => {
     let paytypeid = e.target.value;
     setSelLoading(true);
@@ -251,44 +251,44 @@ const ModalAddManageEarnings = ({
                   return;
                 }
 
-                // get computed leave amount
-                const computedUndertime = computeUndertime(
-                  undertime,
-                  employee,
-                  payrollDraft
-                );
+                // // get computed leave amount
+                // const computedUndertime = computeUndertime(
+                //   undertime,
+                //   employee,
+                //   payrollDraft
+                // );
 
-                // get computed leave amount
-                const computedLeav = computeLeave(
-                  payLeave,
-                  employee,
-                  payrollDraft
-                );
+                // // get computed leave amount
+                // const computedLeav = computeLeave(
+                //   payLeave,
+                //   employee,
+                //   payrollDraft
+                // );
 
-                // get computed leave amount
-                const computedUnpaid = computeLeave(
-                  absences,
-                  employee,
-                  payrollDraft
-                );
+                // // get computed leave amount
+                // const computedUnpaid = computeLeave(
+                //   absences,
+                //   employee,
+                //   payrollDraft
+                // );
 
-                // get computed leave amount
-                const computedOT = computeOvertime(
-                  overtime,
-                  employee,
-                  payrollDraft,
-                  holidays
-                );
-                console.log("123", computedUnpaid, employee.data);
-                mutation.mutate({
-                  ...values,
-                  employee: employee.data,
-                  payLeave: computedLeav.length > 0 ? computedLeav : 0,
-                  unPaidLeave: computedUnpaid.length > 0 ? computedUnpaid : 0,
-                  overtimeLeave: computedOT.length > 0 ? computedOT : 0,
-                  undertime:
-                    computedUndertime.length > 0 ? computedUndertime : 0,
-                });
+                // // get computed leave amount
+                // const computedOT = computeOvertime(
+                //   overtime,
+                //   employee,
+                //   payrollDraft,
+                //   holidays
+                // );
+                // console.log("123", computedUnpaid, employee.data);
+                // mutation.mutate({
+                //   ...values,
+                //   employee: employee.data,
+                //   // payLeave: computedLeav.length > 0 ? computedLeav : 0,
+                //   // unPaidLeave: computedUnpaid.length > 0 ? computedUnpaid : 0,
+                //   // overtimeLeave: computedOT.length > 0 ? computedOT : 0,
+                //   // undertime:
+                //   //   computedUndertime.length > 0 ? computedUndertime : 0,
+                // });
               }}
             >
               {(props) => {

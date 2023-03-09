@@ -151,7 +151,6 @@ export const validateDataIsNotEmpty = (
   // absencesId = 36 is absences
   // nightDiffId = 23 is nightDiff
   // undertimeId = 43 is undertime
-
   if (payItem === Number(leaveId) && payLeaveHrisData.length === 0) {
     dispatch(setError(true));
     dispatch(setMessage("No data found."));

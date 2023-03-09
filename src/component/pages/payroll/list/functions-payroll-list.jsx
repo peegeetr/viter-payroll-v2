@@ -24,6 +24,7 @@ export const runPayroll = (employee, payrollEarnings, holidays) => {
   let totalBasicPay = 0;
   let deductionAmount = 0;
   let netPay = 0;
+  let tax = 0;
   let payrollList = [];
   // loop each employee records
   employee.map((emp) => {
@@ -50,10 +51,9 @@ export const runPayroll = (employee, payrollEarnings, holidays) => {
     });
     //  holiday for each employee
     totalHolidayAmount += payComputeHoliday(emp, holidays, payrollEarnings);
-
     // night diffirencial
     totalNightDiffAmount += payComputeNightDiff(emp, holidays, payrollEarnings);
-    // console.log("ot", totalOtAmount, emp.payroll_list_employee_name);
+    // gross or total earnings
     grossAmount =
       totalNightDiffAmount +
       totalHolidayAmount +
@@ -65,10 +65,31 @@ export const runPayroll = (employee, payrollEarnings, holidays) => {
       totalAbsencesAmount -
       totalUndertimeAmount;
 
+    // loop each deductions for each employee
+    payrollEarnings.map((deduction) => {
+      if (
+        emp.payroll_earning_type === earning.earnings_payroll_type_id && // payroll type
+        emp.payroll_list_payroll_id === earning.earnings_payroll_id && // payroll id
+        emp.payroll_list_employee_id === earning.earnings_employee_id && // employee id
+        new Date(emp.payroll_end_date) >=
+          new Date(earning.earnings_start_pay_date) && // payroll end date
+        new Date(emp.payroll_end_date) >=
+          new Date(earning.earnings_end_pay_date) // payroll end date
+      ) {
+        // totalOtAmount += payComputeOt(earning);
+        // totalLeaveAmount += payComputeLeave(earning);
+        // totalUndertimeAmount += payComputeUndertime(earning);
+        // totalAbsencesAmount += payComputeAbsences(earning);
+        // totalHazardPayAmount += payComputeHazardPay(earning);
+        // totalInflationAmount += payComputeInflationAdjustmen(earning);
+        // totalAdjustmentAmount += payComputeAdjustment(earning);
+      }
+    });
+    // data to send to server
     payrollList.push({
       payroll_list_employee_id: emp.payroll_list_employee_id,
       payroll_list_employee_name: emp.payroll_list_employee_name,
-      payroll_list_basic_pay: Number(emp.payroll_list_employee_salary) / 2,
+      payroll_list_basic_pay: totalBasicPay.toFixed(2),
       payroll_list_overtime_pay: totalOtAmount.toFixed(2),
       payroll_list_leave_pay: totalLeaveAmount.toFixed(2),
       payroll_list_absences: totalAbsencesAmount.toFixed(2),
@@ -96,6 +117,7 @@ export const runPayroll = (employee, payrollEarnings, holidays) => {
     grossAmount = 0;
     deductionAmount = 0;
     netPay = 0;
+    tax = 0;
   });
 
   console.log(payrollList);

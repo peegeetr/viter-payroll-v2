@@ -23,28 +23,28 @@ const JobDetailsList = ({ isLoading, error, employee }) => {
   const eid = getUrlParam().get("employeeid");
 
   // use if not loadmore button undertime
-  const { isLoading: loadingSup, data: supervisor } = useQueryData(
+  const { isFetching: loadingSup, data: supervisor } = useQueryData(
     `${hrisDevApiUrl}/v1/supervisors`, // endpoint
     "get", // method
     "supervisor" // key
   );
 
   // use if not loadmore button undertime
-  const { isLoading: loadingJob, data: jobTitle } = useQueryData(
+  const { isFetching: loadingJob, data: jobTitle } = useQueryData(
     `${hrisDevApiUrl}/v1/job-titles`, // endpoint
     "get", // method
     "jobTitle" // key
   );
 
   // use if not loadmore button undertime
-  const { isLoading: loadingDep, data: department } = useQueryData(
+  const { isFetching: loadingDep, data: department } = useQueryData(
     `${hrisDevApiUrl}/v1/departments`, // endpoint
     "get", // method
     "department" // key
   );
 
   // use if not loadmore button undertime
-  const { isLoading: loadingLeave, data: leave } = useQueryData(
+  const { isFetching: loadingLeave, data: leave } = useQueryData(
     `${hrisDevApiUrl}/v1/leave/types`, // endpoint
     "get", // method
     "leave" // key

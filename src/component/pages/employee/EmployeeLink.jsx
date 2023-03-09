@@ -22,6 +22,8 @@ const EmployeeLink = () => {
     "employee" // key
   );
 
+  console.log(employee);
+
   return (
     <>
       <Header />

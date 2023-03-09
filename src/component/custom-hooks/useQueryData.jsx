@@ -7,7 +7,8 @@ const useQueryData = (endpoint, method, key = "", fd = {}, id = null) => {
     queryKey: [key, id],
     queryFn: () => queryData(endpoint, method, fd),
     retry: false,
-    refetchOnWindowFocus: true,
+    refetchOnWindowFocus: false,
+    cacheTime: 1000,
   });
 };
 

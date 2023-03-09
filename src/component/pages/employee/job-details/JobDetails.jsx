@@ -41,10 +41,10 @@ const JobDetails = () => {
         <p className="font-semibold pt-4 m-0">
           Name :{" "}
           <span className="font-light">
-            {employee?.data.length
-              ? `${employee?.data[0].employee_lname}, 
-            ${employee?.data[0].employee_fname}`
-              : "NO DATA"}
+            {isLoading
+              ? "Loading.."
+              : `${employee?.data[0].employee_lname}, 
+              ${employee?.data[0].employee_fname}`}
           </span>
         </p>
         <div className="w-full pb-20">

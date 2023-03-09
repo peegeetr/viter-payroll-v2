@@ -17,7 +17,14 @@ import {
   handleNumOnly,
   hrisDevApiUrl,
 } from "../../../helpers/functions-general";
-import { holidayId, nightDiffId } from "../../../helpers/functions-payitemId";
+import {
+  absencesId,
+  holidayId,
+  leaveId,
+  nightDiffId,
+  overtimeId,
+  undertimeId,
+} from "../../../helpers/functions-payitemId";
 import { queryData } from "../../../helpers/queryData";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 import {
@@ -35,7 +42,6 @@ const ModalAddManageEarnings = ({
   holidays,
 }) => {
   const { store, dispatch } = React.useContext(StoreContext);
-  const [loading, setLoading] = React.useState(false);
   const [loadingSel, setSelLoading] = React.useState(false);
   const [isAmount, setIsAmount] = React.useState(false);
   const [isHris, setIsHri] = React.useState("");
@@ -98,7 +104,6 @@ const ModalAddManageEarnings = ({
     "overtime" // key
   );
 
-  console.log(overtime);
   const handlePayType = async (e, props) => {
     let paytypeid = e.target.value;
     setSelLoading(true);
@@ -233,6 +238,10 @@ const ModalAddManageEarnings = ({
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
                 console.log(values);
+                let computedLeav = [];
+                let computedUndertime = [];
+                let computedUnpaid = [];
+                let computedOT = [];
                 // payroll date validation if installment
                 if (validatePayPeriod(values, payrollDraft, dispatch)) {
                   return;
@@ -250,35 +259,41 @@ const ModalAddManageEarnings = ({
                 ) {
                   return;
                 }
-                // get computed leave amount
-                const computedUndertime = computeUndertime(
-                  undertime,
-                  employee,
-                  payrollDraft
-                );
 
-                // get computed leave amount
-                const computedLeav = computeLeave(
-                  payLeave,
-                  employee,
-                  payrollDraft
-                );
+                if (values.earnings_payitem_id === leaveId) {
+                  // get computed leave amount
+                  computedLeav = computeLeave(payLeave, employee, payrollDraft);
+                }
 
-                // get computed leave amount
-                const computedUnpaid = computeLeave(
-                  absences,
-                  employee,
-                  payrollDraft
-                );
+                if (values.earnings_payitem_id === undertimeId) {
+                  // get computed leave amount
+                  computedUndertime = computeUndertime(
+                    undertime,
+                    employee,
+                    payrollDraft
+                  );
+                }
 
-                // get computed leave amount
-                const computedOT = computeOvertime(
-                  overtime,
-                  employee,
-                  payrollDraft,
-                  holidays
-                );
-                console.log("123", computedUnpaid, employee.data);
+                if (values.earnings_payitem_id === absencesId) {
+                  // get computed leave amount
+                  computedUnpaid = computeLeave(
+                    absences,
+                    employee,
+                    payrollDraft
+                  );
+                }
+
+                if (values.earnings_payitem_id === overtimeId) {
+                  // get computed leave amount
+                  computedOT = computeOvertime(
+                    overtime,
+                    employee,
+                    payrollDraft,
+                    holidays
+                  );
+                }
+
+                // console.log("123", computedUnpaid, employee.data);
                 mutation.mutate({
                   ...values,
                   employee: employee.data,

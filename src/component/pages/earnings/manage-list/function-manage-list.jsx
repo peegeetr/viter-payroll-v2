@@ -151,27 +151,27 @@ export const validateDataIsNotEmpty = (
   // absencesId = 36 is absences
   // nightDiffId = 23 is nightDiff
   // undertimeId = 43 is undertime
-  if (payItem === Number(leaveId) && payLeaveHrisData.length === 0) {
+  if (payItem === Number(leaveId) && payLeaveHrisData?.data.length === 0) {
     dispatch(setError(true));
     dispatch(setMessage("No data found."));
     val = true;
   }
-  if (payItem === Number(absencesId) && absencesHrisData.length === 0) {
+  if (payItem === Number(absencesId) && absencesHrisData?.data.length === 0) {
     dispatch(setError(true));
     dispatch(setMessage("No data found."));
     val = true;
   }
-  if (payItem === Number(overtimeId) && overtimeHrisData.length === 0) {
+  if (payItem === Number(overtimeId) && overtimeHrisData?.data.length === 0) {
     dispatch(setError(true));
     dispatch(setMessage("No data found."));
     val = true;
   }
-  if (payItem === Number(nightDiffId) && nightDiffHrisData.length === 0) {
+  if (payItem === Number(nightDiffId) && nightDiffHrisData?.data.length === 0) {
     dispatch(setError(true));
     dispatch(setMessage("No data found."));
     val = true;
   }
-  if (payItem === Number(undertimeId) && undertimeHrisData.length === 0) {
+  if (payItem === Number(undertimeId) && undertimeHrisData?.data.length === 0) {
     dispatch(setError(true));
     dispatch(setMessage("No data found."));
     val = true;

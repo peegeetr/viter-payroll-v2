@@ -89,7 +89,7 @@ const ManageEarningsList = () => {
             <thead>
               <tr>
                 <th>#</th>
-                {/* <th className="min-w-[5rem]">Payroll ID</th> */}
+                <th className="min-w-[5rem]">Payroll ID</th>
                 <th className="min-w-[10rem]">Employeee</th>
                 <th className="min-w-[7rem]">Pay Item</th>
                 <th className="min-w-[12rem]">Details</th>
@@ -125,7 +125,11 @@ const ManageEarningsList = () => {
                   {page.data.map((item, key) => (
                     <tr key={key}>
                       <td>{counter++}.</td>
-                      {/* <td>{item.earnings_payroll_id}</td> */}
+                      <td>
+                        {item.earnings_number_of_installment === 0
+                          ? "All"
+                          : item.earnings_payroll_id}
+                      </td>
                       <td>{item.earnings_employee}</td>
                       <td>{item.payitem_name}</td>
                       <td>{item.earnings_details}</td>

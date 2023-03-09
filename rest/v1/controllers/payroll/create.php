@@ -12,7 +12,35 @@ if (array_key_exists("payrollid", $_GET)) {
 checkPayload($data);
 // get data
 
-$payroll->payroll_id = checkIndex($data, "payroll_id");
+
+// if (result.data.length > 0) {
+//     let sid = result.data[0].payroll_id.split("-");
+//     let id = Number(sid[1]) + 1;
+//     if (id < 10) {
+//       id = "00" + id;
+//       result.data.length > 0 ? setLastId("PR-" + id) : setLastId("PR-001");
+//     } else if (id < 100) {
+//       id = "0" + id;
+//       result.data.length > 0 ? setLastId("PR-" + id) : setLastId("PR-001");
+//     } else {
+//       id = id;
+//       result.data.length > 0 ? setLastId("PR-" + id) : setLastId("PR-001");
+//     }
+//   } else {
+//     setLastId("PR-001");
+//   }
+
+// $
+// $lastMemberId = $member->readAll();
+// if ($lastMemberId->num_rows == 0) {
+//     $payroll->payroll_id = checkIndex($data, "payroll_id");
+// }else{
+//     $row = $result->fetch_assoc();
+//     extract($row);
+// }
+
+
+$payroll->payroll_id = checkIndex($data, $lastId);
 $payroll->payroll_start_date = checkIndex($data, "payroll_start_date");
 $payroll->payroll_end_date = checkIndex($data, "payroll_end_date");
 $payroll->payroll_pay_date = checkIndex($data, "payroll_pay_date");

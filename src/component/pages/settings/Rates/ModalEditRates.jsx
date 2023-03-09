@@ -2,39 +2,48 @@ import { Form, Formik } from "formik";
 import React from "react";
 import { FaTimesCircle } from "react-icons/fa";
 import * as Yup from "yup";
-import { setIsAdd, setStartIndex } from "../../../../store/StoreAction";
+import {
+  setError,
+  setIsAdd,
+  setMessage,
+  setStartIndex,
+  setSuccess,
+} from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
 import useLoadAll from "../../../custom-hooks/useLoadAll";
 import fetchApi from "../../../helpers/fetchApi";
 import { fetchData } from "../../../helpers/fetchData";
 import { InputSelect, InputText } from "../../../helpers/FormInputs";
 import { devApiUrl } from "../../../helpers/functions-general";
+import { queryData } from "../../../helpers/queryData";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import useQueryData from "../../../custom-hooks/useQueryData";
 
 const ModalEditRates = ({ itemEdit, payType }) => {
   const { store, dispatch } = React.useContext(StoreContext);
-  const [loading, setLoading] = React.useState(false);
   const [payItem, setPayItem] = React.useState(
     itemEdit ? itemEdit.rates_payitems_id : ""
   );
-
-  let payid = itemEdit ? `/${itemEdit.rates_paytype_id}` : `/${0}`;
-
-  const { result, setResult } = useLoadAll(
-    `${devApiUrl}/v1/paytype/${payid}`,
-    "get"
+  const [payItemId, setPayItemId] = React.useState(
+    Number(itemEdit ? itemEdit.rates_paytype_id : 0)
   );
+
+  // use if not loadmore button and handle change
+  const { data: result } = useQueryData(
+    `${devApiUrl}/v1/paytype/${payItemId}`, // endpoint
+    "get", // method
+    "result", // key
+    {}, // fd
+    payItemId // id
+  );
+
+  console.log(result);
 
   const handlePayType = async (e, props) => {
     let paytypeid = e.target.value;
-    setLoading(true);
-    const results = await fetchApi(`${devApiUrl}/v1/paytype/${paytypeid}`);
-
-    if (results.data) {
-      setLoading(false);
-      setPayItem("");
-      setResult(results.data);
-    }
+    setPayItemId(paytypeid);
+    setPayItem("");
   };
 
   const handlePayItem = async (e, props) => {
@@ -42,6 +51,31 @@ const ModalEditRates = ({ itemEdit, payType }) => {
     setPayItem(payitemid);
   };
 
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: (values) =>
+      queryData(
+        itemEdit
+          ? `${devApiUrl}/v1/rates/${itemEdit.rates_aid}`
+          : `${devApiUrl}/v1/rates`,
+        itemEdit ? "put" : "post",
+        values
+      ),
+    onSuccess: (data) => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries({ queryKey: ["rate"] });
+      // show success box
+      if (data.success) {
+        dispatch(setSuccess(true));
+        dispatch(setMessage(`Successfuly ${itemEdit ? "updated." : "added."}`));
+      }
+      // show error box
+      if (!data.success) {
+        dispatch(setError(true));
+        dispatch(setMessage(data.error));
+      }
+    },
+  });
   const handleClose = () => {
     dispatch(setIsAdd(false));
   };
@@ -81,23 +115,8 @@ const ModalEditRates = ({ itemEdit, payType }) => {
               initialValues={initVal}
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
-                fetchData(
-                  setLoading,
-                  itemEdit
-                    ? `${devApiUrl}/v1/rates/${itemEdit.rates_aid}`
-                    : `${devApiUrl}/v1/rates`,
-                  { ...values }, // form data values
-                  null, // result set data
-                  itemEdit ? "Succesfully updated." : "Succesfully added.", // success msg
-                  "", // additional error msg if needed
-                  dispatch, // context api action
-                  store, // context api state
-                  true, // boolean to show success modal
-                  false, // boolean to show load more functionality button
-                  null, // navigate default value
-                  itemEdit ? "put" : "post"
-                );
-                dispatch(setStartIndex(0));
+                console.log(values);
+                mutation.mutate(values);
               }}
             >
               {(props) => {
@@ -110,7 +129,7 @@ const ModalEditRates = ({ itemEdit, payType }) => {
                           label="Name"
                           type="text"
                           name="rates_name"
-                          disabled={loading}
+                          disabled={mutation.isLoading}
                         />
                       </div>
                       <div className="relative my-5 ">
@@ -118,7 +137,7 @@ const ModalEditRates = ({ itemEdit, payType }) => {
                           label="Percent"
                           type="text"
                           name="rates_percent"
-                          disabled={loading}
+                          disabled={mutation.isLoading}
                         />
                       </div>
 
@@ -126,7 +145,7 @@ const ModalEditRates = ({ itemEdit, payType }) => {
                         <InputSelect
                           name="rates_paytype_id"
                           label="Pay Type"
-                          disabled={loading}
+                          disabled={mutation.isLoading}
                           onChange={handlePayType}
                           onFocus={(e) =>
                             e.target.parentElement.classList.add("focused")
@@ -134,8 +153,8 @@ const ModalEditRates = ({ itemEdit, payType }) => {
                         >
                           <optgroup label="Pay Type">
                             <option value="" hidden></option>
-                            {payType.length > 0 ? (
-                              payType.map((paytype, key) => {
+                            {payType?.data.length > 0 ? (
+                              payType.data.map((paytype, key) => {
                                 return (
                                   <option key={key} value={paytype.paytype_aid}>
                                     {paytype.paytype_name}
@@ -154,12 +173,12 @@ const ModalEditRates = ({ itemEdit, payType }) => {
                           label="Pay Item"
                           name="rates_payitems_id"
                           onChange={handlePayItem}
-                          disabled={loading}
+                          disabled={mutation.isLoading}
                         >
                           <optgroup label="Pay Item">
                             <option value="" hidden></option>
-                            {result.length > 0 ? (
-                              result.map((payitem, key) => {
+                            {result?.data.length > 0 ? (
+                              result.data.map((payitem, key) => {
                                 return (
                                   <option key={key} value={payitem.payitem_aid}>
                                     {payitem.payitem_name}
@@ -176,17 +195,17 @@ const ModalEditRates = ({ itemEdit, payType }) => {
                     <div className="flex items-center gap-1 p-4 ">
                       <button
                         type="submit"
-                        disabled={loading || !props.dirty}
+                        disabled={mutation.isLoading || !props.dirty}
                         className="btn-modal-submit relative"
                       >
-                        {loading && <ButtonSpinner />}
+                        {mutation.isLoading && <ButtonSpinner />}
                         {itemEdit ? "Save" : "Add"}
                       </button>
                       <button
                         type="reset"
                         className="btn-modal-cancel cursor-pointer"
                         onClick={handleClose}
-                        disabled={loading}
+                        disabled={mutation.isLoading}
                       >
                         Cancel
                       </button>

@@ -50,20 +50,14 @@ const PhilhealthForm = ({ itemEdit }) => {
             <FaEdit />
           </button>
         </div>
-        <p className="font-semibold mb-5 xs:pl-5 pl-2">
-          Percentage :
-          <span className="font-light pl-2">
-            {numberWithCommas(percentage)}%
-          </span>
-        </p>
-        <p className="font-semibold xs:pl-5 pl-2">
-          Minimum :
-          <span className="font-light pl-2">{numberWithCommas(min)}</span>
-        </p>
-        <p className="font-semibold xs:pl-5 pl-2">
-          Maximum :
-          <span className="font-light pl-2">{numberWithCommas(max)}</span>
-        </p>
+        <div className="text-left grid grid-cols-[7rem_1fr] mb-5 xs:pl-5 pl-2">
+          <p className="font-semibold">Percentage :</p>
+          <p className="pl-2">{numberWithCommas(percentage)}%</p>
+          <p className="font-semibold">Minimum :</p>
+          <p className="pl-2">{numberWithCommas(min)}</p>
+          <p className="font-semibold">Maximum :</p>
+          <p className="pl-2">{numberWithCommas(max)}</p>
+        </div>
       </div>
       {store.isAdd && <ModalUpdatePhilhealth item={item} />}
     </>

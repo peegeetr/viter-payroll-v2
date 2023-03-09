@@ -6,12 +6,9 @@ import {
   setIsRestore,
 } from "../../../../../store/StoreAction";
 import { StoreContext } from "../../../../../store/StoreContext";
-import useLoadRole from "../../../../custom-hooks/useLoadRole";
 import useQueryData from "../../../../custom-hooks/useQueryData";
 import { devApiUrl } from "../../../../helpers/functions-general";
-import ModalConfirm from "../../../../partials/modals/ModalConfirm";
 import ModalConfirmRq from "../../../../partials/modals/ModalConfirmRq";
-import ModalDeleteRestore from "../../../../partials/modals/ModalDeleteRestore";
 import ModalDeleteRestoreRq from "../../../../partials/modals/ModalDeleteRestoreRq";
 import NoData from "../../../../partials/NoData";
 import ServerError from "../../../../partials/ServerError";

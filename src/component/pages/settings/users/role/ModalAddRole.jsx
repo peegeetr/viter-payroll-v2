@@ -1,18 +1,48 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Form, Formik } from "formik";
 import React from "react";
 import { FaTimesCircle } from "react-icons/fa";
 import * as Yup from "yup";
-import { setIsAdd, setStartIndex } from "../../../../../store/StoreAction";
+import {
+  setError,
+  setIsAdd,
+  setMessage,
+  setSuccess,
+} from "../../../../../store/StoreAction";
 import { StoreContext } from "../../../../../store/StoreContext";
-import { fetchData } from "../../../../helpers/fetchData";
 import { InputText, InputTextArea } from "../../../../helpers/FormInputs";
 import { devApiUrl } from "../../../../helpers/functions-general";
+import { queryData } from "../../../../helpers/queryData";
 import ButtonSpinner from "../../../../partials/spinners/ButtonSpinner";
 
 const ModalAddRole = ({ item }) => {
   const { store, dispatch } = React.useContext(StoreContext);
-  const [loading, setLoading] = React.useState(false);
 
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: (values) =>
+      queryData(
+        item
+          ? `${devApiUrl}/v1/roles/${item.role_aid}`
+          : `${devApiUrl}/v1/roles`,
+        item ? "put" : "post",
+        values
+      ),
+    onSuccess: (data) => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries({ queryKey: ["role"] });
+      // show success box
+      if (data.success) {
+        dispatch(setSuccess(true));
+        dispatch(setMessage(`Successfuly ${item ? "updated." : "added."}`));
+      }
+      // show error box
+      if (!data.success) {
+        dispatch(setError(true));
+        dispatch(setMessage(data.error));
+      }
+    },
+  });
   const handleClose = () => {
     dispatch(setIsAdd(false));
   };
@@ -51,24 +81,8 @@ const ModalAddRole = ({ item }) => {
               initialValues={initVal}
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
-                console.log();
-                fetchData(
-                  setLoading,
-                  item
-                    ? `${devApiUrl}/v1/roles/${item.role_aid}`
-                    : `${devApiUrl}/v1/roles`,
-                  values, // form data values
-                  null, // result set data
-                  item ? "Succesfully updated." : "Succesfully added.", // success msg
-                  "", // additional error msg if needed
-                  dispatch, // context api action
-                  store, // context api state
-                  true, // boolean to show success modal
-                  false, // boolean to show load more functionality button
-                  null,
-                  item ? "put" : "post" // method
-                );
-                dispatch(setStartIndex(0));
+                console.log(values);
+                mutation.mutate(values);
               }}
             >
               {(props) => {
@@ -79,7 +93,7 @@ const ModalAddRole = ({ item }) => {
                         label="Name"
                         type="text"
                         name="role_name"
-                        disabled={loading}
+                        disabled={mutation.isLoading}
                       />
                     </div>
                     <div className="relative mb-5">
@@ -87,23 +101,29 @@ const ModalAddRole = ({ item }) => {
                         label="Description"
                         type="text"
                         name="role_description"
-                        disabled={loading}
+                        disabled={mutation.isLoading}
                       />
                     </div>
 
                     <div className="flex items-center gap-1 pt-5">
                       <button
                         type="submit"
-                        disabled={loading || !props.dirty}
+                        disabled={mutation.isLoading || !props.dirty}
                         className="btn-modal-submit relative"
                       >
-                        {loading ? <ButtonSpinner /> : item ? "Save" : "Add"}
+                        {mutation.isLoading ? (
+                          <ButtonSpinner />
+                        ) : item ? (
+                          "Save"
+                        ) : (
+                          "Add"
+                        )}
                       </button>
                       <button
                         type="reset"
                         className="btn-modal-cancel"
                         onClick={handleClose}
-                        disabled={loading}
+                        disabled={mutation.isLoading}
                       >
                         Cancel
                       </button>

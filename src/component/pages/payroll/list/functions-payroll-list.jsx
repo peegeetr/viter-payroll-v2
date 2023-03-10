@@ -54,7 +54,7 @@ export const runPayroll = (employee, payrollEarnings, holidays, semiTax) => {
     totalHolidayAmount += payComputeHoliday(emp, holidays, payrollEarnings);
     // night diffirencial
     totalNightDiffAmount += payComputeNightDiff(emp, holidays, payrollEarnings);
-    // gross or total earnings
+    // gross or total wages
     grossAmount =
       totalNightDiffAmount +
       totalHolidayAmount +
@@ -66,8 +66,9 @@ export const runPayroll = (employee, payrollEarnings, holidays, semiTax) => {
       totalAbsencesAmount -
       totalUndertimeAmount;
 
-    // compute tax due
-    tax = payComputeTaxDue(emp, grossAmount, semiTax);
+    // total De Minimis
+
+    // 13th mo & Other benefits
 
     // // loop each deductions for each employee
     // payrollEarnings.map((deduction) => {
@@ -89,6 +90,9 @@ export const runPayroll = (employee, payrollEarnings, holidays, semiTax) => {
     //     // totalAdjustmentAmount += payComputeAdjustment(earning);
     //   }
     // });
+
+    // compute tax due
+    tax = payComputeTaxDue(emp, grossAmount, semiTax, lessItems);
     // data to send to server
     payrollList.push({
       payroll_list_employee_id: emp.payroll_list_employee_id,

@@ -17,6 +17,12 @@ import {
   InputTextArea,
 } from "../../../helpers/FormInputs";
 import {
+  everyPayrollNumber,
+  installmentNumber,
+  isHrisNumber,
+  onetimeNumber,
+} from "../../../helpers/functions-earning-refference";
+import {
   devApiUrl,
   handleNumOnly,
   hrisDevApiUrl,
@@ -61,7 +67,7 @@ const ModalAddManageEarnings = ({
   let payroll_start_date = payrollDraft?.data[0].payroll_start_date;
   let payroll_end_date = payrollDraft?.data[0].payroll_end_date;
   let payroll_id = payrollDraft?.data[0].payroll_id;
-  let payroll_type_id = payrollDraft?.data[0].payroll_earning_type;
+  let payroll_type_id = payrollDraft?.data[0].payroll_category_type;
 
   const queryClient = useQueryClient();
 
@@ -136,8 +142,8 @@ const ModalAddManageEarnings = ({
       setSelLoading(false);
       setPayItem(results.data);
       if (results.data[0].payitem_is_hris === 1) {
-        setIsInstallment("3"); // hris is installment value
-        setNumberInsti("1");
+        setIsInstallment(isHrisNumber); // hris is installment value is 3
+        setNumberInsti(onetimeNumber); // installment value is 1
         setEmployeeName("all");
         setEmployeeId("0");
         setDeatils("details");
@@ -157,7 +163,7 @@ const ModalAddManageEarnings = ({
     // get employee id
     setIsInstallment(categoryIsInstallment);
     if (categoryIsInstallment === "0") {
-      setNumberInsti("0");
+      setNumberInsti(everyPayrollNumber); // installment value is 0 everypayroll
       setIsStartDate("n/a");
       setIsEndDate("n/a");
     }
@@ -212,15 +218,18 @@ const ModalAddManageEarnings = ({
 
   const yupSchema = Yup.object({
     payroll_employee:
-      isInstallment !== "3" && Yup.string().required("Required"),
+      isInstallment !== isHrisNumber && Yup.string().required("Required"),
     earnings_paytype_id: Yup.string().required("Required"),
     earnings_payitem_id: Yup.string().required("Required"),
     earnings_frequency: Yup.string().required("Required"),
-    deatils: isInstallment !== "3" && Yup.string().required("Required"),
+    deatils:
+      isInstallment !== isHrisNumber && Yup.string().required("Required"),
     number_of_installment:
-      isInstallment === "2" && Yup.string().required("Required"),
-    startDate: isInstallment === "2" && Yup.string().required("Required"),
-    endDate: isInstallment === "2" && Yup.string().required("Required"),
+      isInstallment === installmentNumber && Yup.string().required("Required"),
+    startDate:
+      isInstallment === installmentNumber && Yup.string().required("Required"),
+    endDate:
+      isInstallment === installmentNumber && Yup.string().required("Required"),
     amount:
       payItem.length > 0 &&
       payItem[0].payitem_is_hris === 0 &&
@@ -327,7 +336,8 @@ const ModalAddManageEarnings = ({
                 props.values.earnings_employee_id = employeeId;
                 props.values.earnings_amount = (
                   Number(props.values.amount) /
-                  (props.values.earnings_number_of_installment === "0" ||
+                  (props.values.earnings_number_of_installment ===
+                    everyPayrollNumber ||
                   props.values.earnings_number_of_installment === ""
                     ? "1"
                     : Number(props.values.earnings_number_of_installment))

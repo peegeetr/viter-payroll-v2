@@ -11,6 +11,10 @@ import {
   InputTextArea,
 } from "../../../helpers/FormInputs";
 import { devApiUrl, handleNumOnly } from "../../../helpers/functions-general";
+import {
+  mandatoryDeductionId,
+  taxDeductionId,
+} from "../../../helpers/functions-payitemId";
 import { queryData } from "../../../helpers/queryData";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 import { validatePayPeriod } from "../../earnings/manage-list/function-manage-list";
@@ -27,7 +31,7 @@ const ModalAddManageDeduction = ({ payType, employee, payrollDraft }) => {
   const [isEndDate, setIsEndDate] = React.useState("");
   let payroll_start_date = payrollDraft?.data[0].payroll_start_date;
   let payroll_end_date = payrollDraft?.data[0].payroll_end_date;
-  let payroll_type_id = payrollDraft?.data[0].payroll_earning_type;
+  let payroll_type_id = payrollDraft?.data[0].payroll_category_type;
 
   const queryClient = useQueryClient();
 
@@ -55,7 +59,7 @@ const ModalAddManageDeduction = ({ payType, employee, payrollDraft }) => {
       setIsPayItem(results.data);
     }
   };
-  console.log("payitem", isPayItem);
+  console.log("payType", payType);
   const handleEmployee = async (e) => {
     // get employee id
     setEmployeeId(e.target.options[e.target.selectedIndex].id);
@@ -194,6 +198,8 @@ const ModalAddManageDeduction = ({ payType, employee, payrollDraft }) => {
                             <option value="" hidden></option>
                             {payType?.data.map((paytype, key) => {
                               return (
+                                paytype.paytype_aid !== mandatoryDeductionId &&
+                                paytype.paytype_aid !== taxDeductionId &&
                                 paytype.paytype_category === "deductions" && (
                                   <option key={key} value={paytype.paytype_aid}>
                                     {paytype.paytype_name}

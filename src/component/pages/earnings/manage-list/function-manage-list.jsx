@@ -21,9 +21,9 @@ export const validatePayPeriod = (values, inputDate, dispatch) => {
       new Date(inputDate?.data[0].payroll_start_date) ||
       new Date(values.earnings_start_pay_date) >
         new Date(inputDate?.data[0].payroll_end_date) ||
-      new Date(values.earnings_end_pay_date) <
-        new Date(inputDate?.data[0].payroll_end_date) ||
-      // deductions
+      // new Date(values.earnings_end_pay_date) <
+      //   new Date(inputDate?.data[0].payroll_end_date) ||
+      // // deductions
       new Date(values.deduction_start_pay_date) <
         new Date(inputDate?.data[0].payroll_start_date) ||
       new Date(values.deduction_start_pay_date) >

@@ -37,6 +37,13 @@ const PayrollView = () => {
   );
 
   // use if not loadmore button undertime
+  const { data: payrollDeductions } = useQueryData(
+    `${devApiUrl}/v1/deductions`, // endpoint
+    "get", // method
+    "payrollDeductions" // key
+  );
+
+  // use if not loadmore button undertime
   const { data: holidays } = useQueryData(
     `${devApiUrl}/v1/holidays`, // endpoint
     "get", // method
@@ -50,7 +57,7 @@ const PayrollView = () => {
     "semiMonthly" // key
   );
 
-  console.log(semiMonthly);
+  console.log("payrollEarnings", payrollEarnings);
 
   const handleRun = () => {
     dispatch(setIsConfirm(true));
@@ -91,6 +98,7 @@ const PayrollView = () => {
           item={pid}
           employees={payrollList?.data}
           payrollEarnings={payrollEarnings?.data}
+          payrollDeductions={payrollDeductions?.data}
           holidays={holidays?.data}
           semiTax={semiMonthly?.data}
         />

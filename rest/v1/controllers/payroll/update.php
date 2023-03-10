@@ -17,7 +17,7 @@ if (array_key_exists("payrollid", $_GET)) {
     $payroll->payroll_start_date = checkIndex($data, "payroll_start_date");
     $payroll->payroll_end_date = checkIndex($data, "payroll_end_date");
     $payroll->payroll_pay_date = addslashes(trim($data["payroll_pay_date"]));
-    $payroll->payroll_earning_type = checkIndex($data, "payroll_earning_type");
+    $payroll->payroll_category_type = checkIndex($data, "payroll_category_type");
     $payroll->payroll_datetime = date("Y-m-d H:i:s");
 
     //check to see if task id in query string is not empty and is number, if not return json error

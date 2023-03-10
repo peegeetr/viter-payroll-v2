@@ -61,6 +61,7 @@ class PayItem
     {
         try {
             $sql = "select * from {$this->tblPayItem} ";
+            $sql .= "where payitem_is_active = 1 ";
             $sql .= "order by payitem_is_active desc, ";
             $sql .= "payitem_name asc ";
             $query = $this->connection->query($sql);

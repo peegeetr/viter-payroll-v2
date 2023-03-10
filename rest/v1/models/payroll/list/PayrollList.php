@@ -85,7 +85,7 @@ class PayrollList
             $sql .= "payrollList.payroll_list_employee_work_on_holiday, ";
             $sql .= "payrollList.payroll_list_employee_work_none_working_holiday, ";
             $sql .= "payrollList.payroll_list_employee_id, ";
-            $sql .= "payroll.payroll_earning_type, ";
+            $sql .= "payroll.payroll_category_type, ";
             $sql .= "payroll.payroll_id, ";
             $sql .= "payroll.payroll_start_date, ";
             $sql .= "payroll.payroll_end_date, ";

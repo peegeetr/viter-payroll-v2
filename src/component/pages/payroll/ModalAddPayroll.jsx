@@ -66,14 +66,14 @@ const ModalAddPayroll = ({ item }) => {
     payroll_start_date: item ? item.payroll_start_date : "",
     payroll_end_date: item ? item.payroll_end_date : "",
     payroll_pay_date: item ? item.payroll_pay_date : "",
-    payroll_earning_type: item ? item.payroll_earning_type : "",
+    payroll_category_type: item ? item.payroll_category_type : "",
   };
 
   const yupSchema = Yup.object({
     payroll_start_date: Yup.string().required("Required"),
     payroll_end_date: Yup.string().required("Required"),
     payroll_pay_date: Yup.string().required("Required"),
-    payroll_earning_type: Yup.string().required("Required"),
+    payroll_category_type: Yup.string().required("Required"),
   });
 
   return (
@@ -111,7 +111,7 @@ const ModalAddPayroll = ({ item }) => {
                     <div className="relative my-5 ">
                       <InputSelect
                         label="Earning Type"
-                        name="payroll_earning_type"
+                        name="payroll_category_type"
                         disabled={mutation.isLoading}
                         onFocus={(e) =>
                           e.target.parentElement.classList.add("focused")

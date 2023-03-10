@@ -7,7 +7,7 @@ class Payroll
     public $payroll_start_date;
     public $payroll_end_date;
     public $payroll_pay_date;
-    public $payroll_earning_type;
+    public $payroll_category_type;
     public $payroll_created;
     public $payroll_datetime;
 
@@ -49,7 +49,7 @@ class Payroll
             $sql .= "payroll_start_date, ";
             $sql .= "payroll_end_date, ";
             $sql .= "payroll_pay_date, ";
-            $sql .= "payroll_earning_type, ";
+            $sql .= "payroll_category_type, ";
             $sql .= "payroll_created, ";
             $sql .= "payroll_datetime ) values ( ";
             $sql .= ":payroll_id, ";
@@ -57,7 +57,7 @@ class Payroll
             $sql .= ":payroll_start_date, ";
             $sql .= ":payroll_end_date, ";
             $sql .= ":payroll_pay_date, ";
-            $sql .= ":payroll_earning_type, ";
+            $sql .= ":payroll_category_type, ";
             $sql .= ":payroll_created, ";
             $sql .= ":payroll_datetime ) ";
             $query = $this->connection->prepare($sql);
@@ -67,7 +67,7 @@ class Payroll
                 "payroll_start_date" => $this->payroll_start_date,
                 "payroll_end_date" => $this->payroll_end_date,
                 "payroll_pay_date" => $this->payroll_pay_date,
-                "payroll_earning_type" => $this->payroll_earning_type,
+                "payroll_category_type" => $this->payroll_category_type,
                 "payroll_created" => $this->payroll_created,
                 "payroll_datetime" => $this->payroll_datetime,
             ]);
@@ -128,7 +128,7 @@ class Payroll
             $sql .= "{$this->tblPayroll} as pr, ";
             $sql .= "{$this->tblPayrollType} as prlist ";
             $sql .= "where ";
-            $sql .= "pr.payroll_earning_type = prlist.payroll_type_aid ";
+            $sql .= "pr.payroll_category_type = prlist.payroll_type_aid ";
             $sql .= "order by pr.payroll_is_paid, ";
             $sql .= "DATE(pr.payroll_pay_date) desc ";
             $query = $this->connection->query($sql);
@@ -146,7 +146,7 @@ class Payroll
             $sql .= "{$this->tblPayroll} as pr, ";
             $sql .= "{$this->tblPayrollType} as prlist ";
             $sql .= "where ";
-            $sql .= "pr.payroll_earning_type = prlist.payroll_type_aid ";
+            $sql .= "pr.payroll_category_type = prlist.payroll_type_aid ";
             $sql .= "order by pr.payroll_is_paid, ";
             $sql .= "DATE(pr.payroll_pay_date) desc ";
             $sql .= "limit :start, ";
@@ -169,7 +169,7 @@ class Payroll
             $sql .= "{$this->tblPayroll} as pr, ";
             $sql .= "{$this->tblPayrollType} as prlist ";
             $sql .= "where ";
-            $sql .= "pr.payroll_earning_type = prlist.payroll_type_aid ";
+            $sql .= "pr.payroll_category_type = prlist.payroll_type_aid ";
             $sql .= "and pr.payroll_id like :search ";
             $sql .= "order by pr.payroll_is_paid desc ";
             $query = $this->connection->prepare($sql);
@@ -209,7 +209,7 @@ class Payroll
             $sql .= "payroll_start_date = :payroll_start_date, ";
             $sql .= "payroll_end_date = :payroll_end_date, ";
             $sql .= "payroll_pay_date = :payroll_pay_date, ";
-            $sql .= "payroll_earning_type = :payroll_earning_type, ";
+            $sql .= "payroll_category_type = :payroll_category_type, ";
             $sql .= "payroll_datetime = :payroll_datetime ";
             $sql .= "where payroll_aid = :payroll_aid ";
             $query = $this->connection->prepare($sql);
@@ -217,7 +217,7 @@ class Payroll
                 "payroll_start_date" => $this->payroll_start_date,
                 "payroll_end_date" => $this->payroll_end_date,
                 "payroll_pay_date" => $this->payroll_pay_date,
-                "payroll_earning_type" => $this->payroll_earning_type,
+                "payroll_category_type" => $this->payroll_category_type,
                 "payroll_datetime" => $this->payroll_datetime,
                 "payroll_aid" => $this->payroll_aid,
             ]);
@@ -334,7 +334,7 @@ class Payroll
     {
         try {
             $sql = "select payroll_id, ";
-            $sql .= "payroll_earning_type, ";
+            $sql .= "payroll_category_type, ";
             $sql .= "payroll_start_date, ";
             $sql .= "payroll_end_date ";
             $sql .= "from {$this->tblPayroll} ";

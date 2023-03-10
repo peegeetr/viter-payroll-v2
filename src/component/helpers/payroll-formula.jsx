@@ -1,11 +1,24 @@
+import { onetimeNumber } from "./functions-earning-refference";
 import { getWorkingDays } from "./functions-general";
 import {
   absencesId,
+  bereavementId,
+  bonusId,
+  diminimisId,
+  employeeReferralBonusId,
+  fcaTutionId,
+  fwcTithesId,
   hazardPayId,
   inflationAdjustmentId,
   leaveId,
+  otherAllowancesId,
+  otherDeductionId,
   overtimeId,
+  PagibigLoanId,
+  PagibigMP2Id,
   payAdjustmentId,
+  separationPayId,
+  SSSLoanId,
   undertimeId,
 } from "./functions-payitemId";
 
@@ -106,7 +119,7 @@ export const payComputeNightDiff = (emp, holidays, payrollEarnings) => {
 
     payrollEarnings.map((earning) => {
       if (
-        emp.payroll_earning_type === earning.earnings_payroll_type_id && // payroll type
+        emp.payroll_category_type === earning.earnings_payroll_type_id && // payroll type
         emp.payroll_list_payroll_id === earning.earnings_payroll_id && // payroll id
         emp.payroll_list_employee_id === earning.earnings_employee_id &&
         new Date(emp.payroll_end_date) >=
@@ -151,10 +164,7 @@ export const payComputeNightDiff = (emp, holidays, payrollEarnings) => {
 // compute Hazard Pay
 export const payComputeHazardPay = (earning) => {
   let finalAmount = 0;
-  if (
-    earning.earnings_payitem_id === hazardPayId &&
-    earning.earnings_number_of_installment === 1
-  ) {
+  if (earning.earnings_payitem_id === hazardPayId) {
     finalAmount += Number(earning.earnings_amount);
   }
   return finalAmount;
@@ -163,10 +173,7 @@ export const payComputeHazardPay = (earning) => {
 // compute Inflation Adjustmen
 export const payComputeInflationAdjustmen = (earning) => {
   let finalAmount = 0;
-  if (
-    earning.earnings_payitem_id === inflationAdjustmentId &&
-    earning.earnings_number_of_installment === 1
-  ) {
+  if (earning.earnings_payitem_id === inflationAdjustmentId) {
     finalAmount += Number(earning.earnings_amount);
   }
   return finalAmount;
@@ -175,10 +182,61 @@ export const payComputeInflationAdjustmen = (earning) => {
 // compute Pay Adjustment
 export const payComputeAdjustment = (earning) => {
   let finalAmount = 0;
-  if (
-    earning.earnings_payitem_id === payAdjustmentId &&
-    earning.earnings_number_of_installment === 1
-  ) {
+  if (earning.earnings_payitem_id === payAdjustmentId) {
+    finalAmount += Number(earning.earnings_amount);
+  }
+  return finalAmount;
+};
+
+// compute Pay Diminimis
+export const payComputeDiminimis = (earning) => {
+  let finalAmount = 0;
+  if (earning.earnings_payitem_id === diminimisId) {
+    finalAmount += Number(earning.earnings_amount);
+  }
+  return finalAmount;
+};
+
+// compute Pay Bereavement
+export const payComputeBereavement = (earning) => {
+  let finalAmount = 0;
+  if (earning.earnings_payitem_id === bereavementId) {
+    finalAmount += Number(earning.earnings_amount);
+  }
+  return finalAmount;
+};
+
+// compute Pay Bonus
+export const payComputeBunos = (earning) => {
+  let finalAmount = 0;
+  if (earning.earnings_payitem_id === bonusId) {
+    finalAmount += Number(earning.earnings_amount);
+  }
+  return finalAmount;
+};
+
+// compute Pay Employee Referral Bonus
+export const payComputeEmployeeReferralBonus = (earning) => {
+  let finalAmount = 0;
+  if (earning.earnings_payitem_id === employeeReferralBonusId) {
+    finalAmount += Number(earning.earnings_amount);
+  }
+  return finalAmount;
+};
+
+// compute Pay Separation Pay
+export const payComputeSeparationPay = (earning) => {
+  let finalAmount = 0;
+  if (earning.earnings_payitem_id === separationPayId) {
+    finalAmount += Number(earning.earnings_amount);
+  }
+  return finalAmount;
+};
+
+// compute Pay Other Allowances
+export const payComputeOtherAllowances = (earning) => {
+  let finalAmount = 0;
+  if (earning.earnings_payitem_id === otherAllowancesId) {
     finalAmount += Number(earning.earnings_amount);
   }
   return finalAmount;
@@ -202,7 +260,7 @@ export const payComputeHoliday = (emp, holidays, payrollEarnings) => {
       // If employee has holiday but leave
       payrollEarnings.map((earning) => {
         if (
-          emp.payroll_earning_type === earning.earnings_payroll_type_id && // payroll type
+          emp.payroll_category_type === earning.earnings_payroll_type_id && // payroll type
           emp.payroll_list_payroll_id === earning.earnings_payroll_id && // payroll id
           emp.payroll_list_employee_id === earning.earnings_employee_id && // employee id
           new Date(holidaysItem.holidays_date) >=
@@ -315,4 +373,60 @@ export const payComputeTaxDue = (emp, gross, semiTax, lessItems) => {
   });
 
   return tax;
+};
+
+// deductions compution
+
+// compute FCA Tuition
+export const payComputeTuition = (deduction) => {
+  let finalAmount = 0;
+  if (deduction.deduction_payitem_id === fcaTutionId) {
+    finalAmount += Number(deduction.deduction_amount);
+  }
+  return finalAmount;
+};
+
+// compute FWC Tithes
+export const payComputeTithes = (deduction) => {
+  let finalAmount = 0;
+  if (deduction.deduction_payitem_id === fwcTithesId) {
+    finalAmount += Number(deduction.deduction_amount);
+  }
+  return finalAmount;
+};
+
+// compute FWC Tithes
+export const payComputeOtherDeduction = (deduction) => {
+  let finalAmount = 0;
+  if (deduction.deduction_payitem_id === otherDeductionId) {
+    finalAmount += Number(deduction.deduction_amount);
+  }
+  return finalAmount;
+};
+
+// compute Pagibig Loan
+export const payComputePagibigLoan = (deduction) => {
+  let finalAmount = 0;
+  if (deduction.deduction_payitem_id === PagibigLoanId) {
+    finalAmount += Number(deduction.deduction_amount);
+  }
+  return finalAmount;
+};
+
+// compute Pagibig MP2
+export const payComputePagibigMP2 = (deduction) => {
+  let finalAmount = 0;
+  if (deduction.deduction_payitem_id === PagibigMP2Id) {
+    finalAmount += Number(deduction.deduction_amount);
+  }
+  return finalAmount;
+};
+
+// compute SSS Loan
+export const payComputeSSSLoan = (deduction) => {
+  let finalAmount = 0;
+  if (deduction.deduction_payitem_id === SSSLoanId) {
+    finalAmount += Number(deduction.deduction_amount);
+  }
+  return finalAmount;
 };

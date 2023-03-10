@@ -6,7 +6,14 @@ import { fetchData } from "../../helpers/fetchData";
 import { runPayroll } from "../../pages/payroll/list/functions-payroll-list";
 import ButtonSpinner from "../spinners/ButtonSpinner";
 
-const ModalRun = ({ item, employees, payrollEarnings, holidays, semiTax }) => {
+const ModalRun = ({
+  item,
+  employees,
+  payrollEarnings,
+  payrollDeductions,
+  holidays,
+  semiTax,
+}) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [loading, setLoading] = React.useState(false);
 
@@ -17,7 +24,13 @@ const ModalRun = ({ item, employees, payrollEarnings, holidays, semiTax }) => {
   // console.log("run", runPayroll(employees, payrollEarnings));
   const handleYes = async () => {
     // run payroll
-    runPayroll(employees, payrollEarnings, holidays, semiTax);
+    runPayroll(
+      employees,
+      payrollEarnings,
+      payrollDeductions,
+      holidays,
+      semiTax
+    );
     // setLoading(true);
     // fetchData(
     //   setLoading,

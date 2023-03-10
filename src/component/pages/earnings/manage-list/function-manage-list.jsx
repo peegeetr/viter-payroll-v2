@@ -186,8 +186,8 @@ export const getStatus = (item) => {
   item.earnings_number_of_installment === 0 ||
   item.deduction_number_of_installment === 0
     ? (val = <StatusActive text="Recurring" />)
-    : item.earnings_number_of_installment !== item.earnings_num_pay ||
-      item.deduction_number_of_installment !== item.deduction_num_pay
+    : item.earnings_number_of_installment > item.earnings_num_pay ||
+      item.deduction_number_of_installment > item.deduction_num_pay
     ? (val = <StatusOngoing text="Ongoing" />)
     : (val = <StatusActive text="Paid" />);
 

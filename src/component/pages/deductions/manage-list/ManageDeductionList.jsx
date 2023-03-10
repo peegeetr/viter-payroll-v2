@@ -84,9 +84,9 @@ const ManageDeductionList = () => {
       />
 
       <div className="relative text-center">
-        {isFetching && !isFetchingNextPage && status !== "loading" && (
+        {/* {isFetching && !isFetchingNextPage && status !== "loading" && (
           <FetchingSpinner />
-        )}
+        )} */}
         <div className=" overflow-x-auto z-0">
           <table>
             <thead>

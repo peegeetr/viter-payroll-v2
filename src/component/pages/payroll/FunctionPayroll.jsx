@@ -5,7 +5,8 @@ export const validatePrId = async (
   urlEarning,
   urlDeduction,
   dispatch,
-  prId
+  prId,
+  setLoading
 ) => {
   let val = false;
   const earning = await fetchEarnings(urlEarning);
@@ -13,6 +14,7 @@ export const validatePrId = async (
   const deduction = await fetchDeducations(urlDeduction);
 
   if (earning.length > 0 || deduction.length > 0) {
+    setLoading(false);
     dispatch(setError(true));
     dispatch(
       setMessage(
@@ -42,11 +44,11 @@ const fetchDeducations = async (urlDeduction) => {
 
 const getResult = (result) => {
   if (typeof result === "undefined") {
-    console.log("undefined");
+    setLoading(false);
     return;
   }
   if (!result.data) {
-    console.log("no data");
+    setLoading(false);
     return;
   }
   if (result.data) {

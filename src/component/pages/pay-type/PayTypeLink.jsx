@@ -103,7 +103,6 @@ const PayTypeLink = ({ setItemEdit }) => {
               <Link
                 to={`${devNavUrl}/pay-type/pay-item?paytypeid=${item.paytype_aid}`}
                 className="w-full py-1"
-                onClick={() => dispatch(setStartIndex(0))}
               >
                 <div className="text-left grid lg:grid-cols-[3fr_1fr] ">
                   <div className="">

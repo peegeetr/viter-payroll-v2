@@ -7,10 +7,11 @@ import {
   payComputeLeave,
   payComputeNightDiff,
   payComputeOt,
+  payComputeTaxDue,
   payComputeUndertime,
 } from "../../../helpers/payroll-formula";
 
-export const runPayroll = (employee, payrollEarnings, holidays) => {
+export const runPayroll = (employee, payrollEarnings, holidays, semiTax) => {
   let totalOtAmount = 0;
   let totalLeaveAmount = 0;
   let totalUndertimeAmount = 0;
@@ -64,6 +65,9 @@ export const runPayroll = (employee, payrollEarnings, holidays) => {
       totalAdjustmentAmount -
       totalAbsencesAmount -
       totalUndertimeAmount;
+
+    // compute tax due
+    tax = payComputeTaxDue(emp, grossAmount, semiTax);
 
     // // loop each deductions for each employee
     // payrollEarnings.map((deduction) => {

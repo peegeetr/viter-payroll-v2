@@ -279,3 +279,29 @@ export const holidayTotalAmount = (emp, holidaysItem) => {
   finalAmount += ratedAmount - regularAmount;
   return finalAmount;
 };
+
+// compute tax due
+export const payComputeTaxDue = (emp, gross, semiTax) => {
+  let list = [];
+  const totalNonTaxableCompensation = 0;
+  const taxableCompensationIncome = 0;
+  semiTax.map((sTax) => {
+    if (
+      Number(taxableCompensationIncome) >= Number(sTax.tax_range_from) &&
+      Number(taxableCompensationIncome) <= Number(sTax.tax_range_to)
+    ) {
+      list.push({
+        // tax_aid: Number(taxBracket[i].tax_aid),
+        // tax_range_from: Number(taxBracket[i].tax_range_from),
+        // tax_range_to: Number(taxBracket[i].tax_range_to),
+        // tax_less: Number(taxBracket[i].tax_less),
+        // tax_rate: Number(taxBracket[i].tax_rate),
+        // tax_add: Number(taxBracket[i].tax_add),
+        tax_income: Number(taxableCompensationIncome),
+        total_non_tax_comp: Number(totalNonTaxableCompensation),
+      });
+    }
+  });
+
+  return list;
+};

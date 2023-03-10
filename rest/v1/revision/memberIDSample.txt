@@ -1,0 +1,42 @@
+
+
+    // create member id format ex. (yy-mm-001)
+    $rawNewMemberId  = explode("-", $data["members_registration"]);
+    $formattedMemberId = "";
+    $id = "";
+    $result = $member->readLastMemberId();
+    if($result->num_rows == 0) {
+        // create new id
+        $formattedMemberId = substr($rawNewMemberId[0], 2) . "-" . $rawNewMemberId[1] . "-" . "001";
+    }else {
+        $row = $result->fetch_assoc();
+        extract($row);
+        // member_id from existing record ex. (22-01-001)
+        $existingMeberId = explode("-", $members_id);
+
+        if($existingMeberId[0] == substr($rawNewMemberId[0], 2) && $existingMeberId[1] == $rawNewMemberId[1]){
+            $lastId =  intval($existingMeberId[2]) + 1;
+            // if (intval($existingMeberId[2]) < 10) {
+            if ($lastId < 10) {
+                $id = "00" . $lastId;
+            // }elseif (intval($existingMeberId[2]) < 100) {
+            }elseif ($lastId < 100) {
+                // $lastId =  intval($existingMeberId[2]) + 1;
+                $id = "0" . $lastId;
+            } else {
+                // $lastId =  intval($existingMeberId[2]) + 1;
+                $id = $lastId;
+            }
+
+            $formattedMemberId = $existingMeberId[0] . "-" . $existingMeberId[1] . "-" . $id;
+
+        }elseif ($existingMeberId[0] == substr($rawNewMemberId[0], 2) && $existingMeberId[1] != $rawNewMemberId[1]) {
+            $formattedMemberId = $existingMeberId[0] . "-" . $rawNewMemberId[1] . "-" . "001";
+
+        }else {
+            $formattedMemberId = substr($rawNewMemberId[0], 2) . "-" . $rawNewMemberId[1] . "-" . "001";
+        }
+    }
+
+
+    $member->members_id = $formattedMemberId;

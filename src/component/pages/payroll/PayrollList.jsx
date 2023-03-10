@@ -30,6 +30,7 @@ const PayrollList = ({ setItemEdit }) => {
   const [id, setId] = React.useState(null);
   const [isDel, setDel] = React.useState(false);
   const link = getUserType(store.credentials.data.role_is_developer === 1);
+  const [loading, setLoading] = React.useState(false);
 
   const [onSearch, setOnSearch] = React.useState(false);
   const [page, setPage] = React.useState(1);
@@ -71,6 +72,7 @@ const PayrollList = ({ setItemEdit }) => {
   }, [inView]);
 
   const handleEdit = async (item) => {
+    setLoading(true);
     let prId = item.payroll_id;
     const urlEarning = `${devApiUrl}/v1/earnings/validateId/${prId}`;
     const urlDeduction = `${devApiUrl}/v1/deductions/validateId/${prId}`;
@@ -78,6 +80,7 @@ const PayrollList = ({ setItemEdit }) => {
     if (vp) return;
     dispatch(setIsAdd(true));
     setItemEdit(item);
+    setLoading(false);
   };
 
   const handleDelete = (item) => {
@@ -103,6 +106,7 @@ const PayrollList = ({ setItemEdit }) => {
         {/* {isFetching && !isFetchingNextPage && status !== "loading" && (
           <FetchingSpinner />
         )} */}
+        {loading && <TableSpinner />}
         <div className=" overflow-x-auto z-0">
           <table>
             <thead>

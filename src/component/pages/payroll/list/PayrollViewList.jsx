@@ -57,6 +57,8 @@ const PayrollViewList = () => {
     // cacheTime: 1000,
   });
 
+  console.log(result);
+
   React.useEffect(() => {
     if (inView) {
       setPage((prev) => prev + 1);
@@ -73,16 +75,16 @@ const PayrollViewList = () => {
         <p className="mr-8">
           Pay Period :{" "}
           <span className="font-light text-black">
-            {result?.pages > 0 ? getPayPeriod(result) : "--"}
+            {result?.pages[0].data.length > 0 ? getPayPeriod(result) : "--"}
           </span>
         </p>
         <p className="">
           Period Work Days:{" "}
           <span className="font-light text-black">
-            {result?.pages > 0
+            {result?.pages[0].data.length > 0
               ? getWorkingDays(
-                  new Date(result[0]?.payroll_start_date),
-                  new Date(result[0]?.payroll_end_date)
+                  new Date(result.pages[0].data[0].payroll_start_date),
+                  new Date(result.pages[0].data[0].payroll_end_date)
                 )
               : "--"}
           </span>

@@ -204,10 +204,18 @@ export const getWorkingDays = (startDate, endDate) => {
 
 // get pay period working days between dates
 export const getPayPeriod = (result) => {
-  const mo = formatDate(result[0]?.payroll_start_date).split(" ")[1];
-  const startDay = formatDate(result[0]?.payroll_start_date).split(" ")[2];
-  const endDay = formatDate(result[0]?.payroll_end_date).split(" ")[2];
-  const year = formatDate(result[0]?.payroll_start_date).split(" ")[3];
+  const mo = formatDate(result.pages[0].data[0].payroll_start_date).split(
+    " "
+  )[1];
+  const startDay = formatDate(result.pages[0].data[0].payroll_start_date).split(
+    " "
+  )[2];
+  const endDay = formatDate(result.pages[0].data[0].payroll_end_date).split(
+    " "
+  )[2];
+  const year = formatDate(result.pages[0].data[0].payroll_start_date).split(
+    " "
+  )[3];
   return `${mo} ${startDay} - ${endDay}, ${year}`;
 };
 

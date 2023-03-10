@@ -22,8 +22,6 @@ const EmployeeLink = () => {
     "employee" // key
   );
 
-  console.log(employee);
-
   return (
     <>
       <Header />
@@ -53,10 +51,12 @@ const EmployeeLink = () => {
             </ul>
           </>
         ) : (
-          <div className="relative w-full min-h-[616px] grid place-items-center">
-            {isLoading && <TableSpinner />}
-            <NoData />
-          </div>
+          <>
+            <div className="relative w-full min-h-[616px] grid place-items-center">
+              {isLoading && <TableSpinner />}
+              <NoData />
+            </div>
+          </>
         )}
         <Footer />
       </div>

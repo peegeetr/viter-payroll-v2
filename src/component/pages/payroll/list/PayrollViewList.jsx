@@ -83,8 +83,8 @@ const PayrollViewList = () => {
           <span className="font-light text-black">
             {result?.pages[0].data.length > 0
               ? getWorkingDays(
-                  new Date(result.pages[0].data[0].payroll_start_date),
-                  new Date(result.pages[0].data[0].payroll_end_date)
+                  new Date(result?.pages[0].data[0].payroll_start_date),
+                  new Date(result?.pages[0].data[0].payroll_end_date)
                 )
               : "--"}
           </span>
@@ -175,8 +175,10 @@ const PayrollViewList = () => {
         <table>
           <tbody>
             <tr className="bg-gray-200 hover:bg-gray-200 text-primary">
-              <td className="w-[15rem]">Payroll Entry - PR-001</td>
-              <td colSpan={2}>Jan 1 - 15 2023</td>
+              <td className="w-[15rem]">Payroll Entry ({pid})</td>
+              <td colSpan={2}>
+                {result?.pages[0].data.length > 0 ? getPayPeriod(result) : "--"}
+              </td>
             </tr>
             <tr className="font-bold">
               <td className="w-[15rem]">Particulars</td>

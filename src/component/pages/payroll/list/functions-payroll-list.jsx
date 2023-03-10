@@ -95,6 +95,7 @@ export const runPayroll = (employee, payrollEarnings, holidays, semiTax) => {
     tax = payComputeTaxDue(emp, grossAmount, semiTax, lessItems);
     // data to send to server
     payrollList.push({
+      // wages
       payroll_list_employee_id: emp.payroll_list_employee_id,
       payroll_list_employee_name: emp.payroll_list_employee_name,
       payroll_list_basic_pay: totalBasicPay.toFixed(2),
@@ -108,6 +109,8 @@ export const runPayroll = (employee, payrollEarnings, holidays, semiTax) => {
       payroll_list_adjustment_pay: totalAdjustmentAmount.toFixed(2),
       payroll_list_holiday: totalHolidayAmount.toFixed(2),
       payroll_list_gross: grossAmount.toFixed(2),
+      // Deminimis
+      // total deduction
       payroll_list_deduction: 0,
       payroll_list_net_pay: 0,
     });

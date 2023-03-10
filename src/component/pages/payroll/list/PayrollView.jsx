@@ -43,7 +43,15 @@ const PayrollView = () => {
     "holidays" // key
   );
 
-  console.log(payrollEarnings, holidays, payrollList);
+  // use if not loadmore button undertime
+  const { data: semiMonthly } = useQueryData(
+    `${devApiUrl}/v1/tax/semi-monthly`, // endpoint
+    "get", // method
+    "semiMonthly" // key
+  );
+
+  console.log(semiMonthly);
+
   const handleRun = () => {
     dispatch(setIsConfirm(true));
   };
@@ -84,6 +92,7 @@ const PayrollView = () => {
           employees={payrollList?.data}
           payrollEarnings={payrollEarnings?.data}
           holidays={holidays?.data}
+          semiTax={semiMonthly?.data}
         />
       )}
       {store.success && <ModalSuccess />}

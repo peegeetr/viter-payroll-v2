@@ -1,4 +1,5 @@
 import { useField } from "formik";
+import { NumericFormat } from "react-number-format";
 import React from "react";
 
 export const InputTextArea = ({ label, ...props }) => {
@@ -21,20 +22,39 @@ export const InputTextArea = ({ label, ...props }) => {
 
 export const InputText = ({ label, ...props }) => {
   const [field, meta] = useField(props);
-  return (
-    <>
-      <input
-        {...field}
-        {...props}
-        className={meta.touched && meta.error ? "error-show" : null}
-      />
-      <label htmlFor={props.id || props.name}>{label}</label>
+  if (props.num === "num") {
+    return (
+      <>
+        <NumericFormat
+          {...field}
+          {...props}
+          allowLeadingZeros
+          thousandSeparator=","
+          decimalScale={4}
+          // prefix={"P "}
+        />
 
-      {meta.touched && meta.error ? (
-        <span className="error-show">{meta.error}</span>
-      ) : null}
-    </>
-  );
+        <label htmlFor={props.id || props.name}>{label}</label>
+        {meta.touched && meta.error ? (
+          <span className="error-show">{meta.error}</span>
+        ) : null}
+      </>
+    );
+  } else {
+    return (
+      <>
+        <input
+          {...field}
+          {...props}
+          className={meta.touched && meta.error ? "error-show" : null}
+        />
+        <label htmlFor={props.id || props.name}>{label}</label>
+        {meta.touched && meta.error ? (
+          <span className="error-show">{meta.error}</span>
+        ) : null}
+      </>
+    );
+  }
 };
 
 export const InputSelect = ({ label, onChange, ...props }) => {

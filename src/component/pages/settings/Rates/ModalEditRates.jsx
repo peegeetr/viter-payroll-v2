@@ -34,8 +34,6 @@ const ModalEditRates = ({ itemEdit, payType }) => {
     payItemId // id
   );
 
-  console.log(result);
-
   const handlePayType = async (e, props) => {
     let paytypeid = e.target.value;
     setPayItemId(paytypeid);
@@ -111,12 +109,14 @@ const ModalEditRates = ({ itemEdit, payType }) => {
               initialValues={initVal}
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
-                console.log(values);
-                mutation.mutate(values);
+                const rate = values.rates_percent.replace(/[,]/g, "");
+                // console.log(rate);
+                mutation.mutate({ ...values, rate });
               }}
             >
               {(props) => {
                 props.values.rates_payitems_id = payItem;
+
                 return (
                   <Form>
                     <div className="max-h-[28rem]  p-4">
@@ -130,6 +130,7 @@ const ModalEditRates = ({ itemEdit, payType }) => {
                       </div>
                       <div className="relative my-5 ">
                         <InputText
+                          num="num"
                           label="Percent"
                           type="text"
                           name="rates_percent"

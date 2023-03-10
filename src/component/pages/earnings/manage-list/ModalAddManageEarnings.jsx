@@ -325,13 +325,19 @@ const ModalAddManageEarnings = ({
                 props.values.earnings_details = deatils || props.values.deatils;
                 props.values.is_installment = isInstallment;
                 props.values.earnings_employee_id = employeeId;
-                props.values.earnings_amount = (
-                  Number(props.values.amount) /
+                props.values.earnings_amount =
+                  Number(props.values.amount.replace(/[,]/g, "")) /
                   (props.values.earnings_number_of_installment === "0" ||
                   props.values.earnings_number_of_installment === ""
                     ? "1"
-                    : Number(props.values.earnings_number_of_installment))
-                ).toFixed(2);
+                    : Number(props.values.earnings_number_of_installment));
+                // props.values.earnings_amount = (
+                //   Number(props.values.amount.replace(/[,]/g, "").slice(2)) /
+                //   (props.values.earnings_number_of_installment === "0" ||
+                //   props.values.earnings_number_of_installment === ""
+                //     ? "1"
+                //     : Number(props.values.earnings_number_of_installment))
+                // ).toFixed(2);
                 props.values.earnings_payroll_id =
                   payrollDraft?.data[0].payroll_id;
                 props.values.earnings_number_of_installment =
@@ -455,6 +461,7 @@ const ModalAddManageEarnings = ({
                           {/* show amount text */}
                           <div className="relative mb-5">
                             <InputText
+                              num="num"
                               label="Amount"
                               type="text"
                               onKeyPress={handleNumOnly}

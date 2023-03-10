@@ -20,7 +20,7 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
         // get data
         // get task id from query string
         $sss_bracket->sss_bracket_start = $_GET['start'];
-        $sss_bracket->sss_bracket_total = 5;
+        $sss_bracket->sss_bracket_total = 30;
         //check to see if task id in query string is not empty and is number, if not return json error
         checkLimitId($sss_bracket->sss_bracket_start, $sss_bracket->sss_bracket_total);
         $query = checkReadLimit($sss_bracket);

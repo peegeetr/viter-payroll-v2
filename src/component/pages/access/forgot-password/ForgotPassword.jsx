@@ -36,7 +36,7 @@ const ForgotPassword = () => {
     <>
       <div
         className="flex justify-center items-center"
-        style={{ transform: "translateY(clamp(5rem,17vw,22rem))" }}
+        style={{ transform: "translateY(clamp(5rem,12vw,22rem))" }}
       >
         <div className="w-96 p-6">
           <div className="flex justify-center">

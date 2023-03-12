@@ -375,6 +375,31 @@ export const payComputeTaxDue = (emp, gross, semiTax, lessItems) => {
   return tax;
 };
 
+// compute sss bracket
+export const payComputeSssBracket = (emp, gross, bracket, lessItems) => {
+  console.log(emp);
+  let tax = 0;
+  let list = [];
+  const totalNonTaxableCompensation = lessItems;
+  const taxableCompensationIncome = 0;
+  bracket.map((sBracket) => {
+    if (
+      Number(taxableCompensationIncome) >=
+        Number(sBracket.sss_bracket_range_from) &&
+      Number(taxableCompensationIncome) <= Number(sBracket.sss_bracket_range_to)
+    ) {
+      taxableCompensationIncome = gross - totalNonTaxableCompensation;
+      tax =
+        taxableCompensationIncome -
+        Number(sBracket.semi_monthly_less_amount) *
+          (Number(sBracket.semi_monthly_rate) / 100) +
+        Number(sBracket.semi_monthly_additional_amount);
+    }
+  });
+
+  return tax;
+};
+
 // deductions compution
 
 // compute FCA Tuition

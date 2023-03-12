@@ -76,7 +76,7 @@ const CreateSystemPassword = () => {
       ) : (
         <div
           className="relative"
-          style={{ transform: "translateY(clamp(5rem,12vw,15rem))" }}
+          style={{ transform: "translateY(clamp(5rem,5vw,15rem))" }}
         >
           <div className="flex justify-center items-center ">
             <div className="w-96 p-6">

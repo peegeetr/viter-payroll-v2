@@ -3,9 +3,6 @@ import { FaEnvelope, FaSave } from "react-icons/fa";
 import { ImPlay3 } from "react-icons/im";
 import { setIsConfirm } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
-import useLoadHolidays from "../../../custom-hooks/useLoadHolidays";
-import useLoadPayrollEarnings from "../../../custom-hooks/useLoadPayrollEarnings";
-import useLoadPayrollList from "../../../custom-hooks/useLoadPayrollList";
 import useQueryData from "../../../custom-hooks/useQueryData";
 import { devApiUrl, getUrlParam } from "../../../helpers/functions-general";
 import BreadCrumbs from "../../../partials/BreadCrumbs";
@@ -21,6 +18,13 @@ const PayrollView = () => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [itemEdit, setItemEdit] = React.useState(null);
   const pid = getUrlParam().get("payrollid");
+
+  // use if not loadmore button undertime
+  const { data: bracket } = useQueryData(
+    `${devApiUrl}/v1/sss-bracket`, // endpoint
+    "get", // method
+    "bracket" // key
+  );
 
   // use if not loadmore button undertime
   const { data: payrollList } = useQueryData(
@@ -100,6 +104,7 @@ const PayrollView = () => {
           payrollEarnings={payrollEarnings?.data}
           payrollDeductions={payrollDeductions?.data}
           holidays={holidays?.data}
+          bracket={bracket?.data}
           semiTax={semiMonthly?.data}
         />
       )}

@@ -19,6 +19,7 @@ import {
   payComputeOtherAllowances,
   payComputeOtherDeduction,
   payComputeSeparationPay,
+  payComputeSssBracket,
   payComputeTaxDue,
   payComputeTithes,
   payComputeTuition,
@@ -30,6 +31,7 @@ export const runPayroll = (
   payrollEarnings,
   payrollDeductions,
   holidays,
+  bracket,
   semiTax
 ) => {
   // wages
@@ -42,7 +44,6 @@ export const runPayroll = (
   let totalInflationAmount = 0;
   let totalAdjustmentAmount = 0;
   let totalHolidayAmount = 0;
-
   let grossAmount = 0;
   let totalBasicPay = 0;
 
@@ -53,6 +54,8 @@ export const runPayroll = (
   let totalEmployeeReferralBonus = 0;
   let totalSeparationPay = 0;
   let totalOtherAllowances = 0;
+
+  // sss bracket earnings
   let totalHmoEr = 0;
   let totalPgbgEr = 0;
   let totalPhicEr = 0;
@@ -69,6 +72,9 @@ export const runPayroll = (
   let lessItems = 0;
   let tax = 0;
   let netPay = 0;
+
+  // sss bracket deduction
+  let totalSssEe = 0;
 
   let payrollList = [];
   // loop each employee records
@@ -135,6 +141,8 @@ export const runPayroll = (
       totalAdjustmentAmount -
       totalAbsencesAmount -
       totalUndertimeAmount;
+
+    // totalSssEr = payComputeSssBracket(emp, grossAmount, bracket, lessItems);
 
     // loop each deductions for each employee
     payrollDeductions.map((deduction) => {
@@ -210,10 +218,13 @@ export const runPayroll = (
     totalEmployeeReferralBonus = 0;
     totalOtherAllowances = 0;
     totalSeparationPay = 0;
+    // reset sss bracket earnings Er
     totalHmoEr = 0;
     totalPgbgEr = 0;
     totalPhicEr = 0;
     totalSssEr = 0;
+    // reset sss bracket earnings EE
+    totalSssEe = 0;
     // reset deductions variables
     totalTuition = 0;
     totalTithes = 0;

@@ -13,16 +13,14 @@ const useIsLogin = (navigate) => {
   React.useEffect(() => {
     setLoading(true);
     const fetchLogin = async () => {
-      const login = await fetchApi(
-        devApiUrl + "/admin/settings/account/read-account-token.php",
-        {
-          token: checkLocalStorage().token,
-          memberId: store.credentials.account_role_is_admin === "1" ? "0" : "1",
-        }
+      const login = await queryData(
+        "/v1/user-others/token",
+        { ...values, token: fbsPayroll.token },
+        "post"
       );
 
       if (typeof login === "undefined" || !login.status) {
-        localStorage.removeItem("fwcdonationtoken");
+        localStorage.removeItem("fbsPayroll");
         setLoading(false);
       } else {
         setLoading(false);

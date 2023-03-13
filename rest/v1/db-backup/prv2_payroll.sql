@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.0
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Feb 17, 2023 at 02:22 AM
--- Server version: 5.7.39-42-log
--- PHP Version: 7.4.33
+-- Host: 127.0.0.1
+-- Generation Time: Mar 13, 2023 at 08:24 AM
+-- Server version: 10.4.22-MariaDB
+-- PHP Version: 8.1.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `dbg5s9r5osiott`
+-- Database: `fbs_payroll_v2`
 --
 
 -- --------------------------------------------------------
@@ -34,8 +34,8 @@ CREATE TABLE `prv2_payroll` (
   `payroll_start_date` varchar(20) NOT NULL,
   `payroll_end_date` varchar(20) NOT NULL,
   `payroll_pay_date` varchar(20) NOT NULL,
-  `payroll_earning_type` varchar(20) NOT NULL,
-  `payroll_created` varchar(20) NOT NULL,
+  `payroll_category_type` varchar(20) NOT NULL,
+  `payroll_created` datetime NOT NULL,
   `payroll_datetime` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -57,7 +57,7 @@ ALTER TABLE `prv2_payroll`
 -- AUTO_INCREMENT for table `prv2_payroll`
 --
 ALTER TABLE `prv2_payroll`
-  MODIFY `payroll_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `payroll_aid` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

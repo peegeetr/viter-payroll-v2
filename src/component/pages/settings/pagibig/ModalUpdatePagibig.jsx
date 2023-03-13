@@ -30,6 +30,7 @@ const ModalUpdatePagibig = ({ item }) => {
     onSuccess: (data) => {
       // Invalidate and refetch
       queryClient.invalidateQueries({ queryKey: ["pagibig"] });
+      dispatch(setIsAdd(false));
       // show success box
       if (data.success) {
         dispatch(setSuccess(true));

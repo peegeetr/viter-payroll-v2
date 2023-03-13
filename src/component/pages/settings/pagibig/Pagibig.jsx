@@ -28,7 +28,7 @@ const Pagibig = () => {
         <Footer />
       </div>
 
-      {store.success && <ModalSuccess close={"close"} />}
+      {store.success && <ModalSuccess />}
       {store.error && <ModalError />}
     </>
   );

@@ -32,7 +32,7 @@ const PayrollView = () => {
     "get", // method
     "payrollList" // key
   );
-
+  console.log("payroll", payrollList);
   // use if not loadmore button undertime
   const { data: payrollEarnings } = useQueryData(
     `${devApiUrl}/v1/earnings`, // endpoint

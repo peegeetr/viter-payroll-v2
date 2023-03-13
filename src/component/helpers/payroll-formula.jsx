@@ -454,7 +454,8 @@ export const payComputePagibig = (emp, pagibig) => {
     pagibigEe,
     pagibigEr,
     payroll_id: emp.payroll_id,
-    payroll_list_employee_id: emp.payroll_list_employee_id,
+    employee_id: emp.payroll_list_employee_id,
+    payroll_category_type: emp.payroll_category_type,
     payroll_list_employee_name: emp.payroll_list_employee_name,
   });
 

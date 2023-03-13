@@ -15,7 +15,7 @@ const SummaryEarnings = () => {
   return (
     <>
       <Header />
-      <Navigation menu="employee" />
+      <Navigation menu="reports" />
       <div className="wrapper">
         <BreadCrumbs />
         <hr />

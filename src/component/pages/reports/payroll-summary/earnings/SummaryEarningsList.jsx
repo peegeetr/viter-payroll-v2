@@ -106,20 +106,21 @@ const SummaryEarningsList = () => {
         <div className="overflow-x-auto z-0 ">
           <table>
             <thead>
-              <tr className="border-none">
+              <tr className="border-none text-center">
                 <th className="text-center" rowSpan="2">
                   #
                 </th>
-                <th className="min-w-[10rem]" rowSpan="2">
+                <th className="min-w-[10rem] text-left" rowSpan="2">
                   Name
                 </th>
-                <th className="table-border" rowSpan="2">
+                <th
+                  className="table-border min-w-[10rem] text-left"
+                  rowSpan="2"
+                >
                   Department
                 </th>
-                <th className="table-border " rowSpan="2">
-                  Monthly
-                  <br />
-                  Basic pay
+                <th className="table-border min-w-[12rem]" rowSpan="2">
+                  Monthly Basic pay
                 </th>
                 <th className="table-border min-w-[8rem]" rowSpan="2">
                   Additional pay
@@ -127,18 +128,14 @@ const SummaryEarningsList = () => {
                 <th className="table-border min-w-[5rem]" rowSpan="2">
                   Total Pay
                 </th>
-                <th className="table-border " rowSpan="2">
-                  Regular
-                  <br />
-                  Work Hours
+                <th className="table-border  min-w-[12rem]" rowSpan="2">
+                  Regular Work Hours
                 </th>
                 <th className="table-border" rowSpan="2">
                   Rate
                 </th>
-                <th className="table-border " rowSpan="2">
-                  Total
-                  <br />
-                  Reg Wage
+                <th className="table-border  min-w-[12rem]" rowSpan="2">
+                  Total Reg Wage
                 </th>
                 <th className="table-border-center " colSpan="3">
                   Leave
@@ -156,7 +153,7 @@ const SummaryEarningsList = () => {
                   Gross Pay
                 </th>
               </tr>
-              <tr className="">
+              <tr className="text-center">
                 <th className="table-border">Hrs</th>
                 <th className="table-border">Rate</th>
                 <th className="table-border">Amount</th>
@@ -172,31 +169,32 @@ const SummaryEarningsList = () => {
               </tr>
             </thead>
             <tbody>
-              <tr className="">
+              <tr className="text-right">
                 <td className="text-center py-[0.7rem]">1.</td>
 
-                <td>cyrene, lumabas</td>
-                <td>IT</td>
-                <td>{numberWithCommas(100000000000)}</td>
-                <td>{numberWithCommas(100000000000)}</td>
-                <td>{numberWithCommas(100000000000)}</td>
-                <td>{numberWithCommas(100000000000)}</td>
-                <td>{numberWithCommas(100000000000)}</td>
-                <td>{numberWithCommas(100000000000)}</td>
-                <td>{numberWithCommas(100000000000)}</td>
-                <td>{numberWithCommas(100000000000)}</td>
-                <td>{numberWithCommas(100000000000)}</td>
-                <td>{numberWithCommas(100000000000)}</td>
-                <td>{numberWithCommas(100000000000)}</td>
-                <td>{numberWithCommas(100000000000)}</td>
-                <td>{numberWithCommas(100000000000)}</td>
-                <td>{numberWithCommas(100000000000)}</td>
-                <td>{numberWithCommas(100000000000)}</td>
-                <td>{numberWithCommas(100000000000)}</td>
-                <td>{numberWithCommas(100000000000)}</td>
-                <td>{numberWithCommas(100000000000)}</td>
-                <td>{numberWithCommas(100000000000)}</td>
+                <td className="text-left">cyrene, lumabas</td>
+                <td className="text-left">IT</td>
+                <td className="px-6">{numberWithCommas(100.5)}</td>
+                <td className="px-6">{numberWithCommas(1250.5)}</td>
+                <td className="px-6">{numberWithCommas(100000000000)}</td>
+                <td className="px-6">{numberWithCommas(100000000000)}</td>
+                <td className="px-6">{numberWithCommas(100000000000)}</td>
+                <td className="px-6">{numberWithCommas(100000000000)}</td>
+                <td className="px-6">{numberWithCommas(100000000000)}</td>
+                <td className="px-6">{numberWithCommas(100000000000)}</td>
+                <td className="px-6">{numberWithCommas(100000000000)}</td>
+                <td className="px-6">{numberWithCommas(100000000000)}</td>
+                <td className="px-6">{numberWithCommas(100000000000)}</td>
+                <td className="px-6">{numberWithCommas(100000000000)}</td>
+                <td className="px-6">{numberWithCommas(100000000000)}</td>
+                <td className="px-6">{numberWithCommas(100000000000)}</td>
+                <td className="px-6">{numberWithCommas(100000000000)}</td>
+                <td className="px-6">{numberWithCommas(100000000000)}</td>
+                <td className="px-6">{numberWithCommas(100000000000)}</td>
+                <td className="px-6">{numberWithCommas(100000000000)}</td>
+                <td className="px-6">{numberWithCommas(100000000000)}</td>
               </tr>
+
               <tr className="text-center ">
                 <td colSpan="100%" className="p-10">
                   <NoData />

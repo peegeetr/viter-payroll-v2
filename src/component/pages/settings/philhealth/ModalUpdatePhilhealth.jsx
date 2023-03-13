@@ -30,6 +30,7 @@ const ModalUpdatePhilhealth = ({ item }) => {
     onSuccess: (data) => {
       // Invalidate and refetch
       queryClient.invalidateQueries({ queryKey: ["philhealth"] });
+      dispatch(setIsAdd(false));
       // show success box
       if (data.success) {
         dispatch(setSuccess(true));

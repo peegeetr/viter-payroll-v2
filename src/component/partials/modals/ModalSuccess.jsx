@@ -4,13 +4,12 @@ import { setIsAdd, setSuccess } from "../../../store/StoreAction";
 import { StoreContext } from "../../../store/StoreContext";
 import { GetFocus } from "../../helpers/functions-general";
 
-const ModalSuccess = ({ close }) => {
+const ModalSuccess = () => {
   const { store, dispatch } = React.useContext(StoreContext);
   GetFocus("btnClose");
 
   const handleClose = () => {
     dispatch(setSuccess(false));
-    close === "close" && dispatch(setIsAdd(false));
   };
 
   return (

@@ -40,26 +40,31 @@ const PhilhealthForm = ({ itemEdit }) => {
   return (
     <>
       <div className="relative w-full max-w-[650px] ">
-        {isLoading && <TableSpinner />}
-        <div className="bg-gray-200 p-2 mb-5 flex justify-between items-center">
-          <h4>Update Amount</h4>
-          <button
-            type="button"
-            className="tooltip-action-table"
-            data-tooltip="Edit"
-            onClick={() => handleEdit(philhealth)}
-          >
-            <FaEdit />
-          </button>
-        </div>
-        <div className="text-left grid grid-cols-[7rem_1fr] mb-5 xs:pl-5 pl-2">
-          <p className="font-semibold">Percentage :</p>
-          <p className="pl-2">{numberWithCommas(percentage)}%</p>
-          <p className="font-semibold">Minimum :</p>
-          <p className="pl-2">{numberWithCommas(min)}</p>
-          <p className="font-semibold">Maximum :</p>
-          <p className="pl-2">{numberWithCommas(max)}</p>
-        </div>
+        {isLoading ? (
+          <TableSpinner />
+        ) : (
+          <>
+            <div className="bg-gray-200 p-2 mb-5 flex justify-between items-center">
+              <h4>Update Amount</h4>
+              <button
+                type="button"
+                className="tooltip-action-table"
+                data-tooltip="Edit"
+                onClick={() => handleEdit(philhealth)}
+              >
+                <FaEdit />
+              </button>
+            </div>
+            <div className="text-left grid grid-cols-[7rem_1fr] mb-5 xs:pl-5 pl-2">
+              <p className="font-semibold">Percentage :</p>
+              <p className="pl-2">{numberWithCommas(percentage)}%</p>
+              <p className="font-semibold">Minimum :</p>
+              <p className="pl-2">{numberWithCommas(min)}</p>
+              <p className="font-semibold">Maximum :</p>
+              <p className="pl-2">{numberWithCommas(max)}</p>
+            </div>
+          </>
+        )}
       </div>
       {store.isAdd && <ModalUpdatePhilhealth item={item} />}
     </>

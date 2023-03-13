@@ -38,25 +38,30 @@ const PagibigForm = () => {
   return (
     <>
       <div className="relative w-full max-w-[650px] ">
-        {isLoading && <TableSpinner />}
-        <div className="bg-gray-200 p-2 mb-5 flex justify-between items-center">
-          <h4>Update Amount</h4>
-          <button
-            type="button"
-            className="tooltip-action-table"
-            data-tooltip="Edit"
-            onClick={() => handleEdit(pagibig)}
-          >
-            <FaEdit />
-          </button>
-        </div>
+        {isLoading ? (
+          <TableSpinner />
+        ) : (
+          <>
+            <div className="bg-gray-200 p-2 mb-5 flex justify-between items-center">
+              <h4>Update Amount</h4>
+              <button
+                type="button"
+                className="tooltip-action-table"
+                data-tooltip="Edit"
+                onClick={() => handleEdit(pagibig)}
+              >
+                <FaEdit />
+              </button>
+            </div>
 
-        <div className="text-left grid grid-cols-[6rem_1fr] mb-5 xs:pl-5 pl-2">
-          <p className="font-semibold">EE Amount :</p>
-          <p className="pl-2">{numberWithCommas(eeAmount)}</p>
-          <p className="font-semibold">ER Amount :</p>
-          <p className="pl-2">{numberWithCommas(erAmount)}</p>
-        </div>
+            <div className="text-left grid grid-cols-[6rem_1fr] mb-5 xs:pl-5 pl-2">
+              <p className="font-semibold">EE Amount :</p>
+              <p className="pl-2">{numberWithCommas(eeAmount)}</p>
+              <p className="font-semibold">ER Amount :</p>
+              <p className="pl-2">{numberWithCommas(erAmount)}</p>
+            </div>
+          </>
+        )}
       </div>
       {store.isAdd && <ModalUpdatePagibig item={item} />}
     </>

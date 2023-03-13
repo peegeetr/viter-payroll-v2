@@ -445,8 +445,7 @@ export const payComputePagibig = (emp, pagibig) => {
     if (Number(emp.payroll_list_pagibig_additional) > 0) {
       pagibigEr = Number(emp.payroll_list_pagibig_additional);
       pagibigEe = Number(emp.payroll_list_pagibig_additional);
-    }
-    if (Number(emp.payroll_list_pagibig_additional) === 0) {
+    } else {
       pagibigEr = pagibig[0].pagibig_er_amount;
       pagibigEe = pagibig[0].pagibig_ee_amount;
     }

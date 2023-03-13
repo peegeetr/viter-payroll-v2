@@ -56,7 +56,7 @@ for ($i = 0; $i < count($allEmployee); $i++) {
     $payroll->payroll_list_employee_id = $allEmployee[$i]["employee_aid"];
     $payroll->payroll_list_employee_salary = $allEmployee[$i]["employee_job_salary"];
     $payroll->payroll_list_night_diff_per_day = $allEmployee[$i]["employee_job_nd_per_day"];
-    $payroll->payroll_list_pagibig_additional = $allEmployee[$i]["employee_job_pag_ibig_deduc"];
+    $payroll->payroll_list_pagibig_additional = $allEmployee[$i]["employee_job_pagibig_amount"];
     // create payroll list
     if ($allEmployee[$i]["employee_job_payroll_elegibility"] === 1) {
         checkCreatePayrollList($payroll);

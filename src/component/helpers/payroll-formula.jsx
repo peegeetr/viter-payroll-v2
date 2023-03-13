@@ -441,28 +441,23 @@ export const payComputePagibig = (emp, pagibig) => {
   let pagibigEr = 0;
   let pagibigEe = 0;
   let pagibigList = [];
-
-  if (pagibig.length > 0 && Number(emp.payroll_list_pagibig_additional) > 0) {
-    pagibigEr = Number(emp.payroll_list_pagibig_additional);
-    pagibigEe = Number(emp.payroll_list_pagibig_additional);
-    pagibigList.push({
-      pagibigEe,
-      pagibigEr,
-      payroll_id: emp.payroll_id,
-      payroll_list_employee_id: emp.payroll_list_employee_id,
-      payroll_list_employee_name: emp.payroll_list_employee_name,
-    });
-  } else {
-    pagibigEr = pagibig[0].pagibig_er_amount;
-    pagibigEe = pagibig[0].pagibig_ee_amount;
-    pagibigList.push({
-      pagibigEe,
-      pagibigEr,
-      payroll_id: emp.payroll_id,
-      payroll_list_employee_id: emp.payroll_list_employee_id,
-      payroll_list_employee_name: emp.payroll_list_employee_name,
-    });
+  if (pagibig.length > 0) {
+    if (Number(emp.payroll_list_pagibig_additional) > 0) {
+      pagibigEr = Number(emp.payroll_list_pagibig_additional);
+      pagibigEe = Number(emp.payroll_list_pagibig_additional);
+    }
+    if (Number(emp.payroll_list_pagibig_additional) === 0) {
+      pagibigEr = pagibig[0].pagibig_er_amount;
+      pagibigEe = pagibig[0].pagibig_ee_amount;
+    }
   }
+  pagibigList.push({
+    pagibigEe,
+    pagibigEr,
+    payroll_id: emp.payroll_id,
+    payroll_list_employee_id: emp.payroll_list_employee_id,
+    payroll_list_employee_name: emp.payroll_list_employee_name,
+  });
 
   return { pagibigEr, pagibigEe, pagibigList };
 };

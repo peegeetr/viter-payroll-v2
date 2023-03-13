@@ -12,7 +12,7 @@ const ModalRun = ({
   payrollEarnings,
   payrollDeductions,
   holidays,
-  bracket,
+  sssBracket,
   semiTax,
 }) => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -30,7 +30,7 @@ const ModalRun = ({
       payrollEarnings,
       payrollDeductions,
       holidays,
-      bracket,
+      sssBracket,
       semiTax
     );
     // setLoading(true);

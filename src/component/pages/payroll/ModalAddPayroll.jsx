@@ -46,6 +46,7 @@ const ModalAddPayroll = ({ item }) => {
     onSuccess: (data) => {
       // Invalidate and refetch
       queryClient.invalidateQueries({ queryKey: ["payroll"] });
+      dispatch(setIsAdd(false));
       // show success box
       if (data.success) {
         dispatch(setSuccess(true));

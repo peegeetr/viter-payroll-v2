@@ -340,11 +340,11 @@ export const holidayTotalAmount = (emp, holidaysItem) => {
 
 // compute tax due
 export const payComputeTaxDue = (emp, gross, semiTax, lessItems) => {
-  console.log(emp);
+  // console.log(emp);
   let tax = 0;
   let list = [];
   const totalNonTaxableCompensation = lessItems;
-  const taxableCompensationIncome = 0;
+  let taxableCompensationIncome = 0;
   semiTax.map((sTax) => {
     if (
       Number(taxableCompensationIncome) >=
@@ -376,28 +376,45 @@ export const payComputeTaxDue = (emp, gross, semiTax, lessItems) => {
 };
 
 // compute sss bracket
-export const payComputeSssBracket = (emp, gross, bracket, lessItems) => {
-  console.log(emp);
-  let tax = 0;
-  let list = [];
-  const totalNonTaxableCompensation = lessItems;
-  const taxableCompensationIncome = 0;
-  bracket.map((sBracket) => {
+export const payComputeSssBracket = (emp, sssBracket) => {
+  let sssEr = 0;
+  let sssEe = 0;
+  let sssList = [];
+  sssBracket.map((item) => {
     if (
-      Number(taxableCompensationIncome) >=
-        Number(sBracket.sss_bracket_range_from) &&
-      Number(taxableCompensationIncome) <= Number(sBracket.sss_bracket_range_to)
+      Number(emp.payroll_list_employee_salary) >=
+        Number(item.sss_bracket_range_from) &&
+      Number(emp.payroll_list_employee_salary) <=
+        Number(item.sss_bracket_range_to)
     ) {
-      taxableCompensationIncome = gross - totalNonTaxableCompensation;
-      tax =
-        taxableCompensationIncome -
-        Number(sBracket.semi_monthly_less_amount) *
-          (Number(sBracket.semi_monthly_rate) / 100) +
-        Number(sBracket.semi_monthly_additional_amount);
+      sssEr = Number(item.sss_bracket_er) / 2;
+      sssEe = Number(item.sss_bracket_ee) / 2;
+      // use to insert in earnings table
+      sssList.push({
+        sssEe,
+        sssEr,
+        payroll_id: emp.payroll_id,
+        payroll_list_employee_id: emp.payroll_list_employee_id,
+        payroll_list_employee_name: emp.payroll_list_employee_name,
+      });
     }
   });
 
-  return tax;
+  // if out of bracket
+  if (sssEr === 0 || sssEe === 0) {
+    sssEr = Number(sssBracket[sssBracket.length - 1].sss_bracket_er) / 2;
+    sssEe = Number(sssBracket[sssBracket.length - 1].sss_bracket_ee) / 2;
+    // use to insert in earnings table
+    sssList.push({
+      sssEe,
+      sssEr,
+      payroll_id: emp.payroll_id,
+      payroll_list_employee_id: emp.payroll_list_employee_id,
+      payroll_list_employee_name: emp.payroll_list_employee_name,
+    });
+  }
+
+  return { sssEr, sssEe, sssList };
 };
 
 // deductions compution

@@ -20,10 +20,10 @@ const PayrollView = () => {
   const pid = getUrlParam().get("payrollid");
 
   // use if not loadmore button undertime
-  const { data: bracket } = useQueryData(
+  const { data: sssBracket } = useQueryData(
     `${devApiUrl}/v1/sss-bracket`, // endpoint
     "get", // method
-    "bracket" // key
+    "sss-bracket" // key
   );
 
   // use if not loadmore button undertime
@@ -61,7 +61,7 @@ const PayrollView = () => {
     "semiMonthly" // key
   );
 
-  console.log("payrollEarnings", payrollEarnings);
+  console.log(payrollList);
 
   const handleRun = () => {
     dispatch(setIsConfirm(true));
@@ -104,7 +104,7 @@ const PayrollView = () => {
           payrollEarnings={payrollEarnings?.data}
           payrollDeductions={payrollDeductions?.data}
           holidays={holidays?.data}
-          bracket={bracket?.data}
+          sssBracket={sssBracket?.data}
           semiTax={semiMonthly?.data}
         />
       )}

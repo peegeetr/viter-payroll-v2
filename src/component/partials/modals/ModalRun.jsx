@@ -25,7 +25,7 @@ const ModalRun = ({
   // console.log("run", runPayroll(employees, payrollEarnings));
   const handleYes = async () => {
     // run payroll
-    runPayroll(
+    const values = runPayroll(
       employees,
       payrollEarnings,
       payrollDeductions,
@@ -49,6 +49,8 @@ const ModalRun = ({
     //   isDel ? "delete" : "put"
     // );
     // dispatch(setStartIndex(0));
+
+    console.log(values);
   };
 
   return (

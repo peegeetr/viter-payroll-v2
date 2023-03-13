@@ -55,9 +55,6 @@ export const runPayroll = (
   let totalSeparationPay = 0;
   let totalOtherAllowances = 0;
 
-  // sss bracket
-  let sssAmount = 0;
-
   // total deduction
   let totalTuition = 0;
   let totalTithes = 0;
@@ -70,8 +67,22 @@ export const runPayroll = (
   let tax = 0;
   let netPay = 0;
 
+  // items for earnings and deductions to send to server
+  // sss bracket
+  let sssAmount = 0;
+  // pagibig
+  let pagibigAmount = 0;
+  // philhealth
+  let philAmount = 0;
+  // Night differential
+  let nightDiffAmount = 0;
+  // holiday
+  let holidayAmount = 0;
+
   let payrollList = [];
   let sssList = [];
+  let ndList = [];
+  let holidayList = [];
   // loop each employee records
   employee.map((emp) => {
     totalBasicPay = Number(emp.payroll_list_employee_salary) / 2;
@@ -122,9 +133,11 @@ export const runPayroll = (
     });
 
     //  holiday for each employee
-    totalHolidayAmount += payComputeHoliday(emp, holidays, payrollEarnings);
+    holidayAmount = payComputeHoliday(emp, holidays, payrollEarnings);
+    totalHolidayAmount += holidayAmount.finalAmount;
     // night diffirencial
-    totalNightDiffAmount += payComputeNightDiff(emp, holidays, payrollEarnings);
+    nightDiffAmount = payComputeNightDiff(emp, holidays, payrollEarnings);
+    totalNightDiffAmount += nightDiffAmount.finalAmount;
     // gross or total wages
     grossAmount =
       totalNightDiffAmount +
@@ -138,7 +151,8 @@ export const runPayroll = (
       totalUndertimeAmount;
 
     sssAmount = payComputeSssBracket(emp, sssBracket);
-    // console.log(sssAmount.sssEr);
+    // pagibigAmount = payComputePagibig(emp, pagibig);
+    // philAmount = payComputePhil(emp, philhealth);
 
     // loop each deductions for each employee
     payrollDeductions.map((deduction) => {
@@ -196,10 +210,14 @@ export const runPayroll = (
 
       payroll_list_net_pay: 0,
     });
-
+    // SSS
     sssList.push(...sssAmount.sssList);
+    // ND
+    ndList.push(...nightDiffAmount.ndList);
+    // holiday
+    holidayList.push(...holidayAmount.holidayList);
 
-    console.log(sssList);
+    // console.log({holidayList, });
 
     // reset wages variables
     totalOtAmount = 0;
@@ -233,5 +251,6 @@ export const runPayroll = (
     netPay = 0;
   });
 
-  console.log(payrollList);
+  // console.log(payrollList);
+  return { payrollList, holidayList, sssList, ndList };
 };

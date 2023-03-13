@@ -74,6 +74,7 @@ export const payComputeUndertime = (earning) => {
 
 // compute Night Diffirencial
 export const payComputeNightDiff = (emp, holidays, payrollEarnings) => {
+  let ndList = [];
   const days = getWorkingDays(
     new Date(emp.payroll_start_date),
     new Date(emp.payroll_end_date)
@@ -158,7 +159,14 @@ export const payComputeNightDiff = (emp, holidays, payrollEarnings) => {
   }
 
   finalAmount = totalNDAmount + totalNDHolidayAmount;
-  return finalAmount;
+  ndList.push({
+    finalAmount,
+    payroll_id: emp.payroll_id,
+    payroll_list_employee_id: emp.payroll_list_employee_id,
+    payroll_list_employee_name: emp.payroll_list_employee_name,
+  });
+  return { finalAmount, ndList };
+  // return finalAmount;
 };
 
 // compute Hazard Pay
@@ -247,6 +255,7 @@ export const payComputeHoliday = (emp, holidays, payrollEarnings) => {
   let finalAmount = 0;
   let holidayLeaveAmount = 0;
   let holidayAmount = 0;
+  let holidayList = [];
   holidays.map((holidaysItem) => {
     let holidayDate = holidaysItem.holidays_date;
 
@@ -282,7 +291,14 @@ export const payComputeHoliday = (emp, holidays, payrollEarnings) => {
   });
 
   finalAmount = holidayAmount - holidayLeaveAmount;
-  return finalAmount;
+  holidayList.push({
+    finalAmount,
+    payroll_id: emp.payroll_id,
+    payroll_list_employee_id: emp.payroll_list_employee_id,
+    payroll_list_employee_name: emp.payroll_list_employee_name,
+  });
+  return { finalAmount, holidayList };
+  // return finalAmount;
 };
 
 // compute holiday

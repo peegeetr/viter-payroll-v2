@@ -1,10 +1,13 @@
 import React from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
 import { FaQuestionCircle, FaTimesCircle } from "react-icons/fa";
 import { setIsConfirm, setStartIndex } from "../../../store/StoreAction";
 import { StoreContext } from "../../../store/StoreContext";
 import { fetchData } from "../../helpers/fetchData";
 import { runPayroll } from "../../pages/payroll/list/functions-payroll-list";
 import ButtonSpinner from "../spinners/ButtonSpinner";
+import { queryData } from "../../helpers/queryData";
 
 const ModalRun = ({
   item,
@@ -20,8 +23,33 @@ const ModalRun = ({
   const { store, dispatch } = React.useContext(StoreContext);
   const [loading, setLoading] = React.useState(false);
 
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: (values) =>
+      queryData(
+        item
+          ? `${devApiUrl}/v1/roles/${item.role_aid}`
+          : `${devApiUrl}/v1/roles`,
+        item ? "put" : "post",
+        values
+      ),
+    onSuccess: (data) => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries({ queryKey: ["role"] });
+      // show success box
+      if (data.success) {
+        dispatch(setSuccess(true));
+        dispatch(setMessage(`Successfuly ${item ? "updated." : "added."}`));
+      }
+      // show error box
+      if (!data.success) {
+        dispatch(setError(true));
+        dispatch(setMessage(data.error));
+      }
+    },
+  });
   const handleClose = () => {
-    dispatch(setIsConfirm(false));
+    dispatch(setIsAdd(false));
   };
 
   // console.log("run", runPayroll(employees, payrollEarnings));
@@ -37,22 +65,6 @@ const ModalRun = ({
       pagibig,
       philhealth
     );
-    // setLoading(true);
-    // fetchData(
-    //   setLoading,
-    //   isDel ? mysqlApiReset : mysqlApiArchive,
-    //   { isActive: 0, email: item, isDeveloper: isDeveloper },
-    //   null,
-    //   isDel ? "Please check your email to continue resetting password." : "",
-    //   "",
-    //   dispatch,
-    //   store,
-    //   isDel ? true : false,
-    //   false,
-    //   null,
-    //   isDel ? "delete" : "put"
-    // );
-    // dispatch(setStartIndex(0));
 
     console.log(values);
   };

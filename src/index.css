@@ -91,6 +91,12 @@
   .btn-modal-cancel {
     @apply flex items-center justify-center text-dark gap-2 px-3 py-1.5 bg-white rounded-full border-gray-300 border w-full disabled:!cursor-not-allowed;
   }
+  .table-border {
+    @apply border-solid border-x-[1px] border-gray-300;
+  }
+  .table-border-center {
+    @apply border-solid border-x-[1px] border-gray-300 border-b-[1px] text-center;
+  }
 }
 
 @layer utilities {
@@ -155,7 +161,7 @@
   @apply w-1;
 }
 ::-webkit-scrollbar:horizontal {
-  @apply h-1 bg-gray-400;
+  @apply h-2 bg-transparent;
 }
 ::-webkit-scrollbar-track-piece {
   @apply bg-gray-300 rounded-xl;

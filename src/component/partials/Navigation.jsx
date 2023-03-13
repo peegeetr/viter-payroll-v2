@@ -1,22 +1,12 @@
 import React from "react";
 import { AiFillSetting } from "react-icons/ai";
-import {
-  FaBusinessTime,
-  FaCalendarAlt,
-  FaCalendarCheck,
-  FaTasks,
-  FaUserCheck,
-  FaUsers,
-} from "react-icons/fa";
-import { GiReceiveMoney } from "react-icons/gi";
+import { TbReportSearch } from "react-icons/tb";
+import { FaClipboardList, FaTasks, FaUsers } from "react-icons/fa";
+import { GiPayMoney, GiReceiveMoney, GiTakeMyMoney } from "react-icons/gi";
 import { Link } from "react-router-dom";
 import { setIsShow, setStartIndex } from "../../store/StoreAction";
 import { StoreContext } from "../../store/StoreContext";
-import {
-  devNavUrl,
-  getUserType,
-  UrlSystem,
-} from "../helpers/functions-general";
+import { getUserType } from "../helpers/functions-general";
 
 const Navigation = ({ menu }) => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -82,7 +72,7 @@ const Navigation = ({ menu }) => {
               onClick={handleShow}
               data-tooltip="Earnings"
             >
-              <FaCalendarAlt className="mr-4 w-4 h-4 md:mr-0 lg:mr-4" />
+              <GiTakeMyMoney className="mr-4 w-4 h-4 md:mr-0 lg:mr-4" />
               <span className="md:hidden lg:block">Earnings</span>
             </Link>
           </li>
@@ -99,7 +89,7 @@ const Navigation = ({ menu }) => {
               onClick={handleShow}
               data-tooltip="Deductions"
             >
-              <FaBusinessTime className="mr-4 w-4 h-4 md:mr-0 lg:mr-4" />
+              <GiPayMoney className="mr-4 w-4 h-4 md:mr-0 lg:mr-4" />
               <span className="md:hidden lg:block">Deductions</span>
             </Link>
           </li>
@@ -116,7 +106,7 @@ const Navigation = ({ menu }) => {
               onClick={handleShow}
               data-tooltip="Pay Type"
             >
-              <FaUserCheck className="mr-4 w-4 h-4 md:mr-0 lg:mr-4" />
+              <FaClipboardList className="mr-4 w-4 h-4 md:mr-0 lg:mr-4" />
               <span className="md:hidden lg:block">Pay Type</span>
             </Link>
           </li>
@@ -150,7 +140,7 @@ const Navigation = ({ menu }) => {
               onClick={handleShow}
               data-tooltip="Reports"
             >
-              <FaUsers className="mr-4 w-4 h-4 md:mr-0 lg:mr-4" />
+              <TbReportSearch className="mr-4 w-4 h-4 md:mr-0 lg:mr-4" />
               <span className="md:hidden lg:block">Reports</span>
             </Link>
           </li>

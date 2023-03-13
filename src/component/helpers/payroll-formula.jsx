@@ -484,43 +484,25 @@ export const payComputePhil = (emp, philhealth) => {
       philhealthEr = Number(philhealth[0].philhealth_max) / 4;
       philhealthEe = Number(philhealth[0].philhealth_max) / 4;
       // use to insert in earnings table
-      philhealthList.push({
-        philhealthEe,
-        philhealthEr,
-        payroll_id: emp.payroll_id,
-        payroll_list_employee_id: emp.payroll_list_employee_id,
-        payroll_list_employee_name: emp.payroll_list_employee_name,
-      });
-      return;
     }
-
     //if salary <= min
     if (totalSalary <= philhealth[0].philhealth_min) {
       philhealthEr = Number(philhealth[0].philhealth_min) / 4;
       philhealthEe = Number(philhealth[0].philhealth_min) / 4;
       // use to insert in earnings table
-      philhealthList.push({
-        philhealthEe,
-        philhealthEr,
-        payroll_id: emp.payroll_id,
-        payroll_list_employee_id: emp.payroll_list_employee_id,
-        payroll_list_employee_name: emp.payroll_list_employee_name,
-      });
-      return;
     }
-
     // if min, max are false
     philhealthEr = Number(totalSalary) / 4;
     philhealthEe = Number(totalSalary) / 4;
-    // use to insert in earnings table
-    philhealthList.push({
-      philhealthEe,
-      philhealthEr,
-      payroll_id: emp.payroll_id,
-      payroll_list_employee_id: emp.payroll_list_employee_id,
-      payroll_list_employee_name: emp.payroll_list_employee_name,
-    });
   }
+  // use to insert in earnings table
+  philhealthList.push({
+    philhealthEe,
+    philhealthEr,
+    payroll_id: emp.payroll_id,
+    payroll_list_employee_id: emp.payroll_list_employee_id,
+    payroll_list_employee_name: emp.payroll_list_employee_name,
+  });
 
   return { philhealthEr, philhealthEe, philhealthList };
 };

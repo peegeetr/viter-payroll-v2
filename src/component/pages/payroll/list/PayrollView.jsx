@@ -74,8 +74,6 @@ const PayrollView = () => {
     "philhealth" // key
   );
 
-  console.log(payrollList);
-
   const handleRun = () => {
     dispatch(setIsConfirm(true));
   };

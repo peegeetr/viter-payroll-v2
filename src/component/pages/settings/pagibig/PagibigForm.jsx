@@ -7,6 +7,7 @@ import {
   devApiUrl,
   numberWithCommas,
 } from "../../../helpers/functions-general.jsx";
+import TableSpinner from "../../../partials/spinners/TableSpinner.jsx";
 import ModalUpdatePagibig from "./ModalUpdatePagibig.jsx";
 
 const PagibigForm = () => {
@@ -16,7 +17,7 @@ const PagibigForm = () => {
   const [eeAmount, setEeAmount] = React.useState(0);
 
   // use if not loadmore button undertime
-  const { data: pagibig } = useQueryData(
+  const { isLoading, data: pagibig } = useQueryData(
     `${devApiUrl}/v1/pagibig`, // endpoint
     "get", // method
     "pagibig" // key
@@ -37,6 +38,7 @@ const PagibigForm = () => {
   return (
     <>
       <div className="relative w-full max-w-[650px] ">
+        {isLoading && <TableSpinner />}
         <div className="bg-gray-200 p-2 mb-5 flex justify-between items-center">
           <h4>Update Amount</h4>
           <button

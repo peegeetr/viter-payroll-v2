@@ -84,7 +84,6 @@ class PayrollList
             $sql .= "payrollList.payroll_list_night_diff_per_day, ";
             $sql .= "payrollList.payroll_list_employee_work_on_holiday, ";
             $sql .= "payrollList.payroll_list_pagibig_additional, ";
-            $sql .= "payrollList.payroll_list_employee_payroll_elegibility, ";
             $sql .= "payrollList.payroll_list_employee_id, ";
             $sql .= "payroll.payroll_category_type, ";
             $sql .= "payroll.payroll_id, ";

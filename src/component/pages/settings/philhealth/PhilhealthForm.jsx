@@ -8,6 +8,7 @@ import {
 import { FaEdit } from "react-icons/fa";
 import ModalUpdatePhilhealth from "./ModalUpdatePhilhealth.jsx";
 import { setIsAdd } from "../../../../store/StoreAction.jsx";
+import TableSpinner from "../../../partials/spinners/TableSpinner.jsx";
 
 const PhilhealthForm = ({ itemEdit }) => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -17,7 +18,7 @@ const PhilhealthForm = ({ itemEdit }) => {
   const [max, setMax] = React.useState(0);
 
   // use if not loadmore button undertime
-  const { data: philhealth } = useQueryData(
+  const { isLoading, data: philhealth } = useQueryData(
     `${devApiUrl}/v1/philhealth`, // endpoint
     "get", // method
     "philhealth" // key
@@ -39,6 +40,7 @@ const PhilhealthForm = ({ itemEdit }) => {
   return (
     <>
       <div className="relative w-full max-w-[650px] ">
+        {isLoading && <TableSpinner />}
         <div className="bg-gray-200 p-2 mb-5 flex justify-between items-center">
           <h4>Update Amount</h4>
           <button

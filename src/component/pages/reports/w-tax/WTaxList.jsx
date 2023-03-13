@@ -12,46 +12,41 @@ const WTaxList = () => {
         <div className=" overflow-x-auto z-0">
           <table>
             <thead>
-              <tr>
+              <tr className="text-center">
                 <th>#</th>
-                <th className="min-w-[10rem]">Name</th>
-                <th className="min-w-[10rem]">Department</th>
-                <th>
-                  Total
-                  <br />
-                  Compensation
+                <th className="min-w-[10rem] text-left">Name</th>
+                <th className="min-w-[10rem] table-border text-left">
+                  Department
                 </th>
-                <th className="min-w-[9rem]">
-                  Less Non Taxable
-                  <br /> Compensation
+                <th className="min-w-[15rem] table-border">
+                  Total Compensation
                 </th>
-                <th>
-                  13th Month &
-                  <br /> Other Benefits
+                <th className="min-w-[15rem] table-border">
+                  Less Non Taxable Compensation
                 </th>
-                <th className="min-w-[9rem]">
-                  Employee Share
-                  <br />
-                  (SSS, PHIC, PGBG)
+                <th className="min-w-[15rem] table-border">
+                  13th Month & Other Benefits
                 </th>
-                <th className="min-w-[9rem]">
-                  Total Non Taxable
-                  <br /> Compensation
+                <th className="min-w-[20rem] table-border">
+                  Employee Share (SSS, PHIC, PGBG)
                 </th>
-                <th className="min-w-[5rem]">Tax With Held</th>
+                <th className="min-w-[20rem] table-border">
+                  Total Non Taxable Compensation
+                </th>
+                <th className="min-w-[10rem] table-border">Tax With Held</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td className="text-center">1.</td>
-                <td>cyrene, lumabas</td>
-                <td>IT</td>
-                <td>{numberWithCommas(100000000000)}</td>
-                <td>{numberWithCommas(100000000000)}</td>
-                <td>{numberWithCommas(100000000000)}</td>
-                <td>{numberWithCommas(100000000000)}</td>
-                <td>{numberWithCommas(100000000000)}</td>
-                <td>{numberWithCommas(100000000000)}</td>
+              <tr className="text-right">
+                <td className="text-center py-[0.7rem]">1.</td>
+                <td className="text-left">cyrene, lumabas</td>
+                <td className="text-left">IT</td>
+                <td className="px-6">{numberWithCommas(1000)}</td>
+                <td className="px-6">{numberWithCommas(1000)}</td>
+                <td className="px-6">{numberWithCommas(1000)}</td>
+                <td className="px-6">{numberWithCommas(1000)}</td>
+                <td className="px-6">{numberWithCommas(1000)}</td>
+                <td className="px-6">{numberWithCommas(1000)}</td>
               </tr>
               <tr className="text-center ">
                 <td colSpan="100%" className="p-10">

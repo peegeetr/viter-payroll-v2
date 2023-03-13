@@ -165,13 +165,12 @@ const ModalAddManageDeduction = ({ payType, employee, payrollDraft }) => {
             >
               {(props) => {
                 props.values.deduction_employee_id = employeeId;
-                props.values.deduction_amount = (
-                  Number(props.values.amount) /
+                props.values.deduction_amount =
+                  Number(props.values.amount.replace(/[,]/g, "")) /
                   (props.values.deduction_number_of_installment === "0" ||
                   props.values.deduction_number_of_installment === ""
                     ? "1"
-                    : Number(props.values.deduction_number_of_installment))
-                ).toFixed(2);
+                    : Number(props.values.deduction_number_of_installment));
                 props.values.deduction_payroll_id =
                   payrollDraft?.data[0].payroll_id;
                 props.values.deduction_number_of_installment =
@@ -285,6 +284,7 @@ const ModalAddManageDeduction = ({ payType, employee, payrollDraft }) => {
                       </div>
                       <div className="relative mb-5">
                         <InputText
+                          num="num"
                           label="Amount"
                           type="text"
                           onKeyPress={handleNumOnly}

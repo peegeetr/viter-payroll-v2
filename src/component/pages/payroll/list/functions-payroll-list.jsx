@@ -18,6 +18,10 @@ import {
   payComputeOt,
   payComputeOtherAllowances,
   payComputeOtherDeduction,
+  payComputePagibig,
+  payComputePagibigLoan,
+  payComputePagibigMP2,
+  payComputePhil,
   payComputeSeparationPay,
   payComputeSssBracket,
   payComputeTaxDue,
@@ -32,7 +36,9 @@ export const runPayroll = (
   payrollDeductions,
   holidays,
   sssBracket,
-  semiTax
+  semiTax,
+  pagibig,
+  philhealth
 ) => {
   // wages
   let totalOtAmount = 0;
@@ -62,10 +68,11 @@ export const runPayroll = (
   let totalPagibigLoan = 0;
   let totalPagibigMP2 = 0;
   let totalSSSLoan = 0;
+  let totalTaxAmount = 0;
   let deductionAmount = 0;
   let lessItems = 0;
-  let tax = 0;
   let netPay = 0;
+  let tax = 0;
 
   // items for earnings and deductions to send to server
   // sss bracket
@@ -83,6 +90,7 @@ export const runPayroll = (
   let sssList = [];
   let ndList = [];
   let holidayList = [];
+  let pagibigList = [];
   // loop each employee records
   employee.map((emp) => {
     totalBasicPay = Number(emp.payroll_list_employee_salary) / 2;
@@ -151,8 +159,8 @@ export const runPayroll = (
       totalUndertimeAmount;
 
     sssAmount = payComputeSssBracket(emp, sssBracket);
-    // pagibigAmount = payComputePagibig(emp, pagibig);
-    // philAmount = payComputePhil(emp, philhealth);
+    pagibigAmount = payComputePagibig(emp, pagibig);
+    philAmount = payComputePhil(emp, philhealth);
 
     // loop each deductions for each employee
     payrollDeductions.map((deduction) => {
@@ -174,6 +182,7 @@ export const runPayroll = (
 
     // compute tax due
     tax = payComputeTaxDue(emp, grossAmount, semiTax, lessItems);
+
     // data to send to server
     payrollList.push({
       payroll_list_employee_id: emp.payroll_list_employee_id,
@@ -207,6 +216,11 @@ export const runPayroll = (
       payroll_list_pagibig_mp2: totalPagibigMP2.toFixed(2),
       payroll_list_sss_loan: totalSSSLoan.toFixed(2),
       payroll_list_deduction: 0,
+      payroll_list_tax: tax.toFixed(2),
+      payroll_list_sss_ee: sssAmount.sssEe.toFixed(2),
+      payroll_list_sss_er: sssAmount.sssEr.toFixed(2),
+      payroll_list_pagibig_ee: pagibigAmount.pagibigEe,
+      payroll_list_pagibig_er: pagibigAmount.pagibigEr,
 
       payroll_list_net_pay: 0,
     });
@@ -216,6 +230,8 @@ export const runPayroll = (
     ndList.push(...nightDiffAmount.ndList);
     // holiday
     holidayList.push(...holidayAmount.holidayList);
+    // pagibig
+    pagibigList.push(...pagibigAmount.pagibigList);
 
     // console.log({holidayList, });
 
@@ -252,5 +268,5 @@ export const runPayroll = (
   });
 
   // console.log(payrollList);
-  return { payrollList, holidayList, sssList, ndList };
+  return { payrollList, holidayList, sssList, ndList, pagibigList };
 };

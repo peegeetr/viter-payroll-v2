@@ -95,7 +95,6 @@ const PayrollList = ({ setItemEdit }) => {
     setData(item);
     setDel(true);
   };
-
   return (
     <>
       <SearchBarRq

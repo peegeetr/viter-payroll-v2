@@ -156,15 +156,16 @@ export const payComputeNightDiff = (emp, holidays, payrollEarnings) => {
     ratedNdAmount = regularAmount * rate10;
     // 10% additional
     totalNDAmount += ratedNdAmount - regularAmount;
+
+    finalAmount = totalNDAmount + totalNDHolidayAmount;
+    ndList.push({
+      finalAmount,
+      payroll_id: emp.payroll_id,
+      payroll_list_employee_id: emp.payroll_list_employee_id,
+      payroll_list_employee_name: emp.payroll_list_employee_name,
+    });
   }
 
-  finalAmount = totalNDAmount + totalNDHolidayAmount;
-  ndList.push({
-    finalAmount,
-    payroll_id: emp.payroll_id,
-    payroll_list_employee_id: emp.payroll_list_employee_id,
-    payroll_list_employee_name: emp.payroll_list_employee_name,
-  });
   return { finalAmount, ndList };
   // return finalAmount;
 };
@@ -287,16 +288,17 @@ export const payComputeHoliday = (emp, holidays, payrollEarnings) => {
         }
       });
       holidayAmount += holidayTotalAmount(emp, holidaysItem);
+      holidayList.push({
+        holidayAmount: holidayTotalAmount(emp, holidaysItem),
+        holidayName: holidaysItem.holidays_name,
+        payroll_id: emp.payroll_id,
+        payroll_list_employee_id: emp.payroll_list_employee_id,
+        payroll_list_employee_name: emp.payroll_list_employee_name,
+      });
     }
   });
 
   finalAmount = holidayAmount - holidayLeaveAmount;
-  holidayList.push({
-    finalAmount,
-    payroll_id: emp.payroll_id,
-    payroll_list_employee_id: emp.payroll_list_employee_id,
-    payroll_list_employee_name: emp.payroll_list_employee_name,
-  });
   return { finalAmount, holidayList };
   // return finalAmount;
 };
@@ -357,8 +359,8 @@ export const holidayTotalAmount = (emp, holidaysItem) => {
 // compute tax due
 export const payComputeTaxDue = (emp, gross, semiTax, lessItems) => {
   // console.log(emp);
-  let tax = 0;
-  let list = [];
+  let finalAmount = 0;
+  let taxList = [];
   const totalNonTaxableCompensation = lessItems;
   let taxableCompensationIncome = 0;
   semiTax.map((sTax) => {
@@ -367,7 +369,7 @@ export const payComputeTaxDue = (emp, gross, semiTax, lessItems) => {
         Number(sTax.semi_monthly_range_from) &&
       Number(taxableCompensationIncome) <= Number(sTax.semi_monthly_range_to)
     ) {
-      // list.push({
+      // taxList.push({
       //   // tax_aid: Number(taxBracket[i].tax_aid),
       //   semi_monthly_range_from: Number(sTax.semi_monthly_range_from),
       //   semi_monthly_range_to: Number(sTax.semi_monthly_range_to),
@@ -379,8 +381,9 @@ export const payComputeTaxDue = (emp, gross, semiTax, lessItems) => {
       //   taxableCompensationIncome: gross - totalNonTaxableCompensation,
       //   totalNonTaxableCompensation,
       // });
+
       taxableCompensationIncome = gross - totalNonTaxableCompensation;
-      tax =
+      finalAmount =
         taxableCompensationIncome -
         Number(sTax.semi_monthly_less_amount) *
           (Number(sTax.semi_monthly_rate) / 100) +
@@ -388,7 +391,7 @@ export const payComputeTaxDue = (emp, gross, semiTax, lessItems) => {
     }
   });
 
-  return tax;
+  return finalAmount;
 };
 
 // compute sss bracket
@@ -431,6 +434,95 @@ export const payComputeSssBracket = (emp, sssBracket) => {
   }
 
   return { sssEr, sssEe, sssList };
+};
+
+// compute pagibig
+export const payComputePagibig = (emp, pagibig) => {
+  let pagibigEr = 0;
+  let pagibigEe = 0;
+  let pagibigList = [];
+
+  if (pagibig.length > 0 && Number(emp.payroll_list_pagibig_additional) > 0) {
+    pagibigEr = Number(emp.payroll_list_pagibig_additional);
+    pagibigEe = Number(emp.payroll_list_pagibig_additional);
+    pagibigList.push({
+      pagibigEe,
+      pagibigEr,
+      payroll_id: emp.payroll_id,
+      payroll_list_employee_id: emp.payroll_list_employee_id,
+      payroll_list_employee_name: emp.payroll_list_employee_name,
+    });
+  } else {
+    pagibigEr = pagibig[0].pagibig_er_amount;
+    pagibigEe = pagibig[0].pagibig_ee_amount;
+    pagibigList.push({
+      pagibigEe,
+      pagibigEr,
+      payroll_id: emp.payroll_id,
+      payroll_list_employee_id: emp.payroll_list_employee_id,
+      payroll_list_employee_name: emp.payroll_list_employee_name,
+    });
+  }
+
+  return { pagibigEr, pagibigEe, pagibigList };
+};
+
+// compute philhealth
+export const payComputePhil = (emp, philhealth) => {
+  let philhealthEr = 0;
+  let philhealthEe = 0;
+  let totalSalary = 0;
+  let philhealthList = [];
+
+  if (philhealth.length > 0) {
+    totalSalary =
+      Number(emp.payroll_list_employee_salary) *
+      (philhealth[0].philhealth_percentage / 100);
+
+    //if salary >= max
+    if (totalSalary >= philhealth[0].philhealth_max) {
+      philhealthEr = Number(philhealth[0].philhealth_max) / 4;
+      philhealthEe = Number(philhealth[0].philhealth_max) / 4;
+      // use to insert in earnings table
+      philhealthList.push({
+        philhealthEe,
+        philhealthEr,
+        payroll_id: emp.payroll_id,
+        payroll_list_employee_id: emp.payroll_list_employee_id,
+        payroll_list_employee_name: emp.payroll_list_employee_name,
+      });
+      return;
+    }
+
+    //if salary <= min
+    if (totalSalary <= philhealth[0].philhealth_min) {
+      philhealthEr = Number(philhealth[0].philhealth_min) / 4;
+      philhealthEe = Number(philhealth[0].philhealth_min) / 4;
+      // use to insert in earnings table
+      philhealthList.push({
+        philhealthEe,
+        philhealthEr,
+        payroll_id: emp.payroll_id,
+        payroll_list_employee_id: emp.payroll_list_employee_id,
+        payroll_list_employee_name: emp.payroll_list_employee_name,
+      });
+      return;
+    }
+
+    // if min, max are false
+    philhealthEr = Number(totalSalary) / 4;
+    philhealthEe = Number(totalSalary) / 4;
+    // use to insert in earnings table
+    philhealthList.push({
+      philhealthEe,
+      philhealthEr,
+      payroll_id: emp.payroll_id,
+      payroll_list_employee_id: emp.payroll_list_employee_id,
+      payroll_list_employee_name: emp.payroll_list_employee_name,
+    });
+  }
+
+  return { philhealthEr, philhealthEe, philhealthList };
 };
 
 // deductions compution

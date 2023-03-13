@@ -61,6 +61,19 @@ const PayrollView = () => {
     "semiMonthly" // key
   );
 
+  // use if not loadmore button undertime
+  const { data: pagibig } = useQueryData(
+    `${devApiUrl}/v1/pagibig`, // endpoint
+    "get", // method
+    "pagibig" // key
+  );
+  // use if not loadmore button undertime
+  const { data: philhealth } = useQueryData(
+    `${devApiUrl}/v1/philhealth`, // endpoint
+    "get", // method
+    "philhealth" // key
+  );
+
   console.log(payrollList);
 
   const handleRun = () => {
@@ -106,6 +119,8 @@ const PayrollView = () => {
           holidays={holidays?.data}
           sssBracket={sssBracket?.data}
           semiTax={semiMonthly?.data}
+          pagibig={pagibig?.data}
+          philhealth={philhealth?.data}
         />
       )}
       {store.success && <ModalSuccess />}

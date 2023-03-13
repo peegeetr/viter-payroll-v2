@@ -14,6 +14,8 @@ const ModalRun = ({
   holidays,
   sssBracket,
   semiTax,
+  pagibig,
+  philhealth,
 }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [loading, setLoading] = React.useState(false);
@@ -31,7 +33,9 @@ const ModalRun = ({
       payrollDeductions,
       holidays,
       sssBracket,
-      semiTax
+      semiTax,
+      pagibig,
+      philhealth
     );
     // setLoading(true);
     // fetchData(

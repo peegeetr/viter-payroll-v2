@@ -48,6 +48,10 @@ import CreatePasswordSuccess from "./component/pages/access/create-password/Crea
 import ForgotPassword from "./component/pages/access/forgot-password/ForgotPassword";
 import ForgotPasswordVerification from "./component/pages/access/forgot-password/ForgotPasswordVerification";
 import ForgotPasswordSystem from "./component/pages/access/forgot-password/ForgotPasswordSystem";
+import PayrollSummaryPage from "./component/pages/reports/payroll-summary/PayrollSummaryPage";
+import WTax from "./component/pages/reports/w-tax/WTax";
+import SummaryEarnings from "./component/pages/reports/payroll-summary/earnings/SummaryEarnings";
+import SummaryDeductions from "./component/pages/reports/payroll-summary/deductions/SummaryDeductions";
 
 function App() {
   // Create a client
@@ -514,6 +518,38 @@ function App() {
               element={
                 <ProtectedRouteSystem>
                   <ReportsLink />
+                </ProtectedRouteSystem>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/reports/summary`}
+              element={
+                <ProtectedRouteSystem>
+                  <PayrollSummaryPage />
+                </ProtectedRouteSystem>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/reports/summary/earnings`}
+              element={
+                <ProtectedRouteSystem>
+                  <SummaryEarnings />
+                </ProtectedRouteSystem>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/reports/summary/deductions`}
+              element={
+                <ProtectedRouteSystem>
+                  <SummaryDeductions />
+                </ProtectedRouteSystem>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/reports/wtax`}
+              element={
+                <ProtectedRouteSystem>
+                  <WTax />
                 </ProtectedRouteSystem>
               }
             />

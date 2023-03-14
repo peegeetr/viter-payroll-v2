@@ -283,13 +283,16 @@ export const payComputeHoliday = (emp, holidays, payrollEarnings) => {
             earning.earnings_payitem_id === leaveId
           ) {
             // Total Amount holiday and leave
-            holidayLeaveAmount += holidayTotalAmount(emp, holidaysItem);
+            holidayLeaveAmount += holidayTotalAmount(
+              emp,
+              holidaysItem
+            ).finalAmount;
           }
         }
       });
-      holidayAmount += holidayTotalAmount(emp, holidaysItem);
+      holidayAmount += holidayTotalAmount(emp, holidaysItem).finalAmount;
       holidayList.push({
-        holidayAmount: holidayTotalAmount(emp, holidaysItem),
+        holidayAmount: holidayTotalAmount(emp, holidaysItem).finalAmount,
         holidayName: holidaysItem.holidays_name,
         payroll_id: emp.payroll_id,
         payroll_list_employee_id: emp.payroll_list_employee_id,
@@ -317,6 +320,9 @@ export const holidayTotalAmount = (emp, holidaysItem) => {
   let finalAmount = 0;
   let dailyRate = Number(
     employeeRate(emp.payroll_list_employee_salary, days).daily
+  );
+  let ratehrs = Number(
+    employeeRate(emp.payroll_list_employee_salary, days).hourly
   );
 
   if (holidaysItem.holidays_type === "regular") {
@@ -353,7 +359,7 @@ export const holidayTotalAmount = (emp, holidaysItem) => {
   }
 
   finalAmount += ratedAmount - regularAmount;
-  return finalAmount;
+  return { finalAmount };
 };
 
 // compute tax due

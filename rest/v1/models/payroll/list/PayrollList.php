@@ -12,11 +12,19 @@ class PayrollList
     public $payroll_list_net_pay;
     public $payroll_list_basic_pay;
     public $payroll_list_overtime_pay;
+    public $payroll_list_overtime_hrs;
+    public $payroll_list_overtime_rate;
     public $payroll_list_leave_pay;
+    public $payroll_list_leave_hrs;
+    public $payroll_list_leave_rate;
     public $payroll_list_holiday;
+    public $payroll_list_holiday_hrs;
+    public $payroll_list_holiday_rate;
     public $payroll_list_inlfation_adjustment;
     public $payroll_list_adjustment_pay;
     public $payroll_list_night_shift_differential;
+    public $payroll_list_nd_hrs;
+    public $payroll_list_nd_rate;
     public $payroll_list_hazard_pay;
     public $payroll_list_absences;
     public $payroll_list_deminimis;
@@ -41,6 +49,7 @@ class PayrollList
     public $payroll_list_fca_tuition;
     public $payroll_list_other_deduction;
     public $payroll_list_tax;
+    public $payroll_list_undertime;
     public $payroll_list_datetime;
 
     public $connection;
@@ -154,6 +163,112 @@ class PayrollList
             $query = $this->connection->prepare($sql);
             $query->execute([
                 "search" => "{$this->payrollList_search}%",
+                "payroll_list_payroll_id" => $this->payroll_list_payroll_id,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    // update
+    public function update()
+    {
+        try {
+            $sql = "update {$this->tblPayrollList} set ";
+            $sql .= "payroll_list_deduction = :payroll_list_deduction, ";
+            $sql .= "payroll_list_gross = :payroll_list_gross, ";
+            $sql .= "payroll_list_net_pay = :payroll_list_net_pay, ";
+            $sql .= "payroll_list_basic_pay = :payroll_list_basic_pay, ";
+            $sql .= "payroll_list_overtime_pay = :payroll_list_overtime_pay, ";
+            $sql .= "payroll_list_overtime_hrs = :payroll_list_overtime_hrs, ";
+            $sql .= "payroll_list_overtime_rate = :payroll_list_overtime_rate, ";
+            $sql .= "payroll_list_leave_pay = :payroll_list_leave_pay, ";
+            $sql .= "payroll_list_leave_hrs = :payroll_list_leave_hrs, ";
+            $sql .= "payroll_list_leave_rate = :payroll_list_leave_rate, ";
+            $sql .= "payroll_list_holiday = :payroll_list_holiday, ";
+            $sql .= "payroll_list_holiday_hrs = :payroll_list_holiday_hrs, ";
+            $sql .= "payroll_list_holiday_rate = :payroll_list_holiday_rate, ";
+            $sql .= "payroll_list_inlfation_adjustment = :payroll_list_inlfation_adjustment, ";
+            $sql .= "payroll_list_adjustment_pay = :payroll_list_adjustment_pay, ";
+            $sql .= "payroll_list_night_shift_differential = :payroll_list_night_shift_differential, ";
+            $sql .= "payroll_list_nd_hrs = :payroll_list_nd_hrs, ";
+            $sql .= "payroll_list_nd_rate = :payroll_list_nd_rate, ";
+            $sql .= "payroll_list_hazard_pay = :payroll_list_hazard_pay, ";
+            $sql .= "payroll_list_absences = :payroll_list_absences, ";
+            $sql .= "payroll_list_deminimis = :payroll_list_deminimis, ";
+            $sql .= "payroll_list_13th_month = :payroll_list_13th_month, ";
+            $sql .= "payroll_list_bonus = :payroll_list_bonus, ";
+            $sql .= "payroll_list_employee_referral_bunos = :payroll_list_employee_referral_bunos, ";
+            $sql .= "payroll_list_bereavement = :payroll_list_bereavement, ";
+            $sql .= "payroll_list_separation_pay = :payroll_list_separation_pay, ";
+            $sql .= "payroll_list_other_allowances = :payroll_list_other_allowances, ";
+            $sql .= "payroll_list_sss_er = :payroll_list_sss_er, ";
+            $sql .= "payroll_list_philhealth_er = :payroll_list_philhealth_er, ";
+            $sql .= "payroll_list_pagibig_er = :payroll_list_pagibig_er, ";
+            $sql .= "payroll_list_hmo_er = :payroll_list_hmo_er, ";
+            $sql .= "payroll_list_sss_ee = :payroll_list_sss_ee, ";
+            $sql .= "payroll_list_philhealth_ee = :payroll_list_philhealth_ee, ";
+            $sql .= "payroll_list_pagibig_ee = :payroll_list_pagibig_ee, ";
+            $sql .= "payroll_list_hmo_ee = :payroll_list_hmo_ee, ";
+            $sql .= "payroll_list_sss_loan = :payroll_list_sss_loan, ";
+            $sql .= "payroll_list_pagibig_loan = :payroll_list_pagibig_loan, ";
+            $sql .= "payroll_list_pagibig_mp2 = :payroll_list_pagibig_mp2, ";
+            $sql .= "payroll_list_fwc_tithes = :payroll_list_fwc_tithes, ";
+            $sql .= "payroll_list_fca_tuition = :payroll_list_fca_tuition, ";
+            $sql .= "payroll_list_other_deduction = :payroll_list_other_deduction, ";
+            $sql .= "payroll_list_tax = :payroll_list_tax, ";
+            $sql .= "payroll_list_undertime = :payroll_list_undertime, ";
+            $sql .= "payroll_list_datetime = :payroll_list_datetime ";
+            $sql .= "where payroll_list_payroll_id = :payroll_list_payroll_id ";
+            $sql .= "and payroll_list_employee_id = :payroll_list_employee_id ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "payroll_list_employee_id" => $this->payroll_list_employee_id,
+                "payroll_list_deduction" => $this->payroll_list_deduction,
+                "payroll_list_gross" => $this->payroll_list_gross,
+                "payroll_list_net_pay" => $this->payroll_list_net_pay,
+                "payroll_list_basic_pay" => $this->payroll_list_basic_pay,
+                "payroll_list_overtime_pay" => $this->payroll_list_overtime_pay,
+                "payroll_list_overtime_hrs" => $this->payroll_list_overtime_hrs,
+                "payroll_list_overtime_rate" => $this->payroll_list_overtime_rate,
+                "payroll_list_leave_pay" => $this->payroll_list_leave_pay,
+                "payroll_list_leave_hrs" => $this->payroll_list_leave_hrs,
+                "payroll_list_leave_rate" => $this->payroll_list_leave_rate,
+                "payroll_list_holiday" => $this->payroll_list_holiday,
+                "payroll_list_holiday_hrs" => $this->payroll_list_holiday_hrs,
+                "payroll_list_holiday_rate" => $this->payroll_list_holiday_rate,
+                "payroll_list_inlfation_adjustment" => $this->payroll_list_inlfation_adjustment,
+                "payroll_list_adjustment_pay" => $this->payroll_list_adjustment_pay,
+                "payroll_list_night_shift_differential" => $this->payroll_list_night_shift_differential,
+                "payroll_list_nd_hrs" => $this->payroll_list_nd_hrs,
+                "payroll_list_nd_rate" => $this->payroll_list_nd_rate,
+                "payroll_list_hazard_pay" => $this->payroll_list_hazard_pay,
+                "payroll_list_absences" => $this->payroll_list_absences,
+                "payroll_list_deminimis" => $this->payroll_list_deminimis,
+                "payroll_list_13th_month" => $this->payroll_list_13th_month,
+                "payroll_list_bonus" => $this->payroll_list_bonus,
+                "payroll_list_employee_referral_bunos" => $this->payroll_list_employee_referral_bunos,
+                "payroll_list_bereavement" => $this->payroll_list_bereavement,
+                "payroll_list_separation_pay" => $this->payroll_list_separation_pay,
+                "payroll_list_other_allowances" => $this->payroll_list_other_allowances,
+                "payroll_list_sss_er" => $this->payroll_list_sss_er,
+                "payroll_list_philhealth_er" => $this->payroll_list_philhealth_er,
+                "payroll_list_pagibig_er" => $this->payroll_list_pagibig_er,
+                "payroll_list_hmo_er" => $this->payroll_list_hmo_er,
+                "payroll_list_sss_ee" => $this->payroll_list_sss_ee,
+                "payroll_list_philhealth_ee" => $this->payroll_list_philhealth_ee,
+                "payroll_list_pagibig_ee" => $this->payroll_list_pagibig_ee,
+                "payroll_list_hmo_ee" => $this->payroll_list_hmo_ee,
+                "payroll_list_sss_loan" => $this->payroll_list_sss_loan,
+                "payroll_list_pagibig_loan" => $this->payroll_list_pagibig_loan,
+                "payroll_list_pagibig_mp2" => $this->payroll_list_pagibig_mp2,
+                "payroll_list_fwc_tithes" => $this->payroll_list_fwc_tithes,
+                "payroll_list_fca_tuition" => $this->payroll_list_fca_tuition,
+                "payroll_list_other_deduction" => $this->payroll_list_other_deduction,
+                "payroll_list_tax" => $this->payroll_list_tax,
+                "payroll_list_undertime" => $this->payroll_list_undertime,
+                "payroll_list_datetime" => $this->payroll_list_datetime,
                 "payroll_list_payroll_id" => $this->payroll_list_payroll_id,
             ]);
         } catch (PDOException $ex) {

@@ -15,7 +15,7 @@ const SummaryDeductionsLink = () => {
           <span className="text-lg mr-4">
             <GiPayMoney />
           </span>
-          <span className=" font-bold">Deduction Summary</span>
+          <span className=" font-bold">Deduction</span>
         </div>
         <p className="ml-[35px] my-0">
           Manage what actions and capabilities every account are can perform in

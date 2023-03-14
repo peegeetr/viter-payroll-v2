@@ -15,7 +15,7 @@ const SummaryEarningsLink = () => {
           <span className="text-lg mr-4">
             <GiTakeMyMoney />
           </span>
-          <span className=" font-bold">Earnings Summary</span>
+          <span className=" font-bold">Earnings</span>
         </div>
         <p className="ml-[35px] my-0">
           Manage what actions and capabilities every account are can perform in

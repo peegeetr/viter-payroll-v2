@@ -52,6 +52,22 @@ class PayrollList
     public $payroll_list_undertime;
     public $payroll_list_datetime;
 
+    // earnings  
+    public $earnings_payroll_type_id;
+    public $earnings_paytype_id;
+    public $earnings_payitem_id;
+    public $earnings_amount;
+    public $earnings_details;
+    public $earnings_frequency;
+    public $earnings_is_installment;
+    public $earnings_number_of_installment;
+    public $earnings_start_pay_date;
+    public $earnings_end_pay_date;
+    public $earnings_hris_date;
+    public $earnings_created;
+
+    // earnings  
+
     public $connection;
     public $payrollList_search;
     public $payrollList_start;
@@ -59,12 +75,14 @@ class PayrollList
     public $lastInsertedId;
     public $tblPayrollList;
     public $tblPayroll;
+    public $tblEarnings;
 
     public function __construct($db)
     {
         $this->connection = $db;
         $this->tblPayrollList = "prv2_payroll_list";
         $this->tblPayroll = "prv2_payroll";
+        $this->tblEarnings = "prv2_earnings";
     }
 
 
@@ -271,6 +289,72 @@ class PayrollList
                 "payroll_list_datetime" => $this->payroll_list_datetime,
                 "payroll_list_payroll_id" => $this->payroll_list_payroll_id,
             ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+
+    // create earnings
+    public function createEarnings()
+    {
+        try {
+            $sql = "insert into {$this->tblEarnings} ";
+            $sql .= "( earnings_employee, ";
+            $sql .= "earnings_payroll_id, ";
+            $sql .= "earnings_payroll_type_id, ";
+            $sql .= "earnings_employee_id, ";
+            $sql .= "earnings_paytype_id, ";
+            $sql .= "earnings_payitem_id, ";
+            $sql .= "earnings_is_paid, ";
+            $sql .= "earnings_amount, ";
+            $sql .= "earnings_details, ";
+            $sql .= "earnings_frequency, ";
+            $sql .= "earnings_is_installment, ";
+            $sql .= "earnings_number_of_installment, ";
+            $sql .= "earnings_start_pay_date, ";
+            $sql .= "earnings_end_pay_date, ";
+            $sql .= "earnings_hris_date, ";
+            $sql .= "earnings_created, ";
+            $sql .= "earnings_datetime ) values ( ";
+            $sql .= ":earnings_employee, ";
+            $sql .= ":earnings_payroll_id, ";
+            $sql .= ":earnings_payroll_type_id, ";
+            $sql .= ":earnings_employee_id, ";
+            $sql .= ":earnings_paytype_id, ";
+            $sql .= ":earnings_payitem_id, ";
+            $sql .= ":earnings_is_paid, ";
+            $sql .= ":earnings_amount, ";
+            $sql .= ":earnings_details, ";
+            $sql .= ":earnings_frequency, ";
+            $sql .= ":earnings_is_installment, ";
+            $sql .= ":earnings_number_of_installment, ";
+            $sql .= ":earnings_start_pay_date, ";
+            $sql .= ":earnings_end_pay_date, ";
+            $sql .= ":earnings_hris_date, ";
+            $sql .= ":earnings_created, ";
+            $sql .= ":earnings_datetime ) ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "earnings_employee" => $this->payroll_list_employee_name,
+                "earnings_payroll_id" => $this->payroll_list_payroll_id,
+                "earnings_payroll_type_id" => $this->earnings_payroll_type_id,
+                "earnings_employee_id" => $this->payroll_list_employee_id,
+                "earnings_paytype_id" => $this->earnings_paytype_id,
+                "earnings_payitem_id" => $this->earnings_payitem_id,
+                "earnings_amount" => $this->earnings_amount,
+                "earnings_details" => $this->earnings_details,
+                "earnings_frequency" => $this->earnings_frequency,
+                "earnings_is_installment" => $this->earnings_is_installment,
+                "earnings_number_of_installment" => $this->earnings_number_of_installment,
+                "earnings_start_pay_date" => $this->earnings_start_pay_date,
+                "earnings_end_pay_date" => $this->earnings_end_pay_date,
+                "earnings_hris_date" => $this->earnings_hris_date,
+                "earnings_created" => $this->earnings_created,
+                "earnings_datetime" => $this->payroll_list_datetime,
+            ]);
+            $this->lastInsertedId = $this->connection->lastInsertId();
         } catch (PDOException $ex) {
             $query = false;
         }

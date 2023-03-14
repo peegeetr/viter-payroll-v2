@@ -75,7 +75,7 @@ const ModalRun = ({
       philhealth
     ).holidayList;
 
-    console.log("holidayList", holidayList);
+    console.log("holidayList", holidayList, "payrollList", payrollList);
     mutation.mutate({
       payrollList: payrollList.length > 0 ? payrollList : 0,
       holidayList: holidayList.length > 0 ? holidayList : 0,

@@ -104,7 +104,6 @@ export const runPayroll = (
   let pagibigList = [];
   let philhealthList = [];
   // loop each employee records
-
   employee.map((emp) => {
     const days = getWorkingDays(
       new Date(emp.payroll_start_date),
@@ -171,8 +170,6 @@ export const runPayroll = (
     holidayAmount = payComputeHoliday(emp, holidays, payrollEarnings);
 
     totalHolidayAmount += holidayAmount.finalAmount;
-    totalHolidayRateAmount += holidayAmount.finalRateAmount + totalBasicHrs;
-    totalHolidayHrs = holidayAmount.holidayTotalHrs;
 
     // night diffirencial
     nightDiffAmount = payComputeNightDiff(emp, holidays, payrollEarnings);
@@ -238,8 +235,8 @@ export const runPayroll = (
       payroll_list_leave_hrs: 0,
       payroll_list_leave_rate: 0,
       payroll_list_holiday: totalHolidayAmount.toFixed(2),
-      payroll_list_holiday_hrs: totalHolidayHrs,
-      payroll_list_holiday_rate: totalHolidayRateAmount.toFixed(2),
+      payroll_list_holiday_hrs: 0,
+      payroll_list_holiday_rate: 0,
       payroll_list_inlfation_adjustment: totalInflationAmount.toFixed(2),
       payroll_list_adjustment_pay: totalAdjustmentAmount.toFixed(2),
       payroll_list_night_shift_differential: totalNightDiffAmount.toFixed(2),

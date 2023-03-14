@@ -3,7 +3,9 @@ import {
   installmentNumber,
   onetimeNumber,
 } from "../../../helpers/functions-earning-refference";
+import { getWorkingDays } from "../../../helpers/functions-general";
 import {
+  employeeRate,
   payComputeAbsences,
   payComputeAdjustment,
   payComputeBereavement,
@@ -40,40 +42,46 @@ export const runPayroll = (
   pagibig,
   philhealth
 ) => {
-  // wages
+  let grossAmount = 0;
+  let deductionAmount = 0;
+  let netPay = 0;
+  let totalBasicPay = 0;
   let totalOtAmount = 0;
+  let totalOtHrsAmount = 0;
+  let totalOtRateAmount = 0;
   let totalLeaveAmount = 0;
-  let totalUndertimeAmount = 0;
-  let totalAbsencesAmount = 0;
-  let totalNightDiffAmount = 0;
-  let totalHazardPayAmount = 0;
+  let totalLeaveHrsAmount = 0;
+  let totalLeaveRateAmount = 0;
+  let totalHolidayAmount = 0;
+  let totalHolidayHrs = 0;
+  let totalHolidayRateAmount = 0;
   let totalInflationAmount = 0;
   let totalAdjustmentAmount = 0;
-  let totalHolidayAmount = 0;
-  let grossAmount = 0;
-  let totalBasicPay = 0;
-
-  // De Minimis
+  let totalNightDiffAmount = 0;
+  let totalNightDiffHrsAmount = 0;
+  let totalNightDiffRateAmount = 0;
+  let totalHazardPayAmount = 0;
+  let totalAbsencesAmount = 0;
   let totalDiminimis = 0;
-  // 13th month and Other benefits
+  let total13thMoth = 0;
   let totalBonus = 0;
-  let totalBereavement = 0;
   let totalEmployeeReferralBonus = 0;
+  let totalBereavement = 0;
   let totalSeparationPay = 0;
   let totalOtherAllowances = 0;
-  let totalBenefits = 0;
 
-  // total deduction
-  let totalTuition = 0;
-  let totalTithes = 0;
-  let totalOtherDeduction = 0;
+  let totalSSSLoan = 0;
   let totalPagibigLoan = 0;
   let totalPagibigMP2 = 0;
-  let totalSSSLoan = 0;
+  let totalTithes = 0;
+  let totalTuition = 0;
+  let totalOtherDeduction = 0;
   let totalTaxAmount = 0;
-  let deductionAmount = 0;
+  let totalUndertimeAmount = 0;
+
+  let totalBenefits = 0;
+
   let lessItems = 0;
-  let netPay = 0;
   let tax = 0;
 
   // items for earnings and deductions to send to server
@@ -96,8 +104,16 @@ export const runPayroll = (
   let pagibigList = [];
   let philhealthList = [];
   // loop each employee records
+
   employee.map((emp) => {
+    const days = getWorkingDays(
+      new Date(emp.payroll_start_date),
+      new Date(emp.payroll_end_date)
+    );
     totalBasicPay = Number(emp.payroll_list_employee_salary) / 2;
+    let totalBasicHrs = Number(
+      employeeRate(emp.payroll_list_employee_salary, days).hourly
+    );
     // loop each earnings for each employee
     payrollEarnings.map((earning) => {
       // loop earnings wages for each employee
@@ -153,7 +169,11 @@ export const runPayroll = (
 
     //  holiday for each employee
     holidayAmount = payComputeHoliday(emp, holidays, payrollEarnings);
+
     totalHolidayAmount += holidayAmount.finalAmount;
+    totalHolidayRateAmount += holidayAmount.finalRateAmount + totalBasicHrs;
+    totalHolidayHrs = holidayAmount.holidayTotalHrs;
+
     // night diffirencial
     nightDiffAmount = payComputeNightDiff(emp, holidays, payrollEarnings);
     totalNightDiffAmount += nightDiffAmount.finalAmount;
@@ -212,11 +232,19 @@ export const runPayroll = (
       payroll_list_net_pay: 0,
       payroll_list_basic_pay: totalBasicPay.toFixed(2),
       payroll_list_overtime_pay: totalOtAmount.toFixed(2),
+      payroll_list_overtime_hrs: 0,
+      payroll_list_overtime_rate: 0,
       payroll_list_leave_pay: totalLeaveAmount.toFixed(2),
+      payroll_list_leave_hrs: 0,
+      payroll_list_leave_rate: 0,
       payroll_list_holiday: totalHolidayAmount.toFixed(2),
+      payroll_list_holiday_hrs: totalHolidayHrs,
+      payroll_list_holiday_rate: totalHolidayRateAmount.toFixed(2),
       payroll_list_inlfation_adjustment: totalInflationAmount.toFixed(2),
       payroll_list_adjustment_pay: totalAdjustmentAmount.toFixed(2),
       payroll_list_night_shift_differential: totalNightDiffAmount.toFixed(2),
+      payroll_list_nd_hrs: 0,
+      payroll_list_nd_rate: 0,
       payroll_list_hazard_pay: totalHazardPayAmount.toFixed(2),
       payroll_list_absences: totalAbsencesAmount.toFixed(2),
       payroll_list_deminimis: totalDiminimis.toFixed(2),
@@ -258,35 +286,47 @@ export const runPayroll = (
     // console.log({holidayList, });
 
     // reset wages variables
+    grossAmount = 0;
+    deductionAmount = 0;
+    netPay = 0;
+    totalBasicPay = 0;
     totalOtAmount = 0;
+    totalOtHrsAmount = 0;
+    totalOtRateAmount = 0;
     totalLeaveAmount = 0;
-    totalUndertimeAmount = 0;
-    totalAbsencesAmount = 0;
-    totalNightDiffAmount = 0;
-    totalHazardPayAmount = 0;
+    totalLeaveHrsAmount = 0;
+    totalLeaveRateAmount = 0;
+    totalHolidayAmount = 0;
+    totalHolidayHrs = 0;
+    totalHolidayRateAmount = 0;
     totalInflationAmount = 0;
     totalAdjustmentAmount = 0;
-    totalHolidayAmount = 0;
-    grossAmount = 0;
-    // reset all earnings except wages
+    totalNightDiffAmount = 0;
+    totalNightDiffHrsAmount = 0;
+    totalNightDiffRateAmount = 0;
+    totalHazardPayAmount = 0;
+    totalAbsencesAmount = 0;
+    totalDiminimis = 0;
+    total13thMoth = 0;
     totalBonus = 0;
-    totalBereavement = 0;
     totalEmployeeReferralBonus = 0;
-    totalOtherAllowances = 0;
+    totalBereavement = 0;
     totalSeparationPay = 0;
-    // reset deductions variables
-    totalTuition = 0;
-    totalTithes = 0;
-    totalOtherDeduction = 0;
+    totalOtherAllowances = 0;
+
+    totalSSSLoan = 0;
     totalPagibigLoan = 0;
     totalPagibigMP2 = 0;
-    totalSSSLoan = 0;
-    // reset variables
-    totalDiminimis = 0;
-    deductionAmount = 0;
-    tax = 0;
+    totalTithes = 0;
+    totalTuition = 0;
+    totalOtherDeduction = 0;
+    totalTaxAmount = 0;
+    totalUndertimeAmount = 0;
 
-    netPay = 0;
+    totalBenefits = 0;
+
+    lessItems = 0;
+    tax = 0;
   });
 
   // console.log(payrollList);

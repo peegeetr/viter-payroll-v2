@@ -4,6 +4,7 @@ $conn = null;
 $conn = checkDbConnection();
 // make instance of classes
 $payrollList = new PayrollList($conn);
+$earnings = new Earnings($conn);
 // get $_GET data
 // check if listpayrollid is in the url e.g. /listpayrollid/1
 $error = [];
@@ -21,6 +22,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
 
     // payroll run
     $allPayrollList = $data["payrollList"];
+    $allHolidayList = $data["holidayList"];
 
 
     for ($pl = 0; $pl < count($allPayrollList); $pl++) {
@@ -69,6 +71,29 @@ if (array_key_exists("listpayrollid", $_GET)) {
         $payrollList->payroll_list_tax = $allPayrollList[$pl]["payroll_list_tax"];
         $query = checkUpdate($payrollList);
     }
+
+    for ($h = 0; $h < count($allHolidayList); $h++) {
+        $earnings->earnings_payroll_id = $allHolidayList[$h]["payroll_list_payroll_id"];
+        $earnings->earnings_payroll_type_id = $allHolidayList[$h]["earnings_payroll_type_id"];
+        $earnings->earnings_is_paid = 1;
+        $earnings->earnings_num_pay = 1;
+        $earnings->earnings_employee = $allHolidayList[$h]["earnings_employee"];
+        $earnings->earnings_employee_id = $allHolidayList[$h]["earnings_employee_id"];
+        $earnings->earnings_paytype_id = $allHolidayList[$h]["earnings_paytype_id"];
+        $earnings->earnings_payitem_id = $allHolidayList[$h]["earnings_payitem_id"];
+        $earnings->earnings_amount = $allHolidayList[$h]["earnings_amount"];
+        $earnings->earnings_details = $allHolidayList[$h]["earnings_details"];
+        $earnings->earnings_frequency = $allHolidayList[$h]["earnings_frequency"];
+        $earnings->earnings_is_installment = $allHolidayList[$h]["earnings_is_installment"];
+        $earnings->earnings_number_of_installment = $allHolidayList[$h]["earnings_number_of_installment"];
+        $earnings->earnings_start_pay_date = $allHolidayList[$h]["earnings_start_pay_date"];
+        $earnings->earnings_end_pay_date = $allHolidayList[$h]["earnings_end_pay_date"];
+        $earnings->earnings_hris_date = $allHolidayList[$h]["earnings_hris_date"];
+        $earnings->earnings_created = date("Y-m-d H:i:s");
+        $earnings->earnings_datetime = date("Y-m-d H:i:s");
+        $query = checkCreate($earnings);
+    }
+
     returnSuccess($payrollList, "Payroll List", $query);
 }
 

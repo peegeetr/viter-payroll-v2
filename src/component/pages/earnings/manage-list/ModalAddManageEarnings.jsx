@@ -20,6 +20,8 @@ import {
   everyPayrollNumber,
   installmentNumber,
   isHrisNumber,
+  isMonthly,
+  isSemiMonthly,
   onetimeNumber,
 } from "../../../helpers/functions-earning-refference";
 import {
@@ -425,8 +427,8 @@ const ModalAddManageEarnings = ({
                         >
                           <optgroup label="Frequency">
                             <option value="" hidden></option>
-                            <option value="sm">Semi-monthly</option>
-                            <option value="m">Monthly</option>
+                            <option value={isSemiMonthly}>Semi-monthly</option>
+                            <option value={isMonthly}>Monthly</option>
                           </optgroup>
                         </InputSelect>
                       </div>

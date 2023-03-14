@@ -9,3 +9,9 @@ export const installmentNumber = "2";
 
 // earnings_is_installment = 3 is INSTALLMENT
 export const isHrisNumber = "3";
+
+// earnings_frequency = sm is Semi Monthly
+export const isSemiMonthly = "sm";
+
+// earnings_frequency = m is Monthly
+export const isMonthly = "m";

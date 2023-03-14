@@ -64,10 +64,21 @@ const ModalRun = ({
       pagibig,
       philhealth
     ).payrollList;
+    const holidayList = runPayroll(
+      employees,
+      payrollEarnings,
+      payrollDeductions,
+      holidays,
+      sssBracket,
+      semiTax,
+      pagibig,
+      philhealth
+    ).holidayList;
 
-    console.log("payrollList", payrollList);
+    console.log("holidayList", holidayList);
     mutation.mutate({
       payrollList: payrollList.length > 0 ? payrollList : 0,
+      holidayList: holidayList.length > 0 ? holidayList : 0,
     });
   };
 

@@ -18,6 +18,9 @@ export const employeeReferralBonusId = "6";
 export const separationPayId = "8";
 export const otherAllowancesId = "9";
 
+// paytype earnings Id
+export const wagesId = 1;
+
 // payitem deduction Id
 export const fwcTithesId = "31";
 export const fcaTutionId = "32";

@@ -53,13 +53,15 @@ export const runPayroll = (
   let grossAmount = 0;
   let totalBasicPay = 0;
 
-  // all earnings except wages
+  // De Minimis
   let totalDiminimis = 0;
+  // 13th month and Other benefits
   let totalBonus = 0;
   let totalBereavement = 0;
   let totalEmployeeReferralBonus = 0;
   let totalSeparationPay = 0;
   let totalOtherAllowances = 0;
+  let totalBenefits = 0;
 
   // total deduction
   let totalTuition = 0;
@@ -140,6 +142,13 @@ export const runPayroll = (
         totalOtherAllowances += payComputeOtherAllowances(earning);
       }
     });
+    // Total 13th mo & Other benefits
+    totalBenefits =
+      totalBereavement +
+      totalBonus +
+      totalEmployeeReferralBonus +
+      totalSeparationPay +
+      totalOtherAllowances;
 
     //  holiday for each employee
     holidayAmount = payComputeHoliday(emp, holidays, payrollEarnings);
@@ -182,7 +191,7 @@ export const runPayroll = (
     });
 
     // compute tax due
-    tax = payComputeTaxDue(emp, grossAmount, semiTax, lessItems);
+    tax = payComputeTaxDue(emp, grossAmount, semiTax, totalBenefits);
 
     // data to send to server
     payrollList.push({

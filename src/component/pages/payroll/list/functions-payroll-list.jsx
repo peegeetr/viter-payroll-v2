@@ -53,13 +53,15 @@ export const runPayroll = (
   let grossAmount = 0;
   let totalBasicPay = 0;
 
-  // all earnings except wages
+  // De Minimis
   let totalDiminimis = 0;
+  // 13th month and Other benefits
   let totalBonus = 0;
   let totalBereavement = 0;
   let totalEmployeeReferralBonus = 0;
   let totalSeparationPay = 0;
   let totalOtherAllowances = 0;
+  let totalBenefits = 0;
 
   // total deduction
   let totalTuition = 0;
@@ -85,6 +87,7 @@ export const runPayroll = (
   let nightDiffAmount = 0;
   // holiday
   let holidayAmount = 0;
+  let totalMadatoryEe = 0;
 
   let payrollList = [];
   let sssList = [];
@@ -140,6 +143,13 @@ export const runPayroll = (
         totalOtherAllowances += payComputeOtherAllowances(earning);
       }
     });
+    // Total 13th mo & Other benefits
+    totalBenefits =
+      totalBereavement +
+      totalBonus +
+      totalEmployeeReferralBonus +
+      totalSeparationPay +
+      totalOtherAllowances;
 
     //  holiday for each employee
     holidayAmount = payComputeHoliday(emp, holidays, payrollEarnings);
@@ -162,6 +172,9 @@ export const runPayroll = (
     sssAmount = payComputeSssBracket(emp, sssBracket);
     pagibigAmount = payComputePagibig(emp, pagibig);
     philAmount = payComputePhil(emp, philhealth);
+    // Total madatory deduction ee
+    totalMadatoryEe =
+      sssAmount.sssEe + pagibigAmount.pagibigEe + philAmount.philhealthEe;
 
     // loop each deductions for each employee
     payrollDeductions.map((deduction) => {
@@ -182,7 +195,13 @@ export const runPayroll = (
     });
 
     // compute tax due
-    tax = payComputeTaxDue(emp, grossAmount, semiTax, lessItems);
+    tax = payComputeTaxDue(
+      emp,
+      grossAmount,
+      semiTax,
+      totalBenefits,
+      totalMadatoryEe
+    );
 
     // data to send to server
     payrollList.push({

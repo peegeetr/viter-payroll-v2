@@ -383,12 +383,18 @@ export const holidayTotalAmount = (emp, holidaysItem) => {
 };
 
 // compute tax due
-export const payComputeTaxDue = (emp, gross, semiTax, lessItems) => {
+export const payComputeTaxDue = (
+  emp,
+  gross,
+  semiTax,
+  totalBenefits,
+  totalMadatoryEe
+) => {
   // console.log(emp);
-  let finalAmount = 0;
+  let taxDue = 0;
   let taxList = [];
-  const totalNonTaxableCompensation = lessItems;
-  let taxableCompensationIncome = 0;
+  const totalNonTaxableCompensation = totalBenefits + totalMadatoryEe;
+  let taxableCompensationIncome = gross - totalNonTaxableCompensation;
   semiTax.map((sTax) => {
     if (
       Number(taxableCompensationIncome) >=
@@ -408,8 +414,7 @@ export const payComputeTaxDue = (emp, gross, semiTax, lessItems) => {
       //   totalNonTaxableCompensation,
       // });
 
-      taxableCompensationIncome = gross - totalNonTaxableCompensation;
-      finalAmount =
+      taxDue =
         taxableCompensationIncome -
         Number(sTax.semi_monthly_less_amount) *
           (Number(sTax.semi_monthly_rate) / 100) +
@@ -417,7 +422,7 @@ export const payComputeTaxDue = (emp, gross, semiTax, lessItems) => {
     }
   });
 
-  return finalAmount;
+  return taxDue;
 };
 
 // compute sss bracket

@@ -87,6 +87,7 @@ export const runPayroll = (
   let nightDiffAmount = 0;
   // holiday
   let holidayAmount = 0;
+  let totalMadatoryEe = 0;
 
   let payrollList = [];
   let sssList = [];
@@ -171,6 +172,9 @@ export const runPayroll = (
     sssAmount = payComputeSssBracket(emp, sssBracket);
     pagibigAmount = payComputePagibig(emp, pagibig);
     philAmount = payComputePhil(emp, philhealth);
+    // Total madatory deduction ee
+    totalMadatoryEe =
+      sssAmount.sssEe + pagibigAmount.pagibigEe + philAmount.philhealthEe;
 
     // loop each deductions for each employee
     payrollDeductions.map((deduction) => {
@@ -191,7 +195,13 @@ export const runPayroll = (
     });
 
     // compute tax due
-    tax = payComputeTaxDue(emp, grossAmount, semiTax, totalBenefits);
+    tax = payComputeTaxDue(
+      emp,
+      grossAmount,
+      semiTax,
+      totalBenefits,
+      totalMadatoryEe
+    );
 
     // data to send to server
     payrollList.push({

@@ -107,35 +107,35 @@ const SummaryDeductionsList = () => {
                 <th className="text-center" rowSpan="2">
                   #
                 </th>
-                <th className="min-w-[10rem]" rowSpan="2">
+                <th className="min-w-[18rem]" rowSpan="2">
                   Name
                 </th>
-                <th className="table-border min-w-[10rem]" rowSpan="2">
+                <th className="table-border min-w-[12rem]" rowSpan="2">
                   Department
                 </th>
-                <th className="table-border-center min-w-[9rem]" colSpan="2">
-                  Sss
+                <th className="table-border-center min-w-[8rem]" colSpan="2">
+                  SSS
                 </th>
                 <th className="table-border-center min-w-[8rem]" colSpan="2">
-                  Phic
+                  Phil. Health
                 </th>
                 <th className="table-border-center min-w-[5rem]" colSpan="2">
-                  Pgbg
+                  Pag-ibig
                 </th>
-                <th className="table-border-center min-w-[10rem]" colSpan="2">
+                <th className="table-border-center min-w-[5rem]" colSpan="2">
                   Loans
                 </th>
-                <th className="table-border min-w-[12rem]" rowSpan="2">
+                <th className="table-border min-w-[10rem]" rowSpan="2">
                   With Holding TAX
                 </th>
-                <th className="table-border min-w-[8rem]" rowSpan="2">
+                <th className="table-border min-w-[6rem]" rowSpan="2">
                   PGBG MP2
                 </th>
                 <th className="table-border min-w-[10rem]" rowSpan="2">
                   Other Deductions
                 </th>
                 <th
-                  className="text-center table-border border-b-[1px]"
+                  className="text-center table-border border-b-[1px] min-w-[5rem]"
                   rowSpan="2"
                 >
                   Total EE
@@ -164,20 +164,20 @@ const SummaryDeductionsList = () => {
 
                 <td className="text-left">cyrene, lumabas</td>
                 <td className="text-left">IT</td>
-                <td className="px-6">{numberWithCommas(100000000000)}</td>
-                <td className="px-6">{numberWithCommas(100000000000)}</td>
-                <td className="px-6">{numberWithCommas(100000000000)}</td>
-                <td className="px-6">{numberWithCommas(100000000000)}</td>
-                <td className="px-6">{numberWithCommas(100000000000)}</td>
-                <td className="px-6">{numberWithCommas(100000000000)}</td>
-                <td className="px-6">{numberWithCommas(100000000000)}</td>
-                <td className="px-6">{numberWithCommas(100000000000)}</td>
-                <td className="px-6">{numberWithCommas(100000000000)}</td>
-                <td className="px-6">{numberWithCommas(100000000000)}</td>
-                <td className="px-6">{numberWithCommas(100000000000)}</td>
-                <td className="px-6">{numberWithCommas(100000000000)}</td>
-                <td className="px-6">{numberWithCommas(100000000000)}</td>
-                <td className="px-6">{numberWithCommas(100000000000)}</td>
+                <td className="px-6">{numberWithCommas(10253.53)}</td>
+                <td className="px-6">{numberWithCommas(10253.53)}</td>
+                <td className="px-6">{numberWithCommas(10253.53)}</td>
+                <td className="px-6">{numberWithCommas(10253.53)}</td>
+                <td className="px-6">{numberWithCommas(10253.53)}</td>
+                <td className="px-6">{numberWithCommas(10253.53)}</td>
+                <td className="px-6">{numberWithCommas(10253.53)}</td>
+                <td className="px-6">{numberWithCommas(10253.53)}</td>
+                <td className="px-6">{numberWithCommas(10253.53)}</td>
+                <td className="px-6">{numberWithCommas(10253.53)}</td>
+                <td className="px-6">{numberWithCommas(10253.53)}</td>
+                <td className="px-6">{numberWithCommas(10253.53)}</td>
+                <td className="px-6">{numberWithCommas(10253.53)}</td>
+                <td className="px-6">{numberWithCommas(102530.53)}</td>
               </tr>
               <tr className="text-center ">
                 <td colSpan="100%" className="p-10">

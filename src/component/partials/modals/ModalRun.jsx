@@ -1,13 +1,18 @@
-import React from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import React from "react";
 
-import { FaQuestionCircle, FaTimesCircle } from "react-icons/fa";
-import { setIsConfirm, setStartIndex } from "../../../store/StoreAction";
+import { FaQuestionCircle } from "react-icons/fa";
+import {
+  setError,
+  setIsConfirm,
+  setMessage,
+  setSuccess,
+} from "../../../store/StoreAction";
 import { StoreContext } from "../../../store/StoreContext";
-import { fetchData } from "../../helpers/fetchData";
+import { devApiUrl } from "../../helpers/functions-general";
+import { queryData } from "../../helpers/queryData";
 import { runPayroll } from "../../pages/payroll/list/functions-payroll-list";
 import ButtonSpinner from "../spinners/ButtonSpinner";
-import { queryData } from "../../helpers/queryData";
 
 const ModalRun = ({
   item,
@@ -26,20 +31,14 @@ const ModalRun = ({
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: (values) =>
-      queryData(
-        item
-          ? `${devApiUrl}/v1/roles/${item.role_aid}`
-          : `${devApiUrl}/v1/roles`,
-        item ? "put" : "post",
-        values
-      ),
+      queryData(`${devApiUrl}/v1/payrollList/${item}`, "put", values),
     onSuccess: (data) => {
       // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: ["role"] });
+      queryClient.invalidateQueries({ queryKey: ["payrollList"] });
       // show success box
       if (data.success) {
         dispatch(setSuccess(true));
-        dispatch(setMessage(`Successfuly ${item ? "updated." : "added."}`));
+        dispatch(setMessage(`Successfuly Done`));
       }
       // show error box
       if (!data.success) {
@@ -49,13 +48,13 @@ const ModalRun = ({
     },
   });
   const handleClose = () => {
-    dispatch(setIsAdd(false));
+    dispatch(setIsConfirm(false));
   };
 
   // console.log("run", runPayroll(employees, payrollEarnings));
   const handleYes = async () => {
     // run payroll
-    const values = runPayroll(
+    const payrollList = runPayroll(
       employees,
       payrollEarnings,
       payrollDeductions,
@@ -64,9 +63,12 @@ const ModalRun = ({
       semiTax,
       pagibig,
       philhealth
-    );
+    ).payrollList;
 
-    console.log(values);
+    console.log("payrollList", payrollList);
+    mutation.mutate({
+      payrollList: payrollList.length > 0 ? payrollList : 0,
+    });
   };
 
   return (

@@ -30,7 +30,7 @@ class PayrollList
     public $payroll_list_deminimis;
     public $payroll_list_13th_month;
     public $payroll_list_bonus;
-    public $payroll_list_employee_referral_bunos;
+    public $payroll_list_employee_referral_bonus;
     public $payroll_list_bereavement;
     public $payroll_list_separation_pay;
     public $payroll_list_other_allowances;
@@ -199,7 +199,7 @@ class PayrollList
             $sql .= "payroll_list_deminimis = :payroll_list_deminimis, ";
             $sql .= "payroll_list_13th_month = :payroll_list_13th_month, ";
             $sql .= "payroll_list_bonus = :payroll_list_bonus, ";
-            $sql .= "payroll_list_employee_referral_bunos = :payroll_list_employee_referral_bunos, ";
+            $sql .= "payroll_list_employee_referral_bonus = :payroll_list_employee_referral_bonus, ";
             $sql .= "payroll_list_bereavement = :payroll_list_bereavement, ";
             $sql .= "payroll_list_separation_pay = :payroll_list_separation_pay, ";
             $sql .= "payroll_list_other_allowances = :payroll_list_other_allowances, ";
@@ -248,7 +248,7 @@ class PayrollList
                 "payroll_list_deminimis" => $this->payroll_list_deminimis,
                 "payroll_list_13th_month" => $this->payroll_list_13th_month,
                 "payroll_list_bonus" => $this->payroll_list_bonus,
-                "payroll_list_employee_referral_bunos" => $this->payroll_list_employee_referral_bunos,
+                "payroll_list_employee_referral_bonus" => $this->payroll_list_employee_referral_bonus,
                 "payroll_list_bereavement" => $this->payroll_list_bereavement,
                 "payroll_list_separation_pay" => $this->payroll_list_separation_pay,
                 "payroll_list_other_allowances" => $this->payroll_list_other_allowances,

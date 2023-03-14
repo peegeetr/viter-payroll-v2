@@ -203,7 +203,7 @@ export const runPayroll = (
       payroll_list_deminimis: totalDiminimis.toFixed(2),
       payroll_list_13th_month: 0,
       payroll_list_bonus: totalBonus.toFixed(2),
-      payroll_list_employee_referral_bunos:
+      payroll_list_employee_referral_bonus:
         totalEmployeeReferralBonus.toFixed(2),
       payroll_list_bereavement: totalBereavement.toFixed(2),
       payroll_list_separation_pay: totalSeparationPay.toFixed(2),

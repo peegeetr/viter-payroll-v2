@@ -48,7 +48,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
         $payrollList->payroll_list_deminimis = $allPayrollList[$pl]["payroll_list_deminimis"];
         $payrollList->payroll_list_13th_month = $allPayrollList[$pl]["payroll_list_13th_month"];
         $payrollList->payroll_list_bonus = $allPayrollList[$pl]["payroll_list_bonus"];
-        $payrollList->payroll_list_employee_referral_bunos = $allPayrollList[$pl]["payroll_list_employee_referral_bunos"];
+        $payrollList->payroll_list_employee_referral_bonus = $allPayrollList[$pl]["payroll_list_employee_referral_bonus"];
         $payrollList->payroll_list_bereavement = $allPayrollList[$pl]["payroll_list_bereavement"];
         $payrollList->payroll_list_separation_pay = $allPayrollList[$pl]["payroll_list_separation_pay"];
         $payrollList->payroll_list_other_allowances = $allPayrollList[$pl]["payroll_list_other_allowances"];

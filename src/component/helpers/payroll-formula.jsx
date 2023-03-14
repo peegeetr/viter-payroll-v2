@@ -9,6 +9,7 @@ import {
   bereavementId,
   bonusId,
   diminimisId,
+  EmpConributionId,
   employeeReferralBonusId,
   fcaTutionId,
   fwcTithesId,
@@ -16,13 +17,21 @@ import {
   holidayId,
   inflationAdjustmentId,
   leaveId,
+  mandatoryDeductionId,
+  nightDiffId,
   otherAllowancesId,
   otherDeductionId,
   overtimeId,
+  pagibigEeId,
+  pagibigErId,
   PagibigLoanId,
   PagibigMP2Id,
   payAdjustmentId,
+  philhealthEeId,
+  philhealthErId,
   separationPayId,
+  sssEeId,
+  sssErId,
   SSSLoanId,
   undertimeId,
   wagesId,
@@ -165,10 +174,18 @@ export const payComputeNightDiff = (emp, holidays, payrollEarnings) => {
 
     finalAmount = totalNDAmount + totalNDHolidayAmount;
     ndList.push({
-      finalAmount,
-      payroll_id: emp.payroll_id,
-      payroll_list_employee_id: emp.payroll_list_employee_id,
-      payroll_list_employee_name: emp.payroll_list_employee_name,
+      earnings_payroll_type_id: emp.payroll_category_type,
+      earnings_employee: emp.payroll_list_employee_name,
+      earnings_employee_id: emp.payroll_id,
+      earnings_paytype_id: wagesId,
+      earnings_payitem_id: nightDiffId,
+      earnings_amount: finalAmount,
+      earnings_details: `${emp.payroll_list_night_diff_per_day}hrs per day`,
+      earnings_frequency: isSemiMonthly,
+      earnings_is_installment: isHrisNumber,
+      earnings_number_of_installment: onetimeNumber,
+      earnings_start_pay_date: emp.payroll_start_date,
+      earnings_end_pay_date: emp.payroll_end_date,
     });
   }
 
@@ -305,13 +322,15 @@ export const payComputeHoliday = (emp, holidays, payrollEarnings) => {
         earnings_paytype_id: wagesId,
         earnings_payitem_id: holidayId,
         earnings_amount: holidayTotalAmount(emp, holidaysItem).dailyAmount,
-        earnings_details: holidaysItem.holidays_name,
+        earnings_details: `${holidaysItem.holidays_name} ${formatDate(
+          holidaysItem.holidays_date
+        )}`,
         earnings_frequency: isSemiMonthly,
         earnings_is_installment: isHrisNumber,
         earnings_number_of_installment: onetimeNumber,
-        earnings_start_pay_date: holidaysItem.holidays_date,
-        earnings_end_pay_date: holidaysItem.holidays_date,
-        earnings_hris_date: isHrisNumber,
+        earnings_start_pay_date: emp.payroll_start_date,
+        earnings_end_pay_date: emp.payroll_end_date,
+        earnings_hris_date: holidaysItem.holidays_date,
       });
     }
   });
@@ -434,11 +453,22 @@ export const payComputeSssBracket = (emp, sssBracket) => {
       sssEe = Number(item.sss_bracket_ee) / 2;
       // use to insert in earnings table
       sssList.push({
-        sssEe,
-        sssEr,
-        payroll_id: emp.payroll_id,
-        payroll_list_employee_id: emp.payroll_list_employee_id,
-        payroll_list_employee_name: emp.payroll_list_employee_name,
+        earnings_payroll_type_id: emp.payroll_category_type,
+        earnings_employee: emp.payroll_list_employee_name,
+        earnings_employee_id: emp.payroll_id,
+        deduction_paytype_id: mandatoryDeductionId,
+        earnings_paytype_id: EmpConributionId,
+        deduction_payitem_id: sssEeId,
+        earnings_payitem_id: sssErId,
+        deduction_amount: sssEe,
+        earnings_amount: sssEr,
+        earnings_details: "Employer SSS",
+        deduction_details: "Employee SSS",
+        earnings_frequency: isSemiMonthly,
+        earnings_is_installment: onetimeNumber,
+        earnings_number_of_installment: onetimeNumber,
+        earnings_start_pay_date: emp.payroll_start_date,
+        earnings_end_pay_date: emp.payroll_end_date,
       });
     }
   });
@@ -449,11 +479,22 @@ export const payComputeSssBracket = (emp, sssBracket) => {
     sssEe = Number(sssBracket[sssBracket.length - 1].sss_bracket_ee) / 2;
     // use to insert in earnings table
     sssList.push({
-      sssEe,
-      sssEr,
-      payroll_id: emp.payroll_id,
-      payroll_list_employee_id: emp.payroll_list_employee_id,
-      payroll_list_employee_name: emp.payroll_list_employee_name,
+      earnings_payroll_type_id: emp.payroll_category_type,
+      earnings_employee: emp.payroll_list_employee_name,
+      earnings_employee_id: emp.payroll_id,
+      deduction_paytype_id: mandatoryDeductionId,
+      earnings_paytype_id: EmpConributionId,
+      deduction_payitem_id: sssEeId,
+      earnings_payitem_id: sssErId,
+      deduction_amount: sssEe,
+      earnings_amount: sssEr,
+      earnings_details: "Employer SSS",
+      deduction_details: "Employee SSS",
+      earnings_frequency: isSemiMonthly,
+      earnings_is_installment: onetimeNumber,
+      earnings_number_of_installment: onetimeNumber,
+      earnings_start_pay_date: emp.payroll_start_date,
+      earnings_end_pay_date: emp.payroll_end_date,
     });
   }
 
@@ -475,12 +516,22 @@ export const payComputePagibig = (emp, pagibig) => {
     }
   }
   pagibigList.push({
-    pagibigEe,
-    pagibigEr,
-    payroll_id: emp.payroll_id,
-    employee_id: emp.payroll_list_employee_id,
-    payroll_category_type: emp.payroll_category_type,
-    payroll_list_employee_name: emp.payroll_list_employee_name,
+    earnings_payroll_type_id: emp.payroll_category_type,
+    earnings_employee: emp.payroll_list_employee_name,
+    earnings_employee_id: emp.payroll_id,
+    deduction_paytype_id: mandatoryDeductionId,
+    earnings_paytype_id: EmpConributionId,
+    deduction_payitem_id: pagibigEeId,
+    earnings_payitem_id: pagibigErId,
+    deduction_amount: pagibigEe,
+    earnings_amount: pagibigEr,
+    earnings_details: "Employer Pagibig",
+    deduction_details: "Employee Pagibig",
+    earnings_frequency: isSemiMonthly,
+    earnings_is_installment: onetimeNumber,
+    earnings_number_of_installment: onetimeNumber,
+    earnings_start_pay_date: emp.payroll_start_date,
+    earnings_end_pay_date: emp.payroll_end_date,
   });
 
   return { pagibigEr, pagibigEe, pagibigList };
@@ -516,11 +567,22 @@ export const payComputePhil = (emp, philhealth) => {
   }
   // use to insert in earnings table
   philhealthList.push({
-    philhealthEe,
-    philhealthEr,
-    payroll_id: emp.payroll_id,
-    payroll_list_employee_id: emp.payroll_list_employee_id,
-    payroll_list_employee_name: emp.payroll_list_employee_name,
+    earnings_payroll_type_id: emp.payroll_category_type,
+    earnings_employee: emp.payroll_list_employee_name,
+    earnings_employee_id: emp.payroll_id,
+    deduction_paytype_id: mandatoryDeductionId,
+    earnings_paytype_id: EmpConributionId,
+    deduction_payitem_id: philhealthEeId,
+    earnings_payitem_id: philhealthErId,
+    deduction_amount: philhealthEe,
+    earnings_amount: philhealthEr,
+    earnings_details: "Employer Philhealth",
+    deduction_details: "Employee Philhealth",
+    earnings_frequency: isSemiMonthly,
+    earnings_is_installment: onetimeNumber,
+    earnings_number_of_installment: onetimeNumber,
+    earnings_start_pay_date: emp.payroll_start_date,
+    earnings_end_pay_date: emp.payroll_end_date,
   });
 
   return { philhealthEr, philhealthEe, philhealthList };

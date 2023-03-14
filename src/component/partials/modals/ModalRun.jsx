@@ -54,7 +54,7 @@ const ModalRun = ({
   // console.log("run", runPayroll(employees, payrollEarnings));
   const handleYes = async () => {
     // run payroll
-    const payrollList = runPayroll(
+    const run = runPayroll(
       employees,
       payrollEarnings,
       payrollDeductions,
@@ -63,22 +63,22 @@ const ModalRun = ({
       semiTax,
       pagibig,
       philhealth
-    ).payrollList;
-    const holidayList = runPayroll(
-      employees,
-      payrollEarnings,
-      payrollDeductions,
-      holidays,
-      sssBracket,
-      semiTax,
-      pagibig,
-      philhealth
-    ).holidayList;
+    );
 
-    console.log("holidayList", holidayList, "payrollList", payrollList);
+    let payrollList = run.payrollList;
+    let holidayList = run.holidayList;
+    let ndList = run.ndList;
+    let sssList = run.sssList;
+    let pagibigList = run.pagibigList;
+    let philhealthList = run.philhealthList;
+
     mutation.mutate({
       payrollList: payrollList.length > 0 ? payrollList : 0,
       holidayList: holidayList.length > 0 ? holidayList : 0,
+      ndList: ndList.length > 0 ? ndList : 0,
+      sssList: sssList.length > 0 ? sssList : 0,
+      pagibigList: pagibigList.length > 0 ? pagibigList : 0,
+      philhealthList: philhealthList.length > 0 ? philhealthList : 0,
     });
   };
 

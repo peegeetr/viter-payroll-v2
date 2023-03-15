@@ -13,7 +13,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { StoreContext } from "../../../store/StoreContext";
 import { fetchData } from "../../helpers/fetchData";
 import { InputSelect, InputText, MyCheckbox } from "../../helpers/FormInputs";
-import { devApiUrl } from "../../helpers/functions-general";
+import { devApiUrl, removeComma } from "../../helpers/functions-general";
 import { queryData } from "../../helpers/queryData";
 import ButtonSpinner from "../../partials/spinners/ButtonSpinner";
 
@@ -90,9 +90,8 @@ const ModalAddHolidays = ({ item }) => {
               initialValues={initVal}
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
-                // console.log(values);
-
-                mutation.mutate(values);
+                const holidays_rate = removeComma(values.holidays_rate);
+                mutation.mutate({ ...values, holidays_rate });
               }}
             >
               {(props) => {
@@ -103,7 +102,7 @@ const ModalAddHolidays = ({ item }) => {
                         label="Holiday"
                         type="text"
                         name="holidays_name"
-                        disabled={loading}
+                        disabled={mutation.isLoading}
                       />
                     </div>
                     <div className="relative mb-5">
@@ -113,14 +112,14 @@ const ModalAddHolidays = ({ item }) => {
                         onFocus={(e) => (e.target.type = "date")}
                         onBlur={(e) => (e.target.type = "text")}
                         name="holidays_date"
-                        disabled={loading}
+                        disabled={mutation.isLoading}
                       />
                     </div>
                     <div className="relative mb-5">
                       <InputSelect
                         name="holidays_type"
                         label="Type"
-                        disabled={loading}
+                        disabled={mutation.isLoading}
                         onFocus={(e) =>
                           e.target.parentElement.classList.add("focused")
                         }
@@ -134,33 +133,40 @@ const ModalAddHolidays = ({ item }) => {
                     </div>
                     <div className="relative mb-5">
                       <InputText
+                        num="num"
                         label="Rate"
                         type="text"
                         name="holidays_rate"
-                        disabled={loading}
+                        disabled={mutation.isLoading}
                       />
                     </div>
                     <div className="relative mb-5 grid grid-cols-[1fr_8fr] items-center justify-center ">
                       <MyCheckbox
                         type="checkbox"
                         name="holidays_observed"
-                        disabled={loading}
+                        disabled={mutation.isLoading}
                       />
                       <p className="mb-0">Is this holiday observed?</p>
                     </div>
                     <div className="flex items-center gap-1 pt-5">
                       <button
                         type="submit"
-                        disabled={loading || !props.dirty}
+                        disabled={mutation.isLoading || !props.dirty}
                         className="btn-modal-submit relative"
                       >
-                        {loading ? <ButtonSpinner /> : item ? "Save" : "Add"}
+                        {mutation.isLoading ? (
+                          <ButtonSpinner />
+                        ) : item ? (
+                          "Save"
+                        ) : (
+                          "Add"
+                        )}
                       </button>
                       <button
                         type="reset"
                         className="btn-modal-cancel cursor-pointer"
                         onClick={handleClose}
-                        disabled={loading}
+                        disabled={mutation.isLoading}
                       >
                         Cancel
                       </button>

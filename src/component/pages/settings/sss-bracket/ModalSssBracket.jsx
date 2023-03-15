@@ -14,6 +14,7 @@ import { InputText } from "../../../helpers/FormInputs.jsx";
 import {
   devApiUrl,
   handleNumOnly,
+  removeComma,
 } from "../../../helpers/functions-general.jsx";
 import { queryData } from "../../../helpers/queryData.jsx";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner.jsx";
@@ -91,9 +92,25 @@ const ModalSssBracket = ({ itemEdit }) => {
               initialValues={initVal}
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
-                console.log(values);
-
-                mutation.mutate(values);
+                const sss_bracket_range_from = removeComma(
+                  `${values.sss_bracket_range_from}`
+                );
+                const sss_bracket_range_to = removeComma(
+                  `${values.sss_bracket_range_to}`
+                );
+                const sss_bracket_er = removeComma(`${values.sss_bracket_er}`);
+                const sss_bracket_ee = removeComma(`${values.sss_bracket_ee}`);
+                const sss_bracket_total = removeComma(
+                  `${values.sss_bracket_total}`
+                );
+                mutation.mutate({
+                  ...values,
+                  sss_bracket_range_from,
+                  sss_bracket_range_to,
+                  sss_bracket_er,
+                  sss_bracket_ee,
+                  sss_bracket_total,
+                });
               }}
             >
               {(props) => {
@@ -110,7 +127,7 @@ const ModalSssBracket = ({ itemEdit }) => {
                         type="text"
                         name="sss_bracket_range_from"
                         disabled={mutation.isLoading}
-                        onKeyPress={(e) => handleNumOnly(e)}
+                        num="num"
                       />
                     </div>
 
@@ -120,7 +137,7 @@ const ModalSssBracket = ({ itemEdit }) => {
                         type="text"
                         name="sss_bracket_range_to"
                         disabled={mutation.isLoading}
-                        onKeyPress={(e) => handleNumOnly(e)}
+                        num="num"
                       />
                     </div>
 
@@ -130,7 +147,7 @@ const ModalSssBracket = ({ itemEdit }) => {
                         type="text"
                         name="sss_bracket_er"
                         disabled={mutation.isLoading}
-                        onKeyPress={(e) => handleNumOnly(e)}
+                        num="num"
                       />
                     </div>
 
@@ -140,7 +157,7 @@ const ModalSssBracket = ({ itemEdit }) => {
                         type="text"
                         name="sss_bracket_ee"
                         disabled={mutation.isLoading}
-                        onKeyPress={(e) => handleNumOnly(e)}
+                        num="num"
                       />
                     </div>
 
@@ -150,7 +167,7 @@ const ModalSssBracket = ({ itemEdit }) => {
                         type="text"
                         name="sss_bracket_total"
                         disabled={mutation.isLoading}
-                        onKeyPress={(e) => handleNumOnly(e)}
+                        num="num"
                       />
                     </div>
 

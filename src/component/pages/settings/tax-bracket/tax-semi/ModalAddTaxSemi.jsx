@@ -16,6 +16,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   devApiUrl,
   handleNumOnly,
+  removeComma,
 } from "../../../../helpers/functions-general.jsx";
 import ButtonSpinner from "../../../../partials/spinners/ButtonSpinner.jsx";
 import { queryData } from "../../../../helpers/queryData.jsx";
@@ -98,9 +99,29 @@ const ModalAddTaxSemi = ({ itemEdit }) => {
               initialValues={initVal}
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
-                console.log(values);
-
-                mutation.mutate(values);
+                const semi_monthly_range_from = removeComma(
+                  `${values.semi_monthly_range_from}`
+                );
+                const semi_monthly_range_to = removeComma(
+                  `${values.semi_monthly_range_to}`
+                );
+                const semi_monthly_less_amount = removeComma(
+                  `${values.semi_monthly_less_amount}`
+                );
+                const semi_monthly_rate = removeComma(
+                  `${values.semi_monthly_rate}`
+                );
+                const semi_monthly_additional_amount = removeComma(
+                  `${values.semi_monthly_additional_amount}`
+                );
+                mutation.mutate({
+                  ...values,
+                  semi_monthly_range_from,
+                  semi_monthly_range_to,
+                  semi_monthly_less_amount,
+                  semi_monthly_rate,
+                  semi_monthly_additional_amount,
+                });
               }}
             >
               {(props) => {
@@ -108,6 +129,7 @@ const ModalAddTaxSemi = ({ itemEdit }) => {
                   <Form>
                     <div className="relative my-5 ">
                       <InputText
+                        num="num"
                         label="Range From"
                         type="text"
                         name="semi_monthly_range_from"
@@ -118,6 +140,7 @@ const ModalAddTaxSemi = ({ itemEdit }) => {
 
                     <div className="relative mb-5">
                       <InputText
+                        num="num"
                         label="Range To"
                         type="text"
                         name="semi_monthly_range_to"
@@ -128,6 +151,7 @@ const ModalAddTaxSemi = ({ itemEdit }) => {
 
                     <div className="relative mb-5">
                       <InputText
+                        num="num"
                         label="Less Amount"
                         type="text"
                         name="semi_monthly_less_amount"
@@ -138,6 +162,7 @@ const ModalAddTaxSemi = ({ itemEdit }) => {
 
                     <div className="relative mb-5">
                       <InputText
+                        num="num"
                         label="Rate %"
                         type="text"
                         name="semi_monthly_rate"
@@ -148,6 +173,7 @@ const ModalAddTaxSemi = ({ itemEdit }) => {
 
                     <div className="relative mb-5">
                       <InputText
+                        num="num"
                         label="Addt'l Amount"
                         type="text"
                         name="semi_monthly_additional_amount"

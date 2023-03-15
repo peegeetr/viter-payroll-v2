@@ -134,11 +134,11 @@ const PayrollViewList = () => {
                 <React.Fragment key={key}>
                   {page.data.map((item, key) => (
                     <tr key={key}>
-                      <td className="text-center">{counter}.</td>
+                      <td className="text-center">{counter++}.</td>
                       <td>{item.payroll_list_employee_name}</td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
+                      <td>{item.payroll_list_gross}</td>
+                      <td>{item.payroll_list_deduction}</td>
+                      <td>{item.payroll_list_net_pay}</td>
                       <td>
                         {item.payroll_list_is_paid === 1 && (
                           <div className="flex items-center justify-end gap-1 mr-2">

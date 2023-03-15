@@ -109,14 +109,16 @@ const PayrollView = () => {
                     <ImPlay3 />
                     <span>Run</span>
                   </button>
-                  <button
-                    type="button"
-                    className="btn-primary"
-                    onClick={handleMarkPaid}
-                  >
-                    <FaSave />
-                    <span>Mark Paid</span>
-                  </button>
+                  {payrollList?.data[0].payroll_list_gross !== "" && (
+                    <button
+                      type="button"
+                      className="btn-primary"
+                      onClick={handleMarkPaid}
+                    >
+                      <FaSave />
+                      <span>Mark Paid</span>
+                    </button>
+                  )}
                 </>
               )
             ) : (

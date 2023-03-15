@@ -242,7 +242,6 @@ if (array_key_exists("listpayrollid", $_GET)) {
             $payrollList->start_pay_date = $allTaxList[$tax]["deduction_start_pay_date"];
             $payrollList->end_pay_date = $allTaxList[$tax]["deduction_end_pay_date"];
             $payrollList->hris_date = "";
-            $query = checkCreateEarnings($payrollList);
             $query = checkCreateDeductions($payrollList);
         }
     }

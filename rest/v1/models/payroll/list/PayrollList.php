@@ -105,6 +105,9 @@ class PayrollList
             $sql = "select payrollList.payroll_list_payroll_id, ";
             $sql .= "payrollList.payroll_list_aid, ";
             $sql .= "payrollList.payroll_list_is_paid, ";
+            $sql .= "payrollList.payroll_list_gross, ";
+            $sql .= "payrollList.payroll_list_deduction, ";
+            $sql .= "payrollList.payroll_list_net_pay, ";
             $sql .= "payrollList.payroll_list_employee_name, ";
             $sql .= "payrollList.payroll_list_employee_salary, ";
             $sql .= "payrollList.payroll_list_night_diff_per_day, ";
@@ -137,6 +140,9 @@ class PayrollList
             $sql = "select payrollList.payroll_list_payroll_id, ";
             $sql .= "payrollList.payroll_list_aid, ";
             $sql .= "payrollList.payroll_list_is_paid, ";
+            $sql .= "payrollList.payroll_list_gross, ";
+            $sql .= "payrollList.payroll_list_deduction, ";
+            $sql .= "payrollList.payroll_list_net_pay, ";
             $sql .= "payrollList.payroll_list_employee_name, ";
             $sql .= "payrollList.payroll_list_employee_salary, ";
             $sql .= "payrollList.payroll_list_night_diff_per_day, ";
@@ -171,6 +177,9 @@ class PayrollList
             $sql = "select payroll_list_payroll_id, ";
             $sql .= "payroll_list_employee_name, ";
             $sql .= "payroll_list_employee_id, ";
+            $sql .= "payroll_list_gross, ";
+            $sql .= "payroll_list_deduction, ";
+            $sql .= "payroll_list_net_pay, ";
             $sql .= "payroll_list_is_paid, ";
             $sql .= "payroll_list_aid ";
             $sql .= "from {$this->tblPayrollList} ";

@@ -10,12 +10,24 @@ import {
 } from "../../../store/StoreAction";
 import { StoreContext } from "../../../store/StoreContext";
 import { devApiUrl } from "../../helpers/functions-general";
+import {
+  holidayId,
+  nightDiffId,
+  pagibigEeId,
+  pagibigErId,
+  payrollTaxDeductionId,
+  philhealthEeId,
+  philhealthErId,
+  sssEeId,
+  sssErId,
+} from "../../helpers/functions-payitemId";
 import { queryData } from "../../helpers/queryData";
 import { runPayroll } from "../../pages/payroll/list/functions-payroll-list";
 import ButtonSpinner from "../spinners/ButtonSpinner";
 
 const ModalRun = ({
   item,
+  isPaid,
   employees,
   payrollEarnings,
   payrollDeductions,
@@ -31,10 +43,17 @@ const ModalRun = ({
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: (values) =>
-      queryData(`${devApiUrl}/v1/payrollList/${item}`, "put", values),
+      queryData(
+        isPaid
+          ? `${devApiUrl}/v1/payrollList/${item}`
+          : `${devApiUrl}/v1/payrollList/paid/${item}`,
+        "put",
+        values
+      ),
     onSuccess: (data) => {
       // Invalidate and refetch
       queryClient.invalidateQueries({ queryKey: ["payrollList"] });
+      dispatch(setIsConfirm(false));
       // show success box
       if (data.success) {
         dispatch(setSuccess(true));
@@ -51,6 +70,8 @@ const ModalRun = ({
     dispatch(setIsConfirm(false));
   };
 
+  // earningsNumInstallmentList,
+  // deducNumInstallmentList,
   // console.log("run", runPayroll(employees, payrollEarnings));
   const handleYes = async () => {
     // run payroll
@@ -71,6 +92,11 @@ const ModalRun = ({
     let sssList = run.sssList;
     let pagibigList = run.pagibigList;
     let philhealthList = run.philhealthList;
+    let taxList = run.taxList;
+    let earningsNumPayList = run.earningsNumInstallmentList;
+    let deducNumPayList = run.deducNumInstallmentList;
+
+    console.log("earningsNumPayList", earningsNumPayList);
 
     mutation.mutate({
       payrollList: payrollList.length > 0 ? payrollList : 0,
@@ -79,6 +105,20 @@ const ModalRun = ({
       sssList: sssList.length > 0 ? sssList : 0,
       pagibigList: pagibigList.length > 0 ? pagibigList : 0,
       philhealthList: philhealthList.length > 0 ? philhealthList : 0,
+      taxList: taxList.length > 0 ? taxList : 0,
+      earningsNumPayList:
+        earningsNumPayList.length > 0 ? earningsNumPayList : 0,
+      deducNumPayList: deducNumPayList.length > 0 ? deducNumPayList : 0,
+      isPaid: 1,
+      payItemTaxId: payrollTaxDeductionId,
+      payItemHolidayId: holidayId,
+      payItemNightDiffId: nightDiffId,
+      payItemSssErId: sssErId,
+      payItemNSssEeId: sssEeId,
+      payItemPagibigErId: pagibigErId,
+      payItemPagibigEeId: pagibigEeId,
+      payItemPhilhealthErId: philhealthErId,
+      payItemPhilhealthEeId: philhealthEeId,
     });
   };
 
@@ -91,10 +131,12 @@ const ModalRun = ({
             <span className="text-5xl text-red-700 ">
               <FaQuestionCircle className="my-0 mx-auto" />
             </span>
-            <span className="text-sm font-bold">Are you sure to run</span>{" "}
+            <span className="text-sm font-bold">
+              Are you sure to {isPaid ? "run" : "mark as paid"}
+            </span>
             <br />
             <span className="text-sm font-bold break-all">"{item}"?</span>
-            {/* <p>You can't undo this action.</p> */}
+            {!isPaid && <p>You can't undo this action.</p>}
             <div className="flex items-center gap-1 pt-5">
               <button
                 type="submit"

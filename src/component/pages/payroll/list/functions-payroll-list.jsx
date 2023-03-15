@@ -47,19 +47,11 @@ export const runPayroll = (
   let netPay = 0;
   let totalBasicPay = 0;
   let totalOtAmount = 0;
-  let totalOtHrsAmount = 0;
-  let totalOtRateAmount = 0;
   let totalLeaveAmount = 0;
-  let totalLeaveHrsAmount = 0;
-  let totalLeaveRateAmount = 0;
   let totalHolidayAmount = 0;
-  let totalHolidayHrs = 0;
-  let totalHolidayRateAmount = 0;
   let totalInflationAmount = 0;
   let totalAdjustmentAmount = 0;
   let totalNightDiffAmount = 0;
-  let totalNightDiffHrsAmount = 0;
-  let totalNightDiffRateAmount = 0;
   let totalHazardPayAmount = 0;
   let totalAbsencesAmount = 0;
   let totalDiminimis = 0;
@@ -98,11 +90,14 @@ export const runPayroll = (
   let totalMadatoryEe = 0;
 
   let payrollList = [];
+  let taxList = [];
   let sssList = [];
   let ndList = [];
   let holidayList = [];
   let pagibigList = [];
   let philhealthList = [];
+  let earningsNumInstallmentList = [];
+  let deducNumInstallmentList = [];
   // loop each employee records
   employee.map((emp) => {
     const days = getWorkingDays(
@@ -110,9 +105,6 @@ export const runPayroll = (
       new Date(emp.payroll_end_date)
     );
     totalBasicPay = Number(emp.payroll_list_employee_salary) / 2;
-    let totalBasicHrs = Number(
-      employeeRate(emp.payroll_list_employee_salary, days).hourly
-    );
     // loop each earnings for each employee
     payrollEarnings.map((earning) => {
       // loop earnings wages for each employee
@@ -147,8 +139,7 @@ export const runPayroll = (
       if (
         emp.payroll_list_employee_id === earning.earnings_employee_id && // employee id
         earning.earnings_is_paid === 0 && // not paid
-        (earning.earnings_is_installment === installmentNumber || //installment is = 2
-          earning.earnings_is_installment === onetimeNumber) && //onetime payroll is = 1
+        earning.earnings_is_installment !== everyPayrollNumber && //onetime or installment
         earning.earnings_number_of_installment > earning.earnings_num_pay //number of payment
       ) {
         totalBereavement += payComputeBereavement(earning);
@@ -156,8 +147,22 @@ export const runPayroll = (
         totalEmployeeReferralBonus += payComputeEmployeeReferralBonus(earning);
         totalSeparationPay += payComputeSeparationPay(earning);
         totalOtherAllowances += payComputeOtherAllowances(earning);
+
+        // for updating number of pay if installment or one time
+        earningsNumInstallmentList.push({
+          earnings_num_pay: earning.earnings_num_pay + 1,
+          earnings_is_paid:
+            earning.earnings_num_pay + 1 ===
+            earning.earnings_number_of_installment
+              ? 1
+              : 0,
+          earnings_employee_id: emp.payroll_list_employee_id,
+          earnings_payitem_id: earning.earnings_payitem_id,
+        });
       }
     });
+
+    console.log("is pad", earningsNumInstallmentList);
     // Total 13th mo & Other benefits
     totalBenefits =
       totalBereavement +
@@ -198,8 +203,7 @@ export const runPayroll = (
       if (
         emp.payroll_list_employee_id === deduction.deduction_employee_id && // employee id
         deduction.deduction_is_paid === 0 && // not paid
-        (deduction.deduction_is_installment === installmentNumber || //installment is = 2
-          deduction.deduction_is_installment === onetimeNumber) && //onetime payroll is = 1
+        deduction.deduction_is_installment !== everyPayrollNumber && //onetime or installment
         deduction.deduction_number_of_installment > deduction.deduction_num_pay //number of payment
       ) {
         totalTuition += payComputeTuition(deduction);
@@ -208,9 +212,19 @@ export const runPayroll = (
         totalPagibigLoan += payComputePagibigLoan(deduction);
         totalPagibigMP2 += payComputePagibigMP2(deduction);
         totalSSSLoan += payComputeSSSLoan(deduction);
+        // for updating number of pay if installment or one time
+        deducNumInstallmentList.push({
+          deduction_num_pay: deduction.deduction_num_pay + 1,
+          deduction_is_paid:
+            deduction.deduction_num_pay + 1 ===
+            deduction.deduction_number_of_installment
+              ? 1
+              : 0,
+          deduction_employee_id: emp.payroll_list_employee_id,
+          deduction_payitem_id: deduction.deduction_payitem_id,
+        });
       }
     });
-
     // compute tax due
     tax = payComputeTaxDue(
       emp,
@@ -219,7 +233,7 @@ export const runPayroll = (
       totalBenefits,
       totalMadatoryEe
     );
-
+    totalTaxAmount = tax.taxDue;
     // data to send to server
     payrollList.push({
       payroll_list_employee_id: emp.payroll_list_employee_id,
@@ -229,19 +243,11 @@ export const runPayroll = (
       payroll_list_net_pay: 0,
       payroll_list_basic_pay: totalBasicPay.toFixed(2),
       payroll_list_overtime_pay: totalOtAmount.toFixed(2),
-      payroll_list_overtime_hrs: 0,
-      payroll_list_overtime_rate: 0,
       payroll_list_leave_pay: totalLeaveAmount.toFixed(2),
-      payroll_list_leave_hrs: 0,
-      payroll_list_leave_rate: 0,
       payroll_list_holiday: totalHolidayAmount.toFixed(2),
-      payroll_list_holiday_hrs: 0,
-      payroll_list_holiday_rate: 0,
       payroll_list_inlfation_adjustment: totalInflationAmount.toFixed(2),
       payroll_list_adjustment_pay: totalAdjustmentAmount.toFixed(2),
       payroll_list_night_shift_differential: totalNightDiffAmount.toFixed(2),
-      payroll_list_nd_hrs: 0,
-      payroll_list_nd_rate: 0,
       payroll_list_hazard_pay: totalHazardPayAmount.toFixed(2),
       payroll_list_absences: totalAbsencesAmount.toFixed(2),
       payroll_list_deminimis: totalDiminimis.toFixed(2),
@@ -266,19 +272,21 @@ export const runPayroll = (
       payroll_list_fwc_tithes: totalTithes.toFixed(2),
       payroll_list_fca_tuition: totalTuition.toFixed(2),
       payroll_list_other_deduction: totalOtherDeduction.toFixed(2),
-      payroll_list_tax: tax.toFixed(2),
+      payroll_list_tax: totalTaxAmount.toFixed(2),
       payroll_list_undertime: totalUndertimeAmount.toFixed(2),
     });
-    // SSS
+    // SSS List
     sssList.push(...sssAmount.sssList);
-    // ND
+    // ND List
     ndList.push(...nightDiffAmount.ndList);
-    // holiday
+    // holiday List
     holidayList.push(...holidayAmount.holidayList);
-    // pagibig
+    // pagibig List
     pagibigList.push(...pagibigAmount.pagibigList);
-    // pagibig
+    // pagibig List
     philhealthList.push(...philAmount.philhealthList);
+    // tax List
+    taxList.push(...tax.taxList);
 
     // console.log({holidayList, });
 
@@ -288,19 +296,11 @@ export const runPayroll = (
     netPay = 0;
     totalBasicPay = 0;
     totalOtAmount = 0;
-    totalOtHrsAmount = 0;
-    totalOtRateAmount = 0;
     totalLeaveAmount = 0;
-    totalLeaveHrsAmount = 0;
-    totalLeaveRateAmount = 0;
     totalHolidayAmount = 0;
-    totalHolidayHrs = 0;
-    totalHolidayRateAmount = 0;
     totalInflationAmount = 0;
     totalAdjustmentAmount = 0;
     totalNightDiffAmount = 0;
-    totalNightDiffHrsAmount = 0;
-    totalNightDiffRateAmount = 0;
     totalHazardPayAmount = 0;
     totalAbsencesAmount = 0;
     totalDiminimis = 0;
@@ -334,5 +334,8 @@ export const runPayroll = (
     ndList,
     pagibigList,
     philhealthList,
+    taxList,
+    earningsNumInstallmentList,
+    deducNumInstallmentList,
   };
 };

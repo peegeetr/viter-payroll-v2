@@ -27,7 +27,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
     $allSssList = $data["sssList"];
     $allPagibigList = $data["pagibigList"];
     $allPhilhealthList = $data["philhealthList"];
-
+    $allTaxList = $data["taxList"];
 
     for ($pl = 0; $pl < count($allPayrollList); $pl++) {
         $payrollList->payroll_list_employee_id = $allPayrollList[$pl]["payroll_list_employee_id"];
@@ -36,19 +36,11 @@ if (array_key_exists("listpayrollid", $_GET)) {
         $payrollList->payroll_list_net_pay =  $allPayrollList[$pl]["payroll_list_net_pay"];
         $payrollList->payroll_list_basic_pay =  $allPayrollList[$pl]["payroll_list_basic_pay"];
         $payrollList->payroll_list_overtime_pay =  $allPayrollList[$pl]["payroll_list_overtime_pay"];
-        $payrollList->payroll_list_overtime_hrs =  $allPayrollList[$pl]["payroll_list_overtime_hrs"];
-        $payrollList->payroll_list_overtime_rate =  $allPayrollList[$pl]["payroll_list_overtime_rate"];
         $payrollList->payroll_list_leave_pay =  $allPayrollList[$pl]["payroll_list_leave_pay"];
-        $payrollList->payroll_list_leave_hrs =  $allPayrollList[$pl]["payroll_list_leave_hrs"];
-        $payrollList->payroll_list_leave_rate =  $allPayrollList[$pl]["payroll_list_leave_rate"];
         $payrollList->payroll_list_holiday =  $allPayrollList[$pl]["payroll_list_holiday"];
-        $payrollList->payroll_list_holiday_hrs =  $allPayrollList[$pl]["payroll_list_holiday_hrs"];
-        $payrollList->payroll_list_holiday_rate =  $allPayrollList[$pl]["payroll_list_holiday_rate"];
         $payrollList->payroll_list_inlfation_adjustment =  $allPayrollList[$pl]["payroll_list_inlfation_adjustment"];
         $payrollList->payroll_list_adjustment_pay =  $allPayrollList[$pl]["payroll_list_adjustment_pay"];
         $payrollList->payroll_list_night_shift_differential = $allPayrollList[$pl]["payroll_list_night_shift_differential"];
-        $payrollList->payroll_list_nd_hrs =  $allPayrollList[$pl]["payroll_list_nd_hrs"];
-        $payrollList->payroll_list_nd_rate =  $allPayrollList[$pl]["payroll_list_nd_rate"];
         $payrollList->payroll_list_hazard_pay = $allPayrollList[$pl]["payroll_list_hazard_pay"];
         $payrollList->payroll_list_absences = $allPayrollList[$pl]["payroll_list_absences"];
         $payrollList->payroll_list_deminimis = $allPayrollList[$pl]["payroll_list_deminimis"];
@@ -76,7 +68,13 @@ if (array_key_exists("listpayrollid", $_GET)) {
         $query = checkUpdate($payrollList);
     }
 
+    // delete first existing PR ID and pay item id holiday
+    $payrollList->payitem_id = $data["payItemHolidayId"];
+    checkId($payrollList->payitem_id);
+    checkDeleteEarnings($payrollList);
+
     if ($allHolidayList !== 0) {
+
         for ($h = 0; $h < count($allHolidayList); $h++) {
             $payrollList->payroll_type_id = $allHolidayList[$h]["earnings_payroll_type_id"];
             $payrollList->num_pay = 1;
@@ -94,15 +92,13 @@ if (array_key_exists("listpayrollid", $_GET)) {
             $payrollList->hris_date = $allHolidayList[$h]["earnings_hris_date"];
 
             $query = checkCreateEarnings($payrollList);
-            // $query = $payrollList->checkEarningsExist();
-            // if ($query->rowCount() > 0) {
-            //     continue;
-            // } else {
-            //     $query = checkCreateEarnings($payrollList);
-            // }
         }
     }
 
+    // delete first existing PR ID and pay item id night diff
+    $payrollList->payitem_id = $data["payItemNightDiffId"];
+    checkId($payrollList->payitem_id);
+    checkDeleteEarnings($payrollList);
     if ($allNdList !== 0) {
         for ($nd = 0; $nd < count($allNdList); $nd++) {
             $payrollList->payroll_type_id = $allNdList[$nd]["earnings_payroll_type_id"];
@@ -121,14 +117,17 @@ if (array_key_exists("listpayrollid", $_GET)) {
             $payrollList->hris_date = "";
 
             $query = checkCreateEarnings($payrollList);
-            // $query = $payrollList->checkEarningsExist();
-            // if ($query->rowCount() > 0) {
-            //     continue;
-            // } else {
-            //     $query = checkCreateEarnings($payrollList);
-            // }
         }
     }
+
+    // delete first existing PR ID and pay item id SSS ER
+    $payrollList->payitem_id = $data["payItemSssErId"];
+    checkId($payrollList->payitem_id);
+    checkDeleteEarnings($payrollList);
+    // delete first deduction PR ID and pay item id SSS EE
+    $payrollList->payitem_id = $data["payItemNSssEeId"];
+    checkId($payrollList->payitem_id);
+    checkDeleteDeductions($payrollList);
     // earnings sss EE and deductions sss ER
     if ($allSssList !== 0) {
         for ($sss = 0; $sss < count($allSssList); $sss++) {
@@ -152,14 +151,17 @@ if (array_key_exists("listpayrollid", $_GET)) {
             $payrollList->hris_date = "";
             $query = checkCreateEarnings($payrollList);
             $query = checkCreateDeductions($payrollList);
-            // $query = $payrollList->checkEarningsExist();
-            // if ($query->rowCount() > 0) {
-            //     continue;
-            // } else {
-            //     $query = checkCreateEarnings($payrollList);
-            // }
         }
     }
+
+    // delete first existing PR ID and pay item id pagibig ER
+    $payrollList->payitem_id = $data["payItemPagibigErId"];
+    checkId($payrollList->payitem_id);
+    checkDeleteEarnings($payrollList);
+    // delete first deduction PR ID and pay item id pagibig EE
+    $payrollList->payitem_id = $data["payItemPagibigEeId"];
+    checkId($payrollList->payitem_id);
+    checkDeleteDeductions($payrollList);
     // earnings Pagibig EE and deductions Pagibig ER
     if ($allPagibigList !== 0) {
         for ($pgbg = 0; $pgbg < count($allPagibigList); $pgbg++) {
@@ -183,15 +185,17 @@ if (array_key_exists("listpayrollid", $_GET)) {
             $payrollList->hris_date = "";
             $query = checkCreateEarnings($payrollList);
             $query = checkCreateDeductions($payrollList);
-            // $query = $payrollList->checkEarningsExist();
-            // if ($query->rowCount() > 0) {
-            //     continue;
-            // } else {
-            //     $query = checkCreateEarnings($payrollList);
-            // }
         }
     }
 
+    // delete first existing PR ID and pay item id pagibig ER
+    $payrollList->payitem_id = $data["payItemPhilhealthErId"];
+    checkId($payrollList->payitem_id);
+    checkDeleteEarnings($payrollList);
+    // delete first deduction PR ID and pay item id pagibig EE
+    $payrollList->payitem_id = $data["payItemPhilhealthEeId"];
+    checkId($payrollList->payitem_id);
+    checkDeleteDeductions($payrollList);
     // earnings Phil EE and deductions Phil ER
     if ($allPhilhealthList !== 0) {
         for ($phil = 0; $phil < count($allPhilhealthList); $phil++) {
@@ -215,14 +219,35 @@ if (array_key_exists("listpayrollid", $_GET)) {
             $payrollList->hris_date = "";
             $query = checkCreateEarnings($payrollList);
             $query = checkCreateDeductions($payrollList);
-            // $query = $payrollList->checkEarningsExist();
-            // if ($query->rowCount() > 0) {
-            //     continue;
-            // } else {
-            //     $query = checkCreateEarnings($payrollList);
-            // }
         }
     }
+    // delete first deduction PR ID and pay item id pagibig EE
+    $payrollList->payitem_id = $data["payItemTaxId"];
+    checkId($payrollList->payitem_id);
+    checkDeleteDeductions($payrollList);
+    // earnings Phil EE and deductions Phil ER
+    if ($allTaxList !== 0) {
+        for ($tax = 0; $tax < count($allTaxList); $tax++) {
+            $payrollList->payroll_type_id = $allTaxList[$tax]["deduction_payroll_type_id"];
+            $payrollList->num_pay = 1;
+            $payrollList->payroll_list_employee_name = $allTaxList[$tax]["deduction_employee"];
+            $payrollList->payroll_list_employee_id = $allTaxList[$tax]["deduction_employee_id"];
+            $payrollList->deduction_paytype_id = $allTaxList[$tax]["deduction_paytype_id"];
+            $payrollList->deduction_payitem_id = $allTaxList[$tax]["deduction_payitem_id"];
+            $payrollList->deduction_amount = $allTaxList[$tax]["deduction_amount"];
+            $payrollList->deduction_details = $allTaxList[$tax]["deduction_details"];
+            $payrollList->frequency = $allTaxList[$tax]["deduction_frequency"];
+            $payrollList->is_installment = $allTaxList[$tax]["deduction_is_installment"];
+            $payrollList->number_of_installment = $allTaxList[$tax]["deduction_number_of_installment"];
+            $payrollList->start_pay_date = $allTaxList[$tax]["deduction_start_pay_date"];
+            $payrollList->end_pay_date = $allTaxList[$tax]["deduction_end_pay_date"];
+            $payrollList->hris_date = "";
+            $query = checkCreateDeductions($payrollList);
+        }
+    }
+
+
+
     returnSuccess($payrollList, "Payroll List", $query);
 }
 

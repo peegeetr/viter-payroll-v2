@@ -27,78 +27,80 @@ const SummaryDeductionsList = () => {
   });
   return (
     <>
-      <Formik
-        initialValues={initVal}
-        validationSchema={yupSchema}
-        onSubmit={async (values, { setSubmitting, resetForm }) => {
-          consoleLog(values);
-          setLoading(true);
-          const result = await fetchApi(
-            devApiUrl +
-              `/v1/leaves/filter/${values.employee_id}/${values.leave_id}/${values.start_date}/${values.return_date}/${leaveName}/${values.role_is_contributor}`
-          );
-          consoleLog("result", result);
-          if (typeof result === "undefined") {
-            consoleLog("undefined");
-            setLoading(false);
-            dispatch(setError(true));
-            dispatch(setMessage("API / Network Error"));
-            return;
-          }
-          if (!result.data) {
-            consoleLog("No Data");
-            dispatch(setError(true));
-            dispatch(setMessage("No Data"));
-            setLoading(false);
-            return;
-          }
-          if (result.data) {
-            consoleLog("result", result.data);
-            setResult(result.data);
-            setLoading(false);
-          }
-        }}
-      >
-        {(props) => {
-          return (
-            <Form>
-              <div className="grid gap-5 grid-cols-1 md:grid-cols-[1fr_1fr_150px] py-10 items-center">
-                <div className="relative">
-                  <InputText
-                    label="Start Pay Date"
-                    name="payStart_date"
-                    type="text"
-                    disabled={loading}
-                    onFocus={(e) => (e.target.type = "date")}
-                    onBlur={(e) => (e.target.type = "date")}
-                  />
-                </div>
+      <div className="relative overflow-x-auto z-0 w-full lg:w-[35rem] ">
+        <Formik
+          initialValues={initVal}
+          validationSchema={yupSchema}
+          onSubmit={async (values, { setSubmitting, resetForm }) => {
+            consoleLog(values);
+            setLoading(true);
+            const result = await fetchApi(
+              devApiUrl +
+                `/v1/leaves/filter/${values.employee_id}/${values.leave_id}/${values.start_date}/${values.return_date}/${leaveName}/${values.role_is_contributor}`
+            );
+            consoleLog("result", result);
+            if (typeof result === "undefined") {
+              consoleLog("undefined");
+              setLoading(false);
+              dispatch(setError(true));
+              dispatch(setMessage("API / Network Error"));
+              return;
+            }
+            if (!result.data) {
+              consoleLog("No Data");
+              dispatch(setError(true));
+              dispatch(setMessage("No Data"));
+              setLoading(false);
+              return;
+            }
+            if (result.data) {
+              consoleLog("result", result.data);
+              setResult(result.data);
+              setLoading(false);
+            }
+          }}
+        >
+          {(props) => {
+            return (
+              <Form>
+                <div className="grid gap-5 grid-cols-1 md:grid-cols-[1fr_1fr_150px] py-10 items-center">
+                  <div className="relative">
+                    <InputText
+                      label="Start Pay Date"
+                      name="payStart_date"
+                      type="text"
+                      disabled={loading}
+                      onFocus={(e) => (e.target.type = "date")}
+                      onBlur={(e) => (e.target.type = "date")}
+                    />
+                  </div>
 
-                <div className="relative">
-                  <InputText
-                    label="End Pay Date"
-                    name="payEnd_date"
-                    type="text"
-                    disabled={loading}
-                    onFocus={(e) => (e.target.type = "date")}
-                    onBlur={(e) => (e.target.type = "date")}
-                  />
-                </div>
+                  <div className="relative">
+                    <InputText
+                      label="End Pay Date"
+                      name="payEnd_date"
+                      type="text"
+                      disabled={loading}
+                      onFocus={(e) => (e.target.type = "date")}
+                      onBlur={(e) => (e.target.type = "date")}
+                    />
+                  </div>
 
-                <button
-                  className="btn-modal-submit relative"
-                  type="submit "
-                  disabled={loading || !props.dirty}
-                >
-                  {loading && <ButtonSpinner />}
-                  <MdFilterAlt className="text-lg" />
-                  <span>Filter</span>
-                </button>
-              </div>
-            </Form>
-          );
-        }}
-      </Formik>
+                  <button
+                    className="btn-modal-submit relative"
+                    type="submit "
+                    disabled={loading || !props.dirty}
+                  >
+                    {loading && <ButtonSpinner />}
+                    <MdFilterAlt className="text-lg" />
+                    <span>Filter</span>
+                  </button>
+                </div>
+              </Form>
+            );
+          }}
+        </Formik>
+      </div>
       <div className="relative text-center">
         <div className=" overflow-x-auto z-0">
           <table>

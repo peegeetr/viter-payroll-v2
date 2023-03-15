@@ -12,11 +12,12 @@ import ModalError from "../../../partials/modals/ModalError";
 import ModalRun from "../../../partials/modals/ModalRun";
 import ModalSuccess from "../../../partials/modals/ModalSuccess";
 import Navigation from "../../../partials/Navigation";
+import NoData from "../../../partials/NoData";
 import PayrollViewList from "./PayrollViewList";
 
 const PayrollView = () => {
   const { store, dispatch } = React.useContext(StoreContext);
-  const [itemEdit, setItemEdit] = React.useState(null);
+  const [isPaid, setIsPaid] = React.useState(false);
   const pid = getUrlParam().get("payrollid");
 
   // use if not loadmore button undertime
@@ -32,7 +33,6 @@ const PayrollView = () => {
     "get", // method
     "payrollList" // key
   );
-  console.log("payroll", payrollList);
   // use if not loadmore button undertime
   const { data: payrollEarnings } = useQueryData(
     `${devApiUrl}/v1/earnings`, // endpoint
@@ -73,8 +73,15 @@ const PayrollView = () => {
     "get", // method
     "philhealth" // key
   );
+  console.log(payrollList);
 
   const handleRun = () => {
+    setIsPaid(true);
+    dispatch(setIsConfirm(true));
+  };
+
+  const handleMarkPaid = () => {
+    setIsPaid(false);
     dispatch(setIsConfirm(true));
   };
 
@@ -86,24 +93,43 @@ const PayrollView = () => {
         <div className="flex items-center mb-1 justify-between whitespace-nowrap overflow-auto gap-2">
           <BreadCrumbs />
           <div className="flex items-center gap-1">
-            <button type="button" className="btn-primary">
-              <FaEnvelope />
-              <span>Email All</span>
-            </button>
-            <button type="button" className="btn-primary" onClick={handleRun}>
-              <ImPlay3 />
-              <span>Run</span>
-            </button>
-            <button type="button" className="btn-primary">
-              <FaSave />
-              <span>Mark Paid</span>
-            </button>
+            {payrollList?.data.length > 0 ? (
+              payrollList?.data[0].payroll_list_is_paid === 1 ? (
+                <button type="button" className="btn-primary">
+                  <FaEnvelope />
+                  <span>Email All</span>
+                </button>
+              ) : (
+                <>
+                  <button
+                    type="button"
+                    className="btn-primary"
+                    onClick={handleRun}
+                  >
+                    <ImPlay3 />
+                    <span>Run</span>
+                  </button>
+                  {payrollList?.data[0].payroll_list_gross !== "" && (
+                    <button
+                      type="button"
+                      className="btn-primary"
+                      onClick={handleMarkPaid}
+                    >
+                      <FaSave />
+                      <span>Mark Paid</span>
+                    </button>
+                  )}
+                </>
+              )
+            ) : (
+              ""
+            )}
           </div>
         </div>
         <hr />
 
         <div className="w-full pt-2 pb-20">
-          <PayrollViewList setItemEdit={setItemEdit} />
+          {payrollList?.data.length > 0 ? <PayrollViewList /> : <NoData />}
         </div>
         <Footer />
       </div>
@@ -111,6 +137,7 @@ const PayrollView = () => {
       {store.isConfirm && (
         <ModalRun
           item={pid}
+          isPaid={isPaid}
           employees={payrollList?.data}
           payrollEarnings={payrollEarnings?.data}
           payrollDeductions={payrollDeductions?.data}
@@ -121,6 +148,7 @@ const PayrollView = () => {
           philhealth={philhealth?.data}
         />
       )}
+
       {store.success && <ModalSuccess />}
       {store.error && <ModalError />}
     </>

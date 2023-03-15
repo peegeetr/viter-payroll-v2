@@ -225,3 +225,10 @@ export const getUserType = (developer) => {
   developer ? (link = `${devNavUrl}/${UrlSystem}`) : (link = `${devNavUrl}`);
   return link;
 };
+
+// remove number format with comma
+export const removeComma = (value) => {
+  // console.log(value);
+  return value.replace(/[,]/g, "");
+  // console.log(value.replace(/[,]/g, ""));
+};

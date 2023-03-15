@@ -11,7 +11,11 @@ import {
 } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
 import { InputText } from "../../../helpers/FormInputs";
-import { devApiUrl, handleNumOnly } from "../../../helpers/functions-general";
+import {
+  devApiUrl,
+  handleNumOnly,
+  removeComma,
+} from "../../../helpers/functions-general";
 import { queryData } from "../../../helpers/queryData";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 
@@ -80,8 +84,13 @@ const ModalUpdatePagibig = ({ item }) => {
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
                 console.log(values);
-
-                mutation.mutate(values);
+                const pagibig_er_amount = removeComma(values.pagibig_ee_amount);
+                const pagibig_ee_amount = removeComma(values.pagibig_er_amount);
+                mutation.mutate({
+                  ...values,
+                  pagibig_er_amount,
+                  pagibig_ee_amount,
+                });
               }}
             >
               {(props) => {
@@ -90,20 +99,20 @@ const ModalUpdatePagibig = ({ item }) => {
                     <div className="max-h-[28rem] p-4">
                       <div className="relative mb-5 mt-5">
                         <InputText
+                          num="num"
                           label="EE Amount"
                           type="text"
                           name="pagibig_ee_amount"
-                          onKeyPress={handleNumOnly}
                           disabled={mutation.isLoading}
                         />
                       </div>
 
                       <div className="relative mb-5">
                         <InputText
+                          num="num"
                           label="ER Amount"
                           type="text"
                           name="pagibig_er_amount"
-                          onKeyPress={handleNumOnly}
                           disabled={mutation.isLoading}
                         />
                       </div>

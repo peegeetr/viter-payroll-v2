@@ -164,8 +164,8 @@ const SummaryDeductionsList = () => {
               <tr className="text-right">
                 <td className="text-center">1.</td>
 
-                <td className="text-left">cyrene, lumabas</td>
-                <td className="text-left">IT</td>
+                <td className="text-left">Lumabas, Cyrene Mercado</td>
+                <td className="text-left">Information Technology</td>
                 <td className="px-6">{numberWithCommas(10253.53)}</td>
                 <td className="px-6">{numberWithCommas(10253.53)}</td>
                 <td className="px-6">{numberWithCommas(10253.53)}</td>

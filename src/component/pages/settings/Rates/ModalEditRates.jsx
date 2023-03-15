@@ -12,7 +12,7 @@ import {
 import { StoreContext } from "../../../../store/StoreContext";
 import useQueryData from "../../../custom-hooks/useQueryData";
 import { InputSelect, InputText } from "../../../helpers/FormInputs";
-import { devApiUrl } from "../../../helpers/functions-general";
+import { devApiUrl, removeComma } from "../../../helpers/functions-general";
 import { queryData } from "../../../helpers/queryData";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 
@@ -109,7 +109,7 @@ const ModalEditRates = ({ itemEdit, payType }) => {
               initialValues={initVal}
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
-                const rate = values.rates_percent.replace(/[,]/g, "");
+                const rate = removeComma(values.rates_percent);
                 // console.log(rate);
                 mutation.mutate({ ...values, rate });
               }}

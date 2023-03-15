@@ -11,7 +11,7 @@ import {
 } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
 import { InputText } from "../../../helpers/FormInputs";
-import { devApiUrl, handleNumOnly } from "../../../helpers/functions-general";
+import { devApiUrl, removeComma } from "../../../helpers/functions-general";
 import { queryData } from "../../../helpers/queryData";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 
@@ -81,9 +81,17 @@ const ModalUpdatePhilhealth = ({ item }) => {
               initialValues={initVal}
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
-                console.log(values);
-
-                mutation.mutate(values);
+                const philhealth_percentage = removeComma(
+                  `${values.philhealth_percentage}`
+                );
+                const philhealth_min = removeComma(`${values.philhealth_min}`);
+                const philhealth_max = removeComma(`${values.philhealth_max}`);
+                mutation.mutate({
+                  ...values,
+                  philhealth_percentage,
+                  philhealth_min,
+                  philhealth_max,
+                });
               }}
             >
               {(props) => {
@@ -92,30 +100,30 @@ const ModalUpdatePhilhealth = ({ item }) => {
                     <div className="max-h-[28rem] p-4">
                       <div className="relative mb-5 mt-5">
                         <InputText
+                          num="num"
                           label="Percentage"
                           type="text"
                           name="philhealth_percentage"
-                          onKeyPress={handleNumOnly}
                           disabled={mutation.isLoading}
                         />
                       </div>
 
                       <div className="relative mb-5">
                         <InputText
+                          num="num"
                           label="Minimum"
                           type="text"
                           name="philhealth_min"
-                          onKeyPress={handleNumOnly}
                           disabled={mutation.isLoading}
                         />
                       </div>
 
                       <div className="relative mb-5">
                         <InputText
+                          num="num"
                           label="Maximum"
                           type="text"
                           name="philhealth_max"
-                          onKeyPress={handleNumOnly}
                           disabled={mutation.isLoading}
                         />
                       </div>

@@ -38,5 +38,11 @@ export const PagibigMP2Id = "30";
 export const SSSLoanId = "28";
 
 // paytype deduction Id
-export const taxDeductionId = 16;
+export const wagesEarningsId = 1;
+export const deMinimisEarningsId = 10;
+export const otherBenefitsEarningsId = 11;
+export const empContributionEarningsId = 12;
 export const mandatoryDeductionId = 13;
+export const optionalDeductionId = 14;
+export const paytypeOtherDeductionId = 15;
+export const taxDeductionId = 16;

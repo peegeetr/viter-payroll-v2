@@ -219,6 +219,15 @@ export const getPayPeriod = (result) => {
   return `${mo} ${startDay} - ${endDay}, ${year}`;
 };
 
+// get pay period working days between dates
+export const getPayslipPeriod = (result) => {
+  const mo = formatDate(result.data[0].payroll_start_date).split(" ")[1];
+  const startDay = formatDate(result.data[0].payroll_start_date).split(" ")[2];
+  const endDay = formatDate(result.data[0].payroll_end_date).split(" ")[2];
+  const year = formatDate(result.data[0].payroll_start_date).split(" ")[3];
+  return `${mo} ${startDay} - ${endDay}, ${year}`;
+};
+
 // get user type
 export const getUserType = (developer) => {
   let link = "";

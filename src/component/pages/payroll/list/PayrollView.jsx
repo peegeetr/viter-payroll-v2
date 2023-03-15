@@ -73,7 +73,6 @@ const PayrollView = () => {
     "get", // method
     "philhealth" // key
   );
-  console.log(payrollList);
 
   const handleRun = () => {
     setIsPaid(true);

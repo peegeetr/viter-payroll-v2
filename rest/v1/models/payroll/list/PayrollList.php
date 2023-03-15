@@ -12,19 +12,11 @@ class PayrollList
     public $payroll_list_net_pay;
     public $payroll_list_basic_pay;
     public $payroll_list_overtime_pay;
-    public $payroll_list_overtime_hrs;
-    public $payroll_list_overtime_rate;
     public $payroll_list_leave_pay;
-    public $payroll_list_leave_hrs;
-    public $payroll_list_leave_rate;
     public $payroll_list_holiday;
-    public $payroll_list_holiday_hrs;
-    public $payroll_list_holiday_rate;
     public $payroll_list_inlfation_adjustment;
     public $payroll_list_adjustment_pay;
     public $payroll_list_night_shift_differential;
-    public $payroll_list_nd_hrs;
-    public $payroll_list_nd_rate;
     public $payroll_list_hazard_pay;
     public $payroll_list_absences;
     public $payroll_list_deminimis;
@@ -206,19 +198,11 @@ class PayrollList
             $sql .= "payroll_list_net_pay = :payroll_list_net_pay, ";
             $sql .= "payroll_list_basic_pay = :payroll_list_basic_pay, ";
             $sql .= "payroll_list_overtime_pay = :payroll_list_overtime_pay, ";
-            $sql .= "payroll_list_overtime_hrs = :payroll_list_overtime_hrs, ";
-            $sql .= "payroll_list_overtime_rate = :payroll_list_overtime_rate, ";
             $sql .= "payroll_list_leave_pay = :payroll_list_leave_pay, ";
-            $sql .= "payroll_list_leave_hrs = :payroll_list_leave_hrs, ";
-            $sql .= "payroll_list_leave_rate = :payroll_list_leave_rate, ";
             $sql .= "payroll_list_holiday = :payroll_list_holiday, ";
-            $sql .= "payroll_list_holiday_hrs = :payroll_list_holiday_hrs, ";
-            $sql .= "payroll_list_holiday_rate = :payroll_list_holiday_rate, ";
             $sql .= "payroll_list_inlfation_adjustment = :payroll_list_inlfation_adjustment, ";
             $sql .= "payroll_list_adjustment_pay = :payroll_list_adjustment_pay, ";
             $sql .= "payroll_list_night_shift_differential = :payroll_list_night_shift_differential, ";
-            $sql .= "payroll_list_nd_hrs = :payroll_list_nd_hrs, ";
-            $sql .= "payroll_list_nd_rate = :payroll_list_nd_rate, ";
             $sql .= "payroll_list_hazard_pay = :payroll_list_hazard_pay, ";
             $sql .= "payroll_list_absences = :payroll_list_absences, ";
             $sql .= "payroll_list_deminimis = :payroll_list_deminimis, ";
@@ -255,19 +239,11 @@ class PayrollList
                 "payroll_list_net_pay" => $this->payroll_list_net_pay,
                 "payroll_list_basic_pay" => $this->payroll_list_basic_pay,
                 "payroll_list_overtime_pay" => $this->payroll_list_overtime_pay,
-                "payroll_list_overtime_hrs" => $this->payroll_list_overtime_hrs,
-                "payroll_list_overtime_rate" => $this->payroll_list_overtime_rate,
                 "payroll_list_leave_pay" => $this->payroll_list_leave_pay,
-                "payroll_list_leave_hrs" => $this->payroll_list_leave_hrs,
-                "payroll_list_leave_rate" => $this->payroll_list_leave_rate,
                 "payroll_list_holiday" => $this->payroll_list_holiday,
-                "payroll_list_holiday_hrs" => $this->payroll_list_holiday_hrs,
-                "payroll_list_holiday_rate" => $this->payroll_list_holiday_rate,
                 "payroll_list_inlfation_adjustment" => $this->payroll_list_inlfation_adjustment,
                 "payroll_list_adjustment_pay" => $this->payroll_list_adjustment_pay,
                 "payroll_list_night_shift_differential" => $this->payroll_list_night_shift_differential,
-                "payroll_list_nd_hrs" => $this->payroll_list_nd_hrs,
-                "payroll_list_nd_rate" => $this->payroll_list_nd_rate,
                 "payroll_list_hazard_pay" => $this->payroll_list_hazard_pay,
                 "payroll_list_absences" => $this->payroll_list_absences,
                 "payroll_list_deminimis" => $this->payroll_list_deminimis,
@@ -373,28 +349,88 @@ class PayrollList
         return $query;
     }
 
-    // update Earnings
-    public function updateEarnings()
+    // update payroll to paid
+    public function isPaidPayroll()
+    {
+        try {
+            $sql = "update {$this->tblPayroll} set ";
+            $sql .= "payroll_is_paid = :payroll_is_paid, ";
+            $sql .= "payroll_datetime = :payroll_datetime ";
+            $sql .= "where payroll_id = :payroll_id ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "payroll_is_paid" => $this->payroll_list_is_paid,
+                "payroll_datetime" => $this->payroll_list_datetime,
+                "payroll_id" => $this->payroll_list_payroll_id,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    // update payroll to payroll list to paid
+    public function isPaidPayrollList()
+    {
+        try {
+            $sql = "update {$this->tblPayrollList} set ";
+            $sql .= "payroll_list_is_paid = :payroll_list_is_paid, ";
+            $sql .= "payroll_list_datetime = :payroll_list_datetime ";
+            $sql .= "where payroll_list_payroll_id = :payroll_list_payroll_id ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "payroll_list_is_paid" => $this->payroll_list_is_paid,
+                "payroll_list_datetime" => $this->payroll_list_datetime,
+                "payroll_list_payroll_id" => $this->payroll_list_payroll_id,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    // update Deduction
+    public function updateIsPaidDeduction()
+    {
+        try {
+            $sql = "update {$this->tblDeductions} set ";
+            $sql .= "deduction_num_pay = :deduction_num_pay, ";
+            $sql .= "deduction_is_paid = :deduction_is_paid, ";
+            $sql .= "deduction_datetime = :deduction_datetime ";
+            $sql .= "where deduction_employee_id = :deduction_employee_id ";
+            $sql .= "and deduction_payitem_id = :deduction_payitem_id ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "deduction_employee_id" => $this->payroll_list_employee_id,
+                "deduction_payitem_id" => $this->payitem_id,
+                "deduction_num_pay" => $this->num_pay,
+                "deduction_is_paid" => $this->payroll_list_is_paid,
+                "deduction_datetime" => $this->payroll_list_datetime,
+
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    // update Earnings  
+    public function updateIsPaidEarnings()
     {
         try {
             $sql = "update {$this->tblEarnings} set ";
-            $sql .= "earnings_amount = :earnings_amount, ";
-            $sql .= "earnings_details = :earnings_details, ";
-            $sql .= "earnings_hris_date = :earnings_hris_date, ";
+            $sql .= "earnings_num_pay = :earnings_num_pay, ";
+            $sql .= "earnings_is_paid = :earnings_is_paid, ";
             $sql .= "earnings_datetime = :earnings_datetime ";
-            $sql .= "where earnings_payroll_id = :earnings_payroll_id ";
-            $sql .= "and earnings_employee_id = :earnings_employee_id ";
+            $sql .= "where earnings_employee_id = :earnings_employee_id ";
             $sql .= "and earnings_payitem_id = :earnings_payitem_id ";
             $query = $this->connection->prepare($sql);
             $query->execute([
                 "earnings_employee_id" => $this->payroll_list_employee_id,
                 "earnings_payitem_id" => $this->payitem_id,
-                "earnings_amount" => $this->amount,
-                "earnings_details" => $this->details,
-                "earnings_hris_date" => $this->hris_date,
+                "earnings_num_pay" => $this->num_pay,
+                "earnings_is_paid" => $this->payroll_list_is_paid,
                 "earnings_datetime" => $this->payroll_list_datetime,
-                "earnings_payroll_id" => $this->payroll_list_payroll_id,
-
             ]);
         } catch (PDOException $ex) {
             $query = false;
@@ -454,7 +490,7 @@ class PayrollList
                 "deduction_paytype_id" => $this->paytype_id,
                 "deduction_payitem_id" => $this->deduction_payitem_id,
                 "deduction_amount" => $this->deduction_amount,
-                "deduction_details" => $this->details,
+                "deduction_details" => $this->deduction_details,
                 "deduction_frequency" => $this->frequency,
                 "deduction_is_installment" => $this->is_installment,
                 "deduction_number_of_installment" => $this->number_of_installment,
@@ -489,6 +525,43 @@ class PayrollList
                 "earnings_payitem_id" => "{$this->payitem_id}",
                 "earnings_payroll_id" => "{$this->payroll_list_payroll_id}",
                 "earnings_hris_date" => "{$this->hris_date}",
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+
+    // delete Earnings
+    public function deleteEarnings()
+    {
+        try {
+            $sql = "delete from {$this->tblEarnings} ";
+            $sql .= "where earnings_payroll_id = :payroll_list_payroll_id ";
+            $sql .= "and earnings_payitem_id = :payitem_id ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "payroll_list_payroll_id" => $this->payroll_list_payroll_id,
+                "payitem_id" => $this->payitem_id,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    // delete Deductions
+    public function deleteDeductions()
+    {
+        try {
+            $sql = "delete from {$this->tblDeductions} ";
+            $sql .= "where deduction_payroll_id = :payroll_list_payroll_id ";
+            $sql .= "and deduction_payitem_id = :payitem_id ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "payroll_list_payroll_id" => $this->payroll_list_payroll_id,
+                "payitem_id" => $this->payitem_id,
             ]);
         } catch (PDOException $ex) {
             $query = false;

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 14, 2023 at 05:06 AM
+-- Generation Time: Mar 15, 2023 at 06:37 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -42,19 +42,11 @@ CREATE TABLE `prv2_payroll_list` (
   `payroll_list_net_pay` varchar(20) NOT NULL,
   `payroll_list_basic_pay` varchar(20) NOT NULL,
   `payroll_list_overtime_pay` varchar(20) NOT NULL,
-  `payroll_list_overtime_hrs` varchar(20) NOT NULL,
-  `payroll_list_overtime_rate` varchar(20) NOT NULL,
   `payroll_list_leave_pay` varchar(20) NOT NULL,
-  `payroll_list_leave_hrs` varchar(20) NOT NULL,
-  `payroll_list_leave_rate` varchar(20) NOT NULL,
   `payroll_list_holiday` varchar(20) NOT NULL,
-  `payroll_list_holiday_hrs` varchar(20) NOT NULL,
-  `payroll_list_holiday_rate` varchar(20) NOT NULL,
   `payroll_list_inlfation_adjustment` varchar(20) NOT NULL,
   `payroll_list_adjustment_pay` varchar(20) NOT NULL,
   `payroll_list_night_shift_differential` varchar(20) NOT NULL,
-  `payroll_list_nd_hrs` varchar(20) NOT NULL,
-  `payroll_list_nd_rate` varchar(20) NOT NULL,
   `payroll_list_hazard_pay` varchar(20) NOT NULL,
   `payroll_list_absences` varchar(20) NOT NULL,
   `payroll_list_deminimis` varchar(20) NOT NULL,

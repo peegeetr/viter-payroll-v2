@@ -33,8 +33,10 @@ import {
   sssEeId,
   sssErId,
   SSSLoanId,
+  payrollTaxDeductionId,
   undertimeId,
   wagesId,
+  taxDeductionId,
 } from "./functions-payitemId";
 
 export const employeeRate = (salary, workingDays) => {
@@ -176,7 +178,7 @@ export const payComputeNightDiff = (emp, holidays, payrollEarnings) => {
     ndList.push({
       earnings_payroll_type_id: emp.payroll_category_type,
       earnings_employee: emp.payroll_list_employee_name,
-      earnings_employee_id: emp.payroll_id,
+      earnings_employee_id: emp.payroll_list_employee_id,
       earnings_paytype_id: wagesId,
       earnings_payitem_id: nightDiffId,
       earnings_amount: finalAmount,
@@ -235,6 +237,7 @@ export const payComputeBereavement = (earning) => {
   if (earning.earnings_payitem_id === bereavementId) {
     finalAmount += Number(earning.earnings_amount);
   }
+
   return finalAmount;
 };
 
@@ -318,7 +321,7 @@ export const payComputeHoliday = (emp, holidays, payrollEarnings) => {
       holidayList.push({
         earnings_payroll_type_id: emp.payroll_category_type,
         earnings_employee: emp.payroll_list_employee_name,
-        earnings_employee_id: emp.payroll_id,
+        earnings_employee_id: emp.payroll_list_employee_id,
         earnings_paytype_id: wagesId,
         earnings_payitem_id: holidayId,
         earnings_amount: holidayTotalAmount(emp, holidaysItem).dailyAmount,
@@ -413,19 +416,6 @@ export const payComputeTaxDue = (
         Number(sTax.semi_monthly_range_from) &&
       Number(taxableCompensationIncome) <= Number(sTax.semi_monthly_range_to)
     ) {
-      // taxList.push({
-      //   // tax_aid: Number(taxBracket[i].tax_aid),
-      //   semi_monthly_range_from: Number(sTax.semi_monthly_range_from),
-      //   semi_monthly_range_to: Number(sTax.semi_monthly_range_to),
-      //   semi_monthly_less_amount: Number(sTax.semi_monthly_less_amount),
-      //   semi_monthly_rate: Number(sTax.semi_monthly_rate),
-      //   semi_monthly_additional_amount: Number(
-      //     sTax.semi_monthly_additional_amount
-      //   ),
-      //   taxableCompensationIncome: gross - totalNonTaxableCompensation,
-      //   totalNonTaxableCompensation,
-      // });
-
       taxDue =
         taxableCompensationIncome -
         Number(sTax.semi_monthly_less_amount) *
@@ -434,7 +424,22 @@ export const payComputeTaxDue = (
     }
   });
 
-  return taxDue;
+  // use to insert in earnings table
+  taxList.push({
+    deduction_payroll_type_id: emp.payroll_category_type,
+    deduction_employee: emp.payroll_list_employee_name,
+    deduction_employee_id: emp.payroll_list_employee_id,
+    deduction_paytype_id: taxDeductionId,
+    deduction_payitem_id: payrollTaxDeductionId,
+    deduction_amount: taxDue,
+    deduction_details: "Tax Employee",
+    deduction_frequency: isSemiMonthly,
+    deduction_is_installment: onetimeNumber,
+    deduction_number_of_installment: onetimeNumber,
+    deduction_start_pay_date: emp.payroll_start_date,
+    deduction_end_pay_date: emp.payroll_end_date,
+  });
+  return { taxDue, taxList };
 };
 
 // compute sss bracket
@@ -455,15 +460,15 @@ export const payComputeSssBracket = (emp, sssBracket) => {
       sssList.push({
         earnings_payroll_type_id: emp.payroll_category_type,
         earnings_employee: emp.payroll_list_employee_name,
-        earnings_employee_id: emp.payroll_id,
+        earnings_employee_id: emp.payroll_list_employee_id,
         deduction_paytype_id: mandatoryDeductionId,
         earnings_paytype_id: EmpConributionId,
         deduction_payitem_id: sssEeId,
         earnings_payitem_id: sssErId,
         deduction_amount: sssEe,
         earnings_amount: sssEr,
-        earnings_details: "Employer SSS",
-        deduction_details: "Employee SSS",
+        earnings_details: "SSS Employer",
+        deduction_details: "SSS Employee",
         earnings_frequency: isSemiMonthly,
         earnings_is_installment: onetimeNumber,
         earnings_number_of_installment: onetimeNumber,
@@ -481,15 +486,15 @@ export const payComputeSssBracket = (emp, sssBracket) => {
     sssList.push({
       earnings_payroll_type_id: emp.payroll_category_type,
       earnings_employee: emp.payroll_list_employee_name,
-      earnings_employee_id: emp.payroll_id,
+      earnings_employee_id: emp.payroll_list_employee_id,
       deduction_paytype_id: mandatoryDeductionId,
       earnings_paytype_id: EmpConributionId,
       deduction_payitem_id: sssEeId,
       earnings_payitem_id: sssErId,
       deduction_amount: sssEe,
       earnings_amount: sssEr,
-      earnings_details: "Employer SSS",
-      deduction_details: "Employee SSS",
+      earnings_details: "SSS Employer",
+      deduction_details: "SSS Employee",
       earnings_frequency: isSemiMonthly,
       earnings_is_installment: onetimeNumber,
       earnings_number_of_installment: onetimeNumber,
@@ -518,15 +523,15 @@ export const payComputePagibig = (emp, pagibig) => {
   pagibigList.push({
     earnings_payroll_type_id: emp.payroll_category_type,
     earnings_employee: emp.payroll_list_employee_name,
-    earnings_employee_id: emp.payroll_id,
+    earnings_employee_id: emp.payroll_list_employee_id,
     deduction_paytype_id: mandatoryDeductionId,
     earnings_paytype_id: EmpConributionId,
     deduction_payitem_id: pagibigEeId,
     earnings_payitem_id: pagibigErId,
     deduction_amount: pagibigEe,
     earnings_amount: pagibigEr,
-    earnings_details: "Employer Pagibig",
-    deduction_details: "Employee Pagibig",
+    earnings_details: "Pagibig Employer",
+    deduction_details: "Pagibig Employee",
     earnings_frequency: isSemiMonthly,
     earnings_is_installment: onetimeNumber,
     earnings_number_of_installment: onetimeNumber,
@@ -569,15 +574,15 @@ export const payComputePhil = (emp, philhealth) => {
   philhealthList.push({
     earnings_payroll_type_id: emp.payroll_category_type,
     earnings_employee: emp.payroll_list_employee_name,
-    earnings_employee_id: emp.payroll_id,
+    earnings_employee_id: emp.payroll_list_employee_id,
     deduction_paytype_id: mandatoryDeductionId,
     earnings_paytype_id: EmpConributionId,
     deduction_payitem_id: philhealthEeId,
     earnings_payitem_id: philhealthErId,
     deduction_amount: philhealthEe,
     earnings_amount: philhealthEr,
-    earnings_details: "Employer Philhealth",
-    deduction_details: "Employee Philhealth",
+    earnings_details: "Philhealth Employer",
+    deduction_details: "Philhealth Employee ",
     earnings_frequency: isSemiMonthly,
     earnings_is_installment: onetimeNumber,
     earnings_number_of_installment: onetimeNumber,

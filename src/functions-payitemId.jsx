@@ -32,7 +32,6 @@ export const EmpConributionId = 12;
 export const fwcTithesId = "31";
 export const fcaTutionId = "32";
 export const otherDeductionId = "33";
-export const payrollTaxDeductionId = "34";
 export const PagibigLoanId = "29";
 export const PagibigMP2Id = "30";
 export const SSSLoanId = "28";

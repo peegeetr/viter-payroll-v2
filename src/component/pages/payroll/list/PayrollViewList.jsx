@@ -54,7 +54,7 @@ const PayrollViewList = () => {
       return;
     },
     refetchOnWindowFocus: false,
-    // cacheTime: 1000,
+    cacheTime: 1000,
   });
 
   React.useEffect(() => {
@@ -63,7 +63,7 @@ const PayrollViewList = () => {
       fetchNextPage();
     }
   }, [inView]);
-
+  console.log("res", result?.pages);
   return (
     <>
       <div className="xs:flex text-primary">
@@ -99,9 +99,9 @@ const PayrollViewList = () => {
       />
 
       <div className="relative text-center">
-        {/* {isFetching && !isFetchingNextPage && status !== "loading" && (
+        {isFetching && !isFetchingNextPage && status !== "loading" && (
           <FetchingSpinner />
-        )} */}
+        )}
         <div className=" overflow-x-auto z-0">
           <table>
             <thead>
@@ -140,17 +140,17 @@ const PayrollViewList = () => {
                       <td></td>
                       <td></td>
                       <td>
-                        {/* {item.payroll_list_is_paid === 1 && ( */}
-                        <div className="flex items-center justify-end gap-1 mr-2">
-                          <Link
-                            to={`${link}/payroll/list/payslip?payslipid=${item.payroll_list_aid}`}
-                            className="btn-action-table tooltip-action-table"
-                            data-tooltip="Payslip"
-                          >
-                            <MdOutlineReceipt />
-                          </Link>
-                        </div>
-                        {/* )} */}
+                        {item.payroll_list_is_paid === 1 && (
+                          <div className="flex items-center justify-end gap-1 mr-2">
+                            <Link
+                              to={`${link}/payroll/list/payslip?payslipid=${item.payroll_list_aid}`}
+                              className="btn-action-table tooltip-action-table"
+                              data-tooltip="Payslip"
+                            >
+                              <MdOutlineReceipt />
+                            </Link>
+                          </div>
+                        )}
                       </td>
                     </tr>
                   ))}

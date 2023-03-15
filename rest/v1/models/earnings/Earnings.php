@@ -277,6 +277,45 @@ class Earnings
         return $query;
     }
 
+    // read by id
+    public function readPayslipById()
+    {
+        try {
+            $sql = "select earnings.earnings_aid, ";
+            $sql .= "earnings.earnings_is_paid, ";
+            $sql .= "earnings.earnings_num_pay, ";
+            $sql .= "earnings.earnings_employee, ";
+            $sql .= "earnings.earnings_amount, ";
+            $sql .= "earnings.earnings_details, ";
+            $sql .= "earnings.earnings_frequency, ";
+            $sql .= "earnings.earnings_number_of_installment, ";
+            $sql .= "earnings.earnings_hris_date, ";
+            $sql .= "earnings.earnings_start_pay_date, ";
+            $sql .= "earnings.earnings_end_pay_date, ";
+            $sql .= "payitem.payitem_name, ";
+            $sql .= "paytype.paytype_name ";
+            $sql .= "from {$this->tblEarnings} as earnings, ";
+            $sql .= "{$this->tblPayType} as paytype, ";
+            $sql .= "{$this->tblPayItem} as payitem ";
+            $sql .= "where earnings.earnings_paytype_id = :earnings_paytype_id ";
+            $sql .= "and earnings.earnings_employee_id = :earnings_employee_id ";
+            $sql .= "and earnings.earnings_payroll_id = :earnings_payroll_id ";
+            $sql .= "and earnings.earnings_paytype_id = paytype.paytype_aid ";
+            $sql .= "and earnings.earnings_payitem_id = payitem.payitem_aid ";
+            $sql .= "order by earnings.earnings_is_paid desc, ";
+            $sql .= "earnings.earnings_employee asc ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "earnings_paytype_id" => $this->earnings_paytype_id,
+                "earnings_employee_id" => $this->earnings_employee_id,
+                "earnings_payroll_id" => $this->earnings_payroll_id,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
     // update
     public function update()
     {

@@ -1,6 +1,6 @@
 import React from "react";
-import { FaEnvelope } from "react-icons/fa";
 import { AiFillPrinter } from "react-icons/ai";
+import { FaEnvelope } from "react-icons/fa";
 import { StoreContext } from "../../../../store/StoreContext";
 import BreadCrumbs from "../../../partials/BreadCrumbs";
 import Footer from "../../../partials/Footer";

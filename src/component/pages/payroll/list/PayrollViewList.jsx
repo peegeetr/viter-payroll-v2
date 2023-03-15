@@ -140,17 +140,15 @@ const PayrollViewList = () => {
                       <td>{item.payroll_list_deduction}</td>
                       <td>{item.payroll_list_net_pay}</td>
                       <td>
-                        {item.payroll_list_is_paid === 1 && (
-                          <div className="flex items-center justify-end gap-1 mr-2">
-                            <Link
-                              to={`${link}/payroll/list/payslip?payslipid=${item.payroll_list_aid}`}
-                              className="btn-action-table tooltip-action-table"
-                              data-tooltip="Payslip"
-                            >
-                              <MdOutlineReceipt />
-                            </Link>
-                          </div>
-                        )}
+                        <div className="flex items-center justify-end gap-1 mr-2">
+                          <Link
+                            to={`${link}/payroll/list/payslip?payslipid=${item.payroll_list_aid}`}
+                            className="btn-action-table tooltip-action-table"
+                            data-tooltip="Payslip"
+                          >
+                            <MdOutlineReceipt />
+                          </Link>
+                        </div>
                       </td>
                     </tr>
                   ))}

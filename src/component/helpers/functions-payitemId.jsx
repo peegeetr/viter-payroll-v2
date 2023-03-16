@@ -15,18 +15,14 @@ export const separationPayId = "8";
 export const otherAllowancesId = "9";
 export const diminimisId = "11";
 export const sssErId = "13";
-export const philhealthEeId = "14";
+export const philhealthErId = "14";
 export const pagibigErId = "15";
 export const inflationAdjustmentId = "21";
 export const payAdjustmentId = "22";
 export const hazardPayId = "24";
 export const sssEeId = "25";
-export const philhealthErId = "26";
+export const philhealthEeId = "26";
 export const pagibigEeId = "27";
-
-// paytype earnings Id
-export const wagesId = 1;
-export const EmpConributionId = 12;
 
 // payitem deduction Id
 export const fwcTithesId = "31";

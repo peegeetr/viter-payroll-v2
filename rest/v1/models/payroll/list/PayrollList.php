@@ -531,7 +531,7 @@ class PayrollList
                 "deduction_is_paid" => $this->num_pay,
                 "deduction_num_pay" => $this->num_pay,
                 "deduction_employee_id" => $this->payroll_list_employee_id,
-                "deduction_paytype_id" => $this->paytype_id,
+                "deduction_paytype_id" => $this->deduction_paytype_id,
                 "deduction_payitem_id" => $this->deduction_payitem_id,
                 "deduction_amount" => $this->deduction_amount,
                 "deduction_details" => $this->deduction_details,

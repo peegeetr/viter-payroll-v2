@@ -277,8 +277,8 @@ class Earnings
         return $query;
     }
 
-    // read by id
-    public function readPayslipById()
+    // read by payslip id, payroll id and paytype id
+    public function readPayslipByPaytypeId()
     {
         try {
             $sql = "select earnings.earnings_aid, ";

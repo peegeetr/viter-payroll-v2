@@ -260,6 +260,44 @@ class Deductions
         return $query;
     }
 
+    // read by payslip id, payroll id and paytype id
+    public function readPayslipByPaytypeId()
+    {
+        try {
+            $sql = "select deduction.deduction_aid, ";
+            $sql .= "deduction.deduction_is_paid, ";
+            $sql .= "deduction.deduction_num_pay, ";
+            $sql .= "deduction.deduction_employee, ";
+            $sql .= "deduction.deduction_amount, ";
+            $sql .= "deduction.deduction_details, ";
+            $sql .= "deduction.deduction_frequency, ";
+            $sql .= "deduction.deduction_number_of_installment, ";
+            $sql .= "deduction.deduction_start_pay_date, ";
+            $sql .= "deduction.deduction_end_pay_date, ";
+            $sql .= "payitem.payitem_name, ";
+            $sql .= "paytype.paytype_name ";
+            $sql .= "from {$this->tblDeductions} as deduction, ";
+            $sql .= "{$this->tblPayType} as paytype, ";
+            $sql .= "{$this->tblPayItem} as payitem ";
+            $sql .= "where deduction.deduction_paytype_id = :deduction_paytype_id ";
+            $sql .= "and deduction.deduction_employee_id = :deduction_employee_id ";
+            $sql .= "and deduction.deduction_payroll_id = :deduction_payroll_id ";
+            $sql .= "and deduction.deduction_paytype_id = paytype.paytype_aid ";
+            $sql .= "and deduction.deduction_payitem_id = payitem.payitem_aid ";
+            $sql .= "order by deduction.deduction_is_paid desc, ";
+            $sql .= "deduction.deduction_employee asc ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "deduction_paytype_id" => $this->deduction_paytype_id,
+                "deduction_employee_id" => $this->deduction_employee_id,
+                "deduction_payroll_id" => $this->deduction_payroll_id,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
     // update
     public function update()
     {

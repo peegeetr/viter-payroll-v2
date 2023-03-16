@@ -14,6 +14,7 @@ import { InputText } from "../../../../helpers/FormInputs.jsx";
 import {
   devApiUrl,
   handleNumOnly,
+  removeComma,
 } from "../../../../helpers/functions-general.jsx";
 import { queryData } from "../../../../helpers/queryData.jsx";
 import ButtonSpinner from "../../../../partials/spinners/ButtonSpinner.jsx";
@@ -91,9 +92,29 @@ const ModalAddTaxMonthly = ({ itemEdit }) => {
               initialValues={initVal}
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
-                console.log(values);
-
-                mutation.mutate(values);
+                const tax_monthly_range_from = removeComma(
+                  `${values.tax_monthly_range_from}`
+                );
+                const tax_monthly_range_to = removeComma(
+                  `${values.tax_monthly_range_to}`
+                );
+                const tax_monthly_less_amount = removeComma(
+                  `${values.tax_monthly_less_amount}`
+                );
+                const tax_monthly_rate = removeComma(
+                  `${values.tax_monthly_rate}`
+                );
+                const tax_monthly_additional_amount = removeComma(
+                  `${values.tax_monthly_additional_amount}`
+                );
+                mutation.mutate({
+                  ...values,
+                  tax_monthly_range_from,
+                  tax_monthly_range_to,
+                  tax_monthly_less_amount,
+                  tax_monthly_rate,
+                  tax_monthly_additional_amount,
+                });
               }}
             >
               {(props) => {
@@ -101,6 +122,7 @@ const ModalAddTaxMonthly = ({ itemEdit }) => {
                   <Form>
                     <div className="relative my-5">
                       <InputText
+                        num="num"
                         label="Range From"
                         type="text"
                         name="tax_monthly_range_from"
@@ -111,6 +133,7 @@ const ModalAddTaxMonthly = ({ itemEdit }) => {
 
                     <div className="relative mb-5">
                       <InputText
+                        num="num"
                         label="Range To"
                         type="text"
                         name="tax_monthly_range_to"
@@ -121,6 +144,7 @@ const ModalAddTaxMonthly = ({ itemEdit }) => {
 
                     <div className="relative mb-5">
                       <InputText
+                        num="num"
                         label="Less Amount"
                         type="text"
                         name="tax_monthly_less_amount"
@@ -131,6 +155,7 @@ const ModalAddTaxMonthly = ({ itemEdit }) => {
 
                     <div className="relative mb-5">
                       <InputText
+                        num="num"
                         label="Rate %"
                         type="text"
                         name="tax_monthly_rate"
@@ -141,6 +166,7 @@ const ModalAddTaxMonthly = ({ itemEdit }) => {
 
                     <div className="relative mb-5">
                       <InputText
+                        num="num"
                         label="Addt'l Amount"
                         type="text"
                         name="tax_monthly_additional_amount"

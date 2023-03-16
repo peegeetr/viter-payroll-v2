@@ -6,7 +6,10 @@ import { MdFilterAlt } from "react-icons/md";
 import * as Yup from "yup";
 import { StoreContext } from "../../../../../store/StoreContext";
 import {
+  devApiUrl,
+  getPayPeriod,
   getUserType,
+  hrisDevApiUrl,
   numberWithCommas,
 } from "../../../../helpers/functions-general";
 import NoData from "../../../../partials/NoData";
@@ -15,6 +18,9 @@ import { InputText } from "../../../../helpers/FormInputs";
 import { queryDataInfinite } from "../../../../helpers/queryDataInfinite";
 import TableSpinner from "../../../../partials/spinners/TableSpinner";
 import ButtonSpinner from "../../../../partials/spinners/ButtonSpinner";
+import LoadmoreRq from "../../../../partials/LoadmoreRq";
+import { getDepartment } from "../function-report-summary";
+import useQueryData from "../../../../custom-hooks/useQueryData";
 
 const SummaryDeductionsList = () => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -38,12 +44,12 @@ const SummaryDeductionsList = () => {
     isFetchingNextPage,
     status,
   } = useInfiniteQuery({
-    queryKey: ["payrollList", isSubmit],
+    queryKey: ["payrollList-summary", isSubmit],
     queryFn: async ({ pageParam = 1 }) =>
       await queryDataInfinite(
         `${devApiUrl}/v1/payrollList/filter/${startDate}/${endDate}`, // search endpoint
-        `${devApiUrl}/v1/payrollList/page/${pageParam}`, // list endpoint
-        store.isSearch // search boolean
+        `${devApiUrl}/v1/payrollList/summary/${pageParam}`, // list endpoint
+        isFilter // search boolean
       ),
     getNextPageParam: (lastPage) => {
       if (lastPage.page < lastPage.total) {
@@ -61,6 +67,14 @@ const SummaryDeductionsList = () => {
       fetchNextPage();
     }
   }, [inView]);
+
+  // // use if not loadmore button undertime
+  // const { data: job } = useQueryData(
+  //   `${hrisDevApiUrl}/v1/employees/job`, // endpoint
+  //   "get", // method
+  //   "department" // key
+  // );
+
   const initVal = {
     payStart_date: "",
     payEnd_date: "",
@@ -140,6 +154,9 @@ const SummaryDeductionsList = () => {
                 <th className="table-border min-w-[12rem]" rowSpan="2">
                   Department
                 </th>
+                <th className="table-border min-w-[12rem]" rowSpan="2">
+                  Pay Date
+                </th>
                 <th className="table-border-center min-w-[8rem]" colSpan="2">
                   SSS
                 </th>
@@ -205,26 +222,49 @@ const SummaryDeductionsList = () => {
                 <React.Fragment key={key}>
                   {page.data.map((item, key) => (
                     <tr key={key} className="text-right">
-                      <td className="text-center">1.</td>
+                      <td className="text-center">{counter++}.</td>
 
                       <td className="text-left">
                         {item.payroll_list_employee_name}
                       </td>
-                      <td className="text-left">Information Technology</td>
-                      <td className="px-6">{numberWithCommas(10253.53)}</td>
-                      <td className="px-6">{numberWithCommas(10253.53)}</td>
-                      <td className="px-6">{numberWithCommas(10253.53)}</td>
-                      <td className="px-6">{numberWithCommas(10253.53)}</td>
-                      <td className="px-6">{numberWithCommas(10253.53)}</td>
-                      <td className="px-6">{numberWithCommas(10253.53)}</td>
-                      <td className="px-6">{numberWithCommas(10253.53)}</td>
-                      <td className="px-6">{numberWithCommas(10253.53)}</td>
-                      <td className="px-6">{numberWithCommas(10253.53)}</td>
-                      <td className="px-6">{numberWithCommas(10253.53)}</td>
-                      <td className="px-6">{numberWithCommas(10253.53)}</td>
-                      <td className="px-6">{numberWithCommas(10253.53)}</td>
-                      <td className="px-6">{numberWithCommas(10253.53)}</td>
-                      <td className="px-6">{numberWithCommas(102530.53)}</td>
+                      <td className="text-left">
+                        {/* {getDepartment(item.payroll_list_employee_id, job)} */}
+                      </td>
+                      <td className="text-center">{getPayPeriod(result)}</td>
+                      <td className="px-6">
+                        {numberWithCommas(item.payroll_list_sss_er)}
+                      </td>
+                      <td className="px-6">
+                        {numberWithCommas(item.payroll_list_sss_ee)}
+                      </td>
+                      <td className="px-6">
+                        {numberWithCommas(item.payroll_list_philhealth_er)}
+                      </td>
+                      <td className="px-6">
+                        {numberWithCommas(item.payroll_list_philhealth_ee)}
+                      </td>
+                      <td className="px-6">
+                        {numberWithCommas(item.payroll_list_pagibig_er)}
+                      </td>
+                      <td className="px-6">
+                        {numberWithCommas(item.payroll_list_pagibig_ee)}
+                      </td>
+                      <td className="px-6">
+                        {numberWithCommas(item.payroll_list_sss_loan)}
+                      </td>
+                      <td className="px-6">
+                        {numberWithCommas(item.payroll_list_tax)}
+                      </td>
+                      <td className="px-6">
+                        {numberWithCommas(item.payroll_list_pagibig_mp2)}
+                      </td>
+                      <td className="px-6">
+                        {numberWithCommas(item.payroll_list_other_deduction)}
+                      </td>
+                      <td className="px-6">{numberWithCommas(0.0)}</td>
+                      <td className="px-6">{numberWithCommas(0.0)}</td>
+                      <td className="px-6">{numberWithCommas(0.0)}</td>
+                      <td className="px-6">{numberWithCommas(0.0)}</td>
                     </tr>
                   ))}
                 </React.Fragment>
@@ -232,6 +272,15 @@ const SummaryDeductionsList = () => {
             </tbody>
           </table>
         </div>
+        <LoadmoreRq
+          fetchNextPage={fetchNextPage}
+          isFetchingNextPage={isFetchingNextPage}
+          hasNextPage={hasNextPage}
+          result={result?.pages[0]}
+          setPage={setPage}
+          page={page}
+          refView={ref}
+        />
       </div>
     </>
   );

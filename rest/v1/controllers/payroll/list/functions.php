@@ -62,3 +62,27 @@ function checkDeleteDeductions($object)
     checkQuery($query, "There's a problem processing your request. (delete deductions)");
     return $query;
 }
+
+// Read all
+function checkReadAllSummary($object)
+{
+    $query = $object->readAllSummary();
+    checkQuery($query, "Empty records.(Read Summary)");
+    return $query;
+}
+
+// Read limit
+function checkReadSummaryLimit($object)
+{
+    $query = $object->readSummaryLimit();
+    checkQuery($query, "Empty records.(Summary Limit)");
+    return $query;
+}
+
+// Read limit
+function checkReadSummaryByDate($object)
+{
+    $query = $object->readSummaryByDate();
+    checkQuery($query, "Empty records. (limit)");
+    return $query;
+}

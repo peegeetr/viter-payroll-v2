@@ -70,6 +70,8 @@ class PayrollList
     public $payrollList_search;
     public $payrollList_start;
     public $payrollList_total;
+    public $date_from;
+    public $date_to;
     public $lastInsertedId;
     public $tblPayrollList;
     public $tblPayroll;
@@ -207,6 +209,7 @@ class PayrollList
         return $query;
     }
 
+
     // search  
     public function search()
     {
@@ -233,6 +236,106 @@ class PayrollList
         }
         return $query;
     }
+
+    // read by payslip by id
+    public function readAllSummary()
+    {
+        try {
+            $sql = "select payrollList.*, ";
+            $sql .= "payroll.payroll_category_type, ";
+            $sql .= "payroll.payroll_id, ";
+            $sql .= "payroll.payroll_start_date, ";
+            $sql .= "payroll.payroll_end_date, ";
+            $sql .= "payroll.payroll_pay_date ";
+            $sql .= "from {$this->tblPayrollList} as payrollList, ";
+            $sql .= "{$this->tblPayroll} as payroll ";
+            $sql .= "where payrollList.payroll_list_payroll_id = payroll.payroll_id ";
+            $sql .= "order by payrollList.payroll_list_payroll_id, ";
+            $sql .= "payroll.payroll_end_date desc, ";
+            $sql .= "payrollList.payroll_list_employee_name asc ";
+            $query = $this->connection->query($sql);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    public function readSummaryLimit()
+    {
+        try {
+            $sql = "select payrollList.*, ";
+            $sql .= "payroll.payroll_category_type, ";
+            $sql .= "payroll.payroll_id, ";
+            $sql .= "payroll.payroll_start_date, ";
+            $sql .= "payroll.payroll_end_date, ";
+            $sql .= "payroll.payroll_pay_date ";
+            $sql .= "from {$this->tblPayrollList} as payrollList, ";
+            $sql .= "{$this->tblPayroll} as payroll ";
+            $sql .= "where payrollList.payroll_list_payroll_id = payroll.payroll_id ";
+            $sql .= "order by payrollList.payroll_list_payroll_id, ";
+            $sql .= "payroll.payroll_end_date desc, ";
+            $sql .= "payrollList.payroll_list_employee_name asc ";
+            $sql .= "limit :start, ";
+            $sql .= ":total ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "start" => $this->payrollList_start - 1,
+                "total" => $this->payrollList_total,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    // read by payslip by id
+    public function readSummaryByDate()
+    {
+        try {
+            $sql = "select payrollList.*, ";
+            $sql .= "payroll.payroll_category_type, ";
+            $sql .= "payroll.payroll_id, ";
+            $sql .= "payroll.payroll_start_date, ";
+            $sql .= "payroll.payroll_end_date, ";
+            $sql .= "payroll.payroll_pay_date ";
+            $sql .= "from {$this->tblPayrollList} as payrollList, ";
+            $sql .= "{$this->tblPayroll} as payroll ";
+            $sql .= "where payrollList.payroll_list_payroll_id = payroll.payroll_id ";
+            $sql .= "and payroll.payroll_start_date = :payroll_start_date ";
+            $sql .= "and payroll.payroll_end_date = :payroll_end_date ";
+            $sql .= "order by payrollList.payroll_list_payroll_id, ";
+            $sql .= "payroll.payroll_end_date desc, ";
+            $sql .= "payrollList.payroll_list_employee_name asc ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "payroll_start_date" => $this->date_from,
+                "payroll_end_date" => $this->date_to,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    // public function readSummaryByDate()
+    // {
+    //     try {
+    //         $sql = "select * from {$this->tblPayrollList} ";
+    //         $sql .= "where DATE(payroll_list_created) between ";
+    //         $sql .= ":date_from and :date_to ";
+    //         $sql .= "order by payroll_list_payroll_id desc, ";
+    //         $sql .= "payroll_list_employee_name asc ";
+    //         $query = $this->connection->prepare($sql);
+    //         $query->execute([
+    //             "date_from" => $this->date_from,
+    //             "date_to" => $this->date_to,
+    //         ]);
+    //     } catch (PDOException $ex) {
+    //         $query = false;
+    //     }
+    //     return $query;
+    // }
+
 
     // update
     public function update()

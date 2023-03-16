@@ -9,10 +9,9 @@ function checkReadPayslipById($object)
     return $query;
 }
 
-// Read by draft
 function checkReadPayslipByPaytypeId($object)
 {
-    $query = $object->readPayslipById();
-    checkQuery($query, "Empty records (Read payslip by id).");
+    $query = $object->readPayslipByPaytypeId();
+    checkQuery($query, "Empty records (Read payslip by paytype id).");
     return $query;
 }

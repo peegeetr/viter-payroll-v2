@@ -90,14 +90,16 @@ const PayrollView = () => {
       <Navigation menu="payroll" />
       <div className="wrapper">
         <div className="flex items-center mb-1 justify-between whitespace-nowrap overflow-auto gap-2">
-          <BreadCrumbs />
+          <BreadCrumbs param={`${location.search}`} />
           <div className="flex items-center gap-1">
             {payrollList?.data.length > 0 ? (
               payrollList?.data[0].payroll_list_is_paid === 1 ? (
-                <button type="button" className="btn-primary">
-                  <FaEnvelope />
-                  <span>Email All</span>
-                </button>
+                <>
+                  <button type="button" className="btn-primary">
+                    <FaEnvelope />
+                    <span>Email All</span>
+                  </button>{" "}
+                </>
               ) : (
                 <>
                   <button

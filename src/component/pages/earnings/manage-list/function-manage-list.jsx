@@ -213,9 +213,9 @@ export const otFinalAmount = (otItem, eItem, holidays, payrollDraft) => {
     new Date(payrollDraft?.data[0].payroll_start_date),
     new Date(payrollDraft?.data[0].payroll_end_date)
   );
-  let rate25 = 125 / 100;
-  let restRate30 = 130 / 100;
-  let restRate10 = 110 / 100;
+  let rate25 = 25 / 100;
+  let restRate30 = 30 / 100;
+  let restRate10 = 10 / 100;
   let isHoliday = false;
   let isRestDay = false;
   let ratedAmount = 0;

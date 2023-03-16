@@ -1,4 +1,6 @@
 import React from "react";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { useInView } from "react-intersection-observer";
 import { Form, Formik } from "formik";
 import { MdFilterAlt } from "react-icons/md";
 import * as Yup from "yup";
@@ -10,12 +12,55 @@ import {
 import NoData from "../../../../partials/NoData";
 import ServerError from "../../../../partials/ServerError";
 import { InputText } from "../../../../helpers/FormInputs";
+import { queryDataInfinite } from "../../../../helpers/queryDataInfinite";
+import TableSpinner from "../../../../partials/spinners/TableSpinner";
+import ButtonSpinner from "../../../../partials/spinners/ButtonSpinner";
 
 const SummaryDeductionsList = () => {
   const { store, dispatch } = React.useContext(StoreContext);
   const link = getUserType(store.credentials.data.role_is_developer === 1);
-  const [loading, setLoading] = React.useState(false);
+  const [isFilter, setFilter] = React.useState(false);
+  const [isSubmit, setSubmit] = React.useState(false);
+  const [startDate, setStartDate] = React.useState("");
+  const [endDate, setEndDate] = React.useState("");
 
+  const [page, setPage] = React.useState(1);
+  let counter = 1;
+  const { ref, inView } = useInView();
+
+  // use if with loadmore button and search bar
+  const {
+    data: result,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+    isFetchingNextPage,
+    status,
+  } = useInfiniteQuery({
+    queryKey: ["payrollList", isSubmit],
+    queryFn: async ({ pageParam = 1 }) =>
+      await queryDataInfinite(
+        `${devApiUrl}/v1/payrollList/filter/${startDate}/${endDate}`, // search endpoint
+        `${devApiUrl}/v1/payrollList/page/${pageParam}`, // list endpoint
+        store.isSearch // search boolean
+      ),
+    getNextPageParam: (lastPage) => {
+      if (lastPage.page < lastPage.total) {
+        return lastPage.page + lastPage.count;
+      }
+      return;
+    },
+    refetchOnWindowFocus: false,
+    cacheTime: 1000,
+  });
+
+  React.useEffect(() => {
+    if (inView) {
+      setPage((prev) => prev + 1);
+      fetchNextPage();
+    }
+  }, [inView]);
   const initVal = {
     payStart_date: "",
     payEnd_date: "",
@@ -32,32 +77,12 @@ const SummaryDeductionsList = () => {
           initialValues={initVal}
           validationSchema={yupSchema}
           onSubmit={async (values, { setSubmitting, resetForm }) => {
-            consoleLog(values);
-            setLoading(true);
-            const result = await fetchApi(
-              devApiUrl +
-                `/v1/leaves/filter/${values.employee_id}/${values.leave_id}/${values.start_date}/${values.return_date}/${leaveName}/${values.role_is_contributor}`
-            );
-            consoleLog("result", result);
-            if (typeof result === "undefined") {
-              consoleLog("undefined");
-              setLoading(false);
-              dispatch(setError(true));
-              dispatch(setMessage("API / Network Error"));
-              return;
-            }
-            if (!result.data) {
-              consoleLog("No Data");
-              dispatch(setError(true));
-              dispatch(setMessage("No Data"));
-              setLoading(false);
-              return;
-            }
-            if (result.data) {
-              consoleLog("result", result.data);
-              setResult(result.data);
-              setLoading(false);
-            }
+            setFilter(true);
+            setSubmit(!isSubmit);
+            setStartDate(values.payStart_date);
+            setEndDate(values.payEnd_date);
+            // // refetch data of query
+            // refetch();
           }}
         >
           {(props) => {
@@ -69,7 +94,7 @@ const SummaryDeductionsList = () => {
                       label="Start Pay Date"
                       name="payStart_date"
                       type="text"
-                      disabled={loading}
+                      disabled={isFetching}
                       onFocus={(e) => (e.target.type = "date")}
                       onBlur={(e) => (e.target.type = "date")}
                     />
@@ -80,7 +105,7 @@ const SummaryDeductionsList = () => {
                       label="End Pay Date"
                       name="payEnd_date"
                       type="text"
-                      disabled={loading}
+                      disabled={isFetching}
                       onFocus={(e) => (e.target.type = "date")}
                       onBlur={(e) => (e.target.type = "date")}
                     />
@@ -89,9 +114,9 @@ const SummaryDeductionsList = () => {
                   <button
                     className="btn-modal-submit relative"
                     type="submit "
-                    disabled={loading || !props.dirty}
+                    disabled={isFetching || !props.dirty}
                   >
-                    {loading && <ButtonSpinner />}
+                    {isFetching && <ButtonSpinner />}
                     <MdFilterAlt className="text-lg" />
                     <span>Filter</span>
                   </button>
@@ -161,36 +186,49 @@ const SummaryDeductionsList = () => {
               </tr>
             </thead>
             <tbody>
-              <tr className="text-right">
-                <td className="text-center">1.</td>
+              {(status === "loading" || result?.pages[0].data.length === 0) && (
+                <tr className="text-center ">
+                  <td colSpan="100%" className="p-10">
+                    {status === "loading" && <TableSpinner />}
+                    <NoData />
+                  </td>
+                </tr>
+              )}
+              {error && (
+                <tr className="text-center ">
+                  <td colSpan="100%" className="p-10">
+                    <ServerError />
+                  </td>
+                </tr>
+              )}
+              {result?.pages.map((page, key) => (
+                <React.Fragment key={key}>
+                  {page.data.map((item, key) => (
+                    <tr key={key} className="text-right">
+                      <td className="text-center">1.</td>
 
-                <td className="text-left">Lumabas, Cyrene Mercado</td>
-                <td className="text-left">Information Technology</td>
-                <td className="px-6">{numberWithCommas(10253.53)}</td>
-                <td className="px-6">{numberWithCommas(10253.53)}</td>
-                <td className="px-6">{numberWithCommas(10253.53)}</td>
-                <td className="px-6">{numberWithCommas(10253.53)}</td>
-                <td className="px-6">{numberWithCommas(10253.53)}</td>
-                <td className="px-6">{numberWithCommas(10253.53)}</td>
-                <td className="px-6">{numberWithCommas(10253.53)}</td>
-                <td className="px-6">{numberWithCommas(10253.53)}</td>
-                <td className="px-6">{numberWithCommas(10253.53)}</td>
-                <td className="px-6">{numberWithCommas(10253.53)}</td>
-                <td className="px-6">{numberWithCommas(10253.53)}</td>
-                <td className="px-6">{numberWithCommas(10253.53)}</td>
-                <td className="px-6">{numberWithCommas(10253.53)}</td>
-                <td className="px-6">{numberWithCommas(102530.53)}</td>
-              </tr>
-              <tr className="text-center ">
-                <td colSpan="100%" className="p-10">
-                  <NoData />
-                </td>
-              </tr>
-              <tr className="text-center ">
-                <td colSpan="100%" className="p-10">
-                  <ServerError />
-                </td>
-              </tr>
+                      <td className="text-left">
+                        {item.payroll_list_employee_name}
+                      </td>
+                      <td className="text-left">Information Technology</td>
+                      <td className="px-6">{numberWithCommas(10253.53)}</td>
+                      <td className="px-6">{numberWithCommas(10253.53)}</td>
+                      <td className="px-6">{numberWithCommas(10253.53)}</td>
+                      <td className="px-6">{numberWithCommas(10253.53)}</td>
+                      <td className="px-6">{numberWithCommas(10253.53)}</td>
+                      <td className="px-6">{numberWithCommas(10253.53)}</td>
+                      <td className="px-6">{numberWithCommas(10253.53)}</td>
+                      <td className="px-6">{numberWithCommas(10253.53)}</td>
+                      <td className="px-6">{numberWithCommas(10253.53)}</td>
+                      <td className="px-6">{numberWithCommas(10253.53)}</td>
+                      <td className="px-6">{numberWithCommas(10253.53)}</td>
+                      <td className="px-6">{numberWithCommas(10253.53)}</td>
+                      <td className="px-6">{numberWithCommas(10253.53)}</td>
+                      <td className="px-6">{numberWithCommas(102530.53)}</td>
+                    </tr>
+                  ))}
+                </React.Fragment>
+              ))}
             </tbody>
           </table>
         </div>

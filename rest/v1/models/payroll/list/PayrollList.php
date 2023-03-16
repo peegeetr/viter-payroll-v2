@@ -137,18 +137,19 @@ class PayrollList
     public function readPayslipById()
     {
         try {
-            $sql = "select payrollList.payroll_list_payroll_id, ";
-            $sql .= "payrollList.payroll_list_aid, ";
-            $sql .= "payrollList.payroll_list_is_paid, ";
-            $sql .= "payrollList.payroll_list_gross, ";
-            $sql .= "payrollList.payroll_list_deduction, ";
-            $sql .= "payrollList.payroll_list_net_pay, ";
-            $sql .= "payrollList.payroll_list_employee_name, ";
-            $sql .= "payrollList.payroll_list_employee_salary, ";
-            $sql .= "payrollList.payroll_list_night_diff_per_day, ";
-            $sql .= "payrollList.payroll_list_employee_work_on_holiday, ";
-            $sql .= "payrollList.payroll_list_pagibig_additional, ";
-            $sql .= "payrollList.payroll_list_employee_id, ";
+            $sql = "select payrollList.*, ";
+            // $sql = "select payrollList.payroll_list_payroll_id, ";
+            // $sql .= "payrollList.payroll_list_aid, ";
+            // $sql .= "payrollList.payroll_list_is_paid, ";
+            // $sql .= "payrollList.payroll_list_gross, ";
+            // $sql .= "payrollList.payroll_list_deduction, ";
+            // $sql .= "payrollList.payroll_list_net_pay, ";
+            // $sql .= "payrollList.payroll_list_employee_name, ";
+            // $sql .= "payrollList.payroll_list_employee_salary, ";
+            // $sql .= "payrollList.payroll_list_night_diff_per_day, ";
+            // $sql .= "payrollList.payroll_list_employee_work_on_holiday, ";
+            // $sql .= "payrollList.payroll_list_pagibig_additional, ";
+            // $sql .= "payrollList.payroll_list_employee_id, ";
             $sql .= "payroll.payroll_category_type, ";
             $sql .= "payroll.payroll_id, ";
             $sql .= "payroll.payroll_start_date, ";

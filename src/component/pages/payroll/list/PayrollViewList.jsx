@@ -25,8 +25,8 @@ const PayrollViewList = () => {
   const pid = getUrlParam().get("payrollid");
 
   const [onSearch, setOnSearch] = React.useState(false);
-  const [page, setPage] = React.useState(1);
   const search = React.useRef(null);
+  const [page, setPage] = React.useState(1);
   let counter = 1;
   const { ref, inView } = useInView();
 

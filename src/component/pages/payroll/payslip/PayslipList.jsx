@@ -1,11 +1,11 @@
 import {
-  otherBenefitsEarningsId,
-  wagesEarningsId,
+  empContributionEarningsId,
   mandatoryDeductionId,
   optionalDeductionId,
+  otherBenefitsEarningsId,
   paytypeOtherDeductionId,
   taxDeductionId,
-  empContributionEarningsId,
+  wagesEarningsId,
 } from "../../../helpers/functions-payitemId";
 import PayslipDeduction from "./PayslipDeduction";
 import PayslipEarnings from "./PayslipEarnings";
@@ -50,7 +50,8 @@ const PayslipList = ({ payslip }) => {
 
             {/* deduction */}
             <PayslipMandatoryDeduc
-              paytypeId={empContributionEarningsId}
+              paytypeId={mandatoryDeductionId}
+              payslip={payslip}
               empid={payslip?.data[0].payroll_list_employee_id}
               payrollid={payslip?.data[0].payroll_list_payroll_id}
             />

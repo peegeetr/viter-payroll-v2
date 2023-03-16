@@ -1,6 +1,9 @@
 import useQueryData from "../../../custom-hooks/useQueryData";
 import { devApiUrl } from "../../../helpers/functions-general";
-import { mandatoryDeductionId } from "../../../helpers/functions-payitemId";
+import {
+  empContributionEarningsId,
+  mandatoryDeductionId,
+} from "../../../helpers/functions-payitemId";
 const PayslipDeduction = ({ paytypeId, empid, payrollid }) => {
   // use if not loadmore button undertime
   const { data: deductions } = useQueryData(
@@ -11,7 +14,7 @@ const PayslipDeduction = ({ paytypeId, empid, payrollid }) => {
 
   return (
     <>
-      {deductions?.data.length > 0 && (
+      {deductions?.data.length > 0 && paytypeId !== mandatoryDeductionId && (
         <>
           <tr>
             <td colSpan={4}></td>
@@ -29,9 +32,9 @@ const PayslipDeduction = ({ paytypeId, empid, payrollid }) => {
             <td className="w-[20rem]">
               {item.payitem_name} {item.earnings_details}
             </td>
-            <td className="w-[10rem]">{item.deduction_amount}</td>
-            <td>0</td>
-            <td>0</td>
+            <td className="w-[10rem]"></td>
+            <td> </td>
+            <td>{item.deduction_amount}</td>
           </tr>
         );
       })}

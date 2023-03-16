@@ -7,7 +7,7 @@ import {
   hrisDevApiUrl,
 } from "../../../helpers/functions-general";
 
-const PayslipHeader = ({ payslip, empid }) => {
+const PayslipHeader = ({ payslip, empid, days }) => {
   // use if not loadmore button undertime
   const { data: job } = useQueryData(
     `${hrisDevApiUrl}/v1/employees/job/${empid}`, // endpoint
@@ -41,12 +41,7 @@ const PayslipHeader = ({ payslip, empid }) => {
           </p>
           <p className="mb-0">
             <span className="font-semibold">Pay Period : </span>{" "}
-            {getPayslipPeriod(payslip)} (
-            {getWorkingDays(
-              new Date(payslip.data[0].payroll_start_date),
-              new Date(payslip.data[0].payroll_end_date)
-            )}{" "}
-            working days)
+            {getPayslipPeriod(payslip)} ({days} working days)
           </p>
         </div>
       </div>

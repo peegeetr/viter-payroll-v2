@@ -63,7 +63,7 @@ const PayrollViewList = () => {
       fetchNextPage();
     }
   }, [inView]);
-  console.log("res", result?.pages);
+
   return (
     <>
       <div className="xs:flex text-primary">
@@ -99,9 +99,9 @@ const PayrollViewList = () => {
       />
 
       <div className="relative text-center">
-        {isFetching && !isFetchingNextPage && status !== "loading" && (
+        {/* {isFetching && !isFetchingNextPage && status !== "loading" && (
           <FetchingSpinner />
-        )}
+        )} */}
         <div className=" overflow-x-auto z-0">
           <table>
             <thead>

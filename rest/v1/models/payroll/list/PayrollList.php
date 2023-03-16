@@ -57,6 +57,7 @@ class PayrollList
     public $start_pay_date;
     public $end_pay_date;
     public $hris_date;
+    public $holidays_rate;
     public $created;
 
     public $deduction_details;
@@ -346,6 +347,7 @@ class PayrollList
             $sql .= "earnings_start_pay_date, ";
             $sql .= "earnings_end_pay_date, ";
             $sql .= "earnings_hris_date, ";
+            $sql .= "earnings_holidays_rate, ";
             $sql .= "earnings_created, ";
             $sql .= "earnings_datetime ) values ( ";
             $sql .= ":earnings_employee, ";
@@ -364,6 +366,7 @@ class PayrollList
             $sql .= ":earnings_start_pay_date, ";
             $sql .= ":earnings_end_pay_date, ";
             $sql .= ":earnings_hris_date, ";
+            $sql .= ":earnings_holidays_rate, ";
             $sql .= ":earnings_created, ";
             $sql .= ":earnings_datetime ) ";
             $query = $this->connection->prepare($sql);
@@ -384,6 +387,7 @@ class PayrollList
                 "earnings_start_pay_date" => $this->start_pay_date,
                 "earnings_end_pay_date" => $this->end_pay_date,
                 "earnings_hris_date" => $this->hris_date,
+                "earnings_holidays_rate" => $this->holidays_rate,
                 "earnings_created" => $this->created,
                 "earnings_datetime" => $this->payroll_list_datetime,
             ]);

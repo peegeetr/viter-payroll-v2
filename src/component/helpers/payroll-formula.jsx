@@ -306,18 +306,21 @@ export const payComputeHoliday = (emp, holidays, payrollEarnings) => {
             new Date(earning.earnings_end_pay_date)
         ) {
           if (
-            earning.earnings_payitem_id === absencesId ||
-            earning.earnings_payitem_id === leaveId
+            earning.earnings_payitem_id !== absencesId ||
+            earning.earnings_payitem_id !== leaveId
           ) {
-            // Total Amount holiday and leave
-            holidayLeaveAmount += holidayTotalAmount(
-              emp,
-              holidaysItem
-            ).dailyAmount;
+            // // Total Amount holiday and leave
+            // holidayLeaveAmount += holidayTotalAmount(
+            //   emp,
+            //   holidaysItem
+            // ).dailyAmount;
+            holidayAmount += holidayTotalAmount(emp, holidaysItem).dailyAmount;
           }
         }
       });
-      holidayAmount += holidayTotalAmount(emp, holidaysItem).dailyAmount;
+
+      // holidayAmount += holidayTotalAmount(emp, holidaysItem).dailyAmount;
+
       holidayList.push({
         earnings_payroll_type_id: emp.payroll_category_type,
         earnings_employee: emp.payroll_list_employee_name,
@@ -325,20 +328,22 @@ export const payComputeHoliday = (emp, holidays, payrollEarnings) => {
         earnings_paytype_id: wagesEarningsId,
         earnings_payitem_id: holidayId,
         earnings_amount: holidayTotalAmount(emp, holidaysItem).dailyAmount,
-        earnings_details: `${holidaysItem.holidays_name} ${formatDate(
-          holidaysItem.holidays_date
-        )}`,
+        earnings_details: `${holidaysItem.holidays_name} (${
+          holidaysItem.holidays_rate
+        }%) ${formatDate(holidaysItem.holidays_date)}`,
         earnings_frequency: isSemiMonthly,
         earnings_is_installment: isHrisNumber,
         earnings_number_of_installment: onetimeNumber,
         earnings_start_pay_date: emp.payroll_start_date,
         earnings_end_pay_date: emp.payroll_end_date,
         earnings_hris_date: holidaysItem.holidays_date,
+        earnings_holidays_rate: holidaysItem.holidays_rate,
       });
     }
   });
 
-  finalAmount = holidayAmount - holidayLeaveAmount;
+  // finalAmount = holidayAmount - holidayLeaveAmount;
+  finalAmount = holidayAmount;
   return { finalAmount, holidayList };
   // return finalAmount;
 };
@@ -363,15 +368,18 @@ export const holidayTotalAmount = (emp, holidaysItem) => {
     // If employee has holiday and not observed
     if (workOnHoliday === 0 && holidaysItem.holidays_observed === 0) {
       // no additional
-      dailyAmount = 0;
+      // dailyAmount = 0;
+      dailyAmount = dailyRate;
     }
 
     // If employee has holiday
     // if employee has holiday observed and other employee did not observed
     // 100% additional pay for working holiday
     if (workOnHoliday === 1 || holidaysItem.holidays_observed === 1) {
-      regularAmount += dailyRate;
-      ratedAmount += dailyRate * rate;
+      // regularAmount += dailyRate;
+      // ratedAmount += dailyRate * rate;
+      dailyAmount += dailyRate * rate;
+      // console.log(dailyAmount, dailyRate);
     }
   }
 
@@ -380,19 +388,22 @@ export const holidayTotalAmount = (emp, holidaysItem) => {
   if (holidaysItem.holidays_type === "special") {
     if (workOnHoliday === 0 && holidaysItem.holidays_observed === 0) {
       // no additional
-      dailyAmount = 0;
+      dailyAmount = dailyRate;
     }
 
     // If employee has holiday
     // If employee has holiday and not observed
     if (workOnHoliday === 1 || holidaysItem.holidays_observed === 1) {
       // 30% additional
-      regularAmount += dailyRate;
-      ratedAmount += dailyRate * rate;
+      // regularAmount += dailyRate;
+      // ratedAmount += dailyRate * rate;
+      dailyAmount += dailyRate * rate;
     }
   }
 
-  dailyAmount += ratedAmount - regularAmount;
+  // dailyAmount += ratedAmount - regularAmount;
+  // dailyAmount -= dailyRate;
+  // dailyAmount = dailyAmount.toFixed(2);
 
   return { dailyAmount };
 };

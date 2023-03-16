@@ -108,9 +108,9 @@ const PayrollList = ({ setItemEdit }) => {
       />
 
       <div className="relative text-center">
-        {isFetching && !isFetchingNextPage && status !== "loading" && (
+        {/* {isFetching && !isFetchingNextPage && status !== "loading" && (
           <FetchingSpinner />
-        )}
+        )} */}
         {loading && <TableSpinner />}
         <div className=" overflow-x-auto z-0">
           <table>

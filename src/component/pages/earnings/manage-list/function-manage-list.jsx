@@ -199,9 +199,9 @@ export const otHolidayComputed = (regularAmount, holidayRate, rate) => {
   let totalAmount = 0;
   let finalAmount = 0;
   // 100% or 30% additional holiday
-  totalHolidayAmount = regularAmount * holidayRate - regularAmount;
-  // additional rate ot or night diff
-  totalAmount = regularAmount * rate - regularAmount;
+  totalHolidayAmount = regularAmount * holidayRate;
+  // additional rate ot
+  totalAmount = regularAmount * rate;
   // total of additional salary
   finalAmount = totalHolidayAmount + totalAmount;
   return finalAmount;
@@ -213,12 +213,11 @@ export const otFinalAmount = (otItem, eItem, holidays, payrollDraft) => {
     new Date(payrollDraft?.data[0].payroll_start_date),
     new Date(payrollDraft?.data[0].payroll_end_date)
   );
-  let rate25 = 25 / 100;
-  let restRate30 = 30 / 100;
-  let restRate10 = 10 / 100;
+  let rate25 = 125 / 100;
+  let restRate30 = 130 / 100;
+  let restRate10 = 110 / 100;
   let isHoliday = false;
   let isRestDay = false;
-  let ratedAmount = 0;
   let regularAmount = 0;
   let finalAmount = 0;
   let totalOtAmount25 = 0;
@@ -254,14 +253,13 @@ export const otFinalAmount = (otItem, eItem, holidays, payrollDraft) => {
           regularAmount =
             Number(otItem.task_spent) *
             employeeRate(eItem.employee_job_salary, days).hourly;
-          // if dont have holiday and not saturday or sunday
-          totalOtNightDiff = regularAmount * restRate10 - regularAmount;
+          totalOtNightDiff = regularAmount * restRate10;
           totalOtHolidayRestAmount =
             totalOtHolidayRestAmount + totalOtNightDiff;
         }
       }
 
-      //if overtime is regular or special holiday day
+      //if overtime is regular or special holiday day not restday
       if (!isRestDay) {
         totalOtHolidayAmount = otHolidayComputed(
           (regularAmount =
@@ -279,7 +277,7 @@ export const otFinalAmount = (otItem, eItem, holidays, payrollDraft) => {
             Number(otItem.task_spent) *
             employeeRate(eItem.employee_job_salary, days).hourly;
           // if dont have holiday and not saturday or sunday
-          totalOtNightDiff = regularAmount * restRate10 - regularAmount;
+          totalOtNightDiff = regularAmount * restRate10;
           totalOtHolidayAmount = totalOtHolidayAmount + totalOtNightDiff;
         }
       }
@@ -295,9 +293,7 @@ export const otFinalAmount = (otItem, eItem, holidays, payrollDraft) => {
       Number(otItem.task_spent) *
       employeeRate(eItem.employee_job_salary, days).hourly;
     //if dont have holiday and saturday or sunday
-    ratedAmount = regularAmount * restRate30;
-    //total of 30% additional
-    totalOtRestAmount = ratedAmount - regularAmount;
+    totalOtRestAmount = regularAmount * restRate30;
     isRestDay = true;
 
     if (
@@ -308,7 +304,7 @@ export const otFinalAmount = (otItem, eItem, holidays, payrollDraft) => {
         Number(otItem.task_spent) *
         employeeRate(eItem.employee_job_salary, days).hourly;
       // if dont have holiday and not saturday or sunday
-      totalOtNightDiff = regularAmount * restRate10 - regularAmount;
+      totalOtNightDiff = regularAmount * restRate10;
       totalOtRestAmount = totalOtRestAmount + totalOtNightDiff;
     }
   }
@@ -319,9 +315,7 @@ export const otFinalAmount = (otItem, eItem, holidays, payrollDraft) => {
       Number(otItem.task_spent) *
       employeeRate(eItem.employee_job_salary, days).hourly;
     // if dont have holiday and not saturday or sunday
-    ratedAmount = regularAmount * rate25;
-    //total of 25% additional
-    totalOtAmount25 = ratedAmount - regularAmount;
+    totalOtAmount25 = regularAmount * rate25;
 
     if (
       (otTimeHr >= 22 && otTimeHr <= 23) ||
@@ -331,7 +325,7 @@ export const otFinalAmount = (otItem, eItem, holidays, payrollDraft) => {
         Number(otItem.task_spent) *
         employeeRate(eItem.employee_job_salary, days).hourly;
       // if dont have holiday and not saturday or sunday
-      totalOtNightDiff = regularAmount * restRate10 - regularAmount;
+      totalOtNightDiff = regularAmount * restRate10;
 
       totalOtAmount25 = totalOtAmount25 + totalOtNightDiff;
     }

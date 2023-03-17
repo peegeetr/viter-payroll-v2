@@ -50,6 +50,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
         $payrollList->payroll_list_bereavement = $allPayrollList[$pl]["payroll_list_bereavement"];
         $payrollList->payroll_list_separation_pay = $allPayrollList[$pl]["payroll_list_separation_pay"];
         $payrollList->payroll_list_other_allowances = $allPayrollList[$pl]["payroll_list_other_allowances"];
+        $payrollList->payroll_list_total_benefits = $allPayrollList[$pl]["payroll_list_total_benefits"];
         $payrollList->payroll_list_sss_er = $allPayrollList[$pl]["payroll_list_sss_er"];
         $payrollList->payroll_list_philhealth_er = $allPayrollList[$pl]["payroll_list_philhealth_er"];
         $payrollList->payroll_list_pagibig_er = $allPayrollList[$pl]["payroll_list_pagibig_er"];

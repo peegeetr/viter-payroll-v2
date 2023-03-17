@@ -104,7 +104,6 @@ export const runPayroll = (
       new Date(emp.payroll_start_date),
       new Date(emp.payroll_end_date)
     );
-    totalBasicPay = Number(emp.payroll_list_employee_salary) / 2;
     // loop each earnings for each employee
     payrollEarnings.map((earning) => {
       // loop earnings wages for each employee
@@ -162,7 +161,6 @@ export const runPayroll = (
       }
     });
 
-    console.log("is pad", earningsNumInstallmentList);
     // Total 13th mo & Other benefits
     totalBenefits =
       totalBereavement +
@@ -179,11 +177,15 @@ export const runPayroll = (
     // night diffirencial
     nightDiffAmount = payComputeNightDiff(emp, holidays, payrollEarnings);
     totalNightDiffAmount += nightDiffAmount.finalAmount;
+    totalBasicPay = Number(emp.payroll_list_employee_salary) / 2;
     // gross or total wages
     grossAmount =
       totalNightDiffAmount +
       totalHolidayAmount +
-      totalBasicPay +
+      (totalBasicPay -
+        (totalLeaveAmount +
+          totalAbsencesAmount +
+          holidayAmount.regularAmount)) +
       totalOtAmount +
       totalHazardPayAmount +
       totalInflationAmount +
@@ -225,6 +227,7 @@ export const runPayroll = (
         });
       }
     });
+
     // compute tax due
     tax = payComputeTaxDue(
       emp,
@@ -234,12 +237,14 @@ export const runPayroll = (
       totalMadatoryEe
     );
     totalTaxAmount = tax.taxDue;
+    deductionAmount = totalTaxAmount;
+    console.log(totalTaxAmount);
     // data to send to server
     payrollList.push({
       payroll_list_employee_id: emp.payroll_list_employee_id,
       payroll_list_employee_name: emp.payroll_list_employee_name,
       payroll_list_gross: grossAmount.toFixed(2),
-      payroll_list_deduction: 0,
+      payroll_list_deduction: deductionAmount.toFixed(2),
       payroll_list_net_pay: 0,
       payroll_list_basic_pay: totalBasicPay.toFixed(2),
       payroll_list_overtime_pay: totalOtAmount.toFixed(2),
@@ -258,6 +263,7 @@ export const runPayroll = (
       payroll_list_bereavement: totalBereavement.toFixed(2),
       payroll_list_separation_pay: totalSeparationPay.toFixed(2),
       payroll_list_other_allowances: totalOtherAllowances.toFixed(2),
+      payroll_list_total_benefits: totalBenefits.toFixed(2),
       payroll_list_sss_er: sssAmount.sssEr.toFixed(2),
       payroll_list_philhealth_er: philAmount.philhealthEr.toFixed(2),
       payroll_list_pagibig_er: pagibigAmount.pagibigEr.toFixed(2),

@@ -1,4 +1,7 @@
-import { getWorkingDays } from "../../../helpers/functions-general";
+import {
+  getWorkingDays,
+  numberWithCommas,
+} from "../../../helpers/functions-general";
 import {
   empContributionEarningsId,
   mandatoryDeductionId,
@@ -23,6 +26,10 @@ const PayslipList = ({ payslip }) => {
   let hourRate = Number(
     employeeRate(payslip?.data[0].payroll_list_employee_salary, days).hourly
   );
+  let totalEarnings =
+    Number(payslip?.data[0].payroll_list_gross) +
+    Number(payslip?.data[0].payroll_list_total_benefits);
+  console.log(payslip);
   return (
     <>
       <PayslipHeader
@@ -57,8 +64,7 @@ const PayslipList = ({ payslip }) => {
               <td colSpan={3} className="uppercase text-right xs:pr-16">
                 Total Earnings
               </td>
-              {/* create api for getting total earnings (wages, other benefits) */}
-              <td>{0}</td>
+              <td>{numberWithCommas(totalEarnings.toFixed(2))}</td>
             </tr>
             <tr>
               <td colSpan={4}>&nbsp;</td>
@@ -83,11 +89,24 @@ const PayslipList = ({ payslip }) => {
               empid={payslip?.data[0].payroll_list_employee_id}
               payrollid={payslip?.data[0].payroll_list_payroll_id}
             />
-            <PayslipDeduction
+            {/* <PayslipDeduction
               paytypeId={taxDeductionId}
               empid={payslip?.data[0].payroll_list_employee_id}
               payrollid={payslip?.data[0].payroll_list_payroll_id}
-            />
+            /> */}
+            <tr>
+              <td colSpan={4}></td>
+            </tr>
+            <tr className="font-semibold bg-gray-100 hover:bg-gray-100">
+              <td colSpan={3} className="w-[20rem] uppercase">
+                TAX
+              </td>
+              <td colSpan={3} className="w-[20rem] uppercase">
+                {numberWithCommas(
+                  Number(payslip?.data[0].payroll_list_tax).toFixed(2)
+                )}
+              </td>
+            </tr>
 
             {/* total */}
             <tr>

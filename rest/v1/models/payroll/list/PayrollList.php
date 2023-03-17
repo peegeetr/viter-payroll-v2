@@ -26,6 +26,7 @@ class PayrollList
     public $payroll_list_bereavement;
     public $payroll_list_separation_pay;
     public $payroll_list_other_allowances;
+    public $payroll_list_total_benefits;
     public $payroll_list_sss_er;
     public $payroll_list_philhealth_er;
     public $payroll_list_pagibig_er;
@@ -141,18 +142,6 @@ class PayrollList
     {
         try {
             $sql = "select payrollList.*, ";
-            // $sql = "select payrollList.payroll_list_payroll_id, ";
-            // $sql .= "payrollList.payroll_list_aid, ";
-            // $sql .= "payrollList.payroll_list_is_paid, ";
-            // $sql .= "payrollList.payroll_list_gross, ";
-            // $sql .= "payrollList.payroll_list_deduction, ";
-            // $sql .= "payrollList.payroll_list_net_pay, ";
-            // $sql .= "payrollList.payroll_list_employee_name, ";
-            // $sql .= "payrollList.payroll_list_employee_salary, ";
-            // $sql .= "payrollList.payroll_list_night_diff_per_day, ";
-            // $sql .= "payrollList.payroll_list_employee_work_on_holiday, ";
-            // $sql .= "payrollList.payroll_list_pagibig_additional, ";
-            // $sql .= "payrollList.payroll_list_employee_id, ";
             $sql .= "payroll.payroll_category_type, ";
             $sql .= "payroll.payroll_id, ";
             $sql .= "payroll.payroll_start_date, ";
@@ -361,6 +350,7 @@ class PayrollList
             $sql .= "payroll_list_bereavement = :payroll_list_bereavement, ";
             $sql .= "payroll_list_separation_pay = :payroll_list_separation_pay, ";
             $sql .= "payroll_list_other_allowances = :payroll_list_other_allowances, ";
+            $sql .= "payroll_list_total_benefits = :payroll_list_total_benefits, ";
             $sql .= "payroll_list_sss_er = :payroll_list_sss_er, ";
             $sql .= "payroll_list_philhealth_er = :payroll_list_philhealth_er, ";
             $sql .= "payroll_list_pagibig_er = :payroll_list_pagibig_er, ";
@@ -402,6 +392,7 @@ class PayrollList
                 "payroll_list_bereavement" => $this->payroll_list_bereavement,
                 "payroll_list_separation_pay" => $this->payroll_list_separation_pay,
                 "payroll_list_other_allowances" => $this->payroll_list_other_allowances,
+                "payroll_list_total_benefits" => $this->payroll_list_total_benefits,
                 "payroll_list_sss_er" => $this->payroll_list_sss_er,
                 "payroll_list_philhealth_er" => $this->payroll_list_philhealth_er,
                 "payroll_list_pagibig_er" => $this->payroll_list_pagibig_er,

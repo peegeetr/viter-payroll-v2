@@ -124,10 +124,10 @@ const PayrollViewList = () => {
             <thead>
               <tr>
                 <th className="text-center">#</th>
-                <th className="w-[15rem]">Employee</th>
-                <th className="w-[8rem]">Gross</th>
-                <th className="w-[8rem]">Deduction</th>
-                <th className="w-[8srem]">Net Pay</th>
+                <th className="w-[10rem]">Employee</th>
+                <th className="text-right w-[8rem]">Gross</th>
+                <th className="text-right w-[8rem]">Deduction</th>
+                <th className="text-right w-[8rem]">Net Pay</th>
                 <th></th>
               </tr>
             </thead>
@@ -191,9 +191,15 @@ const PayrollViewList = () => {
                       <tr key={key}>
                         <td className="text-center">{counter++}.</td>
                         <td>{item.payroll_list_employee_name}</td>
-                        <td>{numberWithCommas(item.payroll_list_gross)}</td>
-                        <td>{numberWithCommas(item.payroll_list_deduction)}</td>
-                        <td>{numberWithCommas(item.payroll_list_net_pay)}</td>
+                        <td className="text-right px-2">
+                          {numberWithCommas(item.payroll_list_gross)}
+                        </td>
+                        <td className="text-right px-2">
+                          {numberWithCommas(item.payroll_list_deduction)}
+                        </td>
+                        <td className="text-right px-2">
+                          {numberWithCommas(item.payroll_list_net_pay)}
+                        </td>
                         <td>
                           <div className="flex items-center justify-end gap-1 mr-2">
                             <Link
@@ -239,89 +245,119 @@ const PayrollViewList = () => {
             </tr>
             <tr>
               <td className="w-[15rem]">Salaries & Wages</td>
-              <td className="w-[8rem]">
+              <td className="w-[8rem] text-right px-5">
                 {numberWithCommas(salariesAndWages.toFixed(2))}
               </td>
               <td></td>
             </tr>
             <tr>
               <td className="w-[15rem]">13th Month & Bonuses</td>
-              <td className="w-[8rem]">
+              <td className="w-[8rem] text-right px-5">
                 {numberWithCommas(monthAndBonuses.toFixed(2))}
               </td>
               <td></td>
             </tr>
             <tr>
               <td className="w-[15rem]">SSS Er</td>
-              <td className="w-[8rem]">{numberWithCommas(sssEr.toFixed(2))}</td>
+              <td className="w-[8rem] text-right px-5">
+                {numberWithCommas(sssEr.toFixed(2))}
+              </td>
               <td></td>
             </tr>
             <tr>
               <td className="w-[15rem]">PHIC Er</td>
-              <td className="w-[8rem]">
+              <td className="w-[8rem] text-right px-5">
                 {numberWithCommas(phicEr.toFixed(2))}
               </td>
               <td></td>
             </tr>
             <tr>
               <td className="w-[15rem]">PGBG ER</td>
-              <td className="w-[8rem]">{numberWithCommas(pagEr.toFixed(2))}</td>
+              <td className="w-[8rem] text-right px-5">
+                {numberWithCommas(pagEr.toFixed(2))}
+              </td>
               <td></td>
             </tr>
             <tr>
               <td className="w-[15rem] pl-8">SSS Payable</td>
               <td className="w-[8rem]"></td>
-              <td>{numberWithCommas(sssPayable.toFixed(2))}</td>
+              <td className="text-right px-5">
+                {numberWithCommas(sssPayable.toFixed(2))}
+              </td>
             </tr>
             <tr>
               <td className="w-[15rem] pl-8">PHIC Payable</td>
               <td className="w-[8rem]"></td>
-              <td>{numberWithCommas(phicPayable.toFixed(2))}</td>
+              <td className="text-right px-5">
+                {numberWithCommas(phicPayable.toFixed(2))}
+              </td>
             </tr>
             <tr>
               <td className="w-[15rem] pl-8">PGBG Payable</td>
               <td className="w-[8rem]"></td>
-              <td>{numberWithCommas(pagPayable.toFixed(2))}</td>
+              <td className="text-right px-5">
+                {numberWithCommas(pagPayable.toFixed(2))}
+              </td>
             </tr>
             <tr>
               <td className="w-[15rem] pl-8">SSS Loan Payable</td>
               <td className="w-[8rem]"></td>
-              <td>{numberWithCommas(sssLoanPayable.toFixed(2))}</td>
+              <td className="text-right px-5">
+                {numberWithCommas(sssLoanPayable.toFixed(2))}
+              </td>
             </tr>
             <tr>
               <td className="w-[15rem] pl-8">PGBG Loan Payable</td>
               <td className="w-[8rem]"></td>
-              <td>{numberWithCommas(pagLoanPayable.toFixed(2))}</td>
+              <td className="text-right px-5">
+                {numberWithCommas(pagLoanPayable.toFixed(2))}
+              </td>
             </tr>
             <tr>
               <td className="w-[15rem] pl-8">Wtax Payable</td>
               <td className="w-[8rem]"></td>
-              <td>{numberWithCommas(wtaxPayable.toFixed(2))}</td>
+              <td className="text-right px-5">
+                {numberWithCommas(wtaxPayable.toFixed(2))}
+              </td>
             </tr>
             <tr>
               <td className="w-[15rem] pl-8">PGBG MP2 Payable</td>
               <td className="w-[8rem]"></td>
-              <td>{numberWithCommas(pagMp2Payable.toFixed(2))}</td>
+              <td className="text-right px-5">
+                {numberWithCommas(pagMp2Payable.toFixed(2))}
+              </td>
             </tr>
             <tr>
               <td className="w-[15rem] pl-8">Others</td>
               <td className="w-[8rem]"></td>
-              <td>{numberWithCommas(others.toFixed(2))}</td>
+              <td className="text-right px-5">
+                {numberWithCommas(others.toFixed(2))}
+              </td>
             </tr>
             <tr>
               <td className="w-[15rem] pl-8">Total Net Pay</td>
               <td className="w-[8rem]"></td>
-              <td>{numberWithCommas(netPay.toFixed(2))}</td>
+              <td className="text-right px-5">
+                {numberWithCommas(netPay.toFixed(2))}
+              </td>
             </tr>
             <tr className="font-bold bg-gray-200 hover:bg-gray-200 ">
               <td className="w-[15rem] pl-8"></td>
-              <td>{numberWithCommas(dR.toFixed(2))}</td>
-              <td>{numberWithCommas(cR.toFixed(2))}</td>
+              <td className="text-right px-5">
+                {numberWithCommas(dR.toFixed(2))}
+              </td>
+              <td className="text-right px-5">
+                {numberWithCommas(cR.toFixed(2))}
+              </td>
             </tr>
             <tr className="font-bold bg-gray-200 hover:bg-gray-200 ">
               <td className="w-[15rem] pl-8"></td>
-              <td>{numberWithCommas(Number(dR - cR).toFixed(2))}</td>
-              <td>{numberWithCommas(Number(cR - dR).toFixed(2))}</td>
+              <td className="text-right px-5">
+                {numberWithCommas(Number(dR - cR).toFixed(2))}
+              </td>
+              <td className="text-right px-5">
+                {numberWithCommas(Number(cR - dR).toFixed(2))}
+              </td>
             </tr>
           </tbody>
         </table>

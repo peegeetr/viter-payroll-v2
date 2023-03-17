@@ -65,6 +65,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
         $payrollList->payroll_list_fwc_tithes = $allPayrollList[$pl]["payroll_list_fwc_tithes"];
         $payrollList->payroll_list_fca_tuition = $allPayrollList[$pl]["payroll_list_fca_tuition"];
         $payrollList->payroll_list_other_deduction = $allPayrollList[$pl]["payroll_list_other_deduction"];
+        $payrollList->payroll_list_madatory_ee = $allPayrollList[$pl]["payroll_list_madatory_ee"];
         $payrollList->payroll_list_tax = $allPayrollList[$pl]["payroll_list_tax"];
         $query = checkUpdate($payrollList);
     }

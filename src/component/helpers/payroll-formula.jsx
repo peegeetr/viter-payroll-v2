@@ -414,11 +414,13 @@ export const payComputeTaxDue = (
   gross,
   semiTax,
   totalBenefits,
-  totalMadatoryEe
+  totalMadatoryEe,
+  totalDiminimis
 ) => {
   let taxDue = 0;
   let taxList = [];
-  const totalNonTaxableCompensation = totalBenefits + totalMadatoryEe;
+  const totalNonTaxableCompensation =
+    totalBenefits + totalMadatoryEe + totalDiminimis;
   let taxableCompensationIncome = gross - totalNonTaxableCompensation;
   semiTax.map((sTax) => {
     if (

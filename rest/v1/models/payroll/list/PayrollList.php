@@ -41,6 +41,7 @@ class PayrollList
     public $payroll_list_fwc_tithes;
     public $payroll_list_fca_tuition;
     public $payroll_list_other_deduction;
+    public $payroll_list_madatory_ee;
     public $payroll_list_tax;
     public $payroll_list_undertime;
     public $payroll_list_datetime;
@@ -365,6 +366,7 @@ class PayrollList
             $sql .= "payroll_list_fwc_tithes = :payroll_list_fwc_tithes, ";
             $sql .= "payroll_list_fca_tuition = :payroll_list_fca_tuition, ";
             $sql .= "payroll_list_other_deduction = :payroll_list_other_deduction, ";
+            $sql .= "payroll_list_madatory_ee = :payroll_list_madatory_ee, ";
             $sql .= "payroll_list_tax = :payroll_list_tax, ";
             $sql .= "payroll_list_undertime = :payroll_list_undertime, ";
             $sql .= "payroll_list_datetime = :payroll_list_datetime ";
@@ -407,6 +409,7 @@ class PayrollList
                 "payroll_list_fwc_tithes" => $this->payroll_list_fwc_tithes,
                 "payroll_list_fca_tuition" => $this->payroll_list_fca_tuition,
                 "payroll_list_other_deduction" => $this->payroll_list_other_deduction,
+                "payroll_list_madatory_ee" => $this->payroll_list_madatory_ee,
                 "payroll_list_tax" => $this->payroll_list_tax,
                 "payroll_list_undertime" => $this->payroll_list_undertime,
                 "payroll_list_datetime" => $this->payroll_list_datetime,

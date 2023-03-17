@@ -182,6 +182,7 @@ export const runPayroll = (
     grossAmount =
       totalNightDiffAmount +
       totalHolidayAmount +
+      // totalBasicPay +
       (totalBasicPay -
         (totalLeaveAmount +
           totalAbsencesAmount +
@@ -234,11 +235,20 @@ export const runPayroll = (
       grossAmount,
       semiTax,
       totalBenefits,
-      totalMadatoryEe
+      totalMadatoryEe,
+      totalDiminimis
     );
     totalTaxAmount = tax.taxDue;
-    deductionAmount = totalTaxAmount;
-    console.log(totalTaxAmount);
+    deductionAmount =
+      totalTaxAmount +
+      totalMadatoryEe +
+      totalTuition +
+      totalTithes +
+      totalOtherDeduction +
+      totalPagibigLoan +
+      totalPagibigMP2 +
+      totalSSSLoan;
+    console.log(totalHolidayAmount);
     // data to send to server
     payrollList.push({
       payroll_list_employee_id: emp.payroll_list_employee_id,
@@ -278,6 +288,7 @@ export const runPayroll = (
       payroll_list_fwc_tithes: totalTithes.toFixed(2),
       payroll_list_fca_tuition: totalTuition.toFixed(2),
       payroll_list_other_deduction: totalOtherDeduction.toFixed(2),
+      payroll_list_madatory_ee: totalMadatoryEe.toFixed(2),
       payroll_list_tax: totalTaxAmount.toFixed(2),
       payroll_list_undertime: totalUndertimeAmount.toFixed(2),
     });

@@ -46,3 +46,20 @@ export const getErningsHolidayRate = (earning, item) => {
   console.log("types", list, earning);
   return list;
 };
+
+/* table {
+    position: relative
+}
+
+1st tr {
+  position: sticky
+  top: 0
+}
+
+2nd tr {
+  position: sticky
+  top: 35px
+}
+
+
+*/

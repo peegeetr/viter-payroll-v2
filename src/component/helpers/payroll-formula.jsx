@@ -278,13 +278,7 @@ export const payComputeOtherAllowances = (earning) => {
 };
 
 // compute holiday
-export const payComputeHoliday = (
-  emp,
-  holidays,
-  payrollEarnings,
-  totalLeaveAmount,
-  totalAbsencesAmount
-) => {
+export const payComputeHoliday = (emp, holidays, payrollEarnings) => {
   let finalAmount = 0;
   let regularAmount = 0;
   let holidayAmount = 0;
@@ -310,7 +304,6 @@ export const payComputeHoliday = (
           new Date(holidaysItem.holidays_date) <=
             new Date(earning.earnings_end_pay_date)
         ) {
-          console.log(12313);
           if (
             earning.earnings_payitem_id !== absencesId ||
             earning.earnings_payitem_id !== leaveId
@@ -327,7 +320,7 @@ export const payComputeHoliday = (
 
       // holidayAmount += holidayTotalAmount(emp, holidaysItem).dailyAmount;
       // if(totalLeaveAmount === 0 || totalAbsencesAmount === 0)
-      // regularAmount = holidayTotalAmount(emp, holidaysItem).dailyRate;
+      regularAmount = holidayTotalAmount(emp, holidaysItem).dailyRate;
       holidayAmount = holidayTotalAmount(emp, holidaysItem).dailyAmount;
       holidayList.push({
         earnings_payroll_type_id: emp.payroll_category_type,

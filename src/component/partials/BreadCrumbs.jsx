@@ -17,7 +17,7 @@ const BreadCrumbs = ({ param = "", name = "" }) => {
     .filter((crumb) => crumb !== "")
     .map((crumb, key) => {
       currentLink += `/${crumb}`;
-      console.log(crumb.replace("view", "").replace(`${name}`, ""));
+      // console.log(crumb.replace("view", "").replace(`${name}`, ""));
       return (
         <li
           className="text-primary after:mr-2 after:content-['>'] last:after:hidden last:text-dark last:pointer-events-none"

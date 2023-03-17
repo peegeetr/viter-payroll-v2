@@ -37,14 +37,16 @@ const PayslipEarnings = ({ paytypeId, empid, payrollid, hourRate, days }) => {
               <tr className="font-semibold bg-gray-100 hover:bg-gray-100 uppercase">
                 <td className="w-[30rem]">WAGES</td>
                 <td className="w-[10rem]">hours</td>
-                <td>rate</td>
-                <td>total</td>
+                <td className="text-right  px-4">rate</td>
+                <td className="text-right  px-4">total</td>
               </tr>
               <tr className="hover:bg-transparent">
                 <td className="w-[20rem]">Basic Pay (Deminimis inclusive)</td>
                 <td className="w-[10rem]">{basicHrs * 8}</td>
-                <td>{hourRate}</td>
-                <td>{numberWithCommas(basicPay.toFixed(2))}</td>
+                <td className="text-right   px-4">{hourRate}</td>
+                <td className="text-right px-4">
+                  {numberWithCommas(basicPay.toFixed(2))}
+                </td>
               </tr>
             </>
           )}
@@ -70,22 +72,26 @@ const PayslipEarnings = ({ paytypeId, empid, payrollid, hourRate, days }) => {
                   {item.payitem_name} {item.earnings_details}
                 </td>
                 <td className="w-[10rem]">{numberOfHolidays * 8}</td>
-                <td>
+                <td className=" text-right px-4 w-[5rem]">
                   {(
                     hourRate *
                     (Number(item.earnings_holidays_rate) / 100)
                   ).toFixed(4)}
                 </td>
-                <td>{numberWithCommas(item.earnings_amount)}</td>
+                <td className=" text-right px-4">
+                  {numberWithCommas(item.earnings_amount)}
+                </td>
               </tr>
             );
           })}
           {earnings?.data.length > 0 && (
             <tr className="font-semibold bg-gray-100 hover:bg-gray-100">
-              <td colSpan={3} className="uppercase text-right xs:pr-16">
+              <td colSpan={3} className="uppercase text-right xs:pr-4">
                 Total {earnings?.data[0].paytype_name}
               </td>
-              <td>{numberWithCommas(totalAmount.toFixed(2))}</td>
+              <td className=" text-right px-4">
+                {numberWithCommas(totalAmount.toFixed(2))}
+              </td>
             </tr>
           )}
         </>

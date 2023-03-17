@@ -242,7 +242,9 @@ const SummaryEarningsList = () => {
                       <td className="text-left ">
                         {item.payroll_list_employee_name}
                       </td>
-                      <td className="text-left"> </td>
+                      <td className="text-left">
+                        {item.payroll_list_employee_department}
+                      </td>
                       <td className="text-center">{`${getPayPeriod(
                         result?.pages[0].data[0].payroll_start_date,
                         result?.pages[0].data[0].payroll_end_date

@@ -10,6 +10,7 @@ import {
   getUrlParam,
   getUserType,
   getWorkingDays,
+  numberWithCommas,
 } from "../../../helpers/functions-general";
 import { queryDataInfinite } from "../../../helpers/queryDataInfinite";
 import LoadmoreRq from "../../../partials/LoadmoreRq";
@@ -136,9 +137,9 @@ const PayrollViewList = () => {
                     <tr key={key}>
                       <td className="text-center">{counter++}.</td>
                       <td>{item.payroll_list_employee_name}</td>
-                      <td>{item.payroll_list_gross}</td>
-                      <td>{item.payroll_list_deduction}</td>
-                      <td>{item.payroll_list_net_pay}</td>
+                      <td>{numberWithCommas(item.payroll_list_gross)}</td>
+                      <td>{numberWithCommas(item.payroll_list_deduction)}</td>
+                      <td>{numberWithCommas(item.payroll_list_net_pay)}</td>
                       <td>
                         <div className="flex items-center justify-end gap-1 mr-2">
                           <Link

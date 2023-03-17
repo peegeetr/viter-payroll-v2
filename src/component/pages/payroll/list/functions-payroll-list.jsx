@@ -248,6 +248,8 @@ export const runPayroll = (
       totalPagibigLoan +
       totalPagibigMP2 +
       totalSSSLoan;
+
+    netPay = grossAmount + totalBenefits - deductionAmount;
     console.log(totalHolidayAmount);
     // data to send to server
     payrollList.push({
@@ -255,7 +257,7 @@ export const runPayroll = (
       payroll_list_employee_name: emp.payroll_list_employee_name,
       payroll_list_gross: grossAmount.toFixed(2),
       payroll_list_deduction: deductionAmount.toFixed(2),
-      payroll_list_net_pay: 0,
+      payroll_list_net_pay: netPay.toFixed(2),
       payroll_list_basic_pay: totalBasicPay.toFixed(2),
       payroll_list_overtime_pay: totalOtAmount.toFixed(2),
       payroll_list_leave_pay: totalLeaveAmount.toFixed(2),

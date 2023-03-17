@@ -1,4 +1,48 @@
-import { hrisDevApiUrl } from "../../../helpers/functions-general";
-import { queryData } from "../../../helpers/queryData";
+import { holidayId, overtimeId } from "../../../helpers/functions-payitemId";
 
-export const getDepartment = async (empid, job) => {};
+// get beenifits leave
+export const getErningsOtRate = (earning, item) => {
+  let list = [];
+  earning?.data.map((eItem) => {
+    // check if leave type aid is equal
+    if (
+      eItem.earnings_employee_id === item.payroll_list_employee_id &&
+      eItem.earnings_payitem_id === overtimeId
+    ) {
+      // leave list return
+      list.push({
+        employee_aid: item.employee_aid,
+        employee_name: eItem.earnings_employee,
+        hrs: 1,
+        rate: 20,
+        amount: 5,
+        total: 5,
+      });
+    }
+  });
+  console.log("types", list, earning);
+  return list;
+};
+// get beenifits leave
+export const getErningsHolidayRate = (earning, item) => {
+  let list = [];
+  earning?.data.map((eItem) => {
+    // check if leave type aid is equal
+    if (
+      eItem.earnings_employee_id === item.payroll_list_employee_id &&
+      eItem.earnings_payitem_id === holidayId
+    ) {
+      // leave list return
+      list.push({
+        employee_aid: item.employee_aid,
+        employee_name: eItem.earnings_employee,
+        hrs: 1,
+        rate: 20,
+        amount: 5,
+        total: 5,
+      });
+    }
+  });
+  console.log("types", list, earning);
+  return list;
+};

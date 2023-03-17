@@ -1,9 +1,11 @@
-import React from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { useInView } from "react-intersection-observer";
 import { Form, Formik } from "formik";
+import React from "react";
 import { MdFilterAlt } from "react-icons/md";
+import { useInView } from "react-intersection-observer";
+import * as Yup from "yup";
 import { StoreContext } from "../../../../../store/StoreContext";
+import useQueryData from "../../../../custom-hooks/useQueryData";
 import { InputText } from "../../../../helpers/FormInputs";
 import {
   devApiUrl,
@@ -12,14 +14,16 @@ import {
   getWorkingDays,
   numberWithCommas,
 } from "../../../../helpers/functions-general";
+import { queryDataInfinite } from "../../../../helpers/queryDataInfinite";
+import LoadmoreRq from "../../../../partials/LoadmoreRq";
 import NoData from "../../../../partials/NoData";
-import * as Yup from "yup";
 import ServerError from "../../../../partials/ServerError";
 import ButtonSpinner from "../../../../partials/spinners/ButtonSpinner";
-import fetchApi from "../../../../helpers/fetchApi";
-import { queryDataInfinite } from "../../../../helpers/queryDataInfinite";
 import TableSpinner from "../../../../partials/spinners/TableSpinner";
-import useQueryData from "../../../../custom-hooks/useQueryData";
+import {
+  getErningsHolidayRate,
+  getErningsOtRate,
+} from "../function-report-summary";
 
 const SummaryEarningsList = () => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -139,8 +143,8 @@ const SummaryEarningsList = () => {
           }}
         </Formik>
       </div>
-      <div className="relative text-center">
-        <div className="overflow-x-auto z-0 ">
+      <div className="text-center">
+        <div className="overflow-x-auto max-h-[40rem] z-0 ">
           <table>
             <thead>
               <tr className="border-none text-center">
@@ -212,6 +216,7 @@ const SummaryEarningsList = () => {
                 <th className="table-border min-w-[7rem]">Total Amount</th>
               </tr>
             </thead>
+
             {(status === "loading" || result?.pages[0].data.length === 0) && (
               <tbody>
                 <tr className="text-center ">
@@ -242,7 +247,6 @@ const SummaryEarningsList = () => {
                       </td>
                       <td className="text-left"> </td>
                       <td className="text-center">{getPayPeriod(result)}</td>
-
                       <td className="px-6">
                         {numberWithCommas(item.payroll_list_basic_pay)}
                       </td>
@@ -268,16 +272,10 @@ const SummaryEarningsList = () => {
                       <td className="px-6">
                         {numberWithCommas(item.payroll_list_sss_ee)}
                       </td>
-                      <td className="px-6">
+                      <td colSpan={4} className="px-6">
                         {numberWithCommas(item.payroll_list_sss_ee)}
                       </td>
-                      <td className="px-6">
-                        {numberWithCommas(item.payroll_list_sss_ee)}
-                      </td>
-                      <td className="px-6">
-                        {numberWithCommas(item.payroll_list_sss_ee)}
-                      </td>
-                      <td className="px-6">
+                      <td colSpan={4} className="px-6">
                         {numberWithCommas(item.payroll_list_sss_ee)}
                       </td>
                       <td className="px-6">
@@ -296,12 +294,64 @@ const SummaryEarningsList = () => {
                         {numberWithCommas(item.payroll_list_sss_ee)}
                       </td>
                     </tr>
+
+                    {getErningsOtRate(earnings, item)?.map((item, key) => {
+                      return (
+                        <tr
+                          className="max-h-[10rem] overflow-y-auto text-right"
+                          key={key}
+                        >
+                          <td colSpan={14} className="px-6"></td>
+
+                          <td className="px-6">{numberWithCommas(item.hrs)}</td>
+                          <td className="px-6">
+                            {numberWithCommas(item.rate)}
+                          </td>
+                          <td className="px-6">
+                            {numberWithCommas(item.amount)}
+                          </td>
+                          <td className="px-6">
+                            {numberWithCommas(item.total)}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                    {getErningsHolidayRate(earnings, item)?.map((item, key) => {
+                      return (
+                        <tr
+                          key={key}
+                          className="text-right max-h-[10rem] overflow-y-auto "
+                        >
+                          <td colSpan={18} className="px-6"></td>
+
+                          <td className="px-6">{numberWithCommas(item.hrs)}</td>
+                          <td className="px-6">
+                            {numberWithCommas(item.rate)}
+                          </td>
+                          <td className="px-6">
+                            {numberWithCommas(item.amount)}
+                          </td>
+                          <td className="px-6">
+                            {numberWithCommas(item.total)}
+                          </td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 ))}
               </React.Fragment>
             ))}
           </table>
         </div>
+        <LoadmoreRq
+          fetchNextPage={fetchNextPage}
+          isFetchingNextPage={isFetchingNextPage}
+          hasNextPage={hasNextPage}
+          result={result?.pages[0]}
+          setPage={setPage}
+          page={page}
+          refView={ref}
+        />
       </div>
     </>
   );

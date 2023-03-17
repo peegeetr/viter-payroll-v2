@@ -1,26 +1,23 @@
-import React from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { useInView } from "react-intersection-observer";
 import { Form, Formik } from "formik";
+import React from "react";
 import { MdFilterAlt } from "react-icons/md";
+import { useInView } from "react-intersection-observer";
 import * as Yup from "yup";
 import { StoreContext } from "../../../../../store/StoreContext";
+import { InputText } from "../../../../helpers/FormInputs";
 import {
   devApiUrl,
   getPayPeriod,
   getUserType,
-  hrisDevApiUrl,
   numberWithCommas,
 } from "../../../../helpers/functions-general";
+import { queryDataInfinite } from "../../../../helpers/queryDataInfinite";
+import LoadmoreRq from "../../../../partials/LoadmoreRq";
 import NoData from "../../../../partials/NoData";
 import ServerError from "../../../../partials/ServerError";
-import { InputText } from "../../../../helpers/FormInputs";
-import { queryDataInfinite } from "../../../../helpers/queryDataInfinite";
-import TableSpinner from "../../../../partials/spinners/TableSpinner";
 import ButtonSpinner from "../../../../partials/spinners/ButtonSpinner";
-import LoadmoreRq from "../../../../partials/LoadmoreRq";
-import { getDepartment } from "../function-report-summary";
-import useQueryData from "../../../../custom-hooks/useQueryData";
+import TableSpinner from "../../../../partials/spinners/TableSpinner";
 
 const SummaryDeductionsList = () => {
   const { store, dispatch } = React.useContext(StoreContext);

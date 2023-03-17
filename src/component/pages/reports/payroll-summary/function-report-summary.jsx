@@ -1,45 +1,25 @@
 import { holidayId, overtimeId } from "../../../helpers/functions-payitemId";
 
 // get beenifits leave
-export const getErningsOtRate = (earning, item) => {
+export const getErningsRate = (earning, item) => {
   let list = [];
   earning?.data.map((eItem) => {
     // check if leave type aid is equal
     if (
       eItem.earnings_employee_id === item.payroll_list_employee_id &&
-      eItem.earnings_payitem_id === overtimeId
+      (eItem.earnings_payitem_id === overtimeId ||
+        eItem.earnings_payitem_id === holidayId)
     ) {
       // leave list return
       list.push({
-        employee_aid: item.employee_aid,
+        employee_id: eItem.earnings_employee_id,
         employee_name: eItem.earnings_employee,
-        hrs: 1,
-        rate: 20,
-        amount: 5,
-        total: 5,
-      });
-    }
-  });
-  console.log("types", list, earning);
-  return list;
-};
-// get beenifits leave
-export const getErningsHolidayRate = (earning, item) => {
-  let list = [];
-  earning?.data.map((eItem) => {
-    // check if leave type aid is equal
-    if (
-      eItem.earnings_employee_id === item.payroll_list_employee_id &&
-      eItem.earnings_payitem_id === holidayId
-    ) {
-      // leave list return
-      list.push({
-        employee_aid: item.employee_aid,
-        employee_name: eItem.earnings_employee,
-        hrs: 1,
-        rate: 20,
-        amount: 5,
-        total: 5,
+        otHrs: 1,
+        otRate: 20,
+        otAmount: 5,
+        holidayHrs: 1,
+        holidayRate: 20,
+        holidayAmount: 5,
       });
     }
   });
@@ -61,5 +41,6 @@ export const getErningsHolidayRate = (earning, item) => {
   top: 35px
 }
 
+className="sticky left-[1px] bg-white"  
 
 */

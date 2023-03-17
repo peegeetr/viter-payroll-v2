@@ -20,10 +20,7 @@ import NoData from "../../../../partials/NoData";
 import ServerError from "../../../../partials/ServerError";
 import ButtonSpinner from "../../../../partials/spinners/ButtonSpinner";
 import TableSpinner from "../../../../partials/spinners/TableSpinner";
-import {
-  getErningsHolidayRate,
-  getErningsOtRate,
-} from "../function-report-summary";
+import { getErningsRate } from "../function-report-summary";
 
 const SummaryEarningsList = () => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -105,7 +102,7 @@ const SummaryEarningsList = () => {
           {(props) => {
             return (
               <Form>
-                <div className="grid gap-5 grid-cols-1 md:grid-cols-[1fr_1fr_150px] py-10 items-center">
+                <div className="grid gap-5 grid-cols-1 md:grid-cols-[1fr_1fr_150px] pt-5 pb-10 items-center">
                   <div className="relative">
                     <InputText
                       label="Start Pay Date"
@@ -147,7 +144,7 @@ const SummaryEarningsList = () => {
         <div className="overflow-x-auto max-h-[40rem] z-0 ">
           <table>
             <thead>
-              <tr className="border-none text-center">
+              <tr className="border-none text-center ">
                 <th className="text-center" rowSpan="2">
                   #
                 </th>
@@ -197,7 +194,7 @@ const SummaryEarningsList = () => {
                   Gross Pay
                 </th>
               </tr>
-              <tr className="text-center">
+              <tr className="text-center ">
                 <th className="table-border">Hrs</th>
                 <th className="table-border">Rate</th>
                 <th className="table-border">Amount</th>
@@ -295,7 +292,7 @@ const SummaryEarningsList = () => {
                       </td>
                     </tr>
 
-                    {getErningsOtRate(earnings, item)?.map((item, key) => {
+                    {getErningsRate(earnings, item)?.map((item, key) => {
                       return (
                         <tr
                           className="max-h-[10rem] overflow-y-auto text-right"
@@ -303,37 +300,26 @@ const SummaryEarningsList = () => {
                         >
                           <td colSpan={14} className="px-6"></td>
 
-                          <td className="px-6">{numberWithCommas(item.hrs)}</td>
                           <td className="px-6">
-                            {numberWithCommas(item.rate)}
+                            {numberWithCommas(item.otHrs)}
                           </td>
                           <td className="px-6">
-                            {numberWithCommas(item.amount)}
+                            {numberWithCommas(item.otRate)}
                           </td>
                           <td className="px-6">
-                            {numberWithCommas(item.total)}
+                            {numberWithCommas(item.otAmount)}
                           </td>
-                        </tr>
-                      );
-                    })}
-                    {getErningsHolidayRate(earnings, item)?.map((item, key) => {
-                      return (
-                        <tr
-                          key={key}
-                          className="text-right max-h-[10rem] overflow-y-auto "
-                        >
-                          <td colSpan={18} className="px-6"></td>
-
-                          <td className="px-6">{numberWithCommas(item.hrs)}</td>
+                          <td className="px-6"></td>
                           <td className="px-6">
-                            {numberWithCommas(item.rate)}
+                            {numberWithCommas(item.holidayHrs)}
                           </td>
                           <td className="px-6">
-                            {numberWithCommas(item.amount)}
+                            {numberWithCommas(item.holidayRate)}
                           </td>
                           <td className="px-6">
-                            {numberWithCommas(item.total)}
+                            {numberWithCommas(item.holidayAmount)}
                           </td>
+                          <td className="px-6"></td>
                         </tr>
                       );
                     })}

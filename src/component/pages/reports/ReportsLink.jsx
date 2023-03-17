@@ -4,6 +4,7 @@ import Footer from "../../partials/Footer.jsx";
 import Header from "../../partials/Header.jsx";
 import Navigation from "../../partials/Navigation.jsx";
 import PayrollSummaryLink from "./payroll-summary/PayrollSummaryLink.jsx";
+import SummaryTypeLink from "./paytype/SummaryTypeLink.jsx";
 import WTaxLink from "./w-tax/WTaxLink.jsx";
 
 const ReportsLink = () => {
@@ -20,6 +21,9 @@ const ReportsLink = () => {
           </li>
           <li className="py-2">
             <WTaxLink />
+          </li>
+          <li className="py-2">
+            <SummaryTypeLink />
           </li>
         </ul>
         <Footer />

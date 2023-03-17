@@ -52,6 +52,7 @@ import PayrollSummaryPage from "./component/pages/reports/payroll-summary/Payrol
 import WTax from "./component/pages/reports/w-tax/WTax";
 import SummaryEarnings from "./component/pages/reports/payroll-summary/earnings/SummaryEarnings";
 import SummaryDeductions from "./component/pages/reports/payroll-summary/deductions/SummaryDeductions";
+import SummaryType from "./component/pages/reports/paytype/SummaryType";
 
 function App() {
   // Create a client
@@ -550,6 +551,14 @@ function App() {
               element={
                 <ProtectedRouteSystem>
                   <WTax />
+                </ProtectedRouteSystem>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/reports/paytype`}
+              element={
+                <ProtectedRouteSystem>
+                  <SummaryType />
                 </ProtectedRouteSystem>
               }
             />

@@ -68,7 +68,7 @@ export const payComputeLeave = (earning) => {
 
   if (earning.earnings_payitem_id === leaveId) {
     //dont have additional leave
-    finalAmount += 0;
+    finalAmount += Number(earning.earnings_amount);
   }
   return finalAmount;
 };
@@ -278,7 +278,13 @@ export const payComputeOtherAllowances = (earning) => {
 };
 
 // compute holiday
-export const payComputeHoliday = (emp, holidays, payrollEarnings) => {
+export const payComputeHoliday = (
+  emp,
+  holidays,
+  payrollEarnings,
+  totalLeaveAmount,
+  totalAbsencesAmount
+) => {
   let finalAmount = 0;
   let regularAmount = 0;
   let holidayAmount = 0;
@@ -286,7 +292,6 @@ export const payComputeHoliday = (emp, holidays, payrollEarnings) => {
   let holidayList = [];
   holidays.map((holidaysItem) => {
     let holidayDate = holidaysItem.holidays_date;
-
     if (
       new Date(holidaysItem.holidays_date) >=
         new Date(emp.payroll_start_date) &&
@@ -305,6 +310,7 @@ export const payComputeHoliday = (emp, holidays, payrollEarnings) => {
           new Date(holidaysItem.holidays_date) <=
             new Date(earning.earnings_end_pay_date)
         ) {
+          console.log(12313);
           if (
             earning.earnings_payitem_id !== absencesId ||
             earning.earnings_payitem_id !== leaveId
@@ -320,14 +326,17 @@ export const payComputeHoliday = (emp, holidays, payrollEarnings) => {
       });
 
       // holidayAmount += holidayTotalAmount(emp, holidaysItem).dailyAmount;
-      regularAmount = holidayTotalAmount(emp, holidaysItem).dailyRate;
+      // if(totalLeaveAmount === 0 || totalAbsencesAmount === 0)
+      // regularAmount = holidayTotalAmount(emp, holidaysItem).dailyRate;
+      holidayAmount = holidayTotalAmount(emp, holidaysItem).dailyAmount;
       holidayList.push({
         earnings_payroll_type_id: emp.payroll_category_type,
         earnings_employee: emp.payroll_list_employee_name,
         earnings_employee_id: emp.payroll_list_employee_id,
         earnings_paytype_id: wagesEarningsId,
         earnings_payitem_id: holidayId,
-        earnings_amount: holidayTotalAmount(emp, holidaysItem).dailyAmount,
+        // earnings_amount:  holidayTotalAmount(emp, holidaysItem).dailyAmount,
+        earnings_amount: holidayAmount,
         earnings_details: `${holidaysItem.holidays_name} (${
           holidaysItem.holidays_rate
         }%) ${formatDate(holidaysItem.holidays_date)}`,

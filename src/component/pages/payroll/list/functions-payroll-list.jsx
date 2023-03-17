@@ -170,7 +170,13 @@ export const runPayroll = (
       totalOtherAllowances;
 
     //  holiday for each employee
-    holidayAmount = payComputeHoliday(emp, holidays, payrollEarnings);
+    holidayAmount = payComputeHoliday(
+      emp,
+      holidays,
+      payrollEarnings,
+      totalLeaveAmount,
+      totalAbsencesAmount
+    );
 
     totalHolidayAmount += holidayAmount.finalAmount;
 
@@ -186,13 +192,14 @@ export const runPayroll = (
       (totalBasicPay -
         (totalLeaveAmount +
           totalAbsencesAmount +
+          totalUndertimeAmount +
           holidayAmount.regularAmount)) +
       totalOtAmount +
       totalHazardPayAmount +
       totalInflationAmount +
-      totalAdjustmentAmount -
-      totalAbsencesAmount -
-      totalUndertimeAmount;
+      totalAdjustmentAmount;
+    // totalAbsencesAmount -
+    // totalUndertimeAmount;
 
     sssAmount = payComputeSssBracket(emp, sssBracket);
     pagibigAmount = payComputePagibig(emp, pagibig);
@@ -250,7 +257,8 @@ export const runPayroll = (
       totalSSSLoan;
 
     netPay = grossAmount + totalBenefits - deductionAmount;
-    console.log(totalHolidayAmount);
+    console.log(emp.payroll_list_employee_name, totalTaxAmount, grossAmount);
+    console.log(emp.payroll_list_employee_name, totalHolidayAmount);
     // data to send to server
     payrollList.push({
       payroll_list_employee_id: emp.payroll_list_employee_id,

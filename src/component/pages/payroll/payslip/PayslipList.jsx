@@ -30,7 +30,11 @@ const PayslipList = ({ payslip }) => {
     Number(payslip?.data[0].payroll_list_gross) +
     Number(payslip?.data[0].payroll_list_total_benefits);
   let netPay = totalEarnings - Number(payslip?.data[0].payroll_list_deduction);
-  console.log(payslip);
+  console.log(
+    payslip,
+    Number(payslip?.data[0].payroll_list_gross),
+    Number(payslip?.data[0].payroll_list_total_benefits)
+  );
   return (
     <>
       <PayslipHeader

@@ -106,27 +106,29 @@ class PayrollList
     public function readById()
     {
         try {
-            $sql = "select payrollList.payroll_list_payroll_id, ";
-            $sql .= "payrollList.payroll_list_aid, ";
-            $sql .= "payrollList.payroll_list_is_paid, ";
-            $sql .= "payrollList.payroll_list_gross, ";
-            $sql .= "payrollList.payroll_list_deduction, ";
-            $sql .= "payrollList.payroll_list_net_pay, ";
-            $sql .= "payrollList.payroll_list_employee_name, ";
-            $sql .= "payrollList.payroll_list_employee_salary, ";
-            $sql .= "payrollList.payroll_list_night_diff_per_day, ";
-            $sql .= "payrollList.payroll_list_employee_work_on_holiday, ";
-            $sql .= "payrollList.payroll_list_pagibig_additional, ";
-            $sql .= "payrollList.payroll_list_employee_id, ";
-            $sql .= "payroll.payroll_category_type, ";
-            $sql .= "payroll.payroll_id, ";
-            $sql .= "payroll.payroll_start_date, ";
-            $sql .= "payroll.payroll_end_date, ";
-            $sql .= "payroll.payroll_pay_date ";
+            $sql = "select *, sum(payrollList.payroll_list_gross) as salWages ";
+            // $sql = "select payrollList.payroll_list_payroll_id, ";
+            // $sql .= "payrollList.payroll_list_aid, ";
+            // $sql .= "payrollList.payroll_list_is_paid, ";
+            // $sql .= "payrollList.payroll_list_gross, ";
+            // $sql .= "payrollList.payroll_list_deduction, ";
+            // $sql .= "payrollList.payroll_list_net_pay, ";
+            // $sql .= "payrollList.payroll_list_employee_name, ";
+            // $sql .= "payrollList.payroll_list_employee_salary, ";
+            // $sql .= "payrollList.payroll_list_night_diff_per_day, ";
+            // $sql .= "payrollList.payroll_list_employee_work_on_holiday, ";
+            // $sql .= "payrollList.payroll_list_pagibig_additional, ";
+            // $sql .= "payrollList.payroll_list_employee_id, ";
+            // $sql .= "payroll.payroll_category_type, ";
+            // $sql .= "payroll.payroll_id, ";
+            // $sql .= "payroll.payroll_start_date, ";
+            // $sql .= "payroll.payroll_end_date, ";
+            // $sql .= "payroll.payroll_pay_date ";
             $sql .= "from {$this->tblPayrollList} as payrollList, ";
             $sql .= "{$this->tblPayroll} as payroll ";
             $sql .= "where payrollList.payroll_list_payroll_id = :payroll_list_payroll_id ";
             $sql .= "and payroll.payroll_id = payrollList.payroll_list_payroll_id ";
+            $sql .= "group by payrollList.payroll_list_employee_id ";
             $sql .= "order by payrollList.payroll_list_employee_name asc ";
             $query = $this->connection->prepare($sql);
             $query->execute([
@@ -166,24 +168,26 @@ class PayrollList
     public function readLimit()
     {
         try {
-            $sql = "select payrollList.payroll_list_payroll_id, ";
-            $sql .= "payrollList.payroll_list_aid, ";
-            $sql .= "payrollList.payroll_list_is_paid, ";
-            $sql .= "payrollList.payroll_list_gross, ";
-            $sql .= "payrollList.payroll_list_deduction, ";
-            $sql .= "payrollList.payroll_list_net_pay, ";
-            $sql .= "payrollList.payroll_list_employee_name, ";
-            $sql .= "payrollList.payroll_list_employee_salary, ";
-            $sql .= "payrollList.payroll_list_night_diff_per_day, ";
-            $sql .= "payrollList.payroll_list_employee_id, ";
-            $sql .= "payroll.payroll_id, ";
-            $sql .= "payroll.payroll_start_date, ";
-            $sql .= "payroll.payroll_end_date, ";
-            $sql .= "payroll.payroll_pay_date ";
+            $sql = "select *, sum(payrollList.payroll_list_gross) as salWages ";
+            // $sql = "select payrollList.payroll_list_payroll_id, ";
+            // $sql .= "payrollList.payroll_list_aid, ";
+            // $sql .= "payrollList.payroll_list_is_paid, ";
+            // $sql .= "payrollList.payroll_list_gross, ";
+            // $sql .= "payrollList.payroll_list_deduction, ";
+            // $sql .= "payrollList.payroll_list_net_pay, ";
+            // $sql .= "payrollList.payroll_list_employee_name, ";
+            // $sql .= "payrollList.payroll_list_employee_salary, ";
+            // $sql .= "payrollList.payroll_list_night_diff_per_day, ";
+            // $sql .= "payrollList.payroll_list_employee_id, ";
+            // $sql .= "payroll.payroll_id, ";
+            // $sql .= "payroll.payroll_start_date, ";
+            // $sql .= "payroll.payroll_end_date, ";
+            // $sql .= "payroll.payroll_pay_date ";
             $sql .= "from {$this->tblPayrollList} as payrollList, ";
             $sql .= "{$this->tblPayroll} as payroll ";
             $sql .= "where payrollList.payroll_list_payroll_id = :payroll_list_payroll_id ";
             $sql .= "and payroll.payroll_id = payrollList.payroll_list_payroll_id ";
+            $sql .= "group by payrollList.payroll_list_employee_id ";
             $sql .= "order by payrollList.payroll_list_employee_name asc ";
             $sql .= "limit :start, ";
             $sql .= ":total ";

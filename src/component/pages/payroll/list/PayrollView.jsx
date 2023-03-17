@@ -13,6 +13,8 @@ import ModalRun from "../../../partials/modals/ModalRun";
 import ModalSuccess from "../../../partials/modals/ModalSuccess";
 import Navigation from "../../../partials/Navigation";
 import NoData from "../../../partials/NoData";
+import ServerError from "../../../partials/ServerError";
+import FetchingSpinner from "../../../partials/spinners/FetchingSpinner";
 import PayrollViewList from "./PayrollViewList";
 
 const PayrollView = () => {
@@ -28,7 +30,11 @@ const PayrollView = () => {
   );
 
   // use if not loadmore button undertime
-  const { data: payrollList } = useQueryData(
+  const {
+    data: payrollList,
+    isLoading,
+    error,
+  } = useQueryData(
     `${devApiUrl}/v1/payrollList/${pid}`, // endpoint
     "get", // method
     "payrollList" // key
@@ -92,46 +98,48 @@ const PayrollView = () => {
         <div className="flex items-center mb-1 justify-between whitespace-nowrap overflow-auto gap-2">
           <BreadCrumbs param={`${location.search}`} />
           <div className="flex items-center gap-1">
-            {payrollList?.data.length > 0 ? (
-              payrollList?.data[0].payroll_list_is_paid === 1 ? (
-                <>
-                  <button type="button" className="btn-primary">
-                    <FaEnvelope />
-                    <span>Email All</span>
-                  </button>{" "}
-                </>
-              ) : (
-                <>
+            {isLoading && <FetchingSpinner />}
+            {payrollList?.data[0].payroll_list_is_paid === 1 ? (
+              <>
+                <button type="button" className="btn-primary">
+                  <FaEnvelope />
+                  <span>Email All</span>
+                </button>{" "}
+              </>
+            ) : (
+              <>
+                <button
+                  type="button"
+                  className="btn-primary"
+                  onClick={handleRun}
+                >
+                  <ImPlay3 />
+                  <span>Run</span>
+                </button>
+                {payrollList?.data[0].payroll_list_gross !== "" && (
                   <button
                     type="button"
                     className="btn-primary"
-                    onClick={handleRun}
+                    onClick={handleMarkPaid}
                   >
-                    <ImPlay3 />
-                    <span>Run</span>
+                    <FaSave />
+                    <span>Mark Paid</span>
                   </button>
-                  {payrollList?.data[0].payroll_list_gross !== "" && (
-                    <button
-                      type="button"
-                      className="btn-primary"
-                      onClick={handleMarkPaid}
-                    >
-                      <FaSave />
-                      <span>Mark Paid</span>
-                    </button>
-                  )}
-                </>
-              )
-            ) : (
-              ""
+                )}
+              </>
             )}
           </div>
         </div>
         <hr />
 
         <div className="w-full pt-2 pb-20">
-          {payrollList?.data.length > 0 ? <PayrollViewList /> : <NoData />}
+          {/* {payrollList?.data.length > 0 ? <PayrollViewList /> : <NoData />} */}
+          {payrollList?.data.length > 0 && <PayrollViewList />}
+          {/* <PayrollViewList /> */}
         </div>
+
+        {error && <ServerError />}
+
         <Footer />
       </div>
 

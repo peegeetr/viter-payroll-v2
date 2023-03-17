@@ -90,6 +90,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
             $payrollList->start_pay_date = $allHolidayList[$h]["earnings_start_pay_date"];
             $payrollList->end_pay_date = $allHolidayList[$h]["earnings_end_pay_date"];
             $payrollList->hris_date = $allHolidayList[$h]["earnings_hris_date"];
+            $payrollList->holidays_rate = $allHolidayList[$h]["earnings_holidays_rate"];
 
             $query = checkCreateEarnings($payrollList);
         }

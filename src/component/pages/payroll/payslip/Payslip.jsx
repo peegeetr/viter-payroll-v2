@@ -10,7 +10,9 @@ import Header from "../../../partials/Header";
 import ModalError from "../../../partials/modals/ModalError";
 import ModalSuccess from "../../../partials/modals/ModalSuccess";
 import Navigation from "../../../partials/Navigation";
+import NoData from "../../../partials/NoData";
 import ServerError from "../../../partials/ServerError";
+import FetchingSpinner from "../../../partials/spinners/FetchingSpinner";
 import PayslipList from "./PayslipList";
 
 const Payslip = () => {
@@ -19,7 +21,11 @@ const Payslip = () => {
   const payslipId = getUrlParam().get("payslipid");
 
   // use if not loadmore button undertime
-  const { data: payslip } = useQueryData(
+  const {
+    data: payslip,
+    isLoading,
+    error,
+  } = useQueryData(
     `${devApiUrl}/v1/payslip/${payslipId}`, // endpoint
     "get", // method
     "payslip" // key
@@ -33,6 +39,7 @@ const Payslip = () => {
       <div className="wrapper print:pt-0">
         <div className="flex items-center mb-1 justify-between whitespace-nowrap overflow-auto gap-2 print:hidden">
           <BreadCrumbs param={`${payrollUrl}`} />
+          {isLoading && <FetchingSpinner />}
           <div className="flex items-center gap-1">
             <button type="button" className="btn-primary">
               <FaEnvelope />
@@ -48,14 +55,14 @@ const Payslip = () => {
 
         <div className="w-full pt-5 pb-20 mb-16">
           {payslip?.data.length > 0 ? (
-            <>
-              <PayslipList payslip={payslip} />
-            </>
+            <PayslipList payslip={payslip} />
           ) : (
-            // <ServerError />
-            "Page Error"
+            <NoData />
           )}
         </div>
+
+        {error && <ServerError />}
+
         <Footer />
       </div>
       {store.success && <ModalSuccess />}

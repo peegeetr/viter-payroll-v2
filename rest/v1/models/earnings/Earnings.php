@@ -290,6 +290,7 @@ class Earnings
             $sql .= "earnings.earnings_frequency, ";
             $sql .= "earnings.earnings_number_of_installment, ";
             $sql .= "earnings.earnings_hris_date, ";
+            $sql .= "earnings.earnings_holidays_rate, ";
             $sql .= "earnings.earnings_start_pay_date, ";
             $sql .= "earnings.earnings_end_pay_date, ";
             $sql .= "payitem.payitem_name, ";

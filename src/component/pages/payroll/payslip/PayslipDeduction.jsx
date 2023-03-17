@@ -1,5 +1,8 @@
 import useQueryData from "../../../custom-hooks/useQueryData";
-import { devApiUrl } from "../../../helpers/functions-general";
+import {
+  devApiUrl,
+  numberWithCommas,
+} from "../../../helpers/functions-general";
 import {
   empContributionEarningsId,
   mandatoryDeductionId,
@@ -11,6 +14,8 @@ const PayslipDeduction = ({ paytypeId, empid, payrollid }) => {
     "get", // method
     `deductions-${paytypeId}` // key
   );
+
+  console.log(deductions);
 
   return (
     <>
@@ -34,7 +39,7 @@ const PayslipDeduction = ({ paytypeId, empid, payrollid }) => {
             </td>
             <td className="w-[10rem]"></td>
             <td> </td>
-            <td>{item.deduction_amount}</td>
+            <td>{numberWithCommas(item.deduction_amount)}</td>
           </tr>
         );
       })}
@@ -44,7 +49,7 @@ const PayslipDeduction = ({ paytypeId, empid, payrollid }) => {
             <td colSpan={3} className="uppercase text-right xs:pr-16">
               Total {deductions?.data[0].paytype_name}
             </td>
-            <td>9,830.55</td>
+            <td>{numberWithCommas(deductions?.data[0].deduction_amount)}</td>
           </tr>
         </>
       )}

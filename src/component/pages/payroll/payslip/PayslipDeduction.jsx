@@ -39,7 +39,9 @@ const PayslipDeduction = ({ paytypeId, empid, payrollid }) => {
             </td>
             <td className="w-[10rem]"></td>
             <td> </td>
-            <td>{numberWithCommas(item.deduction_amount)}</td>
+            <td className="text-right px-4">
+              {numberWithCommas(item.deduction_amount)}
+            </td>
           </tr>
         );
       })}

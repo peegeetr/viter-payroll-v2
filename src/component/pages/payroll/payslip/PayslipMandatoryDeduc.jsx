@@ -30,42 +30,53 @@ const PayslipMandatoryDeduc = ({ paytypeId, payslip, empid, payrollid }) => {
           {payslip?.data.length > 0 && (
             <>
               <tr className="font-semibold bg-gray-100 hover:bg-gray-100">
-                <td className="w-[20rem] uppercase">Mandatory deduction</td>
-                <td className="w-[20rem] uppercase">EE</td>
-                <td colSpan={2} className="w-[20rem] uppercase">
-                  ER
-                </td>
+                <th className=" w-[5rem] uppercase">Mandatory deduction</th>
+                <th className=" uppercase text-right px-4">EE</th>
+                <th className=" uppercase text-right px-4">ER</th>
+                <th className=" uppercase"> </th>
               </tr>
-              <tr className="hover:bg-transparent">
-                <td className="w-[20rem]"> SSS</td>
-                <td className="w-[10rem]">
+              <tr className="hover:bg-transparent text-right px-4 ">
+                <td className="w-[20rem] text-left"> SSS</td>
+                <td className="w-[10rem] text-right px-4">
                   {payslip?.data[0].payroll_list_sss_ee}
                 </td>
-                <td>{payslip?.data[0].payroll_list_sss_er} </td>
-                <td>{payslip?.data[0].payroll_list_sss_ee}</td>
+                <td className="text-right px-4">
+                  {payslip?.data[0].payroll_list_sss_er}{" "}
+                </td>
+                <td className="text-right px-4">
+                  {payslip?.data[0].payroll_list_sss_ee}
+                </td>
                 {/* <td>{numberWithCommas(Number(sssTotal).toFixed(2))} </td> */}
               </tr>
               <tr className="hover:bg-transparent">
                 <td className="w-[20rem]">Pag-ibig</td>
-                <td className="w-[10rem]">
+                <td className="w-[10rem] text-right px-4">
                   {payslip?.data[0].payroll_list_pagibig_ee}
                 </td>
-                <td>{payslip?.data[0].payroll_list_pagibig_er}</td>
-                <td>{payslip?.data[0].payroll_list_pagibig_ee}</td>
+                <td className="text-right px-4">
+                  {payslip?.data[0].payroll_list_pagibig_er}
+                </td>
+                <td className="text-right px-4">
+                  {payslip?.data[0].payroll_list_pagibig_ee}
+                </td>
               </tr>
               <tr className="hover:bg-transparent">
-                <td className="w-[20rem]">Philhealth</td>
-                <td className="w-[10rem]">
+                <td>Philhealth</td>
+                <td className=" text-right px-4">
                   {payslip?.data[0].payroll_list_philhealth_ee}
                 </td>
-                <td>{payslip?.data[0].payroll_list_philhealth_er}</td>
-                <td>{payslip?.data[0].payroll_list_philhealth_ee}</td>
+                <td className=" text-right px-4">
+                  {payslip?.data[0].payroll_list_philhealth_er}
+                </td>
+                <td className="  text-right px-4">
+                  {payslip?.data[0].payroll_list_philhealth_ee}
+                </td>
               </tr>
               <tr className="font-semibold bg-gray-100 hover:bg-gray-100">
-                <td colSpan={3} className="uppercase text-right xs:pr-16">
+                <td colSpan={3} className="uppercase text-right xs:pr-4">
                   Total Mandatory deduction
                 </td>
-                <td>
+                <td className=" text-right px-4">
                   {numberWithCommas(
                     Number(payslip?.data[0].payroll_list_madatory_ee).toFixed(2)
                   )}

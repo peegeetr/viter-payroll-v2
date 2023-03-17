@@ -3,12 +3,10 @@ import {
   numberWithCommas,
 } from "../../../helpers/functions-general";
 import {
-  empContributionEarningsId,
   mandatoryDeductionId,
   optionalDeductionId,
   otherBenefitsEarningsId,
   paytypeOtherDeductionId,
-  taxDeductionId,
   wagesEarningsId,
 } from "../../../helpers/functions-payitemId";
 import { employeeRate } from "../../../helpers/payroll-formula";
@@ -16,7 +14,6 @@ import PayslipDeduction from "./PayslipDeduction";
 import PayslipEarnings from "./PayslipEarnings";
 import PayslipHeader from "./PayslipHeader";
 import PayslipMandatoryDeduc from "./PayslipMandatoryDeduc";
-import React from "react";
 
 const PayslipList = ({ payslip }) => {
   const days = getWorkingDays(
@@ -66,10 +63,12 @@ const PayslipList = ({ payslip }) => {
               <td colSpan={4}>&nbsp;</td>
             </tr>
             <tr className="font-semibold bg-gray-300 hover:bg-gray-300">
-              <td colSpan={3} className="uppercase text-right xs:pr-16">
+              <td colSpan={3} className="uppercase text-right xs:pr-4">
                 Total Earnings
               </td>
-              <td>{numberWithCommas(totalEarnings.toFixed(2))}</td>
+              <td className=" text-right px-4">
+                {numberWithCommas(totalEarnings.toFixed(2))}
+              </td>
             </tr>
             <tr>
               <td colSpan={4}>&nbsp;</td>
@@ -102,7 +101,7 @@ const PayslipList = ({ payslip }) => {
               <td colSpan={3} className="w-[20rem] uppercase">
                 TAX
               </td>
-              <td colSpan={3} className="w-[20rem] uppercase">
+              <td colSpan={3} className="w-[20rem] uppercase text-right px-4">
                 {numberWithCommas(
                   Number(payslip?.data[0].payroll_list_tax).toFixed(2)
                 )}
@@ -114,10 +113,10 @@ const PayslipList = ({ payslip }) => {
               <td colSpan={4}>&nbsp;</td>
             </tr>
             <tr className="font-semibold bg-gray-300 hover:bg-gray-300 uppercase">
-              <td colSpan={3} className="uppercase text-right xs:pr-16 pr-4">
+              <td colSpan={3} className="uppercase text-right xs:pr-4 ">
                 total deductions
               </td>
-              <td>
+              <td className=" text-right px-4">
                 {numberWithCommas(
                   Number(payslip?.data[0].payroll_list_deduction).toFixed(2)
                 )}
@@ -129,10 +128,12 @@ const PayslipList = ({ payslip }) => {
 
             {/* netpay */}
             <tr className="bg-primary hover:bg-primary text-white uppercase">
-              <td colSpan={3} className="uppercase text-right xs:pr-16 pr-4">
+              <td colSpan={3} className="uppercase text-right xs:pr-4  ">
                 net pay
               </td>
-              <td>{numberWithCommas(Number(netPay.toFixed(2)))}</td>
+              <td className=" text-right px-4">
+                {numberWithCommas(Number(netPay.toFixed(2)))}
+              </td>
             </tr>
           </tbody>
         </table>

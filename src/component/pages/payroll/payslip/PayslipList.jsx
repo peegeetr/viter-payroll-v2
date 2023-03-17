@@ -1,4 +1,7 @@
-import { getWorkingDays } from "../../../helpers/functions-general";
+import {
+  getWorkingDays,
+  numberWithCommas,
+} from "../../../helpers/functions-general";
 import {
   empContributionEarningsId,
   mandatoryDeductionId,
@@ -23,6 +26,11 @@ const PayslipList = ({ payslip }) => {
   let hourRate = Number(
     employeeRate(payslip?.data[0].payroll_list_employee_salary, days).hourly
   );
+  let totalEarnings =
+    Number(payslip?.data[0].payroll_list_gross) +
+    Number(payslip?.data[0].payroll_list_total_benefits);
+  let netPay = totalEarnings - Number(payslip?.data[0].payroll_list_deduction);
+  console.log(payslip);
   return (
     <>
       <PayslipHeader
@@ -57,39 +65,47 @@ const PayslipList = ({ payslip }) => {
               <td colSpan={3} className="uppercase text-right xs:pr-16">
                 Total Earnings
               </td>
-              {/* create api for getting total earnings (wages, other benefits) */}
-              <td>{0}</td>
+              <td>{numberWithCommas(totalEarnings.toFixed(2))}</td>
             </tr>
             <tr>
               <td colSpan={4}>&nbsp;</td>
             </tr>
 
-            {/* deduction */}
+            {/* Mandatory deduction */}
             <PayslipMandatoryDeduc
               paytypeId={mandatoryDeductionId}
               payslip={payslip}
               empid={payslip?.data[0].payroll_list_employee_id}
               payrollid={payslip?.data[0].payroll_list_payroll_id}
             />
-
+            {/* Optional deduction */}
             <PayslipDeduction
               paytypeId={optionalDeductionId}
               empid={payslip?.data[0].payroll_list_employee_id}
               payrollid={payslip?.data[0].payroll_list_payroll_id}
             />
-
+            {/* other deduction */}
             <PayslipDeduction
               paytypeId={paytypeOtherDeductionId}
               empid={payslip?.data[0].payroll_list_employee_id}
               payrollid={payslip?.data[0].payroll_list_payroll_id}
             />
-            <PayslipDeduction
-              paytypeId={taxDeductionId}
-              empid={payslip?.data[0].payroll_list_employee_id}
-              payrollid={payslip?.data[0].payroll_list_payroll_id}
-            />
+            {/* tax */}
+            <tr>
+              <td colSpan={4}></td>
+            </tr>
+            <tr className="font-semibold bg-gray-100 hover:bg-gray-100">
+              <td colSpan={3} className="w-[20rem] uppercase">
+                TAX
+              </td>
+              <td colSpan={3} className="w-[20rem] uppercase">
+                {numberWithCommas(
+                  Number(payslip?.data[0].payroll_list_tax).toFixed(2)
+                )}
+              </td>
+            </tr>
 
-            {/* total */}
+            {/* total deduction */}
             <tr>
               <td colSpan={4}>&nbsp;</td>
             </tr>
@@ -97,17 +113,22 @@ const PayslipList = ({ payslip }) => {
               <td colSpan={3} className="uppercase text-right xs:pr-16 pr-4">
                 total deductions
               </td>
-              <td>9,830.55</td>
+              <td>
+                {numberWithCommas(
+                  Number(payslip?.data[0].payroll_list_deduction).toFixed(2)
+                )}
+              </td>
             </tr>
             <tr>
               <td colSpan={4}>&nbsp;</td>
             </tr>
+
             {/* netpay */}
             <tr className="bg-primary hover:bg-primary text-white uppercase">
               <td colSpan={3} className="uppercase text-right xs:pr-16 pr-4">
                 net pay
               </td>
-              <td>9,196.35</td>
+              <td>{numberWithCommas(Number(netPay.toFixed(2)))}</td>
             </tr>
           </tbody>
         </table>

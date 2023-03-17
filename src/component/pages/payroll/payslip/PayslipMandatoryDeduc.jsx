@@ -65,7 +65,11 @@ const PayslipMandatoryDeduc = ({ paytypeId, payslip, empid, payrollid }) => {
                 <td colSpan={3} className="uppercase text-right xs:pr-16">
                   Total Mandatory deduction
                 </td>
-                <td>0.00</td>
+                <td>
+                  {numberWithCommas(
+                    Number(payslip?.data[0].payroll_list_madatory_ee).toFixed(2)
+                  )}
+                </td>
               </tr>
             </>
           )}

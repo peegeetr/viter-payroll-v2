@@ -10,6 +10,7 @@ import {
   getUrlParam,
   getUserType,
   getWorkingDays,
+  numberWithCommas,
 } from "../../../helpers/functions-general";
 import { queryDataInfinite } from "../../../helpers/queryDataInfinite";
 import LoadmoreRq from "../../../partials/LoadmoreRq";
@@ -29,6 +30,22 @@ const PayrollViewList = () => {
   const [page, setPage] = React.useState(1);
   let counter = 1;
   const { ref, inView } = useInView();
+  let salariesAndWages = 0;
+  let monthAndBonuses = 0;
+  let sssEr = 0;
+  let phicEr = 0;
+  let pagEr = 0;
+  let dR = 0;
+  let sssPayable = 0;
+  let phicPayable = 0;
+  let pagPayable = 0;
+  let sssLoanPayable = 0;
+  let pagLoanPayable = 0;
+  let wtaxPayable = 0;
+  let pagMp2Payable = 0;
+  let others = 0;
+  let netPay = 0;
+  let cR = 0;
 
   // use if with loadmore button and search bar
   const {
@@ -112,10 +129,10 @@ const PayrollViewList = () => {
             <thead>
               <tr>
                 <th className="text-center">#</th>
-                <th className="w-[15rem]">Employee</th>
-                <th className="w-[8rem]">Gross</th>
-                <th className="w-[8rem]">Deduction</th>
-                <th className="w-[8srem]">Net Pay</th>
+                <th className="w-[10rem]">Employee</th>
+                <th className="text-right w-[8rem]">Gross</th>
+                <th className="text-right w-[8rem]">Deduction</th>
+                <th className="text-right w-[8rem]">Net Pay</th>
                 <th></th>
               </tr>
             </thead>
@@ -137,26 +154,71 @@ const PayrollViewList = () => {
               )}
               {result?.pages.map((page, key) => (
                 <React.Fragment key={key}>
-                  {page.data.map((item, key) => (
-                    <tr key={key}>
-                      <td className="text-center">{counter++}.</td>
-                      <td>{item.payroll_list_employee_name}</td>
-                      <td>{item.payroll_list_gross}</td>
-                      <td>{item.payroll_list_deduction}</td>
-                      <td>{item.payroll_list_net_pay}</td>
-                      <td>
-                        <div className="flex items-center justify-end gap-1 mr-2">
-                          <Link
-                            to={`${link}/payroll/list/payslip?payslipid=${item.payroll_list_aid}`}
-                            className="btn-action-table tooltip-action-table"
-                            data-tooltip="Payslip"
-                          >
-                            <MdOutlineReceipt />
-                          </Link>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
+                  {page.data.map((item, key) => {
+                    salariesAndWages += Number(item.payroll_list_gross);
+                    monthAndBonuses += Number(item.payroll_list_total_benefits);
+                    sssEr += Number(item.payroll_list_sss_er);
+                    phicEr += Number(item.payroll_list_philhealth_er);
+                    pagEr += Number(item.payroll_list_pagibig_er);
+                    dR =
+                      salariesAndWages +
+                      monthAndBonuses +
+                      sssEr +
+                      phicEr +
+                      pagEr;
+                    sssPayable +=
+                      Number(item.payroll_list_sss_ee) +
+                      Number(item.payroll_list_sss_er);
+                    phicPayable +=
+                      Number(item.payroll_list_philhealth_ee) +
+                      Number(item.payroll_list_philhealth_er);
+                    pagPayable +=
+                      Number(item.payroll_list_pagibig_ee) +
+                      Number(item.payroll_list_pagibig_er);
+                    sssLoanPayable += Number(item.payroll_list_sss_loan);
+                    pagLoanPayable += Number(item.payroll_list_pagibig_loan);
+                    wtaxPayable += Number(item.payroll_list_tax);
+                    pagMp2Payable += Number(item.payroll_list_pagibig_mp2);
+                    others +=
+                      Number(item.payroll_list_fwc_tithes) +
+                      Number(item.payroll_list_fca_tuition) +
+                      Number(item.payroll_list_other_deduction);
+                    netPay += Number(item.payroll_list_net_pay);
+                    cR =
+                      sssPayable +
+                      phicPayable +
+                      pagPayable +
+                      wtaxPayable +
+                      pagMp2Payable +
+                      others +
+                      netPay;
+                    return (
+                      <tr key={key}>
+                        <td className="text-center">{counter++}.</td>
+                        <td>{item.payroll_list_employee_name}</td>
+                        <td className="text-right px-2">
+                          {numberWithCommas(item.payroll_list_gross)}
+                        </td>
+                        <td className="text-right px-2">
+                          {numberWithCommas(item.payroll_list_deduction)}
+                        </td>
+                        <td className="text-right px-2">
+                          {numberWithCommas(item.payroll_list_net_pay)}
+                        </td>
+                        <td>
+                          <div className="flex items-center justify-end gap-1 mr-2">
+                            <Link
+                              to={`${link}/payroll/list/payslip?payslipid=${item.payroll_list_aid}`}
+                              className="btn-action-table tooltip-action-table"
+                              data-tooltip="Payslip"
+                            >
+                              <MdOutlineReceipt />
+                            </Link>
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </React.Fragment>
               ))}
             </tbody>
@@ -193,73 +255,119 @@ const PayrollViewList = () => {
             </tr>
             <tr>
               <td className="w-[15rem]">Salaries & Wages</td>
-              <td className="w-[8rem]">0.00</td>
+              <td className="w-[8rem] text-right px-5">
+                {numberWithCommas(salariesAndWages.toFixed(2))}
+              </td>
               <td></td>
             </tr>
             <tr>
               <td className="w-[15rem]">13th Month & Bonuses</td>
-              <td className="w-[8rem]">9,500.00</td>
+              <td className="w-[8rem] text-right px-5">
+                {numberWithCommas(monthAndBonuses.toFixed(2))}
+              </td>
               <td></td>
             </tr>
             <tr>
               <td className="w-[15rem]">SSS Er</td>
-              <td className="w-[8rem]">0.00</td>
+              <td className="w-[8rem] text-right px-5">
+                {numberWithCommas(sssEr.toFixed(2))}
+              </td>
               <td></td>
             </tr>
             <tr>
               <td className="w-[15rem]">PHIC Er</td>
-              <td className="w-[8rem]">0.00</td>
+              <td className="w-[8rem] text-right px-5">
+                {numberWithCommas(phicEr.toFixed(2))}
+              </td>
               <td></td>
             </tr>
             <tr>
               <td className="w-[15rem]">PGBG ER</td>
-              <td className="w-[8rem]">0.00</td>
+              <td className="w-[8rem] text-right px-5">
+                {numberWithCommas(pagEr.toFixed(2))}
+              </td>
               <td></td>
             </tr>
             <tr>
               <td className="w-[15rem] pl-8">SSS Payable</td>
               <td className="w-[8rem]"></td>
-              <td>0.00</td>
+              <td className="text-right px-5">
+                {numberWithCommas(sssPayable.toFixed(2))}
+              </td>
             </tr>
             <tr>
               <td className="w-[15rem] pl-8">PHIC Payable</td>
               <td className="w-[8rem]"></td>
-              <td>0.00</td>
+              <td className="text-right px-5">
+                {numberWithCommas(phicPayable.toFixed(2))}
+              </td>
             </tr>
             <tr>
               <td className="w-[15rem] pl-8">PGBG Payable</td>
               <td className="w-[8rem]"></td>
-              <td>0.00</td>
+              <td className="text-right px-5">
+                {numberWithCommas(pagPayable.toFixed(2))}
+              </td>
+            </tr>
+            <tr>
+              <td className="w-[15rem] pl-8">SSS Loan Payable</td>
+              <td className="w-[8rem]"></td>
+              <td className="text-right px-5">
+                {numberWithCommas(sssLoanPayable.toFixed(2))}
+              </td>
+            </tr>
+            <tr>
+              <td className="w-[15rem] pl-8">PGBG Loan Payable</td>
+              <td className="w-[8rem]"></td>
+              <td className="text-right px-5">
+                {numberWithCommas(pagLoanPayable.toFixed(2))}
+              </td>
             </tr>
             <tr>
               <td className="w-[15rem] pl-8">Wtax Payable</td>
               <td className="w-[8rem]"></td>
-              <td>0.00</td>
+              <td className="text-right px-5">
+                {numberWithCommas(wtaxPayable.toFixed(2))}
+              </td>
             </tr>
             <tr>
               <td className="w-[15rem] pl-8">PGBG MP2 Payable</td>
               <td className="w-[8rem]"></td>
-              <td>0.00</td>
+              <td className="text-right px-5">
+                {numberWithCommas(pagMp2Payable.toFixed(2))}
+              </td>
             </tr>
             <tr>
               <td className="w-[15rem] pl-8">Others</td>
               <td className="w-[8rem]"></td>
-              <td>0.00</td>
+              <td className="text-right px-5">
+                {numberWithCommas(others.toFixed(2))}
+              </td>
             </tr>
             <tr>
               <td className="w-[15rem] pl-8">Total Net Pay</td>
               <td className="w-[8rem]"></td>
-              <td>9,500.00</td>
+              <td className="text-right px-5">
+                {numberWithCommas(netPay.toFixed(2))}
+              </td>
             </tr>
             <tr className="font-bold bg-gray-200 hover:bg-gray-200 ">
               <td className="w-[15rem] pl-8"></td>
-              <td>9,500.00</td>
-              <td>9,500.00</td>
+              <td className="text-right px-5">
+                {numberWithCommas(dR.toFixed(2))}
+              </td>
+              <td className="text-right px-5">
+                {numberWithCommas(cR.toFixed(2))}
+              </td>
             </tr>
             <tr className="font-bold bg-gray-200 hover:bg-gray-200 ">
               <td className="w-[15rem] pl-8"></td>
-              <td>0.00</td>
-              <td>0.00</td>
+              <td className="text-right px-5">
+                {numberWithCommas(Number(dR - cR).toFixed(2))}
+              </td>
+              <td className="text-right px-5">
+                {numberWithCommas(Number(cR - dR).toFixed(2))}
+              </td>
             </tr>
           </tbody>
         </table>

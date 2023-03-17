@@ -26,6 +26,7 @@ class PayrollList
     public $payroll_list_bereavement;
     public $payroll_list_separation_pay;
     public $payroll_list_other_allowances;
+    public $payroll_list_total_benefits;
     public $payroll_list_sss_er;
     public $payroll_list_philhealth_er;
     public $payroll_list_pagibig_er;
@@ -40,6 +41,7 @@ class PayrollList
     public $payroll_list_fwc_tithes;
     public $payroll_list_fca_tuition;
     public $payroll_list_other_deduction;
+    public $payroll_list_madatory_ee;
     public $payroll_list_tax;
     public $payroll_list_undertime;
     public $payroll_list_datetime;
@@ -104,27 +106,29 @@ class PayrollList
     public function readById()
     {
         try {
-            $sql = "select payrollList.payroll_list_payroll_id, ";
-            $sql .= "payrollList.payroll_list_aid, ";
-            $sql .= "payrollList.payroll_list_is_paid, ";
-            $sql .= "payrollList.payroll_list_gross, ";
-            $sql .= "payrollList.payroll_list_deduction, ";
-            $sql .= "payrollList.payroll_list_net_pay, ";
-            $sql .= "payrollList.payroll_list_employee_name, ";
-            $sql .= "payrollList.payroll_list_employee_salary, ";
-            $sql .= "payrollList.payroll_list_night_diff_per_day, ";
-            $sql .= "payrollList.payroll_list_employee_work_on_holiday, ";
-            $sql .= "payrollList.payroll_list_pagibig_additional, ";
-            $sql .= "payrollList.payroll_list_employee_id, ";
-            $sql .= "payroll.payroll_category_type, ";
-            $sql .= "payroll.payroll_id, ";
-            $sql .= "payroll.payroll_start_date, ";
-            $sql .= "payroll.payroll_end_date, ";
-            $sql .= "payroll.payroll_pay_date ";
+            $sql = "select *, sum(payrollList.payroll_list_gross) as salWages ";
+            // $sql = "select payrollList.payroll_list_payroll_id, ";
+            // $sql .= "payrollList.payroll_list_aid, ";
+            // $sql .= "payrollList.payroll_list_is_paid, ";
+            // $sql .= "payrollList.payroll_list_gross, ";
+            // $sql .= "payrollList.payroll_list_deduction, ";
+            // $sql .= "payrollList.payroll_list_net_pay, ";
+            // $sql .= "payrollList.payroll_list_employee_name, ";
+            // $sql .= "payrollList.payroll_list_employee_salary, ";
+            // $sql .= "payrollList.payroll_list_night_diff_per_day, ";
+            // $sql .= "payrollList.payroll_list_employee_work_on_holiday, ";
+            // $sql .= "payrollList.payroll_list_pagibig_additional, ";
+            // $sql .= "payrollList.payroll_list_employee_id, ";
+            // $sql .= "payroll.payroll_category_type, ";
+            // $sql .= "payroll.payroll_id, ";
+            // $sql .= "payroll.payroll_start_date, ";
+            // $sql .= "payroll.payroll_end_date, ";
+            // $sql .= "payroll.payroll_pay_date ";
             $sql .= "from {$this->tblPayrollList} as payrollList, ";
             $sql .= "{$this->tblPayroll} as payroll ";
             $sql .= "where payrollList.payroll_list_payroll_id = :payroll_list_payroll_id ";
             $sql .= "and payroll.payroll_id = payrollList.payroll_list_payroll_id ";
+            $sql .= "group by payrollList.payroll_list_employee_id ";
             $sql .= "order by payrollList.payroll_list_employee_name asc ";
             $query = $this->connection->prepare($sql);
             $query->execute([
@@ -141,18 +145,6 @@ class PayrollList
     {
         try {
             $sql = "select payrollList.*, ";
-            // $sql = "select payrollList.payroll_list_payroll_id, ";
-            // $sql .= "payrollList.payroll_list_aid, ";
-            // $sql .= "payrollList.payroll_list_is_paid, ";
-            // $sql .= "payrollList.payroll_list_gross, ";
-            // $sql .= "payrollList.payroll_list_deduction, ";
-            // $sql .= "payrollList.payroll_list_net_pay, ";
-            // $sql .= "payrollList.payroll_list_employee_name, ";
-            // $sql .= "payrollList.payroll_list_employee_salary, ";
-            // $sql .= "payrollList.payroll_list_night_diff_per_day, ";
-            // $sql .= "payrollList.payroll_list_employee_work_on_holiday, ";
-            // $sql .= "payrollList.payroll_list_pagibig_additional, ";
-            // $sql .= "payrollList.payroll_list_employee_id, ";
             $sql .= "payroll.payroll_category_type, ";
             $sql .= "payroll.payroll_id, ";
             $sql .= "payroll.payroll_start_date, ";
@@ -176,24 +168,26 @@ class PayrollList
     public function readLimit()
     {
         try {
-            $sql = "select payrollList.payroll_list_payroll_id, ";
-            $sql .= "payrollList.payroll_list_aid, ";
-            $sql .= "payrollList.payroll_list_is_paid, ";
-            $sql .= "payrollList.payroll_list_gross, ";
-            $sql .= "payrollList.payroll_list_deduction, ";
-            $sql .= "payrollList.payroll_list_net_pay, ";
-            $sql .= "payrollList.payroll_list_employee_name, ";
-            $sql .= "payrollList.payroll_list_employee_salary, ";
-            $sql .= "payrollList.payroll_list_night_diff_per_day, ";
-            $sql .= "payrollList.payroll_list_employee_id, ";
-            $sql .= "payroll.payroll_id, ";
-            $sql .= "payroll.payroll_start_date, ";
-            $sql .= "payroll.payroll_end_date, ";
-            $sql .= "payroll.payroll_pay_date ";
+            $sql = "select *, sum(payrollList.payroll_list_gross) as salWages ";
+            // $sql = "select payrollList.payroll_list_payroll_id, ";
+            // $sql .= "payrollList.payroll_list_aid, ";
+            // $sql .= "payrollList.payroll_list_is_paid, ";
+            // $sql .= "payrollList.payroll_list_gross, ";
+            // $sql .= "payrollList.payroll_list_deduction, ";
+            // $sql .= "payrollList.payroll_list_net_pay, ";
+            // $sql .= "payrollList.payroll_list_employee_name, ";
+            // $sql .= "payrollList.payroll_list_employee_salary, ";
+            // $sql .= "payrollList.payroll_list_night_diff_per_day, ";
+            // $sql .= "payrollList.payroll_list_employee_id, ";
+            // $sql .= "payroll.payroll_id, ";
+            // $sql .= "payroll.payroll_start_date, ";
+            // $sql .= "payroll.payroll_end_date, ";
+            // $sql .= "payroll.payroll_pay_date ";
             $sql .= "from {$this->tblPayrollList} as payrollList, ";
             $sql .= "{$this->tblPayroll} as payroll ";
             $sql .= "where payrollList.payroll_list_payroll_id = :payroll_list_payroll_id ";
             $sql .= "and payroll.payroll_id = payrollList.payroll_list_payroll_id ";
+            $sql .= "group by payrollList.payroll_list_employee_id ";
             $sql .= "order by payrollList.payroll_list_employee_name asc ";
             $sql .= "limit :start, ";
             $sql .= ":total ";
@@ -361,6 +355,7 @@ class PayrollList
             $sql .= "payroll_list_bereavement = :payroll_list_bereavement, ";
             $sql .= "payroll_list_separation_pay = :payroll_list_separation_pay, ";
             $sql .= "payroll_list_other_allowances = :payroll_list_other_allowances, ";
+            $sql .= "payroll_list_total_benefits = :payroll_list_total_benefits, ";
             $sql .= "payroll_list_sss_er = :payroll_list_sss_er, ";
             $sql .= "payroll_list_philhealth_er = :payroll_list_philhealth_er, ";
             $sql .= "payroll_list_pagibig_er = :payroll_list_pagibig_er, ";
@@ -375,6 +370,7 @@ class PayrollList
             $sql .= "payroll_list_fwc_tithes = :payroll_list_fwc_tithes, ";
             $sql .= "payroll_list_fca_tuition = :payroll_list_fca_tuition, ";
             $sql .= "payroll_list_other_deduction = :payroll_list_other_deduction, ";
+            $sql .= "payroll_list_madatory_ee = :payroll_list_madatory_ee, ";
             $sql .= "payroll_list_tax = :payroll_list_tax, ";
             $sql .= "payroll_list_undertime = :payroll_list_undertime, ";
             $sql .= "payroll_list_datetime = :payroll_list_datetime ";
@@ -402,6 +398,7 @@ class PayrollList
                 "payroll_list_bereavement" => $this->payroll_list_bereavement,
                 "payroll_list_separation_pay" => $this->payroll_list_separation_pay,
                 "payroll_list_other_allowances" => $this->payroll_list_other_allowances,
+                "payroll_list_total_benefits" => $this->payroll_list_total_benefits,
                 "payroll_list_sss_er" => $this->payroll_list_sss_er,
                 "payroll_list_philhealth_er" => $this->payroll_list_philhealth_er,
                 "payroll_list_pagibig_er" => $this->payroll_list_pagibig_er,
@@ -416,6 +413,7 @@ class PayrollList
                 "payroll_list_fwc_tithes" => $this->payroll_list_fwc_tithes,
                 "payroll_list_fca_tuition" => $this->payroll_list_fca_tuition,
                 "payroll_list_other_deduction" => $this->payroll_list_other_deduction,
+                "payroll_list_madatory_ee" => $this->payroll_list_madatory_ee,
                 "payroll_list_tax" => $this->payroll_list_tax,
                 "payroll_list_undertime" => $this->payroll_list_undertime,
                 "payroll_list_datetime" => $this->payroll_list_datetime,

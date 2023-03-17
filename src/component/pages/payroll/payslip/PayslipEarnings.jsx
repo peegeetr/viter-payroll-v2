@@ -20,7 +20,7 @@ const PayslipEarnings = ({ paytypeId, empid, payrollid, hourRate, days }) => {
   let basicHrs = days - numberOfHolidays;
   let totalAmount = basicPay;
   // setTotalEarnings(totalAmount);
-
+  console.log(earnings);
   return (
     <>
       {isLoading ? (

@@ -280,7 +280,7 @@ export const payComputeOtherAllowances = (earning) => {
 // compute holiday
 export const payComputeHoliday = (emp, holidays, payrollEarnings) => {
   let finalAmount = 0;
-  let holidayLeaveAmount = 0;
+  let regularAmount = 0;
   let holidayAmount = 0;
 
   let holidayList = [];
@@ -314,13 +314,13 @@ export const payComputeHoliday = (emp, holidays, payrollEarnings) => {
             //   emp,
             //   holidaysItem
             // ).dailyAmount;
-            holidayAmount += holidayTotalAmount(emp, holidaysItem).dailyAmount;
+            holidayAmount = holidayTotalAmount(emp, holidaysItem).dailyAmount;
           }
         }
       });
 
       // holidayAmount += holidayTotalAmount(emp, holidaysItem).dailyAmount;
-
+      regularAmount = holidayTotalAmount(emp, holidaysItem).dailyRate;
       holidayList.push({
         earnings_payroll_type_id: emp.payroll_category_type,
         earnings_employee: emp.payroll_list_employee_name,
@@ -344,7 +344,7 @@ export const payComputeHoliday = (emp, holidays, payrollEarnings) => {
 
   // finalAmount = holidayAmount - holidayLeaveAmount;
   finalAmount = holidayAmount;
-  return { finalAmount, holidayList };
+  return { finalAmount, regularAmount, holidayList };
   // return finalAmount;
 };
 
@@ -378,7 +378,7 @@ export const holidayTotalAmount = (emp, holidaysItem) => {
     if (workOnHoliday === 1 || holidaysItem.holidays_observed === 1) {
       // regularAmount += dailyRate;
       // ratedAmount += dailyRate * rate;
-      dailyAmount += dailyRate * rate;
+      dailyAmount = dailyRate * rate;
       // console.log(dailyAmount, dailyRate);
     }
   }
@@ -397,7 +397,7 @@ export const holidayTotalAmount = (emp, holidaysItem) => {
       // 30% additional
       // regularAmount += dailyRate;
       // ratedAmount += dailyRate * rate;
-      dailyAmount += dailyRate * rate;
+      dailyAmount = dailyRate * rate;
     }
   }
 
@@ -405,7 +405,7 @@ export const holidayTotalAmount = (emp, holidaysItem) => {
   // dailyAmount -= dailyRate;
   // dailyAmount = dailyAmount.toFixed(2);
 
-  return { dailyAmount };
+  return { dailyAmount, dailyRate };
 };
 
 // compute tax due
@@ -414,12 +414,13 @@ export const payComputeTaxDue = (
   gross,
   semiTax,
   totalBenefits,
-  totalMadatoryEe
+  totalMadatoryEe,
+  totalDiminimis
 ) => {
-  // console.log(emp);
   let taxDue = 0;
   let taxList = [];
-  const totalNonTaxableCompensation = totalBenefits + totalMadatoryEe;
+  const totalNonTaxableCompensation =
+    totalBenefits + totalMadatoryEe + totalDiminimis;
   let taxableCompensationIncome = gross - totalNonTaxableCompensation;
   semiTax.map((sTax) => {
     if (
@@ -428,8 +429,7 @@ export const payComputeTaxDue = (
       Number(taxableCompensationIncome) <= Number(sTax.semi_monthly_range_to)
     ) {
       taxDue =
-        taxableCompensationIncome -
-        Number(sTax.semi_monthly_less_amount) *
+        (taxableCompensationIncome - Number(sTax.semi_monthly_less_amount)) *
           (Number(sTax.semi_monthly_rate) / 100) +
         Number(sTax.semi_monthly_additional_amount);
     }

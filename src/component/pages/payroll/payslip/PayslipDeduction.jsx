@@ -49,7 +49,11 @@ const PayslipDeduction = ({ paytypeId, empid, payrollid }) => {
             <td colSpan={3} className="uppercase text-right xs:pr-16">
               Total {deductions?.data[0].paytype_name}
             </td>
-            <td>{numberWithCommas(deductions?.data[0].deduction_amount)}</td>
+            <td>
+              {numberWithCommas(
+                Number(deductions?.data[0].deduction_amount).toFixed(2)
+              )}
+            </td>
           </tr>
         </>
       )}

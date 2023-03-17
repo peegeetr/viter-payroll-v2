@@ -96,8 +96,6 @@ const ModalRun = ({
     let earningsNumPayList = run.earningsNumInstallmentList;
     let deducNumPayList = run.deducNumInstallmentList;
 
-    console.log("earningsNumPayList", earningsNumPayList);
-
     mutation.mutate({
       payrollList: payrollList.length > 0 ? payrollList : 0,
       holidayList: holidayList.length > 0 ? holidayList : 0,
@@ -141,7 +139,7 @@ const ModalRun = ({
               <button
                 type="submit"
                 className="btn-modal-submit"
-                disabled={loading}
+                disabled={mutation.isLoading}
                 onClick={handleYes}
               >
                 {loading ? <ButtonSpinner /> : "Confirm"}
@@ -149,7 +147,7 @@ const ModalRun = ({
               <button
                 type="reset"
                 className="btn-modal-cancel"
-                disabled={loading}
+                disabled={mutation.isLoading}
                 onClick={handleClose}
               >
                 Cancel

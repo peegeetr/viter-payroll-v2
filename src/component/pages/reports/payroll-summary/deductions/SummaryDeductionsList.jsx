@@ -227,7 +227,10 @@ const SummaryDeductionsList = () => {
                       <td className="text-left">
                         {/* {getDepartment(item.payroll_list_employee_id, job)} */}
                       </td>
-                      <td className="text-center">{getPayPeriod(result)}</td>
+                      <td className="text-center">{`${getPayPeriod(
+                        result?.pages[0].data[0].payroll_start_date,
+                        result?.pages[0].data[0].payroll_end_date
+                      )}`}</td>
                       <td className="px-6">
                         {numberWithCommas(item.payroll_list_sss_er)}
                       </td>

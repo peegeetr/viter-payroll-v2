@@ -141,14 +141,14 @@ const SummaryEarningsList = () => {
         </Formik>
       </div>
       <div className="text-center">
-        <div className="overflow-x-auto max-h-[40rem] z-0 ">
-          <table>
-            <thead>
-              <tr className="border-none text-center ">
+        <div className="overflow-x-auto max-h-[40rem] ">
+          <table className="">
+            <thead className="relative z-0">
+              <tr className="border-none text-center sticky top-0 ">
                 <th className="text-center" rowSpan="2">
                   #
                 </th>
-                <th className="min-w-[18rem] text-left" rowSpan="2">
+                <th className="min-w-[12rem] text-left" rowSpan="2">
                   Name
                 </th>
                 <th
@@ -194,7 +194,7 @@ const SummaryEarningsList = () => {
                   Gross Pay
                 </th>
               </tr>
-              <tr className="text-center ">
+              <tr className="text-center sticky top-[35px] ">
                 <th className="table-border">Hrs</th>
                 <th className="table-border">Rate</th>
                 <th className="table-border">Amount</th>
@@ -236,14 +236,17 @@ const SummaryEarningsList = () => {
             {result?.pages.map((page, key) => (
               <React.Fragment key={key}>
                 {page.data.map((item, key) => (
-                  <tbody key={key}>
-                    <tr className="text-right">
-                      <td className="text-center">{counter++}.</td>
-                      <td className="text-left">
+                  <tbody key={key} className=" ">
+                    <tr className="text-right ">
+                      <td className="text-center ">{counter++}.</td>
+                      <td className="text-left ">
                         {item.payroll_list_employee_name}
                       </td>
                       <td className="text-left"> </td>
-                      <td className="text-center">{getPayPeriod(result)}</td>
+                      <td className="text-center">{`${getPayPeriod(
+                        result?.pages[0].data[0].payroll_start_date,
+                        result?.pages[0].data[0].payroll_end_date
+                      )}`}</td>
                       <td className="px-6">
                         {numberWithCommas(item.payroll_list_basic_pay)}
                       </td>

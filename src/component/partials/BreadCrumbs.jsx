@@ -4,7 +4,7 @@ import { setStartIndex } from "../../store/StoreAction";
 import { StoreContext } from "../../store/StoreContext";
 import { devNavUrl, getUserType, UrlAdmin } from "../helpers/functions-general";
 
-const BreadCrumbs = ({ param = "" }) => {
+const BreadCrumbs = ({ param = "", name = "" }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const location = useLocation();
 
@@ -17,7 +17,7 @@ const BreadCrumbs = ({ param = "" }) => {
     .filter((crumb) => crumb !== "")
     .map((crumb, key) => {
       currentLink += `/${crumb}`;
-
+      console.log(crumb.replace("view", "").replace(`${name}`, ""));
       return (
         <li
           className="text-primary after:mr-2 after:content-['>'] last:after:hidden last:text-dark last:pointer-events-none"
@@ -28,7 +28,7 @@ const BreadCrumbs = ({ param = "" }) => {
             to={`${link}${currentLink}${param}`}
             className="mr-2 text-base font-medium hover:text-primary capitalize"
           >
-            {crumb}
+            {name !== "" ? `${crumb.replace("view", `${name}`)}` : `${crumb}`}
           </Link>
         </li>
       );

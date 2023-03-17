@@ -1,16 +1,16 @@
 import React from "react";
 
-// Online URL dev hris
-export const hrisDevBaseImgUrl = "https://hr-app.frontlinebusiness.com.ph/img";
-export const hrisDevApiUrl = "https://hr-app.frontlinebusiness.com.ph/rest";
-export const hrisdevBaseUrl = "https://hr-app.frontlinebusiness.com.ph";
-export const hrisdevNavUrl = "";
+// // Online URL dev hris
+// export const hrisDevBaseImgUrl = "https://hr-app.frontlinebusiness.com.ph/img";
+// export const hrisDevApiUrl = "https://hr-app.frontlinebusiness.com.ph/rest";
+// export const hrisdevBaseUrl = "https://hr-app.frontlinebusiness.com.ph";
+// export const hrisdevNavUrl = "";
 
-// Online URL dev payroll
-export const devBaseImgUrl = "https://payroll-app.frontlinebusiness.com.ph/img";
-export const devApiUrl = "https://payroll-app.frontlinebusiness.com.ph/rest";
-export const devBaseUrl = "https://payroll-app.frontlinebusiness.com.ph";
-export const devNavUrl = "";
+// // Online URL dev payroll
+// export const devBaseImgUrl = "https://payroll-app.frontlinebusiness.com.ph/img";
+// export const devApiUrl = "https://payroll-app.frontlinebusiness.com.ph/rest";
+// export const devBaseUrl = "https://payroll-app.frontlinebusiness.com.ph";
+// export const devNavUrl = "";
 
 // Local URL dev
 // export const devApiUrl = "http://localhost/react-vite/viter-hris-v3/rest";
@@ -26,18 +26,18 @@ export const devNavUrl = "";
 // export const devBaseImgUrl = "http://localhost/viter-payroll-v2/public/img";
 // export const devNavUrl = "";
 
-// // cy url
-// export const devBaseImgUrl = "https://payroll-app.frontlinebusiness.com.ph/img";
-// export const devApiUrl = "http://localhost/projects/viter-payroll-v2/rest";
-// export const devBaseUrl = "http://localhost/projects/viter-payroll-v2/public";
-// export const devNavUrl = "";
+// cy url
+export const devBaseImgUrl = "https://payroll-app.frontlinebusiness.com.ph/img";
+export const devApiUrl = "http://localhost/projects/viter-payroll-v2/rest";
+export const devBaseUrl = "http://localhost/projects/viter-payroll-v2/public";
+export const devNavUrl = "";
 
-// // local URL dev hris
-// export const hrisDevBaseImgUrl =
-//   "https://hris.frontlinebusiness.com.ph/dev-app/img";
-// export const hrisDevApiUrl = "http://localhost/projects/viter-hris-v3/rest";
-// export const hrisdevBaseUrl = "http://localhost/projects/viter-hris-v3/public";
-// export const hrisdevNavUrl = "/dev-app";
+// local URL dev hris
+export const hrisDevBaseImgUrl =
+  "https://hris.frontlinebusiness.com.ph/dev-app/img";
+export const hrisDevApiUrl = "http://localhost/projects/viter-hris-v3/rest";
+export const hrisdevBaseUrl = "http://localhost/projects/viter-hris-v3/public";
+export const hrisdevNavUrl = "/dev-app";
 
 export const UrlAdmin = "";
 export const UrlSystem = "system";
@@ -203,19 +203,11 @@ export const getWorkingDays = (startDate, endDate) => {
 };
 
 // get pay period working days between dates
-export const getPayPeriod = (result) => {
-  const mo = formatDate(result?.pages[0].data[0].payroll_start_date).split(
-    " "
-  )[1];
-  const startDay = formatDate(
-    result?.pages[0].data[0].payroll_start_date
-  ).split(" ")[2];
-  const endDay = formatDate(result?.pages[0].data[0].payroll_end_date).split(
-    " "
-  )[2];
-  const year = formatDate(result?.pages[0].data[0].payroll_start_date).split(
-    " "
-  )[3];
+export const getPayPeriod = (startDate, endDate) => {
+  const mo = formatDate(startDate).split(" ")[1];
+  const startDay = formatDate(startDate).split(" ")[2];
+  const endDay = formatDate(endDate).split(" ")[2];
+  const year = formatDate(startDate).split(" ")[3];
   return `${mo} ${startDay} - ${endDay}, ${year}`;
 };
 

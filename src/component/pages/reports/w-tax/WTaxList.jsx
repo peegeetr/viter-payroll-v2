@@ -1,15 +1,9 @@
-import React from "react";
 import { Form, Formik } from "formik";
+import React from "react";
 import { MdFilterAlt } from "react-icons/md";
 import * as Yup from "yup";
 import { StoreContext } from "../../../../store/StoreContext";
 import { InputText } from "../../../helpers/FormInputs";
-import {
-  getPayPeriod,
-  numberWithCommas,
-} from "../../../helpers/functions-general";
-import NoData from "../../../partials/NoData";
-import ServerError from "../../../partials/ServerError";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 
 const WTaxList = () => {

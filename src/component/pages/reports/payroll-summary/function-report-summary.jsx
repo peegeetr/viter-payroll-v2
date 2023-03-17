@@ -41,5 +41,6 @@ export const getErningsRate = (earning, item) => {
   top: 35px
 }
 
+className="sticky left-[1px] bg-white"  
 
 */

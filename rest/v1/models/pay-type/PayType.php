@@ -11,6 +11,10 @@ class PayType
 
     public $connection;
     public $lastInsertedId;
+    public $paytype_start;
+    public $paytype_total;
+    public $date_from;
+    public $date_to;
     public $tblPayType;
     public $tblPayItem;
 

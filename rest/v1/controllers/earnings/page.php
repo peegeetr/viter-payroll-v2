@@ -20,7 +20,7 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
         // get data
         // get task id from query string
         $earnings->earnings_start = $_GET['start'];
-        $earnings->earnings_total = 15;
+        $earnings->earnings_total = 5;
         //check to see if task id in query string is not empty and is number, if not return json error
         checkLimitId($earnings->earnings_start, $earnings->earnings_total);
         $query = checkReadLimit($earnings);

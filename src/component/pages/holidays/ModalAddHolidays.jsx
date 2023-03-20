@@ -33,7 +33,7 @@ const ModalAddHolidays = ({ item }) => {
       ),
     onSuccess: (data) => {
       // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: ["holidays"] });
+      queryClient.invalidateQueries({ queryKey: ["holiday"] });
       // show success box
       if (data.success) {
         dispatch(setSuccess(true));

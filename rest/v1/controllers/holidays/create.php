@@ -22,7 +22,7 @@ $holidays->holidays_created = date("Y-m-d H:i:s");
 $holidays->holidays_datetime = date("Y-m-d H:i:s");
 
 isHolidayNameExist($holidays, $holidays->holidays_name);
-isHolidayDateExist($holidays, $holidays->holidays_date);
+// isHolidayDateExist($holidays, $holidays->holidays_date);
 
 // create
 $query = checkCreate($holidays);

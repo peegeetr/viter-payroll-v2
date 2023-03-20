@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 08, 2023 at 12:31 AM
+-- Generation Time: Mar 20, 2023 at 06:17 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -45,6 +45,7 @@ CREATE TABLE `prv2_earnings` (
   `earnings_start_pay_date` varchar(20) NOT NULL,
   `earnings_end_pay_date` varchar(20) NOT NULL,
   `earnings_hris_date` varchar(20) NOT NULL,
+  `earnings_holidays_rate` varchar(5) NOT NULL,
   `earnings_hris_undertime_out` varchar(10) NOT NULL,
   `earnings_created` datetime NOT NULL,
   `earnings_datetime` datetime NOT NULL

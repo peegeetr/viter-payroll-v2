@@ -1,0 +1,31 @@
+ 
+
+*controllers  
+    - holidays/holidays.php
+    - holidays/page.php
+    - holidays/search.php
+
+    - payroll/list/benefits.php
+    - payroll/list/filter.php
+    - payroll/list/functions.php
+    - payroll/list/summary.php
+
+*models 
+    - holidays/Holidays.php
+    - payroll/Payroll.php
+    - payroll/PayrollList.php 
+
+*htaccess 
+    - payrollList
+    - holidays 
+
+*db tables 
+    - 
+
+*core functions 
+    -
+
+*extra
+    -
+    
+ 

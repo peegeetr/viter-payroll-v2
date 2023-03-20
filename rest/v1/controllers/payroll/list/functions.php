@@ -79,10 +79,18 @@ function checkReadSummaryLimit($object)
     return $query;
 }
 
-// Read limit
+// filter by date
 function checkReadSummaryByDate($object)
 {
     $query = $object->readSummaryByDate();
-    checkQuery($query, "Empty records. (limit)");
+    checkQuery($query, "Empty records. (payroll list limit by date)");
+    return $query;
+}
+
+// filter by employee id and date
+function checkReadSummaryBenefitsByEmpId($object)
+{
+    $query = $object->readSummaryBenefitsByEmpId();
+    checkQuery($query, "Empty records. (payroll list limit by employee id and date)");
     return $query;
 }

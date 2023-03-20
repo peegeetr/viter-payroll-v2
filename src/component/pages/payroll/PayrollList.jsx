@@ -157,8 +157,8 @@ const PayrollList = ({ setItemEdit }) => {
                           formatDate(item.payroll_end_date).split(" ")[2]
                         },  ${formatDate(item.payroll_end_date).split(" ")[3]}`}
                       </td>
-                      <td>{"42"}</td>
-                      <td>4200</td>
+                      <td>{item.count}</td>
+                      <td>{"0"}</td>
                       <td>
                         {item.payroll_is_paid === 1 ? (
                           <StatusActive text={"paid"} />

@@ -95,7 +95,7 @@ const ManageDeductionList = () => {
                 {/* <th className="min-w-[5rem]">Payroll ID</th> */}
                 <th className="min-w-[10rem]">Employeee</th>
                 <th className="min-w-[12rem]">Details</th>
-                <th className="min-w-[5rem]">Amount</th>
+                <th className="min-w-[5rem] text-right">Amount</th>
                 <th>Installment</th>
                 <th className="min-w-[6rem]">Start Date</th>
                 <th className="min-w-[6rem]">End Date</th>
@@ -130,14 +130,13 @@ const ManageDeductionList = () => {
                       {/* <td>{item.deduction_payroll_id}</td> */}
                       <td>{item.deduction_employee}</td>
                       <td>{item.deduction_details}</td>
-                      <td>
+                      <td className="text-right">
                         P
                         {numberWithCommas(
                           Number(item.deduction_amount).toFixed(2)
                         )}
                       </td>
-                      {/* <td>{item.deduction_number_of_installment}</td> */}
-                      <td>
+                      <td className="text-center">
                         {item.deduction_number_of_installment === 0
                           ? "N/A"
                           : `${item.deduction_num_pay}/${item.deduction_number_of_installment}`}

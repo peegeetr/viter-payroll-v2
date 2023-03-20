@@ -93,7 +93,7 @@ const ManageEarningsList = () => {
                 <th className="min-w-[10rem]">Employeee</th>
                 <th className="min-w-[7rem]">Pay Item</th>
                 <th className="min-w-[12rem]">Details</th>
-                <th className="min-w-[5rem]">Amount</th>
+                <th className="min-w-[5rem] text-right ">Amount</th>
                 <th>Installment</th>
                 <th className="min-w-[6rem]">Start Date</th>
                 <th className="min-w-[6rem]">End Date</th>
@@ -133,13 +133,13 @@ const ManageEarningsList = () => {
                       <td>{item.earnings_employee}</td>
                       <td>{item.payitem_name}</td>
                       <td>{item.earnings_details}</td>
-                      <td>
+                      <td className="text-right">
                         P
                         {numberWithCommas(
                           Number(item.earnings_amount).toFixed(2)
                         )}
                       </td>
-                      <td>
+                      <td className="text-center">
                         {item.earnings_number_of_installment === 0
                           ? "N/A"
                           : `${item.earnings_num_pay}/${item.earnings_number_of_installment}`}

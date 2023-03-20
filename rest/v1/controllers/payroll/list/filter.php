@@ -17,6 +17,23 @@ $response = new Response();
 if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
     checkApiKey();
 
+    if (array_key_exists("startDate", $_GET) && array_key_exists("endDate", $_GET) && array_key_exists("employeeId", $_GET)) {
+        // get data
+        $payrollList->payroll_list_employee_id = $_GET['employeeId'];
+        $employee_id = $_GET['employeeId'];
+        $payrollList->date_from = $_GET['startDate'];
+        $payrollList->date_to = $_GET['endDate'];
+        checkId($payrollList->payroll_list_employee_id);
+        if ($payrollList->payroll_list_employee_id === '0') {
+            $query = checkReadSummaryByDate($payrollList);
+            http_response_code(200);
+            getQueriedData($query);
+        }
+        $query = checkReadSummaryBenefitsByEmpId($payrollList);
+        http_response_code(200);
+        getQueriedData($query);
+    }
+
     if (array_key_exists("startDate", $_GET) && array_key_exists("endDate", $_GET)) {
         // get data
         $payrollList->date_from = $_GET['startDate'];

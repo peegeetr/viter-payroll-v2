@@ -5,17 +5,17 @@ import { Link } from "react-router-dom";
 import { StoreContext } from "../../../../store/StoreContext";
 import { getUserType } from "../../../helpers/functions-general";
 
-const SummaryTypeLink = () => {
+const PayBenefitsLink = () => {
   const { store, dispatch } = React.useContext(StoreContext);
   const link = getUserType(store.credentials.data.role_is_developer === 1);
   return (
     <div className="group flex items-center justify-between border-b border-solid border-gray-300">
-      <Link to={`${link}/reports/paytype`} className="w-full py-1">
+      <Link to={`${link}/reports/benefits`} className="w-full py-1">
         <div className="flex items-center">
           <span className="text-lg mr-4">
             <BsFillCalculatorFill />
           </span>
-          <span className=" font-bold">Paytype</span>
+          <span className=" font-bold">Benefits</span>
         </div>
         <p className="ml-[35px] my-0">
           Manage what actions and capabilities every account are can perform in
@@ -24,7 +24,7 @@ const SummaryTypeLink = () => {
       </Link>
 
       <Link
-        to={`${link}/reports/paytype`}
+        to={`${link}/reports/benefits`}
         className="btn-action-table group-hover:bg-primary group-hover:text-white"
       >
         <SlArrowRight className="inline" />
@@ -33,4 +33,4 @@ const SummaryTypeLink = () => {
   );
 };
 
-export default SummaryTypeLink;
+export default PayBenefitsLink;

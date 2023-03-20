@@ -54,6 +54,7 @@ import SummaryEarnings from "./component/pages/reports/payroll-summary/earnings/
 import SummaryDeductions from "./component/pages/reports/payroll-summary/deductions/SummaryDeductions";
 import SummaryType from "./component/pages/reports/paytype/SummaryType";
 import SummaryTypeView from "./component/pages/reports/paytype/view/SummaryTypeView";
+import PayBenefits from "./component/pages/reports/paybenefits/PayBenefits";
 
 function App() {
   // Create a client
@@ -552,6 +553,14 @@ function App() {
               element={
                 <ProtectedRouteSystem>
                   <WTax />
+                </ProtectedRouteSystem>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/reports/benefits`}
+              element={
+                <ProtectedRouteSystem>
+                  <PayBenefits />
                 </ProtectedRouteSystem>
               }
             />

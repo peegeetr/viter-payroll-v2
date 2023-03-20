@@ -1,5 +1,5 @@
 import React from "react";
-import { BsFillCalculatorFill } from "react-icons/bs";
+import { FaClipboardList } from "react-icons/fa";
 import { SlArrowRight } from "react-icons/sl";
 import { Link } from "react-router-dom";
 import { StoreContext } from "../../../../store/StoreContext";
@@ -13,7 +13,7 @@ const SummaryTypeLink = () => {
       <Link to={`${link}/reports/paytype`} className="w-full py-1">
         <div className="flex items-center">
           <span className="text-lg mr-4">
-            <BsFillCalculatorFill />
+            <FaClipboardList />
           </span>
           <span className=" font-bold">Paytype</span>
         </div>

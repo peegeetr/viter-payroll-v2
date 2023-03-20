@@ -20,7 +20,7 @@ const PayslipEarnings = ({ paytypeId, empid, payrollid, hourRate, days }) => {
   let basicHrs = days - numberOfHolidays;
   let totalAmount = basicPay;
   // setTotalEarnings(totalAmount);
-  console.log(earnings);
+  console.log(earnings, basicPay);
   return (
     <>
       {isLoading ? (
@@ -66,12 +66,14 @@ const PayslipEarnings = ({ paytypeId, empid, payrollid, hourRate, days }) => {
             )}
           {earnings?.data.map((item, key) => {
             totalAmount += Number(item.earnings_amount);
+            console.log(totalAmount.toFixed(2));
             return (
               <tr key={key} className="hover:bg-transparent">
                 <td className="w-[20rem]">
                   {item.payitem_name} {item.earnings_details}
                 </td>
-                <td className="w-[10rem]">{numberOfHolidays * 8}</td>
+                <td className="w-[10rem]">{8}</td>
+                {/* <td className="w-[10rem]">{numberOfHolidays * 8}</td> */}
                 <td className=" text-right px-4 w-[5rem]">
                   {(
                     hourRate *

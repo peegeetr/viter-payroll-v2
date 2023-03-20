@@ -15,17 +15,10 @@ const PayslipMandatoryDeduc = ({ paytypeId, payslip, empid, payrollid }) => {
     "get", // method
     `deductions-${paytypeId}` // key
   );
-
+  // console.log(deductions);
   return (
     <>
-      {isLoading ? (
-        <tr className="text-center ">
-          <td colSpan="100%" className="p-10">
-            {/* <TableSpinner /> */}
-            Loading...
-          </td>
-        </tr>
-      ) : (
+      {payslip?.data.length > 0 && (
         <>
           {payslip?.data.length > 0 && (
             <>

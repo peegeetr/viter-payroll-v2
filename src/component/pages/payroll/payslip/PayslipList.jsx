@@ -28,7 +28,7 @@ const PayslipList = ({ payslip }) => {
     Number(payslip?.data[0].payroll_list_total_benefits);
   let netPay = totalEarnings - Number(payslip?.data[0].payroll_list_deduction);
   console.log(
-    payslip,
+    // payslip,
     Number(payslip?.data[0].payroll_list_gross),
     Number(payslip?.data[0].payroll_list_total_benefits)
   );
@@ -132,7 +132,8 @@ const PayslipList = ({ payslip }) => {
                 net pay
               </td>
               <td className=" text-right px-4">
-                {numberWithCommas(Number(netPay.toFixed(2)))}
+                {numberWithCommas(netPay.toFixed(2))}
+                {/* {12312300} */}
               </td>
             </tr>
           </tbody>

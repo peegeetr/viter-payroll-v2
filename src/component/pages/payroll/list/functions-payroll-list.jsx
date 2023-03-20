@@ -172,7 +172,7 @@ export const runPayroll = (
     //  holiday for each employee
     holidayAmount = payComputeHoliday(emp, holidays, payrollEarnings);
 
-    totalHolidayAmount += holidayAmount.finalAmount;
+    totalHolidayAmount = holidayAmount.accumulatedAmount;
 
     // night diffirencial
     nightDiffAmount = payComputeNightDiff(emp, holidays, payrollEarnings);
@@ -253,7 +253,7 @@ export const runPayroll = (
     netPay = grossAmount + totalBenefits - deductionAmount;
     console.log(
       emp.payroll_list_employee_name,
-      totalTaxAmount,
+      // totalTaxAmount,
       grossAmount,
       totalHolidayAmount,
       holidayAmount.regularAmount

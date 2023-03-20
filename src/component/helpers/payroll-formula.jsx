@@ -282,6 +282,7 @@ export const payComputeHoliday = (emp, holidays, payrollEarnings) => {
   let finalAmount = 0;
   let regularAmount = 0;
   let holidayAmount = 0;
+  let accumulatedAmount = 0;
 
   let holidayList = [];
   holidays.map((holidaysItem) => {
@@ -320,8 +321,9 @@ export const payComputeHoliday = (emp, holidays, payrollEarnings) => {
 
       // holidayAmount += holidayTotalAmount(emp, holidaysItem).dailyAmount;
       // if(totalLeaveAmount === 0 || totalAbsencesAmount === 0)
-      regularAmount = holidayTotalAmount(emp, holidaysItem).dailyRate;
+      regularAmount += holidayTotalAmount(emp, holidaysItem).dailyRate;
       holidayAmount = holidayTotalAmount(emp, holidaysItem).dailyAmount;
+      accumulatedAmount += holidayAmount;
       holidayList.push({
         earnings_payroll_type_id: emp.payroll_category_type,
         earnings_employee: emp.payroll_list_employee_name,
@@ -329,7 +331,7 @@ export const payComputeHoliday = (emp, holidays, payrollEarnings) => {
         earnings_paytype_id: wagesEarningsId,
         earnings_payitem_id: holidayId,
         // earnings_amount:  holidayTotalAmount(emp, holidaysItem).dailyAmount,
-        earnings_amount: holidayAmount,
+        earnings_amount: holidayAmount.toFixed(2),
         earnings_details: `${holidaysItem.holidays_name} (${
           holidaysItem.holidays_rate
         }%) ${formatDate(holidaysItem.holidays_date)}`,
@@ -346,7 +348,7 @@ export const payComputeHoliday = (emp, holidays, payrollEarnings) => {
 
   // finalAmount = holidayAmount - holidayLeaveAmount;
   finalAmount = holidayAmount;
-  return { finalAmount, regularAmount, holidayList };
+  return { finalAmount, regularAmount, holidayList, accumulatedAmount };
   // return finalAmount;
 };
 

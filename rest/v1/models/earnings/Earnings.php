@@ -143,6 +143,7 @@ class Earnings
             $sql .= "{$this->tblPayItem} as payitem ";
             $sql .= "where earnings.earnings_paytype_id = paytype.paytype_aid ";
             $sql .= "and earnings.earnings_payitem_id = payitem.payitem_aid ";
+            $sql .= "and payitem.payitem_paytype_id = paytype.paytype_aid ";
             $sql .= "order by ";
             $sql .= "earnings.earnings_is_paid asc, ";
             $sql .= "DATE(earnings.earnings_start_pay_date) desc, ";
@@ -184,6 +185,7 @@ class Earnings
             $sql .= "{$this->tblPayItem} as payitem ";
             $sql .= "where earnings.earnings_paytype_id = paytype.paytype_aid ";
             $sql .= "and earnings.earnings_payitem_id = payitem.payitem_aid ";
+            $sql .= "and payitem.payitem_paytype_id = paytype.paytype_aid ";
             $sql .= "order by ";
             $sql .= "earnings.earnings_is_paid asc, ";
             $sql .= "DATE(earnings.earnings_start_pay_date) desc, ";
@@ -229,6 +231,7 @@ class Earnings
             $sql .= "{$this->tblPayItem} as payitem ";
             $sql .= "where earnings.earnings_paytype_id = paytype.paytype_aid ";
             $sql .= "and earnings.earnings_payitem_id = payitem.payitem_aid ";
+            $sql .= "and payitem.payitem_paytype_id = paytype.paytype_aid ";
             $sql .= "and earnings.earnings_employee like :search ";
             $sql .= "order by ";
             $sql .= "earnings.earnings_is_paid asc, ";

@@ -67,9 +67,47 @@ class Holidays
         try {
             $sql = "select * ";
             $sql .= "from {$this->tblHolidays} ";
-            $sql .= "order by holidays_is_active desc ";
+            $sql .= "order by holidays_is_active desc, ";
+            $sql .= "holidays_name asc ";
 
             $query = $this->connection->query($sql);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    public function readLimit()
+    {
+        try {
+            $sql = "select * ";
+            $sql .= "from {$this->tblHolidays} ";
+            $sql .= "order by holidays_is_active desc, ";
+            $sql .= "holidays_name asc ";
+            $sql .= "limit :start, ";
+            $sql .= ":total ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "start" => $this->holidays_start - 1,
+                "total" => $this->holidays_total,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    public function search()
+    {
+        try {
+            $sql = "select * from {$this->tblHolidays} ";
+            $sql .= "where holidays_name like :search ";
+            $sql .= "order by holidays_is_active desc, ";
+            $sql .= "holidays_name asc ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "search" => "{$this->holidays_search}%",
+            ]);
         } catch (PDOException $ex) {
             $query = false;
         }
@@ -120,44 +158,6 @@ class Holidays
         }
         return $query;
     }
-
-    public function search()
-    {
-        try {
-            $sql = "select * from {$this->tblHolidays} ";
-            $sql .= "where holidays_name like :search ";
-            $sql .= "order by holidays_name asc ";
-            $query = $this->connection->prepare($sql);
-            $query->execute([
-                "search" => "{$this->holidays_search}%",
-            ]);
-        } catch (PDOException $ex) {
-            $query = false;
-        }
-        return $query;
-    }
-
-
-    public function readLimit()
-    {
-        try {
-            $sql = "select * ";
-            $sql .= "from {$this->tblHolidays} ";
-            $sql .= "order by holidays_is_active desc, ";
-            $sql .= "holidays_name asc ";
-            $sql .= "limit :start, ";
-            $sql .= ":total ";
-            $query = $this->connection->prepare($sql);
-            $query->execute([
-                "start" => $this->holidays_start - 1,
-                "total" => $this->holidays_total,
-            ]);
-        } catch (PDOException $ex) {
-            $query = false;
-        }
-        return $query;
-    }
-
 
     public function checkHolidayName()
     {

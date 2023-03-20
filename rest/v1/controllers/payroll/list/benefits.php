@@ -4,7 +4,6 @@
 require '../../../core/header.php';
 // use needed functions
 require '../../../core/functions.php';
-require 'functions.php';
 // use needed classes
 require '../../../models/payroll/list/PayrollList.php';
 // check database connection
@@ -17,16 +16,21 @@ $response = new Response();
 if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
     checkApiKey();
 
-    if (array_key_exists("start", $_GET)) {
-        // get payroll id  
+    if (
+        array_key_exists("listpayrollid", $_GET) &&
+        array_key_exists("start", $_GET)
+
+    ) {
+        // get payroll id 
+        $payrollList->payroll_list_payroll_id = $_GET['listpayrollid'];
         // get task id from query string
         $payrollList->payrollList_start = $_GET['start'];
         $payrollList->payrollList_total = 5;
         //check to see if task id in query string is not empty and is number, if not return json error
         checkLimitId($payrollList->payrollList_start, $payrollList->payrollList_total);
-        $query = checkReadSummaryLimit($payrollList);
+        $query = checkReadLimit($payrollList);
         http_response_code(200);
-        $total_result = checkReadAllSummary($payrollList);
+        $total_result = checkReadAll($payrollList);
         http_response_code(200);
 
         $returnData["data"] = getResultData($query);
@@ -40,7 +44,6 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
         $response->send();
         exit;
     }
-
     // return 404 error if endpoint not available
     checkEndpoint();
 }

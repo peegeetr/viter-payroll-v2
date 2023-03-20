@@ -3,6 +3,7 @@ import BreadCrumbs from "../../partials/BreadCrumbs.jsx";
 import Footer from "../../partials/Footer.jsx";
 import Header from "../../partials/Header.jsx";
 import Navigation from "../../partials/Navigation.jsx";
+import PayBenefitsLink from "./paybenefits/PayBenefitsLink.jsx";
 import PayrollSummaryLink from "./payroll-summary/PayrollSummaryLink.jsx";
 import SummaryTypeLink from "./paytype/SummaryTypeLink.jsx";
 import WTaxLink from "./w-tax/WTaxLink.jsx";
@@ -24,6 +25,9 @@ const ReportsLink = () => {
           </li>
           <li className="py-2">
             <SummaryTypeLink />
+          </li>
+          <li className="py-2">
+            <PayBenefitsLink />
           </li>
         </ul>
         <Footer />

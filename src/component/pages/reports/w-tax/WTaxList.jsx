@@ -98,38 +98,38 @@ const WTaxList = () => {
           <tbody>
             <tr className="bg-gray-200 hover:bg-gray-200 text-primary">
               <td>Total Amount of Compensation</td>
-              <td className="w-[8rem]">0.00</td>
-              <td>0.00</td>
+              <td className="w-[8rem] text-right px-4">0.00</td>
+              <td className=" text-right px-4">0.00</td>
             </tr>
             <tr>
               <td className="w-[15rem]">Less Non Taxable Compensation</td>
-              <td className="w-[8rem]">0.00</td>
-              <td></td>
+              <td className="w-[8rem] text-right px-4">0.00</td>
+              <td className=" text-right px-4"></td>
             </tr>
             <tr>
               <td className="w-[15rem]">13th Month & Other Benefits</td>
-              <td className="w-[8rem]">9,500.00</td>
-              <td></td>
+              <td className="w-[8rem] text-right px-4">9,500.00</td>
+              <td className=" text-right px-4"></td>
             </tr>
             <tr>
               <td className="w-[15rem]">Deminimis</td>
-              <td className="w-[8rem]">0.00</td>
-              <td></td>
+              <td className="w-[8rem] text-right px-4">0.00</td>
+              <td className=" text-right px-4"></td>
             </tr>
             <tr>
               <td className="w-[15rem]">Employee Share (SSS, PHIC, PGBG)</td>
-              <td className="w-[8rem]">0.00</td>
-              <td></td>
+              <td className="w-[8rem] text-right px-4">0.00</td>
+              <td className=" text-right px-4"></td>
             </tr>
             <tr className="  bg-gray-200 hover:bg-gray-200 text-primary">
-              <td className="w-[15rem]  ">Total Non Taxable Compensation</td>
-              <td>9,500.00</td>
-              <td>9,500.00</td>
+              <td className="w-[15rem] ">Total Non Taxable Compensation</td>
+              <td className=" text-right px-4">9,500.00</td>
+              <td className=" text-right px-4">9,500.00</td>
             </tr>
             <tr className="  bg-gray-200 hover:bg-gray-200 text-primary">
               <td className="w-[15rem] ">Tax Withheld</td>
-              <td>0.00</td>
-              <td>0.00</td>
+              <td className=" text-right px-4">0.00</td>
+              <td className=" text-right px-4">0.00</td>
             </tr>
           </tbody>
         </table>

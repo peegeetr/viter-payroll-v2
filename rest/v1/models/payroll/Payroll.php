@@ -128,11 +128,16 @@ class Payroll
     public function readAll()
     {
         try {
-            $sql = "select * from ";
-            $sql .= "{$this->tblPayroll} as pr, ";
-            $sql .= "{$this->tblPayrollType} as prlist ";
+            $sql = "select *, ";
+            $sql .= "COUNT(prlist.payroll_list_employee_id) as count ";
+            $sql .= "from {$this->tblPayroll} as pr, ";
+            $sql .= "{$this->tblPayrollList} as prlist, ";
+            $sql .= "{$this->tblPayrollType} as prtype ";
             $sql .= "where ";
-            $sql .= "pr.payroll_category_type = prlist.payroll_type_aid ";
+            $sql .= "pr.payroll_category_type = prtype.payroll_type_aid ";
+            $sql .= "and pr.payroll_id = prlist.payroll_list_payroll_id ";
+            $sql .= "GROUP BY prlist.payroll_list_employee_id ";
+            $sql .= "and prlist.payroll_list_payroll_id ";
             $sql .= "order by pr.payroll_is_paid, ";
             $sql .= "DATE(pr.payroll_pay_date), pr.payroll_id desc ";
             $query = $this->connection->query($sql);
@@ -146,11 +151,16 @@ class Payroll
     public function readLimit()
     {
         try {
-            $sql = "select * from ";
-            $sql .= "{$this->tblPayroll} as pr, ";
-            $sql .= "{$this->tblPayrollType} as prlist ";
+            $sql = "select *, ";
+            $sql .= "COUNT(prlist.payroll_list_employee_id) as count ";
+            $sql .= "from {$this->tblPayroll} as pr, ";
+            $sql .= "{$this->tblPayrollList} as prlist, ";
+            $sql .= "{$this->tblPayrollType} as prtype ";
             $sql .= "where ";
-            $sql .= "pr.payroll_category_type = prlist.payroll_type_aid ";
+            $sql .= "pr.payroll_category_type = prtype.payroll_type_aid ";
+            $sql .= "and pr.payroll_id = prlist.payroll_list_payroll_id ";
+            $sql .= "GROUP BY prlist.payroll_list_employee_id ";
+            $sql .= "and prlist.payroll_list_payroll_id ";
             $sql .= "order by pr.payroll_is_paid, ";
             $sql .= "DATE(pr.payroll_pay_date), pr.payroll_id desc ";
             $sql .= "limit :start, ";
@@ -169,12 +179,18 @@ class Payroll
     public function search()
     {
         try {
-            $sql = "select * from ";
-            $sql .= "{$this->tblPayroll} as pr, ";
-            $sql .= "{$this->tblPayrollType} as prlist ";
+            $sql = "select *, ";
+            $sql .= "COUNT(prlist.payroll_list_employee_id) as count ";
+            $sql .= "from {$this->tblPayroll} as pr, ";
+            $sql .= "{$this->tblPayrollList} as prlist, ";
+            $sql .= "{$this->tblPayrollType} as prtype ";
             $sql .= "where ";
-            $sql .= "pr.payroll_category_type = prlist.payroll_type_aid ";
+            $sql .= "pr.payroll_category_type = prtype.payroll_type_aid ";
+            $sql .= "and pr.payroll_id = prlist.payroll_list_payroll_id ";
             $sql .= "and pr.payroll_id like :search ";
+            $sql .= "GROUP BY prlist.payroll_list_employee_id ";
+            $sql .= "and prlist.payroll_list_payroll_id ";
+            $sql .= "order by pr.payroll_is_paid, ";
             $sql .= "DATE(pr.payroll_pay_date), pr.payroll_id desc ";
             $query = $this->connection->prepare($sql);
             $query->execute([

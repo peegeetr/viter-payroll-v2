@@ -301,20 +301,19 @@ export const runPayroll = (
       payroll_list_tax: totalTaxAmount.toFixed(2),
       payroll_list_undertime: totalUndertimeAmount.toFixed(2),
     });
+
+    // tax List
+    taxList.push(...tax.taxList);
     // SSS List
     sssList.push(...sssAmount.sssList);
-    // ND List
-    ndList.push(...nightDiffAmount.ndList);
-    // holiday List
-    holidayList.push(...holidayAmount.holidayList);
     // pagibig List
     pagibigList.push(...pagibigAmount.pagibigList);
     // pagibig List
     philhealthList.push(...philAmount.philhealthList);
-    // tax List
-    taxList.push(...tax.taxList);
-
-    // console.log({holidayList, });
+    // ND List
+    ndList.push(...nightDiffAmount.ndList);
+    // holiday List
+    holidayList.push(...holidayAmount.holidayList);
 
     // reset wages variables
     grossAmount = 0;

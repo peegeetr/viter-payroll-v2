@@ -55,6 +55,7 @@ const ManageEarningsList = () => {
     refetchOnWindowFocus: false,
   });
 
+  console.log(result);
   React.useEffect(() => {
     if (inView) {
       setPage((prev) => prev + 1);

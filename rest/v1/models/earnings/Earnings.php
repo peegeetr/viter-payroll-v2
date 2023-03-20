@@ -127,14 +127,12 @@ class Earnings
             $sql .= "earnings.earnings_end_pay_date, ";
             $sql .= "earnings.earnings_payitem_id, ";
             $sql .= "earnings.earnings_paytype_id, ";
-            $sql .= "earnings.earnings_details, ";
             $sql .= "earnings.earnings_payroll_id, ";
             $sql .= "earnings.earnings_payroll_type_id, ";
             $sql .= "earnings.earnings_is_installment, ";
-            $sql .= "earnings.earnings_hris_date, ";
-            $sql .= "earnings.earnings_hris_undertime_out, ";
             $sql .= "payitem.payitem_aid, ";
             $sql .= "payitem.payitem_is_hris, ";
+            $sql .= "earnings.earnings_hris_undertime_out, ";
             $sql .= "payitem.payitem_name, ";
             $sql .= "paytype.paytype_aid, ";
             $sql .= "paytype.paytype_name ";
@@ -145,9 +143,10 @@ class Earnings
             $sql .= "and earnings.earnings_payitem_id = payitem.payitem_aid ";
             $sql .= "and payitem.payitem_paytype_id = paytype.paytype_aid ";
             $sql .= "order by ";
-            $sql .= "earnings.earnings_is_paid asc, ";
-            $sql .= "DATE(earnings.earnings_start_pay_date) desc, ";
-            $sql .= "earnings.earnings_employee asc ";
+            $sql .= "earnings.earnings_is_paid, ";
+            $sql .= "earnings.earnings_employee, ";
+            $sql .= "DATE(earnings.earnings_hris_date), ";
+            $sql .= "earnings.earnings_details ";
             $query = $this->connection->query($sql);
         } catch (PDOException $ex) {
             $query = false;
@@ -187,9 +186,10 @@ class Earnings
             $sql .= "and earnings.earnings_payitem_id = payitem.payitem_aid ";
             $sql .= "and payitem.payitem_paytype_id = paytype.paytype_aid ";
             $sql .= "order by ";
-            $sql .= "earnings.earnings_is_paid asc, ";
-            $sql .= "DATE(earnings.earnings_start_pay_date) desc, ";
-            $sql .= "earnings.earnings_employee asc ";
+            $sql .= "earnings.earnings_is_paid, ";
+            $sql .= "earnings.earnings_employee, ";
+            $sql .= "DATE(earnings.earnings_hris_date), ";
+            $sql .= "earnings.earnings_details ";
             $sql .= "limit :start, ";
             $sql .= ":total ";
             $query = $this->connection->prepare($sql);
@@ -210,6 +210,7 @@ class Earnings
             $sql .= "earnings.earnings_is_paid, ";
             $sql .= "earnings.earnings_num_pay, ";
             $sql .= "earnings.earnings_employee, ";
+            $sql .= "earnings.earnings_employee_id, ";
             $sql .= "earnings.earnings_amount, ";
             $sql .= "earnings.earnings_details, ";
             $sql .= "earnings.earnings_frequency, ";
@@ -223,6 +224,7 @@ class Earnings
             $sql .= "earnings.earnings_is_installment, ";
             $sql .= "payitem.payitem_aid, ";
             $sql .= "payitem.payitem_is_hris, ";
+            $sql .= "earnings.earnings_hris_undertime_out, ";
             $sql .= "payitem.payitem_name, ";
             $sql .= "paytype.paytype_aid, ";
             $sql .= "paytype.paytype_name ";
@@ -234,9 +236,10 @@ class Earnings
             $sql .= "and payitem.payitem_paytype_id = paytype.paytype_aid ";
             $sql .= "and earnings.earnings_employee like :search ";
             $sql .= "order by ";
-            $sql .= "earnings.earnings_is_paid asc, ";
-            $sql .= "DATE(earnings.earnings_start_pay_date) desc, ";
-            $sql .= "earnings.earnings_employee asc ";
+            $sql .= "earnings.earnings_is_paid, ";
+            $sql .= "earnings.earnings_employee, ";
+            $sql .= "DATE(earnings.earnings_hris_date), ";
+            $sql .= "earnings.earnings_details ";
             $query = $this->connection->prepare($sql);
             $query->execute([
                 "search" => "{$this->earnings_search}%",

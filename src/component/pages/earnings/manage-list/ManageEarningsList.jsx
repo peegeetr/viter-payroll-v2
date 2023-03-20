@@ -7,6 +7,7 @@ import { StoreContext } from "../../../../store/StoreContext";
 import {
   devApiUrl,
   formatDate,
+  hrisDevApiUrl,
   numberWithCommas,
 } from "../../../helpers/functions-general";
 import { queryDataInfinite } from "../../../helpers/queryDataInfinite";
@@ -38,6 +39,7 @@ const ManageEarningsList = () => {
     isFetching,
     isFetchingNextPage,
     status,
+    refetch,
   } = useInfiniteQuery({
     queryKey: ["earnings", onSearch, store.isSearch],
     queryFn: async ({ pageParam = 1 }) =>
@@ -56,6 +58,7 @@ const ManageEarningsList = () => {
   });
 
   console.log(result);
+
   React.useEffect(() => {
     if (inView) {
       setPage((prev) => prev + 1);

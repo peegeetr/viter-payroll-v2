@@ -95,16 +95,16 @@ const ManageEarningsList = () => {
                 <th>#</th>
                 <th className="min-w-[5rem]">Payroll ID</th>
                 <th className="min-w-[10rem]">Employeee</th>
-                <th className="min-w-[12rem]">Details</th>
-                <th className="min-w-[5rem] text-right ">Amount</th>
-                <th>Installment</th>
-                <th className="min-w-[6rem]">Start Date</th>
-                <th className="min-w-[6rem]">End Date</th>
-                <th className="min-w-[7rem]">Pay Item</th>
+                <th className="min-w-[15rem]">Details</th>
+                <th className="min-w-[6rem] text-right ">Amount</th>
+                <th className="text-center ">Installment</th>
+                <th className="min-w-[8rem]">Coverage date</th>
+                {/* <th className="min-w-[6rem]">End Date</th> */}
+                {/* <th className="min-w-[7rem]">Pay Item</th>
                 <th className="min-w-[7rem]">Pay Type</th>
-                <th className="min-w-[7rem]">Frequency</th>
+                <th className="min-w-[7rem]">Frequency</th> */}
                 {/* <th className="min-w-[8rem]">Details</th> */}
-                <th>Status</th>
+                <th className="min-w-[5rem]">Status</th>
                 <th className="text-right">Actions</th>
               </tr>
             </thead>
@@ -157,6 +157,28 @@ const ManageEarningsList = () => {
                                 " "
                               )[1]
                             } 
+                          ${
+                            formatDate(item.earnings_start_pay_date).split(
+                              " "
+                            )[2]
+                          } - ${
+                              formatDate(item.earnings_end_pay_date).split(
+                                " "
+                              )[2]
+                            },  ${
+                              formatDate(item.earnings_end_pay_date).split(
+                                " "
+                              )[3]
+                            }`}
+                      </td>
+                      {/* <td>
+                        {item.earnings_start_pay_date === "n/a"
+                          ? "N/A"
+                          : `${
+                              formatDate(item.earnings_start_pay_date).split(
+                                " "
+                              )[1]
+                            } 
                         ${
                           formatDate(item.earnings_start_pay_date).split(" ")[2]
                         }
@@ -164,8 +186,8 @@ const ManageEarningsList = () => {
                           formatDate(item.earnings_start_pay_date).split(" ")[3]
                         }
                         `}
-                      </td>
-                      <td>
+                      </td> */}
+                      {/* <td>
                         {item.earnings_end_pay_date === "n/a"
                           ? "N/A"
                           : `${
@@ -176,14 +198,14 @@ const ManageEarningsList = () => {
                       ${formatDate(item.earnings_end_pay_date).split(" ")[2]}
                       ${formatDate(item.earnings_end_pay_date).split(" ")[3]}
                       `}
-                      </td>
-                      <td>{item.payitem_name}</td>
+                      </td> */}
+                      {/* <td>{item.payitem_name}</td>
                       <td>{item.paytype_name}</td>
                       <td>
                         {item.earnings_frequency === "sm"
                           ? "Semi-monthly"
                           : "Monthly"}
-                      </td>
+                      </td> */}
 
                       {/* <td>{item.earnings_details}</td> */}
                       <td>{getStatus(item)}</td>

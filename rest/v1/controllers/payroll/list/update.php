@@ -118,6 +118,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
             $payrollList->start_pay_date = $allNdList[$nd]["earnings_start_pay_date"];
             $payrollList->end_pay_date = $allNdList[$nd]["earnings_end_pay_date"];
             $payrollList->hris_date = "";
+            $payrollList->holidays_rate = "";
 
             $query = checkCreateEarnings($payrollList);
         }
@@ -152,6 +153,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
             $payrollList->start_pay_date = $allSssList[$sss]["earnings_start_pay_date"];
             $payrollList->end_pay_date = $allSssList[$sss]["earnings_end_pay_date"];
             $payrollList->hris_date = "";
+            $payrollList->holidays_rate = "";
             $query = checkCreateEarnings($payrollList);
             $query = checkCreateDeductions($payrollList);
         }
@@ -186,6 +188,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
             $payrollList->start_pay_date = $allPagibigList[$pgbg]["earnings_start_pay_date"];
             $payrollList->end_pay_date = $allPagibigList[$pgbg]["earnings_end_pay_date"];
             $payrollList->hris_date = "";
+            $payrollList->holidays_rate = "";
             $query = checkCreateEarnings($payrollList);
             $query = checkCreateDeductions($payrollList);
         }
@@ -220,6 +223,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
             $payrollList->start_pay_date = $allPhilhealthList[$phil]["earnings_start_pay_date"];
             $payrollList->end_pay_date = $allPhilhealthList[$phil]["earnings_end_pay_date"];
             $payrollList->hris_date = "";
+            $payrollList->holidays_rate = "";
             $query = checkCreateEarnings($payrollList);
             $query = checkCreateDeductions($payrollList);
         }
@@ -245,6 +249,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
             $payrollList->start_pay_date = $allTaxList[$tax]["deduction_start_pay_date"];
             $payrollList->end_pay_date = $allTaxList[$tax]["deduction_end_pay_date"];
             $payrollList->hris_date = "";
+            $payrollList->holidays_rate = "";
             $query = checkCreateDeductions($payrollList);
         }
     }

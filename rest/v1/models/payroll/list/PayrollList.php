@@ -13,10 +13,13 @@ class PayrollList
     public $payroll_list_basic_pay;
     public $payroll_list_overtime_pay;
     public $payroll_list_leave_pay;
+    public $payroll_list_leave_hrs;
     public $payroll_list_holiday;
+    public $payroll_list_holiday_hrs;
     public $payroll_list_inlfation_adjustment;
     public $payroll_list_adjustment_pay;
     public $payroll_list_night_shift_differential;
+    public $payroll_list_nd_hrs;
     public $payroll_list_hazard_pay;
     public $payroll_list_absences;
     public $payroll_list_deminimis;
@@ -373,10 +376,13 @@ class PayrollList
             $sql .= "payroll_list_basic_pay = :payroll_list_basic_pay, ";
             $sql .= "payroll_list_overtime_pay = :payroll_list_overtime_pay, ";
             $sql .= "payroll_list_leave_pay = :payroll_list_leave_pay, ";
+            $sql .= "payroll_list_leave_hrs = :payroll_list_leave_hrs, ";
             $sql .= "payroll_list_holiday = :payroll_list_holiday, ";
+            $sql .= "payroll_list_holiday_hrs = :payroll_list_holiday_hrs, ";
             $sql .= "payroll_list_inlfation_adjustment = :payroll_list_inlfation_adjustment, ";
             $sql .= "payroll_list_adjustment_pay = :payroll_list_adjustment_pay, ";
             $sql .= "payroll_list_night_shift_differential = :payroll_list_night_shift_differential, ";
+            $sql .= "payroll_list_nd_hrs = :payroll_list_nd_hrs, ";
             $sql .= "payroll_list_hazard_pay = :payroll_list_hazard_pay, ";
             $sql .= "payroll_list_absences = :payroll_list_absences, ";
             $sql .= "payroll_list_deminimis = :payroll_list_deminimis, ";
@@ -416,10 +422,13 @@ class PayrollList
                 "payroll_list_basic_pay" => $this->payroll_list_basic_pay,
                 "payroll_list_overtime_pay" => $this->payroll_list_overtime_pay,
                 "payroll_list_leave_pay" => $this->payroll_list_leave_pay,
+                "payroll_list_leave_hrs" => $this->payroll_list_leave_hrs,
                 "payroll_list_holiday" => $this->payroll_list_holiday,
+                "payroll_list_holiday_hrs" => $this->payroll_list_holiday_hrs,
                 "payroll_list_inlfation_adjustment" => $this->payroll_list_inlfation_adjustment,
                 "payroll_list_adjustment_pay" => $this->payroll_list_adjustment_pay,
                 "payroll_list_night_shift_differential" => $this->payroll_list_night_shift_differential,
+                "payroll_list_nd_hrs" => $this->payroll_list_nd_hrs,
                 "payroll_list_hazard_pay" => $this->payroll_list_hazard_pay,
                 "payroll_list_absences" => $this->payroll_list_absences,
                 "payroll_list_deminimis" => $this->payroll_list_deminimis,

@@ -27,6 +27,7 @@ const PayslipEarnings = ({
   let basicPay = hourRate * (days - numberOfHolidays) * 8;
   let basicHrs = days - numberOfHolidays;
   let totalAmount = basicPay;
+  let isDeminimis = deminimis;
   console.log(earnings);
   return (
     <>
@@ -44,13 +45,15 @@ const PayslipEarnings = ({
               <tr className="font-semibold bg-gray-100 hover:bg-gray-100 uppercase">
                 <td className="w-[30rem]">WAGES</td>
                 <td className="w-[10rem]">hours</td>
-                <td className="text-right  px-4">rate</td>
+                <td className="w-[10rem] text-right  px-4">rate</td>
                 <td className="text-right  px-4">total</td>
               </tr>
               <tr className="hover:bg-transparent">
-                <td className="w-[20rem]">{`Basic Pay (De Minimis inclusive ${numberWithCommas(
-                  deminimis
-                )})`}</td>
+                <td className="w-[20rem]">{`Basic Pay ${
+                  isDeminimis > 0
+                    ? `(De Minimis inclusive ${numberWithCommas(deminimis)})`
+                    : ``
+                }`}</td>
                 <td className="w-[10rem]">{basicHrs * 8}</td>
                 <td className="text-right   px-4">{hourRate}</td>
                 <td className="text-right px-4">

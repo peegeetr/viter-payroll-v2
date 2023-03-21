@@ -1,13 +1,10 @@
-// payitem AID HRIS DATA
-// payitem AID HRIS DATA
+// payitem earnings id
 export const overtimeId = "18";
 export const leaveId = "19";
 export const holidayId = "20";
 export const nightDiffId = "23";
 export const absencesId = "36";
 export const undertimeId = "43";
-
-// payitem AID Payroll DATA
 export const bonusId = "1";
 export const employeeReferralBonusId = "6";
 export const bereavementId = "7";
@@ -33,7 +30,7 @@ export const PagibigLoanId = "29";
 export const PagibigMP2Id = "30";
 export const SSSLoanId = "28";
 
-// paytype deduction Id
+// paytype Id
 export const wagesEarningsId = 1;
 export const deMinimisEarningsId = 10;
 export const otherBenefitsEarningsId = 11;

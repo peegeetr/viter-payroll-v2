@@ -1,4 +1,6 @@
+import useQueryData from "../../../custom-hooks/useQueryData";
 import {
+  devApiUrl,
   getWorkingDays,
   numberWithCommas,
 } from "../../../helpers/functions-general";
@@ -16,6 +18,15 @@ import PayslipHeader from "./PayslipHeader";
 import PayslipMandatoryDeduc from "./PayslipMandatoryDeduc";
 
 const PayslipList = ({ payslip }) => {
+  const empId = payslip?.data[0].payroll_list_employee_id;
+  const payrollId = payslip?.data[0].payroll_list_payroll_id;
+  // use if not loadmore button undertime
+  const { data: earnings, isLoading } = useQueryData(
+    `${devApiUrl}/v1/payslip/earnings/${wagesEarningsId}/${empId}/${payrollId}`, // endpoint
+    "get", // method
+    `earnings-wages` // key
+  );
+  console.log(earnings, empId);
   const days = getWorkingDays(
     new Date(payslip?.data[0].payroll_start_date),
     new Date(payslip?.data[0].payroll_end_date)
@@ -27,10 +38,16 @@ const PayslipList = ({ payslip }) => {
     Number(payslip?.data[0].payroll_list_gross) +
     Number(payslip?.data[0].payroll_list_total_benefits);
   let netPay = totalEarnings - Number(payslip?.data[0].payroll_list_deduction);
+  let deminimis = payslip?.data[0].payroll_list_deminimis;
+  let holidayHrs = payslip?.data[0].payroll_list_holiday_hrs;
+  let totalHrs = holidayHrs;
+  let basicHrs = days * 8 - totalHrs;
+  let basicPay = hourRate * basicHrs - holidayHrs;
   console.log(
     payslip,
     Number(payslip?.data[0].payroll_list_gross),
-    Number(payslip?.data[0].payroll_list_total_benefits)
+    Number(payslip?.data[0].payroll_list_total_benefits),
+    basicPay
   );
   return (
     <>
@@ -43,7 +60,7 @@ const PayslipList = ({ payslip }) => {
       <div className="relative text-center overflow-x-auto z-0">
         <table>
           <tbody>
-            <PayslipEarnings
+            {/* <PayslipEarnings
               paytypeId={wagesEarningsId}
               empid={payslip?.data[0].payroll_list_employee_id}
               payrollid={payslip?.data[0].payroll_list_payroll_id}
@@ -52,14 +69,73 @@ const PayslipList = ({ payslip }) => {
               hourRate={hourRate}
               days={days}
             />
-            {/* 2nd */}
             <PayslipEarnings
               paytypeId={otherBenefitsEarningsId}
               empid={payslip?.data[0].payroll_list_employee_id}
               payrollid={payslip?.data[0].payroll_list_payroll_id}
               hourRate={hourRate}
               days={days}
-            />
+            /> */}
+
+            <tr className="font-semibold bg-gray-100 hover:bg-gray-100 uppercase">
+              <td className="w-[30rem]">WAGES</td>
+              <td className="w-[10rem]">hours</td>
+              <td className="w-[10rem] text-right  px-4">rate</td>
+              <td className="text-right  px-4">total</td>
+            </tr>
+            <tr className="hover:bg-transparent">
+              <td className="w-[20rem]">{`Basic Pay ${
+                deminimis > 0
+                  ? `(De Minimis inclusive ${numberWithCommas(deminimis)})`
+                  : ``
+              }`}</td>
+              <td className="w-[10rem]">{basicHrs}</td>
+              <td className="text-right   px-4">{hourRate}</td>
+              <td className="text-right px-4">
+                {numberWithCommas(basicPay.toFixed(2))}
+              </td>
+            </tr>
+            {isLoading ? (
+              <tr className="text-center ">
+                <td colSpan="100%" className="p-10">
+                  Loading...
+                </td>
+              </tr>
+            ) : (
+              <>
+                {earnings?.data.map((item, key) => {
+                  // totalAmount += Number(item.earnings_amount);
+                  return (
+                    <tr key={key} className="hover:bg-transparent">
+                      <td className="w-[20rem]">{item.earnings_details}</td>
+                      <td className="w-[10rem]">8</td>
+                      <td className="text-right   px-4">
+                        {(
+                          hourRate *
+                          (Number(item.earnings_holidays_rate) / 100)
+                        ).toFixed(4)}
+                      </td>
+                      <td className="text-right px-4">
+                        {numberWithCommas(Number(item.earnings_amount))}
+                      </td>
+                    </tr>
+                  );
+                })}
+                {/* total wages */}
+                {earnings?.data.length > 0 && (
+                  <tr className="font-semibold bg-gray-100 hover:bg-gray-100">
+                    <td colSpan={3} className="uppercase text-right xs:pr-4">
+                      Total Wages
+                    </td>
+                    <td className=" text-right px-4">
+                      {numberWithCommas(
+                        Number(payslip?.data[0].payroll_list_gross).toFixed(2)
+                      )}
+                    </td>
+                  </tr>
+                )}
+              </>
+            )}
 
             <tr className="hover:bg-white">
               <td colSpan={4}>&nbsp;</td>

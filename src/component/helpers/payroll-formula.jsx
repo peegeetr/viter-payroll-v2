@@ -65,12 +65,14 @@ export const payComputeOt = (earning) => {
 
 export const payComputeLeave = (earning) => {
   let finalAmount = 0;
+  let leaveHrs = 0;
 
   if (earning.earnings_payitem_id === leaveId) {
     //dont have additional leave
     finalAmount += Number(earning.earnings_amount);
+    leaveHrs += Number(earning.earnings_leave_hrs);
   }
-  return finalAmount;
+  return { finalAmount, leaveHrs };
 };
 
 export const payComputeAbsences = (earning) => {
@@ -107,6 +109,10 @@ export const payComputeNightDiff = (emp, holidays, payrollEarnings) => {
   let finalAmount = 0;
   let totalNDHolidayAmount = 0;
   let totalNDAmount = 0;
+  let totalHrs = 0;
+  let holidayHrs = 0;
+  let ndHolidayAmount = 0;
+  let ndRatedHolidayAmount = 0;
   let dailyRate = Number(
     employeeRate(emp.payroll_list_employee_salary, days).daily
   );
@@ -115,25 +121,27 @@ export const payComputeNightDiff = (emp, holidays, payrollEarnings) => {
   );
 
   if (emp.payroll_list_night_diff_per_day > 0) {
-    // if holiday and night diff
-    holidays.map((holidaysItem) => {
-      let holidayDate = holidaysItem.holidays_date;
-
-      let holidayRate = holidaysItem.holidays_rate / 100;
-      if (
-        (workOnHoliday === 1 || holidaysItem.holidays_observed === 1) &&
-        new Date(holidaysItem.holidays_date) >=
-          new Date(emp.payroll_start_date) &&
-        new Date(holidaysItem.holidays_date) <=
-          new Date(emp.payroll_end_date) &&
-        new Date(holidayDate).getDay() != 0 &&
-        new Date(holidayDate).getDay() != 6
-      ) {
-        ratedDailyNdAmount = dailyRate * holidayRate;
-        // 10% + holiday rate additional
-        totalNDHolidayAmount += ratedDailyNdAmount - dailyRate;
-      }
-    });
+    // // if holiday and night diff
+    // holidays.map((holidaysItem) => {
+    //   let holidayDate = holidaysItem.holidays_date;
+    //   let holidayRate = holidaysItem.holidays_rate / 100;
+    //   if (
+    //     (workOnHoliday === 1 || holidaysItem.holidays_observed === 1) &&
+    //     new Date(holidaysItem.holidays_date) >=
+    //       new Date(emp.payroll_start_date) &&
+    //     new Date(holidaysItem.holidays_date) <=
+    //       new Date(emp.payroll_end_date) &&
+    //     new Date(holidayDate).getDay() != 0 &&
+    //     new Date(holidayDate).getDay() != 6
+    //   ) {
+    //     // nd per hour
+    //     holidayHrs = Number(emp.payroll_list_night_diff_per_day);
+    //     ndHolidayAmount = holidayHrs * hourRate;
+    //     ndRatedHolidayAmount = ndHolidayAmount * holidayRate;
+    //     // 10% + holiday rate additional
+    //     totalNDHolidayAmount = ndRatedHolidayAmount - ndHolidayAmount;
+    //   }
+    // });
 
     payrollEarnings.map((earning) => {
       if (
@@ -149,8 +157,8 @@ export const payComputeNightDiff = (emp, holidays, payrollEarnings) => {
           earning.earnings_payitem_id === absencesId ||
           earning.earnings_payitem_id === leaveId
         ) {
-          // minus 5 hours
-          ndLeave += 5;
+          // minus nd per hour
+          ndLeave += Number(emp.payroll_list_night_diff_per_day);
         }
 
         let spentHr = earning.earnings_hris_undertime_out.split(" ")[1];
@@ -168,13 +176,14 @@ export const payComputeNightDiff = (emp, holidays, payrollEarnings) => {
       totalMinusHrs = ndLeave + Number(ndUndertime);
     });
     // night diff
-    let totalHrs = emp.payroll_list_night_diff_per_day * days;
+    totalHrs =
+      (Number(emp.payroll_list_night_diff_per_day) - totalMinusHrs) * days;
     regularAmount = (totalHrs - totalMinusHrs) * hourRate;
     ratedNdAmount = regularAmount * rate10;
     // 10% additional
     totalNDAmount += ratedNdAmount - regularAmount;
 
-    finalAmount = totalNDAmount + totalNDHolidayAmount;
+    finalAmount = totalNDAmount;
     ndList.push({
       earnings_payroll_type_id: emp.payroll_category_type,
       earnings_employee: emp.payroll_list_employee_name,
@@ -182,7 +191,8 @@ export const payComputeNightDiff = (emp, holidays, payrollEarnings) => {
       earnings_paytype_id: wagesEarningsId,
       earnings_payitem_id: nightDiffId,
       earnings_amount: finalAmount,
-      earnings_details: `${emp.payroll_list_night_diff_per_day}hrs per day`,
+      earnings_nd_hrs: totalHrs,
+      earnings_details: `Night Differential (${emp.payroll_list_night_diff_per_day}hrs / day)`,
       earnings_frequency: isSemiMonthly,
       earnings_is_installment: isHrisNumber,
       earnings_number_of_installment: onetimeNumber,
@@ -191,7 +201,9 @@ export const payComputeNightDiff = (emp, holidays, payrollEarnings) => {
     });
   }
 
-  return { finalAmount, ndList };
+  // console.log(totalNDAmount, totalHrs, hourRate, regularAmount, ratedNdAmount);
+
+  return { finalAmount, ndList, totalHrs };
   // return finalAmount;
 };
 
@@ -283,6 +295,7 @@ export const payComputeHoliday = (emp, holidays, payrollEarnings) => {
   let regularAmount = 0;
   let holidayAmount = 0;
   let accumulatedAmount = 0;
+  let accumulatedHrs = 0;
 
   let holidayList = [];
   holidays.map((holidaysItem) => {
@@ -318,6 +331,7 @@ export const payComputeHoliday = (emp, holidays, payrollEarnings) => {
       regularAmount += holidayTotalAmount(emp, holidaysItem).dailyRate;
       holidayAmount = Number(holidayTotalAmount(emp, holidaysItem).dailyAmount);
       accumulatedAmount += holidayAmount;
+      accumulatedHrs += 8;
       holidayList.push({
         earnings_payroll_type_id: emp.payroll_category_type,
         earnings_employee: emp.payroll_list_employee_name,
@@ -325,6 +339,7 @@ export const payComputeHoliday = (emp, holidays, payrollEarnings) => {
         earnings_paytype_id: wagesEarningsId,
         earnings_payitem_id: holidayId,
         earnings_amount: holidayAmount.toFixed(2),
+        earnings_holdays_hrs: 8,
         earnings_details: `${holidaysItem.holidays_name} (${
           holidaysItem.holidays_rate
         }%) ${formatDate(holidaysItem.holidays_date)}`,
@@ -341,7 +356,13 @@ export const payComputeHoliday = (emp, holidays, payrollEarnings) => {
 
   // finalAmount = holidayAmount - holidayLeaveAmount;
   finalAmount = holidayAmount;
-  return { finalAmount, regularAmount, holidayList, accumulatedAmount };
+  return {
+    finalAmount,
+    regularAmount,
+    holidayList,
+    accumulatedAmount,
+    accumulatedHrs,
+  };
   // return finalAmount;
 };
 
@@ -433,7 +454,6 @@ export const payComputeTaxDue = (
         Number(sTax.semi_monthly_additional_amount);
     }
   });
-
   // use to insert in earnings table
   taxList.push({
     deduction_payroll_type_id: emp.payroll_category_type,

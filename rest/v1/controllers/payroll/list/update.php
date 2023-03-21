@@ -37,10 +37,13 @@ if (array_key_exists("listpayrollid", $_GET)) {
         $payrollList->payroll_list_basic_pay =  $allPayrollList[$pl]["payroll_list_basic_pay"];
         $payrollList->payroll_list_overtime_pay =  $allPayrollList[$pl]["payroll_list_overtime_pay"];
         $payrollList->payroll_list_leave_pay =  $allPayrollList[$pl]["payroll_list_leave_pay"];
+        $payrollList->payroll_list_leave_hrs =  $allPayrollList[$pl]["payroll_list_leave_hrs"];
         $payrollList->payroll_list_holiday =  $allPayrollList[$pl]["payroll_list_holiday"];
+        $payrollList->payroll_list_holiday_hrs =  $allPayrollList[$pl]["payroll_list_holiday_hrs"];
         $payrollList->payroll_list_inlfation_adjustment =  $allPayrollList[$pl]["payroll_list_inlfation_adjustment"];
         $payrollList->payroll_list_adjustment_pay =  $allPayrollList[$pl]["payroll_list_adjustment_pay"];
         $payrollList->payroll_list_night_shift_differential = $allPayrollList[$pl]["payroll_list_night_shift_differential"];
+        $payrollList->payroll_list_nd_hrs = $allPayrollList[$pl]["payroll_list_nd_hrs"];
         $payrollList->payroll_list_hazard_pay = $allPayrollList[$pl]["payroll_list_hazard_pay"];
         $payrollList->payroll_list_absences = $allPayrollList[$pl]["payroll_list_absences"];
         $payrollList->payroll_list_deminimis = $allPayrollList[$pl]["payroll_list_deminimis"];

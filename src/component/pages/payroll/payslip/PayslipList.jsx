@@ -28,7 +28,7 @@ const PayslipList = ({ payslip }) => {
     Number(payslip?.data[0].payroll_list_total_benefits);
   let netPay = totalEarnings - Number(payslip?.data[0].payroll_list_deduction);
   console.log(
-    // payslip,
+    payslip,
     Number(payslip?.data[0].payroll_list_gross),
     Number(payslip?.data[0].payroll_list_total_benefits)
   );
@@ -47,6 +47,8 @@ const PayslipList = ({ payslip }) => {
               paytypeId={wagesEarningsId}
               empid={payslip?.data[0].payroll_list_employee_id}
               payrollid={payslip?.data[0].payroll_list_payroll_id}
+              gross={payslip?.data[0].payroll_list_gross}
+              deminimis={payslip?.data[0].payroll_list_deminimis}
               hourRate={hourRate}
               days={days}
             />

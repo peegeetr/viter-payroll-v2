@@ -239,7 +239,7 @@ export const runPayroll = (
       totalMadatoryEe,
       totalDiminimis
     );
-    totalTaxAmount = tax.taxDue;
+    totalTaxAmount = Number(tax.taxDue.toFixed(2));
     deductionAmount =
       totalTaxAmount +
       totalMadatoryEe +

@@ -30,14 +30,14 @@ const PayslipHeader = ({ payslip, empid, days }) => {
           </p>
           <p className="mb-0">
             <span className="font-semibold">Department : </span>{" "}
-            {job?.data[0].department_name}
+            {job?.data.length > 0 ? job?.data[0].department_name : "N/A"}
           </p>
           <p className="mb-0">
             <span className="font-semibold">Frequency : </span> Semi-monthly
           </p>
           <p className="mb-0">
             <span className="font-semibold">Position : </span>{" "}
-            {job?.data[0].job_title_name}
+            {job?.data.length > 0 ? job?.data[0].job_title_name : "N/A"}
           </p>
           <p className="mb-0">
             <span className="font-semibold">Pay Period : </span>{" "}

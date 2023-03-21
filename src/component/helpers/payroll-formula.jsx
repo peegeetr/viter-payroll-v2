@@ -309,20 +309,14 @@ export const payComputeHoliday = (emp, holidays, payrollEarnings) => {
             earning.earnings_payitem_id !== absencesId ||
             earning.earnings_payitem_id !== leaveId
           ) {
-            // // Total Amount holiday and leave
-            // holidayLeaveAmount += holidayTotalAmount(
-            //   emp,
-            //   holidaysItem
-            // ).dailyAmount;
-            holidayAmount = holidayTotalAmount(emp, holidaysItem).dailyAmount;
+            holidayAmount = Number(
+              holidayTotalAmount(emp, holidaysItem).dailyAmount
+            );
           }
         }
       });
-
-      // holidayAmount += holidayTotalAmount(emp, holidaysItem).dailyAmount;
-      // if(totalLeaveAmount === 0 || totalAbsencesAmount === 0)
       regularAmount += holidayTotalAmount(emp, holidaysItem).dailyRate;
-      holidayAmount = holidayTotalAmount(emp, holidaysItem).dailyAmount;
+      holidayAmount = Number(holidayTotalAmount(emp, holidaysItem).dailyAmount);
       accumulatedAmount += holidayAmount;
       holidayList.push({
         earnings_payroll_type_id: emp.payroll_category_type,
@@ -330,7 +324,6 @@ export const payComputeHoliday = (emp, holidays, payrollEarnings) => {
         earnings_employee_id: emp.payroll_list_employee_id,
         earnings_paytype_id: wagesEarningsId,
         earnings_payitem_id: holidayId,
-        // earnings_amount:  holidayTotalAmount(emp, holidaysItem).dailyAmount,
         earnings_amount: holidayAmount.toFixed(2),
         earnings_details: `${holidaysItem.holidays_name} (${
           holidaysItem.holidays_rate
@@ -383,7 +376,6 @@ export const holidayTotalAmount = (emp, holidaysItem) => {
       // regularAmount += dailyRate;
       // ratedAmount += dailyRate * rate;
       dailyAmount = dailyRate * rate;
-      // console.log(dailyAmount, dailyRate);
     }
   }
 
@@ -406,8 +398,8 @@ export const holidayTotalAmount = (emp, holidaysItem) => {
   }
 
   // dailyAmount += ratedAmount - regularAmount;
-  // dailyAmount -= dailyRate;
-  // dailyAmount = dailyAmount.toFixed(2);
+  // dailyRate -= dailyRate;
+  dailyAmount = Number(dailyAmount.toFixed(2));
 
   return { dailyAmount, dailyRate };
 };
@@ -424,14 +416,17 @@ export const payComputeTaxDue = (
   let taxDue = 0;
   let taxList = [];
   const totalNonTaxableCompensation =
-    totalBenefits + totalMadatoryEe + totalDiminimis;
-  let taxableCompensationIncome = gross - totalNonTaxableCompensation;
+    Number(totalBenefits.toFixed(2)) + totalMadatoryEe + totalDiminimis;
+  let taxableCompensationIncome =
+    Number(gross.toFixed(2)) - totalNonTaxableCompensation;
+
   semiTax.map((sTax) => {
     if (
       Number(taxableCompensationIncome) >=
         Number(sTax.semi_monthly_range_from) &&
       Number(taxableCompensationIncome) <= Number(sTax.semi_monthly_range_to)
     ) {
+      console.log(sTax);
       taxDue =
         (taxableCompensationIncome - Number(sTax.semi_monthly_less_amount)) *
           (Number(sTax.semi_monthly_rate) / 100) +
@@ -446,7 +441,7 @@ export const payComputeTaxDue = (
     deduction_employee_id: emp.payroll_list_employee_id,
     deduction_paytype_id: taxDeductionId,
     deduction_payitem_id: payrollTaxDeductionId,
-    deduction_amount: taxDue,
+    deduction_amount: Number(taxDue.toFixed(2)),
     deduction_details: "Tax Employee",
     deduction_frequency: isSemiMonthly,
     deduction_is_installment: onetimeNumber,
@@ -454,6 +449,7 @@ export const payComputeTaxDue = (
     deduction_start_pay_date: emp.payroll_start_date,
     deduction_end_pay_date: emp.payroll_end_date,
   });
+
   return { taxDue, taxList };
 };
 

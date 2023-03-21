@@ -8,7 +8,15 @@ import {
   wagesEarningsId,
 } from "../../../helpers/functions-payitemId";
 import TableSpinner from "../../../partials/spinners/TableSpinner";
-const PayslipEarnings = ({ paytypeId, empid, payrollid, hourRate, days }) => {
+const PayslipEarnings = ({
+  paytypeId,
+  empid,
+  payrollid,
+  gross,
+  deminimis,
+  hourRate,
+  days,
+}) => {
   // use if not loadmore button undertime
   const { data: earnings, isLoading } = useQueryData(
     `${devApiUrl}/v1/payslip/earnings/${paytypeId}/${empid}/${payrollid}`, // endpoint
@@ -19,8 +27,7 @@ const PayslipEarnings = ({ paytypeId, empid, payrollid, hourRate, days }) => {
   let basicPay = hourRate * (days - numberOfHolidays) * 8;
   let basicHrs = days - numberOfHolidays;
   let totalAmount = basicPay;
-  // setTotalEarnings(totalAmount);
-  console.log(earnings, basicPay);
+  console.log(earnings);
   return (
     <>
       {isLoading ? (
@@ -41,7 +48,9 @@ const PayslipEarnings = ({ paytypeId, empid, payrollid, hourRate, days }) => {
                 <td className="text-right  px-4">total</td>
               </tr>
               <tr className="hover:bg-transparent">
-                <td className="w-[20rem]">Basic Pay (Deminimis inclusive)</td>
+                <td className="w-[20rem]">{`Basic Pay (De Minimis inclusive ${numberWithCommas(
+                  deminimis
+                )})`}</td>
                 <td className="w-[10rem]">{basicHrs * 8}</td>
                 <td className="text-right   px-4">{hourRate}</td>
                 <td className="text-right px-4">
@@ -66,7 +75,6 @@ const PayslipEarnings = ({ paytypeId, empid, payrollid, hourRate, days }) => {
             )}
           {earnings?.data.map((item, key) => {
             totalAmount += Number(item.earnings_amount);
-            console.log(totalAmount.toFixed(2));
             return (
               <tr key={key} className="hover:bg-transparent">
                 <td className="w-[20rem]">
@@ -81,7 +89,7 @@ const PayslipEarnings = ({ paytypeId, empid, payrollid, hourRate, days }) => {
                   ).toFixed(4)}
                 </td>
                 <td className=" text-right px-4">
-                  {numberWithCommas(item.earnings_amount)}
+                  {numberWithCommas(Number(item.earnings_amount).toFixed(2))}
                 </td>
               </tr>
             );
@@ -92,7 +100,7 @@ const PayslipEarnings = ({ paytypeId, empid, payrollid, hourRate, days }) => {
                 Total {earnings?.data[0].paytype_name}
               </td>
               <td className=" text-right px-4">
-                {numberWithCommas(totalAmount.toFixed(2))}
+                {numberWithCommas(Number(gross).toFixed(2))}
               </td>
             </tr>
           )}

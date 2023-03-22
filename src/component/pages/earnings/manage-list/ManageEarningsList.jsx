@@ -55,6 +55,7 @@ const ManageEarningsList = () => {
       return;
     },
     refetchOnWindowFocus: false,
+    cacheTime: 200,
   });
 
   console.log(result);

@@ -12,6 +12,8 @@ class Earnings
     public $earnings_payitem_id;
     public $earnings_amount;
     public $earnings_leave_hrs;
+    public $earnings_hrs;
+    public $earnings_rate;
     public $earnings_details;
     public $earnings_frequency;
     public $earnings_is_installment;
@@ -55,7 +57,9 @@ class Earnings
             $sql .= "earnings_payitem_id, ";
             $sql .= "earnings_is_paid, ";
             $sql .= "earnings_amount, ";
-            $sql .= "earnings_leave_hrs, ";
+            // $sql .= "earnings_leave_hrs, ";
+            $sql .= "earnings_hrs, ";
+            $sql .= "earnings_rate, ";
             $sql .= "earnings_details, ";
             $sql .= "earnings_hris_undertime_out, ";
             $sql .= "earnings_frequency, ";
@@ -74,7 +78,9 @@ class Earnings
             $sql .= ":earnings_payitem_id, ";
             $sql .= ":earnings_is_paid, ";
             $sql .= ":earnings_amount, ";
-            $sql .= ":earnings_leave_hrs, ";
+            // $sql .= ":earnings_leave_hrs, ";
+            $sql .= ":earnings_hrs, ";
+            $sql .= ":earnings_rate, ";
             $sql .= ":earnings_details, ";
             $sql .= ":earnings_hris_undertime_out, ";
             $sql .= ":earnings_frequency, ";
@@ -95,7 +101,9 @@ class Earnings
                 "earnings_payitem_id" => $this->earnings_payitem_id,
                 "earnings_is_paid" => $this->earnings_is_paid,
                 "earnings_amount" => $this->earnings_amount,
-                "earnings_leave_hrs" => $this->earnings_leave_hrs,
+                // "earnings_leave_hrs" => $this->earnings_leave_hrs,
+                "earnings_hrs" => $this->earnings_hrs,
+                "earnings_rate" => $this->earnings_rate,
                 "earnings_details" => $this->earnings_details,
                 "earnings_frequency" => $this->earnings_frequency,
                 "earnings_is_installment" => $this->earnings_is_installment,
@@ -125,6 +133,8 @@ class Earnings
             $sql .= "earnings.earnings_employee_id, ";
             $sql .= "earnings.earnings_amount, ";
             $sql .= "earnings.earnings_leave_hrs, ";
+            $sql .= "earnings.earnings_hrs, ";
+            $sql .= "earnings.earnings_rate, ";
             $sql .= "earnings.earnings_details, ";
             $sql .= "earnings.earnings_frequency, ";
             $sql .= "earnings.earnings_number_of_installment, ";
@@ -170,6 +180,8 @@ class Earnings
             $sql .= "earnings.earnings_employee_id, ";
             $sql .= "earnings.earnings_amount, ";
             $sql .= "earnings.earnings_leave_hrs, ";
+            $sql .= "earnings.earnings_hrs, ";
+            $sql .= "earnings.earnings_rate, ";
             $sql .= "earnings.earnings_details, ";
             $sql .= "earnings.earnings_frequency, ";
             $sql .= "earnings.earnings_number_of_installment, ";
@@ -221,6 +233,8 @@ class Earnings
             $sql .= "earnings.earnings_employee_id, ";
             $sql .= "earnings.earnings_amount, ";
             $sql .= "earnings.earnings_leave_hrs, ";
+            $sql .= "earnings.earnings_hrs, ";
+            $sql .= "earnings.earnings_rate, ";
             $sql .= "earnings.earnings_details, ";
             $sql .= "earnings.earnings_frequency, ";
             $sql .= "earnings.earnings_number_of_installment, ";

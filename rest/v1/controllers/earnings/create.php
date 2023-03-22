@@ -90,7 +90,8 @@ if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === "19")
         $earnings->earnings_employee_id = $allLeave[$l]["employeId"];
         $earnings->earnings_employee = $allLeave[$l]["name"];
         $earnings->earnings_amount = $allLeave[$l]["amount"];
-        $earnings->earnings_leave_hrs = $allLeave[$l]["hours"];
+        $earnings->earnings_hrs = $allLeave[$l]["hours"];
+        $earnings->earnings_rate = $allLeave[$l]["rate"];
         $earnings->earnings_details = $allLeave[$l]["details"];
         $earnings->earnings_hris_date = $allLeave[$l]["hrisStartDate"];
         $earnings->earnings_start_pay_date = $allLeave[$l]["hrisStartDate"];

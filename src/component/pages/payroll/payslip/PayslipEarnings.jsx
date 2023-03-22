@@ -25,12 +25,13 @@ const PayslipEarnings = ({
   );
   let deminimis = payslip?.data[0].payroll_list_deminimis;
   let holidayHrs = Number(payslip?.data[0].payroll_list_holiday_hrs);
-  let totalHrs = holidayHrs;
+  let leaveHrs = Number(payslip?.data[0].payroll_list_leave_hrs);
+  let totalHrs = holidayHrs + leaveHrs;
   let basicHrs = days * 8 - totalHrs;
   let basicPay = hourRate * basicHrs;
   let gross = payslip?.data[0].payroll_list_gross;
   let totalAmount = basicPay;
-  // console.log(payslip, holidayHrs);
+  // console.log(earnings, payslip);
   return (
     <>
       {isLoading ? (

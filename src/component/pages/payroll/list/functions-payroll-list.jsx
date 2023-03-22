@@ -188,10 +188,10 @@ export const runPayroll = (
     grossAmount =
       totalNightDiffAmount +
       totalHolidayAmount +
+      // totalLeaveAmount +
       // totalBasicPay +
       (totalBasicPay -
-        (totalLeaveAmount +
-          totalAbsencesAmount +
+        (totalAbsencesAmount +
           totalUndertimeAmount +
           holidayAmount.regularAmount)) +
       totalOtAmount +
@@ -259,7 +259,7 @@ export const runPayroll = (
     netPay = grossAmount + totalBenefits - deductionAmount;
     console.log(
       emp.payroll_list_employee_name,
-      "ND-" + totalNightDiffAmount,
+      "reg-" + holidayAmount.regularAmount,
       "Gross-" + grossAmount,
       "HD-" + totalHolidayAmount
     );

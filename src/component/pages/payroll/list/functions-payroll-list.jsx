@@ -259,10 +259,9 @@ export const runPayroll = (
     netPay = grossAmount + totalBenefits - deductionAmount;
     console.log(
       emp.payroll_list_employee_name,
-      totalNightDiffAmount,
-      grossAmount,
-      totalHolidayAmount,
-      holidayAmount.regularAmount
+      "ND-" + totalNightDiffAmount,
+      "Gross-" + grossAmount,
+      "HD-" + totalHolidayAmount
     );
     // data to send to server
     payrollList.push({

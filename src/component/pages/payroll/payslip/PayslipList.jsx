@@ -26,7 +26,6 @@ const PayslipList = ({ payslip }) => {
     "get", // method
     `earnings-wages` // key
   );
-  console.log(earnings, empId);
   const days = getWorkingDays(
     new Date(payslip?.data[0].payroll_start_date),
     new Date(payslip?.data[0].payroll_end_date)
@@ -43,12 +42,12 @@ const PayslipList = ({ payslip }) => {
   let totalHrs = holidayHrs;
   let basicHrs = days * 8 - totalHrs;
   let basicPay = hourRate * basicHrs - holidayHrs;
-  console.log(
-    payslip,
-    Number(payslip?.data[0].payroll_list_gross),
-    Number(payslip?.data[0].payroll_list_total_benefits),
-    basicPay
-  );
+  // console.log(
+  //   payslip,
+  //   Number(payslip?.data[0].payroll_list_gross),
+  //   Number(payslip?.data[0].payroll_list_total_benefits),
+  //   basicPay
+  // );
   return (
     <>
       <PayslipHeader
@@ -60,14 +59,13 @@ const PayslipList = ({ payslip }) => {
       <div className="relative text-center overflow-x-auto z-0">
         <table>
           <tbody>
-            {/* <PayslipEarnings
+            <PayslipEarnings
               paytypeId={wagesEarningsId}
               empid={payslip?.data[0].payroll_list_employee_id}
               payrollid={payslip?.data[0].payroll_list_payroll_id}
-              gross={payslip?.data[0].payroll_list_gross}
-              deminimis={payslip?.data[0].payroll_list_deminimis}
               hourRate={hourRate}
               days={days}
+              payslip={payslip}
             />
             <PayslipEarnings
               paytypeId={otherBenefitsEarningsId}
@@ -75,9 +73,9 @@ const PayslipList = ({ payslip }) => {
               payrollid={payslip?.data[0].payroll_list_payroll_id}
               hourRate={hourRate}
               days={days}
-            /> */}
+            />
 
-            <tr className="font-semibold bg-gray-100 hover:bg-gray-100 uppercase">
+            {/* <tr className="font-semibold bg-gray-100 hover:bg-gray-100 uppercase">
               <td className="w-[30rem]">WAGES</td>
               <td className="w-[10rem]">hours</td>
               <td className="w-[10rem] text-right  px-4">rate</td>
@@ -104,7 +102,6 @@ const PayslipList = ({ payslip }) => {
             ) : (
               <>
                 {earnings?.data.map((item, key) => {
-                  // totalAmount += Number(item.earnings_amount);
                   return (
                     <tr key={key} className="hover:bg-transparent">
                       <td className="w-[20rem]">{item.earnings_details}</td>
@@ -116,12 +113,13 @@ const PayslipList = ({ payslip }) => {
                         ).toFixed(4)}
                       </td>
                       <td className="text-right px-4">
-                        {numberWithCommas(Number(item.earnings_amount))}
+                        {numberWithCommas(
+                          Number(item.earnings_amount).toFixed(2)
+                        )}
                       </td>
                     </tr>
                   );
                 })}
-                {/* total wages */}
                 {earnings?.data.length > 0 && (
                   <tr className="font-semibold bg-gray-100 hover:bg-gray-100">
                     <td colSpan={3} className="uppercase text-right xs:pr-4">
@@ -135,7 +133,7 @@ const PayslipList = ({ payslip }) => {
                   </tr>
                 )}
               </>
-            )}
+            )} */}
 
             <tr className="hover:bg-white">
               <td colSpan={4}>&nbsp;</td>

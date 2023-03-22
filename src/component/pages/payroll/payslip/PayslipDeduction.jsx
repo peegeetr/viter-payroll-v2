@@ -15,8 +15,6 @@ const PayslipDeduction = ({ paytypeId, empid, payrollid }) => {
     `deductions-${paytypeId}` // key
   );
 
-  console.log(deductions);
-
   return (
     <>
       {deductions?.data.length > 0 && paytypeId !== mandatoryDeductionId && (

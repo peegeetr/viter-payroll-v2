@@ -191,8 +191,9 @@ export const payComputeNightDiff = (emp, holidays, payrollEarnings) => {
       earnings_paytype_id: wagesEarningsId,
       earnings_payitem_id: nightDiffId,
       earnings_amount: finalAmount,
-      earnings_nd_hrs: totalHrs,
-      earnings_details: `Night Differential (${emp.payroll_list_night_diff_per_day}hrs / day)`,
+      earnings_hrs: totalHrs,
+      earnings_rate: rate10 * 100,
+      earnings_details: `Night Differential (110%) ${emp.payroll_list_night_diff_per_day}hrs/day`,
       earnings_frequency: isSemiMonthly,
       earnings_is_installment: isHrisNumber,
       earnings_number_of_installment: onetimeNumber,
@@ -339,7 +340,6 @@ export const payComputeHoliday = (emp, holidays, payrollEarnings) => {
         earnings_paytype_id: wagesEarningsId,
         earnings_payitem_id: holidayId,
         earnings_amount: holidayAmount.toFixed(2),
-        earnings_holdays_hrs: 8,
         earnings_details: `${holidaysItem.holidays_name} (${
           holidaysItem.holidays_rate
         }%) ${formatDate(holidaysItem.holidays_date)}`,
@@ -349,7 +349,8 @@ export const payComputeHoliday = (emp, holidays, payrollEarnings) => {
         earnings_start_pay_date: emp.payroll_start_date,
         earnings_end_pay_date: emp.payroll_end_date,
         earnings_hris_date: holidaysItem.holidays_date,
-        earnings_holidays_rate: holidaysItem.holidays_rate,
+        earnings_hrs: 8,
+        earnings_rate: holidaysItem.holidays_rate,
       });
     }
   });
@@ -447,7 +448,6 @@ export const payComputeTaxDue = (
         Number(sTax.semi_monthly_range_from) &&
       Number(taxableCompensationIncome) <= Number(sTax.semi_monthly_range_to)
     ) {
-      console.log(sTax);
       taxDue =
         (taxableCompensationIncome - Number(sTax.semi_monthly_less_amount)) *
           (Number(sTax.semi_monthly_rate) / 100) +

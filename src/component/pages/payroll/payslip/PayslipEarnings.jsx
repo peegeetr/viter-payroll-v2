@@ -6,16 +6,16 @@ import {
 import {
   otherBenefitsEarningsId,
   wagesEarningsId,
+  nightDiffId,
 } from "../../../helpers/functions-payitemId";
 import TableSpinner from "../../../partials/spinners/TableSpinner";
 const PayslipEarnings = ({
   paytypeId,
   empid,
   payrollid,
-  gross,
-  deminimis,
   hourRate,
   days,
+  payslip,
 }) => {
   // use if not loadmore button undertime
   const { data: earnings, isLoading } = useQueryData(
@@ -23,18 +23,19 @@ const PayslipEarnings = ({
     "get", // method
     `earnings-${paytypeId}` // key
   );
-  let numberOfHolidays = earnings?.data.length > 0 ? earnings?.data.length : 0;
-  let basicPay = hourRate * (days - numberOfHolidays) * 8;
-  let basicHrs = days - numberOfHolidays;
+  let deminimis = payslip?.data[0].payroll_list_deminimis;
+  let holidayHrs = Number(payslip?.data[0].payroll_list_holiday_hrs);
+  let totalHrs = holidayHrs;
+  let basicHrs = days * 8 - totalHrs;
+  let basicPay = hourRate * basicHrs;
+  let gross = payslip?.data[0].payroll_list_gross;
   let totalAmount = basicPay;
-  let isDeminimis = deminimis;
-  console.log(earnings);
+  // console.log(payslip, holidayHrs);
   return (
     <>
       {isLoading ? (
         <tr className="text-center ">
           <td colSpan="100%" className="p-10">
-            {/* <TableSpinner /> */}
             Loading...
           </td>
         </tr>
@@ -50,11 +51,11 @@ const PayslipEarnings = ({
               </tr>
               <tr className="hover:bg-transparent">
                 <td className="w-[20rem]">{`Basic Pay ${
-                  isDeminimis > 0
+                  deminimis > 0
                     ? `(De Minimis inclusive ${numberWithCommas(deminimis)})`
                     : ``
                 }`}</td>
-                <td className="w-[10rem]">{basicHrs * 8}</td>
+                <td className="w-[10rem]">{basicHrs}</td>
                 <td className="text-right   px-4">{hourRate}</td>
                 <td className="text-right px-4">
                   {numberWithCommas(basicPay.toFixed(2))}
@@ -80,16 +81,20 @@ const PayslipEarnings = ({
             totalAmount += Number(item.earnings_amount);
             return (
               <tr key={key} className="hover:bg-transparent">
-                <td className="w-[20rem]">
-                  {item.payitem_name} {item.earnings_details}
+                <td className="w-[20rem]">{item.earnings_details}</td>
+                <td className="w-[10rem]">
+                  {`${item.earnings_hrs} ${
+                    Number(nightDiffId) === item.payitem_aid
+                      ? `of ${days * 8}`
+                      : ``
+                  }`}
                 </td>
-                <td className="w-[10rem]">{8}</td>
                 {/* <td className="w-[10rem]">{numberOfHolidays * 8}</td> */}
                 <td className=" text-right px-4 w-[5rem]">
-                  {(
-                    hourRate *
-                    (Number(item.earnings_holidays_rate) / 100)
-                  ).toFixed(4)}
+                  {(hourRate * (Number(item.earnings_rate) / 100)).toFixed(4)}
+                  {/* {`${(hourRate * (Number(item.earnings_rate) / 100)).toFixed(
+                    4
+                  )} of ${days * 8}`} */}
                 </td>
                 <td className=" text-right px-4">
                   {numberWithCommas(Number(item.earnings_amount).toFixed(2))}

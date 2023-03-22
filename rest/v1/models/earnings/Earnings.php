@@ -299,20 +299,8 @@ class Earnings
     public function readPayslipByPaytypeId()
     {
         try {
-            $sql = "select earnings.earnings_aid, ";
-            $sql .= "earnings.earnings_is_paid, ";
-            $sql .= "earnings.earnings_num_pay, ";
-            $sql .= "earnings.earnings_employee, ";
-            $sql .= "earnings.earnings_amount, ";
-            $sql .= "earnings.earnings_details, ";
-            $sql .= "earnings.earnings_frequency, ";
-            $sql .= "earnings.earnings_number_of_installment, ";
-            $sql .= "earnings.earnings_hris_date, ";
-            $sql .= "earnings.earnings_holidays_rate, ";
-            $sql .= "earnings.earnings_start_pay_date, ";
-            $sql .= "earnings.earnings_end_pay_date, ";
-            $sql .= "payitem.payitem_name, ";
-            $sql .= "paytype.paytype_name ";
+            $sql = "select ";
+            $sql .= "* ";
             $sql .= "from {$this->tblEarnings} as earnings, ";
             $sql .= "{$this->tblPayType} as paytype, ";
             $sql .= "{$this->tblPayItem} as payitem ";

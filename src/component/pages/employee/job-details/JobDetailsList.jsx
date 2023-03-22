@@ -124,13 +124,15 @@ const JobDetailsList = ({ isLoading, error, employee }) => {
                 </p>
                 <p className="font-semibold">Regularized on :</p>
                 <p className="pl-2">
-                  {item.employee_job_regularized === "na"
+                  {item.employee_job_regularized === "" ||
+                  item.employee_job_regularized === "na"
                     ? "n/a"
                     : formatDate(item.employee_job_regularized)}
                 </p>
                 <p className="font-semibold">Date separated :</p>
                 <p className="pl-2">
-                  {item.employee_job_separated === "na"
+                  {item.employee_job_regularized === "" ||
+                  item.employee_job_separated === "na"
                     ? "n/a"
                     : formatDate(item.employee_job_separated)}
                 </p>
@@ -138,9 +140,11 @@ const JobDetailsList = ({ isLoading, error, employee }) => {
                 <p className="pl-2">{item.employee_job_tin}</p>
                 <p className="font-semibold">Drive Link :</p>
                 <p className="pl-2 underline text-blue-600">
-                  <a href={`${item.employee_job_drive_link}`} target="_blank">
-                    View on G-Drive
-                  </a>
+                  {item.employee_job_drive_link !== "" && (
+                    <a href={`${item.employee_job_drive_link}`} target="_blank">
+                      View on G-Drive
+                    </a>
+                  )}
                 </p>
                 <p className="font-semibold">Comment :</p>
                 <p className="pl-2">{item.employee_job_comments}</p>

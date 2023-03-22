@@ -90,6 +90,8 @@ if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === "19")
         $earnings->earnings_employee_id = $allLeave[$l]["employeId"];
         $earnings->earnings_employee = $allLeave[$l]["name"];
         $earnings->earnings_amount = $allLeave[$l]["amount"];
+        $earnings->earnings_hrs = $allLeave[$l]["hours"];
+        $earnings->earnings_rate = $allLeave[$l]["rate"];
         $earnings->earnings_details = $allLeave[$l]["details"];
         $earnings->earnings_hris_date = $allLeave[$l]["hrisStartDate"];
         $earnings->earnings_start_pay_date = $allLeave[$l]["hrisStartDate"];
@@ -112,6 +114,8 @@ if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === "18")
         $earnings->earnings_employee_id = $allOvertimeLeave[$o]["employeId"];
         $earnings->earnings_employee = $allOvertimeLeave[$o]["name"];
         $earnings->earnings_amount = $allOvertimeLeave[$o]["amount"];
+        $earnings->earnings_hrs = "";
+        $earnings->earnings_rate = "";
         $earnings->earnings_details = $allOvertimeLeave[$o]["details"];
         $earnings->earnings_hris_date = $allOvertimeLeave[$o]["hrisDate"];
         isHRISImportExist($earnings, "HRIS Overtime data for $earnings->earnings_payroll_id is ");
@@ -132,6 +136,8 @@ if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === "36")
         $earnings->earnings_employee_id = $allUnPaidLeave[$unp]["employeId"];
         $earnings->earnings_employee = $allUnPaidLeave[$unp]["name"];
         $earnings->earnings_amount = $allUnPaidLeave[$unp]["amount"];
+        $earnings->earnings_hrs = $allUnPaidLeave[$unp]["hours"];
+        $earnings->earnings_rate = $allUnPaidLeave[$unp]["rate"];
         $earnings->earnings_hris_date = $allUnPaidLeave[$unp]["hrisStartDate"];
         $earnings->earnings_start_pay_date = $allUnPaidLeave[$unp]["hrisStartDate"];
         $earnings->earnings_end_pay_date = $allUnPaidLeave[$unp]["hrisEndDate"];
@@ -154,6 +160,8 @@ if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === "43")
         $earnings->earnings_employee_id = $allUndertime[$u]["employeId"];
         $earnings->earnings_employee = $allUndertime[$u]["name"];
         $earnings->earnings_amount = $allUndertime[$u]["amount"];
+        $earnings->earnings_hrs = "";
+        $earnings->earnings_rate = "";
         $earnings->earnings_hris_date = $allUndertime[$u]["hrisDate"];
         $earnings->earnings_hris_undertime_out = $allUndertime[$u]["hrisUndertimeOut"];
         $earnings->earnings_details = $allUndertime[$u]["details"];

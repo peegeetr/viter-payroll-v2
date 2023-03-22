@@ -6,16 +6,17 @@ import {
 import {
   otherBenefitsEarningsId,
   wagesEarningsId,
+  nightDiffId,
+  absencesId,
 } from "../../../helpers/functions-payitemId";
 import TableSpinner from "../../../partials/spinners/TableSpinner";
 const PayslipEarnings = ({
   paytypeId,
   empid,
   payrollid,
-  gross,
-  deminimis,
   hourRate,
   days,
+  payslip,
 }) => {
   // use if not loadmore button undertime
   const { data: earnings, isLoading } = useQueryData(
@@ -23,17 +24,21 @@ const PayslipEarnings = ({
     "get", // method
     `earnings-${paytypeId}` // key
   );
-  let numberOfHolidays = earnings?.data.length > 0 ? earnings?.data.length : 0;
-  let basicPay = hourRate * (days - numberOfHolidays) * 8;
-  let basicHrs = days - numberOfHolidays;
+  let deminimis = payslip?.data[0].payroll_list_deminimis;
+  let holidayHrs = Number(payslip?.data[0].payroll_list_holiday_hrs);
+  let leaveHrs = Number(payslip?.data[0].payroll_list_leave_hrs);
+  let absencesHrs = Number(payslip?.data[0].payroll_list_absences_hrs);
+  let totalHrs = holidayHrs + leaveHrs + absencesHrs;
+  let basicHrs = days * 8 - totalHrs;
+  let basicPay = hourRate * basicHrs;
+  let gross = payslip?.data[0].payroll_list_gross;
   let totalAmount = basicPay;
-  console.log(earnings);
+  // console.log(earnings, payslip);
   return (
     <>
       {isLoading ? (
         <tr className="text-center ">
           <td colSpan="100%" className="p-10">
-            {/* <TableSpinner /> */}
             Loading...
           </td>
         </tr>
@@ -44,14 +49,16 @@ const PayslipEarnings = ({
               <tr className="font-semibold bg-gray-100 hover:bg-gray-100 uppercase">
                 <td className="w-[30rem]">WAGES</td>
                 <td className="w-[10rem]">hours</td>
-                <td className="text-right  px-4">rate</td>
+                <td className="w-[10rem] text-right  px-4">rate</td>
                 <td className="text-right  px-4">total</td>
               </tr>
               <tr className="hover:bg-transparent">
-                <td className="w-[20rem]">{`Basic Pay (De Minimis inclusive ${numberWithCommas(
-                  deminimis
-                )})`}</td>
-                <td className="w-[10rem]">{basicHrs * 8}</td>
+                <td className="w-[20rem]">{`Basic Pay ${
+                  deminimis > 0
+                    ? `(De Minimis inclusive ${numberWithCommas(deminimis)})`
+                    : ``
+                }`}</td>
+                <td className="w-[10rem]">{basicHrs}</td>
                 <td className="text-right   px-4">{hourRate}</td>
                 <td className="text-right px-4">
                   {numberWithCommas(basicPay.toFixed(2))}
@@ -77,18 +84,20 @@ const PayslipEarnings = ({
             totalAmount += Number(item.earnings_amount);
             return (
               <tr key={key} className="hover:bg-transparent">
-                <td className="w-[20rem]">
-                  {item.payitem_name} {item.earnings_details}
+                <td className="w-[20rem]">{item.earnings_details}</td>
+                <td className="w-[10rem]">
+                  {`${item.earnings_hrs} ${
+                    Number(nightDiffId) === item.payitem_aid
+                      ? `of ${days * 8}`
+                      : ``
+                  }`}
                 </td>
-                <td className="w-[10rem]">{8}</td>
                 {/* <td className="w-[10rem]">{numberOfHolidays * 8}</td> */}
                 <td className=" text-right px-4 w-[5rem]">
-                  {(
-                    hourRate *
-                    (Number(item.earnings_holidays_rate) / 100)
-                  ).toFixed(4)}
+                  {(hourRate * (Number(item.earnings_rate) / 100)).toFixed(4)}
                 </td>
                 <td className=" text-right px-4">
+                  {item.earnings_payitem_id === absencesId ? "-" : ""}
                   {numberWithCommas(Number(item.earnings_amount).toFixed(2))}
                 </td>
               </tr>

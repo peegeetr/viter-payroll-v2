@@ -94,15 +94,17 @@ export const computeLeave = (leaveData, employee, payrollDraft) => {
           amount:
             Number(lItem.leave_list_days) *
             employeeRate(eItem.employee_job_salary, days).daily,
+          hours: Number(lItem.leave_list_days) * 8,
+          rate: 100,
           employeId: eItem.employee_aid,
-          details: `${formatDate(
-            lItem.leave_list_start_date
-          )}, number of days (${lItem.leave_list_days})`,
+          details: `Leave ${formatDate(lItem.leave_list_start_date)}, Day/s (${
+            lItem.leave_list_days
+          })`,
           hrisStartDate: lItem.leave_list_start_date,
           hrisEndDate: lItem.leave_list_return_date,
-          unpaidDetails: `${formatDate(
+          unpaidDetails: `Unpaid ${formatDate(
             lItem.leave_list_start_date
-          )}, number of days (${lItem.leave_list_days}) `,
+          )}, Day/s (${lItem.leave_list_days}) `,
         });
       }
     });

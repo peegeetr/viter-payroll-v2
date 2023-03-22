@@ -55,8 +55,6 @@ const EmployeeList = () => {
     // cacheTime: 1000,
   });
 
-  console.log(result);
-
   React.useEffect(() => {
     if (inView) {
       setPage((prev) => prev + 1);

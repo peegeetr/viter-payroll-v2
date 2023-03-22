@@ -48,12 +48,16 @@ export const runPayroll = (
   let totalBasicPay = 0;
   let totalOtAmount = 0;
   let totalLeaveAmount = 0;
+  let totalLeaveHrs = 0;
   let totalHolidayAmount = 0;
+  let totalHolidayHrs = 0;
   let totalInflationAmount = 0;
   let totalAdjustmentAmount = 0;
   let totalNightDiffAmount = 0;
+  let totalNightDiffHrs = 0;
   let totalHazardPayAmount = 0;
   let totalAbsencesAmount = 0;
+  let totalAbsencesHrs = 0;
   let totalDiminimis = 0;
   let total13thMoth = 0;
   let totalBonus = 0;
@@ -108,7 +112,7 @@ export const runPayroll = (
     payrollEarnings.map((earning) => {
       // loop earnings wages for each employee
       if (
-        earning.earnings_number_of_installment === onetimeNumber && // onetime payment and HRIS import
+        // earning.earnings_number_of_installment === onetimeNumber && // onetime payment and HRIS import
         emp.payroll_category_type === earning.earnings_payroll_type_id && // payroll type
         emp.payroll_list_payroll_id === earning.earnings_payroll_id && // payroll id
         emp.payroll_list_employee_id === earning.earnings_employee_id && // employee id
@@ -118,9 +122,11 @@ export const runPayroll = (
           new Date(earning.earnings_end_pay_date) // payroll end date
       ) {
         totalOtAmount += payComputeOt(earning);
-        totalLeaveAmount += payComputeLeave(earning);
+        totalLeaveAmount += payComputeLeave(earning).finalAmount;
+        totalLeaveHrs += payComputeLeave(earning).leaveHrs;
         totalUndertimeAmount += payComputeUndertime(earning);
-        totalAbsencesAmount += payComputeAbsences(earning);
+        totalAbsencesAmount += payComputeAbsences(earning).finalAmount;
+        totalAbsencesHrs += payComputeAbsences(earning).leaveHrs;
         totalHazardPayAmount += payComputeHazardPay(earning);
         totalInflationAmount += payComputeInflationAdjustmen(earning);
         totalAdjustmentAmount += payComputeAdjustment(earning);
@@ -173,19 +179,21 @@ export const runPayroll = (
     holidayAmount = payComputeHoliday(emp, holidays, payrollEarnings);
 
     totalHolidayAmount = holidayAmount.accumulatedAmount;
+    totalHolidayHrs = holidayAmount.accumulatedHrs;
 
     // night diffirencial
     nightDiffAmount = payComputeNightDiff(emp, holidays, payrollEarnings);
-    totalNightDiffAmount += nightDiffAmount.finalAmount;
+    totalNightDiffAmount = nightDiffAmount.finalAmount;
+    totalNightDiffHrs = nightDiffAmount.totalHrs;
     totalBasicPay = Number(emp.payroll_list_employee_salary) / 2;
     // gross or total wages
     grossAmount =
       totalNightDiffAmount +
       totalHolidayAmount +
+      // totalLeaveAmount +
       // totalBasicPay +
       (totalBasicPay -
-        (totalLeaveAmount +
-          totalAbsencesAmount +
+        (totalAbsencesAmount +
           totalUndertimeAmount +
           holidayAmount.regularAmount)) +
       totalOtAmount +
@@ -251,13 +259,12 @@ export const runPayroll = (
       totalSSSLoan;
 
     netPay = grossAmount + totalBenefits - deductionAmount;
-    console.log(
-      emp.payroll_list_employee_name,
-      // totalTaxAmount,
-      grossAmount,
-      totalHolidayAmount,
-      holidayAmount.regularAmount
-    );
+    // console.log(
+    //   emp.payroll_list_employee_name,
+    //   "reg-" + holidayAmount.regularAmount,
+    //   "Gross-" + grossAmount,
+    //   "HD-" + totalHolidayAmount
+    // );
     // data to send to server
     payrollList.push({
       payroll_list_employee_id: emp.payroll_list_employee_id,
@@ -268,12 +275,16 @@ export const runPayroll = (
       payroll_list_basic_pay: totalBasicPay.toFixed(2),
       payroll_list_overtime_pay: totalOtAmount.toFixed(2),
       payroll_list_leave_pay: totalLeaveAmount.toFixed(2),
+      payroll_list_leave_hrs: totalLeaveHrs,
       payroll_list_holiday: totalHolidayAmount.toFixed(2),
+      payroll_list_holiday_hrs: totalHolidayHrs,
       payroll_list_inlfation_adjustment: totalInflationAmount.toFixed(2),
       payroll_list_adjustment_pay: totalAdjustmentAmount.toFixed(2),
       payroll_list_night_shift_differential: totalNightDiffAmount.toFixed(2),
+      payroll_list_nd_hrs: totalNightDiffHrs,
       payroll_list_hazard_pay: totalHazardPayAmount.toFixed(2),
       payroll_list_absences: totalAbsencesAmount.toFixed(2),
+      payroll_list_absences_hrs: totalAbsencesHrs,
       payroll_list_deminimis: totalDiminimis.toFixed(2),
       payroll_list_13th_month: 0,
       payroll_list_bonus: totalBonus.toFixed(2),
@@ -322,12 +333,15 @@ export const runPayroll = (
     totalBasicPay = 0;
     totalOtAmount = 0;
     totalLeaveAmount = 0;
+    totalLeaveHrs = 0;
     totalHolidayAmount = 0;
+    totalHolidayHrs = 0;
     totalInflationAmount = 0;
     totalAdjustmentAmount = 0;
     totalNightDiffAmount = 0;
     totalHazardPayAmount = 0;
     totalAbsencesAmount = 0;
+    totalAbsencesHrs = 0;
     totalDiminimis = 0;
     total13thMoth = 0;
     totalBonus = 0;

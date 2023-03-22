@@ -58,8 +58,6 @@ const ManageEarningsList = () => {
     cacheTime: 200,
   });
 
-  console.log(result);
-
   React.useEffect(() => {
     if (inView) {
       setPage((prev) => prev + 1);

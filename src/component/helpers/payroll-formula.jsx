@@ -77,10 +77,12 @@ export const payComputeLeave = (earning) => {
 
 export const payComputeAbsences = (earning) => {
   let finalAmount = 0;
+  let leaveHrs = 0;
   if (earning.earnings_payitem_id === absencesId) {
     finalAmount += Number(earning.earnings_amount);
+    leaveHrs += Number(earning.earnings_hrs);
   }
-  return finalAmount;
+  return { finalAmount, leaveHrs };
 };
 
 export const payComputeUndertime = (earning) => {
@@ -301,6 +303,7 @@ export const payComputeHoliday = (emp, holidays, payrollEarnings) => {
   let accumulatedHrs = 0;
   let isAbsent = false;
   let holidayList = [];
+  let isWorkHoliday = emp.payroll_list_employee_work_on_holiday;
   holidays.map((holidaysItem) => {
     let holidayDate = holidaysItem.holidays_date;
     if (
@@ -345,7 +348,7 @@ export const payComputeHoliday = (emp, holidays, payrollEarnings) => {
           earnings_payitem_id: holidayId,
           earnings_amount: holidayAmount.toFixed(2),
           earnings_details: `${holidaysItem.holidays_name} (${
-            holidaysItem.holidays_rate
+            isWorkHoliday ? holidaysItem.holidays_rate : 100
           }%) ${formatDate(holidaysItem.holidays_date)}`,
           earnings_frequency: isSemiMonthly,
           earnings_is_installment: isHrisNumber,
@@ -354,7 +357,7 @@ export const payComputeHoliday = (emp, holidays, payrollEarnings) => {
           earnings_end_pay_date: emp.payroll_end_date,
           earnings_hris_date: holidaysItem.holidays_date,
           earnings_hrs: 8,
-          earnings_rate: holidaysItem.holidays_rate,
+          earnings_rate: isWorkHoliday ? holidaysItem.holidays_rate : 100,
         });
       }
     }

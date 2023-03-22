@@ -57,6 +57,7 @@ export const runPayroll = (
   let totalNightDiffHrs = 0;
   let totalHazardPayAmount = 0;
   let totalAbsencesAmount = 0;
+  let totalAbsencesHrs = 0;
   let totalDiminimis = 0;
   let total13thMoth = 0;
   let totalBonus = 0;
@@ -124,7 +125,8 @@ export const runPayroll = (
         totalLeaveAmount += payComputeLeave(earning).finalAmount;
         totalLeaveHrs += payComputeLeave(earning).leaveHrs;
         totalUndertimeAmount += payComputeUndertime(earning);
-        totalAbsencesAmount += payComputeAbsences(earning);
+        totalAbsencesAmount += payComputeAbsences(earning).finalAmount;
+        totalAbsencesHrs += payComputeAbsences(earning).leaveHrs;
         totalHazardPayAmount += payComputeHazardPay(earning);
         totalInflationAmount += payComputeInflationAdjustmen(earning);
         totalAdjustmentAmount += payComputeAdjustment(earning);
@@ -257,12 +259,12 @@ export const runPayroll = (
       totalSSSLoan;
 
     netPay = grossAmount + totalBenefits - deductionAmount;
-    console.log(
-      emp.payroll_list_employee_name,
-      "reg-" + holidayAmount.regularAmount,
-      "Gross-" + grossAmount,
-      "HD-" + totalHolidayAmount
-    );
+    // console.log(
+    //   emp.payroll_list_employee_name,
+    //   "reg-" + holidayAmount.regularAmount,
+    //   "Gross-" + grossAmount,
+    //   "HD-" + totalHolidayAmount
+    // );
     // data to send to server
     payrollList.push({
       payroll_list_employee_id: emp.payroll_list_employee_id,
@@ -282,6 +284,7 @@ export const runPayroll = (
       payroll_list_nd_hrs: totalNightDiffHrs,
       payroll_list_hazard_pay: totalHazardPayAmount.toFixed(2),
       payroll_list_absences: totalAbsencesAmount.toFixed(2),
+      payroll_list_absences_hrs: totalAbsencesHrs,
       payroll_list_deminimis: totalDiminimis.toFixed(2),
       payroll_list_13th_month: 0,
       payroll_list_bonus: totalBonus.toFixed(2),
@@ -338,6 +341,7 @@ export const runPayroll = (
     totalNightDiffAmount = 0;
     totalHazardPayAmount = 0;
     totalAbsencesAmount = 0;
+    totalAbsencesHrs = 0;
     totalDiminimis = 0;
     total13thMoth = 0;
     totalBonus = 0;

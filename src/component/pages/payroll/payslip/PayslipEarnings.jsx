@@ -7,6 +7,7 @@ import {
   otherBenefitsEarningsId,
   wagesEarningsId,
   nightDiffId,
+  absencesId,
 } from "../../../helpers/functions-payitemId";
 import TableSpinner from "../../../partials/spinners/TableSpinner";
 const PayslipEarnings = ({
@@ -26,7 +27,8 @@ const PayslipEarnings = ({
   let deminimis = payslip?.data[0].payroll_list_deminimis;
   let holidayHrs = Number(payslip?.data[0].payroll_list_holiday_hrs);
   let leaveHrs = Number(payslip?.data[0].payroll_list_leave_hrs);
-  let totalHrs = holidayHrs + leaveHrs;
+  let absencesHrs = Number(payslip?.data[0].payroll_list_absences_hrs);
+  let totalHrs = holidayHrs + leaveHrs + absencesHrs;
   let basicHrs = days * 8 - totalHrs;
   let basicPay = hourRate * basicHrs;
   let gross = payslip?.data[0].payroll_list_gross;
@@ -93,11 +95,9 @@ const PayslipEarnings = ({
                 {/* <td className="w-[10rem]">{numberOfHolidays * 8}</td> */}
                 <td className=" text-right px-4 w-[5rem]">
                   {(hourRate * (Number(item.earnings_rate) / 100)).toFixed(4)}
-                  {/* {`${(hourRate * (Number(item.earnings_rate) / 100)).toFixed(
-                    4
-                  )} of ${days * 8}`} */}
                 </td>
                 <td className=" text-right px-4">
+                  {item.earnings_payitem_id === absencesId ? "-" : ""}
                   {numberWithCommas(Number(item.earnings_amount).toFixed(2))}
                 </td>
               </tr>

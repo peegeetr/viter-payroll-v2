@@ -61,9 +61,10 @@ export const computeUndertime = (undertimeData, employee, payrollDraft) => {
       if (uItem.employee_aid === eItem.employee_aid) {
         list.push({
           name: `${eItem.employee_lname}, ${eItem.employee_fname}`,
-          amount:
+          amount: (
             Number(uItem.undertime_spent) *
-            employeeRate(eItem.employee_job_salary, days).hourly,
+            employeeRate(eItem.employee_job_salary, days).hourly
+          ).toFixed(2),
           hours: Number(uItem.undertime_spent),
           rate: 100,
           employeId: eItem.employee_aid,
@@ -93,9 +94,10 @@ export const computeLeave = (leaveData, employee, payrollDraft) => {
       if (Number(lItem.leave_list_employee_id) === Number(eItem.employee_aid)) {
         list.push({
           name: `${eItem.employee_lname}, ${eItem.employee_fname}`,
-          amount:
+          amount: (
             Number(lItem.leave_list_days) *
-            employeeRate(eItem.employee_job_salary, days).daily,
+            employeeRate(eItem.employee_job_salary, days).daily
+          ).toFixed(2),
           hours: Number(lItem.leave_list_days) * 8,
           rate: 100,
           employeId: eItem.employee_aid,
@@ -127,10 +129,16 @@ export const computeOvertime = (
       if (Number(otItem.task_employee_id) === Number(eItem.employee_aid)) {
         list.push({
           name: `${eItem.employee_lname}, ${eItem.employee_fname}`,
-          amount: Number(otFinalAmount(otItem, eItem, holidays, payrollDraft)),
+          amount: Number(
+            otFinalAmount(otItem, eItem, holidays, payrollDraft).finalAmount
+          ).toFixed(2),
+          hours: 0,
+          rate: Number(
+            otFinalAmount(otItem, eItem, holidays, payrollDraft).otRate
+          ),
           employeId: eItem.employee_aid,
           hrisDate: otItem.task_created,
-          details: `${formatDate(otItem.task_created)} ${
+          details: `OT ${formatDate(otItem.task_created)} ${
             otItem.task_created.split(" ")[1]
           } (${getUnderTimeSpent(otItem.task_spent)})`,
         });
@@ -220,6 +228,7 @@ export const otFinalAmount = (otItem, eItem, holidays, payrollDraft) => {
   let rate25 = 125 / 100;
   let restRate30 = 130 / 100;
   let restRate10 = 110 / 100;
+  let otRate = 125; // default rate value
   let isHoliday = false;
   let isRestDay = false;
   let regularAmount = 0;
@@ -230,8 +239,7 @@ export const otFinalAmount = (otItem, eItem, holidays, payrollDraft) => {
   let totalOtHolidayAmount = 0;
   let totalOtNightDiff = 0;
   let otDate = otItem.task_created.split(" ")[0];
-  let otTime = otItem.task_created.split(" ")[1];
-  let otTimeHr = otTime.split(":")[0];
+  let otTimeHr = otItem.task_time_started.split(":")[0];
   holidays?.data.map((holidaysItem) => {
     // if overtime and holiday is same date
     if (holidaysItem.holidays_date === otDate) {
@@ -239,6 +247,10 @@ export const otFinalAmount = (otItem, eItem, holidays, payrollDraft) => {
 
       //if overtime is regular or special holiday day and restday
       if (new Date(otDate).getDay() == 0 || new Date(otDate).getDay() == 6) {
+        otRate =
+          restRate30 +
+          holidayRate -
+          (Math.floor(restRate30) + Math.floor(holidayRate));
         totalOtHolidayRestAmount = otHolidayComputed(
           (regularAmount =
             Number(otItem.task_spent) *
@@ -252,12 +264,19 @@ export const otFinalAmount = (otItem, eItem, holidays, payrollDraft) => {
         // if overtime is night shift and holiday
         if (
           (otTimeHr >= 22 && otTimeHr <= 23) ||
-          (otTimeHr >= 0 && otTimeHr <= 6)
+          (otTimeHr >= 0 && otTimeHr < 6)
         ) {
           regularAmount =
             Number(otItem.task_spent) *
             employeeRate(eItem.employee_job_salary, days).hourly;
           totalOtNightDiff = regularAmount * restRate10 - regularAmount;
+          otRate =
+            restRate30 +
+            holidayRate +
+            restRate10 -
+            (Math.floor(restRate30) +
+              Math.floor(holidayRate) +
+              Math.floor(restRate10));
           totalOtHolidayRestAmount =
             totalOtHolidayRestAmount + totalOtNightDiff;
         }
@@ -265,6 +284,8 @@ export const otFinalAmount = (otItem, eItem, holidays, payrollDraft) => {
 
       //if overtime is regular or special holiday day not restday
       if (!isRestDay) {
+        otRate =
+          rate25 + holidayRate - (Math.floor(rate25) + Math.floor(holidayRate));
         totalOtHolidayAmount = otHolidayComputed(
           (regularAmount =
             Number(otItem.task_spent) *
@@ -275,12 +296,19 @@ export const otFinalAmount = (otItem, eItem, holidays, payrollDraft) => {
         isHoliday = true;
         if (
           (otTimeHr >= 22 && otTimeHr <= 23) ||
-          (otTimeHr >= 0 && otTimeHr <= 6)
+          (otTimeHr >= 0 && otTimeHr < 6)
         ) {
           regularAmount =
             Number(otItem.task_spent) *
             employeeRate(eItem.employee_job_salary, days).hourly;
           totalOtNightDiff = regularAmount * restRate10 - regularAmount;
+          otRate =
+            rate25 +
+            holidayRate +
+            restRate10 -
+            (Math.floor(rate25) +
+              Math.floor(holidayRate) +
+              Math.floor(restRate10));
           totalOtHolidayAmount = totalOtHolidayAmount + totalOtNightDiff;
         }
       }
@@ -295,17 +323,19 @@ export const otFinalAmount = (otItem, eItem, holidays, payrollDraft) => {
     regularAmount =
       Number(otItem.task_spent) *
       employeeRate(eItem.employee_job_salary, days).hourly;
+    otRate = restRate30 - Math.floor(restRate30);
     totalOtRestAmount = regularAmount * restRate30;
     isRestDay = true;
 
-    if (
-      (otTimeHr >= 22 && otTimeHr <= 23) ||
-      (otTimeHr >= 0 && otTimeHr <= 6)
-    ) {
+    if ((otTimeHr >= 22 && otTimeHr <= 23) || (otTimeHr >= 0 && otTimeHr < 6)) {
       regularAmount =
         Number(otItem.task_spent) *
         employeeRate(eItem.employee_job_salary, days).hourly;
       totalOtNightDiff = regularAmount * restRate10 - regularAmount;
+      otRate =
+        restRate30 +
+        restRate10 -
+        (Math.floor(restRate30) + Math.floor(restRate10));
       totalOtRestAmount = totalOtRestAmount + totalOtNightDiff;
     }
   }
@@ -316,18 +346,17 @@ export const otFinalAmount = (otItem, eItem, holidays, payrollDraft) => {
       Number(otItem.task_spent) *
       employeeRate(eItem.employee_job_salary, days).hourly;
     // if dont have holiday and not saturday or sunday
+    otRate = rate25 - Math.floor(rate25);
     totalOtAmount25 = regularAmount * rate25;
 
-    if (
-      (otTimeHr >= 22 && otTimeHr <= 23) ||
-      (otTimeHr >= 0 && otTimeHr <= 6)
-    ) {
+    if ((otTimeHr >= 22 && otTimeHr <= 23) || (otTimeHr >= 0 && otTimeHr < 6)) {
       regularAmount =
         Number(otItem.task_spent) *
         employeeRate(eItem.employee_job_salary, days).hourly;
       // if dont have holiday and not saturday or sunday
       totalOtNightDiff = regularAmount * restRate10 - regularAmount;
-
+      otRate =
+        rate25 + restRate10 - (Math.floor(rate25) + Math.floor(restRate10));
       totalOtAmount25 = totalOtAmount25 + totalOtNightDiff;
     }
   }
@@ -340,5 +369,5 @@ export const otFinalAmount = (otItem, eItem, holidays, payrollDraft) => {
   // OT normal day with or without leave
   finalAmount = !isHoliday && !isRestDay && totalOtAmount25;
 
-  return finalAmount;
+  return { finalAmount, otRate };
 };

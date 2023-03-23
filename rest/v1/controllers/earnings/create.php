@@ -114,8 +114,8 @@ if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === "18")
         $earnings->earnings_employee_id = $allOvertimeLeave[$o]["employeId"];
         $earnings->earnings_employee = $allOvertimeLeave[$o]["name"];
         $earnings->earnings_amount = $allOvertimeLeave[$o]["amount"];
-        $earnings->earnings_hrs = "";
-        $earnings->earnings_rate = "";
+        $earnings->earnings_hrs = $allOvertimeLeave[$o]["hours"];
+        $earnings->earnings_rate = $allOvertimeLeave[$o]["rate"];
         $earnings->earnings_details = $allOvertimeLeave[$o]["details"];
         $earnings->earnings_hris_date = $allOvertimeLeave[$o]["hrisDate"];
         isHRISImportExist($earnings, "HRIS Overtime data for $earnings->earnings_payroll_id is ");

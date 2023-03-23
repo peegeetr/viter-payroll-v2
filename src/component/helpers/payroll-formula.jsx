@@ -183,13 +183,15 @@ export const payComputeNightDiff = (emp, holidays, payrollEarnings) => {
       totalMinusHrs = ndLeave + Number(ndUndertime);
     });
     // night diff
+    // totalHrs =
+    //   Number(emp.payroll_list_night_diff_per_day) * days - totalMinusHrs;
     totalHrs =
       Number(emp.payroll_list_night_diff_per_day) * days - totalMinusHrs;
-    regularAmount = (totalHrs - totalMinusHrs) * hourRate;
+    regularAmount = totalHrs * hourRate;
     ratedNdAmount = regularAmount * rate10;
+    console.log(totalHrs, totalMinusHrs);
     // 10% additional
     totalNDAmount += ratedNdAmount - regularAmount;
-
     finalAmount = totalNDAmount;
     ndList.push({
       earnings_payroll_type_id: emp.payroll_category_type,

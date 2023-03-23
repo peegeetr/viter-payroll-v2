@@ -126,7 +126,7 @@ export const computeOvertime = (
   let list = [];
   employee?.data.map((eItem) => {
     overtimeData?.data.map((otItem) => {
-      console.log(otItem);
+      console.log(eItem);
       if (Number(otItem.task_employee_id) === Number(eItem.employee_aid)) {
         list.push({
           name: `${eItem.employee_lname}, ${eItem.employee_fname}`,
@@ -139,7 +139,9 @@ export const computeOvertime = (
           ),
           employeId: eItem.employee_aid,
           hrisDate: otItem.task_created,
-          details: `OT ${formatDate(otItem.task_created)} ${
+          details: `OT (${
+            otFinalAmount(otItem, eItem, holidays, payrollDraft).otRate
+          }%) ${formatDate(otItem.task_created)} ${
             otItem.task_created.split(" ")[1]
           } (${getUnderTimeSpent(otItem.task_spent)})`,
         });

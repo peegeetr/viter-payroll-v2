@@ -96,7 +96,14 @@ const PayslipEarnings = ({
                 </td>
                 {/* <td className="w-[10rem]">{numberOfHolidays * 8}</td> */}
                 <td className=" text-right px-4 w-[5rem]">
-                  {(hourRate * (Number(item.earnings_rate) / 100)).toFixed(4)}
+                  {Number(nightDiffId) === item.payitem_aid
+                    ? (
+                        hourRate * (Number(item.earnings_rate) / 100) -
+                        hourRate
+                      ).toFixed(4)
+                    : (hourRate * (Number(item.earnings_rate) / 100)).toFixed(
+                        4
+                      )}
                 </td>
                 <td className=" text-right px-4">
                   {item.earnings_payitem_id === absencesId ||

@@ -162,19 +162,20 @@ export const payComputeNightDiff = (emp, holidays, payrollEarnings) => {
           // minus nd per hour
           ndLeave +=
             Number(emp.payroll_list_night_diff_per_day) *
-            (earning.earnings_leave_hrs / 8);
+            (Number(earning.earnings_hrs) / 8);
         }
 
-        let spentHr = earning.earnings_hris_undertime_out.split(" ")[1];
+        // let spentHr = earning.earnings_hris_undertime_out.split(" ")[1];
         let undertimeOut = earning.earnings_hris_undertime_out.split(" ")[0];
         let undertimeOutHr = undertimeOut.split(":")[0];
         if (
           earning.earnings_payitem_id === undertimeId &&
           undertimeOutHr >= 0 &&
-          undertimeOutHr <= 6
+          undertimeOutHr < 6
         ) {
           // minus 5 hours
-          ndUndertime += spentHr.slice(0, 1);
+          // ndUndertime += spentHr.slice(0, 1);
+          ndUndertime += Number(earning.earnings_hrs);
         }
       }
       totalMinusHrs = ndLeave + Number(ndUndertime);
@@ -302,10 +303,12 @@ export const payComputeHoliday = (emp, holidays, payrollEarnings) => {
   let accumulatedAmount = 0;
   let accumulatedHrs = 0;
   let isAbsent = false;
+  let regRate = 100;
   let holidayList = [];
-  let isWorkHoliday = emp.payroll_list_employee_work_on_holiday;
+  let isWorkHoliday = Boolean(emp.payroll_list_employee_work_on_holiday);
   holidays.map((holidaysItem) => {
     let holidayDate = holidaysItem.holidays_date;
+    let isObserved = Boolean(holidaysItem.holidays_observed);
     if (
       new Date(holidaysItem.holidays_date) >=
         new Date(emp.payroll_start_date) &&
@@ -326,7 +329,6 @@ export const payComputeHoliday = (emp, holidays, payrollEarnings) => {
           new Date(holidaysItem.holidays_date) <
             new Date(earning.earnings_end_pay_date)
         ) {
-          console.log(earning.earnings_payitem_id);
           isAbsent = true;
         }
       });
@@ -348,7 +350,7 @@ export const payComputeHoliday = (emp, holidays, payrollEarnings) => {
           earnings_payitem_id: holidayId,
           earnings_amount: holidayAmount.toFixed(2),
           earnings_details: `${holidaysItem.holidays_name} (${
-            isWorkHoliday ? holidaysItem.holidays_rate : 100
+            isWorkHoliday || isObserved ? holidaysItem.holidays_rate : regRate
           }%) ${formatDate(holidaysItem.holidays_date)}`,
           earnings_frequency: isSemiMonthly,
           earnings_is_installment: isHrisNumber,
@@ -357,7 +359,8 @@ export const payComputeHoliday = (emp, holidays, payrollEarnings) => {
           earnings_end_pay_date: emp.payroll_end_date,
           earnings_hris_date: holidaysItem.holidays_date,
           earnings_hrs: 8,
-          earnings_rate: isWorkHoliday ? holidaysItem.holidays_rate : 100,
+          earnings_rate:
+            isWorkHoliday || isObserved ? holidaysItem.holidays_rate : regRate,
         });
       }
     }

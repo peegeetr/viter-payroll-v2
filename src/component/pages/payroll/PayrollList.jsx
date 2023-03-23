@@ -121,9 +121,9 @@ const PayrollList = ({ setItemEdit }) => {
                 <th className="min-w-[5rem]">Type</th>
                 <th className="min-w-[9rem]">Pay Date</th>
                 <th className="min-w-[8rem]">Pay period</th>
-                <th className="min-w-[8rem]">No. of Employee</th>
-                <th className="min-w-[8rem]">Total Amount</th>
-                <th className="min-w-[5rem]">Status</th>
+                <th className="min-w-[8rem] text-center"># of Employee</th>
+                <th className="min-w-[8rem] text-right">Total Amount</th>
+                <th className="min-w-[5rem] text-center">Status</th>
                 <th className="min-w-[10rem]">Actions</th>
               </tr>
             </thead>
@@ -157,9 +157,9 @@ const PayrollList = ({ setItemEdit }) => {
                           formatDate(item.payroll_end_date).split(" ")[2]
                         },  ${formatDate(item.payroll_end_date).split(" ")[3]}`}
                       </td>
-                      <td>{item.count}</td>
-                      <td>{"0"}</td>
-                      <td>
+                      <td className="text-center">{item.count}</td>
+                      <td className="text-right">{"123,123.23"}</td>
+                      <td className="text-center">
                         {item.payroll_is_paid === 1 ? (
                           <StatusActive text={"paid"} />
                         ) : (

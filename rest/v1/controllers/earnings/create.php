@@ -160,8 +160,8 @@ if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === "43")
         $earnings->earnings_employee_id = $allUndertime[$u]["employeId"];
         $earnings->earnings_employee = $allUndertime[$u]["name"];
         $earnings->earnings_amount = $allUndertime[$u]["amount"];
-        $earnings->earnings_hrs = "";
-        $earnings->earnings_rate = "";
+        $earnings->earnings_hrs = $allUndertime[$u]["hours"];
+        $earnings->earnings_rate = $allUndertime[$u]["rate"];
         $earnings->earnings_hris_date = $allUndertime[$u]["hrisDate"];
         $earnings->earnings_hris_undertime_out = $allUndertime[$u]["hrisUndertimeOut"];
         $earnings->earnings_details = $allUndertime[$u]["details"];

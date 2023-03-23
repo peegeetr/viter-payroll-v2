@@ -36,6 +36,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
         $payrollList->payroll_list_net_pay =  $allPayrollList[$pl]["payroll_list_net_pay"];
         $payrollList->payroll_list_basic_pay =  $allPayrollList[$pl]["payroll_list_basic_pay"];
         $payrollList->payroll_list_overtime_pay =  $allPayrollList[$pl]["payroll_list_overtime_pay"];
+        $payrollList->payroll_list_overtime_hrs =  $allPayrollList[$pl]["payroll_list_overtime_hrs"];
         $payrollList->payroll_list_leave_pay =  $allPayrollList[$pl]["payroll_list_leave_pay"];
         $payrollList->payroll_list_leave_hrs =  $allPayrollList[$pl]["payroll_list_leave_hrs"];
         $payrollList->payroll_list_holiday =  $allPayrollList[$pl]["payroll_list_holiday"];

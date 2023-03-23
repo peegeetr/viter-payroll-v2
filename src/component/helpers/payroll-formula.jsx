@@ -55,12 +55,14 @@ export const employeeRate = (salary, workingDays) => {
 
 export const payComputeOt = (earning) => {
   let finalAmount = 0;
+  let otHrs = 0;
 
   if (earning.earnings_payitem_id === overtimeId) {
     // additional Overtime
     finalAmount += Number(earning.earnings_amount);
+    otHrs += Number(earning.earnings_hrs);
   }
-  return finalAmount;
+  return { finalAmount, otHrs };
 };
 
 export const payComputeLeave = (earning) => {

@@ -47,6 +47,7 @@ export const runPayroll = (
   let netPay = 0;
   let totalBasicPay = 0;
   let totalOtAmount = 0;
+  let totalOtHrs = 0;
   let totalLeaveAmount = 0;
   let totalLeaveHrs = 0;
   let totalHolidayAmount = 0;
@@ -121,7 +122,8 @@ export const runPayroll = (
         new Date(emp.payroll_end_date) >=
           new Date(earning.earnings_end_pay_date) // payroll end date
       ) {
-        totalOtAmount += payComputeOt(earning);
+        totalOtAmount += payComputeOt(earning).finalAmount;
+        totalOtHrs += payComputeOt(earning).otHrs;
         totalLeaveAmount += payComputeLeave(earning).finalAmount;
         totalLeaveHrs += payComputeLeave(earning).leaveHrs;
         totalUndertimeAmount += payComputeUndertime(earning);
@@ -274,6 +276,7 @@ export const runPayroll = (
       payroll_list_net_pay: netPay.toFixed(2),
       payroll_list_basic_pay: totalBasicPay.toFixed(2),
       payroll_list_overtime_pay: totalOtAmount.toFixed(2),
+      payroll_list_overtime_hrs: totalOtHrs.toFixed(4),
       payroll_list_leave_pay: totalLeaveAmount.toFixed(2),
       payroll_list_leave_hrs: totalLeaveHrs,
       payroll_list_holiday: totalHolidayAmount.toFixed(2),
@@ -332,6 +335,7 @@ export const runPayroll = (
     netPay = 0;
     totalBasicPay = 0;
     totalOtAmount = 0;
+    totalOtHrs = 0;
     totalLeaveAmount = 0;
     totalLeaveHrs = 0;
     totalHolidayAmount = 0;

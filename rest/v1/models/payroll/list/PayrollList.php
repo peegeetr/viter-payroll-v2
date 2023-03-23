@@ -12,6 +12,7 @@ class PayrollList
     public $payroll_list_net_pay;
     public $payroll_list_basic_pay;
     public $payroll_list_overtime_pay;
+    public $payroll_list_overtime_hrs;
     public $payroll_list_leave_pay;
     public $payroll_list_leave_hrs;
     public $payroll_list_holiday;
@@ -378,6 +379,7 @@ class PayrollList
             $sql .= "payroll_list_net_pay = :payroll_list_net_pay, ";
             $sql .= "payroll_list_basic_pay = :payroll_list_basic_pay, ";
             $sql .= "payroll_list_overtime_pay = :payroll_list_overtime_pay, ";
+            $sql .= "payroll_list_overtime_hrs = :payroll_list_overtime_hrs, ";
             $sql .= "payroll_list_leave_pay = :payroll_list_leave_pay, ";
             $sql .= "payroll_list_leave_hrs = :payroll_list_leave_hrs, ";
             $sql .= "payroll_list_holiday = :payroll_list_holiday, ";
@@ -426,6 +428,7 @@ class PayrollList
                 "payroll_list_net_pay" => $this->payroll_list_net_pay,
                 "payroll_list_basic_pay" => $this->payroll_list_basic_pay,
                 "payroll_list_overtime_pay" => $this->payroll_list_overtime_pay,
+                "payroll_list_overtime_hrs" => $this->payroll_list_overtime_hrs,
                 "payroll_list_leave_pay" => $this->payroll_list_leave_pay,
                 "payroll_list_leave_hrs" => $this->payroll_list_leave_hrs,
                 "payroll_list_holiday" => $this->payroll_list_holiday,

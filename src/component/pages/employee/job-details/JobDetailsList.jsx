@@ -140,7 +140,7 @@ const JobDetailsList = ({ isLoading, error, employee }) => {
                 <p className="pl-2">{item.employee_job_tin}</p>
                 <p className="font-semibold">Drive Link :</p>
                 <p className="pl-2 underline text-blue-600">
-                  {item.employee_job_drive_link !== "" && (
+                  {item.employee_job_drive_linkrowCount !== "" && (
                     <a href={`${item.employee_job_drive_link}`} target="_blank">
                       View on G-Drive
                     </a>

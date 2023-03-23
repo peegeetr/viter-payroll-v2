@@ -1,0 +1,22 @@
+ 
+
+*controllers  
+    - payroll/list/functions.php 
+    - payroll/list/page-by-emp-id.php 
+
+*models 
+    - payroll/list/PayrollList.php
+
+*htaccess 
+    - #payroll list paid
+
+*db tables 
+    - 
+
+*core functions 
+    -
+
+*extra
+    -
+    
+ 

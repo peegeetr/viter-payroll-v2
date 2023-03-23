@@ -768,4 +768,54 @@ class PayrollList
         }
         return $query;
     }
+
+
+
+
+    // read by payslip by id
+    public function readPayslipEmpId()
+    {
+        try {
+            $sql = "select payrollList.*, ";
+            $sql .= "payroll.payroll_start_date, ";
+            $sql .= "payroll.payroll_end_date ";
+            $sql .= "from {$this->tblPayrollList} as payrollList, ";
+            $sql .= "{$this->tblPayroll} as payroll ";
+            $sql .= "where payrollList.payroll_list_employee_id = :payroll_list_employee_id ";
+            $sql .= "and payrollList.payroll_list_payroll_id = payroll.payroll_id ";
+            $sql .= "order by payrollList.payroll_list_payroll_id asc ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "payroll_list_employee_id" => $this->payroll_list_employee_id,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    public function readPayslipEmpIdLimit()
+    {
+        try {
+            $sql = "select payrollList.*, ";
+            $sql .= "payroll.payroll_start_date, ";
+            $sql .= "payroll.payroll_end_date ";
+            $sql .= "from {$this->tblPayrollList} as payrollList, ";
+            $sql .= "{$this->tblPayroll} as payroll ";
+            $sql .= "where payrollList.payroll_list_employee_id = :payroll_list_employee_id ";
+            $sql .= "and payrollList.payroll_list_payroll_id = payroll.payroll_id ";
+            $sql .= "order by payrollList.payroll_list_payroll_id asc ";
+            $sql .= "limit :start, ";
+            $sql .= ":total ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "payroll_list_employee_id" => $this->payroll_list_employee_id,
+                "start" => $this->payrollList_start - 1,
+                "total" => $this->payrollList_total,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
 }

@@ -1,7 +1,6 @@
 <?php
 
-// create payroll list
-
+// create eaning from run payroll 
 function checkCreateEarnings($object)
 {
     $query = $object->createEarnings();
@@ -9,6 +8,7 @@ function checkCreateEarnings($object)
     return $query;
 }
 
+// create deductions from run payroll 
 function checkCreateDeductions($object)
 {
     $query = $object->createDeductions();
@@ -92,5 +92,20 @@ function checkReadSummaryBenefitsByEmpId($object)
 {
     $query = $object->readSummaryBenefitsByEmpId();
     checkQuery($query, "Empty records. (payroll list limit by employee id and date)");
+    return $query;
+}
+
+// Read by emp id
+function checkReadPayslipEmpId($object)
+{
+    $query = $object->readPayslipEmpId();
+    checkQuery($query, "Empty records (Read payslip by employee id).");
+    return $query;
+}
+// Read limit by emp id 
+function checkReadPayslipEmpIdLimit($object)
+{
+    $query = $object->readPayslipEmpIdLimit();
+    checkQuery($query, "Empty records (Read limit payslip by employee id).");
     return $query;
 }

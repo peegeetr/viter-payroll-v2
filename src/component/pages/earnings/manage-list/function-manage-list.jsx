@@ -64,10 +64,12 @@ export const computeUndertime = (undertimeData, employee, payrollDraft) => {
           amount:
             Number(uItem.undertime_spent) *
             employeeRate(eItem.employee_job_salary, days).hourly,
+          hours: Number(uItem.undertime_spent),
+          rate: 100,
           employeId: eItem.employee_aid,
-          details: `${formatDate(uItem.undertime_date)}(${getUnderTimeSpent(
-            uItem.undertime_spent
-          )})`,
+          details: `Undertime ${formatDate(
+            uItem.undertime_date
+          )}(${getUnderTimeSpent(uItem.undertime_spent)})`,
           hrisDate: uItem.undertime_date,
           hrisUndertimeOut: `${uItem.undertime_time_out} ${getUnderTimeSpent(
             uItem.undertime_spent

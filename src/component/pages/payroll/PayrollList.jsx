@@ -1,6 +1,6 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import React from "react";
-import { FaEdit, FaList, FaTrash } from "react-icons/fa";
+import { FaEdit, FaList, FaTrash, FaHistory } from "react-icons/fa";
 import { useInView } from "react-intersection-observer";
 import { Link } from "react-router-dom";
 import { setIsAdd, setIsRestore } from "../../../store/StoreAction";
@@ -95,6 +95,12 @@ const PayrollList = ({ setItemEdit }) => {
     setData(item);
     setDel(true);
   };
+  const handleRestore = (item) => {
+    dispatch(setIsRestore(true));
+    setId(item.payroll_aid);
+    setData(item);
+    setDel(false);
+  };
   return (
     <>
       <SearchBarRq
@@ -185,6 +191,18 @@ const PayrollList = ({ setItemEdit }) => {
                           >
                             <FaList />
                           </Link>
+                          {/* 
+                          {item.payroll_is_paid === 1 &&
+                            store.credentials.data.role_is_developer === 1 && (
+                              <button
+                                type="button"
+                                className="btn-action-table tooltip-action-table"
+                                data-tooltip="draft"
+                                onClick={() => handleRestore(item)}
+                              >
+                                <FaHistory />
+                              </button>
+                            )} */}
 
                           {item.payroll_is_paid === 0 && (
                             <button
@@ -221,7 +239,12 @@ const PayrollList = ({ setItemEdit }) => {
           id={id}
           isDel={isDel}
           mysqlApiDelete={`${devApiUrl}/v1/payroll/${id}`}
-          msg={"Are you sure you want to delete this payroll"}
+          // mysqlApiRestore={`${devApiUrl}/v1/payroll/${id}`}
+          msg={
+            isDel
+              ? "Are you sure you want to delete this payroll "
+              : "Are you sure you want to restore this to draft "
+          }
           item={`${dataItem.payroll_id}`}
           arrKey="payroll"
         />

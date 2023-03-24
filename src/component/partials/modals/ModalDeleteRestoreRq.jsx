@@ -45,6 +45,7 @@ const ModalDeleteRestoreRq = ({
     // // mutate data
     mutation.mutate({
       isActive: 1,
+      isDraft: 0,
       column_name: item,
       isDeveloper: isDeveloper,
     });

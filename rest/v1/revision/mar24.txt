@@ -2,7 +2,7 @@
 
 *controllers  
     - earnings/functions.php 
-    - earnings/create.php 
+    - earnings/create.php  
 
 *models 
     - earnings/Earnings.php

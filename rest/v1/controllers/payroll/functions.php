@@ -49,3 +49,11 @@ function checkReadByDraft($object)
     checkQuery($query, "Empty records (draft).");
     return $query;
 }
+
+// check name
+function checkDateExist($object)
+{
+    $query = $object->readIsDateExist();
+    $count = $query->rowCount();
+    checkExistence($count, "Pay period is already exist.");
+}

@@ -222,6 +222,27 @@ class Payroll
         return $query;
     }
 
+    // read date and type id
+    public function readIsDateExist()
+    {
+        try {
+            $sql = "select * from ";
+            $sql .= "{$this->tblPayroll} ";
+            $sql .= "where payroll_category_type = :payroll_category_type ";
+            $sql .= "and payroll_start_date = :payroll_start_date ";
+            $sql .= "and payroll_end_date = :payroll_end_date ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "payroll_category_type" => $this->payroll_category_type,
+                "payroll_start_date" => $this->payroll_start_date,
+                "payroll_end_date" => $this->payroll_end_date,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
     // update
     public function update()
     {

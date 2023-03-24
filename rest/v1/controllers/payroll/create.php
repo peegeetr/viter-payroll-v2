@@ -64,7 +64,10 @@ for ($i = 0; $i < count($allEmployee); $i++) {
         checkCreatePayrollList($payroll);
     }
 }
+
+
 // create
+checkDateExist($payroll);
 $query = checkCreate($payroll);
 
 

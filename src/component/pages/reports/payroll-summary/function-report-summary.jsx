@@ -14,16 +14,16 @@ export const getErningsRate = (earning, item) => {
       list.push({
         employee_id: eItem.earnings_employee_id,
         employee_name: eItem.earnings_employee,
-        otHrs: 1,
-        otRate: 20,
-        otAmount: 5,
-        holidayHrs: 1,
-        holidayRate: 20,
-        holidayAmount: 5,
+        otHrs: eItem.earnings_hrs,
+        otRate: eItem.earnings_rate,
+        otAmount: eItem.earnings_amount,
+        holidayHrs: eItem.earnings_hrs,
+        holidayRate: eItem.earnings_rate,
+        holidayAmount: eItem.earnings_amount,
       });
     }
   });
-  console.log("types", list, earning);
+  // console.log("types", list, earning);
   return list;
 };
 

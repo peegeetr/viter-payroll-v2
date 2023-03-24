@@ -61,6 +61,8 @@ const SummaryEarningsList = () => {
     cacheTime: 1000,
   });
 
+  console.log(result);
+
   React.useEffect(() => {
     if (inView) {
       setPage((prev) => prev + 1);
@@ -152,12 +154,12 @@ const SummaryEarningsList = () => {
                   Name
                 </th>
                 <th
-                  className="table-border min-w-[12rem] text-left"
+                  className="table-border min-w-[13rem] text-center"
                   rowSpan="2"
                 >
                   Department
                 </th>
-                <th className="table-border min-w-[12rem]" rowSpan="2">
+                <th className="table-border min-w-[9rem]" rowSpan="2">
                   Pay Date
                 </th>
                 <th className="table-border min-w-[10rem]" rowSpan="2">
@@ -178,7 +180,7 @@ const SummaryEarningsList = () => {
                 <th className="table-border  min-w-[9rem]" rowSpan="2">
                   Total Reg Wage
                 </th>
-                <th className="table-border-center " colSpan="4">
+                <th className="table-border-center " colSpan="3">
                   Leave
                 </th>
                 <th className="table-border-center " colSpan="4">
@@ -187,7 +189,7 @@ const SummaryEarningsList = () => {
                 <th className="table-border-center " colSpan="4">
                   Holiday
                 </th>
-                <th className="table-border-center min-w-[20rem]" colSpan="4">
+                <th className="table-border-center min-w-[15rem]" colSpan="3">
                   Night Differential
                 </th>
                 <th className="min-w-[5rem]" rowSpan="2">
@@ -198,7 +200,6 @@ const SummaryEarningsList = () => {
                 <th className="table-border">Hrs</th>
                 <th className="table-border">Rate</th>
                 <th className="table-border">Amount</th>
-                <th className="table-border min-w-[7rem]">Total Amount</th>
                 <th className="table-border">Hrs</th>
                 <th className="table-border">Rate</th>
                 <th className="table-border">Amount</th>
@@ -210,7 +211,6 @@ const SummaryEarningsList = () => {
                 <th className="table-border">Hrs</th>
                 <th className="table-border">Rate</th>
                 <th className="table-border">Amount</th>
-                <th className="table-border min-w-[7rem]">Total Amount</th>
               </tr>
             </thead>
 
@@ -246,8 +246,8 @@ const SummaryEarningsList = () => {
                         {item.payroll_list_employee_department}
                       </td>
                       <td className="text-center">{`${getPayPeriod(
-                        result?.pages[0].data[0].payroll_start_date,
-                        result?.pages[0].data[0].payroll_end_date
+                        item.payroll_start_date,
+                        item.payroll_end_date
                       )}`}</td>
                       <td className="px-6">
                         {numberWithCommas(item.payroll_list_basic_pay)}
@@ -261,39 +261,44 @@ const SummaryEarningsList = () => {
                         ) * 8}
                       </td>
                       <td className="px-6">{numberWithCommas(0)}</td>
-                      <td className="px-6">{numberWithCommas(0)}</td>
+                      <td className="px-6">{numberWithCommas(10)}</td>
                       <td className="px-6">
-                        {numberWithCommas(item.payroll_list_sss_ee)}
+                        {/* leave hrs */}
+                        {numberWithCommas(item.payroll_list_leave_hrs)}
                       </td>
                       <td className="px-6">
-                        {numberWithCommas(item.payroll_list_sss_ee)}
+                        {/* leave rate */}
+                        {numberWithCommas(item.payroll_list_leave_rate)}
                       </td>
                       <td className="px-6">
-                        {numberWithCommas(item.payroll_list_sss_ee)}
+                        {/* leave pay */}
+                        {numberWithCommas(item.payroll_list_leave_pay)}
                       </td>
-                      <td className="px-6">
+                      {/* <td className="px-6">
                         {numberWithCommas(item.payroll_list_sss_ee)}
+                      </td> */}
+                      <td colSpan={4} className="px-6">
+                        {numberWithCommas(item.payroll_list_overtime_pay)}
                       </td>
                       <td colSpan={4} className="px-6">
-                        {numberWithCommas(item.payroll_list_sss_ee)}
-                      </td>
-                      <td colSpan={4} className="px-6">
-                        {numberWithCommas(item.payroll_list_sss_ee)}
+                        {/* total holiday amount */}
+                        {numberWithCommas(item.payroll_list_holiday)}
                       </td>
                       <td className="px-6">
-                        {numberWithCommas(item.payroll_list_sss_ee)}
+                        {/* ND hrs */}
+                        {numberWithCommas(item.payroll_list_nd_hrs)}
+                      </td>
+                      {/* ND rate */}
+                      <td className="px-6">{10}%</td>
+                      <td className="px-6">
+                        {/* ND amount */}
+                        {numberWithCommas(
+                          item.payroll_list_night_shift_differential
+                        )}
                       </td>
                       <td className="px-6">
-                        {numberWithCommas(item.payroll_list_sss_ee)}
-                      </td>
-                      <td className="px-6">
-                        {numberWithCommas(item.payroll_list_sss_ee)}
-                      </td>
-                      <td className="px-6">
-                        {numberWithCommas(item.payroll_list_sss_ee)}
-                      </td>
-                      <td className="px-6">
-                        {numberWithCommas(item.payroll_list_sss_ee)}
+                        {/* gross pay */}
+                        {numberWithCommas(item.payroll_list_gross)}
                       </td>
                     </tr>
 
@@ -303,7 +308,7 @@ const SummaryEarningsList = () => {
                           className="max-h-[10rem] overflow-y-auto text-right"
                           key={key}
                         >
-                          <td colSpan={14} className="px-6"></td>
+                          <td colSpan={13} className="px-6"></td>
 
                           <td className="px-6">
                             {numberWithCommas(item.otHrs)}

@@ -145,7 +145,7 @@ const PayrollView = () => {
 
       {store.isConfirm && (
         <ModalRun
-          item={pid}
+          pid={pid}
           isPaid={isPaid}
           employees={payrollList?.data}
           payrollEarnings={payrollEarnings?.data}

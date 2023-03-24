@@ -26,7 +26,7 @@ import { runPayroll } from "../../pages/payroll/list/functions-payroll-list";
 import ButtonSpinner from "../spinners/ButtonSpinner";
 
 const ModalRun = ({
-  item,
+  pid,
   isPaid,
   employees,
   payrollEarnings,
@@ -45,8 +45,8 @@ const ModalRun = ({
     mutationFn: (values) =>
       queryData(
         isPaid
-          ? `${devApiUrl}/v1/payrollList/${item}`
-          : `${devApiUrl}/v1/payrollList/paid/${item}`,
+          ? `${devApiUrl}/v1/payrollList/${pid}`
+          : `${devApiUrl}/v1/payrollList/paid/${pid}`,
         "put",
         values
       ),
@@ -133,7 +133,7 @@ const ModalRun = ({
               Are you sure to {isPaid ? "run" : "mark as paid"}
             </span>
             <br />
-            <span className="text-sm font-bold break-all">"{item}"?</span>
+            <span className="text-sm font-bold break-all">"{pid}"?</span>
             {!isPaid && <p>You can't undo this action.</p>}
             <div className="flex items-center gap-1 pt-5">
               <button

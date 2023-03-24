@@ -92,16 +92,17 @@ const ManageDeductionList = () => {
             <thead>
               <tr>
                 <th>#</th>
-                {/* <th className="min-w-[5rem]">Payroll ID</th> */}
+                <th className="min-w-[5rem]">Payroll ID</th>
                 <th className="min-w-[10rem]">Employeee</th>
-                <th className="min-w-[12rem]">Details</th>
-                <th className="min-w-[5rem] text-right">Amount</th>
-                <th>Installment</th>
-                <th className="min-w-[6rem]">Start Date</th>
+                <th className="min-w-[15rem]">Details</th>
+                <th className="min-w-[6rem] text-right ">Amount</th>
+                <th className="text-center ">Installment</th>
+                <th className="min-w-[8rem]">Coverage date</th>
+                {/* <th className="min-w-[6rem]">Start Date</th>
                 <th className="min-w-[6rem]">End Date</th>
                 <th className="min-w-[12rem]">Pay Type</th>
                 <th className="min-w-[7rem]">Pay Item</th>
-                <th className="min-w-[7rem]">Frequency</th>
+                <th className="min-w-[7rem]">Frequency</th> */}
                 <th>Status</th>
                 <th className="text-right">Actions</th>
               </tr>
@@ -127,7 +128,7 @@ const ManageDeductionList = () => {
                   {page.data.map((item, key) => (
                     <tr key={key}>
                       <td>{counter++}.</td>
-                      {/* <td>{item.deduction_payroll_id}</td> */}
+                      <td>{item.deduction_payroll_id}</td>
                       <td>{item.deduction_employee}</td>
                       <td>{item.deduction_details}</td>
                       <td className="text-right">
@@ -149,11 +150,33 @@ const ManageDeductionList = () => {
                                 " "
                               )[1]
                             } 
+                          ${
+                            formatDate(item.deduction_start_pay_date).split(
+                              " "
+                            )[2]
+                          } - ${
+                              formatDate(item.deduction_end_pay_date).split(
+                                " "
+                              )[2]
+                            },  ${
+                              formatDate(item.deduction_end_pay_date).split(
+                                " "
+                              )[3]
+                            }`}
+                      </td>
+                      {/* <td>
+                        {item.deduction_start_pay_date === "n/a"
+                          ? "N/A"
+                          : `${
+                              formatDate(item.deduction_start_pay_date).split(
+                                " "
+                              )[1]
+                            } 
                       ${formatDate(item.deduction_start_pay_date).split(" ")[2]}
                       ${formatDate(item.deduction_start_pay_date).split(" ")[3]}
                       `}
-                      </td>
-                      <td>
+                      </td> */}
+                      {/* <td>
                         {item.deduction_end_pay_date === "n/a"
                           ? "N/A"
                           : `${
@@ -164,14 +187,14 @@ const ManageDeductionList = () => {
                     ${formatDate(item.deduction_end_pay_date).split(" ")[2]}
                     ${formatDate(item.deduction_end_pay_date).split(" ")[3]}
                     `}
-                      </td>
-                      <td>{item.paytype_name}</td>
-                      <td>{item.payitem_name}</td>
-                      <td>
+                      </td> */}
+                      {/* <td>{item.paytype_name}</td>
+                      <td>{item.payitem_name}</td> */}
+                      {/* <td>
                         {item.deduction_frequency === "sm"
                           ? "Semi-monthly"
                           : "Monthly"}
-                      </td>
+                      </td> */}
                       <td>{getStatus(item)}</td>
                       <td>
                         <div className="flex items-center justify-end gap-2">

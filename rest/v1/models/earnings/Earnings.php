@@ -159,7 +159,7 @@ class Earnings
             $sql .= "and payitem.payitem_paytype_id = paytype.paytype_aid ";
             $sql .= "order by ";
             $sql .= "earnings.earnings_is_paid, ";
-            $sql .= "DATE(earnings.earnings_end_pay_date), ";
+            $sql .= "DATE(earnings.earnings_end_pay_date) desc, ";
             $sql .= "earnings.earnings_employee, ";
             $sql .= "DATE(earnings.earnings_hris_date), ";
             $sql .= "earnings.earnings_details ";
@@ -206,7 +206,7 @@ class Earnings
             $sql .= "and payitem.payitem_paytype_id = paytype.paytype_aid ";
             $sql .= "order by ";
             $sql .= "earnings.earnings_is_paid, ";
-            $sql .= "DATE(earnings.earnings_end_pay_date), ";
+            $sql .= "DATE(earnings.earnings_end_pay_date) desc, ";
             $sql .= "earnings.earnings_employee, ";
             $sql .= "DATE(earnings.earnings_hris_date), ";
             $sql .= "earnings.earnings_details ";
@@ -260,7 +260,7 @@ class Earnings
             $sql .= "and earnings.earnings_employee like :search ";
             $sql .= "order by ";
             $sql .= "earnings.earnings_is_paid, ";
-            $sql .= "DATE(earnings.earnings_end_pay_date), ";
+            $sql .= "DATE(earnings.earnings_end_pay_date) desc, ";
             $sql .= "earnings.earnings_employee, ";
             $sql .= "DATE(earnings.earnings_hris_date), ";
             $sql .= "earnings.earnings_details ";
@@ -447,6 +447,23 @@ class Earnings
         return $query;
     }
 
+    // delete Earnings
+    public function deleteEarnings()
+    {
+        try {
+            $sql = "delete from {$this->tblEarnings} ";
+            $sql .= "where earnings_payroll_id = :earnings_payroll_id ";
+            $sql .= "and earnings_payitem_id = :earnings_payitem_id ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "earnings_payroll_id" => $this->earnings_payroll_id,
+                "earnings_payitem_id" => $this->earnings_payitem_id,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
     // read by payslip by id
     public function readAllSummaryView()
     {

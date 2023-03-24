@@ -80,11 +80,16 @@ if ($data["payitem_is_hris"] === "0" && $earnings->earnings_employee !== "all") 
 
 // create if data is from hris
 // payitem 19 = leave 
-if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === "19") {
+$payitem = $data["leaveId"];
+if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === $payitem) {
     // check array length
     if (count($allLeave) === 0) {
         checkEndpoint();
     }
+    // delete first earnings PR ID and pay item id leave
+    $earnings->earnings_payitem_id = $payitem;
+    checkId($earnings->earnings_payitem_id);
+    checkDeleteEarnings($earnings);
     for ($l = 0; $l < count($allLeave); $l++) {
         // check name
         $earnings->earnings_employee_id = $allLeave[$l]["employeId"];
@@ -103,12 +108,19 @@ if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === "19")
 }
 
 // create if data is from hris
-// payitem 18 = Overtime 
-if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === "18") {
+// payitem 18 = Overtime  
+$payitem = $data["overtimeId"];
+if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === $payitem) {
     // check array length
     if (count($allOvertimeLeave) === 0) {
         checkEndpoint();
     }
+
+    // delete first earnings PR ID and pay item id Overtime
+    $earnings->earnings_payitem_id = $payitem;
+    checkId($earnings->earnings_payitem_id);
+    checkDeleteEarnings($earnings);
+
     for ($o = 0; $o < count($allOvertimeLeave); $o++) {
         // check name
         $earnings->earnings_employee_id = $allOvertimeLeave[$o]["employeId"];
@@ -126,11 +138,16 @@ if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === "18")
 
 // create if data is from hris
 // payitem 36 = absences 
-if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === "36") {
+$payitem = $data["absencesId"];
+if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === $payitem) {
     // check array length
     if (count($allUnPaidLeave) === 0) {
         checkEndpoint();
     }
+    // delete first earnings PR ID and pay item id absences
+    $earnings->earnings_payitem_id = $payitem;
+    checkId($earnings->earnings_payitem_id);
+    checkDeleteEarnings($earnings);
     for ($unp = 0; $unp < count($allUnPaidLeave); $unp++) {
         // check name
         $earnings->earnings_employee_id = $allUnPaidLeave[$unp]["employeId"];
@@ -150,11 +167,16 @@ if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === "36")
 
 // create if data is from hris
 // payitem 43 = undertime 
-if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === "43") {
+$payitem = $data["undertimeId"];
+if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === $payitem) {
     // check array length
     if (count($allUndertime) === 0) {
         checkEndpoint();
     }
+    // delete first earnings PR ID and pay item id undertime
+    $earnings->earnings_payitem_id = $payitem;
+    checkId($earnings->earnings_payitem_id);
+    checkDeleteEarnings($earnings);
     for ($u = 0; $u < count($allUndertime); $u++) {
         // check name
         $earnings->earnings_employee_id = $allUndertime[$u]["employeId"];

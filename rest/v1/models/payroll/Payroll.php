@@ -140,10 +140,9 @@ class Payroll
             $sql .= "where ";
             $sql .= "pr.payroll_category_type = prtype.payroll_type_aid ";
             $sql .= "and pr.payroll_id = prlist.payroll_list_payroll_id ";
-            $sql .= "GROUP BY prlist.payroll_list_employee_id ";
-            $sql .= "and prlist.payroll_list_payroll_id ";
+            $sql .= "GROUP BY prlist.payroll_list_payroll_id ";
             $sql .= "order by pr.payroll_is_paid, ";
-            $sql .= "DATE(pr.payroll_pay_date), pr.payroll_id desc ";
+            $sql .= "pr.payroll_id desc ";
             $query = $this->connection->query($sql);
         } catch (PDOException $ex) {
             $query = false;
@@ -163,10 +162,9 @@ class Payroll
             $sql .= "where ";
             $sql .= "pr.payroll_category_type = prtype.payroll_type_aid ";
             $sql .= "and pr.payroll_id = prlist.payroll_list_payroll_id ";
-            $sql .= "GROUP BY prlist.payroll_list_employee_id ";
-            $sql .= "and prlist.payroll_list_payroll_id ";
+            $sql .= "GROUP BY prlist.payroll_list_payroll_id ";
             $sql .= "order by pr.payroll_is_paid, ";
-            $sql .= "DATE(pr.payroll_pay_date), pr.payroll_id desc ";
+            $sql .= "pr.payroll_id desc ";
             $sql .= "limit :start, ";
             $sql .= ":total ";
             $query = $this->connection->prepare($sql);
@@ -192,10 +190,9 @@ class Payroll
             $sql .= "pr.payroll_category_type = prtype.payroll_type_aid ";
             $sql .= "and pr.payroll_id = prlist.payroll_list_payroll_id ";
             $sql .= "and pr.payroll_id like :search ";
-            $sql .= "GROUP BY prlist.payroll_list_employee_id ";
-            $sql .= "and prlist.payroll_list_payroll_id ";
+            $sql .= "GROUP BY prlist.payroll_list_payroll_id ";
             $sql .= "order by pr.payroll_is_paid, ";
-            $sql .= "DATE(pr.payroll_pay_date), pr.payroll_id desc ";
+            $sql .= "pr.payroll_id desc ";
             $query = $this->connection->prepare($sql);
             $query->execute([
                 "search" => "{$this->payroll_search}%",

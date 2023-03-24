@@ -329,6 +329,11 @@ const ModalAddManageEarnings = ({
                   overtimeLeave: computedOT.length > 0 ? computedOT : 0,
                   undertime:
                     computedUndertime.length > 0 ? computedUndertime : 0,
+                  // payitemID
+                  leaveId: leaveId,
+                  absencesId: absencesId,
+                  overtimeId: overtimeId,
+                  undertimeId: undertimeId,
                 });
               }}
             >

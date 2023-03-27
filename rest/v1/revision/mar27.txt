@@ -1,10 +1,12 @@
  
 
 *controllers  
-    -   
+    - earnings/create.php  
+    - earnings/functions.php  
+    - earnings/filter.php  
 
 *models 
-    - 
+    - earnings/Earnings.php
 
 *htaccess 
     - #earnings

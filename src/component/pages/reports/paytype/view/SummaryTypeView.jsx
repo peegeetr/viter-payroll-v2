@@ -4,6 +4,7 @@ import { useInView } from "react-intersection-observer";
 import { StoreContext } from "../../../../../store/StoreContext";
 import {
   devApiUrl,
+  formatDate,
   getPayPeriod,
   getUrlParam,
   getUserType,
@@ -25,7 +26,6 @@ const SummaryTypeView = () => {
   const [page, setPage] = React.useState(1);
   let counter = 1;
   const { ref, inView } = useInView();
-  console.log(paytypeId);
 
   // use if with loadmore button and search bar
   const {
@@ -65,12 +65,15 @@ const SummaryTypeView = () => {
     result?.pages.length > 0 ? `${result?.pages[0].data[0].paytype_name}` : "";
   let payPeriod =
     result?.pages.length > 0
-      ? `${getPayPeriod(
+      ? result?.pages[0].data[0].earnings_start_pay_date === "n/a"
+        ? formatDate(result?.pages[0].data[0].earnings_created)
+        : `
+        ${getPayPeriod(
           result?.pages[0].data[0].earnings_start_pay_date,
           result?.pages[0].data[0].earnings_end_pay_date
         )}`
-      : "";
-
+      : "no";
+  console.log(result);
   return (
     <>
       <Header />

@@ -26,16 +26,28 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 
     if (
         array_key_exists("paytypeId", $_GET) &&
+        array_key_exists("payitemId", $_GET) &&
         array_key_exists("startDate", $_GET) &&
         array_key_exists("endDate", $_GET)
     ) {
         // get data
-        $earnings->earnings_payroll_type_id = $_GET['paytypeId'];
+        $earnings->earnings_paytype_id = $_GET['paytypeId'];
+        $earnings->earnings_payitem_id = $_GET['payitemId'];
         $earnings->date_from = $_GET['startDate'];
         $earnings->date_to = $_GET['endDate'];
-        $query = checkReadSummaryByDate($earnings);
-        http_response_code(200);
-        getQueriedData($query);
+
+        // if payroll type id is de minimis
+        if ($earnings->earnings_payitem_id === "0") {
+            $query = checkReadSummaryByDate($earnings);
+            http_response_code(200);
+            getQueriedData($query);
+        }
+        if ($earnings->earnings_payitem_id !== "0") {
+
+            $query = checkReadDeminimisByDate($earnings);
+            http_response_code(200);
+            getQueriedData($query);
+        }
     }
     // return 404 error if endpoint not available
     checkEndpoint();

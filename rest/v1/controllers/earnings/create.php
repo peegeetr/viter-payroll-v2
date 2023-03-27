@@ -26,7 +26,6 @@ $earnings->earnings_start_pay_date = checkIndex($data, "earnings_start_pay_date"
 $earnings->earnings_end_pay_date = checkIndex($data, "earnings_end_pay_date");
 $earnings->earnings_details = checkIndex($data, "earnings_details");
 $earnings->earnings_hris_undertime_out = 0;
-$earnings->earnings_is_paid = 0;
 $earnings->earnings_created = date("Y-m-d H:i:s");
 $earnings->earnings_datetime = date("Y-m-d H:i:s");
 
@@ -36,8 +35,17 @@ $allUnPaidLeave = $data["unPaidLeave"];
 $allOvertimeLeave = $data["overtimeLeave"];
 $allUndertime = $data["undertime"];
 
-// create if not data from hris and all employee
+// if earnings is recurring or every payroll
+if ($earnings->earnings_is_installment === "0") {
+    $earnings->earnings_is_paid = 1;
+}
 
+// if earnings is not recurring or every payroll
+if ($earnings->earnings_is_installment !== "0") {
+    $earnings->earnings_is_paid = 0;
+}
+
+// create if not data from hris and all employee
 if ($data["payitem_is_hris"] === "0" && $earnings->earnings_employee === "all") {
     $newCount = 0;
     // check array length
@@ -50,7 +58,7 @@ if ($data["payitem_is_hris"] === "0" && $earnings->earnings_employee === "all") 
 
         $earnings->earnings_employee = "{$employee_lname}, {$employee_fname}";
         $earnings->earnings_employee_id = $allEmployee[$e]["employee_aid"];
-        $earnings->earnings_hris_date =  date("Y-m-d");
+        $earnings->earnings_hris_date = "";
         $earnings->earnings_hrs = "";
         $earnings->earnings_rate = "";
 
@@ -72,7 +80,7 @@ if ($data["payitem_is_hris"] === "0" && $earnings->earnings_employee === "all") 
 if ($data["payitem_is_hris"] === "0" && $earnings->earnings_employee !== "all") {
     // create if specific employee and not data from hris
     $earnings->earnings_employee = explode(" ", $data["earnings_employee"])[0] . ", " . explode(" ", $data["earnings_employee"])[1];
-    $earnings->earnings_hris_date =  date("Y-m-d");
+    $earnings->earnings_hris_date = "";
     $earnings->earnings_hrs = "";
     $earnings->earnings_rate = "";
     // check name

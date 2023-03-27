@@ -56,7 +56,7 @@ RewriteRule ^earnings/page/([0-9]+)$ controllers/earnings/page.php?start=$1 [L]
 RewriteRule ^earnings/search/([A-Za-z0-9-]+)$ controllers/earnings/search.php?search=$1 [L]
 RewriteRule ^earnings/validateId/([A-Za-z0-9-]+)$ controllers/earnings/validateId.php?prid=$1 [L]
 RewriteRule ^earnings/summary/([0-9]+)$ controllers/earnings/summary.php?start=$1 [L]  
-RewriteRule ^earnings/filter/([0-9]+)/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)$ controllers/earnings/filter.php?paytypeId=$1&startDate=$2&endDate=$3 [L]  
+RewriteRule ^earnings/filter/([0-9]+)/([0-9]+)/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)$ controllers/earnings/filter.php?paytypeId=$1&payitemId=$2&startDate=$3&endDate=$4 [L]  
 RewriteRule ^earnings/summary/view/([0-9]+)/([0-9]+)$ controllers/earnings/summary.php?start=$1&payItemId=$2 [L]    
 
 #deductions

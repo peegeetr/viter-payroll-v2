@@ -94,14 +94,14 @@ const ManageDeductionList = () => {
                 <th>#</th>
                 <th className="min-w-[5rem]">Payroll ID</th>
                 <th className="min-w-[10rem]">Employeee</th>
+                <th className="min-w-[10rem]">Pay Item</th>
                 <th className="min-w-[15rem]">Details</th>
                 <th className="min-w-[6rem] text-right ">Amount</th>
                 <th className="text-center ">Installment</th>
-                <th className="min-w-[8rem]">Coverage date</th>
+                <th className="min-w-[10rem]">Coverage date</th>
                 {/* <th className="min-w-[6rem]">Start Date</th>
                 <th className="min-w-[6rem]">End Date</th>
                 <th className="min-w-[12rem]">Pay Type</th>
-                <th className="min-w-[7rem]">Pay Item</th>
                 <th className="min-w-[7rem]">Frequency</th> */}
                 <th>Status</th>
                 <th className="text-right">Actions</th>
@@ -130,6 +130,7 @@ const ManageDeductionList = () => {
                       <td>{counter++}.</td>
                       <td>{item.deduction_payroll_id}</td>
                       <td>{item.deduction_employee}</td>
+                      <td>{item.payitem_name}</td>
                       <td>{item.deduction_details}</td>
                       <td className="text-right">
                         P
@@ -155,6 +156,10 @@ const ManageDeductionList = () => {
                               " "
                             )[2]
                           } - ${
+                              formatDate(item.deduction_end_pay_date).split(
+                                " "
+                              )[1]
+                            } ${
                               formatDate(item.deduction_end_pay_date).split(
                                 " "
                               )[2]
@@ -189,7 +194,7 @@ const ManageDeductionList = () => {
                     `}
                       </td> */}
                       {/* <td>{item.paytype_name}</td>
-                      <td>{item.payitem_name}</td> */}
+                       */}
                       {/* <td>
                         {item.deduction_frequency === "sm"
                           ? "Semi-monthly"

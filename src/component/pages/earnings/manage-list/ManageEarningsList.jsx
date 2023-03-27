@@ -98,7 +98,7 @@ const ManageEarningsList = () => {
                 <th className="min-w-[15rem]">Details</th>
                 <th className="min-w-[6rem] text-right ">Amount</th>
                 <th className="text-center ">Installment</th>
-                <th className="min-w-[8rem]">Coverage date</th>
+                <th className="min-w-[10rem]">Coverage date</th>
                 {/* <th className="min-w-[6rem]">End Date</th> */}
                 {/* <th className="min-w-[7rem]">Pay Type</th>
                 <th className="min-w-[7rem]">Frequency</th> */}
@@ -161,6 +161,10 @@ const ManageEarningsList = () => {
                               " "
                             )[2]
                           } - ${
+                              formatDate(item.earnings_end_pay_date).split(
+                                " "
+                              )[1]
+                            } ${
                               formatDate(item.earnings_end_pay_date).split(
                                 " "
                               )[2]

@@ -65,13 +65,6 @@ const SummaryDeductionsList = () => {
     }
   }, [inView]);
 
-  // // use if not loadmore button undertime
-  // const { data: job } = useQueryData(
-  //   `${hrisDevApiUrl}/v1/employees/job`, // endpoint
-  //   "get", // method
-  //   "department" // key
-  // );
-
   const initVal = {
     payStart_date: "",
     payEnd_date: "",

@@ -36,7 +36,7 @@ const ManageDeduction = () => {
 
   // use if not loadmore button undertime
   const { data: employee } = useQueryData(
-    `${hrisDevApiUrl}/v1/employees`, // endpoint
+    `${hrisDevApiUrl}/v1/employees/pay`, // endpoint
     "get", // method
     "employee" // key
   );

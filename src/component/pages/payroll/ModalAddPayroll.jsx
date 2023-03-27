@@ -28,7 +28,7 @@ const ModalAddPayroll = ({ item }) => {
 
   // use if not loadmore button undertime
   const { data: result } = useQueryData(
-    `${hrisDevApiUrl}/v1/employees`, // endpoint
+    `${hrisDevApiUrl}/v1/employees/pay`, // endpoint
     "get", // method
     "result" // key
   );

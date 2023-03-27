@@ -41,8 +41,8 @@ const EmployeeList = () => {
     queryKey: ["employee", onSearch, store.isSearch],
     queryFn: async ({ pageParam = 1 }) =>
       await queryDataInfinite(
-        `${hrisDevApiUrl}/v1/employees/search/${search.current.value}`, // search endpoint
-        `${hrisDevApiUrl}/v1/employees/page/${pageParam}`, // list endpoint
+        `${hrisDevApiUrl}/v1/employees/search/elegibility/${search.current.value}`, // search endpoint
+        `${hrisDevApiUrl}/v1/employees/pay/elegibility/${pageParam}`, // list endpoint
         store.isSearch // search boolean
       ),
     getNextPageParam: (lastPage) => {
@@ -127,13 +127,13 @@ const EmployeeList = () => {
                           </span>
                         )}
                       </td>
-                      <td>{item.fullname}</td>
+                      <td>{`${item.employee_lname} ${item.employee_fname}`}</td>
                       <td>{item.employee_job_number}</td>
                       <td>{item.employee_email}</td>
                       <td>
-                        {item.supervisor === null
+                        {item.employee_job_supervisor_id === ""
                           ? "Not assigned"
-                          : item.supervisor}
+                          : item.employee_job_supervisor_name}
                       </td>
                       <td>
                         {item.employee_is_active === 1 ? (

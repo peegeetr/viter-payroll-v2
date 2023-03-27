@@ -42,12 +42,12 @@ const PayslipList = ({ payslip }) => {
   let totalHrs = holidayHrs;
   let basicHrs = days * 8 - totalHrs;
   let basicPay = hourRate * basicHrs - holidayHrs;
-  // console.log(
-  //   payslip,
-  //   Number(payslip?.data[0].payroll_list_gross),
-  //   Number(payslip?.data[0].payroll_list_total_benefits),
-  //   basicPay
-  // );
+  console.log(
+    payslip
+    // Number(payslip?.data[0].payroll_list_gross),
+    // Number(payslip?.data[0].payroll_list_total_benefits),
+    // basicPay
+  );
   return (
     <>
       <PayslipHeader
@@ -73,6 +73,7 @@ const PayslipList = ({ payslip }) => {
               payrollid={payslip?.data[0].payroll_list_payroll_id}
               hourRate={hourRate}
               days={days}
+              payslip={payslip}
             />
 
             {/* <tr className="font-semibold bg-gray-100 hover:bg-gray-100 uppercase">

@@ -34,6 +34,7 @@ const PayslipEarnings = ({
   let basicHrs = days * 8 - totalHrs;
   let basicPay = hourRate * basicHrs;
   let gross = payslip?.data[0].payroll_list_gross;
+  let totalBenefits = payslip?.data[0].payroll_list_total_benefits;
   let totalAmount = basicPay;
   // console.log(earnings, payslip);
   return (
@@ -117,13 +118,35 @@ const PayslipEarnings = ({
               </tr>
             );
           })}
-          {earnings?.data.length > 0 && (
+          {/* {earnings?.data.length > 0 && (
             <tr className="font-semibold bg-gray-100 hover:bg-gray-100">
               <td colSpan={3} className="uppercase text-right xs:pr-4">
                 Total {earnings?.data[0].paytype_name}
               </td>
               <td className=" text-right px-4">
                 {numberWithCommas(Number(gross).toFixed(2))}
+              </td>
+            </tr>
+          )} */}
+
+          {paytypeId === wagesEarningsId && (
+            <tr className="font-semibold bg-gray-100 hover:bg-gray-100">
+              <td colSpan={3} className="uppercase text-right xs:pr-4">
+                Total WAGES
+              </td>
+              <td className=" text-right px-4">
+                {numberWithCommas(Number(gross).toFixed(2))}
+              </td>
+            </tr>
+          )}
+
+          {paytypeId === otherBenefitsEarningsId && (
+            <tr className="font-semibold bg-gray-100 hover:bg-gray-100">
+              <td colSpan={3} className="uppercase text-right xs:pr-4">
+                Total 13TH MONTH & OTHER BENEFITS
+              </td>
+              <td className=" text-right px-4">
+                {numberWithCommas(Number(totalBenefits).toFixed(2))}
               </td>
             </tr>
           )}

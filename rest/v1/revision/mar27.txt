@@ -1,0 +1,21 @@
+ 
+
+*controllers  
+    -   
+
+*models 
+    - 
+
+*htaccess 
+    - #earnings
+
+*db tables 
+    - 
+
+*core functions 
+    -
+
+*extra
+    -
+    
+ 

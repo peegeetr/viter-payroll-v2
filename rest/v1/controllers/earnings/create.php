@@ -51,6 +51,8 @@ if ($data["payitem_is_hris"] === "0" && $earnings->earnings_employee === "all") 
         $earnings->earnings_employee = "{$employee_lname}, {$employee_fname}";
         $earnings->earnings_employee_id = $allEmployee[$e]["employee_aid"];
         $earnings->earnings_hris_date =  date("Y-m-d");
+        $earnings->earnings_hrs = "";
+        $earnings->earnings_rate = "";
 
         $query = $earnings->checkName();
         if ($query->rowCount() > 0) {
@@ -71,6 +73,8 @@ if ($data["payitem_is_hris"] === "0" && $earnings->earnings_employee !== "all") 
     // create if specific employee and not data from hris
     $earnings->earnings_employee = explode(" ", $data["earnings_employee"])[0] . ", " . explode(" ", $data["earnings_employee"])[1];
     $earnings->earnings_hris_date =  date("Y-m-d");
+    $earnings->earnings_hrs = "";
+    $earnings->earnings_rate = "";
     // check name
     isNameExist($earnings, "Pay item for $earnings->earnings_employee is ");
 

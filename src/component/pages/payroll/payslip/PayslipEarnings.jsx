@@ -61,7 +61,7 @@ const PayslipEarnings = ({
                     : ``
                 }`}</td>
                 <td className="w-[10rem]">{basicHrs}</td>
-                <td className="text-right   px-4">{hourRate}</td>
+                <td className="text-right   px-4">{hourRate.toFixed(4)}</td>
                 <td className="text-right px-4">
                   {numberWithCommas(basicPay.toFixed(2))}
                 </td>
@@ -101,6 +101,8 @@ const PayslipEarnings = ({
                         hourRate * (Number(item.earnings_rate) / 100) -
                         hourRate
                       ).toFixed(4)
+                    : item.earnings_rate === ""
+                    ? ""
                     : (hourRate * (Number(item.earnings_rate) / 100)).toFixed(
                         4
                       )}

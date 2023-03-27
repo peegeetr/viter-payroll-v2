@@ -94,13 +94,13 @@ const ManageEarningsList = () => {
                 <th>#</th>
                 <th className="min-w-[5rem]">Payroll ID</th>
                 <th className="min-w-[10rem]">Employeee</th>
+                <th className="min-w-[10rem]">Pay Item</th>
                 <th className="min-w-[15rem]">Details</th>
                 <th className="min-w-[6rem] text-right ">Amount</th>
                 <th className="text-center ">Installment</th>
                 <th className="min-w-[8rem]">Coverage date</th>
                 {/* <th className="min-w-[6rem]">End Date</th> */}
-                {/* <th className="min-w-[7rem]">Pay Item</th>
-                <th className="min-w-[7rem]">Pay Type</th>
+                {/* <th className="min-w-[7rem]">Pay Type</th>
                 <th className="min-w-[7rem]">Frequency</th> */}
                 {/* <th className="min-w-[8rem]">Details</th> */}
                 <th className="min-w-[5rem]">Status</th>
@@ -134,7 +134,7 @@ const ManageEarningsList = () => {
                           : item.earnings_payroll_id}
                       </td>
                       <td>{item.earnings_employee}</td>
-
+                      <td>{item.payitem_name}</td>
                       <td>{item.earnings_details}</td>
                       <td className="text-right">
                         P
@@ -198,8 +198,8 @@ const ManageEarningsList = () => {
                       ${formatDate(item.earnings_end_pay_date).split(" ")[3]}
                       `}
                       </td> */}
-                      {/* <td>{item.payitem_name}</td>
-                      <td>{item.paytype_name}</td>
+
+                      {/* <td>{item.paytype_name}</td>
                       <td>
                         {item.earnings_frequency === "sm"
                           ? "Semi-monthly"

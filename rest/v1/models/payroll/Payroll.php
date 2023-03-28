@@ -16,6 +16,7 @@ class Payroll
     public $payroll_list_employee_id;
     public $payroll_list_employee_salary;
     public $payroll_list_night_diff_per_day;
+    public $payroll_list_deminimis;
     public $payroll_list_employee_work_on_holiday;
     public $payroll_list_pagibig_additional;
     public $payroll_list_employee_department;
@@ -91,6 +92,7 @@ class Payroll
             $sql .= "payroll_list_employee_id, ";
             $sql .= "payroll_list_employee_salary, ";
             $sql .= "payroll_list_night_diff_per_day, ";
+            $sql .= "payroll_list_deminimis, ";
             $sql .= "payroll_list_employee_work_on_holiday, ";
             $sql .= "payroll_list_pagibig_additional, ";
             $sql .= "payroll_list_employee_department, ";
@@ -102,6 +104,7 @@ class Payroll
             $sql .= ":payroll_list_employee_id, ";
             $sql .= ":payroll_list_employee_salary, ";
             $sql .= ":payroll_list_night_diff_per_day, ";
+            $sql .= ":payroll_list_deminimis, ";
             $sql .= ":payroll_list_employee_work_on_holiday, ";
             $sql .= ":payroll_list_pagibig_additional, ";
             $sql .= ":payroll_list_employee_department, ";
@@ -115,6 +118,7 @@ class Payroll
                 "payroll_list_employee_id" => $this->payroll_list_employee_id,
                 "payroll_list_employee_salary" => $this->payroll_list_employee_salary,
                 "payroll_list_night_diff_per_day" => $this->payroll_list_night_diff_per_day,
+                "payroll_list_deminimis" => $this->payroll_list_deminimis,
                 "payroll_list_employee_work_on_holiday" => $this->payroll_list_employee_work_on_holiday,
                 "payroll_list_employee_department" => $this->payroll_list_employee_department,
                 "payroll_list_pagibig_additional" => $this->payroll_list_pagibig_additional,

@@ -391,8 +391,7 @@ class PayrollList
             $sql .= "payroll_list_hazard_pay = :payroll_list_hazard_pay, ";
             $sql .= "payroll_list_absences = :payroll_list_absences, ";
             $sql .= "payroll_list_absences_hrs = :payroll_list_absences_hrs, ";
-            $sql .= "payroll_list_absences_rate = :payroll_list_absences_rate, ";
-            $sql .= "payroll_list_deminimis = :payroll_list_deminimis, ";
+            $sql .= "payroll_list_absences_rate = :payroll_list_absences_rate, "; 
             $sql .= "payroll_list_13th_month = :payroll_list_13th_month, ";
             $sql .= "payroll_list_bonus = :payroll_list_bonus, ";
             $sql .= "payroll_list_employee_referral_bonus = :payroll_list_employee_referral_bonus, ";
@@ -440,8 +439,7 @@ class PayrollList
                 "payroll_list_hazard_pay" => $this->payroll_list_hazard_pay,
                 "payroll_list_absences" => $this->payroll_list_absences,
                 "payroll_list_absences_hrs" => $this->payroll_list_absences_hrs,
-                "payroll_list_absences_rate" => $this->payroll_list_absences_rate,
-                "payroll_list_deminimis" => $this->payroll_list_deminimis,
+                "payroll_list_absences_rate" => $this->payroll_list_absences_rate, 
                 "payroll_list_13th_month" => $this->payroll_list_13th_month,
                 "payroll_list_bonus" => $this->payroll_list_bonus,
                 "payroll_list_employee_referral_bonus" => $this->payroll_list_employee_referral_bonus,

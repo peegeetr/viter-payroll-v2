@@ -321,9 +321,6 @@ const SummaryEarningsList = () => {
                           <td className="px-6">
                             {numberWithCommas(item.otAmount)}
                           </td>
-<<<<<<< HEAD
-                          <td className="px-6" colSpan={9}></td>
-=======
                           <td className="px-6"></td>
                           <td className="px-6">
                             {numberWithCommas(item.holidayHrs)}
@@ -335,7 +332,6 @@ const SummaryEarningsList = () => {
                             {numberWithCommas(item.holidayAmount)}
                           </td>
                           <td className="px-6" colSpan={5}></td>
->>>>>>> 17a6c1d35c01713cff25728db740e30ae00f71c6
                         </tr>
                       );
                     })}

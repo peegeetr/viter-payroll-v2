@@ -31,6 +31,7 @@ import {
 } from "../../../helpers/functions-general";
 import {
   absencesId,
+  deMinimisEarningsId,
   empContributionEarningsId,
   holidayId,
   leaveId,
@@ -385,7 +386,8 @@ const ModalAddManageEarnings = ({
                               return (
                                 paytype.paytype_category === "earnings" &&
                                 paytype.paytype_aid !==
-                                  empContributionEarningsId && (
+                                  empContributionEarningsId &&
+                                paytype.paytype_aid !== deMinimisEarningsId && (
                                   <option key={key} value={paytype.paytype_aid}>
                                     {paytype.paytype_name}
                                   </option>

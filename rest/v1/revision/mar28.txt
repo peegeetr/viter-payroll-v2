@@ -1,0 +1,27 @@
+ 
+
+*controllers  
+    - earnings/filter.php  
+    - earnings/functions.php  
+
+    - payroll/create.php  
+    - payroll/list/update.php   
+
+*models 
+    - earnings/Earnings.php
+    - payroll/Payroll.php  
+    - payroll/list/PayrollList.php  
+
+*htaccess 
+    - #earnings
+
+*db tables 
+    - 
+
+*core functions 
+    -
+
+*extra
+    -
+    
+ 

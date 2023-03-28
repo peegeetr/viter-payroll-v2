@@ -48,7 +48,7 @@ const SummaryTypeList = () => {
     queryKey: ["earnings-summary", isSubmit],
     queryFn: async ({ pageParam = 1 }) =>
       await queryDataInfinite(
-        `${devApiUrl}/v1/earnings/filter/${paytype}/${payitem}/${startDate}/${endDate}`, // search endpoint
+        `${devApiUrl}/v1/earnings/filter/${paytype}/${startDate}/${endDate}`, // search endpoint
         `${devApiUrl}/v1/earnings/summary/${pageParam}`, // list endpoint
         isFilter // search boolean
       ),

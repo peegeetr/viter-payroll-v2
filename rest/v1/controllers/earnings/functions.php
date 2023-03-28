@@ -38,14 +38,7 @@ function checkReadSummaryByDate($object)
     checkQuery($query, "Empty records. (limit)");
     return $query;
 }
-
-// Read summary de minis
-function checkReadDeminimisByDate($object)
-{
-    $query = $object->readDeminimisByDate();
-    checkQuery($query, "Empty records. (filter de minimis)");
-    return $query;
-}
+ 
 // Read all Summary
 function checkReadAllSummaryView($object)
 {

@@ -28,6 +28,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
     $allPagibigList = $data["pagibigList"];
     $allPhilhealthList = $data["philhealthList"];
     $allTaxList = $data["taxList"];
+    $allDeminimis = $data["deminimisList"];
 
     for ($pl = 0; $pl < count($allPayrollList); $pl++) {
         $payrollList->payroll_list_employee_id = $allPayrollList[$pl]["payroll_list_employee_id"];
@@ -49,7 +50,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
         $payrollList->payroll_list_absences = $allPayrollList[$pl]["payroll_list_absences"];
         $payrollList->payroll_list_absences_hrs = $allPayrollList[$pl]["payroll_list_absences_hrs"];
         // $payrollList->payroll_list_absences_rate = $allPayrollList[$pl]["payroll_list_absences_rate"];
-        $payrollList->payroll_list_deminimis = $allPayrollList[$pl]["payroll_list_deminimis"];
+        // $payrollList->payroll_list_deminimis = $allPayrollList[$pl]["payroll_list_deminimis"];
         $payrollList->payroll_list_13th_month = $allPayrollList[$pl]["payroll_list_13th_month"];
         $payrollList->payroll_list_bonus = $allPayrollList[$pl]["payroll_list_bonus"];
         $payrollList->payroll_list_employee_referral_bonus = $allPayrollList[$pl]["payroll_list_employee_referral_bonus"];
@@ -74,6 +75,35 @@ if (array_key_exists("listpayrollid", $_GET)) {
         $payrollList->payroll_list_madatory_ee = $allPayrollList[$pl]["payroll_list_madatory_ee"];
         $payrollList->payroll_list_tax = $allPayrollList[$pl]["payroll_list_tax"];
         $query = checkUpdate($payrollList);
+    }
+
+    // delete first existing PR ID and pay item id holiday
+    $payrollList->payitem_id = $data["payItemDeminimisId"];
+    checkId($payrollList->payitem_id);
+    checkDeleteEarnings($payrollList);
+
+    if ($allDeminimis !== 0) {
+
+        for ($d = 0; $d < count($allDeminimis); $d++) {
+            $payrollList->payroll_type_id = $allDeminimis[$d]["earnings_payroll_type_id"];
+            $payrollList->num_pay = 1;
+            $payrollList->payroll_list_employee_name = $allDeminimis[$d]["earnings_employee"];
+            $payrollList->payroll_list_employee_id = $allDeminimis[$d]["earnings_employee_id"];
+            $payrollList->paytype_id = $allDeminimis[$d]["earnings_paytype_id"];
+            $payrollList->payitem_id = $allDeminimis[$d]["earnings_payitem_id"];
+            $payrollList->amount = $allDeminimis[$d]["earnings_amount"];
+            $payrollList->frequency = $allDeminimis[$d]["earnings_frequency"];
+            $payrollList->is_installment = $allDeminimis[$d]["earnings_is_installment"];
+            $payrollList->number_of_installment = $allDeminimis[$d]["earnings_number_of_installment"];
+            $payrollList->start_pay_date = $allDeminimis[$d]["earnings_start_pay_date"];
+            $payrollList->end_pay_date = $allDeminimis[$d]["earnings_end_pay_date"]; 
+            $payrollList->details = $allDeminimis[$d]["earnings_details"];
+            $payrollList->hris_date = "";
+            $payrollList->earnings_rate = "";
+            $payrollList->earnings_hrs = "";
+
+            $query = checkCreateEarnings($payrollList);
+        }
     }
 
     // delete first existing PR ID and pay item id holiday

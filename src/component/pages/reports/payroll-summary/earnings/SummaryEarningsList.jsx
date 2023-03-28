@@ -143,7 +143,7 @@ const SummaryEarningsList = () => {
         </Formik>
       </div>
       <div className="text-center">
-        <div className="overflow-x-auto max-h-[40rem] ">
+        <div className="overflow-x-auto max-h-[40rem] h-[40rem]">
           <table className="">
             <thead className="relative z-0">
               <tr className="border-none text-center sticky top-0 ">
@@ -236,9 +236,11 @@ const SummaryEarningsList = () => {
             {result?.pages.map((page, key) => (
               <React.Fragment key={key}>
                 {page.data.map((item, key) => (
-                  <tbody key={key} className=" ">
+                  <tbody key={key}>
+                    {/* <tr className="text-right relative"> */}
                     <tr className="text-right ">
                       <td className="text-center ">{counter++}.</td>
+                      {/* <td className="text-left sticky left-0 bg-white"> */}
                       <td className="text-left ">
                         {item.payroll_list_employee_name}
                       </td>
@@ -319,7 +321,21 @@ const SummaryEarningsList = () => {
                           <td className="px-6">
                             {numberWithCommas(item.otAmount)}
                           </td>
+<<<<<<< HEAD
                           <td className="px-6" colSpan={9}></td>
+=======
+                          <td className="px-6"></td>
+                          <td className="px-6">
+                            {numberWithCommas(item.holidayHrs)}
+                          </td>
+                          <td className="px-6">
+                            {numberWithCommas(item.holidayRate)}
+                          </td>
+                          <td className="px-6">
+                            {numberWithCommas(item.holidayAmount)}
+                          </td>
+                          <td className="px-6" colSpan={5}></td>
+>>>>>>> 17a6c1d35c01713cff25728db740e30ae00f71c6
                         </tr>
                       );
                     })}

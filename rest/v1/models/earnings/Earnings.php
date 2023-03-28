@@ -618,7 +618,7 @@ class Earnings
             $sql .= "and payitem.payitem_aid = earnings.earnings_payitem_id ";
             $sql .= "and (earnings.earnings_is_paid = 1 ";
             $sql .= "or earnings.earnings_num_pay > 0) ";
-            $sql .= "and DATE(earnings.earnings_start_pay_date) >= :earnings_start_pay_date ";
+            $sql .= "and DATE(earnings.earnings_start_pay_date) >= :earnings_start_pay_date "; 
             $sql .= "and DATE(earnings.earnings_end_pay_date) <= :earnings_end_pay_date ";
             $sql .= "GROUP BY earnings.earnings_payitem_id ";
             $sql .= "order by paytype.paytype_is_active, ";
@@ -636,43 +636,5 @@ class Earnings
         }
         return $query;
     }
-
-    // // read de minimis by payslip by id
-    public function readDeminimisByDate()
-    {
-        try {
-            $sql = "select paytype.paytype_aid , ";
-            $sql .= "paytype.paytype_name, ";
-            $sql .= "payitem.payitem_aid, ";
-            $sql .= "payitem.payitem_name, ";
-            $sql .= "earnings.earnings_created, ";
-            $sql .= "earnings.earnings_start_pay_date, ";
-            $sql .= "earnings.earnings_end_pay_date, ";
-            $sql .= "COUNT(earnings.earnings_payitem_id) as count ";
-            $sql .= "from {$this->tblPayType} as paytype, ";
-            $sql .= "{$this->tblEarnings} as earnings, ";
-            $sql .= "{$this->tblPayItem} as payitem ";
-            $sql .= "where earnings.earnings_paytype_id = :earnings_paytype_id ";
-            $sql .= "and paytype.paytype_aid = earnings.earnings_paytype_id ";
-            $sql .= "and payitem.payitem_aid = earnings.earnings_payitem_id ";
-            $sql .= "and (earnings.earnings_is_paid = 1 ";
-            $sql .= "or earnings.earnings_num_pay > 0) ";
-            $sql .= "and DATE(earnings.earnings_created) between ";
-            $sql .= ":earnings_start_pay_date and :earnings_end_pay_date ";
-            $sql .= "GROUP BY earnings.earnings_payitem_id ";
-            $sql .= "order by paytype.paytype_is_active, ";
-            $sql .= "payitem.payitem_is_active desc, ";
-            $sql .= "paytype.paytype_name, ";
-            $sql .= "payitem.payitem_name asc ";
-            $query = $this->connection->prepare($sql);
-            $query->execute([
-                "earnings_paytype_id" => $this->earnings_paytype_id,
-                "earnings_start_pay_date" => $this->date_from,
-                "earnings_end_pay_date" => $this->date_to,
-            ]);
-        } catch (PDOException $ex) {
-            $query = false;
-        }
-        return $query;
-    }
+ 
 }

@@ -37,6 +37,7 @@ import {
   undertimeId,
   wagesEarningsId,
   taxDeductionId,
+  deMinimisEarningsId,
 } from "./functions-payitemId";
 
 export const employeeRate = (salary, workingDays) => {
@@ -242,12 +243,27 @@ export const payComputeAdjustment = (earning) => {
 };
 
 // compute Pay Diminimis
-export const payComputeDiminimis = (earning) => {
+export const payComputeDiminimis = (emp) => {
   let finalAmount = 0;
-  if (earning.earnings_payitem_id === diminimisId) {
-    finalAmount += Number(earning.earnings_amount);
+  let deminimisList = [];
+  if (emp.payroll_list_deminimis > 0) {
+    finalAmount = emp.payroll_list_deminimis;
+    deminimisList.push({
+      earnings_payroll_type_id: emp.payroll_category_type,
+      earnings_employee: emp.payroll_list_employee_name,
+      earnings_employee_id: emp.payroll_list_employee_id,
+      earnings_paytype_id: deMinimisEarningsId,
+      earnings_payitem_id: diminimisId,
+      earnings_amount: emp.payroll_list_deminimis,
+      earnings_details: `Deminimis`,
+      earnings_frequency: isSemiMonthly,
+      earnings_is_installment: isHrisNumber,
+      earnings_number_of_installment: onetimeNumber,
+      earnings_start_pay_date: emp.payroll_start_date,
+      earnings_end_pay_date: emp.payroll_end_date,
+    });
   }
-  return finalAmount;
+  return { deminimisList, finalAmount };
 };
 
 // compute Pay Bereavement

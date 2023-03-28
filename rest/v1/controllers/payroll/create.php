@@ -57,6 +57,7 @@ for ($i = 0; $i < count($allEmployee); $i++) {
     $payroll->payroll_list_employee_salary = $allEmployee[$i]["employee_job_salary"];
     $payroll->payroll_list_night_diff_per_day = $allEmployee[$i]["employee_job_nd_per_day"];
     $payroll->payroll_list_employee_work_on_holiday = $allEmployee[$i]["employee_job_work_reg_hol"];
+    $payroll->payroll_list_deminimis = $allEmployee[$i]["employee_job_deminimis"];
     $payroll->payroll_list_pagibig_additional = $allEmployee[$i]["employee_job_pagibig_amount"];
     $payroll->payroll_list_employee_department = $allEmployee[$i]["department_name"];
     // create payroll list

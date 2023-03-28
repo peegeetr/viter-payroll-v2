@@ -92,6 +92,7 @@ export const runPayroll = (
   let nightDiffAmount = 0;
   // holiday
   let holidayAmount = 0;
+  let diminimisAmount = 0;
   let totalMadatoryEe = 0;
 
   let payrollList = [];
@@ -99,6 +100,7 @@ export const runPayroll = (
   let sssList = [];
   let ndList = [];
   let holidayList = [];
+  let deminimisList = [];
   let pagibigList = [];
   let philhealthList = [];
   let earningsNumInstallmentList = [];
@@ -133,14 +135,6 @@ export const runPayroll = (
         totalInflationAmount += payComputeInflationAdjustmen(earning);
         totalAdjustmentAmount += payComputeAdjustment(earning);
       }
-      // diminimis
-      // loop earnings every payroll for each employee
-      if (
-        emp.payroll_list_employee_id === earning.earnings_employee_id && // employee id
-        earning.earnings_is_installment === everyPayrollNumber // every payroll
-      ) {
-        totalDiminimis += payComputeDiminimis(earning);
-      }
       // 13th mo & Other benefits
       // loop earnings onetime and installment for each employee
       if (
@@ -168,6 +162,9 @@ export const runPayroll = (
         });
       }
     });
+
+    diminimisAmount = payComputeDiminimis(emp);
+    totalDiminimis = diminimisAmount.finalAmount;
 
     // Total 13th mo & Other benefits
     totalBenefits =
@@ -288,7 +285,7 @@ export const runPayroll = (
       payroll_list_hazard_pay: totalHazardPayAmount.toFixed(2),
       payroll_list_absences: totalAbsencesAmount.toFixed(2),
       payroll_list_absences_hrs: totalAbsencesHrs,
-      payroll_list_deminimis: totalDiminimis.toFixed(2),
+      payroll_list_deminimis: totalDiminimis,
       payroll_list_13th_month: 0,
       payroll_list_bonus: totalBonus.toFixed(2),
       payroll_list_employee_referral_bonus:
@@ -328,6 +325,8 @@ export const runPayroll = (
     ndList.push(...nightDiffAmount.ndList);
     // holiday List
     holidayList.push(...holidayAmount.holidayList);
+    // deminimis List
+    deminimisList.push(...diminimisAmount.deminimisList);
 
     // reset wages variables
     grossAmount = 0;
@@ -378,6 +377,7 @@ export const runPayroll = (
     pagibigList,
     philhealthList,
     taxList,
+    deminimisList,
     earningsNumInstallmentList,
     deducNumInstallmentList,
   };

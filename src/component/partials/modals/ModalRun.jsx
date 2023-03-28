@@ -11,6 +11,7 @@ import {
 import { StoreContext } from "../../../store/StoreContext";
 import { devApiUrl } from "../../helpers/functions-general";
 import {
+  diminimisId,
   holidayId,
   nightDiffId,
   pagibigEeId,
@@ -69,7 +70,6 @@ const ModalRun = ({
   const handleClose = () => {
     dispatch(setIsConfirm(false));
   };
-
   // earningsNumInstallmentList,
   // deducNumInstallmentList,
   // console.log("run", runPayroll(employees, payrollEarnings));
@@ -95,6 +95,7 @@ const ModalRun = ({
     let taxList = run.taxList;
     let earningsNumPayList = run.earningsNumInstallmentList;
     let deducNumPayList = run.deducNumInstallmentList;
+    let payDeminimisList = run.deminimisList;
 
     mutation.mutate({
       payrollList: payrollList.length > 0 ? payrollList : 0,
@@ -104,6 +105,7 @@ const ModalRun = ({
       pagibigList: pagibigList.length > 0 ? pagibigList : 0,
       philhealthList: philhealthList.length > 0 ? philhealthList : 0,
       taxList: taxList.length > 0 ? taxList : 0,
+      deminimisList: payDeminimisList.length > 0 ? payDeminimisList : 0,
       earningsNumPayList:
         earningsNumPayList.length > 0 ? earningsNumPayList : 0,
       deducNumPayList: deducNumPayList.length > 0 ? deducNumPayList : 0,
@@ -117,6 +119,7 @@ const ModalRun = ({
       payItemPagibigEeId: pagibigEeId,
       payItemPhilhealthErId: philhealthErId,
       payItemPhilhealthEeId: philhealthEeId,
+      payItemDeminimisId: diminimisId,
     });
   };
 

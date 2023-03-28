@@ -26,17 +26,17 @@ export const devNavUrl = "";
 // export const devBaseImgUrl = "http://localhost/viter-payroll-v2/public/img";
 // export const devNavUrl = "";
 
-// // // cy url
+// // cy url
 // export const devBaseImgUrl = "https://payroll-app.frontlinebusiness.com.ph/img";
-// export const devApiUrl = "http://localhost/projects/viter-payroll-v2/rest";
-// export const devBaseUrl = "http://localhost/projects/viter-payroll-v2/public";
+// export const devApiUrl = "http://localhost/project/viter-payroll-v2/rest";
+// export const devBaseUrl = "http://localhost/project/viter-payroll-v2/public";
 // export const devNavUrl = "";
 
 // // local URL dev hris
 // export const hrisDevBaseImgUrl =
 //   "https://hris.frontlinebusiness.com.ph/dev-app/img";
-// export const hrisDevApiUrl = "http://localhost/projects/viter-hris-v3/rest";
-// export const hrisdevBaseUrl = "http://localhost/projects/viter-hris-v3/public";
+// export const hrisDevApiUrl = "http://localhost/project/viter-hris-v3/rest";
+// export const hrisdevBaseUrl = "http://localhost/project/viter-hris-v3/public";
 // export const hrisdevNavUrl = "/dev-app";
 
 export const UrlAdmin = "";

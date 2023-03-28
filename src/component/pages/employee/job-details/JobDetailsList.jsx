@@ -191,6 +191,10 @@ const JobDetailsList = ({ isLoading, error, employee }) => {
                 <p className="pl-2">
                   {numberWithCommas(item.employee_job_nd_per_day)}
                 </p>
+                <p className="font-semibold">Deminimis</p>
+                <p className="pl-2">
+                  {numberWithCommas(item.employee_job_deminimis)}
+                </p>
                 <p className="font-semibold">Pag-ibig addtl. amount</p>
                 <p className="pl-2">
                   {numberWithCommas(item.employee_job_pagibig_amount)}

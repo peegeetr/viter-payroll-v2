@@ -116,6 +116,7 @@ const SummaryTypeView = () => {
                     </td>
                   </tr>
                 )}
+
                 {result?.pages.map((page, key) => (
                   <React.Fragment key={key}>
                     {page.data.map((item, key) => (
@@ -123,7 +124,7 @@ const SummaryTypeView = () => {
                         <td>{counter++}.</td>
                         <td>{item.earnings_employee}</td>
                         <td className="w-[15rem] text-right">
-                          {item.earnings_amount}
+                          {Number(item.earnings_amount).toFixed(2)}
                         </td>
                       </tr>
                     ))}

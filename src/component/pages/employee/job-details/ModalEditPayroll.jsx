@@ -88,6 +88,10 @@ const ModalEditPayroll = ({ itemEdit }) => {
       itemEdit.employee_job_starting_pay !== ""
         ? itemEdit.employee_job_starting_pay
         : 0,
+    employee_job_deminimis:
+      itemEdit.employee_job_deminimis !== ""
+        ? itemEdit.employee_job_deminimis
+        : 0,
   };
 
   const yupSchema = Yup.object({});
@@ -186,6 +190,14 @@ const ModalEditPayroll = ({ itemEdit }) => {
                         />
                       </div>
 
+                      <div className="relative mb-3 flex items-center gap-2">
+                        <p className="w-full m-0">Deminimis</p>
+                        <InputText
+                          type="text"
+                          name="employee_job_deminimis"
+                          disabled={mutation.isLoading}
+                        />
+                      </div>
                       <div className="relative mb-3 flex items-center gap-2">
                         <p className="w-full m-0">Pag-ibig addtl. amount</p>
                         <InputText

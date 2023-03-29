@@ -140,7 +140,7 @@ const PayslipEarnings = ({
             </tr>
           )}
 
-          {paytypeId === otherBenefitsEarningsId && (
+          {paytypeId === otherBenefitsEarningsId && totalBenefits > 0 && (
             <tr className="font-semibold bg-gray-100 hover:bg-gray-100">
               <td colSpan={3} className="uppercase text-right xs:pr-4">
                 Total 13TH MONTH & OTHER BENEFITS

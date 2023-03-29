@@ -10,6 +10,7 @@ import {
   devNavUrl,
   formatDate,
   getUserType,
+  numberWithCommas,
   UrlSystem,
 } from "../../helpers/functions-general";
 import { queryDataInfinite } from "../../helpers/queryDataInfinite";
@@ -63,6 +64,8 @@ const PayrollList = ({ setItemEdit }) => {
     },
     refetchOnWindowFocus: false,
   });
+
+  console.log(result);
 
   React.useEffect(() => {
     if (inView) {
@@ -164,7 +167,9 @@ const PayrollList = ({ setItemEdit }) => {
                         },  ${formatDate(item.payroll_end_date).split(" ")[3]}`}
                       </td>
                       <td className="text-center">{item.count}</td>
-                      <td className="text-right">{"123,123.23"}</td>
+                      <td className="text-right">
+                        {numberWithCommas(Number(item.totalNet).toFixed(2))}
+                      </td>
                       <td className="text-center">
                         {item.payroll_is_paid === 1 ? (
                           <StatusActive text={"paid"} />

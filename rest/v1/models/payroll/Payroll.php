@@ -137,7 +137,8 @@ class Payroll
     {
         try {
             $sql = "select *, ";
-            $sql .= "COUNT(prlist.payroll_list_employee_id) as count ";
+            $sql .= "COUNT(prlist.payroll_list_employee_id) as count, ";
+            $sql .= "sum(prlist.payroll_list_net_pay) as totalNet ";
             $sql .= "from {$this->tblPayroll} as pr, ";
             $sql .= "{$this->tblPayrollList} as prlist, ";
             $sql .= "{$this->tblPayrollType} as prtype ";
@@ -159,7 +160,8 @@ class Payroll
     {
         try {
             $sql = "select *, ";
-            $sql .= "COUNT(prlist.payroll_list_employee_id) as count ";
+            $sql .= "COUNT(prlist.payroll_list_employee_id) as count, ";
+            $sql .= "sum(prlist.payroll_list_net_pay) as totalNet ";
             $sql .= "from {$this->tblPayroll} as pr, ";
             $sql .= "{$this->tblPayrollList} as prlist, ";
             $sql .= "{$this->tblPayrollType} as prtype ";
@@ -186,7 +188,8 @@ class Payroll
     {
         try {
             $sql = "select *, ";
-            $sql .= "COUNT(prlist.payroll_list_employee_id) as count ";
+            $sql .= "COUNT(prlist.payroll_list_employee_id) as count, ";
+            $sql .= "sum(prlist.payroll_list_net_pay) as totalNet ";
             $sql .= "from {$this->tblPayroll} as pr, ";
             $sql .= "{$this->tblPayrollList} as prlist, ";
             $sql .= "{$this->tblPayrollType} as prtype ";

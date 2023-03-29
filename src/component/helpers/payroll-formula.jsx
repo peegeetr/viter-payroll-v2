@@ -255,7 +255,7 @@ export const payComputeDiminimis = (emp) => {
       earnings_paytype_id: deMinimisEarningsId,
       earnings_payitem_id: diminimisId,
       earnings_amount: emp.payroll_list_deminimis,
-      earnings_details: `Deminimis`,
+      earnings_details: `De Minimis`,
       earnings_frequency: isSemiMonthly,
       earnings_is_installment: isHrisNumber,
       earnings_number_of_installment: onetimeNumber,

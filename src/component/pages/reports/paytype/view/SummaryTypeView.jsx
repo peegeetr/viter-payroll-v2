@@ -63,16 +63,16 @@ const SummaryTypeView = () => {
     result?.pages.length > 0 ? `${result?.pages[0].data[0].payitem_name}` : "";
   let payType =
     result?.pages.length > 0 ? `${result?.pages[0].data[0].paytype_name}` : "";
-  let payPeriod =
-    result?.pages.length > 0
-      ? result?.pages[0].data[0].earnings_start_pay_date === "n/a"
-        ? formatDate(result?.pages[0].data[0].earnings_created)
-        : `
-        ${getPayPeriod(
-          result?.pages[0].data[0].earnings_start_pay_date,
-          result?.pages[0].data[0].earnings_end_pay_date
-        )}`
-      : "no";
+  // let payPeriod =
+  //   result?.pages.length > 0
+  //     ? result?.pages[0].data[0].earnings_start_pay_date === "n/a"
+  //       ? formatDate(result?.pages[0].data[0].earnings_created)
+  //       : `
+  //       ${getPayPeriod(
+  //         result?.pages[0].data[0].earnings_start_pay_date,
+  //         result?.pages[0].data[0].earnings_end_pay_date
+  //       )}`
+  //     : "no";
   console.log(result);
   return (
     <>
@@ -83,10 +83,10 @@ const SummaryTypeView = () => {
         <hr />
         <div className="pt-4 text-primary">
           <p className="m-0">
-            Pay Period: <span className="text-black">{payPeriod}</span>
+            Pay Type: <span className="text-black">{payType}</span>
           </p>
           <p className="m-0">
-            Pay Type: <span className="text-black">{payType}</span>
+            Pay Item: <span className="text-black">{payItem}</span>
           </p>
         </div>
         <div className="relative overflow-x-auto z-0 w-full lg:w-[35rem] ">
@@ -96,6 +96,7 @@ const SummaryTypeView = () => {
                 <tr>
                   <th>#</th>
                   <th>Employee</th>
+                  <th>Pay Period</th>
                   <th className="text-right">Amount</th>
                 </tr>
               </thead>
@@ -123,6 +124,12 @@ const SummaryTypeView = () => {
                       <tr key={key}>
                         <td>{counter++}.</td>
                         <td>{item.earnings_employee}</td>
+                        <td>
+                          {getPayPeriod(
+                            item.earnings_start_pay_date,
+                            item.earnings_end_pay_date
+                          )}
+                        </td>
                         <td className="w-[15rem] text-right">
                           {Number(item.earnings_amount).toFixed(2)}
                         </td>

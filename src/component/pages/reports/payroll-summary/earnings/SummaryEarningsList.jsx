@@ -159,7 +159,7 @@ const SummaryEarningsList = () => {
                 >
                   Department
                 </th>
-                <th className="table-border min-w-[9rem]" rowSpan="2">
+                <th className="table-border min-w-[12rem]" rowSpan="2">
                   Pay Date
                 </th>
                 <th className="table-border min-w-[10rem]" rowSpan="2">
@@ -291,7 +291,11 @@ const SummaryEarningsList = () => {
                         {numberWithCommas(item.payroll_list_nd_hrs)}
                       </td>
                       {/* ND rate */}
-                      <td className="px-6">{10}%</td>
+                      <td className="px-6">
+                        {item.payroll_list_night_diff_per_day === 0
+                          ? "0"
+                          : "10%"}
+                      </td>
                       <td className="px-6">
                         {/* ND amount */}
                         {numberWithCommas(
@@ -304,7 +308,7 @@ const SummaryEarningsList = () => {
                       </td>
                     </tr>
 
-                    {getErningsRate(earnings, item).otList?.map((item, key) => {
+                    {getErningsRate(earnings, item)?.map((item, key) => {
                       return (
                         <tr
                           className="max-h-[10rem] overflow-y-auto text-right"
@@ -321,9 +325,6 @@ const SummaryEarningsList = () => {
                           <td className="px-6">
                             {numberWithCommas(item.otAmount)}
                           </td>
-<<<<<<< HEAD
-                          <td className="px-6" colSpan={9}></td>
-=======
                           <td className="px-6"></td>
                           <td className="px-6">
                             {numberWithCommas(item.holidayHrs)}
@@ -335,32 +336,9 @@ const SummaryEarningsList = () => {
                             {numberWithCommas(item.holidayAmount)}
                           </td>
                           <td className="px-6" colSpan={5}></td>
->>>>>>> 17a6c1d35c01713cff25728db740e30ae00f71c6
                         </tr>
                       );
                     })}
-                    {getErningsRate(earnings, item).holidayList?.map(
-                      (item, key) => {
-                        return (
-                          <tr
-                            className="max-h-[10rem] overflow-y-auto text-right"
-                            key={key}
-                          >
-                            <td colSpan={17} className="px-6"></td>
-                            <td className="px-6">
-                              {numberWithCommas(item.holidayHrs)}
-                            </td>
-                            <td className="px-6">
-                              {numberWithCommas(item.holidayRate)}
-                            </td>
-                            <td className="px-6">
-                              {numberWithCommas(item.holidayAmount)}
-                            </td>
-                            <td className="px-6" colSpan={5}></td>
-                          </tr>
-                        );
-                      }
-                    )}
                   </tbody>
                 ))}
               </React.Fragment>

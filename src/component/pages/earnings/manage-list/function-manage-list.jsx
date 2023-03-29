@@ -30,7 +30,7 @@ export const validatePayPeriod = (values, inputDate, dispatch) => {
         new Date(inputDate?.data[0].payroll_end_date) ||
       new Date(values.deduction_end_pay_date) <
         new Date(inputDate?.data[0].payroll_end_date)) &&
-    installment === "2"
+    installment !== "2"
   ) {
     dispatch(setError(true));
     dispatch(setMessage("Date range is out of payroll period date."));

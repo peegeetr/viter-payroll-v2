@@ -52,6 +52,7 @@ if ($data["payitem_is_hris"] === "0" && $earnings->earnings_employee === "all") 
     if (count($allEmployee) === 0) {
         checkEndpoint();
     }
+
     for ($e = 0; $e < count($allEmployee); $e++) {
         $employee_lname = $allEmployee[$e]["employee_lname"];
         $employee_fname = $allEmployee[$e]["employee_fname"];
@@ -71,6 +72,7 @@ if ($data["payitem_is_hris"] === "0" && $earnings->earnings_employee === "all") 
         }
         // isNameExist($earnings, "Pay item for $earnings->earnings_payroll_id is ");
         // $query = checkCreate($earnings);
+
     }
     returnSuccess($earnings, "Earnings", $query, $newCount);
 }
@@ -79,12 +81,13 @@ if ($data["payitem_is_hris"] === "0" && $earnings->earnings_employee === "all") 
 
 if ($data["payitem_is_hris"] === "0" && $earnings->earnings_employee !== "all") {
     // create if specific employee and not data from hris
+
     $earnings->earnings_employee = explode(" ", $data["earnings_employee"])[0] . ", " . explode(" ", $data["earnings_employee"])[1];
     $earnings->earnings_hris_date = "";
     $earnings->earnings_hrs = "";
     $earnings->earnings_rate = "";
-    // check name
-    isNameExist($earnings, "Pay item for $earnings->earnings_employee is ");
+    // // check name
+    // isNameExist($earnings, "Pay item for $earnings->earnings_employee is ");
 
     $query = checkCreate($earnings);
     returnSuccess($earnings, "Earnings", $query);

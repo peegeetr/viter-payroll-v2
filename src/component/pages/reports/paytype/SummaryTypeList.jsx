@@ -28,7 +28,6 @@ const SummaryTypeList = () => {
   const [isFilter, setFilter] = React.useState(false);
   const [isSubmit, setSubmit] = React.useState(false);
   const [paytype, setPaytype] = React.useState("");
-  const [payitem, setPayitem] = React.useState("");
   const [startDate, setStartDate] = React.useState("");
   const [endDate, setEndDate] = React.useState("");
 
@@ -78,7 +77,6 @@ const SummaryTypeList = () => {
   );
   const initVal = {
     paytype_aid: "",
-    deminimis: "",
     start_date: "",
     end_date: "",
   };
@@ -101,7 +99,6 @@ const SummaryTypeList = () => {
             setPaytype(values.paytype_aid);
             setStartDate(values.start_date);
             setEndDate(values.end_date);
-            setPayitem(values.deminimis);
 
             // // refetch data of query
             // refetch();
@@ -176,7 +173,7 @@ const SummaryTypeList = () => {
             <th>#</th>
             <th>Pay Item</th>
             <th>Pay Type</th>
-            <th>Pay Period</th>
+            {/* <th>Pay Period</th> */}
             <th className="text-right">Total</th>
           </tr>
         </thead>
@@ -203,7 +200,7 @@ const SummaryTypeList = () => {
                   <td>{counter++}.</td>
                   <td className="w-[15rem]">{item.payitem_name}</td>
                   <td className="w-[15rem]">{item.paytype_name}</td>
-                  <td className="w-[15rem]">
+                  {/* <td className="w-[15rem]">
                     {item.earnings_start_pay_date === "n/a"
                       ? formatDate(item.earnings_created)
                       : `
@@ -211,7 +208,7 @@ const SummaryTypeList = () => {
                     item.earnings_start_pay_date,
                     item.earnings_end_pay_date
                   )}`}
-                  </td>
+                  </td> */}
                   <td className="text-right text-primary underline">
                     <Link
                       className="tooltip-action-table"

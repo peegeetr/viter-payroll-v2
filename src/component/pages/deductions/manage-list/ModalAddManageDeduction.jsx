@@ -307,7 +307,6 @@ const ModalAddManageDeduction = ({ payType, employee, payrollDraft }) => {
                         >
                           <optgroup label="Will be given">
                             <option value="" hidden></option>
-                            <option value="0">Every payroll</option>
                             <option value="1">One-time</option>
                             <option value="2">Installment</option>
                           </optgroup>

@@ -14,6 +14,10 @@ export const getErningsRate = (earning, item) => {
     // check if leave type aid is equal
     if (
       eItem.earnings_employee_id === item.payroll_list_employee_id &&
+<<<<<<< HEAD
+=======
+      eItem.earnings_payitem_id === overtimeId &&
+>>>>>>> b914b7562ae388f4e046995bc5fc406a741bcf72
       eItem.earnings_payroll_id === item.payroll_list_payroll_id
     ) {
       if (eItem.earnings_payitem_id === overtimeId) {
@@ -30,6 +34,7 @@ export const getErningsRate = (earning, item) => {
         payHolidayAmount = eItem.earnings_amount;
       }
 
+<<<<<<< HEAD
       // list.push({
       //   // name: eItem.earnings_employee,
       //   // id: eItem.earnings_employee_id,
@@ -51,8 +56,21 @@ export const getErningsRate = (earning, item) => {
       // ) {
       //   list = [];
       // }
+=======
+      list.push({
+        employee_id: eItem.earnings_employee_id,
+        employee_name: eItem.earnings_employee,
+        otHrs: payOtHrs,
+        otRate: payOtRate,
+        otAmount: payOtAmount,
+        holidayHrs: payHolidayHrs,
+        holidayRate: payHolidayRate,
+        holidayAmount: payHolidayAmount,
+      });
+>>>>>>> b914b7562ae388f4e046995bc5fc406a741bcf72
     }
   });
+<<<<<<< HEAD
   list.push({
     // name: eItem.earnings_employee,
     // id: eItem.earnings_employee_id,
@@ -74,5 +92,8 @@ export const getErningsRate = (earning, item) => {
   ) {
     list = [];
   }
+=======
+  console.log(list);
+>>>>>>> b914b7562ae388f4e046995bc5fc406a741bcf72
   return list;
 };

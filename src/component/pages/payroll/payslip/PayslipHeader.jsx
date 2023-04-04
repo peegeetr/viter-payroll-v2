@@ -6,6 +6,7 @@ import {
   getWorkingDays,
   hrisDevApiUrl,
 } from "../../../helpers/functions-general";
+import FbsLogoSm from "../../../svg/FbsLogoSm";
 
 const PayslipHeader = ({ payslip, empid, days }) => {
   // use if not loadmore button undertime
@@ -17,8 +18,18 @@ const PayslipHeader = ({ payslip, empid, days }) => {
 
   return (
     <>
-      <div className="relative overflow-x-auto z-0">
-        <div className="xs:grid grid-cols-2 mb-5">
+      <div className=" bg-white h-22 border-solid border-b-2 border-primary hidden print:block  ">
+        <span className="flex justify-center pb-2">
+          <FbsLogoSm />
+        </span>
+        <small className="flex justify-center text-center pb-2">
+          Frontline Business Solutions, Inc., Baloc Road, Brgy. San Ignacio
+          <br />
+          San Pablo City, 4000, Laguna, Philippines
+        </small>
+      </div>
+      <div className="relative overflow-x-auto z-0 print:pt-2">
+        <div className="xs:grid grid-cols-2 mb-5 ">
           <p className="mb-0">
             <span className="font-semibold">Employee : </span>{" "}
             {payslip?.data[0].payroll_list_employee_name}

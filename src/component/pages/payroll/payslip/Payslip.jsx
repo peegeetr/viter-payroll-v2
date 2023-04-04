@@ -45,13 +45,17 @@ const Payslip = () => {
               <FaEnvelope />
               <span>Email</span>
             </button>
-            <button type="button" className="btn-primary">
+            <button
+              type="button"
+              className="btn-primary"
+              onClick={() => window.print()}
+            >
               <AiFillPrinter />
               <span>Print</span>
             </button>
           </div>
         </div>
-        <hr />
+        <hr className="print:hidden" />
 
         <div className="w-full pt-5 pb-20 mb-16">
           {payslip?.data.length > 0 ? (

@@ -22,7 +22,7 @@ const Navigation = ({ menu }) => {
       <nav
         className={`${
           store.isShow ? "" : "-translate-x-44"
-        } duration-200 ease-in fixed z-20 min-h-full bg-gradient-to-t from-secondary to-primary w-44 md:w-20 md:-translate-x-0 lg:w-44`}
+        } duration-200 ease-in fixed z-20 min-h-full bg-gradient-to-t from-secondary to-primary w-44 md:w-20 md:-translate-x-0 lg:w-44 print:hidden`}
       >
         <ul className="text-sm mt-16 text-white">
           <li

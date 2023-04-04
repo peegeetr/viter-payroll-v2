@@ -16,6 +16,7 @@ module.exports = {
       },
       screens: {
         xs: "420px",
+        print: { raw: "print" },
       },
       keyframes: {
         shake: {

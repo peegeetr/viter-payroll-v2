@@ -4,13 +4,12 @@ import {
   numberWithCommas,
 } from "../../../helpers/functions-general";
 import {
-  otherBenefitsEarningsId,
-  wagesEarningsId,
-  nightDiffId,
   absencesId,
+  nightDiffId,
+  otherBenefitsEarningsId,
   undertimeId,
+  wagesEarningsId,
 } from "../../../helpers/functions-payitemId";
-import TableSpinner from "../../../partials/spinners/TableSpinner";
 const PayslipEarnings = ({
   paytypeId,
   empid,
@@ -49,21 +48,25 @@ const PayslipEarnings = ({
         <>
           {paytypeId === wagesEarningsId && (
             <>
-              <tr className="font-semibold bg-gray-100 hover:bg-gray-100 uppercase">
-                <td className="w-[30rem]">WAGES</td>
-                <td className="w-[10rem]">hours</td>
-                <td className="w-[10rem] text-right  px-4">rate</td>
-                <td className="text-right  px-4">total</td>
+              <tr className="font-semibold bg-gray-100 hover:bg-gray-100 uppercase ">
+                <td className="w-[30rem] print:py-[2px]">WAGES</td>
+                <td className="w-[10rem] print:py-[2px]">hours</td>
+                <td className="w-[10rem] print:py-[2px] text-right px-4">
+                  rate
+                </td>
+                <td className="text-right print:py-[2px] px-4">total</td>
               </tr>
               <tr className="hover:bg-transparent">
-                <td className="w-[20rem]">{`Basic Pay ${
+                <td className="w-[20rem] print:py-[2px]">{`Basic Pay ${
                   deminimis > 0
                     ? `(De Minimis inclusive ${numberWithCommas(deminimis)})`
                     : ``
                 }`}</td>
-                <td className="w-[10rem]">{basicHrs}</td>
-                <td className="text-right   px-4">{hourRate.toFixed(4)}</td>
-                <td className="text-right px-4">
+                <td className="w-[10rem] print:py-[2px]">{basicHrs}</td>
+                <td className="text-right print:py-[2px] px-4">
+                  {hourRate.toFixed(4)}
+                </td>
+                <td className="text-right print:py-[2px] px-4">
                   {numberWithCommas(basicPay.toFixed(2))}
                 </td>
               </tr>
@@ -74,10 +77,15 @@ const PayslipEarnings = ({
             earnings?.data.length > 0 && (
               <>
                 <tr className="hover:bg-white">
-                  <td colSpan={4}></td>
+                  <td colSpan={4} className="print:py-[2px]">
+                    &nbsp;
+                  </td>
                 </tr>
                 <tr className="font-semibold bg-gray-100 hover:bg-gray-100">
-                  <td colSpan={4} className="w-[20rem] uppercase">
+                  <td
+                    colSpan={4}
+                    className="w-[20rem] uppercase print:py-[2px]"
+                  >
                     {earnings?.data[0].paytype_name}
                   </td>
                 </tr>
@@ -87,8 +95,10 @@ const PayslipEarnings = ({
             totalAmount += Number(item.earnings_amount);
             return (
               <tr key={key} className="hover:bg-transparent">
-                <td className="w-[20rem]">{item.earnings_details}</td>
-                <td className="w-[10rem]">
+                <td className="w-[20rem] print:py-[2px]">
+                  {item.earnings_details}
+                </td>
+                <td className="w-[10rem] print:py-[2px]">
                   {`${item.earnings_hrs} ${
                     Number(nightDiffId) === item.payitem_aid
                       ? `of ${days * 8}`
@@ -96,7 +106,7 @@ const PayslipEarnings = ({
                   }`}
                 </td>
                 {/* <td className="w-[10rem]">{numberOfHolidays * 8}</td> */}
-                <td className=" text-right px-4 w-[5rem]">
+                <td className=" text-right px-4 w-[5rem] print:py-[2px]">
                   {Number(nightDiffId) === item.payitem_aid
                     ? (
                         hourRate * (Number(item.earnings_rate) / 100) -
@@ -108,7 +118,7 @@ const PayslipEarnings = ({
                         4
                       )}
                 </td>
-                <td className=" text-right px-4">
+                <td className=" text-right px-4 print:py-[2px]">
                   {item.earnings_payitem_id === absencesId ||
                   item.earnings_payitem_id === undertimeId
                     ? "-"
@@ -130,11 +140,14 @@ const PayslipEarnings = ({
           )} */}
 
           {paytypeId === wagesEarningsId && (
-            <tr className="font-semibold bg-gray-100 hover:bg-gray-100">
-              <td colSpan={3} className="uppercase text-right xs:pr-4">
+            <tr className="font-semibold bg-gray-100 hover:bg-gray-100 ">
+              <td
+                colSpan={3}
+                className="uppercase text-right xs:pr-4 print:py-[2px]"
+              >
                 Total WAGES
               </td>
-              <td className=" text-right px-4">
+              <td className=" text-right px-4 print:py-[2px]">
                 {numberWithCommas(Number(gross).toFixed(2))}
               </td>
             </tr>
@@ -142,10 +155,13 @@ const PayslipEarnings = ({
 
           {paytypeId === otherBenefitsEarningsId && totalBenefits > 0 && (
             <tr className="font-semibold bg-gray-100 hover:bg-gray-100">
-              <td colSpan={3} className="uppercase text-right xs:pr-4">
+              <td
+                colSpan={3}
+                className="uppercase text-right xs:pr-4 print:py-[2px]"
+              >
                 Total 13TH MONTH & OTHER BENEFITS
               </td>
-              <td className=" text-right px-4">
+              <td className=" text-right px-4 print:py-[2px]">
                 {numberWithCommas(Number(totalBenefits).toFixed(2))}
               </td>
             </tr>

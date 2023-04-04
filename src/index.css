@@ -172,3 +172,16 @@
 ::-webkit-scrollbar-thumb {
   @apply bg-gray-400 rounded-xl border-transparent border-8;
 }
+
+@media print {
+  body {
+    print-color-adjust: exact;
+  }
+  tr,
+  th,
+  td,
+  small,
+  p {
+    @apply text-[10px];
+  }
+}

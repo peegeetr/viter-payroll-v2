@@ -19,11 +19,13 @@ const PayslipDeduction = ({ paytypeId, empid, payrollid }) => {
     <>
       {deductions?.data.length > 0 && paytypeId !== mandatoryDeductionId && (
         <>
-          <tr>
-            <td colSpan={4}></td>
+          <tr className="hover:bg-white">
+            <td colSpan={4} className=" print:py-[2px]">
+              &nbsp;
+            </td>
           </tr>
           <tr className="font-semibold bg-gray-100 hover:bg-gray-100">
-            <td colSpan={4} className="w-[20rem] uppercase">
+            <td colSpan={4} className="w-[20rem] uppercase print:py-[2px]">
               {deductions?.data[0].paytype_name}
             </td>
           </tr>
@@ -32,12 +34,12 @@ const PayslipDeduction = ({ paytypeId, empid, payrollid }) => {
       {deductions?.data.map((item, key) => {
         return (
           <tr key={key} className="hover:bg-transparent">
-            <td className="w-[20rem]">
+            <td className="w-[20rem] print:py-[2px]">
               {item.payitem_name} {item.earnings_details}
             </td>
-            <td className="w-[10rem]"></td>
-            <td></td>
-            <td className="text-right px-4">
+            <td className="w-[10rem] print:py-[2px]"></td>
+            <td className=" print:py-[2px]"></td>
+            <td className="text-right px-4 print:py-[2px]">
               {numberWithCommas(item.deduction_amount)}
             </td>
           </tr>
@@ -45,11 +47,14 @@ const PayslipDeduction = ({ paytypeId, empid, payrollid }) => {
       })}
       {deductions?.data.length > 0 && (
         <>
-          <tr className="font-semibold bg-gray-100 hover:bg-gray-100">
-            <td colSpan={3} className="uppercase text-right xs:pr-4">
+          <tr className="font-semibold bg-gray-100 hover:bg-gray-100 ">
+            <td
+              colSpan={3}
+              className="uppercase text-right xs:pr-4 print:py-[2px]"
+            >
               Total {deductions?.data[0].paytype_name}
             </td>
-            <td className=" text-right px-4">
+            <td className=" text-right px-4 print:py-[2px]">
               {numberWithCommas(
                 Number(deductions?.data[0].deduction_amount).toFixed(2)
               )}

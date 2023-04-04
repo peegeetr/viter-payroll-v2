@@ -137,18 +137,25 @@ const PayslipList = ({ payslip }) => {
             )} */}
 
             <tr className="hover:bg-white">
-              <td colSpan={4}>&nbsp;</td>
+              <td colSpan={4} className="print:py-[2px]">
+                &nbsp;
+              </td>
             </tr>
             <tr className="font-semibold bg-gray-300 hover:bg-gray-300">
-              <td colSpan={3} className="uppercase text-right xs:pr-4">
+              <td
+                colSpan={3}
+                className="uppercase text-right xs:pr-4 print:py-[2px]"
+              >
                 Total Earnings
               </td>
-              <td className=" text-right px-4">
+              <td className=" text-right px-4 print:py-[2px]">
                 {numberWithCommas(totalEarnings.toFixed(2))}
               </td>
             </tr>
-            <tr>
-              <td colSpan={4}>&nbsp;</td>
+            <tr className="hover:bg-white">
+              <td colSpan={4} className=" print:py-[2px]">
+                &nbsp;
+              </td>
             </tr>
 
             {/* Mandatory deduction */}
@@ -171,14 +178,19 @@ const PayslipList = ({ payslip }) => {
               payrollid={payslip?.data[0].payroll_list_payroll_id}
             />
             {/* tax */}
-            <tr>
-              <td colSpan={4}></td>
+            <tr className="hover:bg-white">
+              <td colSpan={4} className=" print:py-[2px]">
+                &nbsp;
+              </td>
             </tr>
             <tr className="font-semibold bg-gray-100 hover:bg-gray-100">
-              <td colSpan={3} className="w-[20rem] uppercase">
+              <td colSpan={3} className="w-[20rem] uppercase print:py-[2px]">
                 TAX
               </td>
-              <td colSpan={3} className="w-[20rem] uppercase text-right px-4">
+              <td
+                colSpan={3}
+                className="w-[20rem] uppercase text-right px-4 print:py-[2px]"
+              >
                 {numberWithCommas(
                   Number(payslip?.data[0].payroll_list_tax).toFixed(2)
                 )}
@@ -186,41 +198,51 @@ const PayslipList = ({ payslip }) => {
             </tr>
 
             {/* total deduction */}
-            <tr>
-              <td colSpan={4}>&nbsp;</td>
+            <tr className="hover:bg-white">
+              <td colSpan={4} className=" print:py-[2px]">
+                &nbsp;
+              </td>
             </tr>
             <tr className="font-semibold bg-gray-300 hover:bg-gray-300 uppercase">
-              <td colSpan={3} className="uppercase text-right xs:pr-4 ">
+              <td
+                colSpan={3}
+                className="uppercase text-right xs:pr-4 print:py-[2px] "
+              >
                 total deductions
               </td>
-              <td className=" text-right px-4">
+              <td className=" text-right px-4 print:py-[2px]">
                 {numberWithCommas(
                   Number(payslip?.data[0].payroll_list_deduction).toFixed(2)
                 )}
               </td>
             </tr>
-            <tr>
-              <td colSpan={4}>&nbsp;</td>
+            <tr className="hover:bg-white">
+              <td colSpan={4} className=" print:py-[2px]">
+                &nbsp;
+              </td>
             </tr>
 
             {/* netpay */}
             <tr className="bg-primary hover:bg-primary text-white uppercase">
-              <td colSpan={3} className="uppercase text-right xs:pr-4  ">
+              <td
+                colSpan={3}
+                className="uppercase text-right xs:pr-4 print:py-[2px] "
+              >
                 net pay
               </td>
-              <td className=" text-right px-4">
+              <td className=" text-right px-4 print:py-[2px]">
                 {numberWithCommas(netPay.toFixed(2))}
-                {/* {12312300} */}
               </td>
             </tr>
           </tbody>
         </table>
-
-        <p className="text-center my-8 ">
-          <i>
-            This is a computer generated payslip. Does not require signature
-          </i>
-        </p>
+        <div className="text-center my-8 ">
+          <small>
+            <i>
+              This is a computer generated payslip. Does not require signature
+            </i>
+          </small>
+        </div>
       </div>
     </>
   );

@@ -96,6 +96,7 @@ export const runPayroll = (
   let totalMadatoryEe = 0;
 
   // list of installment
+  // earnings
   let bereavementAmount = 0;
   let bereavementList = [];
   let bonusAmount = 0;
@@ -106,6 +107,20 @@ export const runPayroll = (
   let separationPayList = [];
   let otherAllowancesAmount = 0;
   let otherAllowancesList = [];
+  // list of installment
+  // deduction
+  let tuitionAmount = 0;
+  let tuitionList = [];
+  let tithesAmount = 0;
+  let tithesList = [];
+  let otherDeductionAmount = 0;
+  let otherDeductionList = [];
+  let pagibigLoanAmount = 0;
+  let pagibigLoanList = [];
+  let pagibigMP2Amount = 0;
+  let pagibigMP2List = [];
+  let sSSLoanAmount = 0;
+  let sSSLoanList = [];
 
   let payrollList = [];
   let taxList = [];
@@ -158,16 +173,19 @@ export const runPayroll = (
         bereavementAmount = payComputeBereavement(emp, earning);
         totalBereavement += bereavementAmount.finalAmount;
 
-        bonusAmount = payComputeBonus(earning);
+        bonusAmount = payComputeBonus(emp, earning);
         totalBonus += bonusAmount.finalAmount;
 
-        employeeReferralBonusAmount = payComputeEmployeeReferralBonus(earning);
+        employeeReferralBonusAmount = payComputeEmployeeReferralBonus(
+          emp,
+          earning
+        );
         totalEmployeeReferralBonus += employeeReferralBonusAmount.finalAmount;
 
-        separationPayAmount = payComputeSeparationPay(earning);
+        separationPayAmount = payComputeSeparationPay(emp, earning);
         totalSeparationPay += separationPayAmount.finalAmount;
 
-        otherAllowancesAmount = payComputeOtherAllowances(earning);
+        otherAllowancesAmount = payComputeOtherAllowances(emp, earning);
         totalOtherAllowances += otherAllowancesAmount.finalAmount;
 
         // for updating number of pay if installment or one time
@@ -183,7 +201,7 @@ export const runPayroll = (
         });
 
         // list of installment
-        // bereavement List
+        // earnings
         bereavementList.push(...bereavementAmount.bereavementList);
         bonusList.push(...bonusAmount.bonusList);
         eRBonusList.push(...employeeReferralBonusAmount.eRBonusList);
@@ -246,12 +264,24 @@ export const runPayroll = (
         deduction.deduction_is_installment !== everyPayrollNumber && //onetime or installment
         deduction.deduction_number_of_installment > deduction.deduction_num_pay //number of payment
       ) {
-        totalTuition += payComputeTuition(deduction);
-        totalTithes += payComputeTithes(deduction);
-        totalOtherDeduction += payComputeOtherDeduction(deduction);
-        totalPagibigLoan += payComputePagibigLoan(deduction);
-        totalPagibigMP2 += payComputePagibigMP2(deduction);
-        totalSSSLoan += payComputeSSSLoan(deduction);
+        tuitionAmount = payComputeTuition(emp, deduction);
+        totalTuition += tuitionAmount.finalAmount;
+
+        tithesAmount = payComputeTithes(emp, deduction);
+        totalTithes += tithesAmount.finalAmount;
+
+        otherDeductionAmount = payComputeOtherDeduction(emp, deduction);
+        totalOtherDeduction += otherDeductionAmount.finalAmount;
+
+        pagibigLoanAmount = payComputePagibigLoan(emp, deduction);
+        totalPagibigLoan += pagibigLoanAmount.finalAmount;
+
+        pagibigMP2Amount = payComputePagibigMP2(emp, deduction);
+        totalPagibigMP2 += pagibigMP2Amount.finalAmount;
+
+        sSSLoanAmount = payComputeSSSLoan(emp, deduction);
+        totalSSSLoan += sSSLoanAmount.finalAmount;
+
         // for updating number of pay if installment or one time
         deducNumInstallmentList.push({
           deduction_num_pay: deduction.deduction_num_pay + 1,
@@ -263,6 +293,15 @@ export const runPayroll = (
           deduction_employee_id: emp.payroll_list_employee_id,
           deduction_payitem_id: deduction.deduction_payitem_id,
         });
+
+        // list of installment
+        // deduction
+        tuitionList.push(...tuitionAmount.tuitionList);
+        tithesList.push(...tithesAmount.tithesList);
+        otherDeductionList.push(...otherDeductionAmount.otherDeductionList);
+        pagibigLoanList.push(...pagibigLoanAmount.pagibigLoanList);
+        pagibigMP2List.push(...pagibigMP2Amount.pagibigMP2List);
+        sSSLoanList.push(...sSSLoanAmount.sSSLoanList);
       }
     });
 

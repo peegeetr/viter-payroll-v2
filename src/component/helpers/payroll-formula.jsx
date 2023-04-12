@@ -297,7 +297,7 @@ export const payComputeBereavement = (emp, earning) => {
 };
 
 // compute Pay Bonus
-export const payComputeBonus = (earning) => {
+export const payComputeBonus = (emp, earning) => {
   let finalAmount = 0;
   let bonusList = [];
   if (earning.earnings_payitem_id === bonusId) {
@@ -325,7 +325,7 @@ export const payComputeBonus = (earning) => {
 };
 
 // compute Pay Employee Referral Bonus
-export const payComputeEmployeeReferralBonus = (earning) => {
+export const payComputeEmployeeReferralBonus = (emp, earning) => {
   let finalAmount = 0;
   let eRBonusList = [];
   if (earning.earnings_payitem_id === employeeReferralBonusId) {
@@ -352,7 +352,7 @@ export const payComputeEmployeeReferralBonus = (earning) => {
 };
 
 // compute Pay Separation Pay
-export const payComputeSeparationPay = (earning) => {
+export const payComputeSeparationPay = (emp, earning) => {
   let finalAmount = 0;
   let separationPayList = [];
   if (earning.earnings_payitem_id === separationPayId) {
@@ -378,7 +378,7 @@ export const payComputeSeparationPay = (earning) => {
 };
 
 // compute Pay Other Allowances
-export const payComputeOtherAllowances = (earning) => {
+export const payComputeOtherAllowances = (emp, earning) => {
   let finalAmount = 0;
   let otherAllowancesList = [];
   if (earning.earnings_payitem_id === otherAllowancesId) {
@@ -750,10 +750,27 @@ export const payComputePhil = (emp, philhealth) => {
 // compute FCA Tuition
 export const payComputeTuition = (deduction) => {
   let finalAmount = 0;
+  let tuitionList = [];
   if (deduction.deduction_payitem_id === fcaTutionId) {
     finalAmount += Number(deduction.deduction_amount);
+    if (deduction.deduction_is_installment === installmentNumber) {
+      tuitionList.push({
+        earnings_payroll_type_id: emp.payroll_category_type,
+        earnings_employee: emp.payroll_list_employee_name,
+        earnings_employee_id: emp.payroll_list_employee_id,
+        deduction_paytype_id: otherBenefitsEarningsId,
+        deduction_payitem_id: separationPayId,
+        deduction_amount: deduction.deduction_amount,
+        deduction_details: deduction.deduction_details,
+        earnings_frequency: isSemiMonthly,
+        earnings_is_installment: onetimeNumber,
+        earnings_number_of_installment: onetimeNumber,
+        earnings_start_pay_date: emp.payroll_start_date,
+        earnings_end_pay_date: emp.payroll_end_date,
+      });
+    }
   }
-  return finalAmount;
+  return { finalAmount, tuitionList };
 };
 
 // compute FWC Tithes

@@ -26,7 +26,10 @@ const JobDetails = () => {
   } = useQueryData(
     `${hrisDevApiUrl}/v1/employees/job/${eid}`, // endpoint
     "get", // method
-    "employee" // key
+    "employee", // key
+    {}, // formdata
+    null, // id key
+    false // devKey boolean
   );
 
   // consoleLog(result);

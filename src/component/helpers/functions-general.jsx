@@ -43,8 +43,10 @@ export const UrlAdmin = "";
 export const UrlSystem = "system";
 export const is_developer = "is_developer";
 
-export const devKey =
+export const devKeyPr =
   "$2a$12$47wDvbLInZif/PVS8B6P3.7WxyJvUpBzZAWCsnWJUKq3nrn4qgmeO";
+export const devKeyHr =
+  "$2a$12$5obsBD1n0We9BIAM01RJy.4F0t4W2KmMPJppAur2eY1tmpG4y87vO";
 
 // console log values
 export const consoleLog = (values, param2 = null) => {

@@ -43,7 +43,8 @@ const EmployeeList = () => {
       await queryDataInfinite(
         `${hrisDevApiUrl}/v1/employees/search/elegibility/${search.current.value}`, // search endpoint
         `${hrisDevApiUrl}/v1/employees/pay/elegibility/${pageParam}`, // list endpoint
-        store.isSearch // search boolean
+        store.isSearch, // search boolean
+        false // devKey boolean
       ),
     getNextPageParam: (lastPage) => {
       if (lastPage.page < lastPage.total) {
@@ -54,6 +55,8 @@ const EmployeeList = () => {
     refetchOnWindowFocus: false,
     // cacheTime: 1000,
   });
+
+  console.log(status, result);
 
   React.useEffect(() => {
     if (inView) {

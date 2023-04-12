@@ -19,7 +19,10 @@ const EmployeeLink = () => {
   const { isLoading, data: employee } = useQueryData(
     `${hrisDevApiUrl}/v1/employees/${employeeid}`, // endpoint
     "get", // method
-    "employee" // key
+    "employee", // key
+    {}, // formdata
+    null, // id key
+    false // devKey boolean
   );
 
   return (

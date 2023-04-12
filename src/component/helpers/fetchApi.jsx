@@ -1,7 +1,7 @@
-import { consoleLog, devKey } from "./functions-general";
+import { consoleLog, devKeyPr } from "./functions-general";
 
 const fetchApi = (url, fd = {}, dispatch = null, method = "get") => {
-  let username = devKey;
+  let username = devKeyPr;
   let password = "";
   let auth = btoa(`${username}:${password}`);
   var myHeaders = new Headers();

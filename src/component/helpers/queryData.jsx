@@ -1,8 +1,8 @@
-import { devKey } from "./functions-general";
+import { devKeyHr, devKeyPr } from "./functions-general";
 
-export const queryData = (endpoint, method = "get", fd = {}) => {
+export const queryData = (endpoint, method = "get", fd = {}, prKey = true) => {
   let url = endpoint;
-  let username = devKey;
+  let username = prKey ? devKeyPr : devKeyHr;
   let password = "";
   let auth = btoa(`${username}:${password}`);
   var myHeaders = new Headers();

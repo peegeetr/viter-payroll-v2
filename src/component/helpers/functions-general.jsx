@@ -10,7 +10,7 @@ export const hrisdevNavUrl = "";
 export const devBaseImgUrl = "https://payroll-app.frontlinebusiness.com.ph/img";
 export const devApiUrl = "https://payroll-app.frontlinebusiness.com.ph/rest";
 export const devBaseUrl = "https://payroll-app.frontlinebusiness.com.ph";
-export const devNavUrl = "";
+export const devNavUrl = "/v2";
 
 // Local URL dev
 // export const devApiUrl = "http://localhost/react-vite/viter-hris-v3/rest";

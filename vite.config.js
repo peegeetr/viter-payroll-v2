@@ -4,7 +4,7 @@ import { defineConfig } from "vite";
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  // base: "/dev-app",
+  base: "/v2",
   build: {
     chunkSizeWarningLimit: 1600,
   },

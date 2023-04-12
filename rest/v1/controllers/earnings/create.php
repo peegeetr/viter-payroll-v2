@@ -63,13 +63,15 @@ if ($data["payitem_is_hris"] === "0" && $earnings->earnings_employee === "all") 
         $earnings->earnings_hrs = "";
         $earnings->earnings_rate = "";
 
-        $query = $earnings->checkName();
-        if ($query->rowCount() > 0) {
-            continue;
-        } else {
-            $newCount++;
-            $query = checkCreate($earnings);
-        }
+        checkDeleteEarningsIdAndEmployeeId($earnings);
+        $query = checkCreate($earnings);
+        // $query = $earnings->checkName();
+        // if ($query->rowCount() > 0) {
+        //     continue;
+        // } else {
+        //     $newCount++;
+        //     $query = checkCreate($earnings);
+        // }
         // isNameExist($earnings, "Pay item for $earnings->earnings_payroll_id is ");
         // $query = checkCreate($earnings);
 
@@ -86,9 +88,8 @@ if ($data["payitem_is_hris"] === "0" && $earnings->earnings_employee !== "all") 
     $earnings->earnings_hris_date = "";
     $earnings->earnings_hrs = "";
     $earnings->earnings_rate = "";
-    // // check name
-    // isNameExist($earnings, "Pay item for $earnings->earnings_employee is ");
 
+    checkDeleteEarningsIdAndEmployeeId($earnings);
     $query = checkCreate($earnings);
     returnSuccess($earnings, "Earnings", $query);
 }

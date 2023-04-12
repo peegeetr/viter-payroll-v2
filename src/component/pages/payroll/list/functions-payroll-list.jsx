@@ -9,7 +9,7 @@ import {
   payComputeAbsences,
   payComputeAdjustment,
   payComputeBereavement,
-  payComputeBunos,
+  payComputeBonus,
   payComputeDiminimis,
   payComputeEmployeeReferralBonus,
   payComputeHazardPay,
@@ -95,6 +95,18 @@ export const runPayroll = (
   let diminimisAmount = 0;
   let totalMadatoryEe = 0;
 
+  // list of installment
+  let bereavementAmount = 0;
+  let bereavementList = [];
+  let bonusAmount = 0;
+  let bonusList = [];
+  let employeeReferralBonusAmount = 0;
+  let eRBonusList = [];
+  let separationPayAmount = 0;
+  let separationPayList = [];
+  let otherAllowancesAmount = 0;
+  let otherAllowancesList = [];
+
   let payrollList = [];
   let taxList = [];
   let sssList = [];
@@ -143,11 +155,20 @@ export const runPayroll = (
         earning.earnings_is_installment !== everyPayrollNumber && //onetime or installment
         earning.earnings_number_of_installment > earning.earnings_num_pay //number of payment
       ) {
-        totalBereavement += payComputeBereavement(earning);
-        totalBonus += payComputeBunos(earning);
-        totalEmployeeReferralBonus += payComputeEmployeeReferralBonus(earning);
-        totalSeparationPay += payComputeSeparationPay(earning);
-        totalOtherAllowances += payComputeOtherAllowances(earning);
+        bereavementAmount = payComputeBereavement(emp, earning);
+        totalBereavement += bereavementAmount.finalAmount;
+
+        bonusAmount = payComputeBonus(earning);
+        totalBonus += bonusAmount.finalAmount;
+
+        employeeReferralBonusAmount = payComputeEmployeeReferralBonus(earning);
+        totalEmployeeReferralBonus += employeeReferralBonusAmount.finalAmount;
+
+        separationPayAmount = payComputeSeparationPay(earning);
+        totalSeparationPay += separationPayAmount.finalAmount;
+
+        otherAllowancesAmount = payComputeOtherAllowances(earning);
+        totalOtherAllowances += otherAllowancesAmount.finalAmount;
 
         // for updating number of pay if installment or one time
         earningsNumInstallmentList.push({
@@ -160,6 +181,14 @@ export const runPayroll = (
           earnings_employee_id: emp.payroll_list_employee_id,
           earnings_payitem_id: earning.earnings_payitem_id,
         });
+
+        // list of installment
+        // bereavement List
+        bereavementList.push(...bereavementAmount.bereavementList);
+        bonusList.push(...bonusAmount.bonusList);
+        eRBonusList.push(...employeeReferralBonusAmount.eRBonusList);
+        separationPayList.push(...separationPayAmount.separationPayList);
+        otherAllowancesList.push(...otherAllowancesAmount.otherAllowancesList);
       }
     });
 
@@ -368,7 +397,6 @@ export const runPayroll = (
     tax = 0;
   });
 
-  // console.log(payrollList);
   return {
     payrollList,
     holidayList,
@@ -378,6 +406,11 @@ export const runPayroll = (
     philhealthList,
     taxList,
     deminimisList,
+    bereavementList,
+    bonusList,
+    eRBonusList,
+    separationPayList,
+    otherAllowancesList,
     earningsNumInstallmentList,
     deducNumInstallmentList,
   };

@@ -51,7 +51,6 @@ class PayrollList
     public $payroll_list_tax;
     public $payroll_list_undertime;
     public $payroll_list_datetime;
-
     // earnings and deduction
     public $payroll_type_id;
     public $num_pay;
@@ -67,6 +66,7 @@ class PayrollList
     public $hris_date;
     public $earnings_rate;
     public $earnings_hrs;
+    public $earnings_installment_extra;
     public $created;
 
     public $deduction_details;
@@ -391,7 +391,7 @@ class PayrollList
             $sql .= "payroll_list_hazard_pay = :payroll_list_hazard_pay, ";
             $sql .= "payroll_list_absences = :payroll_list_absences, ";
             $sql .= "payroll_list_absences_hrs = :payroll_list_absences_hrs, ";
-            $sql .= "payroll_list_absences_rate = :payroll_list_absences_rate, "; 
+            $sql .= "payroll_list_absences_rate = :payroll_list_absences_rate, ";
             $sql .= "payroll_list_13th_month = :payroll_list_13th_month, ";
             $sql .= "payroll_list_bonus = :payroll_list_bonus, ";
             $sql .= "payroll_list_employee_referral_bonus = :payroll_list_employee_referral_bonus, ";
@@ -439,7 +439,7 @@ class PayrollList
                 "payroll_list_hazard_pay" => $this->payroll_list_hazard_pay,
                 "payroll_list_absences" => $this->payroll_list_absences,
                 "payroll_list_absences_hrs" => $this->payroll_list_absences_hrs,
-                "payroll_list_absences_rate" => $this->payroll_list_absences_rate, 
+                "payroll_list_absences_rate" => $this->payroll_list_absences_rate,
                 "payroll_list_13th_month" => $this->payroll_list_13th_month,
                 "payroll_list_bonus" => $this->payroll_list_bonus,
                 "payroll_list_employee_referral_bonus" => $this->payroll_list_employee_referral_bonus,
@@ -498,6 +498,7 @@ class PayrollList
             $sql .= "earnings_hris_date, ";
             $sql .= "earnings_rate, ";
             $sql .= "earnings_hrs, ";
+            $sql .= "earnings_installment_extra, ";
             $sql .= "earnings_created, ";
             $sql .= "earnings_datetime ) values ( ";
             $sql .= ":earnings_employee, ";
@@ -518,6 +519,7 @@ class PayrollList
             $sql .= ":earnings_hris_date, ";
             $sql .= ":earnings_rate, ";
             $sql .= ":earnings_hrs, ";
+            $sql .= ":earnings_installment_extra, ";
             $sql .= ":earnings_created, ";
             $sql .= ":earnings_datetime ) ";
             $query = $this->connection->prepare($sql);
@@ -540,6 +542,7 @@ class PayrollList
                 "earnings_hris_date" => $this->hris_date,
                 "earnings_rate" => $this->earnings_rate,
                 "earnings_hrs" => $this->earnings_hrs,
+                "earnings_installment_extra" => $this->earnings_installment_extra,
                 "earnings_created" => $this->created,
                 "earnings_datetime" => $this->payroll_list_datetime,
             ]);

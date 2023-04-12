@@ -49,8 +49,6 @@ if (array_key_exists("listpayrollid", $_GET)) {
         $payrollList->payroll_list_hazard_pay = $allPayrollList[$pl]["payroll_list_hazard_pay"];
         $payrollList->payroll_list_absences = $allPayrollList[$pl]["payroll_list_absences"];
         $payrollList->payroll_list_absences_hrs = $allPayrollList[$pl]["payroll_list_absences_hrs"];
-        // $payrollList->payroll_list_absences_rate = $allPayrollList[$pl]["payroll_list_absences_rate"];
-        // $payrollList->payroll_list_deminimis = $allPayrollList[$pl]["payroll_list_deminimis"];
         $payrollList->payroll_list_13th_month = $allPayrollList[$pl]["payroll_list_13th_month"];
         $payrollList->payroll_list_bonus = $allPayrollList[$pl]["payroll_list_bonus"];
         $payrollList->payroll_list_employee_referral_bonus = $allPayrollList[$pl]["payroll_list_employee_referral_bonus"];
@@ -96,11 +94,12 @@ if (array_key_exists("listpayrollid", $_GET)) {
             $payrollList->is_installment = $allDeminimis[$d]["earnings_is_installment"];
             $payrollList->number_of_installment = $allDeminimis[$d]["earnings_number_of_installment"];
             $payrollList->start_pay_date = $allDeminimis[$d]["earnings_start_pay_date"];
-            $payrollList->end_pay_date = $allDeminimis[$d]["earnings_end_pay_date"]; 
+            $payrollList->end_pay_date = $allDeminimis[$d]["earnings_end_pay_date"];
             $payrollList->details = $allDeminimis[$d]["earnings_details"];
             $payrollList->hris_date = "";
             $payrollList->earnings_rate = "";
             $payrollList->earnings_hrs = "";
+            $payrollList->earnings_installment_extra = "0";
 
             $query = checkCreateEarnings($payrollList);
         }
@@ -130,6 +129,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
             $payrollList->hris_date = $allHolidayList[$h]["earnings_hris_date"];
             $payrollList->earnings_rate = $allHolidayList[$h]["earnings_rate"];
             $payrollList->earnings_hrs = $allHolidayList[$h]["earnings_hrs"];
+            $payrollList->earnings_installment_extra = "0";
 
             $query = checkCreateEarnings($payrollList);
         }
@@ -157,6 +157,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
             $payrollList->hris_date = "";
             $payrollList->earnings_rate = $allNdList[$nd]["earnings_rate"];
             $payrollList->earnings_hrs = $allNdList[$nd]["earnings_hrs"];
+            $payrollList->earnings_installment_extra = "0";
 
             $query = checkCreateEarnings($payrollList);
         }
@@ -193,6 +194,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
             $payrollList->hris_date = "";
             $payrollList->earnings_rate = "";
             $payrollList->earnings_hrs = "";
+            $payrollList->earnings_installment_extra = "0";
             $query = checkCreateEarnings($payrollList);
             $query = checkCreateDeductions($payrollList);
         }
@@ -229,6 +231,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
             $payrollList->hris_date = "";
             $payrollList->earnings_rate = "";
             $payrollList->earnings_hrs = "";
+            $payrollList->earnings_installment_extra = "0";
             $query = checkCreateEarnings($payrollList);
             $query = checkCreateDeductions($payrollList);
         }
@@ -265,6 +268,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
             $payrollList->hris_date = "";
             $payrollList->earnings_rate = "";
             $payrollList->earnings_hrs = "";
+            $payrollList->earnings_installment_extra = "0";
             $query = checkCreateEarnings($payrollList);
             $query = checkCreateDeductions($payrollList);
         }
@@ -292,6 +296,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
             $payrollList->hris_date = "";
             $payrollList->earnings_rate = "";
             $payrollList->earnings_hrs = "";
+            $payrollList->earnings_installment_extra = "0";
             $query = checkCreateDeductions($payrollList);
         }
     }

@@ -22,6 +22,7 @@ class Earnings
     public $earnings_end_pay_date;
     public $earnings_hris_date;
     public $earnings_hris_undertime_out;
+    public $earnings_installment_extra;
     public $earnings_created;
     public $earnings_datetime;
 
@@ -157,6 +158,7 @@ class Earnings
             $sql .= "where earnings.earnings_paytype_id = paytype.paytype_aid ";
             $sql .= "and earnings.earnings_payitem_id = payitem.payitem_aid ";
             $sql .= "and payitem.payitem_paytype_id = paytype.paytype_aid ";
+            $sql .= "and earnings.earnings_installment_extra = 0 ";
             $sql .= "order by ";
             $sql .= "earnings.earnings_is_paid, ";
             $sql .= "DATE(earnings.earnings_end_pay_date) desc, ";
@@ -204,6 +206,7 @@ class Earnings
             $sql .= "where earnings.earnings_paytype_id = paytype.paytype_aid ";
             $sql .= "and earnings.earnings_payitem_id = payitem.payitem_aid ";
             $sql .= "and payitem.payitem_paytype_id = paytype.paytype_aid ";
+            $sql .= "and earnings.earnings_installment_extra = 0 ";
             $sql .= "order by ";
             $sql .= "earnings.earnings_is_paid, ";
             $sql .= "DATE(earnings.earnings_end_pay_date) desc, ";
@@ -257,6 +260,7 @@ class Earnings
             $sql .= "where earnings.earnings_paytype_id = paytype.paytype_aid ";
             $sql .= "and earnings.earnings_payitem_id = payitem.payitem_aid ";
             $sql .= "and payitem.payitem_paytype_id = paytype.paytype_aid ";
+            $sql .= "and earnings.earnings_installment_extra = 0 ";
             $sql .= "and earnings.earnings_employee like :search ";
             $sql .= "order by ";
             $sql .= "earnings.earnings_is_paid, ";
@@ -462,6 +466,26 @@ class Earnings
         }
         return $query;
     }
+
+    // delete Earnings
+    public function deleteEarningsIdAndEmployeeId()
+    {
+        try {
+            $sql = "delete from {$this->tblEarnings} ";
+            $sql .= "where earnings_payroll_id = :earnings_payroll_id ";
+            $sql .= "and earnings_payitem_id = :earnings_payitem_id ";
+            $sql .= "and earnings_employee_id = :earnings_employee_id ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "earnings_payroll_id" => $this->earnings_payroll_id,
+                "earnings_payitem_id" => $this->earnings_payitem_id,
+                "earnings_employee_id" => $this->earnings_employee_id,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
     // read by payslip by id
     public function readAllSummaryView()
     {
@@ -618,7 +642,7 @@ class Earnings
             $sql .= "and payitem.payitem_aid = earnings.earnings_payitem_id ";
             $sql .= "and (earnings.earnings_is_paid = 1 ";
             $sql .= "or earnings.earnings_num_pay > 0) ";
-            $sql .= "and DATE(earnings.earnings_start_pay_date) >= :earnings_start_pay_date "; 
+            $sql .= "and DATE(earnings.earnings_start_pay_date) >= :earnings_start_pay_date ";
             $sql .= "and DATE(earnings.earnings_end_pay_date) <= :earnings_end_pay_date ";
             $sql .= "GROUP BY earnings.earnings_payitem_id ";
             $sql .= "order by paytype.paytype_is_active, ";
@@ -636,5 +660,4 @@ class Earnings
         }
         return $query;
     }
- 
 }

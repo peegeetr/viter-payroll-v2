@@ -36,6 +36,7 @@ const ModalAddHolidays = ({ item }) => {
       queryClient.invalidateQueries({ queryKey: ["holiday"] });
       // show success box
       if (data.success) {
+        item && dispatch(setIsAdd(false));
         dispatch(setSuccess(true));
         dispatch(setMessage(`Successfuly ${item ? "updated." : "added."}`));
       }
@@ -66,7 +67,6 @@ const ModalAddHolidays = ({ item }) => {
     holidays_name: Yup.string().required("Required"),
     holidays_date: Yup.string().required("Required"),
     holidays_type: Yup.string().required("Required"),
-    holidays_rate: Yup.string().required("Required"),
   });
 
   return (
@@ -90,11 +90,13 @@ const ModalAddHolidays = ({ item }) => {
               initialValues={initVal}
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
-                const holidays_rate = removeComma(values.holidays_rate);
-                mutation.mutate({ ...values, holidays_rate });
+                // const holidays_rate = removeComma(values.holidays_rate);
+                mutation.mutate(values);
               }}
             >
               {(props) => {
+                props.values.holidays_rate =
+                  props.values.holidays_type === "special" ? "130" : "200";
                 return (
                   <Form>
                     <div className="relative mb-5 mt-5">
@@ -130,15 +132,6 @@ const ModalAddHolidays = ({ item }) => {
                           <option value="regular">Regular Holiday</option>
                         </optgroup>
                       </InputSelect>
-                    </div>
-                    <div className="relative mb-5">
-                      <InputText
-                        num="num"
-                        label="Rate"
-                        type="text"
-                        name="holidays_rate"
-                        disabled={mutation.isLoading}
-                      />
                     </div>
                     <div className="relative mb-5 grid grid-cols-[1fr_8fr] items-center justify-center ">
                       <MyCheckbox

@@ -1,4 +1,5 @@
 import {
+  installmentNumber,
   isHrisNumber,
   isSemiMonthly,
   onetimeNumber,
@@ -38,6 +39,7 @@ import {
   wagesEarningsId,
   taxDeductionId,
   deMinimisEarningsId,
+  otherBenefitsEarningsId,
 } from "./functions-payitemId";
 
 export const employeeRate = (salary, workingDays) => {
@@ -267,49 +269,139 @@ export const payComputeDiminimis = (emp) => {
 };
 
 // compute Pay Bereavement
-export const payComputeBereavement = (earning) => {
+export const payComputeBereavement = (emp, earning) => {
   let finalAmount = 0;
+  let bereavementList = [];
   if (earning.earnings_payitem_id === bereavementId) {
     finalAmount += Number(earning.earnings_amount);
+    // if installment create installment extra
+    if (earning.earnings_is_installment === installmentNumber) {
+      bereavementList.push({
+        earnings_payroll_type_id: emp.payroll_category_type,
+        earnings_employee: emp.payroll_list_employee_name,
+        earnings_employee_id: emp.payroll_list_employee_id,
+        earnings_paytype_id: otherBenefitsEarningsId,
+        earnings_payitem_id: bereavementId,
+        earnings_amount: earning.earnings_amount,
+        earnings_details: earning.earnings_details,
+        earnings_frequency: isSemiMonthly,
+        earnings_is_installment: onetimeNumber,
+        earnings_number_of_installment: onetimeNumber,
+        earnings_start_pay_date: emp.payroll_start_date,
+        earnings_end_pay_date: emp.payroll_end_date,
+      });
+    }
   }
 
-  return finalAmount;
+  return { finalAmount, bereavementList };
 };
 
 // compute Pay Bonus
-export const payComputeBunos = (earning) => {
+export const payComputeBonus = (earning) => {
   let finalAmount = 0;
+  let bonusList = [];
   if (earning.earnings_payitem_id === bonusId) {
     finalAmount += Number(earning.earnings_amount);
+
+    // if installment create installment extra
+    if (earning.earnings_is_installment === installmentNumber) {
+      bonusList.push({
+        earnings_payroll_type_id: emp.payroll_category_type,
+        earnings_employee: emp.payroll_list_employee_name,
+        earnings_employee_id: emp.payroll_list_employee_id,
+        earnings_paytype_id: otherBenefitsEarningsId,
+        earnings_payitem_id: bonusId,
+        earnings_amount: earning.earnings_amount,
+        earnings_details: earning.earnings_details,
+        earnings_frequency: isSemiMonthly,
+        earnings_is_installment: onetimeNumber,
+        earnings_number_of_installment: onetimeNumber,
+        earnings_start_pay_date: emp.payroll_start_date,
+        earnings_end_pay_date: emp.payroll_end_date,
+      });
+    }
   }
-  return finalAmount;
+  return { finalAmount, bonusList };
 };
 
 // compute Pay Employee Referral Bonus
 export const payComputeEmployeeReferralBonus = (earning) => {
   let finalAmount = 0;
+  let eRBonusList = [];
   if (earning.earnings_payitem_id === employeeReferralBonusId) {
     finalAmount += Number(earning.earnings_amount);
+    // if installment create installment extra
+    if (earning.earnings_is_installment === installmentNumber) {
+      eRBonusList.push({
+        earnings_payroll_type_id: emp.payroll_category_type,
+        earnings_employee: emp.payroll_list_employee_name,
+        earnings_employee_id: emp.payroll_list_employee_id,
+        earnings_paytype_id: otherBenefitsEarningsId,
+        earnings_payitem_id: employeeReferralBonusId,
+        earnings_amount: earning.earnings_amount,
+        earnings_details: earning.earnings_details,
+        earnings_frequency: isSemiMonthly,
+        earnings_is_installment: onetimeNumber,
+        earnings_number_of_installment: onetimeNumber,
+        earnings_start_pay_date: emp.payroll_start_date,
+        earnings_end_pay_date: emp.payroll_end_date,
+      });
+    }
   }
-  return finalAmount;
+  return { finalAmount, eRBonusList };
 };
 
 // compute Pay Separation Pay
 export const payComputeSeparationPay = (earning) => {
   let finalAmount = 0;
+  let separationPayList = [];
   if (earning.earnings_payitem_id === separationPayId) {
-    finalAmount += Number(earning.earnings_amount);
+    finalAmount += Number(earning.earnings_amount); // if installment create installment extra
+    if (earning.earnings_is_installment === installmentNumber) {
+      separationPayList.push({
+        earnings_payroll_type_id: emp.payroll_category_type,
+        earnings_employee: emp.payroll_list_employee_name,
+        earnings_employee_id: emp.payroll_list_employee_id,
+        earnings_paytype_id: otherBenefitsEarningsId,
+        earnings_payitem_id: separationPayId,
+        earnings_amount: earning.earnings_amount,
+        earnings_details: earning.earnings_details,
+        earnings_frequency: isSemiMonthly,
+        earnings_is_installment: onetimeNumber,
+        earnings_number_of_installment: onetimeNumber,
+        earnings_start_pay_date: emp.payroll_start_date,
+        earnings_end_pay_date: emp.payroll_end_date,
+      });
+    }
   }
-  return finalAmount;
+  return { finalAmount, separationPayList };
 };
 
 // compute Pay Other Allowances
 export const payComputeOtherAllowances = (earning) => {
   let finalAmount = 0;
+  let otherAllowancesList = [];
   if (earning.earnings_payitem_id === otherAllowancesId) {
     finalAmount += Number(earning.earnings_amount);
+    // if installment create installment extra
+    if (earning.earnings_is_installment === installmentNumber) {
+      otherAllowancesList.push({
+        earnings_payroll_type_id: emp.payroll_category_type,
+        earnings_employee: emp.payroll_list_employee_name,
+        earnings_employee_id: emp.payroll_list_employee_id,
+        earnings_paytype_id: otherBenefitsEarningsId,
+        earnings_payitem_id: otherAllowancesId,
+        earnings_amount: earning.earnings_amount,
+        earnings_details: earning.earnings_details,
+        earnings_frequency: isSemiMonthly,
+        earnings_is_installment: onetimeNumber,
+        earnings_number_of_installment: onetimeNumber,
+        earnings_start_pay_date: emp.payroll_start_date,
+        earnings_end_pay_date: emp.payroll_end_date,
+      });
+    }
   }
-  return finalAmount;
+  return { finalAmount, otherAllowancesList };
 };
 
 // compute holiday

@@ -178,7 +178,7 @@ const HolidaysList = ({ setItemEdit }) => {
           isDel={isDel}
           mysqlApiDelete={`${devApiUrl}/v1/holidays/${id}`}
           mysqlApiRestore={null}
-          msg="Are you sure you want to delete this holiday"
+          msg="Are you sure you want to delete this "
           item={`${dataItem.holidays_name}`}
           arrKey="holiday"
         />

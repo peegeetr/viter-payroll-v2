@@ -38,7 +38,7 @@ function checkReadSummaryByDate($object)
     checkQuery($query, "Empty records. (limit)");
     return $query;
 }
- 
+
 // Read all Summary
 function checkReadAllSummaryView($object)
 {
@@ -60,5 +60,13 @@ function checkDeleteEarnings($object)
 {
     $query = $object->deleteEarnings();
     checkQuery($query, "There's a problem processing your request. (delete earnings)");
+    return $query;
+}
+
+// delete specific employee id and earnings id 
+function checkDeleteEarningsIdAndEmployeeId($object)
+{
+    $query = $object->deleteEarningsIdAndEmployeeId();
+    checkQuery($query, "There's a problem processing your request. (delete earnings id and Employee id)");
     return $query;
 }

@@ -21,9 +21,13 @@ import ServerError from "../../../../partials/ServerError";
 import ButtonSpinner from "../../../../partials/spinners/ButtonSpinner";
 import TableSpinner from "../../../../partials/spinners/TableSpinner";
 import { getErningsRate } from "../function-report-summary";
+import ModalViewDetails from "./ModalViewDetails";
+import { setIsAdd } from "../../../../../store/StoreAction";
 
 const SummaryEarningsList = () => {
   const { store, dispatch } = React.useContext(StoreContext);
+  const [isView, setIsView] = React.useState(false);
+  const [item, setItem] = React.useState(null);
   const link = getUserType(store.credentials.data.role_is_developer === 1);
   const [isFilter, setFilter] = React.useState(false);
   const [isSubmit, setSubmit] = React.useState(false);
@@ -61,8 +65,17 @@ const SummaryEarningsList = () => {
     cacheTime: 1000,
   });
 
-  console.log(result);
-
+  const handleOt = (item) => {
+    dispatch(setIsAdd(true));
+    setIsView(false);
+    setItem(item);
+  };
+  const handleHoliday = (item) => {
+    dispatch(setIsAdd(true));
+    setIsView(true);
+    setItem(item);
+  };
+  console.log(isView);
   React.useEffect(() => {
     if (inView) {
       setPage((prev) => prev + 1);
@@ -183,12 +196,8 @@ const SummaryEarningsList = () => {
                 <th className="table-border-center " colSpan="3">
                   Leave
                 </th>
-                <th className="table-border-center " colSpan="4">
-                  Overtime
-                </th>
-                <th className="table-border-center " colSpan="4">
-                  Holiday
-                </th>
+                <th className="table-border-center ">Overtime</th>
+                <th className="table-border-center ">Holiday</th>
                 <th className="table-border-center min-w-[15rem]" colSpan="3">
                   Night Differential
                 </th>
@@ -200,14 +209,8 @@ const SummaryEarningsList = () => {
                 <th className="table-border">Hrs</th>
                 <th className="table-border">Rate</th>
                 <th className="table-border">Amount</th>
-                <th className="table-border">Hrs</th>
-                <th className="table-border">Rate</th>
-                <th className="table-border">Amount</th>
-                <th className="table-border min-w-[7rem]">Total Amount</th>
-                <th className="table-border">Hrs</th>
-                <th className="table-border">Rate</th>
-                <th className="table-border">Amount</th>
-                <th className="table-border min-w-[7rem]">Total Amount</th>
+                <th className="table-border min-w-[8rem]">Total Amount</th>
+                <th className="table-border min-w-[8rem]">Total Amount</th>
                 <th className="table-border">Hrs</th>
                 <th className="table-border">Rate</th>
                 <th className="table-border">Amount</th>
@@ -251,96 +254,88 @@ const SummaryEarningsList = () => {
                         item.payroll_start_date,
                         item.payroll_end_date
                       )}`}</td>
-                      <td className="px-6">
+                      <td className="pr-6">
                         {numberWithCommas(item.payroll_list_basic_pay)}
                       </td>
-                      <td className="px-6">{numberWithCommas(0)}</td>
-                      <td className="px-6">{numberWithCommas(0)}</td>
-                      <td className="px-6">
+                      <td className="pr-6">{numberWithCommas(0)}</td>
+                      <td className="pr-6">{numberWithCommas(0)}</td>
+                      <td className="pr-6">
                         {getWorkingDays(
                           new Date(item.payroll_start_date),
                           new Date(item.payroll_end_date)
                         ) * 8}
                       </td>
-                      <td className="px-6">{numberWithCommas(0)}</td>
-                      <td className="px-6">{numberWithCommas(10)}</td>
-                      <td className="px-6">
+                      <td className="pr-6">{numberWithCommas(0)}</td>
+                      <td className="pr-6">{numberWithCommas(10)}</td>
+                      <td className="pr-6">
                         {/* leave hrs */}
                         {numberWithCommas(item.payroll_list_leave_hrs)}
                       </td>
-                      <td className="px-6">
+                      <td className="pr-6">
                         {/* leave rate */}
                         {numberWithCommas(item.payroll_list_leave_rate)}
                       </td>
-                      <td className="px-6">
+                      <td className="pr-6">
                         {/* leave pay */}
                         {numberWithCommas(item.payroll_list_leave_pay)}
                       </td>
-                      {/* <td className="px-6">
-                        {numberWithCommas(item.payroll_list_sss_ee)}
-                      </td> */}
-                      <td colSpan={4} className="px-6 text-primary underline">
-                        <span className=" cursor-pointer">
+
+                      {/* total overtime amount */}
+                      {numberWithCommas(item.payroll_list_overtime_pay) !==
+                      "0.00" ? (
+                        <td className="pr-6 text-primary underline">
+                          <span
+                            className="cursor-pointer tooltip-action-table !p-0"
+                            data-tooltip="View Deatils"
+                            onClick={() => handleOt(item)}
+                          >
+                            {numberWithCommas(item.payroll_list_overtime_pay)}
+                          </span>
+                        </td>
+                      ) : (
+                        <td className="pr-6">
                           {numberWithCommas(item.payroll_list_overtime_pay)}
-                        </span>
-                      </td>
-                      <td colSpan={4} className="px-6">
-                        {/* total holiday amount */}
-                        {numberWithCommas(item.payroll_list_holiday)}
-                      </td>
-                      <td className="px-6">
+                        </td>
+                      )}
+
+                      {/* total holiday amount */}
+                      {numberWithCommas(item.payroll_list_holiday) !==
+                      "0.00" ? (
+                        <td className="pr-6 text-primary underline">
+                          <span
+                            className="cursor-pointer tooltip-action-table !p-0"
+                            data-tooltip="View Deatils"
+                            onClick={() => handleHoliday(item)}
+                          >
+                            {numberWithCommas(item.payroll_list_holiday)}
+                          </span>
+                        </td>
+                      ) : (
+                        <td className="pr-6">
+                          {numberWithCommas(item.payroll_list_holiday)}
+                        </td>
+                      )}
+                      <td className="pr-6">
                         {/* ND hrs */}
                         {numberWithCommas(item.payroll_list_nd_hrs)}
                       </td>
                       {/* ND rate */}
-                      <td className="px-6">
+                      <td className="pr-6">
                         {item.payroll_list_night_diff_per_day === 0
                           ? "0"
                           : "10%"}
                       </td>
-                      <td className="px-6">
+                      <td className="pr-6">
                         {/* ND amount */}
                         {numberWithCommas(
                           item.payroll_list_night_shift_differential
                         )}
                       </td>
-                      <td className="px-6">
+                      <td className="pr-6">
                         {/* gross pay */}
                         {numberWithCommas(item.payroll_list_gross)}
                       </td>
                     </tr>
-
-                    {/* {getErningsRate(earnings, item)?.map((item, key) => {
-                      return (
-                        <tr
-                          className="max-h-[10rem] overflow-y-auto text-right"
-                          key={key}
-                        >
-                          <td colSpan={13} className="px-6"></td>
-
-                          <td className="px-6">
-                            {numberWithCommas(item.otHrs)}
-                          </td>
-                          <td className="px-6">
-                            {numberWithCommas(item.otRate)}
-                          </td>
-                          <td className="px-6">
-                            {numberWithCommas(item.otAmount)}
-                          </td>
-                          <td className="px-6"></td>
-                          <td className="px-6">
-                            {numberWithCommas(item.holidayHrs)}
-                          </td>
-                          <td className="px-6">
-                            {numberWithCommas(item.holidayRate)}
-                          </td>
-                          <td className="px-6">
-                            {numberWithCommas(item.holidayAmount)}
-                          </td>
-                          <td className="px-6" colSpan={5}></td>
-                        </tr>
-                      );
-                    })} */}
                   </tbody>
                 ))}
               </React.Fragment>
@@ -357,6 +352,9 @@ const SummaryEarningsList = () => {
           refView={ref}
         />
       </div>
+      {store.isAdd && (
+        <ModalViewDetails item={item} isView={isView} earnings={earnings} />
+      )}
     </>
   );
 };

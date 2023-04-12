@@ -1,48 +1,47 @@
 import { holidayId, overtimeId } from "../../../helpers/functions-payitemId";
 
 // get beenifits leave
-export const getErningsRate = (earning, item) => {
+export const getErningsRate = (earning, item, isView) => {
   let list = [];
-  let newList = [];
-  let payOtHrs = "";
-  let payOtRate = "";
-  let payOtAmount = "";
-  let payHolidayHrs = "";
-  let payHolidayRate = "";
-  let payHolidayAmount = "";
+  let payHrs = "";
+  let payRate = "";
+  let payAmount = "";
   earning?.data.map((eItem) => {
     // check if leave type aid is equal
     if (
       eItem.earnings_employee_id === item.payroll_list_employee_id &&
-      eItem.earnings_payitem_id === overtimeId &&
       eItem.earnings_payroll_id === item.payroll_list_payroll_id
     ) {
-      if (eItem.earnings_payitem_id === overtimeId) {
+      if (!isView && eItem.earnings_payitem_id === overtimeId) {
         // leave list return
-        payOtHrs = eItem.earnings_hrs;
-        payOtRate = eItem.earnings_rate;
-        payOtAmount = eItem.earnings_amount;
+        payHrs = eItem.earnings_hrs;
+        payRate = eItem.earnings_rate;
+        payAmount = eItem.earnings_amount;
+
+        list.push({
+          employee_id: eItem.earnings_employee_id,
+          employee_name: eItem.earnings_employee,
+          hrs: payHrs,
+          rate: payRate,
+          amount: payAmount,
+        });
       }
       // check if leave type aid is equal
-      if (eItem.earnings_payitem_id === holidayId) {
+      if (isView && eItem.earnings_payitem_id === holidayId) {
         // leave list return
-        payHolidayHrs = eItem.earnings_hrs;
-        payHolidayRate = eItem.earnings_rate;
-        payHolidayAmount = eItem.earnings_amount;
-      }
+        payHrs = eItem.earnings_hrs;
+        payRate = eItem.earnings_rate;
+        payAmount = eItem.earnings_amount;
 
-      list.push({
-        employee_id: eItem.earnings_employee_id,
-        employee_name: eItem.earnings_employee,
-        otHrs: payOtHrs,
-        otRate: payOtRate,
-        otAmount: payOtAmount,
-        holidayHrs: payHolidayHrs,
-        holidayRate: payHolidayRate,
-        holidayAmount: payHolidayAmount,
-      });
+        list.push({
+          employee_id: eItem.earnings_employee_id,
+          employee_name: eItem.earnings_employee,
+          hrs: payHrs,
+          rate: payRate,
+          amount: payAmount,
+        });
+      }
     }
   });
-  console.log(list);
   return list;
 };

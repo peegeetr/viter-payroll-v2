@@ -218,7 +218,7 @@ const SummaryDeductionsList = () => {
                         {item.payroll_list_employee_name}
                       </td>
                       <td className="text-left">
-                        {/* {getDepartment(item.payroll_list_employee_id, job)} */}
+                        {item.payroll_list_employee_department}
                       </td>
                       <td className="text-center">{`${getPayPeriod(
                         result?.pages[0].data[0].payroll_start_date,

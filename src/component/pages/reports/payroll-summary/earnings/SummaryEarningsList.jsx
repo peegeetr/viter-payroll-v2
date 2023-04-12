@@ -75,7 +75,6 @@ const SummaryEarningsList = () => {
     setIsView(true);
     setItem(item);
   };
-  console.log(isView);
   React.useEffect(() => {
     if (inView) {
       setPage((prev) => prev + 1);

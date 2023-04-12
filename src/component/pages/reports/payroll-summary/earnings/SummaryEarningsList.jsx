@@ -279,8 +279,10 @@ const SummaryEarningsList = () => {
                       {/* <td className="px-6">
                         {numberWithCommas(item.payroll_list_sss_ee)}
                       </td> */}
-                      <td colSpan={4} className="px-6">
-                        {numberWithCommas(item.payroll_list_overtime_pay)}
+                      <td colSpan={4} className="px-6 text-primary underline">
+                        <span className=" cursor-pointer">
+                          {numberWithCommas(item.payroll_list_overtime_pay)}
+                        </span>
                       </td>
                       <td colSpan={4} className="px-6">
                         {/* total holiday amount */}
@@ -308,7 +310,7 @@ const SummaryEarningsList = () => {
                       </td>
                     </tr>
 
-                    {getErningsRate(earnings, item)?.map((item, key) => {
+                    {/* {getErningsRate(earnings, item)?.map((item, key) => {
                       return (
                         <tr
                           className="max-h-[10rem] overflow-y-auto text-right"
@@ -338,7 +340,7 @@ const SummaryEarningsList = () => {
                           <td className="px-6" colSpan={5}></td>
                         </tr>
                       );
-                    })}
+                    })} */}
                   </tbody>
                 ))}
               </React.Fragment>

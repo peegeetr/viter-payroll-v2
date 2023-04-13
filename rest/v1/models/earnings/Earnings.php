@@ -505,13 +505,14 @@ class Earnings
             $sql .= "from {$this->tblPayType} as paytype, ";
             $sql .= "{$this->tblEarnings} as earnings, ";
             $sql .= "{$this->tblPayItem} as payitem ";
-            $sql .= "where earnings.earnings_payitem_id = :earnings_payitem_id ";
+            $sql .= "where earnings.earnings_payroll_id = :earnings_payroll_id ";
             $sql .= "and paytype.paytype_aid = earnings.earnings_paytype_id ";
             $sql .= "and payitem.payitem_aid = earnings.earnings_payitem_id ";
+            $sql .= "and payitem.payitem_paytype_id = paytype.paytype_aid ";
             $sql .= "order by earnings.earnings_employee asc ";
             $query = $this->connection->prepare($sql);
             $query->execute([
-                "earnings_payitem_id" => $this->earnings_payitem_id,
+                "earnings_payroll_id" => $this->earnings_payroll_id,
             ]);
         } catch (PDOException $ex) {
             $query = false;
@@ -537,15 +538,16 @@ class Earnings
             $sql .= "from {$this->tblPayType} as paytype, ";
             $sql .= "{$this->tblEarnings} as earnings, ";
             $sql .= "{$this->tblPayItem} as payitem ";
-            $sql .= "where earnings.earnings_payitem_id = :earnings_payitem_id ";
+            $sql .= "where earnings.earnings_payroll_id = :earnings_payroll_id ";
             $sql .= "and paytype.paytype_aid = earnings.earnings_paytype_id ";
             $sql .= "and payitem.payitem_aid = earnings.earnings_payitem_id ";
+            $sql .= "and payitem.payitem_paytype_id = paytype.paytype_aid ";
             $sql .= "order by earnings.earnings_employee asc ";
             $sql .= "limit :start, ";
             $sql .= ":total ";
             $query = $this->connection->prepare($sql);
             $query->execute([
-                "earnings_payitem_id" => $this->earnings_payitem_id,
+                "earnings_payroll_id" => $this->earnings_payroll_id,
                 "start" => $this->earnings_start - 1,
                 "total" => $this->earnings_total,
             ]);

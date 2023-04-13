@@ -22,7 +22,7 @@ import TableSpinner from "../../../../partials/spinners/TableSpinner";
 const SummaryTypeView = () => {
   const { store, dispatch } = React.useContext(StoreContext);
   const link = getUserType(store.credentials.data.role_is_developer === 1);
-  const paytypeId = getUrlParam().get("paytypeId");
+  const payrollId = getUrlParam().get("payrollId");
   const [page, setPage] = React.useState(1);
   let counter = 1;
   const { ref, inView } = useInView();
@@ -41,7 +41,7 @@ const SummaryTypeView = () => {
     queryFn: async ({ pageParam = 1 }) =>
       await queryDataInfinite(
         ``, // search endpoint
-        `${devApiUrl}/v1/earnings/summary/view/${pageParam}/${paytypeId}` // list endpoint
+        `${devApiUrl}/v1/earnings/summary/view/${pageParam}/${payrollId}` // list endpoint
       ),
     getNextPageParam: (lastPage) => {
       if (lastPage.page < lastPage.total) {
@@ -63,16 +63,6 @@ const SummaryTypeView = () => {
     result?.pages.length > 0 ? `${result?.pages[0].data[0].payitem_name}` : "";
   let payType =
     result?.pages.length > 0 ? `${result?.pages[0].data[0].paytype_name}` : "";
-  // let payPeriod =
-  //   result?.pages.length > 0
-  //     ? result?.pages[0].data[0].earnings_start_pay_date === "n/a"
-  //       ? formatDate(result?.pages[0].data[0].earnings_created)
-  //       : `
-  //       ${getPayPeriod(
-  //         result?.pages[0].data[0].earnings_start_pay_date,
-  //         result?.pages[0].data[0].earnings_end_pay_date
-  //       )}`
-  //     : "no";
   console.log(result);
   return (
     <>

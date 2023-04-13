@@ -12,7 +12,7 @@ export const devApiUrl = "https://payroll-app.frontlinebusiness.com.ph/rest";
 export const devBaseUrl = "https://payroll-app.frontlinebusiness.com.ph";
 export const devNavUrl = "/v2";
 
-// Local URL dev
+// // Local URL dev
 // export const devApiUrl = "http://localhost/react-vite/viter-hris-v3/rest";
 // export const devBaseUrl = "http://localhost/react-vite/viter-hris-v3/public";
 // export const devBaseImgUrl =
@@ -20,7 +20,7 @@ export const devNavUrl = "/v2";
 // export const devBaseUrl = "https://hris.frontlinebusiness.com.ph/dev-app";
 // export const devNavUrl = "/dev-app";
 
-// Local URL dev
+// // Local URL dev
 // export const devApiUrl = "http://localhost/viter-payroll-v2/rest";
 // export const devBaseUrl = "http://localhost/viter-payroll-v2/public";
 // export const devBaseImgUrl = "http://localhost/viter-payroll-v2/public/img";

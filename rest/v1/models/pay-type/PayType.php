@@ -17,12 +17,16 @@ class PayType
     public $date_to;
     public $tblPayType;
     public $tblPayItem;
+    public $tblEarnings;
+    public $tblDeductions;
 
     public function __construct($db)
     {
         $this->connection = $db;
         $this->tblPayType = "prv2_paytype";
         $this->tblPayItem = "prv2_payitem";
+        $this->tblEarnings = "prv2_earnings";
+        $this->tblDeductions = "prv2_deduction";
     }
 
     // create
@@ -57,6 +61,7 @@ class PayType
         }
         return $query;
     }
+
 
     // read all
     public function readAll()
@@ -248,6 +253,123 @@ class PayType
             $query = $this->connection->prepare($sql);
             $query->execute([
                 "paytype_aid" => $this->paytype_aid,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    // read all paytype in report
+    public function readAllPayType()
+    {
+        try {
+            $sql = "select payitem.payitem_aid, ";
+            $sql .= "payitem.payitem_name, ";
+            $sql .= "paytype.paytype_aid, ";
+            $sql .= "paytype.paytype_name ";
+            $sql .= "from {$this->tblPayType} as paytype, ";
+            $sql .= "{$this->tblPayItem} as payitem ";
+            $sql .= "where payitem.payitem_paytype_id = paytype.paytype_aid ";
+            $sql .= "order by paytype.paytype_name, ";
+            $sql .= "payitem.payitem_name asc ";
+            $query = $this->connection->query($sql);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    // read all limit paytype in report
+    public function readAllPayTypeLimit()
+    {
+        try {
+            $sql = "select payitem.payitem_aid, ";
+            $sql .= "payitem.payitem_name, ";
+            $sql .= "paytype.paytype_aid, ";
+            $sql .= "paytype.paytype_name ";
+            $sql .= "from {$this->tblPayType} as paytype, ";
+            $sql .= "{$this->tblPayItem} as payitem ";
+            $sql .= "where payitem.payitem_paytype_id = paytype.paytype_aid ";
+            $sql .= "order by paytype.paytype_name, ";
+            $sql .= "payitem.payitem_name asc ";
+            $sql .= "limit :start, ";
+            $sql .= ":total ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "start" => $this->paytype_start - 1,
+                "total" => $this->paytype_total,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    // report filter specifc type id by date earnings
+    public function readEarningsPaytypeIdByDate()
+    {
+        try {
+            $sql = "select payitem.payitem_aid, ";
+            $sql .= "payitem.payitem_name, ";
+            $sql .= "earnings.earnings_payroll_id, ";
+            $sql .= "earnings.earnings_start_pay_date, ";
+            $sql .= "earnings.earnings_end_pay_date, ";
+            $sql .= "paytype.paytype_category, ";
+            $sql .= "paytype.paytype_aid, ";
+            $sql .= "paytype.paytype_name ";
+            $sql .= "from {$this->tblEarnings} as earnings, ";
+            $sql .= "{$this->tblPayType} as paytype, ";
+            $sql .= "{$this->tblPayItem} as payitem ";
+            $sql .= "where paytype.paytype_aid = :paytype_aid ";
+            $sql .= "and earnings.earnings_paytype_id = paytype.paytype_aid ";
+            $sql .= "and earnings.earnings_payitem_id = payitem.payitem_aid ";
+            $sql .= "and earnings.earnings_paytype_id = payitem.payitem_paytype_id ";
+            $sql .= "and payitem.payitem_paytype_id = paytype.paytype_aid ";
+            $sql .= "and earnings.earnings_is_installment = '1' ";
+            $sql .= "and DATE(earnings.earnings_start_pay_date) between ";
+            $sql .= ":date_from and :date_to ";
+            $sql .= "order by DATE(earnings.earnings_start_pay_date) desc ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "paytype_aid" => $this->paytype_aid,
+                "date_from" => $this->date_from,
+                "date_to" => $this->date_to,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    // report filter specific type id by date deduction
+    public function readDeductionPaytypeIdByDate()
+    {
+        try {
+            $sql = "select payitem.payitem_aid, ";
+            $sql .= "payitem.payitem_name, ";
+            $sql .= "deduction.deduction_start_pay_date, ";
+            $sql .= "deduction.deduction_end_pay_date, ";
+            $sql .= "paytype.paytype_category, ";
+            $sql .= "paytype.paytype_aid, ";
+            $sql .= "paytype.paytype_name ";
+            $sql .= "from {$this->tblDeductions} as deduction, ";
+            $sql .= "{$this->tblPayType} as paytype, ";
+            $sql .= "{$this->tblPayItem} as payitem ";
+            $sql .= "where paytype.paytype_aid = :paytype_aid ";
+            $sql .= "and deduction.deduction_paytype_id = paytype.paytype_aid ";
+            $sql .= "and deduction.deduction_payitem_id = payitem.payitem_aid ";
+            $sql .= "and deduction.deduction_paytype_id = payitem.payitem_paytype_id ";
+            $sql .= "and payitem.payitem_paytype_id = paytype.paytype_aid ";
+            $sql .= "and deduction.deduction_is_installment = '1' ";
+            $sql .= "and DATE(deduction.deduction_start_pay_date) between ";
+            $sql .= ":date_from and :date_to ";
+            $sql .= "order by DATE(deduction.deduction_start_pay_date) desc ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "paytype_aid" => $this->paytype_aid,
+                "date_from" => $this->date_from,
+                "date_to" => $this->date_to,
             ]);
         } catch (PDOException $ex) {
             $query = false;

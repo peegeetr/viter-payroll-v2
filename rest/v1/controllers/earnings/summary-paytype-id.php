@@ -24,10 +24,10 @@ $returnData = [];
 if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
     checkApiKey();
 
-    if (array_key_exists("start", $_GET) && array_key_exists("payItemId", $_GET)) {
+    if (array_key_exists("start", $_GET) && array_key_exists("payrollId", $_GET)) {
         // get payroll id  
         // get task id from query string
-        $earnings->earnings_payitem_id = $_GET['payItemId'];
+        $earnings->earnings_payroll_id = $_GET['payrollId'];
         $earnings->earnings_start = $_GET['start'];
         $earnings->earnings_total = 10;
         //check to see if task id in query string is not empty and is number, if not return json error

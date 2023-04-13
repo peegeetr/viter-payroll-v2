@@ -7,15 +7,21 @@
     - earnings/functions.php
     - payroll/list/paid.php
     - payroll/list/update.php 
+    -> earnings/summary-paytype-id.php.php
+    -> pay-type/functions.php.php
+    -> pay-type/report-filter.php.php
+    -> pay-type/report-page.php.php
  
     
 *models 
     - deductions/Deductions.php
-    - earnings/Earnings.php
     - payroll/list/PayrollList.php
+    -> earnings/Earnings.php
+    -> pay-type/PayType.php
   
 *htaccess 
-    - 
+    - #earnings
+    - #paytype
 
 *db tables 
     -  

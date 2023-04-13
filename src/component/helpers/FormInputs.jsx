@@ -63,6 +63,7 @@ export const InputSelect = ({ label, onChange, ...props }) => {
   if (
     props.name === "earnings_paytype_id" ||
     props.name === "earnings_payitem_id" ||
+    props.name === "employee_job_start_time" ||
     props.name === "payroll_employee" ||
     props.name === "rates_paytype_id" ||
     props.name === "rates_payitems_id" ||

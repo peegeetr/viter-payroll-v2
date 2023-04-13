@@ -44,7 +44,7 @@ const OtherUserList = ({ setItemEdit }) => {
     setItemEdit(item);
   };
 
-  const handleArchive = (item) => {
+  const handleSuspend = (item) => {
     dispatch(setIsConfirm(true));
     setId(item.user_other_aid);
     setData(item);
@@ -143,8 +143,8 @@ const OtherUserList = ({ setItemEdit }) => {
                           <button
                             type="button"
                             className="btn-action-table tooltip-action-table"
-                            data-tooltip="Archive"
-                            onClick={() => handleArchive(item)}
+                            data-tooltip="Suspend"
+                            onClick={() => handleSuspend(item)}
                           >
                             <FaUserSlash />
                           </button>

@@ -4,7 +4,11 @@ import { FaEdit, FaUserCircle } from "react-icons/fa";
 import { useInView } from "react-intersection-observer";
 import { Link } from "react-router-dom";
 import { StoreContext } from "../../../store/StoreContext";
-import { getUserType, hrisDevApiUrl } from "../../helpers/functions-general";
+import {
+  getUserType,
+  hrisDevApiUrl,
+  hrisdevBaseUrl,
+} from "../../helpers/functions-general";
 import { queryDataInfinite } from "../../helpers/queryDataInfinite";
 import LoadmoreRq from "../../partials/LoadmoreRq";
 import NoData from "../../partials/NoData";
@@ -85,14 +89,15 @@ const EmployeeList = () => {
           <table>
             <thead>
               <tr>
-                <th className="text-center">#</th>
-                <th className="w-12"></th>
-                <th className="w-52">Name</th>
-                <th className="w-28">ID No.</th>
-                <th className="w-[24rem]">Work Email</th>
-                <th className="w-[12rem]">Direct report</th>
-                <th>Status</th>
-                <th className="text-right">Actions</th>
+                <th className="w-[1rem] text-center">#</th>
+                <th className="w-[1rem] text-center">Status</th>
+                <th className="w-[1rem] hidden sm:table-cell"></th>
+                <th className="min-w-[14rem]">Name</th>
+                <th className="min-w-28">ID No.</th>
+                <th className="min-w-[24rem]">Work Email</th>
+                <th className="min-w-[14rem]">Report to</th>
+
+                <th className="max-w-[7rem] text-right">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -117,33 +122,36 @@ const EmployeeList = () => {
                   {page.data.map((item, key) => (
                     <tr key={key}>
                       <td className="text-center">{counter++}.</td>
-                      <td>
-                        {item.employee_photo > 0 ? (
-                          <img
-                            src="https://hris.frontlinebusiness.com.ph/img/abrigo.jpg"
-                            alt="employee photo"
-                            className="rounded-full h-8 w-8 object-cover object-center mx-auto"
-                          />
-                        ) : (
-                          <span className="text-3xl text-gray-400">
-                            <FaUserCircle />
-                          </span>
-                        )}
-                      </td>
-                      <td>{`${item.employee_lname} ${item.employee_fname}`}</td>
-                      <td>{item.employee_job_number}</td>
-                      <td>{item.employee_email}</td>
-                      <td>
-                        {item.employee_job_supervisor_id === ""
-                          ? "Not assigned"
-                          : item.employee_job_supervisor_name}
-                      </td>
-                      <td>
+                      <td className="text-center">
                         {item.employee_is_active === 1 ? (
                           <StatusActive />
                         ) : (
                           <StatusInactive />
                         )}
+                      </td>
+
+                      <td className="hidden sm:block">
+                        {item.employee_photo ? (
+                          <img
+                            src={hrisdevBaseUrl + "/" + item.employee_photo}
+                            alt="employee photo"
+                            className="rounded-full min-w-[3rem] min-h-[3rem] max-w-[3rem] max-h-[3rem] object-cover object-[50%,50%]"
+                          />
+                        ) : (
+                          <>
+                            <span className=" text-gray-400 text-5xl ">
+                              <FaUserCircle />
+                            </span>
+                          </>
+                        )}
+                      </td>
+                      <td>{`${item.employee_lname} ${item.employee_fname}`}</td>
+                      <td>{item.employee_job_number}</td>
+                      <td>{item.employee_job_email}</td>
+                      <td>
+                        {item.employee_job_supervisor_id === ""
+                          ? "Not assigned"
+                          : item.employee_job_supervisor_name}
                       </td>
                       <td>
                         <div className="flex justify-end items-center gap-1">

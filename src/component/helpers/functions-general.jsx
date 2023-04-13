@@ -30,13 +30,14 @@ export const devNavUrl = "/v2";
 // export const devBaseImgUrl = "https://payroll-app.frontlinebusiness.com.ph/img";
 // export const devApiUrl = "http://localhost/projects/viter-payroll-v2/rest";
 // export const devBaseUrl = "http://localhost/projects/viter-payroll-v2/public";
-// export const devNavUrl = "";
+// export const devNavUrl = "/v2";
 
 // // local URL dev hris
 // export const hrisDevBaseImgUrl =
 //   "https://hris.frontlinebusiness.com.ph/dev-app/img";
 // export const hrisDevApiUrl = "http://localhost/projects/viter-hris-v3/rest";
-// export const hrisdevBaseUrl = "http://localhost/projects/viter-hris-v3/public";
+// export const hrisdevBaseUrl =
+//   "http://localhost/projects/viter-hris-v3/public/img";
 // export const hrisdevNavUrl = "/dev-app";
 
 export const UrlAdmin = "";

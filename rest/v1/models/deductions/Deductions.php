@@ -107,6 +107,7 @@ class Deductions
             $sql = "select deduction.deduction_aid, ";
             $sql .= "deduction.deduction_is_paid, ";
             $sql .= "deduction.deduction_num_pay, ";
+            $sql .= "deduction.deduction_employee_id, ";
             $sql .= "deduction.deduction_employee, ";
             $sql .= "deduction.deduction_amount, ";
             $sql .= "deduction.deduction_frequency, ";
@@ -128,6 +129,7 @@ class Deductions
             $sql .= "{$this->tblPayItem} as payitem ";
             $sql .= "where deduction.deduction_paytype_id = paytype.paytype_aid ";
             $sql .= "and deduction.deduction_payitem_id = payitem.payitem_aid ";
+            $sql .= "and deduction.deduction_installment_extra = 0 ";
             $sql .= "order by ";
             $sql .= "deduction.deduction_is_paid asc, ";
             $sql .= "DATE(deduction.deduction_start_pay_date) desc, ";
@@ -145,6 +147,7 @@ class Deductions
             $sql = "select deduction.deduction_aid, ";
             $sql .= "deduction.deduction_is_paid, ";
             $sql .= "deduction.deduction_num_pay, ";
+            $sql .= "deduction.deduction_employee_id, ";
             $sql .= "deduction.deduction_employee, ";
             $sql .= "deduction.deduction_amount, ";
             $sql .= "deduction.deduction_frequency, ";
@@ -166,6 +169,7 @@ class Deductions
             $sql .= "{$this->tblPayItem} as payitem ";
             $sql .= "where deduction.deduction_paytype_id = paytype.paytype_aid ";
             $sql .= "and deduction.deduction_payitem_id = payitem.payitem_aid ";
+            $sql .= "and deduction.deduction_installment_extra = 0 ";
             $sql .= "order by ";
             $sql .= "deduction.deduction_is_paid asc, ";
             $sql .= "DATE(deduction.deduction_start_pay_date) desc, ";
@@ -189,6 +193,7 @@ class Deductions
             $sql = "select deduction.deduction_aid, ";
             $sql .= "deduction.deduction_is_paid, ";
             $sql .= "deduction.deduction_num_pay, ";
+            $sql .= "deduction.deduction_employee_id, ";
             $sql .= "deduction.deduction_employee, ";
             $sql .= "deduction.deduction_amount, ";
             $sql .= "deduction.deduction_frequency, ";
@@ -211,6 +216,7 @@ class Deductions
             $sql .= "{$this->tblPayItem} as payitem ";
             $sql .= "where deduction.deduction_paytype_id = paytype.paytype_aid ";
             $sql .= "and deduction.deduction_payitem_id = payitem.payitem_aid ";
+            $sql .= "and deduction.deduction_installment_extra = 0 ";
             $sql .= "and deduction.deduction_employee like :search ";
             $sql .= "order by ";
             $sql .= "deduction.deduction_is_paid asc, ";
@@ -233,6 +239,7 @@ class Deductions
             $sql = "select deduction.deduction_aid, ";
             $sql .= "deduction.deduction_is_paid, ";
             $sql .= "deduction.deduction_num_pay, ";
+            $sql .= "deduction.deduction_employee_id, ";
             $sql .= "deduction.deduction_employee,";
             $sql .= "deduction.deduction_amount, ";
             $sql .= "deduction.deduction_number_of_installment, ";
@@ -267,6 +274,7 @@ class Deductions
             $sql = "select deduction.deduction_aid, ";
             $sql .= "deduction.deduction_is_paid, ";
             $sql .= "deduction.deduction_num_pay, ";
+            $sql .= "deduction.deduction_employee_id, ";
             $sql .= "deduction.deduction_employee, ";
             $sql .= "deduction.deduction_amount, ";
             $sql .= "deduction.deduction_details, ";
@@ -378,6 +386,26 @@ class Deductions
             $query = $this->connection->prepare($sql);
             $query->execute([
                 "deduction_aid" => $this->deduction_aid,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    // delete Earnings
+    public function deleteDeductionIdAndEmployeeId()
+    {
+        try {
+            $sql = "delete from {$this->tblDeductions} ";
+            $sql .= "where deduction_payroll_id = :deduction_payroll_id ";
+            $sql .= "and deduction_payitem_id = :deduction_payitem_id ";
+            $sql .= "and deduction_employee_id = :deduction_employee_id ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "deduction_payroll_id" => $this->deduction_payroll_id,
+                "deduction_payitem_id" => $this->deduction_payitem_id,
+                "deduction_employee_id" => $this->deduction_employee_id,
             ]);
         } catch (PDOException $ex) {
             $query = false;

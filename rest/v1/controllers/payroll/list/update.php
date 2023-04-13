@@ -99,7 +99,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
             $payrollList->hris_date = "";
             $payrollList->earnings_rate = "";
             $payrollList->earnings_hrs = "";
-            $payrollList->earnings_installment_extra = "0";
+            $payrollList->installment_extra = "0";
 
             $query = checkCreateEarnings($payrollList);
         }
@@ -129,7 +129,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
             $payrollList->hris_date = $allHolidayList[$h]["earnings_hris_date"];
             $payrollList->earnings_rate = $allHolidayList[$h]["earnings_rate"];
             $payrollList->earnings_hrs = $allHolidayList[$h]["earnings_hrs"];
-            $payrollList->earnings_installment_extra = "0";
+            $payrollList->installment_extra = "0";
 
             $query = checkCreateEarnings($payrollList);
         }
@@ -157,7 +157,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
             $payrollList->hris_date = "";
             $payrollList->earnings_rate = $allNdList[$nd]["earnings_rate"];
             $payrollList->earnings_hrs = $allNdList[$nd]["earnings_hrs"];
-            $payrollList->earnings_installment_extra = "0";
+            $payrollList->installment_extra = "0";
 
             $query = checkCreateEarnings($payrollList);
         }
@@ -194,7 +194,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
             $payrollList->hris_date = "";
             $payrollList->earnings_rate = "";
             $payrollList->earnings_hrs = "";
-            $payrollList->earnings_installment_extra = "0";
+            $payrollList->installment_extra = "0";
             $query = checkCreateEarnings($payrollList);
             $query = checkCreateDeductions($payrollList);
         }
@@ -231,7 +231,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
             $payrollList->hris_date = "";
             $payrollList->earnings_rate = "";
             $payrollList->earnings_hrs = "";
-            $payrollList->earnings_installment_extra = "0";
+            $payrollList->installment_extra = "0";
             $query = checkCreateEarnings($payrollList);
             $query = checkCreateDeductions($payrollList);
         }
@@ -268,7 +268,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
             $payrollList->hris_date = "";
             $payrollList->earnings_rate = "";
             $payrollList->earnings_hrs = "";
-            $payrollList->earnings_installment_extra = "0";
+            $payrollList->installment_extra = "0";
             $query = checkCreateEarnings($payrollList);
             $query = checkCreateDeductions($payrollList);
         }
@@ -296,7 +296,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
             $payrollList->hris_date = "";
             $payrollList->earnings_rate = "";
             $payrollList->earnings_hrs = "";
-            $payrollList->earnings_installment_extra = "0";
+            $payrollList->installment_extra = "0";
             $query = checkCreateDeductions($payrollList);
         }
     }

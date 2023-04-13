@@ -66,7 +66,7 @@ class PayrollList
     public $hris_date;
     public $earnings_rate;
     public $earnings_hrs;
-    public $earnings_installment_extra;
+    public $installment_extra;
     public $created;
 
     public $deduction_details;
@@ -542,7 +542,7 @@ class PayrollList
                 "earnings_hris_date" => $this->hris_date,
                 "earnings_rate" => $this->earnings_rate,
                 "earnings_hrs" => $this->earnings_hrs,
-                "earnings_installment_extra" => $this->earnings_installment_extra,
+                "earnings_installment_extra" => $this->installment_extra,
                 "earnings_created" => $this->created,
                 "earnings_datetime" => $this->payroll_list_datetime,
             ]);
@@ -661,6 +661,7 @@ class PayrollList
             $sql .= "deduction_details, ";
             $sql .= "deduction_frequency, ";
             $sql .= "deduction_is_installment, ";
+            $sql .= "deduction_installment_extra, ";
             $sql .= "deduction_number_of_installment, ";
             $sql .= "deduction_start_pay_date, ";
             $sql .= "deduction_end_pay_date, ";
@@ -678,6 +679,7 @@ class PayrollList
             $sql .= ":deduction_details, ";
             $sql .= ":deduction_frequency, ";
             $sql .= ":deduction_is_installment, ";
+            $sql .= ":deduction_installment_extra, ";
             $sql .= ":deduction_number_of_installment, ";
             $sql .= ":deduction_start_pay_date, ";
             $sql .= ":deduction_end_pay_date, ";
@@ -697,6 +699,7 @@ class PayrollList
                 "deduction_details" => $this->deduction_details,
                 "deduction_frequency" => $this->frequency,
                 "deduction_is_installment" => $this->is_installment,
+                "deduction_installment_extra" => $this->installment_extra,
                 "deduction_number_of_installment" => $this->number_of_installment,
                 "deduction_start_pay_date" => $this->start_pay_date,
                 "deduction_end_pay_date" => $this->end_pay_date,

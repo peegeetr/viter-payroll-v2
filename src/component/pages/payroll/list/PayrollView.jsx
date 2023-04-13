@@ -89,7 +89,6 @@ const PayrollView = () => {
     setIsPaid(false);
     dispatch(setIsConfirm(true));
   };
-
   return (
     <>
       <Header />

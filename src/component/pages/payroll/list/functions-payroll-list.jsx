@@ -24,6 +24,7 @@ import {
   payComputePagibigLoan,
   payComputePagibigMP2,
   payComputePhil,
+  payComputeSSSLoan,
   payComputeSeparationPay,
   payComputeSssBracket,
   payComputeTaxDue,
@@ -303,6 +304,7 @@ export const runPayroll = (
         pagibigMP2List.push(...pagibigMP2Amount.pagibigMP2List);
         sSSLoanList.push(...sSSLoanAmount.sSSLoanList);
       }
+      // console.log("tuitionList", tuitionAmount.tuitionList);
     });
 
     // compute tax due
@@ -450,6 +452,12 @@ export const runPayroll = (
     eRBonusList,
     separationPayList,
     otherAllowancesList,
+    tuitionList,
+    tithesList,
+    otherDeductionList,
+    pagibigLoanList,
+    pagibigMP2List,
+    sSSLoanList,
     earningsNumInstallmentList,
     deducNumInstallmentList,
   };

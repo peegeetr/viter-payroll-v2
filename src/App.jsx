@@ -55,6 +55,7 @@ import SummaryDeductions from "./component/pages/reports/payroll-summary/deducti
 import SummaryType from "./component/pages/reports/paytype/SummaryType";
 import SummaryTypeView from "./component/pages/reports/paytype/view/SummaryTypeView";
 import PayBenefits from "./component/pages/reports/paybenefits/PayBenefits";
+import PayrollDetails from "./component/pages/employee/payroll-details/PayrollDetails";
 
 function App() {
   // Create a client
@@ -153,6 +154,14 @@ function App() {
               element={
                 <ProtectedRouteOther>
                   <JobDetails />
+                </ProtectedRouteOther>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/employee/details/payroll`}
+              element={
+                <ProtectedRouteOther>
+                  <PayrollDetails />
                 </ProtectedRouteOther>
               }
             />
@@ -423,6 +432,14 @@ function App() {
               element={
                 <ProtectedRouteSystem>
                   <JobDetails />
+                </ProtectedRouteSystem>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/employee/details/payroll`}
+              element={
+                <ProtectedRouteSystem>
+                  <PayrollDetails />
                 </ProtectedRouteSystem>
               }
             />

@@ -10,8 +10,9 @@ import Header from "../../partials/Header.jsx";
 import Navigation from "../../partials/Navigation.jsx";
 import NoData from "../../partials/NoData.jsx";
 import TableSpinner from "../../partials/spinners/TableSpinner.jsx";
-import DetailsLink from "./job-details/JobDetailsLink.jsx";
+import JobDetailsLink from "./job-details/JobDetailsLink.jsx";
 import SalaryHistoryLink from "./salary-history/SalaryHistoryLink.jsx";
+import PayrollDetailsLink from "./payroll-details/PayrollDetailsLink";
 
 const EmployeeLink = () => {
   const employeeid = getUrlParam().get("employeeid");
@@ -46,7 +47,10 @@ const EmployeeLink = () => {
 
             <ul className="pb-20 relative">
               <li className="pb-2">
-                <DetailsLink />
+                <JobDetailsLink />
+              </li>
+              <li className="pb-2">
+                <PayrollDetailsLink />
               </li>
               <li className="py-2">
                 <SalaryHistoryLink />

@@ -53,7 +53,7 @@ const ModalEditPayroll = ({ itemEdit }) => {
   };
 
   const initVal = {
-    employee_aid: itemEdit ? itemEdit.employee_aid : "",
+    employee_aid: itemEdit.employee_aid,
     employee_job_payroll_elegibility:
       itemEdit.employee_job_payroll_elegibility === 1 ? true : false,
     employee_job_sss_deduc:
@@ -66,9 +66,9 @@ const ModalEditPayroll = ({ itemEdit }) => {
       itemEdit.employee_job_work_reg_hol === 1 ? true : false,
     employee_job_none_work_reg_hol:
       itemEdit.employee_job_none_work_reg_hol === 1 ? true : false,
-    employee_job_nd_per_day:
-      itemEdit.employee_job_nd_per_day !== ""
-        ? itemEdit.employee_job_nd_per_day
+    employee_job_deminimis:
+      itemEdit.employee_job_deminimis !== ""
+        ? itemEdit.employee_job_deminimis
         : 0,
     employee_job_pagibig_amount:
       itemEdit.employee_job_pagibig_amount !== ""
@@ -87,10 +87,6 @@ const ModalEditPayroll = ({ itemEdit }) => {
     employee_job_starting_pay:
       itemEdit.employee_job_starting_pay !== ""
         ? itemEdit.employee_job_starting_pay
-        : 0,
-    employee_job_deminimis:
-      itemEdit.employee_job_deminimis !== ""
-        ? itemEdit.employee_job_deminimis
         : 0,
   };
 
@@ -180,17 +176,6 @@ const ModalEditPayroll = ({ itemEdit }) => {
                       </div>
 
                       <div className="relative mb-3 flex items-center gap-2">
-                        <p className="w-full m-0">
-                          Night differential hours per day
-                        </p>
-                        <InputText
-                          type="text"
-                          name="employee_job_nd_per_day"
-                          disabled={mutation.isLoading}
-                        />
-                      </div>
-
-                      <div className="relative mb-3 flex items-center gap-2">
                         <p className="w-full m-0">Deminimis</p>
                         <InputText
                           type="text"
@@ -198,6 +183,7 @@ const ModalEditPayroll = ({ itemEdit }) => {
                           disabled={mutation.isLoading}
                         />
                       </div>
+
                       <div className="relative mb-3 flex items-center gap-2">
                         <p className="w-full m-0">Pag-ibig addtl. amount</p>
                         <InputText

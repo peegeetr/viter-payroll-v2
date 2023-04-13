@@ -4,6 +4,7 @@
 require '../../core/header.php';
 // use needed functions
 require '../../core/functions.php';
+require 'functions.php';
 // use needed classes
 require '../../models/deductions/Deductions.php';
 // get payload

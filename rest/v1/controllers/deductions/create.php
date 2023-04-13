@@ -39,15 +39,23 @@ if ($deductions->deduction_employee == "all") {
 
         $deductions->deduction_employee = "{$employee_lname}, {$employee_fname}";
         $deductions->deduction_employee_id = $allEmployee[$e]["employee_aid"];
-        // check name
-        isNameExist($deductions, "Pay item for $deductions->deduction_payroll_id is ");
+        // // check name
+        // isNameExist($deductions, "Pay item for $deductions->deduction_payroll_id is ");
+
+        // delete 
+        checkDeleteDeductionIdAndEmployeeId($deductions);
+        // then create again 
         $query = checkCreate($deductions);
     }
 } else {
     // create if specific employee  
     $deductions->deduction_employee = explode(" ", $data["payroll_employee"])[0] . ", " . explode(" ", $data["payroll_employee"])[1];
-    // check name
-    isNameExist($deductions, "Pay item for $deductions->deduction_employee is ");
+    // // check name
+    // isNameExist($deductions, "Pay item for $deductions->deduction_employee is ");
+
+    // delete 
+    checkDeleteDeductionIdAndEmployeeId($deductions);
+    // then create again 
     $query = checkCreate($deductions);
 }
 

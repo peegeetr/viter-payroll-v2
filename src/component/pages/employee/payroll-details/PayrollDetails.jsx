@@ -11,9 +11,9 @@ import Header from "../../../partials/Header";
 import ModalError from "../../../partials/modals/ModalError";
 import ModalSuccess from "../../../partials/modals/ModalSuccess";
 import Navigation from "../../../partials/Navigation";
-import JobDetailsList from "./JobDetailsList";
+import PayrollDetailsList from "./PayrollDetailsList";
 
-const JobDetails = () => {
+const PayrollDetails = () => {
   const { store, dispatch } = React.useContext(StoreContext);
 
   const eid = getUrlParam().get("employeeid");
@@ -42,7 +42,7 @@ const JobDetails = () => {
         <BreadCrumbs param={`${location.search}`} />
         <hr />
         <div className="w-full pb-20">
-          <JobDetailsList
+          <PayrollDetailsList
             isLoading={isLoading}
             error={error}
             employee={employee}
@@ -57,4 +57,4 @@ const JobDetails = () => {
   );
 };
 
-export default JobDetails;
+export default PayrollDetails;

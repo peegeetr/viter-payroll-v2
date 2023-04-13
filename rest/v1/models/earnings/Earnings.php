@@ -486,6 +486,7 @@ class Earnings
         }
         return $query;
     }
+
     // read by payslip by id
     public function readAllSummaryView()
     {

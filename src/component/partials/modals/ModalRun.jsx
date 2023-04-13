@@ -101,6 +101,12 @@ const ModalRun = ({
     let payERBonusList = run.eRBonusList;
     let paySeparationPayList = run.separationPayList;
     let payOtherAllowancesList = run.otherAllowancesList;
+    let payTuitionList = run.tuitionList;
+    let payTithesList = run.tithesList;
+    let payOtherDeductionList = run.otherDeductionList;
+    let payPagibigLoanList = run.pagibigLoanList;
+    let payPagibigMP2List = run.pagibigMP2List;
+    let paySSSLoanList = run.sSSLoanList;
 
     mutation.mutate({
       payrollList: payrollList.length > 0 ? payrollList : 0,
@@ -121,6 +127,13 @@ const ModalRun = ({
         paySeparationPayList.length > 0 ? paySeparationPayList : 0,
       otherAllowancesList:
         payOtherAllowancesList.length > 0 ? payOtherAllowancesList : 0,
+      tuitionList: payTuitionList.length > 0 ? payTuitionList : 0,
+      tithesList: payTithesList.length > 0 ? payTithesList : 0,
+      otherDeductionList:
+        payOtherDeductionList.length > 0 ? payOtherDeductionList : 0,
+      pagibigLoanList: payPagibigLoanList.length > 0 ? payPagibigLoanList : 0,
+      pagibigMP2List: payPagibigMP2List.length > 0 ? payPagibigMP2List : 0,
+      sSSLoanList: paySSSLoanList.length > 0 ? paySSSLoanList : 0,
       isPaid: 1,
       payItemTaxId: payrollTaxDeductionId,
       payItemHolidayId: holidayId,

@@ -41,12 +41,20 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
         $allEarningsNumPayList = $data["earningsNumPayList"];
         $allDeducNumPayList = $data["deducNumPayList"];
 
-        // list of installment
+        // list of installment Earnings 
         $allBereavementList = $data["bereavementList"];
         $allBonusList = $data["bonusList"];
         $allERBonusList = $data["eRBonusList"];
         $allSeparationPayList = $data["separationPayList"];
         $allOtherAllowancesList = $data["otherAllowancesList"];
+
+        // list of installment Deductions 
+        $allTuitionList = $data["tuitionList"];
+        $allTithesList = $data["tithesList"];
+        $allOtherDeductionList = $data["otherDeductionList"];
+        $allPagibigLoanList = $data["pagibigLoanList"];
+        $allPagibigMP2List = $data["pagibigMP2List"];
+        $allSSSLoanList = $data["sSSLoanList"];
 
         // payBereavementList
         if ($allEarningsNumPayList !== 0) {
@@ -69,7 +77,7 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
             }
         }
 
-        // list of installment 
+        // list of installment  Earnings 
         // berevements
         if ($allBereavementList !== 0) {
 
@@ -90,12 +98,12 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
                 $payrollList->hris_date = "";
                 $payrollList->earnings_rate = "";
                 $payrollList->earnings_hrs = "";
-                $payrollList->earnings_installment_extra = 1;
+                $payrollList->installment_extra = 1;
                 $query = checkCreateEarnings($payrollList);
             }
         }
 
-        // list of installment 
+        // list of installment  Earnings 
         // bonus
         if ($allBonusList !== 0) {
 
@@ -116,12 +124,12 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
                 $payrollList->hris_date = "";
                 $payrollList->earnings_rate = "";
                 $payrollList->earnings_hrs = "";
-                $payrollList->earnings_installment_extra = 1;
+                $payrollList->installment_extra = 1;
                 $query = checkCreateEarnings($payrollList);
             }
         }
 
-        // list of installment 
+        // list of installment  Earnings 
         // Employee Referal bonus
         if ($allERBonusList !== 0) {
 
@@ -142,12 +150,12 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
                 $payrollList->hris_date = "";
                 $payrollList->earnings_rate = "";
                 $payrollList->earnings_hrs = "";
-                $payrollList->earnings_installment_extra = 1;
+                $payrollList->installment_extra = 1;
                 $query = checkCreateEarnings($payrollList);
             }
         }
 
-        // list of installment 
+        // list of installment Earnings  
         // Separation Pay 
         if ($allSeparationPayList !== 0) {
 
@@ -168,13 +176,13 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
                 $payrollList->hris_date = "";
                 $payrollList->earnings_rate = "";
                 $payrollList->earnings_hrs = "";
-                $payrollList->earnings_installment_extra = 1;
+                $payrollList->installment_extra = 1;
                 $query = checkCreateEarnings($payrollList);
             }
         }
 
-        // list of installment 
-        // Separation Pay 
+        // list of installment Earnings 
+        // Other Allowances 
         if ($allOtherAllowancesList !== 0) {
 
             for ($oa = 0; $oa < count($allOtherAllowancesList); $oa++) {
@@ -194,10 +202,143 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
                 $payrollList->hris_date = "";
                 $payrollList->earnings_rate = "";
                 $payrollList->earnings_hrs = "";
-                $payrollList->earnings_installment_extra = 1;
+                $payrollList->installment_extra = 1;
                 $query = checkCreateEarnings($payrollList);
             }
         }
+
+        // list of installment Deduction
+        // Tuition 
+        if ($allTuitionList !== 0) {
+            for ($tu = 0; $tu < count($allTuitionList); $tu++) {
+                $payrollList->payroll_type_id = $allTuitionList[$tu]["deduction_payroll_type_id"];
+                $payrollList->num_pay = 1;
+                $payrollList->payroll_list_employee_name = $allTuitionList[$tu]["deduction_employee"];
+                $payrollList->payroll_list_employee_id = $allTuitionList[$tu]["deduction_employee_id"];
+                $payrollList->deduction_paytype_id = $allTuitionList[$tu]["deduction_paytype_id"];
+                $payrollList->deduction_payitem_id = $allTuitionList[$tu]["deduction_payitem_id"];
+                $payrollList->deduction_amount = $allTuitionList[$tu]["deduction_amount"];
+                $payrollList->deduction_details = $allTuitionList[$tu]["deduction_details"];
+                $payrollList->frequency = $allTuitionList[$tu]["deduction_frequency"];
+                $payrollList->is_installment = $allTuitionList[$tu]["deduction_is_installment"];
+                $payrollList->number_of_installment = $allTuitionList[$tu]["deduction_number_of_installment"];
+                $payrollList->start_pay_date = $allTuitionList[$tu]["deduction_start_pay_date"];
+                $payrollList->end_pay_date = $allTuitionList[$tu]["deduction_end_pay_date"];
+                $payrollList->installment_extra = "1";
+                $query = checkCreateDeductions($payrollList);
+            }
+        }
+
+        // list of installment Deduction
+        // Tithes 
+        if ($allTithesList !== 0) {
+            for ($ti = 0; $ti < count($allTithesList); $ti++) {
+                $payrollList->payroll_type_id = $allTithesList[$ti]["deduction_payroll_type_id"];
+                $payrollList->num_pay = 1;
+                $payrollList->payroll_list_employee_name = $allTithesList[$ti]["deduction_employee"];
+                $payrollList->payroll_list_employee_id = $allTithesList[$ti]["deduction_employee_id"];
+                $payrollList->deduction_paytype_id = $allTithesList[$ti]["deduction_paytype_id"];
+                $payrollList->deduction_payitem_id = $allTithesList[$ti]["deduction_payitem_id"];
+                $payrollList->deduction_amount = $allTithesList[$ti]["deduction_amount"];
+                $payrollList->deduction_details = $allTithesList[$ti]["deduction_details"];
+                $payrollList->frequency = $allTithesList[$ti]["deduction_frequency"];
+                $payrollList->is_installment = $allTithesList[$ti]["deduction_is_installment"];
+                $payrollList->number_of_installment = $allTithesList[$ti]["deduction_number_of_installment"];
+                $payrollList->start_pay_date = $allTithesList[$ti]["deduction_start_pay_date"];
+                $payrollList->end_pay_date = $allTithesList[$ti]["deduction_end_pay_date"];
+                $payrollList->installment_extra = "1";
+                $query = checkCreateDeductions($payrollList);
+            }
+        }
+
+        // list of installment Deduction
+        // Other Deduction 
+        if ($allOtherDeductionList !== 0) {
+            for ($od = 0; $od < count($allOtherDeductionList); $od++) {
+                $payrollList->payroll_type_id = $allOtherDeductionList[$od]["deduction_payroll_type_id"];
+                $payrollList->num_pay = 1;
+                $payrollList->payroll_list_employee_name = $allOtherDeductionList[$od]["deduction_employee"];
+                $payrollList->payroll_list_employee_id = $allOtherDeductionList[$od]["deduction_employee_id"];
+                $payrollList->deduction_paytype_id = $allOtherDeductionList[$od]["deduction_paytype_id"];
+                $payrollList->deduction_payitem_id = $allOtherDeductionList[$od]["deduction_payitem_id"];
+                $payrollList->deduction_amount = $allOtherDeductionList[$od]["deduction_amount"];
+                $payrollList->deduction_details = $allOtherDeductionList[$od]["deduction_details"];
+                $payrollList->frequency = $allOtherDeductionList[$od]["deduction_frequency"];
+                $payrollList->is_installment = $allOtherDeductionList[$od]["deduction_is_installment"];
+                $payrollList->number_of_installment = $allOtherDeductionList[$od]["deduction_number_of_installment"];
+                $payrollList->start_pay_date = $allOtherDeductionList[$od]["deduction_start_pay_date"];
+                $payrollList->end_pay_date = $allOtherDeductionList[$od]["deduction_end_pay_date"];
+                $payrollList->installment_extra = "1";
+                $query = checkCreateDeductions($payrollList);
+            }
+        }
+
+        // list of installment Deduction
+        // Pagibig Loan 
+        if ($allPagibigLoanList !== 0) {
+            for ($pgbg = 0; $pgbg < count($allPagibigLoanList); $pgbg++) {
+                $payrollList->payroll_type_id = $allPagibigLoanList[$pgbg]["deduction_payroll_type_id"];
+                $payrollList->num_pay = 1;
+                $payrollList->payroll_list_employee_name = $allPagibigLoanList[$pgbg]["deduction_employee"];
+                $payrollList->payroll_list_employee_id = $allPagibigLoanList[$pgbg]["deduction_employee_id"];
+                $payrollList->deduction_paytype_id = $allPagibigLoanList[$pgbg]["deduction_paytype_id"];
+                $payrollList->deduction_payitem_id = $allPagibigLoanList[$pgbg]["deduction_payitem_id"];
+                $payrollList->deduction_amount = $allPagibigLoanList[$pgbg]["deduction_amount"];
+                $payrollList->deduction_details = $allPagibigLoanList[$pgbg]["deduction_details"];
+                $payrollList->frequency = $allPagibigLoanList[$pgbg]["deduction_frequency"];
+                $payrollList->is_installment = $allPagibigLoanList[$pgbg]["deduction_is_installment"];
+                $payrollList->number_of_installment = $allPagibigLoanList[$pgbg]["deduction_number_of_installment"];
+                $payrollList->start_pay_date = $allPagibigLoanList[$pgbg]["deduction_start_pay_date"];
+                $payrollList->end_pay_date = $allPagibigLoanList[$pgbg]["deduction_end_pay_date"];
+                $payrollList->installment_extra = "1";
+                $query = checkCreateDeductions($payrollList);
+            }
+        }
+
+        // list of installment Deduction
+        // Pagibig MP2 
+        if ($allPagibigMP2List !== 0) {
+            for ($mpt = 0; $mpt < count($allPagibigMP2List); $mpt++) {
+                $payrollList->payroll_type_id = $allPagibigMP2List[$mpt]["deduction_payroll_type_id"];
+                $payrollList->num_pay = 1;
+                $payrollList->payroll_list_employee_name = $allPagibigMP2List[$mpt]["deduction_employee"];
+                $payrollList->payroll_list_employee_id = $allPagibigMP2List[$mpt]["deduction_employee_id"];
+                $payrollList->deduction_paytype_id = $allPagibigMP2List[$mpt]["deduction_paytype_id"];
+                $payrollList->deduction_payitem_id = $allPagibigMP2List[$mpt]["deduction_payitem_id"];
+                $payrollList->deduction_amount = $allPagibigMP2List[$mpt]["deduction_amount"];
+                $payrollList->deduction_details = $allPagibigMP2List[$mpt]["deduction_details"];
+                $payrollList->frequency = $allPagibigMP2List[$mpt]["deduction_frequency"];
+                $payrollList->is_installment = $allPagibigMP2List[$mpt]["deduction_is_installment"];
+                $payrollList->number_of_installment = $allPagibigMP2List[$mpt]["deduction_number_of_installment"];
+                $payrollList->start_pay_date = $allPagibigMP2List[$mpt]["deduction_start_pay_date"];
+                $payrollList->end_pay_date = $allPagibigMP2List[$mpt]["deduction_end_pay_date"];
+                $payrollList->installment_extra = "1";
+                $query = checkCreateDeductions($payrollList);
+            }
+        }
+
+        // list of installment Deduction
+        // Pagibig MP2 
+        if ($allSSSLoanList !== 0) {
+            for ($sss = 0; $sss < count($allSSSLoanList); $sss++) {
+                $payrollList->payroll_type_id = $allSSSLoanList[$sss]["deduction_payroll_type_id"];
+                $payrollList->num_pay = 1;
+                $payrollList->payroll_list_employee_name = $allSSSLoanList[$sss]["deduction_employee"];
+                $payrollList->payroll_list_employee_id = $allSSSLoanList[$sss]["deduction_employee_id"];
+                $payrollList->deduction_paytype_id = $allSSSLoanList[$sss]["deduction_paytype_id"];
+                $payrollList->deduction_payitem_id = $allSSSLoanList[$sss]["deduction_payitem_id"];
+                $payrollList->deduction_amount = $allSSSLoanList[$sss]["deduction_amount"];
+                $payrollList->deduction_details = $allSSSLoanList[$sss]["deduction_details"];
+                $payrollList->frequency = $allSSSLoanList[$sss]["deduction_frequency"];
+                $payrollList->is_installment = $allSSSLoanList[$sss]["deduction_is_installment"];
+                $payrollList->number_of_installment = $allSSSLoanList[$sss]["deduction_number_of_installment"];
+                $payrollList->start_pay_date = $allSSSLoanList[$sss]["deduction_start_pay_date"];
+                $payrollList->end_pay_date = $allSSSLoanList[$sss]["deduction_end_pay_date"];
+                $payrollList->installment_extra = "1";
+                $query = checkCreateDeductions($payrollList);
+            }
+        }
+
         http_response_code(200);
         returnSuccess($payrollList, "Payroll type", $query);
     }

@@ -3,7 +3,12 @@ import { Form, Formik } from "formik";
 import React from "react";
 import { FaTimesCircle } from "react-icons/fa";
 import * as Yup from "yup";
-import { setError, setIsAdd, setMessage } from "../../../../store/StoreAction";
+import {
+  setError,
+  setIsAdd,
+  setMessage,
+  setSuccess,
+} from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
 import {
   InputSelect,
@@ -42,6 +47,15 @@ const ModalAddManageDeduction = ({ payType, employee, payrollDraft }) => {
       // Invalidate and refetch
       queryClient.invalidateQueries({ queryKey: ["deduction"] });
 
+      // show success box
+      if (data.success) {
+        const msg =
+          data.added > 0
+            ? `Successfuly added (${data.added}).`
+            : "Records already added.";
+        dispatch(setSuccess(true));
+        dispatch(setMessage(msg));
+      }
       // show error box
       if (!data.success) {
         dispatch(setError(true));

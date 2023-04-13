@@ -1,0 +1,28 @@
+ 
+*controllers     
+    - deduction/create.php
+    - deduction/functions.php
+    - deduction/deduction.php
+    - earnings/create.php
+    - earnings/functions.php
+    - payroll/list/paid.php
+    - payroll/list/update.php 
+ 
+    
+*models 
+    - deductions/Deductions.php
+    - earnings/Earnings.php
+    - payroll/list/PayrollList.php
+  
+*htaccess 
+    - 
+
+*db tables 
+    -  
+
+*core 
+    - 
+
+*extra 
+    - 
+ 

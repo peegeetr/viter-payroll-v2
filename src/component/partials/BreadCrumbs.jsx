@@ -12,7 +12,7 @@ const BreadCrumbs = ({ param = "", name = "" }) => {
 
   const link = getUserType(store.credentials.data.role_is_developer === 1);
   const crumbs = location.pathname
-    .replace("/system", "")
+    .replace("/v2/system", "")
     .split("/")
     .filter((crumb) => crumb !== "")
     .map((crumb, key) => {

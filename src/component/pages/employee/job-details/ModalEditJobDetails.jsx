@@ -28,6 +28,9 @@ const ModalEditJobDetails = ({
 }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [supId, setSupId] = React.useState(itemEdit.employee_job_supervisor_id);
+  const [nightDiff, setNightDiff] = React.useState(
+    itemEdit.employee_job_nd_per_day
+  );
 
   const queryClient = useQueryClient();
   const mutation = useMutation({
@@ -42,6 +45,7 @@ const ModalEditJobDetails = ({
       queryClient.invalidateQueries({ queryKey: ["employee"] });
       // show success box
       if (data.success) {
+        dispatch(setIsAdd(false));
         dispatch(setSuccess(true));
         dispatch(setMessage(`Successfuly updated`));
       }
@@ -53,32 +57,25 @@ const ModalEditJobDetails = ({
     },
   });
   const initVal = {
-    employee_aid: itemEdit ? itemEdit.employee_aid : "",
-    employee_job_hired_date: itemEdit ? itemEdit.employee_job_hired_date : "",
-    employee_job_regularized: itemEdit
-      ? itemEdit.employee_job_regularized
-      : "na",
-    employee_job_separated: itemEdit ? itemEdit.employee_job_separated : "na",
-    employee_job_number: itemEdit ? itemEdit.employee_job_number : "",
-    employee_job_tin: itemEdit ? itemEdit.employee_job_tin : "",
-    employee_job_status: itemEdit ? itemEdit.employee_job_status : "",
-    employee_job_department_id: itemEdit
-      ? itemEdit.employee_job_department_id
-      : "",
-    employee_job_title_id: itemEdit ? itemEdit.employee_job_title_id : "",
-    employee_job_supervisor_id: itemEdit
-      ? itemEdit.employee_job_supervisor_id
-      : "",
-    employee_job_supervisor_name: itemEdit
-      ? itemEdit.employee_job_supervisor_name
-      : "",
-    employee_email: itemEdit ? itemEdit.employee_email : "",
-    employee_job_drive_link: itemEdit ? itemEdit.employee_job_drive_link : "",
-    employee_job_start_time: itemEdit ? itemEdit.employee_job_start_time : "",
-    employee_job_leave_type_id: itemEdit
-      ? itemEdit.employee_job_leave_type_id
-      : "",
-    employee_job_comments: itemEdit ? itemEdit.employee_job_comments : "",
+    employee_aid: itemEdit.employee_aid,
+    employee_job_hired_date: itemEdit.employee_job_hired_date,
+    employee_job_regularized: itemEdit.employee_job_regularized,
+    employee_job_separated: itemEdit.employee_job_separated,
+    employee_job_number: itemEdit.employee_job_number,
+    employee_job_email: itemEdit.employee_job_email,
+    employee_job_tin: itemEdit.employee_job_tin,
+    employee_job_status: itemEdit.employee_job_status,
+    employee_job_department_id: itemEdit.employee_job_department_id,
+    employee_job_title_id: itemEdit.employee_job_title_id,
+    employee_job_supervisor_id: itemEdit.employee_job_supervisor_id,
+    employee_job_supervisor_name: itemEdit.employee_job_supervisor_name,
+    employee_job_drive_link: itemEdit.employee_job_drive_link,
+    employee_job_start_time: itemEdit.employee_job_start_time,
+    employee_job_leave_type_id: itemEdit.employee_job_leave_type_id,
+    employee_job_comments: itemEdit.employee_job_comments,
+    employee_job_nd_per_day: itemEdit.employee_job_nd_per_day,
+
+    employee_job_email_old: itemEdit.employee_job_email,
   };
 
   const yupSchema = Yup.object({
@@ -87,16 +84,30 @@ const ModalEditJobDetails = ({
     employee_job_status: Yup.string().required("Required"),
     employee_job_department_id: Yup.string().required("Required"),
     employee_job_title_id: Yup.string().required("Required"),
-    employee_email: Yup.string().required("Required").email("Invalid email"),
+    employee_job_email: Yup.string()
+      .required("Required")
+      .email("Invalid email"),
     employee_job_drive_link: Yup.string().required("Required"),
     employee_job_start_time: Yup.string().required("Required"),
     employee_job_leave_type_id: Yup.string().required("Required"),
-    // employee_job_supervisor_name: Yup.string().required("Required"),
   });
 
   const handleGetSupervisorId = (e) => {
-    console.log(123);
     setSupId(e.target.options[e.target.selectedIndex].id);
+  };
+
+  const handleGetNightDiff = (e) => {
+    let startTime = e.target.value;
+    if (startTime !== "0" || startTime !== "1") {
+      setNightDiff("0");
+    }
+    if (startTime === "0") {
+      console.log("startTime", startTime);
+      setNightDiff("5");
+    }
+    if (startTime === "1") {
+      setNightDiff("4");
+    }
   };
 
   const handleClose = () => {
@@ -131,6 +142,7 @@ const ModalEditJobDetails = ({
               {(props) => {
                 // set state for supervisor id
                 props.values.employee_job_supervisor_id = supId;
+                props.values.employee_job_nd_per_day = nightDiff;
                 return (
                   <Form>
                     <div className="max-h-[28rem] overflow-y-scroll p-4">
@@ -180,9 +192,9 @@ const ModalEditJobDetails = ({
                         <InputSelect name="employee_job_status" label="Status">
                           <optgroup label="Status">
                             <option value="" hidden></option>
-                            <option value="contructual">Contructual</option>
-                            <option value="probationary">Probationary</option>
-                            <option value="regular">Regular</option>
+                            <option value="Contructual">Contructual</option>
+                            <option value="Probationary">Probationary</option>
+                            <option value="Regular">Regular</option>
                           </optgroup>
                         </InputSelect>
                       </div>
@@ -218,20 +230,26 @@ const ModalEditJobDetails = ({
                         >
                           <optgroup label="Supervisor">
                             <option value="" hidden></option>
-                            {supervisor?.data.map((item, key) => {
-                              return (
-                                item.supervisor_is_active === 1 &&
-                                itemEdit.employee_aid !== item.employee_aid && (
-                                  <option
-                                    id={item.employee_aid}
-                                    value={`${item.employee_lname}, ${item.employee_fname}`}
-                                    key={key}
-                                  >
-                                    {item.employee_lname}, {item.employee_fname}
-                                  </option>
-                                )
-                              );
-                            })}
+                            {supervisor?.data.length > 0 ? (
+                              supervisor?.data.map((item, key) => {
+                                return (
+                                  item.supervisor_is_active === 1 &&
+                                  itemEdit.employee_aid !==
+                                    item.employee_aid && (
+                                    <option
+                                      id={item.employee_aid}
+                                      value={`${item.employee_lname}, ${item.employee_fname}`}
+                                      key={key}
+                                    >
+                                      {item.employee_lname},{" "}
+                                      {item.employee_fname}
+                                    </option>
+                                  )
+                                );
+                              })
+                            ) : (
+                              <option value="">No data</option>
+                            )}
                           </optgroup>
                         </InputSelect>
                       </div>
@@ -244,6 +262,7 @@ const ModalEditJobDetails = ({
                         <InputSelect
                           name="employee_job_start_time"
                           disabled={mutation.isLoading}
+                          onChange={(e) => handleGetNightDiff(e)}
                           label="Work start time"
                         >
                           <optgroup label="Work start time">
@@ -261,7 +280,7 @@ const ModalEditJobDetails = ({
                         <InputText
                           label="Work Email"
                           type="text"
-                          name="employee_email"
+                          name="employee_job_email"
                           disabled={mutation.isLoading}
                         />
                       </div>
@@ -301,6 +320,7 @@ const ModalEditJobDetails = ({
                       {/* TIN */}
                       <div className="relative mb-5">
                         <InputText
+                          tin="tin"
                           label="TIN"
                           type="text"
                           name="employee_job_tin"

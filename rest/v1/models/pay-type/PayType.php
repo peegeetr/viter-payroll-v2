@@ -82,6 +82,8 @@ class PayType
     {
         try {
             $sql = "select type.paytype_name, item.payitem_name, ";
+            $sql .= "type.paytype_aid, ";
+            $sql .= "type.paytype_category, ";
             $sql .= "item.payitem_is_hris, ";
             $sql .= "item.payitem_is_active, item.payitem_aid from ";
             $sql .= "{$this->tblPayType} as type, ";
@@ -347,6 +349,7 @@ class PayType
     {
         try {
             $sql = "select payitem.payitem_aid, ";
+            $sql .= "deduction.deduction_payroll_id, ";
             $sql .= "payitem.payitem_name, ";
             $sql .= "deduction.deduction_start_pay_date, ";
             $sql .= "deduction.deduction_end_pay_date, ";

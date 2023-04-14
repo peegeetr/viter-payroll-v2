@@ -88,7 +88,6 @@ const SummaryTypeList = () => {
     end_date: "",
   };
 
-  console.log(result, category);
 
   const yupSchema = Yup.object({
     paytype_aid: Yup.string().required("Required"),
@@ -235,7 +234,9 @@ const SummaryTypeList = () => {
                     <Link
                       className="tooltip-action-table"
                       data-tooltip="View"
-                      to={`${link}/reports/paytype/view?payrollId=${item.earnings_payroll_id}`}
+                      to={item.paytype_category === "earnings"
+                      ?`${link}/reports/paytype/view?payrollId=${item.earnings_payroll_id}&paytypeId=${item.paytype_aid}`
+                      :`${link}/reports/paytype/view?payrollId=${item.deduction_payroll_id}&paytypeId=${item.paytype_aid}`}
                     >
                       0.00
                     </Link>

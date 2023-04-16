@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.0
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Mar 24, 2023 at 01:00 AM
--- Server version: 5.7.39-42-log
--- PHP Version: 7.4.33
+-- Host: 127.0.0.1
+-- Generation Time: Apr 13, 2023 at 09:36 AM
+-- Server version: 10.4.22-MariaDB
+-- PHP Version: 8.1.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `dbg5s9r5osiott`
+-- Database: `fbs_payroll_v2`
 --
 
 -- --------------------------------------------------------
@@ -41,6 +41,7 @@ CREATE TABLE `prv2_earnings` (
   `earnings_details` varchar(100) NOT NULL,
   `earnings_frequency` varchar(5) NOT NULL,
   `earnings_is_installment` varchar(5) NOT NULL,
+  `earnings_installment_extra` int(11) NOT NULL,
   `earnings_number_of_installment` smallint(2) NOT NULL,
   `earnings_start_pay_date` varchar(20) NOT NULL,
   `earnings_end_pay_date` varchar(20) NOT NULL,
@@ -58,17 +59,15 @@ CREATE TABLE `prv2_earnings` (
 -- Dumping data for table `prv2_earnings`
 --
 
-INSERT INTO `prv2_earnings` (`earnings_aid`, `earnings_payroll_id`, `earnings_payroll_type_id`, `earnings_is_paid`, `earnings_num_pay`, `earnings_employee`, `earnings_employee_id`, `earnings_paytype_id`, `earnings_payitem_id`, `earnings_amount`, `earnings_details`, `earnings_frequency`, `earnings_is_installment`, `earnings_number_of_installment`, `earnings_start_pay_date`, `earnings_end_pay_date`, `earnings_hris_date`, `earnings_holidays_rate`, `earnings_leave_hrs`, `earnings_hrs`, `earnings_rate`, `earnings_hris_undertime_out`, `earnings_created`, `earnings_datetime`) VALUES
-(2063, 'PR-001', '7', 1, 1, 'Dichoso, Jose', '38', '1', '18', '264.20', 'OT (155.00%) Wed Mar 8 2023  10:23 (1h 0m)', 'sm', '3', 1, '2023-03-01', '2023-03-15', '2023-03-08 08:15:28', '', '', '1.000', '155', '0', '2023-03-24 08:24:30', '2023-03-24 08:50:52'),
-(2064, 'PR-001', '7', 1, 1, 'Dichoso Jose', '38', '1', '20', '1772.73', 'Test1 (130%) Wed Mar 8 2023 ', 'sm', '3', 1, '2023-03-01', '2023-03-15', '2023-03-08', '', '', '8', '130', '', '2023-03-24 08:24:38', '2023-03-24 08:24:38'),
-(2065, 'PR-001', '7', 1, 1, 'Reyes Patrick', '37', '1', '20', '1477.27', 'Test1 (130%) Wed Mar 8 2023 ', 'sm', '3', 1, '2023-03-01', '2023-03-15', '2023-03-08', '', '', '8', '130', '', '2023-03-24 08:24:38', '2023-03-24 08:24:38'),
-(2066, 'PR-001', '7', 1, 1, 'Dichoso Jose', '38', '1', '23', '937.49975', 'Night Differential (110%) 5hrs/day', 'sm', '3', 1, '2023-03-01', '2023-03-15', '', '', '', '55', '110', '', '2023-03-24 08:24:38', '2023-03-24 08:24:38'),
-(2067, 'PR-001', '7', 1, 1, 'Dichoso Jose', '38', '12', '13', '1440', 'SSS Employer', 'sm', '1', 1, '2023-03-01', '2023-03-15', '', '', '', '', '', '', '2023-03-24 08:24:38', '2023-03-24 08:24:38'),
-(2068, 'PR-001', '7', 1, 1, 'Reyes Patrick', '37', '12', '13', '1202.5', 'SSS Employer', 'sm', '1', 1, '2023-03-01', '2023-03-15', '', '', '', '', '', '', '2023-03-24 08:24:38', '2023-03-24 08:24:38'),
-(2069, 'PR-001', '7', 1, 1, 'Dichoso Jose', '38', '12', '15', '50', 'Pagibig Employer', 'sm', '1', 1, '2023-03-01', '2023-03-15', '', '', '', '', '', '', '2023-03-24 08:24:38', '2023-03-24 08:24:38'),
-(2070, 'PR-001', '7', 1, 1, 'Reyes Patrick', '37', '12', '15', '50', 'Pagibig Employer', 'sm', '1', 1, '2023-03-01', '2023-03-15', '', '', '', '', '', '', '2023-03-24 08:24:38', '2023-03-24 08:24:38'),
-(2071, 'PR-001', '7', 1, 1, 'Dichoso Jose', '38', '12', '14', '300', 'Philhealth Employer', 'sm', '1', 1, '2023-03-01', '2023-03-15', '', '', '', '', '', '', '2023-03-24 08:24:38', '2023-03-24 08:24:38'),
-(2072, 'PR-001', '7', 1, 1, 'Reyes Patrick', '37', '12', '14', '250', 'Philhealth Employer', 'sm', '1', 1, '2023-03-01', '2023-03-15', '', '', '', '', '', '', '2023-03-24 08:24:38', '2023-03-24 08:24:38');
+INSERT INTO `prv2_earnings` (`earnings_aid`, `earnings_payroll_id`, `earnings_payroll_type_id`, `earnings_is_paid`, `earnings_num_pay`, `earnings_employee`, `earnings_employee_id`, `earnings_paytype_id`, `earnings_payitem_id`, `earnings_amount`, `earnings_details`, `earnings_frequency`, `earnings_is_installment`, `earnings_installment_extra`, `earnings_number_of_installment`, `earnings_start_pay_date`, `earnings_end_pay_date`, `earnings_hris_date`, `earnings_holidays_rate`, `earnings_leave_hrs`, `earnings_hrs`, `earnings_rate`, `earnings_hris_undertime_out`, `earnings_created`, `earnings_datetime`) VALUES
+(136, 'PR-001', '6', 1, 1, 'Lumabas Cyrene', '3', '1', '20', '2000.00', 'test two (200%) Wed Apr 12 2023 ', 'sm', '3', 0, 1, '2023-04-01', '2023-04-15', '2023-04-12', '', '', '8', '200', '', '2023-04-13 08:44:13', '2023-04-13 08:44:13'),
+(137, 'PR-001', '6', 1, 1, 'Merin Marc Ryan', '1', '1', '20', '3000.00', 'test two (200%) Wed Apr 12 2023 ', 'sm', '3', 0, 1, '2023-04-01', '2023-04-15', '2023-04-12', '', '', '8', '200', '', '2023-04-13 08:44:13', '2023-04-13 08:44:13'),
+(138, 'PR-001', '6', 1, 1, 'Lumabas Cyrene', '3', '12', '13', '50', 'SSS Employer', 'sm', '1', 0, 1, '2023-04-01', '2023-04-15', '', '', '', '', '', '', '2023-04-13 08:44:13', '2023-04-13 08:44:13'),
+(139, 'PR-001', '6', 1, 1, 'Merin Marc Ryan', '1', '12', '13', '50', 'SSS Employer', 'sm', '1', 0, 1, '2023-04-01', '2023-04-15', '', '', '', '', '', '', '2023-04-13 08:44:13', '2023-04-13 08:44:13'),
+(140, 'PR-001', '6', 1, 1, 'Lumabas Cyrene', '3', '12', '15', '50', 'Pagibig Employer', 'sm', '1', 0, 1, '2023-04-01', '2023-04-15', '', '', '', '', '', '', '2023-04-13 08:44:13', '2023-04-13 08:44:13'),
+(141, 'PR-001', '6', 1, 1, 'Merin Marc Ryan', '1', '12', '15', '50', 'Pagibig Employer', 'sm', '1', 0, 1, '2023-04-01', '2023-04-15', '', '', '', '', '', '', '2023-04-13 08:44:13', '2023-04-13 08:44:13'),
+(142, 'PR-001', '6', 1, 1, 'Lumabas Cyrene', '3', '12', '14', '200', 'Philhealth Employer', 'sm', '1', 0, 1, '2023-04-01', '2023-04-15', '', '', '', '', '', '', '2023-04-13 08:44:13', '2023-04-13 08:44:13'),
+(143, 'PR-001', '6', 1, 1, 'Merin Marc Ryan', '1', '12', '14', '300', 'Philhealth Employer', 'sm', '1', 0, 1, '2023-04-01', '2023-04-15', '', '', '', '', '', '', '2023-04-13 08:44:13', '2023-04-13 08:44:13');
 
 --
 -- Indexes for dumped tables
@@ -88,7 +87,7 @@ ALTER TABLE `prv2_earnings`
 -- AUTO_INCREMENT for table `prv2_earnings`
 --
 ALTER TABLE `prv2_earnings`
-  MODIFY `earnings_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2073;
+  MODIFY `earnings_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=144;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

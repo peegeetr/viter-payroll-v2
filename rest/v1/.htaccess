@@ -23,6 +23,8 @@ RewriteRule ^roles/active/([0-9]+)$ controllers/settings/user/role/active.php?ro
 RewriteRule ^paytype$ controllers/pay-type/paytype.php [L]
 RewriteRule ^paytype/([0-9]+)$ controllers/pay-type/paytype.php?paytypeid=$1 [L]
 RewriteRule ^paytype/active/([0-9]+)$ controllers/pay-type/active.php?paytypeid=$1 [L]
+RewriteRule ^paytype/report/filter/([0-9]+)/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)$ controllers/pay-type/report-filter.php?payrolltypeid=$1&category=$2&startDate=$3&endDate=$4 [L]
+RewriteRule ^paytype/report/page/([0-9]+)$ controllers/pay-type/report-page.php?start=$1 [L]
    
 #payroll
 RewriteRule ^payroll$ controllers/payroll/payroll.php [L]
@@ -57,7 +59,7 @@ RewriteRule ^earnings/search/([A-Za-z0-9-]+)$ controllers/earnings/search.php?se
 RewriteRule ^earnings/validateId/([A-Za-z0-9-]+)$ controllers/earnings/validateId.php?prid=$1 [L]
 RewriteRule ^earnings/summary/([0-9]+)$ controllers/earnings/summary.php?start=$1 [L]  
 RewriteRule ^earnings/filter/([0-9]+)/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)$ controllers/earnings/filter.php?paytypeId=$1&startDate=$2&endDate=$3 [L]  
-RewriteRule ^earnings/summary/view/([0-9]+)/([0-9]+)$ controllers/earnings/summary.php?start=$1&payItemId=$2 [L]    
+RewriteRule ^earnings/summary/view/([0-9]+)/([A-Za-z0-9-]+)/([0-9]+)$ controllers/earnings/summary-paytype-id.php?start=$1&payrollId=$2&paytypeId=$3 [L]    
 
 #deductions
 RewriteRule ^deductions$ controllers/deductions/deductions.php [L]
@@ -65,6 +67,7 @@ RewriteRule ^deductions/([0-9]+)$ controllers/deductions/deductions.php?deductio
 RewriteRule ^deductions/search/([A-Za-z0-9-]+)$ controllers/deductions/search.php?search=$1 [L]
 RewriteRule ^deductions/validateId/([A-Za-z0-9-]+)$ controllers/deductions/validateId.php?prid=$1 [L]
 RewriteRule ^deductions/page/([0-9]+)$ controllers/deductions/page.php?start=$1 [L]
+RewriteRule ^deductions/summary/view/([0-9]+)/([A-Za-z0-9-]+)/([0-9]+)$ controllers/deductions/summary-paytype-id.php?start=$1&payrollId=$2&paytypeId=$3 [L]    
   
 #payitem
 RewriteRule ^payitem$ controllers/pay-type/pay-item/payitem.php [L]
@@ -84,7 +87,7 @@ RewriteRule ^rates/([0-9]+)$ controllers/settings/rates/rates.php?ratesid=$1 [L]
 #SETTINGS PAYROLL TYPE
 RewriteRule ^payroll-type$ controllers/settings/payroll-type/payroll-type.php [L]
 RewriteRule ^payroll-type/([0-9]+)$ controllers/settings/payroll-type/payroll-type.php?payrolltypeid=$1 [L]
-RewriteRule ^payroll-type/active/([0-9]+)$ controllers/settings/payroll-type/active.php?payrolltypeid=$1 [L]
+RewriteRule ^payroll-type/active/([0-9]+)$ controllers/settings/payroll-type/active.php?payrolltypeid=$1 [L] 
 
 #SETTINGS SEMI BRACKET
 RewriteRule ^tax/semi-monthly$ controllers/settings/tax-bracket/semi-monthly/semi-monthly.php [L]

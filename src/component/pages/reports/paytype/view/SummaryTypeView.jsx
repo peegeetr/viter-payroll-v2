@@ -18,16 +18,32 @@ import Navigation from "../../../../partials/Navigation";
 import NoData from "../../../../partials/NoData";
 import ServerError from "../../../../partials/ServerError";
 import TableSpinner from "../../../../partials/spinners/TableSpinner";
+import useQueryData from "../../../../custom-hooks/useQueryData";
 
 const SummaryTypeView = () => {
   const { store, dispatch } = React.useContext(StoreContext);
   const link = getUserType(store.credentials.data.role_is_developer === 1);
+  const payrollId = getUrlParam().get("payrollId");
   const paytypeId = getUrlParam().get("paytypeId");
   const [page, setPage] = React.useState(1);
   let counter = 1;
   const { ref, inView } = useInView();
 
-  // use if with loadmore button and search bar
+  // use if not loadmore button undertime
+  const {  
+    data: paycategory,
+  } = useQueryData(
+    `${devApiUrl}/v1/paytype/${paytypeId}`, // endpoint
+    "get", // method
+    "paycategory" // key
+  );
+let category=paycategory?.data.length > 0 ?`${paycategory?.data[0].paytype_category}`:"0";
+
+let payItem =
+paycategory?.data.length > 0 ? `${paycategory?.data[0].payitem_name}` : "";
+let payType =
+paycategory?.data.length > 0 ? `${paycategory?.data[0].paytype_name}` : "";
+  // use if with loadmore button and search bar 
   const {
     data: result,
     error,
@@ -37,11 +53,13 @@ const SummaryTypeView = () => {
     isFetchingNextPage,
     status,
   } = useInfiniteQuery({
-    queryKey: ["earnings-paytype"],
+    queryKey: [`${category}-paytype`],
     queryFn: async ({ pageParam = 1 }) =>
       await queryDataInfinite(
         ``, // search endpoint
-        `${devApiUrl}/v1/earnings/summary/view/${pageParam}/${paytypeId}` // list endpoint
+        category === "earnings"
+        ? `${devApiUrl}/v1/earnings/summary/view/${pageParam}/${payrollId}/${paytypeId}` // list endpoint
+        : `${devApiUrl}/v1/deductions/summary/view/${pageParam}/${payrollId}/${paytypeId}` // list endpoint
       ),
     getNextPageParam: (lastPage) => {
       if (lastPage.page < lastPage.total) {
@@ -59,21 +77,16 @@ const SummaryTypeView = () => {
       fetchNextPage();
     }
   }, [inView]);
-  let payItem =
-    result?.pages.length > 0 ? `${result?.pages[0].data[0].payitem_name}` : "";
-  let payType =
-    result?.pages.length > 0 ? `${result?.pages[0].data[0].paytype_name}` : "";
-  // let payPeriod =
-  //   result?.pages.length > 0
-  //     ? result?.pages[0].data[0].earnings_start_pay_date === "n/a"
-  //       ? formatDate(result?.pages[0].data[0].earnings_created)
-  //       : `
-  //       ${getPayPeriod(
-  //         result?.pages[0].data[0].earnings_start_pay_date,
-  //         result?.pages[0].data[0].earnings_end_pay_date
-  //       )}`
-  //     : "no";
-  console.log(result);
+  let payPeriodEarinings = 
+    result?.pages[0].data.length > 0 ? `${getPayPeriod(
+      result?.pages[0].data[0].earnings_start_pay_date,
+      result?.pages[0].data[0].earnings_end_pay_date
+    )}` : "";
+  let payPeriodDeductions = 
+    result?.pages[0].data.length > 0 ? `${getPayPeriod(
+      result?.pages[0].data[0].deduction_start_pay_date,
+      result?.pages[0].data[0].deduction_end_pay_date
+    )}` : ""; 
   return (
     <>
       <Header />
@@ -88,6 +101,10 @@ const SummaryTypeView = () => {
           <p className="m-0">
             Pay Item: <span className="text-black">{payItem}</span>
           </p>
+          <p className="m-0">
+            Pay Period: <span className="text-black">{
+        category === "earnings"?payPeriodEarinings:payPeriodDeductions}</span>
+          </p>
         </div>
         <div className="relative overflow-x-auto z-0 w-full lg:w-[35rem] ">
           <div className="w-full pt-5 pb-20">
@@ -95,8 +112,7 @@ const SummaryTypeView = () => {
               <thead>
                 <tr>
                   <th>#</th>
-                  <th>Employee</th>
-                  <th>Pay Period</th>
+                  <th>Employee</th> 
                   <th className="text-right">Amount</th>
                 </tr>
               </thead>
@@ -123,15 +139,11 @@ const SummaryTypeView = () => {
                     {page.data.map((item, key) => (
                       <tr key={key}>
                         <td>{counter++}.</td>
-                        <td>{item.earnings_employee}</td>
-                        <td>
-                          {getPayPeriod(
-                            item.earnings_start_pay_date,
-                            item.earnings_end_pay_date
-                          )}
-                        </td>
+                        <td>{item.paytype_category === "earnings"?`${item.earnings_employee}`:`${item.deduction_employee}`}</td>
+                        
                         <td className="w-[15rem] text-right">
-                          {Number(item.earnings_amount).toFixed(2)}
+                          {item.paytype_category === "earnings"?`${Number(item.earnings_amount).toFixed(2)}`:`${Number(item.deduction_amount)}`}
+                          
                         </td>
                       </tr>
                     ))}

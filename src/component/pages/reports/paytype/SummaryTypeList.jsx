@@ -21,15 +21,18 @@ import NoData from "../../../partials/NoData";
 import ServerError from "../../../partials/ServerError";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 import TableSpinner from "../../../partials/spinners/TableSpinner";
+import { getPaytype } from "./functions-paytype";
 
 const SummaryTypeList = () => {
   const { store, dispatch } = React.useContext(StoreContext);
   const link = getUserType(store.credentials.data.role_is_developer === 1);
   const [isFilter, setFilter] = React.useState(false);
   const [isSubmit, setSubmit] = React.useState(false);
+  const [category, setCategory] = React.useState("");
   const [paytype, setPaytype] = React.useState("");
   const [startDate, setStartDate] = React.useState("");
   const [endDate, setEndDate] = React.useState("");
+  const [payPeriod, setPayPeriod] = React.useState("");
 
   const [page, setPage] = React.useState(1);
   let counter = 1;
@@ -47,8 +50,8 @@ const SummaryTypeList = () => {
     queryKey: ["earnings-summary", isSubmit],
     queryFn: async ({ pageParam = 1 }) =>
       await queryDataInfinite(
-        `${devApiUrl}/v1/earnings/filter/${paytype}/${startDate}/${endDate}`, // search endpoint
-        `${devApiUrl}/v1/earnings/summary/${pageParam}`, // list endpoint
+        `${devApiUrl}/v1/paytype/report/filter/${paytype}/${category}/${startDate}/${endDate}`, // search endpoint
+        `${devApiUrl}/v1/paytype/0`, // list endpoint
         isFilter // search boolean
       ),
     getNextPageParam: (lastPage) => {
@@ -68,18 +71,23 @@ const SummaryTypeList = () => {
     }
   }, [inView]);
 
-  console.log(result);
   // use if not loadmore button undertime
   const { data: payType } = useQueryData(
     `${devApiUrl}/v1/paytype`, // endpoint
     "get", // method
     "payType" // key
   );
+
+  const handleCategory = async (e) => {
+    // get employee id
+    setCategory(e.target.options[e.target.selectedIndex].id);
+  };
   const initVal = {
     paytype_aid: "",
     start_date: "",
     end_date: "",
   };
+
 
   const yupSchema = Yup.object({
     paytype_aid: Yup.string().required("Required"),
@@ -100,6 +108,8 @@ const SummaryTypeList = () => {
             setStartDate(values.start_date);
             setEndDate(values.end_date);
 
+            setPayPeriod(category);
+
             // // refetch data of query
             // refetch();
           }}
@@ -116,13 +126,18 @@ const SummaryTypeList = () => {
                     <InputSelect
                       label="PayType"
                       name="paytype_aid"
+                      onChange={handleCategory}
                       type="text"
                       disabled={isFetching}
                     >
                       <option value="" hidden></option>
                       {payType?.data.map((paytype, key) => {
                         return (
-                          <option key={key} value={paytype.paytype_aid}>
+                          <option
+                            key={key}
+                            value={paytype.paytype_aid}
+                            id={paytype.paytype_category}
+                          >
                             {paytype.paytype_name}
                           </option>
                         );
@@ -173,13 +188,14 @@ const SummaryTypeList = () => {
             <th>#</th>
             <th>Pay Item</th>
             <th>Pay Type</th>
-            {/* <th>Pay Period</th> */}
+            <th>Employee count</th>
+            <th>Pay Period</th>
             <th className="text-right">Total</th>
           </tr>
         </thead>
         <tbody>
           {(status === "loading" || result?.pages[0].data.length === 0) && (
-            <tr className="text-center ">
+            <tr className="text-center relative">
               <td colSpan="100%" className="p-10">
                 {status === "loading" && <TableSpinner />}
                 <NoData />
@@ -200,20 +216,27 @@ const SummaryTypeList = () => {
                   <td>{counter++}.</td>
                   <td className="w-[15rem]">{item.payitem_name}</td>
                   <td className="w-[15rem]">{item.paytype_name}</td>
-                  {/* <td className="w-[15rem]">
-                    {item.earnings_start_pay_date === "n/a"
-                      ? formatDate(item.earnings_created)
-                      : `
-                  ${getPayPeriod(
-                    item.earnings_start_pay_date,
-                    item.earnings_end_pay_date
-                  )}`}
-                  </td> */}
+                  <td className="w-[15rem]">{item.count}</td>
+                  <td className="w-[15rem]">
+                    {item.paytype_category === "earnings"
+                      ? getPayPeriod(
+                          item.earnings_start_pay_date,
+                          item.earnings_end_pay_date
+                        )
+                      : item.paytype_category === "deductions"
+                      ? getPayPeriod(
+                          item.deduction_start_pay_date,
+                          item.deduction_end_pay_date
+                        )
+                      : ""}
+                  </td>
                   <td className="text-right text-primary underline">
                     <Link
                       className="tooltip-action-table"
                       data-tooltip="View"
-                      to={`${link}/reports/paytype/view?paytypeId=${item.payitem_aid}`}
+                      to={item.paytype_category === "earnings"
+                      ?`${link}/reports/paytype/view?payrollId=${item.earnings_payroll_id}&paytypeId=${item.paytype_aid}`
+                      :`${link}/reports/paytype/view?payrollId=${item.deduction_payroll_id}&paytypeId=${item.paytype_aid}`}
                     >
                       0.00
                     </Link>

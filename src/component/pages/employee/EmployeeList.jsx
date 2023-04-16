@@ -7,7 +7,7 @@ import { StoreContext } from "../../../store/StoreContext";
 import {
   getUserType,
   hrisDevApiUrl,
-  hrisdevBaseUrl,
+  hrisDevBaseImgUrl,
 } from "../../helpers/functions-general";
 import { queryDataInfinite } from "../../helpers/queryDataInfinite";
 import LoadmoreRq from "../../partials/LoadmoreRq";
@@ -133,7 +133,7 @@ const EmployeeList = () => {
                       <td className="hidden sm:block">
                         {item.employee_photo ? (
                           <img
-                            src={hrisdevBaseUrl + "/" + item.employee_photo}
+                            src={hrisDevBaseImgUrl + "/" + item.employee_photo}
                             alt="employee photo"
                             className="rounded-full min-w-[3rem] min-h-[3rem] max-w-[3rem] max-h-[3rem] object-cover object-[50%,50%]"
                           />

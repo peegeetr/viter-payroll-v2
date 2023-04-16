@@ -38,7 +38,8 @@ const ModalEditJobDetails = ({
       queryData(
         `${hrisDevApiUrl}/v1/employees/employment/${itemEdit.employee_aid}`,
         "put",
-        values
+        values,
+        false // hris key
       ),
     onSuccess: (data) => {
       // Invalidate and refetch

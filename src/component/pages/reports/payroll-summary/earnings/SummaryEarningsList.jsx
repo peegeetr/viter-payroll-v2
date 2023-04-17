@@ -23,6 +23,7 @@ import TableSpinner from "../../../../partials/spinners/TableSpinner";
 import { getErningsRate } from "../function-report-summary";
 import ModalViewDetails from "./ModalViewDetails";
 import { setIsAdd } from "../../../../../store/StoreAction";
+import { employeeRate } from "../../../../helpers/payroll-formula";
 
 const SummaryEarningsList = () => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -98,6 +99,37 @@ const SummaryEarningsList = () => {
     payStart_date: Yup.string().required("Required"),
     payEnd_date: Yup.string().required("Required"),
   });
+
+  const getRegularWorkHrs = (item) => {
+    const totalHrs = Number(
+      getWorkingDays(
+        new Date(item.payroll_start_date),
+        new Date(item.payroll_end_date)
+      ) * 8
+    );
+    const absences = Number(item.payroll_list_absences_hrs);
+    return totalHrs - absences;
+  };
+
+  const getTotalRegWage = (item) => {
+    const total =
+      getRegularWorkHrs(item) * getEmployeeRate(item) +
+      Number(item.payroll_list_adjustment_pay);
+    return numberWithCommas(total.toFixed(2));
+  };
+
+  const getEmployeeRate = (item) => {
+    return Number(
+      employeeRate(
+        item.payroll_list_employee_salary,
+        getWorkingDays(
+          new Date(item.payroll_start_date),
+          new Date(item.payroll_end_date)
+        )
+      ).hourly
+    ).toFixed(4);
+  };
+
   return (
     <>
       <div className="relative overflow-x-auto z-0 w-full lg:w-[35rem] ">
@@ -186,21 +218,21 @@ const SummaryEarningsList = () => {
                 <th className="table-border  min-w-[11rem]" rowSpan="2">
                   Regular Work Hours
                 </th>
-                <th className="table-border min-w-[5rem]" rowSpan="2">
+                <th className="table-border min-w-[6rem]" rowSpan="2">
                   Rate
                 </th>
                 <th className="table-border  min-w-[9rem]" rowSpan="2">
                   Total Reg Wage
                 </th>
-                <th className="table-border-center " colSpan="3">
+                <th className="table-border-center min-w-[12rem]" colSpan="3">
                   Leave
                 </th>
                 <th className="table-border-center ">Overtime</th>
                 <th className="table-border-center ">Holiday</th>
-                <th className="table-border-center min-w-[15rem]" colSpan="3">
+                <th className="table-border-center min-w-[12rem]" colSpan="3">
                   Night Differential
                 </th>
-                <th className="min-w-[5rem]" rowSpan="2">
+                <th className="min-w-[7rem]" rowSpan="2">
                   Gross Pay
                 </th>
               </tr>
@@ -254,27 +286,39 @@ const SummaryEarningsList = () => {
                         item.payroll_end_date
                       )}`}</td>
                       <td className="pr-6">
-                        {numberWithCommas(item.payroll_list_basic_pay)}
+                        {numberWithCommas(
+                          (Number(item.payroll_list_basic_pay) * 2).toFixed(2)
+                        )}
                       </td>
-                      <td className="pr-6">{numberWithCommas(0)}</td>
-                      <td className="pr-6">{numberWithCommas(0)}</td>
-                      <td className="pr-6">
-                        {getWorkingDays(
-                          new Date(item.payroll_start_date),
-                          new Date(item.payroll_end_date)
-                        ) * 8}
+                      <td className="text-right pr-4">
+                        {numberWithCommas(item.payroll_list_adjustment_pay)}
                       </td>
-                      <td className="pr-6">{numberWithCommas(0)}</td>
-                      <td className="pr-6">{numberWithCommas(10)}</td>
-                      <td className="pr-6">
+                      <td className="text-right pr-4">
+                        {numberWithCommas(
+                          (
+                            Number(item.payroll_list_basic_pay) * 2 +
+                            Number(item.payroll_list_adjustment_pay)
+                          ).toFixed(2)
+                        )}
+                      </td>
+                      <td className="text-center pr-4">
+                        {getRegularWorkHrs(item)}
+                      </td>
+                      <td className="text-right pr-4">
+                        {getEmployeeRate(item)}
+                      </td>
+                      <td className="text-right pr-4">
+                        {getTotalRegWage(item)}
+                      </td>
+                      <td className="text-center">
                         {/* leave hrs */}
                         {numberWithCommas(item.payroll_list_leave_hrs)}
                       </td>
-                      <td className="pr-6">
+                      <td className="text-center">
                         {/* leave rate */}
-                        {numberWithCommas(item.payroll_list_leave_rate)}
+                        100%
                       </td>
-                      <td className="pr-6">
+                      <td className="text-right pr-4">
                         {/* leave pay */}
                         {numberWithCommas(item.payroll_list_leave_pay)}
                       </td>
@@ -292,7 +336,7 @@ const SummaryEarningsList = () => {
                           </span>
                         </td>
                       ) : (
-                        <td className="pr-6">
+                        <td className="pr-4">
                           {numberWithCommas(item.payroll_list_overtime_pay)}
                         </td>
                       )}
@@ -300,7 +344,7 @@ const SummaryEarningsList = () => {
                       {/* total holiday amount */}
                       {numberWithCommas(item.payroll_list_holiday) !==
                       "0.00" ? (
-                        <td className="pr-6 text-primary underline">
+                        <td className="pr-4 text-primary underline">
                           <span
                             className="cursor-pointer tooltip-action-table !p-0"
                             data-tooltip="View Deatils"
@@ -310,27 +354,28 @@ const SummaryEarningsList = () => {
                           </span>
                         </td>
                       ) : (
-                        <td className="pr-6">
+                        <td className="pr-4">
                           {numberWithCommas(item.payroll_list_holiday)}
                         </td>
                       )}
-                      <td className="pr-6">
+                      <td className="text-center">
                         {/* ND hrs */}
                         {numberWithCommas(item.payroll_list_nd_hrs)}
                       </td>
                       {/* ND rate */}
-                      <td className="pr-6">
-                        {item.payroll_list_night_diff_per_day === 0
+                      <td className="text-center">
+                        {/* {item.payroll_list_night_diff_per_day === 0
                           ? "0"
-                          : "10%"}
+                          : "10%"} */}
+                        10%
                       </td>
-                      <td className="pr-6">
+                      <td className="pr-4">
                         {/* ND amount */}
                         {numberWithCommas(
                           item.payroll_list_night_shift_differential
                         )}
                       </td>
-                      <td className="pr-6">
+                      <td className="text-right pr-4">
                         {/* gross pay */}
                         {numberWithCommas(item.payroll_list_gross)}
                       </td>

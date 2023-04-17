@@ -328,12 +328,7 @@ export const runPayroll = (
       totalSSSLoan;
 
     netPay = grossAmount + totalBenefits - deductionAmount;
-    // console.log(
-    //   emp.payroll_list_employee_name,
-    //   "reg-" + holidayAmount.regularAmount,
-    //   "Gross-" + grossAmount,
-    //   "HD-" + totalHolidayAmount
-    // );
+    // console.log(totalAdjustmentAmount);
     // data to send to server
     payrollList.push({
       payroll_list_employee_id: emp.payroll_list_employee_id,

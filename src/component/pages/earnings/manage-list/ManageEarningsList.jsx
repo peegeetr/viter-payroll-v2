@@ -46,8 +46,7 @@ const ManageEarningsList = () => {
       await queryDataInfinite(
         `${devApiUrl}/v1/earnings/search/${search.current.value}`, // search endpoint
         `${devApiUrl}/v1/earnings/page/${pageParam}`, // list endpoint
-        store.isSearch, // search boolean
-        false // devKey boolean
+        store.isSearch // search boolean
       ),
     getNextPageParam: (lastPage) => {
       if (lastPage.page < lastPage.total) {
@@ -72,7 +71,7 @@ const ManageEarningsList = () => {
     setData(item);
     setDel(true);
   };
-
+  console.log(result);
   return (
     <>
       <SearchBarRq

@@ -46,7 +46,8 @@ const ManageEarningsList = () => {
       await queryDataInfinite(
         `${devApiUrl}/v1/earnings/search/${search.current.value}`, // search endpoint
         `${devApiUrl}/v1/earnings/page/${pageParam}`, // list endpoint
-        store.isSearch // search boolean
+        store.isSearch, // search boolean
+        false // devKey boolean
       ),
     getNextPageParam: (lastPage) => {
       if (lastPage.page < lastPage.total) {

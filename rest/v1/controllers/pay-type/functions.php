@@ -1,6 +1,4 @@
-
 <?php
-
 // Read limit all paytype
 function checkReadAllPayTypeLimit($object)
 {

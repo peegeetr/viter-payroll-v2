@@ -160,6 +160,7 @@ export const validateDataIsNotEmpty = (
   undertimeHrisData,
   dispatch
 ) => {
+  console.log(absencesHrisData);
   let val = false;
   // leaveId = 19 is leave
   // overtimeId = 18 is OT

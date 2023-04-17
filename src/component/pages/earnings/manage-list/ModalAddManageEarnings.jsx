@@ -103,31 +103,41 @@ const ModalAddManageEarnings = ({
   const { data: undertime } = useQueryData(
     `${hrisDevApiUrl}/v1/undertime/pay-undertime/${payroll_start_date}/${payroll_end_date}`, // endpoint
     "get", // method
-    "undertime" // key
+    "undertime", // key
+    {}, // formdata
+    null, // id key
+    false // devKey boolean
   );
 
   // use if not loadmore button payLeave
   const { data: payLeave } = useQueryData(
     `${hrisDevApiUrl}/v1/leaves/period/approved/${payroll_start_date}/${payroll_end_date}`, // endpoint
     "get", // method
-    "payLeave" // key
+    "payLeave", // key
+    {}, // formdata
+    null, // id key
+    false // devKey boolean
   );
 
   // use if not loadmore button absences
   const { data: absences } = useQueryData(
     `${hrisDevApiUrl}/v1/leaves/absences/approved/${payroll_start_date}/${payroll_end_date}`, // endpoint
     "get", // method
-    "absences" // key
+    "absences", // key
+    {}, // formdata
+    null, // id key
+    false // devKey boolean
   );
 
   // use if not loadmore button overtime
   const { data: overtime } = useQueryData(
     `${hrisDevApiUrl}/v1/tasks/overtime/approved/${payroll_start_date}/${payroll_end_date}`, // endpoint
     "get", // method
-    "overtime" // key
+    "overtime", // key
+    {}, // formdata
+    null, // id key
+    false // devKey boolean
   );
-
-  console.log("overtime", overtime);
 
   const handlePayType = async (e, props) => {
     let paytypeid = e.target.value;

@@ -128,8 +128,12 @@ const ModalAddHolidays = ({ item }) => {
                       >
                         <optgroup label="Type">
                           <option value="" disabled hidden></option>
-                          <option value="special">Special Holiday</option>
-                          <option value="regular">Regular Holiday</option>
+                          <option value="special">
+                            Special Holiday (130%)
+                          </option>
+                          <option value="regular">
+                            Regular Holiday (200%)
+                          </option>
                         </optgroup>
                       </InputSelect>
                     </div>

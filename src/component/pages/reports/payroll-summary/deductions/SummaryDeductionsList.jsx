@@ -30,6 +30,7 @@ const SummaryDeductionsList = () => {
   const [page, setPage] = React.useState(1);
   let counter = 1;
   const { ref, inView } = useInView();
+  let totalEe = 0;
 
   // use if with loadmore button and search bar
   const {
@@ -57,6 +58,8 @@ const SummaryDeductionsList = () => {
     refetchOnWindowFocus: false,
     cacheTime: 1000,
   });
+
+  console.log(result);
 
   React.useEffect(() => {
     if (inView) {
@@ -177,7 +180,7 @@ const SummaryDeductionsList = () => {
                 <th className=" table-border min-w-[10rem]" rowSpan="2">
                   Total Deductions
                 </th>
-                <th className="min-w-[5rem] table-border" rowSpan="2">
+                <th className="min-w-[7rem] table-border" rowSpan="2">
                   Net Pay
                 </th>
               </tr>
@@ -210,56 +213,73 @@ const SummaryDeductionsList = () => {
               )}
               {result?.pages.map((page, key) => (
                 <React.Fragment key={key}>
-                  {page.data.map((item, key) => (
-                    <tr key={key} className="text-right">
-                      <td className="text-center">{counter++}.</td>
-
-                      <td className="text-left">
-                        {item.payroll_list_employee_name}
-                      </td>
-                      <td className="text-left">
-                        {item.payroll_list_employee_department}
-                      </td>
-                      <td className="text-center">{`${getPayPeriod(
-                        result?.pages[0].data[0].payroll_start_date,
-                        result?.pages[0].data[0].payroll_end_date
-                      )}`}</td>
-                      <td className="px-6">
-                        {numberWithCommas(item.payroll_list_sss_er)}
-                      </td>
-                      <td className="px-6">
-                        {numberWithCommas(item.payroll_list_sss_ee)}
-                      </td>
-                      <td className="px-6">
-                        {numberWithCommas(item.payroll_list_philhealth_er)}
-                      </td>
-                      <td className="px-6">
-                        {numberWithCommas(item.payroll_list_philhealth_ee)}
-                      </td>
-                      <td className="px-6">
-                        {numberWithCommas(item.payroll_list_pagibig_er)}
-                      </td>
-                      <td className="px-6">
-                        {numberWithCommas(item.payroll_list_pagibig_ee)}
-                      </td>
-                      <td className="px-6">
-                        {numberWithCommas(item.payroll_list_sss_loan)}
-                      </td>
-                      <td className="px-6">
-                        {numberWithCommas(item.payroll_list_tax)}
-                      </td>
-                      <td className="px-6">
-                        {numberWithCommas(item.payroll_list_pagibig_mp2)}
-                      </td>
-                      <td className="px-6">
-                        {numberWithCommas(item.payroll_list_other_deduction)}
-                      </td>
-                      <td className="px-6">{numberWithCommas(0.0)}</td>
-                      <td className="px-6">{numberWithCommas(0.0)}</td>
-                      <td className="px-6">{numberWithCommas(0.0)}</td>
-                      <td className="px-6">{numberWithCommas(0.0)}</td>
-                    </tr>
-                  ))}
+                  {page.data.map((item, key) => {
+                    totalEe =
+                      Number(item.payroll_list_pagibig_ee) +
+                      Number(item.payroll_list_philhealth_ee) +
+                      Number(item.payroll_list_sss_ee);
+                    return (
+                      <tr key={key} className="text-right">
+                        <td className="text-center">{counter++}.</td>
+                        <td className="text-left">
+                          {item.payroll_list_employee_name}
+                        </td>
+                        <td className="text-left">
+                          {item.payroll_list_employee_department}
+                        </td>
+                        <td className="text-center">{`${getPayPeriod(
+                          item.payroll_start_date,
+                          item.payroll_end_date
+                        )}`}</td>
+                        <td className="px-6">
+                          {numberWithCommas(item.payroll_list_sss_er)}
+                        </td>
+                        <td className="px-6">
+                          {numberWithCommas(item.payroll_list_sss_ee)}
+                        </td>
+                        <td className="px-6">
+                          {numberWithCommas(item.payroll_list_philhealth_er)}
+                        </td>
+                        <td className="px-6">
+                          {numberWithCommas(item.payroll_list_philhealth_ee)}
+                        </td>
+                        <td className="px-6">
+                          {numberWithCommas(item.payroll_list_pagibig_er)}
+                        </td>
+                        <td className="px-6">
+                          {numberWithCommas(item.payroll_list_pagibig_ee)}
+                        </td>
+                        <td className="px-6">
+                          {numberWithCommas(item.payroll_list_sss_loan)}
+                        </td>
+                        <td className="px-6">
+                          {numberWithCommas(item.payroll_list_pagibig_loan)}
+                        </td>
+                        <td className="px-6">
+                          {numberWithCommas(item.payroll_list_tax)}
+                        </td>
+                        <td className="px-6">
+                          {numberWithCommas(item.payroll_list_pagibig_mp2)}
+                        </td>
+                        <td className="px-6">
+                          {/* other deductions */}
+                          {numberWithCommas(item.payroll_list_other_deduction)}
+                        </td>
+                        <td className="px-6">
+                          {/* total ee */}
+                          {numberWithCommas(totalEe.toFixed(2))}
+                        </td>
+                        <td className="px-6">
+                          {/* total deduction */}
+                          {numberWithCommas(item.payroll_list_deduction)}
+                        </td>
+                        <td className="px-6">
+                          {/* net pay */}
+                          {numberWithCommas(item.payroll_list_net_pay)}
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </React.Fragment>
               ))}
             </tbody>

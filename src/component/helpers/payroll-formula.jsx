@@ -54,7 +54,6 @@ export const employeeRate = (salary, workingDays) => {
   list.daily = dayRate.toFixed(2);
   list.hourly = hourRate.toFixed(4);
   list.period = periodSalary.toFixed(2);
-  console.log(list.hourly);
   return list;
 };
 
@@ -328,6 +327,7 @@ export const payComputeBonus = (emp, earning) => {
 
 // compute Pay Employee Referral Bonus
 export const payComputeEmployeeReferralBonus = (emp, earning) => {
+  console.log(earning);
   let finalAmount = 0;
   let eRBonusList = [];
   if (earning.earnings_payitem_id === employeeReferralBonusId) {
@@ -341,7 +341,7 @@ export const payComputeEmployeeReferralBonus = (emp, earning) => {
         earnings_paytype_id: otherBenefitsEarningsId,
         earnings_payitem_id: employeeReferralBonusId,
         earnings_amount: earning.earnings_amount,
-        earnings_details: earning.earnings_details,
+        earnings_details: `${earning.payitem_name} - ${earning.earnings_details}`,
         earnings_frequency: isSemiMonthly,
         earnings_is_installment: onetimeNumber,
         earnings_number_of_installment: onetimeNumber,

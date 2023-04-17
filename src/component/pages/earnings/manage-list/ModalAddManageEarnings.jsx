@@ -84,10 +84,11 @@ const ModalAddManageEarnings = ({
       console.log(data);
       // show success box
       if (data.success) {
-        const msg =
-          data.added > 0
-            ? `Successfuly added (${data.added}).`
-            : "Records already added.";
+        const msg = `Successfuly added.`;
+        // const msg =
+        // data.added > 0
+        //   ? `Successfuly added (${data.added}).`
+        //   : "Records already added.";
         dispatch(setSuccess(true));
         dispatch(setMessage(msg));
       }

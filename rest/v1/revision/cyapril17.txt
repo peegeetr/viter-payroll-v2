@@ -9,7 +9,7 @@
     - deductions/Deductions.php
   
 *htaccess 
-    - 
+    - #payroll list paid
 
 *db tables 
     -  

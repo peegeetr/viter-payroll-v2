@@ -227,7 +227,7 @@ const SummaryTypeList = () => {
                         )
                       : ""}
                   </td>
-                  <td className="text-right text-primary underline">
+                  <td className="text-right text-primary ">
                     <Link
                       className="tooltip-action-table"
                       data-tooltip="View"

@@ -143,6 +143,7 @@ const ModalAddManageEarnings = ({
   console.log("payLeave", payLeave);
   console.log("overtime", overtime);
   console.log("absences", absences);
+  console.log("employee", employee);
 
   const handlePayType = async (e, props) => {
     let paytypeid = e.target.value;

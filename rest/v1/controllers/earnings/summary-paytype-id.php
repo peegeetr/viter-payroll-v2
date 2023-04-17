@@ -24,17 +24,19 @@ $returnData = [];
 if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
     checkApiKey();
 
-    if (array_key_exists("start", $_GET) && array_key_exists("payrollId", $_GET) 
-    && array_key_exists("paytypeId", $_GET)) {
+    if (
+        array_key_exists("start", $_GET) && array_key_exists("payrollId", $_GET)
+        && array_key_exists("payitemId", $_GET)
+    ) {
         // get payroll id  
         // get task id from query string
         $earnings->earnings_payroll_id = $_GET['payrollId'];
-        $earnings->earnings_paytype_id = $_GET['paytypeId'];
+        $earnings->earnings_payitem_id = $_GET['payitemId'];
         $earnings->earnings_start = $_GET['start'];
         $earnings->earnings_total = 10;
         //check to see if task id in query string is not empty and is number, if not return json error
         checkLimitId($earnings->earnings_start, $earnings->earnings_total);
- 
+
         $query = checkReadSummaryViewLimit($earnings);
         http_response_code(200);
         $total_result = checkReadAllSummaryView($earnings);
@@ -49,8 +51,7 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
         $returnData["success"] = true;
         $response->setData($returnData);
         $response->send();
-        exit; 
-
+        exit;
     }
 
     if (array_key_exists("start", $_GET)) {

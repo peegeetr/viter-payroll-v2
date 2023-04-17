@@ -233,8 +233,8 @@ const SummaryTypeList = () => {
                       data-tooltip="View"
                       to={
                         item.paytype_category === "earnings"
-                          ? `${link}/reports/paytype/view?payrollId=${item.earnings_payroll_id}&paytypeId=${item.paytype_aid}`
-                          : `${link}/reports/paytype/view?payrollId=${item.deduction_payroll_id}&paytypeId=${item.paytype_aid}`
+                          ? `${link}/reports/paytype/view?payrollId=${item.earnings_payroll_id}&payitemId=${item.payitem_aid}`
+                          : `${link}/reports/paytype/view?payrollId=${item.deduction_payroll_id}&payitemId=${item.payitem_aid}`
                       }
                     >
                       0.00

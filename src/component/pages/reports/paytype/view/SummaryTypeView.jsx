@@ -24,14 +24,14 @@ const SummaryTypeView = () => {
   const { store, dispatch } = React.useContext(StoreContext);
   const link = getUserType(store.credentials.data.role_is_developer === 1);
   const payrollId = getUrlParam().get("payrollId");
-  const paytypeId = getUrlParam().get("paytypeId");
+  const payitemId = getUrlParam().get("payitemId");
   const [page, setPage] = React.useState(1);
   let counter = 1;
   const { ref, inView } = useInView();
 
   // use if not loadmore button undertime
   const { data: paycategory } = useQueryData(
-    `${devApiUrl}/v1/paytype/${paytypeId}`, // endpoint
+    `${devApiUrl}/v1/paytype/${payitemId}`, // endpoint
     "get", // method
     "paycategory" // key
   );
@@ -42,6 +42,8 @@ const SummaryTypeView = () => {
 
   let payType =
     paycategory?.data.length > 0 ? `${paycategory?.data[0].paytype_name}` : "";
+  let payItem =
+    paycategory?.data.length > 0 ? `${paycategory?.data[0].payitem_name}` : "";
   // use if with loadmore button and search bar
   const {
     data: result,
@@ -57,8 +59,8 @@ const SummaryTypeView = () => {
       await queryDataInfinite(
         ``, // search endpoint
         category === "earnings"
-          ? `${devApiUrl}/v1/earnings/summary/view/${pageParam}/${payrollId}/${paytypeId}` // list endpoint
-          : `${devApiUrl}/v1/deductions/summary/view/${pageParam}/${payrollId}/${paytypeId}` // list endpoint
+          ? `${devApiUrl}/v1/earnings/summary/view/${pageParam}/${payrollId}/${payitemId}` // list endpoint
+          : `${devApiUrl}/v1/deductions/summary/view/${pageParam}/${payrollId}/${payitemId}` // list endpoint
       ),
     getNextPageParam: (lastPage) => {
       if (lastPage.page < lastPage.total) {
@@ -102,6 +104,9 @@ const SummaryTypeView = () => {
             Pay Type: <span className="text-black">{payType}</span>
           </p>
           <p className="m-0">
+            Pay Item: <span className="text-black">{payItem}</span>
+          </p>
+          <p className="m-0">
             Pay Period:{" "}
             <span className="text-black">
               {category === "earnings"
@@ -117,7 +122,6 @@ const SummaryTypeView = () => {
                 <tr>
                   <th>#</th>
                   <th>Employee</th>
-                  <th>Item</th>
                   <th className="text-right">Amount</th>
                 </tr>
               </thead>
@@ -149,7 +153,6 @@ const SummaryTypeView = () => {
                             ? `${item.earnings_employee}`
                             : `${item.deduction_employee}`}
                         </td>
-                        <td>{item.payitem_name}</td>
 
                         <td className="w-[15rem] text-right">
                           {item.paytype_category === "earnings"

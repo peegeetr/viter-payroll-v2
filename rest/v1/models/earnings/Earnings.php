@@ -505,21 +505,23 @@ class Earnings
             $sql .= "payitem.payitem_name, ";
             $sql .= "earnings.earnings_created, ";
             $sql .= "earnings.earnings_start_pay_date, ";
-            $sql .= "earnings.earnings_end_pay_date ";
+            $sql .= "earnings.earnings_end_pay_date, ";
+            $sql .= "COUNT(earnings.earnings_payitem_id) as count ";
             $sql .= "from {$this->tblPayType} as paytype, ";
             $sql .= "{$this->tblEarnings} as earnings, ";
             $sql .= "{$this->tblPayItem} as payitem ";
             $sql .= "where earnings.earnings_payroll_id = :earnings_payroll_id ";
-            $sql .= "and earnings.earnings_paytype_id = :earnings_paytype_id ";
+            $sql .= "and earnings.earnings_payitem_id = :earnings_payitem_id ";
             $sql .= "and paytype.paytype_aid = earnings.earnings_paytype_id ";
             $sql .= "and payitem.payitem_aid = earnings.earnings_payitem_id ";
             $sql .= "and earnings.earnings_is_installment = '1' ";
             $sql .= "and payitem.payitem_paytype_id = paytype.paytype_aid ";
+            $sql .= "GROUP BY earnings.earnings_payitem_id ";
             $sql .= "order by earnings.earnings_employee asc ";
             $query = $this->connection->prepare($sql);
             $query->execute([
                 "earnings_payroll_id" => $this->earnings_payroll_id,
-                "earnings_paytype_id" => $this->earnings_paytype_id,
+                "earnings_payitem_id" => $this->earnings_payitem_id,
             ]);
         } catch (PDOException $ex) {
             $query = false;

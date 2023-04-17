@@ -47,7 +47,7 @@ const PayrunSummaryList = () => {
     queryFn: async ({ pageParam = 1 }) =>
       await queryDataInfinite(
         `${devApiUrl}/v1/payrollList/filter/by-employee-id/${startDate}/${endDate}/${employeeId}`, // filter endpoint
-        `${devApiUrl}/v1/payrollList/page/by/employee/0/0`, // list endpoint
+        `${devApiUrl}/v1/payrollList/page/by/employee/${pageParam}/0`, // list endpoint
         isFilter // search boolean
       ),
     getNextPageParam: (lastPage) => {

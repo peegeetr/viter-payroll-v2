@@ -1,0 +1,20 @@
+ 
+*controllers      
+    - earnings/summary-paytype-id.php  
+
+*models 
+    - earnings/Earnings.php 
+    - pay-type/PayType.php
+  
+*htaccess 
+    - #earnings
+
+*db tables 
+    -  
+
+*core 
+    - 
+
+*extra 
+    - 
+ 

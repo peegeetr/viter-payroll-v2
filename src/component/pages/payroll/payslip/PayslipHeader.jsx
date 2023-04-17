@@ -36,7 +36,7 @@ const PayslipHeader = ({ payslip, empid, days }) => {
           </p>
           <p className="mb-0">
             <span className="font-semibold">Department : </span>{" "}
-            {job?.data.length > 0 ? job?.data[0].department_name : "N/A"}
+            {payslip?.data[0].payroll_list_employee_department}
           </p>
           <p className="mb-0">
             <span className="font-semibold">Frequency : </span> Semi-monthly

@@ -329,7 +329,7 @@ class Earnings
             $sql .= "and earnings.earnings_payroll_id = :earnings_payroll_id ";
             $sql .= "and earnings.earnings_paytype_id = paytype.paytype_aid ";
             $sql .= "and earnings.earnings_payitem_id = payitem.payitem_aid ";
-            $sql .= "and earnings.earnings_is_installment = '1' ";
+            $sql .= "and earnings.earnings_installment_extra = '0' ";
             $sql .= "order by earnings.earnings_is_paid desc, ";
             $sql .= "earnings.earnings_employee asc ";
             $query = $this->connection->prepare($sql);

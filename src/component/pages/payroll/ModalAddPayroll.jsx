@@ -30,7 +30,10 @@ const ModalAddPayroll = ({ item }) => {
   const { data: result } = useQueryData(
     `${hrisDevApiUrl}/v1/employees/pay`, // endpoint
     "get", // method
-    "result" // key
+    "result", // key
+    {}, // formdata
+    null, // id key
+    false // devKey boolean
   );
 
   const queryClient = useQueryClient();

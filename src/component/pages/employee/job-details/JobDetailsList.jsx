@@ -24,28 +24,40 @@ const JobDetailsList = ({ isLoading, error, employee }) => {
   const { isFetching: loadingSup, data: supervisor } = useQueryData(
     `${hrisDevApiUrl}/v1/supervisors`, // endpoint
     "get", // method
-    "supervisor" // key
+    "supervisor", // key
+    {}, // formdata
+    null, // id key
+    false // devKey boolean
   );
 
   // use if not loadmore button undertime
   const { isFetching: loadingJob, data: jobTitle } = useQueryData(
     `${hrisDevApiUrl}/v1/job-titles`, // endpoint
     "get", // method
-    "jobTitle" // key
+    "jobTitle", // key
+    {}, // formdata
+    null, // id key
+    false // devKey boolean
   );
 
   // use if not loadmore button undertime
   const { isFetching: loadingDep, data: department } = useQueryData(
     `${hrisDevApiUrl}/v1/departments`, // endpoint
     "get", // method
-    "department" // key
+    "department", // key
+    {}, // formdata
+    null, // id key
+    false // devKey boolean
   );
 
   // use if not loadmore button undertime
   const { isFetching: loadingLeave, data: leave } = useQueryData(
     `${hrisDevApiUrl}/v1/leave/types`, // endpoint
     "get", // method
-    "leave" // key
+    "leave", // key
+    {}, // formdata
+    null, // id key
+    false // devKey boolean
   );
 
   const handleEdit = (item) => {

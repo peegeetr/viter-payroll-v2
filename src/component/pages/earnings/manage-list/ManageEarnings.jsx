@@ -39,7 +39,10 @@ const ManageEarnings = () => {
   const { data: employee } = useQueryData(
     `${hrisDevApiUrl}/v1/employees/pay`, // endpoint
     "get", // method
-    "employee" // key
+    "employee", // key
+    {}, // formdata
+    null, // id key
+    false // devKey boolean
   );
 
   // use if not loadmore button undertime

@@ -50,7 +50,7 @@ if ($data["payitem_is_hris"] === "0" && $earnings->earnings_employee === "all") 
     $newCount = 0;
     // check array length
     if (count($allEmployee) === 0) {
-        checkEndpoint();
+        noDataFound();
     }
 
     for ($e = 0; $e < count($allEmployee); $e++) {
@@ -100,7 +100,7 @@ $payitem = $data["leaveId"];
 if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === $payitem) {
     // check array length
     if (count($allLeave) === 0) {
-        checkEndpoint();
+        noDataFound();
     }
     // delete first earnings PR ID and pay item id leave
     $earnings->earnings_payitem_id = $payitem;
@@ -129,7 +129,7 @@ $payitem = $data["overtimeId"];
 if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === $payitem) {
     // check array length
     if (count($allOvertimeLeave) === 0) {
-        checkEndpoint();
+        noDataFound();
     }
 
     // delete first earnings PR ID and pay item id Overtime
@@ -158,7 +158,7 @@ $payitem = $data["absencesId"];
 if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === $payitem) {
     // check array length
     if (count($allUnPaidLeave) === 0) {
-        checkEndpoint();
+        noDataFound();
     }
     // delete first earnings PR ID and pay item id absences
     $earnings->earnings_payitem_id = $payitem;
@@ -178,7 +178,7 @@ if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === $payi
         isHRISImportExist($earnings, "HRIS absences data for $earnings->earnings_payroll_id is ");
         $query = checkCreate($earnings);
     }
-    returnSuccess($earnings, "Earnings", $query);
+    returnSuccess($earnings, "Earnings", $query, $allUnPaidLeave);
 }
 
 // create if data is from hris
@@ -187,7 +187,7 @@ $payitem = $data["undertimeId"];
 if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === $payitem) {
     // check array length
     if (count($allUndertime) === 0) {
-        checkEndpoint();
+        noDataFound();
     }
     // delete first earnings PR ID and pay item id undertime
     $earnings->earnings_payitem_id = $payitem;

@@ -88,6 +88,8 @@ export const computeLeave = (leaveData, employee, payrollDraft) => {
     new Date(payrollDraft?.data[0].payroll_start_date),
     new Date(payrollDraft?.data[0].payroll_end_date)
   );
+
+  console.log(leaveData, employee);
   let list = [];
   leaveData?.data.map((lItem) => {
     employee?.data.map((eItem) => {
@@ -113,6 +115,8 @@ export const computeLeave = (leaveData, employee, payrollDraft) => {
       }
     });
   });
+
+  console.log(list);
   return list;
 };
 

@@ -1,18 +1,14 @@
  
-*controllers     
-    - deductions/functions.php
-    - deductions/summary-paytype-id.php
-    - earnings/summary-paytype-id.php
+*controllers      
+    - earnings/create.php
+    - earnings/functions.php
  
     
 *models 
-    - earnings/Earnings.php
-    - deductions/Deductions.php
-    - pay-type/PayType.php
+    - 
   
 *htaccess 
-    - #earnings
-    - #deduction
+    - 
 
 *db tables 
     -  

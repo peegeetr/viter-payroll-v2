@@ -158,7 +158,14 @@ $payitem = $data["absencesId"];
 if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === $payitem) {
     // check array length
     if (count($allUnPaidLeave) === 0) {
-        checkEndpoint();
+        $response = new Response();
+        $error = [];
+        $response->setSuccess(false);
+        $error['error'] = "No Data found.";
+        $error["success"] = false;
+        $response->setData($error);
+        $response->send();
+        exit;
     }
     // delete first earnings PR ID and pay item id absences
     $earnings->earnings_payitem_id = $payitem;
@@ -178,7 +185,7 @@ if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === $payi
         isHRISImportExist($earnings, "HRIS absences data for $earnings->earnings_payroll_id is ");
         $query = checkCreate($earnings);
     }
-    returnSuccess($earnings, "Earnings", $query);
+    returnSuccess($earnings, "Earnings", $query, $allUnPaidLeave);
 }
 
 // create if data is from hris
@@ -187,7 +194,14 @@ $payitem = $data["undertimeId"];
 if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === $payitem) {
     // check array length
     if (count($allUndertime) === 0) {
-        checkEndpoint();
+        $response = new Response();
+        $error = [];
+        $response->setSuccess(false);
+        $error['error'] = "No Data found.";
+        $error["success"] = false;
+        $response->setData($error);
+        $response->send();
+        exit;
     }
     // delete first earnings PR ID and pay item id undertime
     $earnings->earnings_payitem_id = $payitem;

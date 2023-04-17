@@ -148,7 +148,7 @@ function checkLimitId($start, $total)
 }
 
 // create sucess
-function returnSuccess($object, $name, $query, $newCount = 1)
+function returnSuccess($object, $name, $query, $newCount = 1, $arr = [])
 {
     $response = new Response();
     $returnData = [];
@@ -157,6 +157,7 @@ function returnSuccess($object, $name, $query, $newCount = 1)
     $returnData["{$name} ID"] = $object->lastInsertedId;
     $returnData["success"] = true;
     $returnData["added"] = $newCount;
+    $returnData["array"] = $arr;
     // return $returnData;
     $response->setData($returnData);
     $response->send();

@@ -2,11 +2,15 @@
 *controllers      
     - earnings/create.php
     - earnings/functions.php
+    -> payroll/list/functions.php
+    -> payroll/list/paid.php
+    -> payroll/list/update.php
  
     
 *models 
-    - earnings/Earnings.php
-    - deductions/Deductions.php
+    -> earnings/Earnings.php
+    -> deductions/Deductions.php
+    -> payroll/list/PayrollList.php
   
 *htaccess 
     - #payroll list paid

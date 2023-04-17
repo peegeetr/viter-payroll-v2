@@ -326,7 +326,7 @@ const SummaryEarningsList = () => {
                       {/* total overtime amount */}
                       {numberWithCommas(item.payroll_list_overtime_pay) !==
                       "0.00" ? (
-                        <td className="pr-6 text-primary underline">
+                        <td className="pr-6 text-primary ">
                           <span
                             className="cursor-pointer tooltip-action-table !p-0"
                             data-tooltip="View Deatils"
@@ -344,7 +344,7 @@ const SummaryEarningsList = () => {
                       {/* total holiday amount */}
                       {numberWithCommas(item.payroll_list_holiday) !==
                       "0.00" ? (
-                        <td className="pr-4 text-primary underline">
+                        <td className="pr-4 text-primary ">
                           <span
                             className="cursor-pointer tooltip-action-table !p-0"
                             data-tooltip="View Deatils"

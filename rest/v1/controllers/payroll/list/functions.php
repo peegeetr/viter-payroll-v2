@@ -47,11 +47,27 @@ function checkUpdateIsPaidDeduction($object)
     return $query;
 }
 
+// delete not installment earnings 
+function checkDeleteNotInstallmentEarnings($object)
+{
+    $query = $object->deleteNotInstallmentEarnings();
+    checkQuery($query, "There's a problem processing your request. (delete not installment earnings)");
+    return $query;
+}
+
 // delete earnings 
 function checkDeleteEarnings($object)
 {
     $query = $object->deleteEarnings();
     checkQuery($query, "There's a problem processing your request. (delete earnings)");
+    return $query;
+}
+
+// delete not installment deductions 
+function checkDeleteNotInstallmentDeductions($object)
+{
+    $query = $object->deleteNotInstallmentDeductions();
+    checkQuery($query, "There's a problem processing your request. (delete not installment deductions)");
     return $query;
 }
 

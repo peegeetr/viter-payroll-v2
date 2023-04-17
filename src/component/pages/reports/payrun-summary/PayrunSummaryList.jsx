@@ -7,21 +7,13 @@ import * as Yup from "yup";
 import { StoreContext } from "../../../../store/StoreContext";
 import useQueryData from "../../../custom-hooks/useQueryData";
 import { InputSelect, InputText } from "../../../helpers/FormInputs";
-import {
-  devApiUrl,
-  getPayPeriod,
-  getUserType,
-  hrisDevApiUrl,
-} from "../../../helpers/functions-general";
-import { deMinimisEarningsId } from "../../../helpers/functions-payitemId";
+import { devApiUrl, hrisDevApiUrl } from "../../../helpers/functions-general";
 import { queryDataInfinite } from "../../../helpers/queryDataInfinite";
-import LoadmoreRq from "../../../partials/LoadmoreRq";
-import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
-import PayrunSummaryBody from "./PayrunSummaryBody";
-import HeaderPrint from "../../../partials/HeaderPrint";
-import TableSpinner from "../../../partials/spinners/TableSpinner";
 import NoData from "../../../partials/NoData";
 import ServerError from "../../../partials/ServerError";
+import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
+import TableSpinner from "../../../partials/spinners/TableSpinner";
+import PayrunSummaryBody from "./PayrunSummaryBody";
 
 const PayrunSummaryList = () => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -164,20 +156,9 @@ const PayrunSummaryList = () => {
             );
           }}
         </Formik>
-        <HeaderPrint />
-        <div className="text-center pb-4 font-bold  print:pt-4">
-          {startDate !== "" && (
-            <>
-              <p className="m-0">Employee Pay Run Summary</p>
-              <p className="m-0 text-primary font-bold">
-                {getPayPeriod(startDate, endDate)}
-              </p>
-            </>
-          )}
-        </div>
 
-        <table>
-          {(status === "loading" || result?.pages[0].data.length === 0) && (
+        {(status === "loading" || result?.pages[0].data.length === 0) && (
+          <table>
             <tbody>
               <tr className="text-center relative">
                 <td colSpan="100%" className="p-10">
@@ -186,8 +167,10 @@ const PayrunSummaryList = () => {
                 </td>
               </tr>
             </tbody>
-          )}
-          {error && (
+          </table>
+        )}
+        {error && (
+          <table>
             <tbody>
               <tr className="text-center ">
                 <td colSpan="100%" className="p-10">
@@ -195,19 +178,12 @@ const PayrunSummaryList = () => {
                 </td>
               </tr>
             </tbody>
-          )}
-          <PayrunSummaryBody result={result} />
-        </table>
-      </div>
-      <div className="text-center">
-        <LoadmoreRq
-          fetchNextPage={fetchNextPage}
-          isFetchingNextPage={isFetchingNextPage}
-          hasNextPage={hasNextPage}
-          result={result?.pages[0]}
-          setPage={setPage}
-          page={page}
-          refView={ref}
+          </table>
+        )}
+        <PayrunSummaryBody
+          result={result}
+          startDate={startDate}
+          endDate={endDate}
         />
       </div>
     </>

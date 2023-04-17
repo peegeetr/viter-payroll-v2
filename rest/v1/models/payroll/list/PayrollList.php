@@ -776,6 +776,43 @@ class PayrollList
         return $query;
     }
 
+    // delete Deductions
+    public function deleteNotInstallmentDeductions()
+    {
+        try {
+            $sql = "delete from {$this->tblDeductions} ";
+            $sql .= "where deduction_payroll_id = :payroll_list_payroll_id ";
+            $sql .= "and deduction_payitem_id = :payitem_id ";
+            $sql .= "and deduction_is_installment != '2' ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "payroll_list_payroll_id" => $this->payroll_list_payroll_id,
+                "payitem_id" => $this->payitem_id,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    // delete Earnings not installment
+    public function deleteNotInstallmentEarnings()
+    {
+        try {
+            $sql = "delete from {$this->tblEarnings} ";
+            $sql .= "where earnings_payroll_id = :payroll_list_payroll_id ";
+            $sql .= "and earnings_payitem_id = :payitem_id ";
+            $sql .= "and earnings_is_installment != '2' ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "payroll_list_payroll_id" => $this->payroll_list_payroll_id,
+                "payitem_id" => $this->payitem_id,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
 
 
 

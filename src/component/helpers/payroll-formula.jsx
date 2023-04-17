@@ -54,7 +54,7 @@ export const employeeRate = (salary, workingDays) => {
   list.daily = dayRate.toFixed(2);
   list.hourly = hourRate.toFixed(4);
   list.period = periodSalary.toFixed(2);
-  // console.log(list);
+  console.log(list.hourly);
   return list;
 };
 

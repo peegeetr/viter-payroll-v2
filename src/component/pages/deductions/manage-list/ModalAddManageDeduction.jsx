@@ -135,7 +135,7 @@ const ModalAddManageDeduction = ({ payType, employee, payrollDraft }) => {
   };
 
   const yupSchema = Yup.object({
-    deduction_details: Yup.string().required("Required"),
+    // deduction_details: Yup.string().required("Required"),
     payroll_employee: Yup.string().required("Required"),
     deduction_paytype_id: Yup.string().required("Required"),
     deduction_payitem_id: Yup.string().required("Required"),

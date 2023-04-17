@@ -7,21 +7,13 @@ import * as Yup from "yup";
 import { StoreContext } from "../../../../store/StoreContext";
 import useQueryData from "../../../custom-hooks/useQueryData";
 import { InputSelect, InputText } from "../../../helpers/FormInputs";
-import {
-  devApiUrl,
-  getPayPeriod,
-  getUserType,
-  hrisDevApiUrl,
-} from "../../../helpers/functions-general";
-import { deMinimisEarningsId } from "../../../helpers/functions-payitemId";
+import { devApiUrl, hrisDevApiUrl } from "../../../helpers/functions-general";
 import { queryDataInfinite } from "../../../helpers/queryDataInfinite";
-import LoadmoreRq from "../../../partials/LoadmoreRq";
-import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
-import PayrunSummaryBody from "./PayrunSummaryBody";
-import HeaderPrint from "../../../partials/HeaderPrint";
-import TableSpinner from "../../../partials/spinners/TableSpinner";
 import NoData from "../../../partials/NoData";
 import ServerError from "../../../partials/ServerError";
+import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
+import TableSpinner from "../../../partials/spinners/TableSpinner";
+import PayrunSummaryBody from "./PayrunSummaryBody";
 
 const PayrunSummaryList = () => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -192,17 +184,6 @@ const PayrunSummaryList = () => {
           result={result}
           startDate={startDate}
           endDate={endDate}
-        />
-      </div>
-      <div className="text-center">
-        <LoadmoreRq
-          fetchNextPage={fetchNextPage}
-          isFetchingNextPage={isFetchingNextPage}
-          hasNextPage={hasNextPage}
-          result={result?.pages[0]}
-          setPage={setPage}
-          page={page}
-          refView={ref}
         />
       </div>
     </>

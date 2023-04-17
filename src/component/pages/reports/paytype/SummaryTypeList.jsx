@@ -8,20 +8,18 @@ import * as Yup from "yup";
 import { StoreContext } from "../../../../store/StoreContext";
 import useQueryData from "../../../custom-hooks/useQueryData";
 import { InputSelect, InputText } from "../../../helpers/FormInputs";
-import { deMinimisEarningsId } from "../../../helpers/functions-payitemId";
 import {
   devApiUrl,
-  formatDate,
   getPayPeriod,
   getUserType,
 } from "../../../helpers/functions-general";
+import { deMinimisEarningsId } from "../../../helpers/functions-payitemId";
 import { queryDataInfinite } from "../../../helpers/queryDataInfinite";
 import LoadmoreRq from "../../../partials/LoadmoreRq";
 import NoData from "../../../partials/NoData";
 import ServerError from "../../../partials/ServerError";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 import TableSpinner from "../../../partials/spinners/TableSpinner";
-import { getPaytype } from "./functions-paytype";
 
 const SummaryTypeList = () => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -197,7 +195,7 @@ const SummaryTypeList = () => {
             <tr className="text-center relative">
               <td colSpan="100%" className="p-10">
                 {status === "loading" && <TableSpinner />}
-                <NoData text="Filter Data" />
+                <NoData text="Filter data using above controls." />
               </td>
             </tr>
           )}

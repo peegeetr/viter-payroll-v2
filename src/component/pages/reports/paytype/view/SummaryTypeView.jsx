@@ -30,20 +30,19 @@ const SummaryTypeView = () => {
   const { ref, inView } = useInView();
 
   // use if not loadmore button undertime
-  const {  
-    data: paycategory,
-  } = useQueryData(
+  const { data: paycategory } = useQueryData(
     `${devApiUrl}/v1/paytype/${paytypeId}`, // endpoint
     "get", // method
     "paycategory" // key
   );
-let category=paycategory?.data.length > 0 ?`${paycategory?.data[0].paytype_category}`:"0";
+  let category =
+    paycategory?.data.length > 0
+      ? `${paycategory?.data[0].paytype_category}`
+      : "0";
 
-let payItem =
-paycategory?.data.length > 0 ? `${paycategory?.data[0].payitem_name}` : "";
-let payType =
-paycategory?.data.length > 0 ? `${paycategory?.data[0].paytype_name}` : "";
-  // use if with loadmore button and search bar 
+  let payType =
+    paycategory?.data.length > 0 ? `${paycategory?.data[0].paytype_name}` : "";
+  // use if with loadmore button and search bar
   const {
     data: result,
     error,
@@ -58,8 +57,8 @@ paycategory?.data.length > 0 ? `${paycategory?.data[0].paytype_name}` : "";
       await queryDataInfinite(
         ``, // search endpoint
         category === "earnings"
-        ? `${devApiUrl}/v1/earnings/summary/view/${pageParam}/${payrollId}/${paytypeId}` // list endpoint
-        : `${devApiUrl}/v1/deductions/summary/view/${pageParam}/${payrollId}/${paytypeId}` // list endpoint
+          ? `${devApiUrl}/v1/earnings/summary/view/${pageParam}/${payrollId}/${paytypeId}` // list endpoint
+          : `${devApiUrl}/v1/deductions/summary/view/${pageParam}/${payrollId}/${paytypeId}` // list endpoint
       ),
     getNextPageParam: (lastPage) => {
       if (lastPage.page < lastPage.total) {
@@ -77,33 +76,38 @@ paycategory?.data.length > 0 ? `${paycategory?.data[0].paytype_name}` : "";
       fetchNextPage();
     }
   }, [inView]);
-  let payPeriodEarinings = 
-    result?.pages[0].data.length > 0 ? `${getPayPeriod(
-      result?.pages[0].data[0].earnings_start_pay_date,
-      result?.pages[0].data[0].earnings_end_pay_date
-    )}` : "";
-  let payPeriodDeductions = 
-    result?.pages[0].data.length > 0 ? `${getPayPeriod(
-      result?.pages[0].data[0].deduction_start_pay_date,
-      result?.pages[0].data[0].deduction_end_pay_date
-    )}` : ""; 
+  let payPeriodEarinings =
+    result?.pages[0].data.length > 0
+      ? `${getPayPeriod(
+          result?.pages[0].data[0].earnings_start_pay_date,
+          result?.pages[0].data[0].earnings_end_pay_date
+        )}`
+      : "";
+  let payPeriodDeductions =
+    result?.pages[0].data.length > 0
+      ? `${getPayPeriod(
+          result?.pages[0].data[0].deduction_start_pay_date,
+          result?.pages[0].data[0].deduction_end_pay_date
+        )}`
+      : "";
   return (
     <>
       <Header />
       <Navigation menu="reports" />
       <div className="wrapper">
-        <BreadCrumbs name={payItem} />
+        <BreadCrumbs name={payType} />
         <hr />
         <div className="pt-4 text-primary">
           <p className="m-0">
             Pay Type: <span className="text-black">{payType}</span>
           </p>
           <p className="m-0">
-            Pay Item: <span className="text-black">{payItem}</span>
-          </p>
-          <p className="m-0">
-            Pay Period: <span className="text-black">{
-        category === "earnings"?payPeriodEarinings:payPeriodDeductions}</span>
+            Pay Period:{" "}
+            <span className="text-black">
+              {category === "earnings"
+                ? payPeriodEarinings
+                : payPeriodDeductions}
+            </span>
           </p>
         </div>
         <div className="relative overflow-x-auto z-0 w-full lg:w-[35rem] ">
@@ -112,7 +116,8 @@ paycategory?.data.length > 0 ? `${paycategory?.data[0].paytype_name}` : "";
               <thead>
                 <tr>
                   <th>#</th>
-                  <th>Employee</th> 
+                  <th>Employee</th>
+                  <th>Item</th>
                   <th className="text-right">Amount</th>
                 </tr>
               </thead>
@@ -139,11 +144,17 @@ paycategory?.data.length > 0 ? `${paycategory?.data[0].paytype_name}` : "";
                     {page.data.map((item, key) => (
                       <tr key={key}>
                         <td>{counter++}.</td>
-                        <td>{item.paytype_category === "earnings"?`${item.earnings_employee}`:`${item.deduction_employee}`}</td>
-                        
+                        <td>
+                          {item.paytype_category === "earnings"
+                            ? `${item.earnings_employee}`
+                            : `${item.deduction_employee}`}
+                        </td>
+                        <td>{item.payitem_name}</td>
+
                         <td className="w-[15rem] text-right">
-                          {item.paytype_category === "earnings"?`${Number(item.earnings_amount).toFixed(2)}`:`${Number(item.deduction_amount)}`}
-                          
+                          {item.paytype_category === "earnings"
+                            ? `${Number(item.earnings_amount).toFixed(2)}`
+                            : `${Number(item.deduction_amount)}`}
                         </td>
                       </tr>
                     ))}

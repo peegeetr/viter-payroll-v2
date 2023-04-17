@@ -26,8 +26,8 @@ class Earnings
     public $earnings_created;
     public $earnings_datetime;
 
-    public $paytype_category; 
-    
+    public $paytype_category;
+
     public $connection;
     public $lastInsertedId;
     public $earnings_start;
@@ -509,7 +509,7 @@ class Earnings
             $sql .= "{$this->tblEarnings} as earnings, ";
             $sql .= "{$this->tblPayItem} as payitem ";
             $sql .= "where earnings.earnings_payroll_id = :earnings_payroll_id ";
-            $sql .= "and earnings.earnings_paytype_id = :earnings_paytype_id "; 
+            $sql .= "and earnings.earnings_paytype_id = :earnings_paytype_id ";
             $sql .= "and paytype.paytype_aid = earnings.earnings_paytype_id ";
             $sql .= "and payitem.payitem_aid = earnings.earnings_payitem_id ";
             $sql .= "and earnings.earnings_is_installment = '1' ";
@@ -518,7 +518,7 @@ class Earnings
             $query = $this->connection->prepare($sql);
             $query->execute([
                 "earnings_payroll_id" => $this->earnings_payroll_id,
-                "earnings_paytype_id" => $this->earnings_paytype_id, 
+                "earnings_paytype_id" => $this->earnings_paytype_id,
             ]);
         } catch (PDOException $ex) {
             $query = false;
@@ -546,7 +546,7 @@ class Earnings
             $sql .= "{$this->tblEarnings} as earnings, ";
             $sql .= "{$this->tblPayItem} as payitem ";
             $sql .= "where earnings.earnings_payroll_id = :earnings_payroll_id ";
-            $sql .= "and earnings.earnings_paytype_id = :earnings_paytype_id "; 
+            $sql .= "and earnings.earnings_paytype_id = :earnings_paytype_id ";
             $sql .= "and paytype.paytype_aid = earnings.earnings_paytype_id ";
             $sql .= "and payitem.payitem_aid = earnings.earnings_payitem_id ";
             $sql .= "and earnings.earnings_is_installment = '1' ";
@@ -557,7 +557,7 @@ class Earnings
             $query = $this->connection->prepare($sql);
             $query->execute([
                 "earnings_payroll_id" => $this->earnings_payroll_id,
-                "earnings_paytype_id" => $this->earnings_paytype_id, 
+                "earnings_paytype_id" => $this->earnings_paytype_id,
                 "start" => $this->earnings_start - 1,
                 "total" => $this->earnings_total,
             ]);

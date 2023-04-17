@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { setStartIndex } from "../../store/StoreAction";
 import { StoreContext } from "../../store/StoreContext";
-import { devNavUrl, getUserType, UrlAdmin } from "../helpers/functions-general";
+import { getUserType } from "../helpers/functions-general";
 
 const BreadCrumbs = ({ param = "", name = "" }) => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -12,12 +12,12 @@ const BreadCrumbs = ({ param = "", name = "" }) => {
 
   const link = getUserType(store.credentials.data.role_is_developer === 1);
   const crumbs = location.pathname
+    .replace("-", " ")
     .replace("/v2/system", "")
     .split("/")
     .filter((crumb) => crumb !== "")
     .map((crumb, key) => {
       currentLink += `/${crumb}`;
-      // console.log(crumb.replace("view", "").replace(`${name}`, ""));
       return (
         <li
           className="text-primary after:mr-2 after:content-['>'] last:after:hidden last:text-dark last:pointer-events-none"

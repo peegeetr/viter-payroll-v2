@@ -21,32 +21,32 @@ const PayrunSummaryBody = ({ result }) => {
               <tr className="hover:bg-white ">
                 <td className="w-[15rem] print:py-[2px]">Basic Pay</td>
                 <td className="w-[8rem] text-right px-4 print:py-[2px]">
-                  {numberWithCommas((1000000).toFixed(2))}
+                  {numberWithCommas(item.payroll_list_basic_pay)}
                 </td>
               </tr>
               <tr className="hover:bg-white ">
                 <td className="w-[15rem] print:py-[2px]">Overtime Pay</td>
                 <td className="w-[8rem] text-right px-4 print:py-[2px]">
-                  0.00
+                  {numberWithCommas(item.payroll_list_overtime_pay)}
                 </td>
               </tr>
               <tr className="hover:bg-white ">
                 <td className="w-[15rem] print:py-[2px]">Paid Leave</td>
                 <td className="w-[8rem] text-right px-4 print:py-[2px]">
-                  9,500.00
+                  {numberWithCommas(item.payroll_list_leave_pay)}
                 </td>
                 <td></td>
               </tr>
               <tr className="hover:bg-white ">
                 <td className="w-[15rem] print:py-[2px]">Absences</td>
                 <td className="w-[8rem] text-right px-4 print:py-[2px]">
-                  0.00
+                  {numberWithCommas(item.payroll_list_absences)}
                 </td>
               </tr>
               <tr className="hover:bg-white ">
                 <td className="w-[15rem] print:py-[2px]">Holiday</td>
                 <td className="w-[8rem] text-right px-4 print:py-[2px]">
-                  0.00
+                  {numberWithCommas(item.payroll_list_holiday)}
                 </td>
               </tr>
               <tr className="hover:bg-white ">
@@ -54,7 +54,7 @@ const PayrunSummaryBody = ({ result }) => {
                   Night Shift Differential
                 </td>
                 <td className="w-[8rem] text-right px-4 print:py-[2px]">
-                  0.00
+                  {numberWithCommas(item.payroll_list_night_shift_differential)}
                 </td>
               </tr>
               <tr className="hover:bg-white font-bold uppercase ">
@@ -62,31 +62,31 @@ const PayrunSummaryBody = ({ result }) => {
                   Wages Total (De Minimis Inclusive)
                 </td>
                 <td className="w-[8rem] text-right px-4 print:py-[2px]">
-                  0.00
+                  {numberWithCommas(item.payroll_list_basic_pay)}
                 </td>
               </tr>
               <tr className="hover:bg-white font-bold uppercase ">
                 <td className="w-[15rem] print:py-[2px]">De Minimis Total</td>
                 <td className="w-[8rem] text-right px-4 print:py-[2px]">
-                  0.00
+                  {numberWithCommas(item.payroll_list_basic_pay)}
                 </td>
               </tr>
               <tr className="hover:bg-white ">
                 <td className="w-[15rem] print:py-[2px]">13th month</td>
                 <td className="w-[8rem] text-right px-4 print:py-[2px]">
-                  0.00
+                  {numberWithCommas(item.payroll_list_basic_pay)}
                 </td>
               </tr>
               <tr className="hover:bg-white ">
                 <td className="w-[15rem] print:py-[2px]">Bonus</td>
                 <td className="w-[8rem] text-right px-4 print:py-[2px]">
-                  0.00
+                  {numberWithCommas(item.payroll_list_basic_pay)}
                 </td>
               </tr>
               <tr className="hover:bg-white ">
                 <td className="w-[15rem] print:py-[2px]">Other Benefits</td>
                 <td className="w-[8rem] text-right px-4 print:py-[2px]">
-                  0.00
+                  {numberWithCommas(item.payroll_list_basic_pay)}
                 </td>
               </tr>
               <tr className="hover:bg-white font-bold uppercase ">
@@ -94,7 +94,7 @@ const PayrunSummaryBody = ({ result }) => {
                   13th month & other benefits total
                 </td>
                 <td className="w-[8rem] text-right px-4 print:py-[2px]">
-                  0.00
+                  {numberWithCommas(item.payroll_list_basic_pay)}
                 </td>
               </tr>
               {/* total earnings ER */}
@@ -109,19 +109,19 @@ const PayrunSummaryBody = ({ result }) => {
               <tr className="hover:bg-white ">
                 <td className="w-[15rem] print:py-[2px]">SSS Er</td>
                 <td className="w-[8rem] text-right px-4 print:py-[2px]">
-                  0.00
+                  {numberWithCommas(item.payroll_list_basic_pay)}
                 </td>
               </tr>
               <tr className="hover:bg-white ">
                 <td className="w-[15rem] print:py-[2px]">PGBG Er</td>
                 <td className="w-[8rem] text-right px-4 print:py-[2px]">
-                  0.00
+                  {numberWithCommas(item.payroll_list_basic_pay)}
                 </td>
               </tr>
               <tr className="hover:bg-white ">
                 <td className="w-[15rem] print:py-[2px]">PHIC Er</td>
                 <td className="w-[8rem] text-right px-4 print:py-[2px]">
-                  0.00
+                  {numberWithCommas(item.payroll_list_basic_pay)}
                 </td>
               </tr>
               <tr className="bg-gray-200  hover:bg-gray-200 font-bold uppercase">
@@ -137,19 +137,19 @@ const PayrunSummaryBody = ({ result }) => {
               <tr className="hover:bg-white ">
                 <td className="w-[15rem] print:py-[2px]">SSS Ee</td>
                 <td className="w-[8rem] text-right px-4 print:py-[2px]">
-                  0.00
+                  {numberWithCommas(item.payroll_list_basic_pay)}
                 </td>
               </tr>
               <tr className="hover:bg-white ">
                 <td className="w-[15rem] print:py-[2px]">PGBG Ee</td>
                 <td className="w-[8rem] text-right px-4 print:py-[2px]">
-                  0.00
+                  {numberWithCommas(item.payroll_list_basic_pay)}
                 </td>
               </tr>
               <tr className="hover:bg-white ">
                 <td className="w-[15rem] print:py-[2px]">PHIC Ee</td>
                 <td className="w-[8rem] text-right px-4 print:py-[2px]">
-                  0.00
+                  {numberWithCommas(item.payroll_list_basic_pay)}
                 </td>
               </tr>
               <tr className="hover:bg-white font-bold uppercase ">
@@ -164,19 +164,19 @@ const PayrunSummaryBody = ({ result }) => {
               <tr className="hover:bg-white ">
                 <td className="w-[15rem] print:py-[2px]">SSS Loan</td>
                 <td className="w-[8rem] text-right px-4 print:py-[2px]">
-                  0.00
+                  {numberWithCommas(item.payroll_list_basic_pay)}
                 </td>
               </tr>
               <tr className="hover:bg-white ">
                 <td className="w-[15rem] print:py-[2px]">PGBG Loan</td>
                 <td className="w-[8rem] text-right px-4 print:py-[2px]">
-                  0.00
+                  {numberWithCommas(item.payroll_list_basic_pay)}
                 </td>
               </tr>
               <tr className="hover:bg-white ">
                 <td className="w-[15rem] print:py-[2px]">PGBG MP2</td>
                 <td className="w-[8rem] text-right px-4 print:py-[2px]">
-                  0.00
+                  {numberWithCommas(item.payroll_list_basic_pay)}
                 </td>
               </tr>
               <tr className="hover:bg-white font-bold uppercase ">
@@ -191,19 +191,19 @@ const PayrunSummaryBody = ({ result }) => {
               <tr className="hover:bg-white ">
                 <td className="w-[15rem] print:py-[2px]">FWC Thesis</td>
                 <td className="w-[8rem] text-right px-4 print:py-[2px]">
-                  0.00
+                  {numberWithCommas(item.payroll_list_basic_pay)}
                 </td>
               </tr>
               <tr className="hover:bg-white ">
                 <td className="w-[15rem] print:py-[2px]">FCA Tuition</td>
                 <td className="w-[8rem] text-right px-4 print:py-[2px]">
-                  0.00
+                  {numberWithCommas(item.payroll_list_basic_pay)}
                 </td>
               </tr>
               <tr className="hover:bg-white ">
                 <td className="w-[15rem] print:py-[2px]">Other Deductions</td>
                 <td className="w-[8rem] text-right px-4 print:py-[2px]">
-                  0.00
+                  {numberWithCommas(item.payroll_list_basic_pay)}
                 </td>
               </tr>
               <tr className="hover:bg-white font-bold uppercase ">
@@ -217,7 +217,7 @@ const PayrunSummaryBody = ({ result }) => {
               <tr className="hover:bg-white font-bold uppercase ">
                 <td className="w-[15rem] print:py-[2px]">Payroll Tax total</td>
                 <td className="w-[8rem] text-right px-4 print:py-[2px]">
-                  0.00
+                  {numberWithCommas(item.payroll_list_basic_pay)}
                 </td>
               </tr>
               <tr className="bg-gray-200   hover:bg-gray-200 font-bold uppercase">
@@ -231,7 +231,7 @@ const PayrunSummaryBody = ({ result }) => {
                 <td className="w-[15rem] print:py-[2px]">Netpay</td>
                 <td></td>
                 <td className="w-[8rem] text-right px-4 print:py-[2px]">
-                  0.00
+                  {numberWithCommas(item.payroll_list_net_pay)}
                 </td>
               </tr>
               <tr>

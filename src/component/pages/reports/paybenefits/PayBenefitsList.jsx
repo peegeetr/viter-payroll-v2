@@ -46,7 +46,7 @@ const PayBenefitsList = () => {
     queryKey: ["benefits-summary", isSubmit],
     queryFn: async ({ pageParam = 1 }) =>
       await queryDataInfinite(
-        `${devApiUrl}/v1/payrollList/filter/${startDate}/${endDate}/${employeeId}`, // filter endpoint
+        `${devApiUrl}/v1/payrollList/filter/by-employee-id/${startDate}/${endDate}/${employeeId}`, // filter endpoint
         `${devApiUrl}/v1/payrollList/summary/${pageParam}`, // list endpoint
         isFilter // search boolean
       ),
@@ -71,7 +71,10 @@ const PayBenefitsList = () => {
   const { data: employee } = useQueryData(
     `${hrisDevApiUrl}/v1/employees/pay`, // endpoint
     "get", // method
-    "employees" // key
+    "employees", // key
+    {}, // formdata
+    null, // id key
+    false // devKey boolean
   );
   const initVal = {
     employee_aid: "",

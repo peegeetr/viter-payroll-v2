@@ -31,7 +31,8 @@ const ModalEditPayroll = ({ itemEdit }) => {
       queryData(
         `${hrisDevApiUrl}/v1/employees/payroll/${itemEdit.employee_aid}`,
         "put",
-        values
+        values,
+        false
       ),
     onSuccess: (data) => {
       // Invalidate and refetch

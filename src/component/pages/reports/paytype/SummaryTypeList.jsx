@@ -197,7 +197,7 @@ const SummaryTypeList = () => {
             <tr className="text-center relative">
               <td colSpan="100%" className="p-10">
                 {status === "loading" && <TableSpinner />}
-                <NoData />
+                <NoData text="Filter Data" />
               </td>
             </tr>
           )}

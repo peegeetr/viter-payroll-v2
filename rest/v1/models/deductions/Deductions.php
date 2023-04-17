@@ -120,7 +120,7 @@ class Deductions
             $sql .= "{$this->tblDeductions} as deduction, ";
             $sql .= "{$this->tblPayItem} as payitem ";
             $sql .= "where deduction.deduction_payroll_id = :deduction_payroll_id ";
-            $sql .= "and deduction.deduction_paytype_id = :deduction_paytype_id "; 
+            $sql .= "and deduction.deduction_paytype_id = :deduction_paytype_id ";
             $sql .= "and paytype.paytype_aid = deduction.deduction_paytype_id ";
             $sql .= "and payitem.payitem_aid = deduction.deduction_payitem_id ";
             $sql .= "and deduction.deduction_is_installment = '1' ";
@@ -129,7 +129,7 @@ class Deductions
             $query = $this->connection->prepare($sql);
             $query->execute([
                 "deduction_payroll_id" => $this->deduction_payroll_id,
-                "deduction_paytype_id" => $this->deduction_paytype_id, 
+                "deduction_paytype_id" => $this->deduction_paytype_id,
             ]);
         } catch (PDOException $ex) {
             $query = false;
@@ -157,7 +157,7 @@ class Deductions
             $sql .= "{$this->tblDeductions} as deduction, ";
             $sql .= "{$this->tblPayItem} as payitem ";
             $sql .= "where deduction.deduction_payroll_id = :deduction_payroll_id ";
-            $sql .= "and deduction.deduction_paytype_id = :deduction_paytype_id "; 
+            $sql .= "and deduction.deduction_paytype_id = :deduction_paytype_id ";
             $sql .= "and paytype.paytype_aid = deduction.deduction_paytype_id ";
             $sql .= "and payitem.payitem_aid = deduction.deduction_payitem_id ";
             $sql .= "and deduction.deduction_is_installment = '1' ";
@@ -168,7 +168,7 @@ class Deductions
             $query = $this->connection->prepare($sql);
             $query->execute([
                 "deduction_payroll_id" => $this->deduction_payroll_id,
-                "deduction_paytype_id" => $this->deduction_paytype_id, 
+                "deduction_paytype_id" => $this->deduction_paytype_id,
                 "start" => $this->deduction_start - 1,
                 "total" => $this->deduction_total,
             ]);
@@ -370,6 +370,7 @@ class Deductions
             $sql .= "and deduction.deduction_payroll_id = :deduction_payroll_id ";
             $sql .= "and deduction.deduction_paytype_id = paytype.paytype_aid ";
             $sql .= "and deduction.deduction_payitem_id = payitem.payitem_aid ";
+            $sql .= "and deduction.deduction_is_installment = '1' ";
             $sql .= "order by deduction.deduction_is_paid desc, ";
             $sql .= "deduction.deduction_employee asc ";
             $query = $this->connection->prepare($sql);

@@ -5,10 +5,11 @@
  
     
 *models 
-    - 
+    - earnings/Earnings.php
+    - deductions/Deductions.php
   
 *htaccess 
-    - 
+    - #payroll list paid
 
 *db tables 
     -  

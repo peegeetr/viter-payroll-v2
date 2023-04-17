@@ -139,8 +139,6 @@ const ModalAddManageEarnings = ({
     false // devKey boolean
   );
 
-  console.log(absences);
-
   const handlePayType = async (e, props) => {
     let paytypeid = e.target.value;
     setSelLoading(true);

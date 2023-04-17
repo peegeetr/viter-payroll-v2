@@ -8,7 +8,7 @@
 *models 
     - earnings/Earnings.php
     - deductions/Deductions.php
-    - settings/pay-type/PayType.php
+    - pay-type/PayType.php
   
 *htaccess 
     - #earnings

@@ -50,7 +50,7 @@ if ($data["payitem_is_hris"] === "0" && $earnings->earnings_employee === "all") 
     $newCount = 0;
     // check array length
     if (count($allEmployee) === 0) {
-        checkEndpoint();
+        noDataFound();
     }
 
     for ($e = 0; $e < count($allEmployee); $e++) {
@@ -100,7 +100,7 @@ $payitem = $data["leaveId"];
 if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === $payitem) {
     // check array length
     if (count($allLeave) === 0) {
-        checkEndpoint();
+        noDataFound();
     }
     // delete first earnings PR ID and pay item id leave
     $earnings->earnings_payitem_id = $payitem;
@@ -129,7 +129,7 @@ $payitem = $data["overtimeId"];
 if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === $payitem) {
     // check array length
     if (count($allOvertimeLeave) === 0) {
-        checkEndpoint();
+        noDataFound();
     }
 
     // delete first earnings PR ID and pay item id Overtime
@@ -158,14 +158,7 @@ $payitem = $data["absencesId"];
 if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === $payitem) {
     // check array length
     if (count($allUnPaidLeave) === 0) {
-        $response = new Response();
-        $error = [];
-        $response->setSuccess(false);
-        $error['error'] = "No Data found.";
-        $error["success"] = false;
-        $response->setData($error);
-        $response->send();
-        exit;
+        noDataFound();
     }
     // delete first earnings PR ID and pay item id absences
     $earnings->earnings_payitem_id = $payitem;
@@ -194,14 +187,7 @@ $payitem = $data["undertimeId"];
 if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === $payitem) {
     // check array length
     if (count($allUndertime) === 0) {
-        $response = new Response();
-        $error = [];
-        $response->setSuccess(false);
-        $error['error'] = "No Data found.";
-        $error["success"] = false;
-        $response->setData($error);
-        $response->send();
-        exit;
+        noDataFound();
     }
     // delete first earnings PR ID and pay item id undertime
     $earnings->earnings_payitem_id = $payitem;

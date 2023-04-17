@@ -7,6 +7,7 @@ import PayBenefitsLink from "./paybenefits/PayBenefitsLink.jsx";
 import PayrollSummaryLink from "./payroll-summary/PayrollSummaryLink.jsx";
 import SummaryTypeLink from "./paytype/SummaryTypeLink.jsx";
 import WTaxLink from "./w-tax/WTaxLink.jsx";
+import PayrunSummaryLink from "./payrun-summary/PayrunSummaryLink";
 
 const ReportsLink = () => {
   return (
@@ -19,6 +20,9 @@ const ReportsLink = () => {
         <ul className="pt-5 pb-20 relative">
           <li className="py-2">
             <PayrollSummaryLink />
+          </li>
+          <li className="py-2">
+            <PayrunSummaryLink />
           </li>
           <li className="py-2">
             <WTaxLink />

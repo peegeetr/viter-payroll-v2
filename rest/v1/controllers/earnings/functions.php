@@ -1,5 +1,18 @@
 <?php
 
+// check if no data from HRIS
+function noDataFound()
+{
+
+    $response = new Response();
+    $error = [];
+    $response->setSuccess(false);
+    $error['error'] = "No Data found.";
+    $error["success"] = false;
+    $response->setData($error);
+    $response->send();
+    exit;
+}
 // Read all Pr id in earnings
 function isEarningsValidateId($object)
 {

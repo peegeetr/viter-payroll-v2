@@ -11,14 +11,25 @@ import {
 import { StoreContext } from "../../../store/StoreContext";
 import { devApiUrl } from "../../helpers/functions-general";
 import {
+  PagibigLoanId,
+  PagibigMP2Id,
+  SSSLoanId,
+  bereavementId,
+  bonusId,
   diminimisId,
+  employeeReferralBonusId,
+  fcaTutionId,
+  fwcTithesId,
   holidayId,
   nightDiffId,
+  otherAllowancesId,
+  otherDeductionId,
   pagibigEeId,
   pagibigErId,
   payrollTaxDeductionId,
   philhealthEeId,
   philhealthErId,
+  separationPayId,
   sssEeId,
   sssErId,
 } from "../../helpers/functions-payitemId";
@@ -145,6 +156,17 @@ const ModalRun = ({
       payItemPhilhealthErId: philhealthErId,
       payItemPhilhealthEeId: philhealthEeId,
       payItemDeminimisId: diminimisId,
+      payItemBereavementId: bereavementId,
+      payItemBonusId: bonusId,
+      payItemEmployeeReferralBonusId: employeeReferralBonusId,
+      payItemSeparationPayId: separationPayId,
+      payItemOtherAllowancesId: otherAllowancesId,
+      payItemFcaTutionId: fcaTutionId,
+      payItemFwcTithesId: fwcTithesId,
+      payItemOtherDeductionId: otherDeductionId,
+      payItemPagibigLoanId: PagibigLoanId,
+      payItemPagibigMP2Id: PagibigMP2Id,
+      payItemSSSLoanId: SSSLoanId,
     });
   };
 

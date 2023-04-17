@@ -164,20 +164,9 @@ const PayrunSummaryList = () => {
             );
           }}
         </Formik>
-        <HeaderPrint />
-        <div className="text-center pb-4 font-bold  print:pt-4">
-          {startDate !== "" && (
-            <>
-              <p className="m-0">Employee Pay Run Summary</p>
-              <p className="m-0 text-primary font-bold">
-                {getPayPeriod(startDate, endDate)}
-              </p>
-            </>
-          )}
-        </div>
 
-        <table>
-          {(status === "loading" || result?.pages[0].data.length === 0) && (
+        {(status === "loading" || result?.pages[0].data.length === 0) && (
+          <table>
             <tbody>
               <tr className="text-center relative">
                 <td colSpan="100%" className="p-10">
@@ -186,8 +175,10 @@ const PayrunSummaryList = () => {
                 </td>
               </tr>
             </tbody>
-          )}
-          {error && (
+          </table>
+        )}
+        {error && (
+          <table>
             <tbody>
               <tr className="text-center ">
                 <td colSpan="100%" className="p-10">
@@ -195,9 +186,13 @@ const PayrunSummaryList = () => {
                 </td>
               </tr>
             </tbody>
-          )}
-          <PayrunSummaryBody result={result} />
-        </table>
+          </table>
+        )}
+        <PayrunSummaryBody
+          result={result}
+          startDate={startDate}
+          endDate={endDate}
+        />
       </div>
       <div className="text-center">
         <LoadmoreRq

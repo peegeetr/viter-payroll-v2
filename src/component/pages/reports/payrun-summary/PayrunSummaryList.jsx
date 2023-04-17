@@ -182,7 +182,7 @@ const PayrunSummaryList = () => {
               <tr className="text-center relative">
                 <td colSpan="100%" className="p-10">
                   {status === "loading" && <TableSpinner />}
-                  <NoData text="Filter Data" />
+                  <NoData text="Filter data using above controls." />
                 </td>
               </tr>
             </tbody>

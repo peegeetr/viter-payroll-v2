@@ -143,18 +143,34 @@ function checkReadReportBenefitsByEmpId($object)
 }
 
 
-// REPORT WTAX filter all employee by date
-function checkReadWtaxAllEmployeeByDate($object)
+// REPORT Monthly WTAX filter all employee by date
+function checkReadReportMonthlyWtaxAllEmployeeByDate($object)
 {
-    $query = $object->readWtaxAllEmployeeByDate();
+    $query = $object->readReportMonthlyWtaxAllEmployeeByDate();
     checkQuery($query, "Empty records. (Read report wtax all employee by date)");
     return $query;
 }
 
-// REPORT WTAX filter by employee id by date
-function checkReadWtaxByEmployeeIdByEmpId($object)
+// REPORT Monthly WTAX filter by employee id by date
+function checkReadReportMonthlyWtaxByEmployeeIdByEmpId($object)
 {
-    $query = $object->readWtaxByEmployeeIdByEmpId();
+    $query = $object->readReportMonthlyWtaxByEmployeeIdByEmpId();
+    checkQuery($query, "Empty records. (Read report wtax limit by employee id and date)");
+    return $query;
+}
+
+// REPORT Yearly WTAX filter all employee by date
+function checkReadReportYearlyWtaxAllEmployeeByDate($object)
+{
+    $query = $object->readReportYearlyWtaxAllEmployeeByDate();
+    checkQuery($query, "Empty records. (Read report wtax all employee by date)");
+    return $query;
+}
+
+// REPORT Yearly WTAX filter by employee id by date
+function checkReadReportYearlyWtaxByEmployeeIdByEmpId($object)
+{
+    $query = $object->readReportYearlyWtaxByEmployeeIdByEmpId();
     checkQuery($query, "Empty records. (Read report wtax limit by employee id and date)");
     return $query;
 }

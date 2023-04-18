@@ -95,6 +95,7 @@ function checkReadSummaryLimit($object)
     return $query;
 }
 
+
 // filter by date
 function checkReadSummaryByDate($object)
 {
@@ -123,5 +124,21 @@ function checkReadPayslipEmpIdLimit($object)
 {
     $query = $object->readPayslipEmpIdLimit();
     checkQuery($query, "Empty records (Read limit payslip by employee id).");
+    return $query;
+}
+
+// Report Benefits Filter
+function checkReadReportBenefitsByDate($object)
+{
+    $query = $object->readReportBenefitsByDate();
+    checkQuery($query, "Empty records. (read report benefits by date)");
+    return $query;
+}
+
+// Report Benefits by employee id Filter
+function checkReadReportBenefitsByEmpId($object)
+{
+    $query = $object->readReportBenefitsByEmpId();
+    checkQuery($query, "Empty records. (read report benefits by employee id and date)");
     return $query;
 }

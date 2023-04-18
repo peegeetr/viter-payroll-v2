@@ -41,6 +41,7 @@ const PayrollViewList = () => {
   let pagPayable = 0;
   let sssLoanPayable = 0;
   let pagLoanPayable = 0;
+  let totalOptional = 0;
   let wtaxPayable = 0;
   let pagMp2Payable = 0;
   let others = 0;
@@ -177,8 +178,10 @@ const PayrollViewList = () => {
                       Number(item.payroll_list_pagibig_er);
                     sssLoanPayable += Number(item.payroll_list_sss_loan);
                     pagLoanPayable += Number(item.payroll_list_pagibig_loan);
-                    wtaxPayable += Number(item.payroll_list_tax);
                     pagMp2Payable += Number(item.payroll_list_pagibig_mp2);
+                    totalOptional =
+                      sssLoanPayable + pagLoanPayable + pagMp2Payable;
+                    wtaxPayable += Number(item.payroll_list_tax);
                     others +=
                       Number(item.payroll_list_fwc_tithes) +
                       Number(item.payroll_list_fca_tuition) +
@@ -189,7 +192,7 @@ const PayrollViewList = () => {
                       phicPayable +
                       pagPayable +
                       wtaxPayable +
-                      pagMp2Payable +
+                      totalOptional +
                       others +
                       netPay;
                     return (

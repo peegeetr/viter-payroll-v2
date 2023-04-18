@@ -1,6 +1,6 @@
 import React from "react";
-import HeaderPrint from "../../../partials/HeaderPrint";
-import { getPayPeriod } from "../../../helpers/functions-general";
+import HeaderPrint from "../../../../partials/HeaderPrint";
+import { getPayPeriod } from "../../../../helpers/functions-general";
 
 const WTaxBody = ({ result, startDate, endDate }) => {
   return (

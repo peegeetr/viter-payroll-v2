@@ -50,7 +50,7 @@ const SummaryTypeList = () => {
     queryFn: async ({ pageParam = 1 }) =>
       await queryDataInfinite(
         `${devApiUrl}/v1/paytype/report/filter/${paytype}/${category}/${startDate}/${endDate}`, // search endpoint
-        `${devApiUrl}/v1/paytype/0`, // list endpoint
+        `${devApiUrl}/v1/payrollList/page/0/${pageParam}`, // list endpoint
         isFilter // search boolean
       ),
     getNextPageParam: (lastPage) => {

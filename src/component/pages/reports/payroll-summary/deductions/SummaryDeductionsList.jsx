@@ -79,7 +79,7 @@ const SummaryDeductionsList = () => {
   });
   return (
     <>
-      <div className="relative overflow-x-auto z-0 w-full lg:w-[35rem] ">
+      <div className="relative overflow-x-auto z-0 w-full  lg:w-[35rem] ">
         <Formik
           initialValues={initVal}
           validationSchema={yupSchema}
@@ -134,7 +134,7 @@ const SummaryDeductionsList = () => {
         </Formik>
       </div>
       <div className="relative text-center">
-        <div className=" overflow-x-auto z-0">
+        <div className="overflow-x-auto max-h-[40rem] h-[40rem] ">
           <table>
             <thead>
               <tr className="border-none text-center">

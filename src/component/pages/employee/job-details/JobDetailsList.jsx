@@ -65,11 +65,6 @@ const JobDetailsList = ({ isLoading, error, employee }) => {
     setItemEdit(item);
   };
 
-  const handleEditPayroll = (item) => {
-    dispatch(setIsRestore(true));
-    setItemEdit(item);
-  };
-
   return (
     <>
       <div className="text-center overflow-x-auto pb-2 z-0 ">

@@ -132,7 +132,7 @@ const SummaryEarningsList = () => {
 
   return (
     <>
-      <div className="relative overflow-x-auto z-0 w-full lg:w-[35rem] ">
+      <div className="relative overflow-x-auto z-0 w-full  lg:w-[35rem] ">
         <Formik
           initialValues={initVal}
           validationSchema={yupSchema}

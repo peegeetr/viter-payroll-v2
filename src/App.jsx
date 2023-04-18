@@ -267,6 +267,87 @@ function App() {
                 </ProtectedRouteOther>
               }
             />
+            <Route
+              path={`${devNavUrl}/reports/summary`}
+              element={
+                <ProtectedRouteOther>
+                  <PayrollSummaryPage />
+                </ProtectedRouteOther>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/reports/summary/earnings`}
+              element={
+                <ProtectedRouteOther>
+                  <SummaryEarnings />
+                </ProtectedRouteOther>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/reports/summary/deductions`}
+              element={
+                <ProtectedRouteOther>
+                  <SummaryDeductions />
+                </ProtectedRouteOther>
+              }
+            />
+
+            <Route
+              path={`${devNavUrl}/reports/employee-payrun`}
+              element={
+                <ProtectedRouteOther>
+                  <PayrunSummary />
+                </ProtectedRouteOther>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/reports/wtax`}
+              element={
+                <ProtectedRouteOther>
+                  <WTaxPage />
+                </ProtectedRouteOther>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/reports/wtax/monthly`}
+              element={
+                <ProtectedRouteOther>
+                  <WTaxMonthly />
+                </ProtectedRouteOther>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/reports/wtax/yearly`}
+              element={
+                <ProtectedRouteOther>
+                  <WTaxYearly />
+                </ProtectedRouteOther>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/reports/benefits`}
+              element={
+                <ProtectedRouteOther>
+                  <PayBenefits />
+                </ProtectedRouteOther>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/reports/paytype`}
+              element={
+                <ProtectedRouteOther>
+                  <SummaryType />
+                </ProtectedRouteOther>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/reports/paytype/view`}
+              element={
+                <ProtectedRouteOther>
+                  <SummaryTypeView />
+                </ProtectedRouteOther>
+              }
+            />
 
             {/* Settings Page */}
             <Route

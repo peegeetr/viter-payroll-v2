@@ -154,6 +154,7 @@ const PayrollView = () => {
           semiTax={semiMonthly?.data}
           pagibig={pagibig?.data}
           philhealth={philhealth?.data}
+          // monthlyTax={monthlyTax?.data}
         />
       )}
 

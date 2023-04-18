@@ -12,6 +12,7 @@ import {
   devApiUrl,
   getPayPeriod,
   getUserType,
+  numberWithCommas,
 } from "../../../helpers/functions-general";
 import { deMinimisEarningsId } from "../../../helpers/functions-payitemId";
 import { queryDataInfinite } from "../../../helpers/queryDataInfinite";
@@ -36,6 +37,7 @@ const SummaryTypeList = () => {
   const [page, setPage] = React.useState(1);
   let counter = 1;
   const { ref, inView } = useInView();
+  let total = 0;
   // use if with loadmore button and search bar
   const {
     data: result,
@@ -62,6 +64,8 @@ const SummaryTypeList = () => {
     refetchOnWindowFocus: false,
     cacheTime: 1000,
   });
+
+  console.log(result);
 
   React.useEffect(() => {
     if (inView) {
@@ -179,7 +183,6 @@ const SummaryTypeList = () => {
           }}
         </Formik>
       </div>
-
       <HeaderPrint />
       <div className="text-center pb-4 font-bold print:pt-4">
         {startDate !== "" && (
@@ -221,35 +224,39 @@ const SummaryTypeList = () => {
               )}
               {result?.pages.map((page, key) => (
                 <React.Fragment key={key}>
-                  {page.data.map((item, key) => (
-                    <tr key={key}>
-                      <td>{counter++}.</td>
-                      <td className="w-[15rem]">{item.payitem_name}</td>
-                      <td className="w-[15rem]">{item.paytype_name}</td>
-                      <td className="w-[15rem]">{item.count}</td>
-                      <td className="text-right text-primary ">
-                        <Link
-                          className="tooltip-action-table"
-                          data-tooltip="View"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          to={
-                            item.paytype_category === "earnings"
-                              ? `${link}/reports/paytype/view?payrollId=${item.earnings_payroll_id}&payitemId=${item.payitem_aid}`
-                              : `${link}/reports/paytype/view?payrollId=${item.deduction_payroll_id}&payitemId=${item.payitem_aid}`
-                          }
-                        >
-                          0.00
-                        </Link>
-                      </td>
-                    </tr>
-                  ))}
+                  {page.data.map((item, key) => {
+                    total += Number(item.amount);
+                    return (
+                      <tr key={key}>
+                        <td>{counter++}.</td>
+                        <td className="w-[15rem]">{item.payitem_name}</td>
+                        <td className="w-[15rem]">{item.paytype_name}</td>
+                        <td className="w-[15rem]">{item.count}</td>
+                        <td className="text-right text-primary ">
+                          <Link
+                            className="tooltip-action-table"
+                            data-tooltip="View"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            to={
+                              item.paytype_category === "earnings"
+                                ? `${link}/reports/paytype/view?payrollId=${item.earnings_payroll_id}&payitemId=${item.payitem_aid}`
+                                : `${link}/reports/paytype/view?payrollId=${item.deduction_payroll_id}&payitemId=${item.payitem_aid}`
+                            }
+                          >
+                            {numberWithCommas(Number(item.amount).toFixed(2))}
+                          </Link>
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </React.Fragment>
               ))}
             </tbody>
           </table>
         </div>
       </div>
+      Total: {numberWithCommas(total.toFixed(2))}
       <div className="text-center">
         <LoadmoreRq
           fetchNextPage={fetchNextPage}

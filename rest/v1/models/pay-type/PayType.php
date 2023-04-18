@@ -315,6 +315,7 @@ class PayType
             $sql = "select payitem.payitem_aid, ";
             $sql .= "payitem.payitem_name, ";
             $sql .= "earnings.earnings_payroll_id, ";
+            $sql .= "sum(earnings.earnings_amount) as amount, ";
             $sql .= "earnings.earnings_start_pay_date, ";
             $sql .= "earnings.earnings_end_pay_date, ";
             $sql .= "paytype.paytype_category, ";
@@ -353,6 +354,7 @@ class PayType
             $sql = "select payitem.payitem_aid, ";
             $sql .= "deduction.deduction_payroll_id, ";
             $sql .= "payitem.payitem_name, ";
+            $sql .= "sum(deduction.deduction_amount) as amount, ";
             $sql .= "deduction.deduction_start_pay_date, ";
             $sql .= "deduction.deduction_end_pay_date, ";
             $sql .= "paytype.paytype_category, ";

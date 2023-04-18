@@ -64,7 +64,7 @@ const ManageDeduction = () => {
         </div>
         <hr />
 
-        <div className="w-full pt-5 pb-20">
+        <div className="w-full pt-2 pb-20">
           <ManageDeductionList />
         </div>
         <Footer />

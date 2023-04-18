@@ -20,7 +20,7 @@ const BreadCrumbs = ({ param = "", name = "" }) => {
       currentLink += `/${crumb}`;
       return (
         <li
-          className="text-primary after:mr-2 after:content-['>'] last:after:hidden last:text-dark last:pointer-events-none"
+          className="text-primary after:mr-2 after:content-['>'] last:after:hidden last:text-dark last:pointer-events-none print:hidden"
           key={key}
           onClick={() => dispatch(setStartIndex(0))}
         >

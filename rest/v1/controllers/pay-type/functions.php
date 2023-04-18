@@ -16,17 +16,17 @@ function checkReadAllPayType($object)
 }
 
 // Read all paytype earning
-function checkReadEarningsPaytypeIdByDate($object)
+function checkReadReportEarningsPaytypeIdByDate($object)
 {
-    $query = $object->readEarningsPaytypeIdByDate();
+    $query = $object->readReportEarningsPaytypeIdByDate();
     checkQuery($query, "Empty records.(read all paytype earnings)");
     return $query;
 }
 
 // Read all paytype deduction
-function checkReadDeductionPaytypeIdByDate($object)
+function checkReadReportDeductionPaytypeIdByDate($object)
 {
-    $query = $object->readDeductionPaytypeIdByDate();
+    $query = $object->readReportDeductionPaytypeIdByDate();
     checkQuery($query, "Empty records.(read all paytype deduction)");
     return $query;
 }

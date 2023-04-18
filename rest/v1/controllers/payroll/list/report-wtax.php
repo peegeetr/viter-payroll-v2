@@ -25,15 +25,14 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
         $payrollList->date_to = $_GET['endDate'];
         checkId($payrollList->payroll_list_employee_id);
         if ($payrollList->payroll_list_employee_id === '0') {
-            $query = checkReadReportBenefitsByDate($payrollList);
+            $query = checkReadWtaxAllEmployeeByDate($payrollList);
             http_response_code(200);
             getQueriedData($query);
         }
-        $query = checkReadSummaryBenefitsByEmpId($payrollList);
+        $query = checkReadWtaxByEmployeeIdByEmpId($payrollList);
         http_response_code(200);
         getQueriedData($query);
     }
-
     // return 404 error if endpoint not available
     checkEndpoint();
 }

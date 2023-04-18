@@ -23,7 +23,7 @@ const FilterDeductions = () => {
         </div>
         <hr />
 
-        <div className="w-full pt-5 pb-20">
+        <div className="w-full pt-2 pb-20">
           <FilterDeductionsList />
         </div>
         <Footer />

@@ -19,10 +19,11 @@ import NoData from "../../../../partials/NoData";
 import ServerError from "../../../../partials/ServerError";
 import TableSpinner from "../../../../partials/spinners/TableSpinner";
 import useQueryData from "../../../../custom-hooks/useQueryData";
+import { AiFillPrinter } from "react-icons/ai";
+import HeaderPrint from "../../../../partials/HeaderPrint";
 
 const SummaryTypeView = () => {
   const { store, dispatch } = React.useContext(StoreContext);
-  const link = getUserType(store.credentials.data.role_is_developer === 1);
   const payrollId = getUrlParam().get("payrollId");
   const payitemId = getUrlParam().get("payitemId");
   const [page, setPage] = React.useState(1);
@@ -31,7 +32,7 @@ const SummaryTypeView = () => {
 
   // use if not loadmore button undertime
   const { data: paycategory } = useQueryData(
-    `${devApiUrl}/v1/paytype/${payitemId}`, // endpoint
+    `${devApiUrl}/v1/payitem/${payitemId}`, // endpoint
     "get", // method
     "paycategory" // key
   );
@@ -59,8 +60,8 @@ const SummaryTypeView = () => {
       await queryDataInfinite(
         ``, // search endpoint
         category === "earnings"
-          ? `${devApiUrl}/v1/earnings/summary/view/${pageParam}/${payrollId}/${payitemId}` // list endpoint
-          : `${devApiUrl}/v1/deductions/summary/view/${pageParam}/${payrollId}/${payitemId}` // list endpoint
+          ? `${devApiUrl}/v1/earnings/report/paytype/view/${pageParam}/${payrollId}/${payitemId}` // list endpoint
+          : `${devApiUrl}/v1/deductions/report/paytype/view/${pageParam}/${payrollId}/${payitemId}` // list endpoint
       ),
     getNextPageParam: (lastPage) => {
       if (lastPage.page < lastPage.total) {
@@ -72,6 +73,7 @@ const SummaryTypeView = () => {
     cacheTime: 1000,
   });
 
+  console.log(result);
   React.useEffect(() => {
     if (inView) {
       setPage((prev) => prev + 1);
@@ -96,9 +98,22 @@ const SummaryTypeView = () => {
     <>
       <Header />
       <Navigation menu="reports" />
-      <div className="wrapper">
-        <BreadCrumbs name={payType} />
-        <hr />
+      <div className="wrapper print:pt-0">
+        <div className="flex items-center mb-1 justify-between whitespace-nowrap overflow-auto gap-2 print:hidden">
+          <BreadCrumbs />
+          <div className="flex items-center gap-1">
+            <button
+              type="button"
+              className="btn-primary"
+              onClick={() => window.print()}
+            >
+              <AiFillPrinter />
+              <span>Print</span>
+            </button>
+          </div>
+        </div>
+        <hr className="print:hidden" />
+        <HeaderPrint />
         <div className="pt-4 text-primary">
           <p className="m-0">
             Pay Type: <span className="text-black">{payType}</span>
@@ -165,7 +180,7 @@ const SummaryTypeView = () => {
                 ))}
               </tbody>
             </table>
-            <div className="text-center">
+            <div className="text-center print:hidden">
               <LoadmoreRq
                 fetchNextPage={fetchNextPage}
                 isFetchingNextPage={isFetchingNextPage}

@@ -12,6 +12,7 @@ class PayItem
     public $connection;
     public $lastInsertedId;
     public $tblPayItem;
+    public $tblPayType;
     public $tblEarnings;
     public $tblRates;
 
@@ -19,6 +20,7 @@ class PayItem
     {
         $this->connection = $db;
         $this->tblPayItem = "prv2_payitem";
+        $this->tblPayType = "prv2_paytype";
         $this->tblEarnings = "prv2_earnings";
         $this->tblRates = "prv2_settings_rates";
     }
@@ -71,15 +73,20 @@ class PayItem
         return $query;
     }
 
-
     // read by id
     public function readById()
     {
         try {
-            $sql = "select payitem_name, payitem_is_hris, payitem_aid ";
-            $sql .= "from {$this->tblPayItem} ";
-            $sql .= "where payitem_aid = :payitem_aid ";
-            $sql .= "order by payitem_name asc ";
+            $sql = "select type.paytype_name, item.payitem_name, ";
+            $sql .= "type.paytype_aid, ";
+            $sql .= "type.paytype_category, ";
+            $sql .= "item.payitem_is_hris, ";
+            $sql .= "item.payitem_is_active, item.payitem_aid from ";
+            $sql .= "{$this->tblPayType} as type, ";
+            $sql .= "{$this->tblPayItem} as item ";
+            $sql .= "where item.payitem_aid = :payitem_aid ";
+            $sql .= "and item.payitem_paytype_id = type.paytype_aid ";
+            $sql .= "order by item.payitem_is_active desc, item.payitem_name asc ";
             $query = $this->connection->prepare($sql);
             $query->execute([
                 "payitem_aid" => $this->payitem_aid,
@@ -89,6 +96,7 @@ class PayItem
         }
         return $query;
     }
+
 
     // update
     public function update()

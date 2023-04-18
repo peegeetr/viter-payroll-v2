@@ -16,18 +16,18 @@ function checkDeleteDeductionIdAndEmployeeId($object)
     return $query;
 }
 
-// Read all Summary
-function checkReadAllSummaryView($object)
+// REPORT Read all Summary
+function checkReadReportDeductionPaytypeById($object)
 {
-    $query = $object->readAllSummaryView();
-    checkQuery($query, "Empty records.(Read Summary view)");
+    $query = $object->readReportDeductionPaytypeById();
+    checkQuery($query, "Empty records.(Read deduction report paytype id )");
     return $query;
 }
 
-// Read limit Summary
-function checkReadSummaryViewLimit($object)
+// REPORT Read limit Summary
+function checkReadReportDeductionPaytypeByIdLimit($object)
 {
-    $query = $object->readSummaryViewLimit();
-    checkQuery($query, "Empty records.(Summary view Limit)");
+    $query = $object->readReportDeductionPaytypeByIdLimit();
+    checkQuery($query, "Empty records.(Read deduction report paytype id Limit)");
     return $query;
 }

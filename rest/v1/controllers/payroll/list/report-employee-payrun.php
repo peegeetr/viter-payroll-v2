@@ -25,11 +25,11 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
         $payrollList->date_to = $_GET['endDate'];
         checkId($payrollList->payroll_list_employee_id);
         if ($payrollList->payroll_list_employee_id === '0') {
-            $query = checkReadReportBenefitsByDate($payrollList);
+            $query = checkReadEmployeePayrunAllEmployeeByDate($payrollList);
             http_response_code(200);
             getQueriedData($query);
         }
-        $query = checkReadSummaryBenefitsByEmpId($payrollList);
+        $query = checkReadEmployeePayrunByEmployeeIdByEmpId($payrollList);
         http_response_code(200);
         getQueriedData($query);
     }

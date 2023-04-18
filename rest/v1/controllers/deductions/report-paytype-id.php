@@ -24,19 +24,19 @@ $returnData = [];
 if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
     checkApiKey();
 
-    if (array_key_exists("start", $_GET) && array_key_exists("payrollId", $_GET) && array_key_exists("paytypeId", $_GET)) {
+    if (array_key_exists("start", $_GET) && array_key_exists("payrollId", $_GET) && array_key_exists("payitemId", $_GET)) {
         // get payroll id  
         // get task id from query string
         $deductions->deduction_payroll_id = $_GET['payrollId'];
-        $deductions->deduction_paytype_id = $_GET['paytypeId'];
+        $deductions->deduction_payitem_id = $_GET['payitemId'];
         $deductions->deduction_start = $_GET['start'];
         $deductions->deduction_total = 10;
         //check to see if task id in query string is not empty and is number, if not return json error
         checkLimitId($deductions->deduction_start, $deductions->deduction_total);
- 
-        $query = checkReadSummaryViewLimit($deductions);
+
+        $query = checkReadReportDeductionPaytypeByIdLimit($deductions);
         http_response_code(200);
-        $total_result = checkReadAllSummaryView($deductions);
+        $total_result = checkReadReportDeductionPaytypeById($deductions);
         http_response_code(200);
 
         $returnData["data"] = getResultData($query);
@@ -48,10 +48,9 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
         $returnData["success"] = true;
         $response->setData($returnData);
         $response->send();
-        exit; 
-
+        exit;
     }
- 
+
     // return 404 error if endpoint not available
     checkEndpoint();
 }

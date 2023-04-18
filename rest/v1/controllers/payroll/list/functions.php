@@ -95,7 +95,6 @@ function checkReadSummaryLimit($object)
     return $query;
 }
 
-
 // filter by date
 function checkReadSummaryByDate($object)
 {
@@ -140,5 +139,38 @@ function checkReadReportBenefitsByEmpId($object)
 {
     $query = $object->readReportBenefitsByEmpId();
     checkQuery($query, "Empty records. (read report benefits by employee id and date)");
+    return $query;
+}
+
+
+// REPORT WTAX filter all employee by date
+function checkReadWtaxAllEmployeeByDate($object)
+{
+    $query = $object->readWtaxAllEmployeeByDate();
+    checkQuery($query, "Empty records. (Read report wtax all employee by date)");
+    return $query;
+}
+
+// REPORT WTAX filter by employee id by date
+function checkReadWtaxByEmployeeIdByEmpId($object)
+{
+    $query = $object->readWtaxByEmployeeIdByEmpId();
+    checkQuery($query, "Empty records. (Read report wtax limit by employee id and date)");
+    return $query;
+}
+
+// REPORT Employee payrun filter all employee by date
+function checkReadEmployeePayrunAllEmployeeByDate($object)
+{
+    $query = $object->readEmployeePayrunAllEmployeeByDate();
+    checkQuery($query, "Empty records. (Read report Employee Payrun all employee by date)");
+    return $query;
+}
+
+// REPORT Employee payrun filter by employee id by date
+function checkReadEmployeePayrunByEmployeeIdByEmpId($object)
+{
+    $query = $object->readEmployeePayrunByEmployeeIdByEmpId();
+    checkQuery($query, "Empty records. (Read report Employee Payrun limit by employee id and date)");
     return $query;
 }

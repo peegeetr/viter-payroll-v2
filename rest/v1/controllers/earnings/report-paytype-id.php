@@ -37,9 +37,9 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
         //check to see if task id in query string is not empty and is number, if not return json error
         checkLimitId($earnings->earnings_start, $earnings->earnings_total);
 
-        $query = checkReadSummaryViewLimit($earnings);
+        $query = checkReadReportEarningsPaytypeByIdLimit($earnings);
         http_response_code(200);
-        $total_result = checkReadAllSummaryView($earnings);
+        $total_result = checkReadReportEarningsPaytypeById($earnings);
         http_response_code(200);
 
         $returnData["data"] = getResultData($query);

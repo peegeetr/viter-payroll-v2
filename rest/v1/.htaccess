@@ -24,7 +24,7 @@ RewriteRule ^paytype$ controllers/pay-type/paytype.php [L]
 RewriteRule ^paytype/([0-9]+)$ controllers/pay-type/paytype.php?paytypeid=$1 [L]
 RewriteRule ^paytype/active/([0-9]+)$ controllers/pay-type/active.php?paytypeid=$1 [L]
 RewriteRule ^paytype/report/filter/([0-9]+)/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)$ controllers/pay-type/report-filter.php?payrolltypeid=$1&category=$2&startDate=$3&endDate=$4 [L]
-RewriteRule ^paytype/report/page/([0-9]+)$ controllers/pay-type/report-page.php?start=$1 [L]
+RewriteRule ^paytype/report/page/([0-9]+)$ controllers/pay-type/report-page.php?start=$1 [L] 
    
 #payroll
 RewriteRule ^payroll$ controllers/payroll/payroll.php [L]
@@ -43,13 +43,14 @@ RewriteRule ^payslip/deductions/([0-9]+)/([0-9]+)/([A-Za-z0-9-]+)$ controllers/p
 RewriteRule ^payrollList$ controllers/payroll/list/payrollView.php [L]
 RewriteRule ^payrollList/summary/([0-9]+)$ controllers/payroll/list/summary.php?start=$1 [L]  
 RewriteRule ^payrollList/filter/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)$ controllers/payroll/list/filter.php?startDate=$1&endDate=$2 [L]  
-RewriteRule ^payrollList/filter/by-employee-id/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/([0-9]+)$ controllers/payroll/list/filter.php?startDate=$1&endDate=$2&employeeId=$3 [L]  
+RewriteRule ^payrollList/report/employee-run/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/([0-9]+)$ controllers/payroll/list/report-employee-payrun.php?startDate=$1&endDate=$2&employeeId=$3 [L]  
 RewriteRule ^payrollList/([A-Za-z0-9-]+)$ controllers/payroll/list/payrollView.php?listpayrollid=$1 [L]  
 RewriteRule ^payrollList/paid/([A-Za-z0-9-]+)$ controllers/payroll/list/paid.php?listpayrollid=$1 [L]  
 RewriteRule ^payrollList/page/([A-Za-z0-9-]+)/([0-9]+)$ controllers/payroll/list/page.php?listpayrollid=$1&start=$2 [L]
 RewriteRule ^payrollList/search/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)$ controllers/payroll/list/search.php?listpayrollid=$1&search=$2 [L]
 RewriteRule ^payrollList/page/by/employee/([0-9]+)/([0-9]+)$ controllers/payroll/list/page-by-emp-id.php?start=$1&empId=$2 [L] 
-RewriteRule ^payrollList/report/employee-benefits/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/([0-9]+)$ controllers/payroll/list/report-employee-benefits.php?startDate=$1&endDate=$2&employeeId=$3 [L]  
+RewriteRule ^payrollList/report/employee-benefits/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/([0-9]+)$ controllers/payroll/list/report-employee-benefits.php?startDate=$1&endDate=$2&employeeId=$3 [L] 
+RewriteRule ^payrollList/report/wtax/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/([0-9]+)$ controllers/payroll/list/report-wtax.php?startDate=$1&endDate=$2&employeeId=$3 [L]   
     
 
 #earnings
@@ -60,7 +61,7 @@ RewriteRule ^earnings/search/([A-Za-z0-9-]+)$ controllers/earnings/search.php?se
 RewriteRule ^earnings/validateId/([A-Za-z0-9-]+)$ controllers/earnings/validateId.php?prid=$1 [L]
 RewriteRule ^earnings/summary/([0-9]+)$ controllers/earnings/summary.php?start=$1 [L]  
 RewriteRule ^earnings/filter/([0-9]+)/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)$ controllers/earnings/filter.php?paytypeId=$1&startDate=$2&endDate=$3 [L]  
-RewriteRule ^earnings/summary/view/([0-9]+)/([A-Za-z0-9-]+)/([0-9]+)$ controllers/earnings/summary-paytype-id.php?start=$1&payrollId=$2&payitemId=$3 [L]    
+RewriteRule ^earnings/report/paytype/view/([0-9]+)/([A-Za-z0-9-]+)/([0-9]+)$ controllers/earnings/report-paytype-id.php?start=$1&payrollId=$2&payitemId=$3 [L]    
 
 #deductions
 RewriteRule ^deductions$ controllers/deductions/deductions.php [L]
@@ -68,7 +69,7 @@ RewriteRule ^deductions/([0-9]+)$ controllers/deductions/deductions.php?deductio
 RewriteRule ^deductions/search/([A-Za-z0-9-]+)$ controllers/deductions/search.php?search=$1 [L]
 RewriteRule ^deductions/validateId/([A-Za-z0-9-]+)$ controllers/deductions/validateId.php?prid=$1 [L]
 RewriteRule ^deductions/page/([0-9]+)$ controllers/deductions/page.php?start=$1 [L]
-RewriteRule ^deductions/summary/view/([0-9]+)/([A-Za-z0-9-]+)/([0-9]+)$ controllers/deductions/summary-paytype-id.php?start=$1&payrollId=$2&paytypeId=$3 [L]    
+RewriteRule ^deductions/report/paytype/view/([0-9]+)/([A-Za-z0-9-]+)/([0-9]+)$ controllers/deductions/report-paytype-id.php?start=$1&payrollId=$2&payitemId=$3 [L]    
   
 #payitem
 RewriteRule ^payitem$ controllers/pay-type/pay-item/payitem.php [L]

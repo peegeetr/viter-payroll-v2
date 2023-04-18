@@ -20,6 +20,7 @@ import NoData from "../../../partials/NoData";
 import ServerError from "../../../partials/ServerError";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 import TableSpinner from "../../../partials/spinners/TableSpinner";
+import HeaderPrint from "../../../partials/HeaderPrint";
 
 const PayBenefitsList = () => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -90,7 +91,7 @@ const PayBenefitsList = () => {
   // payroll-type/summary/
   return (
     <>
-      <div className="relative overflow-x-auto z-0 w-full ">
+      <div className="relative overflow-x-auto z-0 w-full print:hidden">
         <Formik
           initialValues={initVal}
           validationSchema={yupSchema}
@@ -164,6 +165,7 @@ const PayBenefitsList = () => {
         </Formik>
       </div>
       {/* startDate endDate  */}
+      <HeaderPrint />
       <div className="text-center pb-4 font-bold print:pt-4">
         {startDate !== "" && (
           <>
@@ -179,16 +181,18 @@ const PayBenefitsList = () => {
           <table>
             <thead>
               <tr className="text-right">
-                <th className="text-left ">#</th>
-                <th className="text-left min-w-[12rem] ">Name</th>
-                <th>&nbsp;</th>
-                <th>SALARY</th>
-                <th>SSS</th>
-                <th>PHIC</th>
-                <th>PGBG</th>
-                <th>SSS LOAN</th>
-                <th>PGBG LOAN</th>
-                <th>PGBG MP2</th>
+                <th className="text-left  print:py-[2px]">#</th>
+                <th className="text-left min-w-[12rem]  print:py-[2px]">
+                  Name
+                </th>
+                <th className=" print:py-[2px]">&nbsp;</th>
+                <th className=" print:py-[2px]">SALARY</th>
+                <th className=" print:py-[2px]">SSS</th>
+                <th className=" print:py-[2px]">PHIC</th>
+                <th className=" print:py-[2px]">PGBG</th>
+                <th className=" print:py-[2px]">SSS LOAN</th>
+                <th className=" print:py-[2px]">PGBG LOAN</th>
+                <th className=" print:py-[2px]">PGBG MP2</th>
               </tr>
             </thead>
             <tbody>
@@ -211,45 +215,49 @@ const PayBenefitsList = () => {
                 <React.Fragment key={key}>
                   {page.data.map((item, key) => (
                     <tr key={key} className="text-right">
-                      <td className="text-left">{counter++}.</td>
-                      <td colSpan={2} className="text-left">
+                      <td className="text-left print:py-[2px]">{counter++}.</td>
+                      <td colSpan={2} className="text-left print:py-[2px]">
                         {item.payroll_list_employee_name}
                       </td>
-                      <td className="w-[15rem]">
+                      <td className="w-[15rem] print:py-[2px]">
                         {item.payroll_list_basic_pay}
                       </td>
-                      <td className="w-[15rem]">{item.payroll_list_sss_ee}</td>
-                      <td className="w-[15rem]">
+                      <td className="w-[15rem] print:py-[2px]">
+                        {item.payroll_list_sss_ee}
+                      </td>
+                      <td className="w-[15rem] print:py-[2px]">
                         {item.payroll_list_philhealth_ee}
                       </td>
-                      <td className="w-[15rem]">
+                      <td className="w-[15rem] print:py-[2px]">
                         {item.payroll_list_pagibig_ee}
                       </td>
-                      <td className="w-[15rem]">
+                      <td className="w-[15rem] print:py-[2px]">
                         {item.payroll_list_sss_loan}
                       </td>
-                      <td className="w-[15rem]">
+                      <td className="w-[15rem] print:py-[2px]">
                         {item.payroll_list_pagibig_loan}
                       </td>
-                      <td className="w-[15rem]">
+                      <td className="w-[15rem] print:py-[2px]">
                         {item.payroll_list_pagibig_mp2}
                       </td>
                     </tr>
                   ))}
                 </React.Fragment>
               ))}
-              <tr className="font-bold text-right">
-                <td colSpan={3} className="w-[15rem]">
-                  TOTAL
-                </td>
-                <td className="w-[15rem]">{"0"}</td>
-                <td className="w-[15rem]">{"0"}</td>
-                <td className="w-[15rem]">{"0"}</td>
-                <td className="w-[15rem]">{"0"}</td>
-                <td className="w-[15rem]">{"0"}</td>
-                <td className="w-[15rem]">{"0"}</td>
-                <td className="w-[15rem]">{"0"}</td>
-              </tr>
+              {result?.pages[0].data.length !== 0 && (
+                <tr className="font-bold text-right">
+                  <td colSpan={3} className="w-[15rem] print:py-[2px]">
+                    TOTAL
+                  </td>
+                  <td className="w-[15rem] print:py-[2px]">{"0"}</td>
+                  <td className="w-[15rem] print:py-[2px]">{"0"}</td>
+                  <td className="w-[15rem] print:py-[2px]">{"0"}</td>
+                  <td className="w-[15rem] print:py-[2px]">{"0"}</td>
+                  <td className="w-[15rem] print:py-[2px]">{"0"}</td>
+                  <td className="w-[15rem] print:py-[2px]">{"0"}</td>
+                  <td className="w-[15rem] print:py-[2px]">{"0"}</td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>

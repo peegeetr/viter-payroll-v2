@@ -20,6 +20,7 @@ import NoData from "../../../partials/NoData";
 import ServerError from "../../../partials/ServerError";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 import TableSpinner from "../../../partials/spinners/TableSpinner";
+import HeaderPrint from "../../../partials/HeaderPrint";
 
 const SummaryTypeList = () => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -94,7 +95,7 @@ const SummaryTypeList = () => {
   // payroll-type/summary/
   return (
     <>
-      <div className="relative overflow-x-auto z-0 w-full ">
+      <div className="relative overflow-x-auto z-0 w-full  print:hidden">
         <Formik
           initialValues={initVal}
           validationSchema={yupSchema}
@@ -118,7 +119,7 @@ const SummaryTypeList = () => {
                 : "0";
             return (
               <Form>
-                <div className="grid gap-5 grid-cols-1 md:grid-cols-[1fr_1fr_1fr_150px] pt-5 pb-10 items-center">
+                <div className="grid gap-5 grid-cols-1 md:grid-cols-[1fr_1fr_1fr_150px] pt-5 pb-5 items-center">
                   <div className="relative">
                     <InputSelect
                       label="PayType"
@@ -179,73 +180,74 @@ const SummaryTypeList = () => {
         </Formik>
       </div>
 
-      <table>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Pay Item</th>
-            <th>Pay Type</th>
-            <th>Count</th>
-            <th>Pay Period</th>
-            <th className="text-right">Total</th>
-          </tr>
-        </thead>
-        <tbody>
-          {(status === "loading" || result?.pages[0].data.length === 0) && (
-            <tr className="text-center relative">
-              <td colSpan="100%" className="p-10">
-                {status === "loading" && <TableSpinner />}
-                <NoData text="Filter data using above controls." />
-              </td>
-            </tr>
-          )}
-          {error && (
-            <tr className="text-center ">
-              <td colSpan="100%" className="p-10">
-                <ServerError />
-              </td>
-            </tr>
-          )}
-          {result?.pages.map((page, key) => (
-            <React.Fragment key={key}>
-              {page.data.map((item, key) => (
-                <tr key={key}>
-                  <td>{counter++}.</td>
-                  <td className="w-[15rem]">{item.payitem_name}</td>
-                  <td className="w-[15rem]">{item.paytype_name}</td>
-                  <td className="w-[15rem]">{item.count}</td>
-                  <td className="w-[15rem]">
-                    {item.paytype_category === "earnings"
-                      ? getPayPeriod(
-                          item.earnings_start_pay_date,
-                          item.earnings_end_pay_date
-                        )
-                      : item.paytype_category === "deductions"
-                      ? getPayPeriod(
-                          item.deduction_start_pay_date,
-                          item.deduction_end_pay_date
-                        )
-                      : ""}
-                  </td>
-                  <td className="text-right text-primary ">
-                    <Link
-                      className="tooltip-action-table"
-                      data-tooltip="View"
-                      to={
-                        item.paytype_category === "earnings"
-                          ? `${link}/reports/paytype/view?payrollId=${item.earnings_payroll_id}&payitemId=${item.payitem_aid}`
-                          : `${link}/reports/paytype/view?payrollId=${item.deduction_payroll_id}&payitemId=${item.payitem_aid}`
-                      }
-                    >
-                      0.00
-                    </Link>
+      <HeaderPrint />
+      <div className="text-center pb-4 font-bold print:pt-4">
+        {startDate !== "" && (
+          <>
+            <p className="m-0">Pay Run by Pay Item </p>
+            <p className="m-0 text-primary font-bold">
+              {getPayPeriod(startDate, endDate)}
+            </p>
+          </>
+        )}
+      </div>
+      <div className="text-center">
+        <div className="overflow-x-auto ">
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Pay Item</th>
+                <th>Pay Type</th>
+                <th>Employee</th>
+                <th className="text-right">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              {(status === "loading" || result?.pages[0].data.length === 0) && (
+                <tr className="text-center relative">
+                  <td colSpan="100%" className="p-10">
+                    {status === "loading" && <TableSpinner />}
+                    <NoData text="Filter data using above controls." />
                   </td>
                 </tr>
+              )}
+              {error && (
+                <tr className="text-center ">
+                  <td colSpan="100%" className="p-10">
+                    <ServerError />
+                  </td>
+                </tr>
+              )}
+              {result?.pages.map((page, key) => (
+                <React.Fragment key={key}>
+                  {page.data.map((item, key) => (
+                    <tr key={key}>
+                      <td>{counter++}.</td>
+                      <td className="w-[15rem]">{item.payitem_name}</td>
+                      <td className="w-[15rem]">{item.paytype_name}</td>
+                      <td className="w-[15rem]">{item.count}</td>
+                      <td className="text-right text-primary ">
+                        <Link
+                          className="tooltip-action-table"
+                          data-tooltip="View"
+                          to={
+                            item.paytype_category === "earnings"
+                              ? `${link}/reports/paytype/view?payrollId=${item.earnings_payroll_id}&payitemId=${item.payitem_aid}`
+                              : `${link}/reports/paytype/view?payrollId=${item.deduction_payroll_id}&payitemId=${item.payitem_aid}`
+                          }
+                        >
+                          0.00
+                        </Link>
+                      </td>
+                    </tr>
+                  ))}
+                </React.Fragment>
               ))}
-            </React.Fragment>
-          ))}
-        </tbody>
-      </table>
+            </tbody>
+          </table>
+        </div>
+      </div>
       <div className="text-center">
         <LoadmoreRq
           fetchNextPage={fetchNextPage}

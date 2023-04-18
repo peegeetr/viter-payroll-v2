@@ -34,12 +34,12 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
         //check to see if task id in query string is not empty and is number, if not return json error 
 
         if ($category === "earnings") {
-            $query = checkReadEarningsPaytypeIdByDate($payType);
+            $query = checkReadReportEarningsPaytypeIdByDate($payType);
             http_response_code(200);
             getQueriedData($query);
         }
         if ($category === "deductions") {
-            $query = checkReadDeductionPaytypeIdByDate($payType);
+            $query = checkReadReportDeductionPaytypeIdByDate($payType);
             http_response_code(200);
             getQueriedData($query);
         }

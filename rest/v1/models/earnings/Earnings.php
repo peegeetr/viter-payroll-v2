@@ -491,86 +491,6 @@ class Earnings
     }
 
     // read by payslip by id
-    public function readAllSummaryView()
-    {
-        try {
-            $sql = "select earnings.earnings_amount, ";
-            $sql .= "earnings.earnings_employee, ";
-            $sql .= "earnings.earnings_start_pay_date, ";
-            $sql .= "earnings.earnings_end_pay_date, ";
-            $sql .= "paytype.paytype_aid, ";
-            $sql .= "paytype.paytype_category, ";
-            $sql .= "paytype.paytype_name, ";
-            $sql .= "payitem.payitem_aid, ";
-            $sql .= "payitem.payitem_name, ";
-            $sql .= "earnings.earnings_created, ";
-            $sql .= "earnings.earnings_start_pay_date, ";
-            $sql .= "earnings.earnings_end_pay_date, ";
-            $sql .= "COUNT(earnings.earnings_payitem_id) as count ";
-            $sql .= "from {$this->tblPayType} as paytype, ";
-            $sql .= "{$this->tblEarnings} as earnings, ";
-            $sql .= "{$this->tblPayItem} as payitem ";
-            $sql .= "where earnings.earnings_payroll_id = :earnings_payroll_id ";
-            $sql .= "and earnings.earnings_payitem_id = :earnings_payitem_id ";
-            $sql .= "and paytype.paytype_aid = earnings.earnings_paytype_id ";
-            $sql .= "and payitem.payitem_aid = earnings.earnings_payitem_id ";
-            $sql .= "and earnings.earnings_is_installment = '1' ";
-            $sql .= "and payitem.payitem_paytype_id = paytype.paytype_aid ";
-            $sql .= "GROUP BY earnings.earnings_payitem_id ";
-            $sql .= "order by earnings.earnings_employee asc ";
-            $query = $this->connection->prepare($sql);
-            $query->execute([
-                "earnings_payroll_id" => $this->earnings_payroll_id,
-                "earnings_payitem_id" => $this->earnings_payitem_id,
-            ]);
-        } catch (PDOException $ex) {
-            $query = false;
-        }
-        return $query;
-    }
-
-
-    public function readSummaryViewLimit()
-    {
-        try {
-            $sql = "select earnings.earnings_amount, ";
-            $sql .= "earnings.earnings_employee, ";
-            $sql .= "earnings.earnings_start_pay_date, ";
-            $sql .= "earnings.earnings_end_pay_date, ";
-            $sql .= "paytype.paytype_aid, ";
-            $sql .= "paytype.paytype_category, ";
-            $sql .= "paytype.paytype_name, ";
-            $sql .= "payitem.payitem_aid, ";
-            $sql .= "payitem.payitem_name, ";
-            $sql .= "earnings.earnings_created, ";
-            $sql .= "earnings.earnings_start_pay_date, ";
-            $sql .= "earnings.earnings_end_pay_date ";
-            $sql .= "from {$this->tblPayType} as paytype, ";
-            $sql .= "{$this->tblEarnings} as earnings, ";
-            $sql .= "{$this->tblPayItem} as payitem ";
-            $sql .= "where earnings.earnings_payroll_id = :earnings_payroll_id ";
-            $sql .= "and earnings.earnings_paytype_id = :earnings_paytype_id ";
-            $sql .= "and paytype.paytype_aid = earnings.earnings_paytype_id ";
-            $sql .= "and payitem.payitem_aid = earnings.earnings_payitem_id ";
-            $sql .= "and earnings.earnings_is_installment = '1' ";
-            $sql .= "and payitem.payitem_paytype_id = paytype.paytype_aid ";
-            $sql .= "order by earnings.earnings_employee asc ";
-            $sql .= "limit :start, ";
-            $sql .= ":total ";
-            $query = $this->connection->prepare($sql);
-            $query->execute([
-                "earnings_payroll_id" => $this->earnings_payroll_id,
-                "earnings_paytype_id" => $this->earnings_paytype_id,
-                "start" => $this->earnings_start - 1,
-                "total" => $this->earnings_total,
-            ]);
-        } catch (PDOException $ex) {
-            $query = false;
-        }
-        return $query;
-    }
-
-    // read by payslip by id
     public function readAllSummary()
     {
         try {
@@ -670,6 +590,85 @@ class Earnings
                 "earnings_paytype_id" => $this->earnings_paytype_id,
                 "earnings_start_pay_date" => $this->date_from,
                 "earnings_end_pay_date" => $this->date_to,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+    // REPORT Read all Summary
+    // REPORT Read all Summary
+    public function readReportEarningsPaytypeById()
+    {
+        try {
+            $sql = "select earnings.earnings_amount, ";
+            $sql .= "earnings.earnings_employee, ";
+            $sql .= "earnings.earnings_start_pay_date, ";
+            $sql .= "earnings.earnings_end_pay_date, ";
+            $sql .= "paytype.paytype_aid, ";
+            $sql .= "paytype.paytype_category, ";
+            $sql .= "paytype.paytype_name, ";
+            $sql .= "payitem.payitem_aid, ";
+            $sql .= "payitem.payitem_name, ";
+            $sql .= "earnings.earnings_created, ";
+            $sql .= "earnings.earnings_start_pay_date, ";
+            $sql .= "earnings.earnings_end_pay_date ";
+            $sql .= "from {$this->tblPayType} as paytype, ";
+            $sql .= "{$this->tblEarnings} as earnings, ";
+            $sql .= "{$this->tblPayItem} as payitem ";
+            $sql .= "where earnings.earnings_payroll_id = :earnings_payroll_id ";
+            $sql .= "and earnings.earnings_payitem_id = :earnings_payitem_id ";
+            $sql .= "and paytype.paytype_aid = earnings.earnings_paytype_id ";
+            $sql .= "and payitem.payitem_aid = earnings.earnings_payitem_id ";
+            $sql .= "and earnings.earnings_is_installment = '1' ";
+            $sql .= "and payitem.payitem_paytype_id = paytype.paytype_aid ";
+            $sql .= "order by earnings.earnings_employee asc ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "earnings_payroll_id" => $this->earnings_payroll_id,
+                "earnings_payitem_id" => $this->earnings_payitem_id,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    // REPORT Read limit Summary
+    // REPORT Read limit Summary
+    public function readReportEarningsPaytypeByIdLimit()
+    {
+        try {
+            $sql = "select earnings.earnings_amount, ";
+            $sql .= "earnings.earnings_employee, ";
+            $sql .= "earnings.earnings_start_pay_date, ";
+            $sql .= "earnings.earnings_end_pay_date, ";
+            $sql .= "paytype.paytype_aid, ";
+            $sql .= "paytype.paytype_category, ";
+            $sql .= "paytype.paytype_name, ";
+            $sql .= "payitem.payitem_aid, ";
+            $sql .= "payitem.payitem_name, ";
+            $sql .= "earnings.earnings_created, ";
+            $sql .= "earnings.earnings_start_pay_date, ";
+            $sql .= "earnings.earnings_end_pay_date ";
+            $sql .= "from {$this->tblPayType} as paytype, ";
+            $sql .= "{$this->tblEarnings} as earnings, ";
+            $sql .= "{$this->tblPayItem} as payitem ";
+            $sql .= "where earnings.earnings_payroll_id = :earnings_payroll_id ";
+            $sql .= "and earnings.earnings_payitem_id = :earnings_payitem_id ";
+            $sql .= "and paytype.paytype_aid = earnings.earnings_paytype_id ";
+            $sql .= "and payitem.payitem_aid = earnings.earnings_payitem_id ";
+            $sql .= "and earnings.earnings_is_installment = '1' ";
+            $sql .= "and payitem.payitem_paytype_id = paytype.paytype_aid ";
+            $sql .= "order by earnings.earnings_employee asc ";
+            $sql .= "limit :start, ";
+            $sql .= ":total ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "earnings_payroll_id" => $this->earnings_payroll_id,
+                "earnings_payitem_id" => $this->earnings_payitem_id,
+                "start" => $this->earnings_start - 1,
+                "total" => $this->earnings_total,
             ]);
         } catch (PDOException $ex) {
             $query = false;

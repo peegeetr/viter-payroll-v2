@@ -52,21 +52,6 @@ function checkReadSummaryByDate($object)
     return $query;
 }
 
-// Read all Summary
-function checkReadAllSummaryView($object)
-{
-    $query = $object->readAllSummaryView();
-    checkQuery($query, "Empty records.(Read Summary view)");
-    return $query;
-}
-
-// Read limit Summary
-function checkReadSummaryViewLimit($object)
-{
-    $query = $object->readSummaryViewLimit();
-    checkQuery($query, "Empty records.(Summary view Limit)");
-    return $query;
-}
 
 // delete earnings 
 function checkDeleteEarnings($object)
@@ -81,5 +66,21 @@ function checkDeleteEarningsIdAndEmployeeId($object)
 {
     $query = $object->deleteEarningsIdAndEmployeeId();
     checkQuery($query, "There's a problem processing your request. (delete earnings id and Employee id)");
+    return $query;
+}
+
+// REPORT Read all Summary
+function checkReadReportEarningsPaytypeById($object)
+{
+    $query = $object->readReportEarningsPaytypeById();
+    checkQuery($query, "Empty records.(Read earnings report paytype id )");
+    return $query;
+}
+
+// REPORT Read limit Summary
+function checkReadReportEarningsPaytypeByIdLimit($object)
+{
+    $query = $object->readReportEarningsPaytypeByIdLimit();
+    checkQuery($query, "Empty records.(Read earnings report paytype id Limit)");
     return $query;
 }

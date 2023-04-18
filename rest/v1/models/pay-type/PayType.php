@@ -309,7 +309,7 @@ class PayType
     }
 
     // report filter specifc type id by date earnings
-    public function readEarningsPaytypeIdByDate()
+    public function readReportEarningsPaytypeIdByDate()
     {
         try {
             $sql = "select payitem.payitem_aid, ";
@@ -347,7 +347,7 @@ class PayType
     }
 
     // report filter specific type id by date deduction
-    public function readDeductionPaytypeIdByDate()
+    public function readReportDeductionPaytypeIdByDate()
     {
         try {
             $sql = "select payitem.payitem_aid, ";
@@ -357,7 +357,8 @@ class PayType
             $sql .= "deduction.deduction_end_pay_date, ";
             $sql .= "paytype.paytype_category, ";
             $sql .= "paytype.paytype_aid, ";
-            $sql .= "paytype.paytype_name ";
+            $sql .= "paytype.paytype_name, ";
+            $sql .= "COUNT(deduction.deduction_payitem_id) as count ";
             $sql .= "from {$this->tblDeductions} as deduction, ";
             $sql .= "{$this->tblPayType} as paytype, ";
             $sql .= "{$this->tblPayItem} as payitem ";
@@ -369,6 +370,7 @@ class PayType
             $sql .= "and deduction.deduction_is_installment = '1' ";
             $sql .= "and DATE(deduction.deduction_start_pay_date) between ";
             $sql .= ":date_from and :date_to ";
+            $sql .= "GROUP BY deduction.deduction_payitem_id ";
             $sql .= "order by DATE(deduction.deduction_start_pay_date) desc ";
             $query = $this->connection->prepare($sql);
             $query->execute([

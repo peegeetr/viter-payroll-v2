@@ -38,8 +38,8 @@ const WTaxList = () => {
     queryKey: ["earnings-summary", isSubmit],
     queryFn: async ({ pageParam = 1 }) =>
       await queryDataInfinite(
-        `${devApiUrl}/v1/payrollList/filter/by-employee-id/${startDate}/${endDate}/${employeeId}`, // filter endpoint
-        `${devApiUrl}/v1/payrollList/page/by/employee/${pageParam}/0`, // list endpoint
+        `${devApiUrl}/v1/payrollList/report/wtax/${startDate}/${endDate}/${employeeId}`, // filter endpoint
+        `${devApiUrl}/v1/payrollList/page/0/${pageParam}`, // list endpoint
         isFilter // search boolean
       ),
     getNextPageParam: (lastPage) => {
@@ -83,7 +83,7 @@ const WTaxList = () => {
   });
   return (
     <>
-      <div className="relative overflow-x-auto z-0 w-full lg:w-[45rem] ">
+      <div className="relative overflow-x-auto z-0 w-full  ">
         <Formik
           initialValues={initVal}
           validationSchema={yupSchema}
@@ -101,7 +101,7 @@ const WTaxList = () => {
           {(props) => {
             return (
               <Form>
-                <div className="grid gap-5 grid-cols-1 md:grid-cols-[1fr_1fr_1fr_150px] pt-5 pb-10 items-center print:hidden">
+                <div className="grid gap-5 grid-cols-1 md:grid-cols-[1fr_1fr_1fr_150px] pt-5 pb-5 items-center print:hidden">
                   <div className="relative">
                     <InputSelect
                       label="Employee"

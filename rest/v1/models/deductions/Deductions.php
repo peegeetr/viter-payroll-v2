@@ -100,83 +100,6 @@ class Deductions
         return $query;
     }
 
-    // read by payslip by id
-    public function readAllSummaryView()
-    {
-        try {
-            $sql = "select deduction.deduction_amount, ";
-            $sql .= "deduction.deduction_employee, ";
-            $sql .= "deduction.deduction_start_pay_date, ";
-            $sql .= "deduction.deduction_end_pay_date, ";
-            $sql .= "paytype.paytype_aid, ";
-            $sql .= "paytype.paytype_category, ";
-            $sql .= "paytype.paytype_name, ";
-            $sql .= "payitem.payitem_aid, ";
-            $sql .= "payitem.payitem_name, ";
-            $sql .= "deduction.deduction_created, ";
-            $sql .= "deduction.deduction_start_pay_date, ";
-            $sql .= "deduction.deduction_end_pay_date ";
-            $sql .= "from {$this->tblPayType} as paytype, ";
-            $sql .= "{$this->tblDeductions} as deduction, ";
-            $sql .= "{$this->tblPayItem} as payitem ";
-            $sql .= "where deduction.deduction_payroll_id = :deduction_payroll_id ";
-            $sql .= "and deduction.deduction_paytype_id = :deduction_paytype_id ";
-            $sql .= "and paytype.paytype_aid = deduction.deduction_paytype_id ";
-            $sql .= "and payitem.payitem_aid = deduction.deduction_payitem_id ";
-            $sql .= "and deduction.deduction_is_installment = '1' ";
-            $sql .= "and payitem.payitem_paytype_id = paytype.paytype_aid ";
-            $sql .= "order by deduction.deduction_employee asc ";
-            $query = $this->connection->prepare($sql);
-            $query->execute([
-                "deduction_payroll_id" => $this->deduction_payroll_id,
-                "deduction_paytype_id" => $this->deduction_paytype_id,
-            ]);
-        } catch (PDOException $ex) {
-            $query = false;
-        }
-        return $query;
-    }
-
-
-    public function readSummaryViewLimit()
-    {
-        try {
-            $sql = "select deduction.deduction_amount, ";
-            $sql .= "deduction.deduction_employee, ";
-            $sql .= "deduction.deduction_start_pay_date, ";
-            $sql .= "deduction.deduction_end_pay_date, ";
-            $sql .= "paytype.paytype_aid, ";
-            $sql .= "paytype.paytype_category, ";
-            $sql .= "paytype.paytype_name, ";
-            $sql .= "payitem.payitem_aid, ";
-            $sql .= "payitem.payitem_name, ";
-            $sql .= "deduction.deduction_created, ";
-            $sql .= "deduction.deduction_start_pay_date, ";
-            $sql .= "deduction.deduction_end_pay_date ";
-            $sql .= "from {$this->tblPayType} as paytype, ";
-            $sql .= "{$this->tblDeductions} as deduction, ";
-            $sql .= "{$this->tblPayItem} as payitem ";
-            $sql .= "where deduction.deduction_payroll_id = :deduction_payroll_id ";
-            $sql .= "and deduction.deduction_paytype_id = :deduction_paytype_id ";
-            $sql .= "and paytype.paytype_aid = deduction.deduction_paytype_id ";
-            $sql .= "and payitem.payitem_aid = deduction.deduction_payitem_id ";
-            $sql .= "and deduction.deduction_is_installment = '1' ";
-            $sql .= "and payitem.payitem_paytype_id = paytype.paytype_aid ";
-            $sql .= "order by deduction.deduction_employee asc ";
-            $sql .= "limit :start, ";
-            $sql .= ":total ";
-            $query = $this->connection->prepare($sql);
-            $query->execute([
-                "deduction_payroll_id" => $this->deduction_payroll_id,
-                "deduction_paytype_id" => $this->deduction_paytype_id,
-                "start" => $this->deduction_start - 1,
-                "total" => $this->deduction_total,
-            ]);
-        } catch (PDOException $ex) {
-            $query = false;
-        }
-        return $query;
-    }
 
     // read all
     public function readAll()
@@ -485,6 +408,85 @@ class Deductions
                 "deduction_payroll_id" => $this->deduction_payroll_id,
                 "deduction_payitem_id" => $this->deduction_payitem_id,
                 "deduction_employee_id" => $this->deduction_employee_id,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+
+    // read by payslip by id
+    public function readReportDeductionPaytypeById()
+    {
+        try {
+            $sql = "select deduction.deduction_amount, ";
+            $sql .= "deduction.deduction_employee, ";
+            $sql .= "deduction.deduction_start_pay_date, ";
+            $sql .= "deduction.deduction_end_pay_date, ";
+            $sql .= "paytype.paytype_aid, ";
+            $sql .= "paytype.paytype_category, ";
+            $sql .= "paytype.paytype_name, ";
+            $sql .= "payitem.payitem_aid, ";
+            $sql .= "payitem.payitem_name, ";
+            $sql .= "deduction.deduction_created, ";
+            $sql .= "deduction.deduction_start_pay_date, ";
+            $sql .= "deduction.deduction_end_pay_date ";
+            $sql .= "from {$this->tblPayType} as paytype, ";
+            $sql .= "{$this->tblDeductions} as deduction, ";
+            $sql .= "{$this->tblPayItem} as payitem ";
+            $sql .= "where deduction.deduction_payroll_id = :deduction_payroll_id ";
+            $sql .= "and deduction.deduction_payitem_id = :deduction_payitem_id ";
+            $sql .= "and paytype.paytype_aid = deduction.deduction_paytype_id ";
+            $sql .= "and payitem.payitem_aid = deduction.deduction_payitem_id ";
+            $sql .= "and deduction.deduction_is_installment = '1' ";
+            $sql .= "and payitem.payitem_paytype_id = paytype.paytype_aid ";
+            $sql .= "order by deduction.deduction_employee asc ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "deduction_payroll_id" => $this->deduction_payroll_id,
+                "deduction_payitem_id" => $this->deduction_payitem_id,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+
+    public function readReportDeductionPaytypeByIdLimit()
+    {
+        try {
+            $sql = "select deduction.deduction_amount, ";
+            $sql .= "deduction.deduction_employee, ";
+            $sql .= "deduction.deduction_start_pay_date, ";
+            $sql .= "deduction.deduction_end_pay_date, ";
+            $sql .= "paytype.paytype_aid, ";
+            $sql .= "paytype.paytype_category, ";
+            $sql .= "paytype.paytype_name, ";
+            $sql .= "payitem.payitem_aid, ";
+            $sql .= "payitem.payitem_name, ";
+            $sql .= "deduction.deduction_created, ";
+            $sql .= "deduction.deduction_start_pay_date, ";
+            $sql .= "deduction.deduction_end_pay_date ";
+            $sql .= "from {$this->tblPayType} as paytype, ";
+            $sql .= "{$this->tblDeductions} as deduction, ";
+            $sql .= "{$this->tblPayItem} as payitem ";
+            $sql .= "where deduction.deduction_payroll_id = :deduction_payroll_id ";
+            $sql .= "and deduction.deduction_payitem_id = :deduction_payitem_id ";
+            $sql .= "and paytype.paytype_aid = deduction.deduction_paytype_id ";
+            $sql .= "and payitem.payitem_aid = deduction.deduction_payitem_id ";
+            $sql .= "and deduction.deduction_is_installment = '1' ";
+            $sql .= "and payitem.payitem_paytype_id = paytype.paytype_aid ";
+            $sql .= "order by deduction.deduction_employee asc ";
+            $sql .= "limit :start, ";
+            $sql .= ":total ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "deduction_payroll_id" => $this->deduction_payroll_id,
+                "deduction_payitem_id" => $this->deduction_payitem_id,
+                "start" => $this->deduction_start - 1,
+                "total" => $this->deduction_total,
             ]);
         } catch (PDOException $ex) {
             $query = false;

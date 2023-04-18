@@ -231,6 +231,8 @@ const SummaryTypeList = () => {
                         <Link
                           className="tooltip-action-table"
                           data-tooltip="View"
+                          target="_blank"
+                          rel="noopener noreferrer"
                           to={
                             item.paytype_category === "earnings"
                               ? `${link}/reports/paytype/view?payrollId=${item.earnings_payroll_id}&payitemId=${item.payitem_aid}`

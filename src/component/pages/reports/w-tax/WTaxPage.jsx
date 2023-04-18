@@ -9,6 +9,7 @@ import Navigation from "../../../partials/Navigation";
 import Footer from "../../../partials/Footer";
 import WTaxMonthlyLink from "./monthly-tax/WTaxMonthlyLink";
 import BreadCrumbs from "../../../partials/BreadCrumbs";
+import WTaxYearlyLink from "./yearly-tax/WTaxYearlyLink";
 
 const WTaxPage = () => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -23,7 +24,9 @@ const WTaxPage = () => {
           <li className="py-2">
             <WTaxMonthlyLink />
           </li>
-          <li className="py-2">{/* <PayrunSummaryLink /> */}</li>
+          <li className="py-2">
+            <WTaxYearlyLink />
+          </li>
         </ul>
         <Footer />
       </div>

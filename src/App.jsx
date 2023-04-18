@@ -59,6 +59,7 @@ import PayrollDetails from "./component/pages/employee/payroll-details/PayrollDe
 import PayrunSummary from "./component/pages/reports/payrun-summary/PayrunSummary";
 import WTaxPage from "./component/pages/reports/w-tax/WTaxPage";
 import WTaxMonthly from "./component/pages/reports/w-tax/monthly-tax/WTaxMonthly";
+import WTaxYearly from "./component/pages/reports/w-tax/yearly-tax/WTaxYearly";
 
 function App() {
   // Create a client
@@ -590,6 +591,14 @@ function App() {
               element={
                 <ProtectedRouteSystem>
                   <WTaxMonthly />
+                </ProtectedRouteSystem>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/reports/wtax/yearly`}
+              element={
+                <ProtectedRouteSystem>
+                  <WTaxYearly />
                 </ProtectedRouteSystem>
               }
             />

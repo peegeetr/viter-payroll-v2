@@ -903,9 +903,9 @@ class PayrollList
         return $query;
     }
 
-    // REPORT WTAX filter all employee by date
-    // REPORT WTAX filter all employee by date
-    public function readWtaxAllEmployeeByDate()
+    // REPORT Monthly WTAX filter all employee by date
+    // REPORT Monthly WTAX filter all employee by date
+    public function readReportMonthlyWtaxAllEmployeeByDate()
     {
         try {
             $sql = "select payrollList.*, ";
@@ -933,9 +933,9 @@ class PayrollList
         return $query;
     }
 
-    // REPORT WTAX filter by employee id by date
-    // REPORT WTAX filter by employee id by date
-    public function readWtaxByEmployeeIdByEmpId()
+    // REPORT Monthly WTAX filter by employee id by date 
+    // REPORT Monthly WTAX filter by employee id by date
+    public function readReportMonthlyWtaxByEmployeeIdByEmpId()
     {
         try {
             $sql = "select payrollList.*, ";
@@ -958,6 +958,74 @@ class PayrollList
                 "payroll_list_employee_id" => $this->payroll_list_employee_id,
                 "payroll_start_date" => $this->date_from,
                 "payroll_end_date" => $this->date_to,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    // REPORT Yearly WTAX filter all employee by date
+    // REPORT Yearly WTAX filter all employee by date
+    public function readReportYearlyWtaxAllEmployeeByDate()
+    {
+        try {
+            $sql = "select ";
+            // $sql .= "payrollList.*, ";
+            $sql .= "payrollList.payroll_list_tax, ";
+            $sql .= "payrollList.payroll_list_employee_name, ";
+            $sql .= "payroll.payroll_category_type, ";
+            $sql .= "payroll.payroll_id, ";
+            $sql .= "payroll.payroll_start_date, ";
+            $sql .= "payroll.payroll_end_date, ";
+            $sql .= "sum(payrollList.payroll_list_tax) as totalTax, ";
+            $sql .= "payroll.payroll_pay_date ";
+            $sql .= "from {$this->tblPayrollList} as payrollList, ";
+            $sql .= "{$this->tblPayroll} as payroll ";
+            $sql .= "where payrollList.payroll_list_payroll_id = payroll.payroll_id ";
+            $sql .= "and YEAR(payroll.payroll_pay_date) = :payroll_pay_date ";
+            $sql .= "group by YEAR(payroll.payroll_pay_date) ";
+            $sql .= "order by payrollList.payroll_list_payroll_id, ";
+            $sql .= "payroll.payroll_end_date desc, ";
+            $sql .= "payrollList.payroll_list_employee_name asc ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "payroll_pay_date" => $this->date_from,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    // REPORT Yearly WTAX filter by employee id by date
+    // REPORT Yearly WTAX filter by employee id by date
+    public function readReportYearlyWtaxByEmployeeIdByEmpId()
+    {
+        try {
+            $sql = "select ";
+            // $sql .= "payrollList.*, ";
+            $sql .= "payrollList.payroll_list_tax, ";
+            $sql .= "payrollList.payroll_list_employee_name, ";
+            $sql .= "payroll.payroll_category_type, ";
+            $sql .= "payroll.payroll_id, ";
+            $sql .= "payroll.payroll_start_date, ";
+            $sql .= "payroll.payroll_end_date, ";
+            $sql .= "sum(payrollList.payroll_list_tax) as totalTax, ";
+            $sql .= "payroll.payroll_pay_date ";
+            $sql .= "from {$this->tblPayrollList} as payrollList, ";
+            $sql .= "{$this->tblPayroll} as payroll ";
+            $sql .= "where payrollList.payroll_list_employee_id = :payroll_list_employee_id ";
+            $sql .= "and payrollList.payroll_list_payroll_id = payroll.payroll_id ";
+            $sql .= "and YEAR(payroll.payroll_pay_date) = :payroll_pay_date ";
+            $sql .= "group by YEAR(payroll.payroll_pay_date) ";
+            $sql .= "order by payrollList.payroll_list_payroll_id, ";
+            $sql .= "payroll.payroll_end_date desc, ";
+            $sql .= "payrollList.payroll_list_employee_name asc ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "payroll_list_employee_id" => $this->payroll_list_employee_id,
+                "payroll_pay_date" => $this->date_from,
             ]);
         } catch (PDOException $ex) {
             $query = false;

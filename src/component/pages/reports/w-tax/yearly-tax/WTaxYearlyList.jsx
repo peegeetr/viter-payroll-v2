@@ -1,30 +1,30 @@
-import { useInfiniteQuery } from "@tanstack/react-query";
 import { Form, Formik } from "formik";
 import React from "react";
 import { MdFilterAlt } from "react-icons/md";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { useInView } from "react-intersection-observer";
 import * as Yup from "yup";
 import { StoreContext } from "../../../../../store/StoreContext";
-import useQueryData from "../../../../custom-hooks/useQueryData";
 import { InputSelect, InputText } from "../../../../helpers/FormInputs";
+import ButtonSpinner from "../../../../partials/spinners/ButtonSpinner";
+import { queryDataInfinite } from "../../../../helpers/queryDataInfinite";
+import useQueryData from "../../../../custom-hooks/useQueryData";
 import {
   devApiUrl,
   hrisDevApiUrl,
 } from "../../../../helpers/functions-general";
-import { queryDataInfinite } from "../../../../helpers/queryDataInfinite";
+import TableSpinner from "../../../../partials/spinners/TableSpinner";
 import NoData from "../../../../partials/NoData";
 import ServerError from "../../../../partials/ServerError";
-import ButtonSpinner from "../../../../partials/spinners/ButtonSpinner";
-import TableSpinner from "../../../../partials/spinners/TableSpinner";
-import WTaxBodyMonthly from "./WTaxBodyMonthly";
+import WTaxBodyYearly from "./WTaxBodyYearly";
+import { getYear } from "./functions-wtax";
 
-const WTaxMonthlyList = () => {
+const WTaxYearlyList = () => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [isFilter, setFilter] = React.useState(false);
   const [isSubmit, setSubmit] = React.useState(false);
   const [employeeId, setEmployee] = React.useState("");
-  const [startDate, setStartDate] = React.useState("");
-  const [endDate, setEndDate] = React.useState("");
+  const [year, setYear] = React.useState("");
 
   const [page, setPage] = React.useState(1);
   const { ref, inView } = useInView();
@@ -41,7 +41,7 @@ const WTaxMonthlyList = () => {
     queryKey: ["earnings-summary", isSubmit],
     queryFn: async ({ pageParam = 1 }) =>
       await queryDataInfinite(
-        `${devApiUrl}/v1/payrollList/report/wtax/monthly/${startDate}/${endDate}/${employeeId}`, // filter endpoint
+        `${devApiUrl}/v1/payrollList/report/wtax/yearly/${year}/${employeeId}`, // filter endpoint
         `${devApiUrl}/v1/payrollList/page/0/${pageParam}`, // list endpoint
         isFilter // search boolean
       ),
@@ -75,14 +75,13 @@ const WTaxMonthlyList = () => {
 
   const initVal = {
     employee_aid: "",
-    start_date: "",
+    year: "",
     end_date: "",
   };
 
   const yupSchema = Yup.object({
     employee_aid: Yup.string().required("Required"),
-    start_date: Yup.string().required("Required"),
-    end_date: Yup.string().required("Required"),
+    year: Yup.string().required("Required"),
   });
   return (
     <>
@@ -94,17 +93,13 @@ const WTaxMonthlyList = () => {
             setFilter(true);
             setSubmit(!isSubmit);
             setEmployee(values.employee_aid);
-            setStartDate(values.start_date);
-            setEndDate(values.end_date);
-
-            // // refetch data of query
-            // refetch();
+            setYear(values.year);
           }}
         >
           {(props) => {
             return (
               <Form>
-                <div className="grid gap-5 grid-cols-1 md:grid-cols-[1fr_1fr_1fr_150px] pt-5 pb-5 items-center print:hidden">
+                <div className="grid gap-5 grid-cols-1 md:grid-cols-[1fr_1fr_150px] pt-5 pb-5 items-center print:hidden">
                   <div className="relative">
                     <InputSelect
                       label="Employee"
@@ -124,25 +119,22 @@ const WTaxMonthlyList = () => {
                     </InputSelect>
                   </div>
                   <div className="relative">
-                    <InputText
-                      label="Start Pay Date"
-                      name="start_date"
+                    <InputSelect
+                      label="Year"
+                      name="year"
                       type="text"
                       disabled={isFetching}
-                      onFocus={(e) => (e.target.type = "date")}
-                      onBlur={(e) => (e.target.type = "date")}
-                    />
-                  </div>
-
-                  <div className="relative">
-                    <InputText
-                      label="End Pay Date"
-                      name="end_date"
-                      type="text"
-                      disabled={isFetching}
-                      onFocus={(e) => (e.target.type = "date")}
-                      onBlur={(e) => (e.target.type = "date")}
-                    />
+                    >
+                      <option value="" hidden></option>
+                      <option value="0">All</option>
+                      {getYear()?.map((yItem, key) => {
+                        return (
+                          <option key={key} value={yItem.year}>
+                            {`${yItem.year}`}
+                          </option>
+                        );
+                      })}
+                    </InputSelect>
                   </div>
 
                   <button
@@ -182,14 +174,10 @@ const WTaxMonthlyList = () => {
             </tbody>
           </table>
         )}
-        <WTaxBodyMonthly
-          result={result}
-          startDate={startDate}
-          endDate={endDate}
-        />
+        <WTaxBodyYearly result={result} year={year} employeeId={employeeId} />
       </div>
     </>
   );
 };
 
-export default WTaxMonthlyList;
+export default WTaxYearlyList;

@@ -181,7 +181,7 @@ const SummaryTypeView = () => {
                                   Number(item.earnings_amount).toFixed(2)
                                 )}`
                               : `${numberWithCommas(
-                                  Number(item.deduction_amount)
+                                  Number(item.deduction_amount).toFixed(2)
                                 )}`}
                           </td>
                         </tr>

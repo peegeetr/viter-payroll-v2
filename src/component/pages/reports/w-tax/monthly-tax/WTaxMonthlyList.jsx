@@ -73,6 +73,13 @@ const WTaxMonthlyList = () => {
     false // devKey boolean
   );
 
+  // use if not loadmore button monthly tax
+  const { data: monthlyTax } = useQueryData(
+    `${devApiUrl}/v1/tax/monthly`, // endpoint
+    "get", // method
+    "monthlyTax" // key
+  );
+
   const initVal = {
     employee_aid: "",
     start_date: "",
@@ -184,6 +191,7 @@ const WTaxMonthlyList = () => {
         )}
         <WTaxBodyMonthly
           result={result}
+          monthlyTax={monthlyTax?.data}
           startDate={startDate}
           endDate={endDate}
         />

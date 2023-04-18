@@ -8,6 +8,7 @@ import {
   getPayPeriod,
   getUrlParam,
   getUserType,
+  numberWithCommas,
 } from "../../../../helpers/functions-general";
 import { queryDataInfinite } from "../../../../helpers/queryDataInfinite";
 import BreadCrumbs from "../../../../partials/BreadCrumbs";
@@ -29,6 +30,7 @@ const SummaryTypeView = () => {
   const [page, setPage] = React.useState(1);
   let counter = 1;
   const { ref, inView } = useInView();
+  let total = 0;
 
   // use if not loadmore button undertime
   const { data: paycategory } = useQueryData(
@@ -160,26 +162,36 @@ const SummaryTypeView = () => {
 
                 {result?.pages.map((page, key) => (
                   <React.Fragment key={key}>
-                    {page.data.map((item, key) => (
-                      <tr key={key}>
-                        <td>{counter++}.</td>
-                        <td>
-                          {item.paytype_category === "earnings"
-                            ? `${item.earnings_employee}`
-                            : `${item.deduction_employee}`}
-                        </td>
+                    {page.data.map((item, key) => {
+                      item.earnings_amount === undefined
+                        ? (total += Number(item.deduction_amount))
+                        : (total += Number(item.earnings_amount));
+                      return (
+                        <tr key={key}>
+                          <td>{counter++}.</td>
+                          <td>
+                            {item.paytype_category === "earnings"
+                              ? `${item.earnings_employee}`
+                              : `${item.deduction_employee}`}
+                          </td>
 
-                        <td className="w-[15rem] text-right">
-                          {item.paytype_category === "earnings"
-                            ? `${Number(item.earnings_amount).toFixed(2)}`
-                            : `${Number(item.deduction_amount)}`}
-                        </td>
-                      </tr>
-                    ))}
+                          <td className="w-[15rem] text-right">
+                            {item.paytype_category === "earnings"
+                              ? `${numberWithCommas(
+                                  Number(item.earnings_amount).toFixed(2)
+                                )}`
+                              : `${numberWithCommas(
+                                  Number(item.deduction_amount).toFixed(2)
+                                )}`}
+                          </td>
+                        </tr>
+                      );
+                    })}
                   </React.Fragment>
                 ))}
               </tbody>
             </table>
+            Total: {numberWithCommas(total.toFixed(2))}
             <div className="text-center print:hidden">
               <LoadmoreRq
                 fetchNextPage={fetchNextPage}

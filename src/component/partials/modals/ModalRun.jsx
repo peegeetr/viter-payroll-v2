@@ -48,6 +48,7 @@ const ModalRun = ({
   semiTax,
   pagibig,
   philhealth,
+  // monthlyTax,
 }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [loading, setLoading] = React.useState(false);
@@ -95,6 +96,7 @@ const ModalRun = ({
       semiTax,
       pagibig,
       philhealth
+      // monthlyTax
     );
 
     let payrollList = run.payrollList;

@@ -13,6 +13,7 @@ import {
   getPayPeriod,
   getUserType,
   hrisDevApiUrl,
+  numberWithCommas,
 } from "../../../helpers/functions-general";
 import { queryDataInfinite } from "../../../helpers/queryDataInfinite";
 import LoadmoreRq from "../../../partials/LoadmoreRq";
@@ -34,6 +35,13 @@ const PayBenefitsList = () => {
   const [page, setPage] = React.useState(1);
   let counter = 1;
   const { ref, inView } = useInView();
+  let totalSalary = 0;
+  let totalSss = 0;
+  let totalPag = 0;
+  let totalPhic = 0;
+  let totalSssLoan = 0;
+  let totalPagLoan = 0;
+  let totalMp2Loan = 0;
   // use if with loadmore button and search bar
   const {
     data: result,
@@ -213,35 +221,48 @@ const PayBenefitsList = () => {
               )}
               {result?.pages.map((page, key) => (
                 <React.Fragment key={key}>
-                  {page.data.map((item, key) => (
-                    <tr key={key} className="text-right">
-                      <td className="text-left print:py-[2px]">{counter++}.</td>
-                      <td colSpan={2} className="text-left print:py-[2px]">
-                        {item.payroll_list_employee_name}
-                      </td>
-                      <td className="w-[15rem] print:py-[2px]">
-                        {item.payroll_list_basic_pay}
-                      </td>
-                      <td className="w-[15rem] print:py-[2px]">
-                        {item.payroll_list_sss_ee}
-                      </td>
-                      <td className="w-[15rem] print:py-[2px]">
-                        {item.payroll_list_philhealth_ee}
-                      </td>
-                      <td className="w-[15rem] print:py-[2px]">
-                        {item.payroll_list_pagibig_ee}
-                      </td>
-                      <td className="w-[15rem] print:py-[2px]">
-                        {item.payroll_list_sss_loan}
-                      </td>
-                      <td className="w-[15rem] print:py-[2px]">
-                        {item.payroll_list_pagibig_loan}
-                      </td>
-                      <td className="w-[15rem] print:py-[2px]">
-                        {item.payroll_list_pagibig_mp2}
-                      </td>
-                    </tr>
-                  ))}
+                  {page.data.map((item, key) => {
+                    totalSalary += Number(item.payroll_list_employee_salary);
+                    totalSss += Number(item.payroll_list_sss_ee);
+                    totalPag += Number(item.payroll_list_pagibig_ee);
+                    totalPhic += Number(item.payroll_list_philhealth_ee);
+                    totalPagLoan += Number(item.payroll_list_pagibig_loan);
+                    totalSssLoan += Number(item.payroll_list_sss_loan);
+                    totalMp2Loan += Number(item.payroll_list_pagibig_mp2);
+                    return (
+                      <tr key={key} className="text-right">
+                        <td className="text-left print:py-[2px]">
+                          {counter++}.
+                        </td>
+                        <td colSpan={2} className="text-left print:py-[2px]">
+                          {item.payroll_list_employee_name}
+                        </td>
+                        <td className="w-[15rem] print:py-[2px]">
+                          {numberWithCommas(
+                            Number(item.payroll_list_employee_salary).toFixed(2)
+                          )}
+                        </td>
+                        <td className="w-[15rem] print:py-[2px]">
+                          {numberWithCommas(item.payroll_list_sss_ee)}
+                        </td>
+                        <td className="w-[15rem] print:py-[2px]">
+                          {numberWithCommas(item.payroll_list_philhealth_ee)}
+                        </td>
+                        <td className="w-[15rem] print:py-[2px]">
+                          {numberWithCommas(item.payroll_list_pagibig_ee)}
+                        </td>
+                        <td className="w-[15rem] print:py-[2px]">
+                          {numberWithCommas(item.payroll_list_sss_loan)}
+                        </td>
+                        <td className="w-[15rem] print:py-[2px]">
+                          {numberWithCommas(item.payroll_list_pagibig_loan)}
+                        </td>
+                        <td className="w-[15rem] print:py-[2px]">
+                          {numberWithCommas(item.payroll_list_pagibig_mp2)}
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </React.Fragment>
               ))}
               {status !== "loading" && result?.pages[0].data.length !== 0 && (
@@ -249,13 +270,27 @@ const PayBenefitsList = () => {
                   <td colSpan={3} className="w-[15rem] print:py-[2px]">
                     TOTAL
                   </td>
-                  <td className="w-[15rem] print:py-[2px]">{"0"}</td>
-                  <td className="w-[15rem] print:py-[2px]">{"0"}</td>
-                  <td className="w-[15rem] print:py-[2px]">{"0"}</td>
-                  <td className="w-[15rem] print:py-[2px]">{"0"}</td>
-                  <td className="w-[15rem] print:py-[2px]">{"0"}</td>
-                  <td className="w-[15rem] print:py-[2px]">{"0"}</td>
-                  <td className="w-[15rem] print:py-[2px]">{"0"}</td>
+                  <td className="w-[15rem] print:py-[2px]">
+                    {numberWithCommas(totalSalary.toFixed(2))}
+                  </td>
+                  <td className="w-[15rem] print:py-[2px]">
+                    {numberWithCommas(totalSss.toFixed(2))}
+                  </td>
+                  <td className="w-[15rem] print:py-[2px]">
+                    {numberWithCommas(totalPhic.toFixed(2))}
+                  </td>
+                  <td className="w-[15rem] print:py-[2px]">
+                    {numberWithCommas(totalPag.toFixed(2))}
+                  </td>
+                  <td className="w-[15rem] print:py-[2px]">
+                    {numberWithCommas(totalSssLoan.toFixed(2))}
+                  </td>
+                  <td className="w-[15rem] print:py-[2px]">
+                    {numberWithCommas(totalPagLoan.toFixed(2))}
+                  </td>
+                  <td className="w-[15rem] print:py-[2px]">
+                    {numberWithCommas(totalMp2Loan.toFixed(2))}
+                  </td>
                 </tr>
               )}
             </tbody>

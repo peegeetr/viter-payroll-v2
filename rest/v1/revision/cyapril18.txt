@@ -12,10 +12,10 @@
     - pay-type/report-filter.php
 
 *models 
-    - deductions/Deductions.php
-    - earnings/Earnings.php
+    -> deductions/Deductions.php
+    -> earnings/Earnings.php
+    -> pay-type/PayType.php
     - pay-type/pay-item/PayItem.php
-    - pay-type/PayType.php
     - payroll/list/PayrollList.php 
   
 *htaccess 

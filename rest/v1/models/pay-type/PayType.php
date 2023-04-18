@@ -329,7 +329,7 @@ class PayType
             $sql .= "and earnings.earnings_payitem_id = payitem.payitem_aid ";
             $sql .= "and earnings.earnings_paytype_id = payitem.payitem_paytype_id ";
             $sql .= "and payitem.payitem_paytype_id = paytype.paytype_aid ";
-            $sql .= "and earnings.earnings_is_installment = '1' ";
+            $sql .= "and earnings.earnings_is_installment != '2' ";
             $sql .= "and earnings.earnings_start_pay_date = :date_from ";
             $sql .= "and earnings.earnings_end_pay_date = :date_to ";
             $sql .= "GROUP BY earnings.earnings_payitem_id ";
@@ -367,7 +367,7 @@ class PayType
             $sql .= "and deduction.deduction_payitem_id = payitem.payitem_aid ";
             $sql .= "and deduction.deduction_paytype_id = payitem.payitem_paytype_id ";
             $sql .= "and payitem.payitem_paytype_id = paytype.paytype_aid ";
-            $sql .= "and deduction.deduction_is_installment = '1' ";
+            $sql .= "and deduction.deduction_is_installment != '2' ";
             $sql .= "and DATE(deduction.deduction_start_pay_date) between ";
             $sql .= ":date_from and :date_to ";
             $sql .= "GROUP BY deduction.deduction_payitem_id ";

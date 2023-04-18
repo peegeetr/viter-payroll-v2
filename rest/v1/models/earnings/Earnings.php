@@ -658,7 +658,7 @@ class Earnings
             $sql .= "and earnings.earnings_payitem_id = :earnings_payitem_id ";
             $sql .= "and paytype.paytype_aid = earnings.earnings_paytype_id ";
             $sql .= "and payitem.payitem_aid = earnings.earnings_payitem_id ";
-            $sql .= "and earnings.earnings_is_installment  != '2' ";
+            $sql .= "and earnings.earnings_is_installment != '2' ";
             $sql .= "and payitem.payitem_paytype_id = paytype.paytype_aid ";
             $sql .= "order by earnings.earnings_employee asc ";
             $sql .= "limit :start, ";

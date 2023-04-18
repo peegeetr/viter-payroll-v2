@@ -1,14 +1,14 @@
 import React from "react";
-import { StoreContext } from "../../../../store/StoreContext";
-import { getUserType } from "../../../helpers/functions-general";
-import BreadCrumbs from "../../../partials/BreadCrumbs";
-import Footer from "../../../partials/Footer";
-import Header from "../../../partials/Header";
-import Navigation from "../../../partials/Navigation";
-import WTaxList from "./WTaxList";
+import { StoreContext } from "../../../../../store/StoreContext";
+import { getUserType } from "../../../../helpers/functions-general";
+import BreadCrumbs from "../../../../partials/BreadCrumbs";
+import Footer from "../../../../partials/Footer";
+import Header from "../../../../partials/Header";
+import Navigation from "../../../../partials/Navigation";
+import WTaxMonthlyList from "./WTaxMonthlyList";
 import { AiFillPrinter } from "react-icons/ai";
 
-const WTax = () => {
+const WTaxMonthly = () => {
   const { store, dispatch } = React.useContext(StoreContext);
   const link = getUserType(store.credentials.data.role_is_developer === 1);
   return (
@@ -32,7 +32,7 @@ const WTax = () => {
         <hr className="print:hidden" />
 
         <div className="w-full pt-5 pb-20">
-          <WTaxList />
+          <WTaxMonthlyList />
         </div>
 
         <Footer />
@@ -41,4 +41,4 @@ const WTax = () => {
   );
 };
 
-export default WTax;
+export default WTaxMonthly;

@@ -596,8 +596,8 @@ class Earnings
         }
         return $query;
     }
-    // REPORT Read all Summary
-    // REPORT Read all Summary
+    // REPORT Read all Earnings Paytype
+    // REPORT Read all Earnings Paytype
     public function readReportEarningsPaytypeById()
     {
         try {
@@ -620,7 +620,7 @@ class Earnings
             $sql .= "and earnings.earnings_payitem_id = :earnings_payitem_id ";
             $sql .= "and paytype.paytype_aid = earnings.earnings_paytype_id ";
             $sql .= "and payitem.payitem_aid = earnings.earnings_payitem_id ";
-            $sql .= "and earnings.earnings_is_installment = '1' ";
+            $sql .= "and earnings.earnings_is_installment != '2' ";
             $sql .= "and payitem.payitem_paytype_id = paytype.paytype_aid ";
             $sql .= "order by earnings.earnings_employee asc ";
             $query = $this->connection->prepare($sql);
@@ -634,8 +634,8 @@ class Earnings
         return $query;
     }
 
-    // REPORT Read limit Summary
-    // REPORT Read limit Summary
+    // REPORT Read limit Earnings Paytype
+    // REPORT Read limit Earnings Paytype
     public function readReportEarningsPaytypeByIdLimit()
     {
         try {
@@ -658,7 +658,7 @@ class Earnings
             $sql .= "and earnings.earnings_payitem_id = :earnings_payitem_id ";
             $sql .= "and paytype.paytype_aid = earnings.earnings_paytype_id ";
             $sql .= "and payitem.payitem_aid = earnings.earnings_payitem_id ";
-            $sql .= "and earnings.earnings_is_installment = '1' ";
+            $sql .= "and earnings.earnings_is_installment  != '2' ";
             $sql .= "and payitem.payitem_paytype_id = paytype.paytype_aid ";
             $sql .= "order by earnings.earnings_employee asc ";
             $sql .= "limit :start, ";

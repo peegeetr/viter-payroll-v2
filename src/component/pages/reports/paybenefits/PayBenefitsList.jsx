@@ -197,10 +197,10 @@ const PayBenefitsList = () => {
             </thead>
             <tbody>
               {(status === "loading" || result?.pages[0].data.length === 0) && (
-                <tr className="text-center ">
+                <tr className="text-center relative ">
                   <td colSpan="100%" className="p-10">
                     {status === "loading" && <TableSpinner />}
-                    <NoData />
+                    <NoData text="Filter data using above controls." />
                   </td>
                 </tr>
               )}
@@ -244,7 +244,7 @@ const PayBenefitsList = () => {
                   ))}
                 </React.Fragment>
               ))}
-              {result?.pages[0].data.length !== 0 && (
+              {status !== "loading" && result?.pages[0].data.length !== 0 && (
                 <tr className="font-bold text-right">
                   <td colSpan={3} className="w-[15rem] print:py-[2px]">
                     TOTAL

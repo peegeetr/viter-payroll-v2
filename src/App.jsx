@@ -49,7 +49,7 @@ import ForgotPassword from "./component/pages/access/forgot-password/ForgotPassw
 import ForgotPasswordVerification from "./component/pages/access/forgot-password/ForgotPasswordVerification";
 import ForgotPasswordSystem from "./component/pages/access/forgot-password/ForgotPasswordSystem";
 import PayrollSummaryPage from "./component/pages/reports/payroll-summary/PayrollSummaryPage";
-import WTax from "./component/pages/reports/w-tax/WTax";
+import WTax from "./component/pages/reports/w-tax/monthly-tax/WTaxMonthly";
 import SummaryEarnings from "./component/pages/reports/payroll-summary/earnings/SummaryEarnings";
 import SummaryDeductions from "./component/pages/reports/payroll-summary/deductions/SummaryDeductions";
 import SummaryType from "./component/pages/reports/paytype/SummaryType";
@@ -57,6 +57,8 @@ import SummaryTypeView from "./component/pages/reports/paytype/view/SummaryTypeV
 import PayBenefits from "./component/pages/reports/paybenefits/PayBenefits";
 import PayrollDetails from "./component/pages/employee/payroll-details/PayrollDetails";
 import PayrunSummary from "./component/pages/reports/payrun-summary/PayrunSummary";
+import WTaxPage from "./component/pages/reports/w-tax/WTaxPage";
+import WTaxMonthly from "./component/pages/reports/w-tax/monthly-tax/WTaxMonthly";
 
 function App() {
   // Create a client
@@ -579,7 +581,15 @@ function App() {
               path={`${devNavUrl}/${UrlSystem}/reports/wtax`}
               element={
                 <ProtectedRouteSystem>
-                  <WTax />
+                  <WTaxPage />
+                </ProtectedRouteSystem>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/reports/wtax/monthly`}
+              element={
+                <ProtectedRouteSystem>
+                  <WTaxMonthly />
                 </ProtectedRouteSystem>
               }
             />

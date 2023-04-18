@@ -416,7 +416,8 @@ class Deductions
     }
 
 
-    // read by payslip by id
+    // REPORT Read all Deduction Paytype
+    // REPORT Read all Deduction Paytype
     public function readReportDeductionPaytypeById()
     {
         try {
@@ -439,7 +440,7 @@ class Deductions
             $sql .= "and deduction.deduction_payitem_id = :deduction_payitem_id ";
             $sql .= "and paytype.paytype_aid = deduction.deduction_paytype_id ";
             $sql .= "and payitem.payitem_aid = deduction.deduction_payitem_id ";
-            $sql .= "and deduction.deduction_is_installment = '1' ";
+            $sql .= "and deduction.deduction_is_installment != '2' ";
             $sql .= "and payitem.payitem_paytype_id = paytype.paytype_aid ";
             $sql .= "order by deduction.deduction_employee asc ";
             $query = $this->connection->prepare($sql);
@@ -454,6 +455,8 @@ class Deductions
     }
 
 
+    // REPORT Read limit Deduction Paytype
+    // REPORT Read limit Deduction Paytype
     public function readReportDeductionPaytypeByIdLimit()
     {
         try {
@@ -476,7 +479,7 @@ class Deductions
             $sql .= "and deduction.deduction_payitem_id = :deduction_payitem_id ";
             $sql .= "and paytype.paytype_aid = deduction.deduction_paytype_id ";
             $sql .= "and payitem.payitem_aid = deduction.deduction_payitem_id ";
-            $sql .= "and deduction.deduction_is_installment = '1' ";
+            $sql .= "and deduction.deduction_is_installment != '2' ";
             $sql .= "and payitem.payitem_paytype_id = paytype.paytype_aid ";
             $sql .= "order by deduction.deduction_employee asc ";
             $sql .= "limit :start, ";

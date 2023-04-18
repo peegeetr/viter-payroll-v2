@@ -4,18 +4,21 @@ import { MdFilterAlt } from "react-icons/md";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useInView } from "react-intersection-observer";
 import * as Yup from "yup";
-import { StoreContext } from "../../../../store/StoreContext";
-import { InputSelect, InputText } from "../../../helpers/FormInputs";
-import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
+import { StoreContext } from "../../../../../store/StoreContext";
+import { InputSelect, InputText } from "../../../../helpers/FormInputs";
+import ButtonSpinner from "../../../../partials/spinners/ButtonSpinner";
 import WTaxBody from "./WTaxBody";
-import { queryDataInfinite } from "../../../helpers/queryDataInfinite";
-import useQueryData from "../../../custom-hooks/useQueryData";
-import { devApiUrl, hrisDevApiUrl } from "../../../helpers/functions-general";
-import TableSpinner from "../../../partials/spinners/TableSpinner";
-import NoData from "../../../partials/NoData";
-import ServerError from "../../../partials/ServerError";
+import { queryDataInfinite } from "../../../../helpers/queryDataInfinite";
+import useQueryData from "../../../../custom-hooks/useQueryData";
+import {
+  devApiUrl,
+  hrisDevApiUrl,
+} from "../../../../helpers/functions-general";
+import TableSpinner from "../../../../partials/spinners/TableSpinner";
+import NoData from "../../../../partials/NoData";
+import ServerError from "../../../../partials/ServerError";
 
-const WTaxList = () => {
+const WTaxMonthlyList = () => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [isFilter, setFilter] = React.useState(false);
   const [isSubmit, setSubmit] = React.useState(false);
@@ -185,4 +188,4 @@ const WTaxList = () => {
   );
 };
 
-export default WTaxList;
+export default WTaxMonthlyList;

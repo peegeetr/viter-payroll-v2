@@ -238,25 +238,27 @@ const PayBenefitsList = () => {
                           {item.payroll_list_employee_name}
                         </td>
                         <td className="w-[15rem] print:py-[2px]">
-                          {item.payroll_list_employee_salary}
+                          {numberWithCommas(
+                            Number(item.payroll_list_employee_salary).toFixed(2)
+                          )}
                         </td>
                         <td className="w-[15rem] print:py-[2px]">
-                          {item.payroll_list_sss_ee}
+                          {numberWithCommas(item.payroll_list_sss_ee)}
                         </td>
                         <td className="w-[15rem] print:py-[2px]">
-                          {item.payroll_list_philhealth_ee}
+                          {numberWithCommas(item.payroll_list_philhealth_ee)}
                         </td>
                         <td className="w-[15rem] print:py-[2px]">
-                          {item.payroll_list_pagibig_ee}
+                          {numberWithCommas(item.payroll_list_pagibig_ee)}
                         </td>
                         <td className="w-[15rem] print:py-[2px]">
-                          {item.payroll_list_sss_loan}
+                          {numberWithCommas(item.payroll_list_sss_loan)}
                         </td>
                         <td className="w-[15rem] print:py-[2px]">
-                          {item.payroll_list_pagibig_loan}
+                          {numberWithCommas(item.payroll_list_pagibig_loan)}
                         </td>
                         <td className="w-[15rem] print:py-[2px]">
-                          {item.payroll_list_pagibig_mp2}
+                          {numberWithCommas(item.payroll_list_pagibig_mp2)}
                         </td>
                       </tr>
                     );

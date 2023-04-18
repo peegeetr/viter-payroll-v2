@@ -48,7 +48,8 @@ RewriteRule ^payrollList/([A-Za-z0-9-]+)$ controllers/payroll/list/payrollView.p
 RewriteRule ^payrollList/paid/([A-Za-z0-9-]+)$ controllers/payroll/list/paid.php?listpayrollid=$1 [L]  
 RewriteRule ^payrollList/page/([A-Za-z0-9-]+)/([0-9]+)$ controllers/payroll/list/page.php?listpayrollid=$1&start=$2 [L]
 RewriteRule ^payrollList/search/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)$ controllers/payroll/list/search.php?listpayrollid=$1&search=$2 [L]
-RewriteRule ^payrollList/page/by/employee/([0-9]+)/([0-9]+)$ controllers/payroll/list/page-by-emp-id.php?start=$1&empId=$2 [L]
+RewriteRule ^payrollList/page/by/employee/([0-9]+)/([0-9]+)$ controllers/payroll/list/page-by-emp-id.php?start=$1&empId=$2 [L] 
+RewriteRule ^payrollList/report/employee-benefits/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/([0-9]+)$ controllers/payroll/list/report-employee-benefits.php?startDate=$1&endDate=$2&employeeId=$3 [L]  
     
 
 #earnings

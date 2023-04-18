@@ -46,8 +46,8 @@ const PayBenefitsList = () => {
     queryKey: ["benefits-summary", isSubmit],
     queryFn: async ({ pageParam = 1 }) =>
       await queryDataInfinite(
-        `${devApiUrl}/v1/payrollList/filter/by-employee-id/${startDate}/${endDate}/${employeeId}`, // filter endpoint
-        `${devApiUrl}/v1/payrollList/summary/${pageParam}`, // list endpoint
+        `${devApiUrl}/v1/payrollList/report/employee-benefits/${startDate}/${endDate}/${employeeId}`, // filter endpoint
+        `${devApiUrl}/v1/payrollList/report/employee-benefits/${0}/${0}/${0}`, // list endpoint
         isFilter // search boolean
       ),
     getNextPageParam: (lastPage) => {
@@ -164,89 +164,95 @@ const PayBenefitsList = () => {
         </Formik>
       </div>
       {/* startDate endDate  */}
-      <div className="text-center">
+      <div className="text-center pb-4 font-bold print:pt-4">
         {startDate !== "" && (
           <>
-            <p className="m-0">PayPeriod:</p>
+            <p className="m-0">Employee Benefits</p>
             <p className="m-0 text-primary font-bold">
               {getPayPeriod(startDate, endDate)}
             </p>
           </>
         )}
       </div>
-      <div className="pt-4">
-        <table>
-          <thead>
-            <tr className="text-right">
-              <th className="text-left ">#</th>
-              <th className="text-left w-[30rem] ">Name</th>
-              <th>&nbsp;</th>
-              <th>SALARY</th>
-              <th>SSS</th>
-              <th>PHIC</th>
-              <th>PGBG</th>
-              <th>SSS LOAN</th>
-              <th>PGBG LOAN</th>
-              <th>PGBG MP2</th>
-            </tr>
-          </thead>
-          <tbody>
-            {(status === "loading" || result?.pages[0].data.length === 0) && (
-              <tr className="text-center ">
-                <td colSpan="100%" className="p-10">
-                  {status === "loading" && <TableSpinner />}
-                  <NoData />
-                </td>
+      <div className="text-center">
+        <div className="overflow-x-auto ">
+          <table>
+            <thead>
+              <tr className="text-right">
+                <th className="text-left ">#</th>
+                <th className="text-left min-w-[12rem] ">Name</th>
+                <th>&nbsp;</th>
+                <th>SALARY</th>
+                <th>SSS</th>
+                <th>PHIC</th>
+                <th>PGBG</th>
+                <th>SSS LOAN</th>
+                <th>PGBG LOAN</th>
+                <th>PGBG MP2</th>
               </tr>
-            )}
-            {error && (
-              <tr className="text-center ">
-                <td colSpan="100%" className="p-10">
-                  <ServerError />
+            </thead>
+            <tbody>
+              {(status === "loading" || result?.pages[0].data.length === 0) && (
+                <tr className="text-center ">
+                  <td colSpan="100%" className="p-10">
+                    {status === "loading" && <TableSpinner />}
+                    <NoData />
+                  </td>
+                </tr>
+              )}
+              {error && (
+                <tr className="text-center ">
+                  <td colSpan="100%" className="p-10">
+                    <ServerError />
+                  </td>
+                </tr>
+              )}
+              {result?.pages.map((page, key) => (
+                <React.Fragment key={key}>
+                  {page.data.map((item, key) => (
+                    <tr key={key} className="text-right">
+                      <td className="text-left">{counter++}.</td>
+                      <td colSpan={2} className="text-left">
+                        {item.payroll_list_employee_name}
+                      </td>
+                      <td className="w-[15rem]">
+                        {item.payroll_list_basic_pay}
+                      </td>
+                      <td className="w-[15rem]">{item.payroll_list_sss_ee}</td>
+                      <td className="w-[15rem]">
+                        {item.payroll_list_philhealth_ee}
+                      </td>
+                      <td className="w-[15rem]">
+                        {item.payroll_list_pagibig_ee}
+                      </td>
+                      <td className="w-[15rem]">
+                        {item.payroll_list_sss_loan}
+                      </td>
+                      <td className="w-[15rem]">
+                        {item.payroll_list_pagibig_loan}
+                      </td>
+                      <td className="w-[15rem]">
+                        {item.payroll_list_pagibig_mp2}
+                      </td>
+                    </tr>
+                  ))}
+                </React.Fragment>
+              ))}
+              <tr className="font-bold text-right">
+                <td colSpan={3} className="w-[15rem]">
+                  TOTAL
                 </td>
+                <td className="w-[15rem]">{"0"}</td>
+                <td className="w-[15rem]">{"0"}</td>
+                <td className="w-[15rem]">{"0"}</td>
+                <td className="w-[15rem]">{"0"}</td>
+                <td className="w-[15rem]">{"0"}</td>
+                <td className="w-[15rem]">{"0"}</td>
+                <td className="w-[15rem]">{"0"}</td>
               </tr>
-            )}
-            {result?.pages.map((page, key) => (
-              <React.Fragment key={key}>
-                {page.data.map((item, key) => (
-                  <tr key={key} className="text-right">
-                    <td className="text-left">{counter++}.</td>
-                    <td colSpan={2} className="text-left">
-                      {item.payroll_list_employee_name}
-                    </td>
-                    <td className="w-[15rem]">{item.payroll_list_basic_pay}</td>
-                    <td className="w-[15rem]">{item.payroll_list_sss_ee}</td>
-                    <td className="w-[15rem]">
-                      {item.payroll_list_philhealth_ee}
-                    </td>
-                    <td className="w-[15rem]">
-                      {item.payroll_list_pagibig_ee}
-                    </td>
-                    <td className="w-[15rem]">{item.payroll_list_sss_loan}</td>
-                    <td className="w-[15rem]">
-                      {item.payroll_list_pagibig_loan}
-                    </td>
-                    <td className="w-[15rem]">
-                      {item.payroll_list_pagibig_mp2}
-                    </td>
-                  </tr>
-                ))}
-              </React.Fragment>
-            ))}
-            <tr className="font-bold text-right">
-              <td colSpan={3} className="w-[15rem]">
-                TOTAL
-              </td>
-              <td className="w-[15rem]">{"0"}</td>
-              <td className="w-[15rem]">{"0"}</td>
-              <td className="w-[15rem]">{"0"}</td>
-              <td className="w-[15rem]">{"0"}</td>
-              <td className="w-[15rem]">{"0"}</td>
-              <td className="w-[15rem]">{"0"}</td>
-              <td className="w-[15rem]">{"0"}</td>
-            </tr>
-          </tbody>
-        </table>
+            </tbody>
+          </table>
+        </div>
       </div>
       <div className="text-center">
         <LoadmoreRq

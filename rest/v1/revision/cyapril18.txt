@@ -1,13 +1,12 @@
  
 *controllers      
-    - earnings/summary-paytype-id.php  
+    - 
 
 *models 
-    - earnings/Earnings.php 
-    - pay-type/PayType.php
+    - deduction/deduction.php   
   
 *htaccess 
-    - #earnings
+    - 
 
 *db tables 
     -  

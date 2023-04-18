@@ -370,7 +370,7 @@ class Deductions
             $sql .= "and deduction.deduction_payroll_id = :deduction_payroll_id ";
             $sql .= "and deduction.deduction_paytype_id = paytype.paytype_aid ";
             $sql .= "and deduction.deduction_payitem_id = payitem.payitem_aid ";
-            $sql .= "and deduction.deduction_is_installment = '2' ";
+            $sql .= "and deduction.deduction_is_installment != '2' ";
             $sql .= "order by deduction.deduction_is_paid desc, ";
             $sql .= "deduction.deduction_employee asc ";
             $query = $this->connection->prepare($sql);

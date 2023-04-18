@@ -19,7 +19,6 @@ const WTaxBodyMonthly = ({ result, monthlyTax, startDate, endDate }) => {
     totalDiminimis
   ) => {
     let taxDue = 0;
-    // let taxList = [];
     const totalNonTaxableCompensation =
       Number(totalBenefits.toFixed(2)) + totalMadatoryEe + totalDiminimis;
     let taxableCompensationIncome =
@@ -38,13 +37,9 @@ const WTaxBodyMonthly = ({ result, monthlyTax, startDate, endDate }) => {
     });
 
     nonTax = totalNonTaxableCompensation;
-
-    console.log(gross, totalNonTaxableCompensation);
     return taxDue;
   };
 
-  console.log(monthlyTax);
-  // console.log(tax);
   return (
     <>
       {result?.pages.map((page, key) => (
@@ -63,7 +58,6 @@ const WTaxBodyMonthly = ({ result, monthlyTax, startDate, endDate }) => {
               totalShareEe,
               item.deminimis
             );
-            console.log(tax);
             return (
               <div key={key} className="mb-8 print:mb-12">
                 <HeaderPrint />

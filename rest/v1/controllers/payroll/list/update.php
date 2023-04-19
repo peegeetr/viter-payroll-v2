@@ -21,7 +21,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
     checkKeyword($payrollList->payroll_list_payroll_id);
 
     // payroll run
-    $allPayrollList = $data["payrollList"];
+    $allPayrollPayList = $data["payrollPayList"];
     $allHolidayList = $data["holidayList"];
     $allNdList = $data["ndList"];
     $allSssList = $data["sssList"];
@@ -30,7 +30,8 @@ if (array_key_exists("listpayrollid", $_GET)) {
     $allTaxList = $data["taxList"];
     $allDeminimis = $data["deminimisList"];
 
-    // installment
+
+    // installment 
     // installment
     // installment
     // installment
@@ -49,50 +50,54 @@ if (array_key_exists("listpayrollid", $_GET)) {
     $allPagibigMP2List = $data["pagibigMP2List"];
     $allSSSLoanList = $data["sSSLoanList"];
 
-    for ($pl = 0; $pl < count($allPayrollList); $pl++) {
-        $payrollList->payroll_list_employee_id = $allPayrollList[$pl]["payroll_list_employee_id"];
-        $payrollList->payroll_list_deduction = $allPayrollList[$pl]["payroll_list_deduction"];
-        $payrollList->payroll_list_gross =  $allPayrollList[$pl]["payroll_list_gross"];
-        $payrollList->payroll_list_net_pay =  $allPayrollList[$pl]["payroll_list_net_pay"];
-        $payrollList->payroll_list_basic_pay =  $allPayrollList[$pl]["payroll_list_basic_pay"];
-        $payrollList->payroll_list_overtime_pay =  $allPayrollList[$pl]["payroll_list_overtime_pay"];
-        $payrollList->payroll_list_overtime_hrs =  $allPayrollList[$pl]["payroll_list_overtime_hrs"];
-        $payrollList->payroll_list_leave_pay =  $allPayrollList[$pl]["payroll_list_leave_pay"];
-        $payrollList->payroll_list_leave_hrs =  $allPayrollList[$pl]["payroll_list_leave_hrs"];
-        $payrollList->payroll_list_holiday =  $allPayrollList[$pl]["payroll_list_holiday"];
-        $payrollList->payroll_list_holiday_hrs =  $allPayrollList[$pl]["payroll_list_holiday_hrs"];
-        $payrollList->payroll_list_inlfation_adjustment =  $allPayrollList[$pl]["payroll_list_inlfation_adjustment"];
-        $payrollList->payroll_list_adjustment_pay =  $allPayrollList[$pl]["payroll_list_adjustment_pay"];
-        $payrollList->payroll_list_night_shift_differential = $allPayrollList[$pl]["payroll_list_night_shift_differential"];
-        $payrollList->payroll_list_nd_hrs = $allPayrollList[$pl]["payroll_list_nd_hrs"];
-        $payrollList->payroll_list_hazard_pay = $allPayrollList[$pl]["payroll_list_hazard_pay"];
-        $payrollList->payroll_list_absences = $allPayrollList[$pl]["payroll_list_absences"];
-        $payrollList->payroll_list_absences_hrs = $allPayrollList[$pl]["payroll_list_absences_hrs"];
-        $payrollList->payroll_list_13th_month = $allPayrollList[$pl]["payroll_list_13th_month"];
-        $payrollList->payroll_list_bonus = $allPayrollList[$pl]["payroll_list_bonus"];
-        $payrollList->payroll_list_employee_referral_bonus = $allPayrollList[$pl]["payroll_list_employee_referral_bonus"];
-        $payrollList->payroll_list_bereavement = $allPayrollList[$pl]["payroll_list_bereavement"];
-        $payrollList->payroll_list_separation_pay = $allPayrollList[$pl]["payroll_list_separation_pay"];
-        $payrollList->payroll_list_other_allowances = $allPayrollList[$pl]["payroll_list_other_allowances"];
-        $payrollList->payroll_list_total_benefits = $allPayrollList[$pl]["payroll_list_total_benefits"];
-        $payrollList->payroll_list_sss_er = $allPayrollList[$pl]["payroll_list_sss_er"];
-        $payrollList->payroll_list_philhealth_er = $allPayrollList[$pl]["payroll_list_philhealth_er"];
-        $payrollList->payroll_list_pagibig_er = $allPayrollList[$pl]["payroll_list_pagibig_er"];
-        $payrollList->payroll_list_hmo_er = $allPayrollList[$pl]["payroll_list_hmo_er"];
-        $payrollList->payroll_list_sss_ee = $allPayrollList[$pl]["payroll_list_sss_ee"];
-        $payrollList->payroll_list_philhealth_ee = $allPayrollList[$pl]["payroll_list_philhealth_ee"];
-        $payrollList->payroll_list_pagibig_ee = $allPayrollList[$pl]["payroll_list_pagibig_ee"];
-        $payrollList->payroll_list_hmo_ee = $allPayrollList[$pl]["payroll_list_hmo_ee"];
-        $payrollList->payroll_list_sss_loan = $allPayrollList[$pl]["payroll_list_sss_loan"];
-        $payrollList->payroll_list_pagibig_loan = $allPayrollList[$pl]["payroll_list_pagibig_loan"];
-        $payrollList->payroll_list_pagibig_mp2 = $allPayrollList[$pl]["payroll_list_pagibig_mp2"];
-        $payrollList->payroll_list_fwc_tithes = $allPayrollList[$pl]["payroll_list_fwc_tithes"];
-        $payrollList->payroll_list_fca_tuition = $allPayrollList[$pl]["payroll_list_fca_tuition"];
-        $payrollList->payroll_list_other_deduction = $allPayrollList[$pl]["payroll_list_other_deduction"];
-        $payrollList->payroll_list_madatory_ee = $allPayrollList[$pl]["payroll_list_madatory_ee"];
-        $payrollList->payroll_list_tax = $allPayrollList[$pl]["payroll_list_tax"];
+
+    for ($pl = 0; $pl < count($allPayrollPayList); $pl++) {
+        $payrollList->payroll_list_employee_id = $allPayrollPayList[$pl]["payroll_list_employee_id"];
+        $payrollList->payroll_list_deduction = $allPayrollPayList[$pl]["payroll_list_deduction"];
+        $payrollList->payroll_list_gross =  $allPayrollPayList[$pl]["payroll_list_gross"];
+        $payrollList->payroll_list_net_pay =  $allPayrollPayList[$pl]["payroll_list_net_pay"];
+        $payrollList->payroll_list_basic_pay =  $allPayrollPayList[$pl]["payroll_list_basic_pay"];
+        $payrollList->payroll_list_overtime_pay =  $allPayrollPayList[$pl]["payroll_list_overtime_pay"];
+        $payrollList->payroll_list_overtime_hrs =  $allPayrollPayList[$pl]["payroll_list_overtime_hrs"];
+        $payrollList->payroll_list_leave_pay =  $allPayrollPayList[$pl]["payroll_list_leave_pay"];
+        $payrollList->payroll_list_leave_hrs =  $allPayrollPayList[$pl]["payroll_list_leave_hrs"];
+        $payrollList->payroll_list_holiday =  $allPayrollPayList[$pl]["payroll_list_holiday"];
+        $payrollList->payroll_list_holiday_hrs =  $allPayrollPayList[$pl]["payroll_list_holiday_hrs"];
+        $payrollList->payroll_list_inlfation_adjustment =  $allPayrollPayList[$pl]["payroll_list_inlfation_adjustment"];
+        $payrollList->payroll_list_adjustment_pay =  $allPayrollPayList[$pl]["payroll_list_adjustment_pay"];
+        $payrollList->payroll_list_night_shift_differential = $allPayrollPayList[$pl]["payroll_list_night_shift_differential"];
+        $payrollList->payroll_list_nd_hrs = $allPayrollPayList[$pl]["payroll_list_nd_hrs"];
+        $payrollList->payroll_list_hazard_pay = $allPayrollPayList[$pl]["payroll_list_hazard_pay"];
+        $payrollList->payroll_list_absences = $allPayrollPayList[$pl]["payroll_list_absences"];
+        $payrollList->payroll_list_absences_hrs = $allPayrollPayList[$pl]["payroll_list_absences_hrs"];
+        $payrollList->payroll_list_13th_month = $allPayrollPayList[$pl]["payroll_list_13th_month"];
+        $payrollList->payroll_list_bonus = $allPayrollPayList[$pl]["payroll_list_bonus"];
+        $payrollList->payroll_list_employee_referral_bonus = $allPayrollPayList[$pl]["payroll_list_employee_referral_bonus"];
+        $payrollList->payroll_list_bereavement = $allPayrollPayList[$pl]["payroll_list_bereavement"];
+        $payrollList->payroll_list_separation_pay = $allPayrollPayList[$pl]["payroll_list_separation_pay"];
+        $payrollList->payroll_list_other_allowances = $allPayrollPayList[$pl]["payroll_list_other_allowances"];
+        $payrollList->payroll_list_total_benefits = $allPayrollPayList[$pl]["payroll_list_total_benefits"];
+        $payrollList->payroll_list_sss_er = $allPayrollPayList[$pl]["payroll_list_sss_er"];
+        $payrollList->payroll_list_philhealth_er = $allPayrollPayList[$pl]["payroll_list_philhealth_er"];
+        $payrollList->payroll_list_pagibig_er = $allPayrollPayList[$pl]["payroll_list_pagibig_er"];
+        $payrollList->payroll_list_hmo_er = $allPayrollPayList[$pl]["payroll_list_hmo_er"];
+        $payrollList->payroll_list_sss_ee = $allPayrollPayList[$pl]["payroll_list_sss_ee"];
+        $payrollList->payroll_list_philhealth_ee = $allPayrollPayList[$pl]["payroll_list_philhealth_ee"];
+        $payrollList->payroll_list_pagibig_ee = $allPayrollPayList[$pl]["payroll_list_pagibig_ee"];
+        $payrollList->payroll_list_hmo_ee = $allPayrollPayList[$pl]["payroll_list_hmo_ee"];
+        $payrollList->payroll_list_sss_loan = $allPayrollPayList[$pl]["payroll_list_sss_loan"];
+        $payrollList->payroll_list_pagibig_loan = $allPayrollPayList[$pl]["payroll_list_pagibig_loan"];
+        $payrollList->payroll_list_pagibig_mp2 = $allPayrollPayList[$pl]["payroll_list_pagibig_mp2"];
+        $payrollList->payroll_list_fwc_tithes = $allPayrollPayList[$pl]["payroll_list_fwc_tithes"];
+        $payrollList->payroll_list_fca_tuition = $allPayrollPayList[$pl]["payroll_list_fca_tuition"];
+        $payrollList->payroll_list_other_deduction = $allPayrollPayList[$pl]["payroll_list_other_deduction"];
+        $payrollList->payroll_list_madatory_ee = $allPayrollPayList[$pl]["payroll_list_madatory_ee"];
+        $payrollList->payroll_list_undertime = $allPayrollPayList[$pl]["payroll_list_undertime"];
+        $payrollList->payroll_list_tax = $allPayrollPayList[$pl]["payroll_list_tax"];
+
         $query = checkUpdate($payrollList);
     }
+
 
     // delete first existing PR ID and pay item id holiday
     $payrollList->payitem_id = $data["payItemDeminimisId"];
@@ -348,10 +353,10 @@ if (array_key_exists("listpayrollid", $_GET)) {
             $payrollList->start_pay_date = $allBereavementList[$be]["earnings_start_pay_date"];
             $payrollList->end_pay_date = $allBereavementList[$be]["earnings_end_pay_date"];
             $payrollList->details = $allBereavementList[$be]["earnings_details"];
+            $payrollList->installment_extra = $allBereavementList[$be]["installment_extra"];
             $payrollList->hris_date = "";
             $payrollList->earnings_rate = "";
             $payrollList->earnings_hrs = "";
-            $payrollList->installment_extra = 1;
 
             $query = checkCreateEarnings($payrollList);
         }
@@ -379,10 +384,10 @@ if (array_key_exists("listpayrollid", $_GET)) {
             $payrollList->start_pay_date = $allBonusList[$bonus]["earnings_start_pay_date"];
             $payrollList->end_pay_date = $allBonusList[$bonus]["earnings_end_pay_date"];
             $payrollList->details = $allBonusList[$bonus]["earnings_details"];
+            $payrollList->installment_extra = $allBonusList[$bonus]["installment_extra"];
             $payrollList->hris_date = "";
             $payrollList->earnings_rate = "";
             $payrollList->earnings_hrs = "";
-            $payrollList->installment_extra = 1;
             $query = checkCreateEarnings($payrollList);
         }
     }
@@ -409,10 +414,10 @@ if (array_key_exists("listpayrollid", $_GET)) {
             $payrollList->start_pay_date = $allERBonusList[$erb]["earnings_start_pay_date"];
             $payrollList->end_pay_date = $allERBonusList[$erb]["earnings_end_pay_date"];
             $payrollList->details = $allERBonusList[$erb]["earnings_details"];
+            $payrollList->installment_extra = $allBereavementList[$be]["installment_extra"];
             $payrollList->hris_date = "";
             $payrollList->earnings_rate = "";
             $payrollList->earnings_hrs = "";
-            $payrollList->installment_extra = 1;
             $query = checkCreateEarnings($payrollList);
         }
     }
@@ -439,10 +444,10 @@ if (array_key_exists("listpayrollid", $_GET)) {
             $payrollList->start_pay_date = $allSeparationPayList[$sp]["earnings_start_pay_date"];
             $payrollList->end_pay_date = $allSeparationPayList[$sp]["earnings_end_pay_date"];
             $payrollList->details = $allSeparationPayList[$sp]["earnings_details"];
+            $payrollList->installment_extra = $allBereavementList[$be]["installment_extra"];
             $payrollList->hris_date = "";
             $payrollList->earnings_rate = "";
             $payrollList->earnings_hrs = "";
-            $payrollList->installment_extra = 1;
             $query = checkCreateEarnings($payrollList);
         }
     }
@@ -469,10 +474,10 @@ if (array_key_exists("listpayrollid", $_GET)) {
             $payrollList->start_pay_date = $allOtherAllowancesList[$oa]["earnings_start_pay_date"];
             $payrollList->end_pay_date = $allOtherAllowancesList[$oa]["earnings_end_pay_date"];
             $payrollList->details = $allOtherAllowancesList[$oa]["earnings_details"];
+            $payrollList->installment_extra = $allBereavementList[$be]["installment_extra"];
             $payrollList->hris_date = "";
             $payrollList->earnings_rate = "";
             $payrollList->earnings_hrs = "";
-            $payrollList->installment_extra = 1;
             $query = checkCreateEarnings($payrollList);
         }
     }
@@ -634,8 +639,6 @@ if (array_key_exists("listpayrollid", $_GET)) {
             $query = checkCreateDeductions($payrollList);
         }
     }
-
-
 
     returnSuccess($payrollList, "Payroll List", $query);
 }

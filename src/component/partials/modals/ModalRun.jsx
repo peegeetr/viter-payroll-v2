@@ -48,6 +48,8 @@ const ModalRun = ({
   semiTax,
   pagibig,
   philhealth,
+  category13thMonth,
+  categoryId,
   // monthlyTax,
 }) => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -58,8 +60,8 @@ const ModalRun = ({
     mutationFn: (values) =>
       queryData(
         isPaid
-          ? `${devApiUrl}/v1/payrollList/${pid}`
-          : `${devApiUrl}/v1/payrollList/paid/${pid}`,
+          ? `${devApiUrl}/v1/payrollList/paid/${pid}`
+          : `${devApiUrl}/v1/payrollList/${pid}`,
         "put",
         values
       ),
@@ -95,7 +97,9 @@ const ModalRun = ({
       sssBracket,
       semiTax,
       pagibig,
-      philhealth
+      philhealth,
+      category13thMonth,
+      categoryId
       // monthlyTax
     );
 
@@ -121,32 +125,33 @@ const ModalRun = ({
     let payPagibigMP2List = run.pagibigMP2List;
     let paySSSLoanList = run.sSSLoanList;
 
+    console.log(paybonusList);
     mutation.mutate({
-      payrollList: payrollList.length > 0 ? payrollList : 0,
-      holidayList: holidayList.length > 0 ? holidayList : 0,
-      ndList: ndList.length > 0 ? ndList : 0,
-      sssList: sssList.length > 0 ? sssList : 0,
-      pagibigList: pagibigList.length > 0 ? pagibigList : 0,
-      philhealthList: philhealthList.length > 0 ? philhealthList : 0,
-      taxList: taxList.length > 0 ? taxList : 0,
-      deminimisList: payDeminimisList.length > 0 ? payDeminimisList : 0,
+      payrollPayList: payrollList.length > 0 ? payrollList : [],
+      holidayList: holidayList.length > 0 ? holidayList : [],
+      ndList: ndList.length > 0 ? ndList : [],
+      sssList: sssList.length > 0 ? sssList : [],
+      pagibigList: pagibigList.length > 0 ? pagibigList : [],
+      philhealthList: philhealthList.length > 0 ? philhealthList : [],
+      taxList: taxList.length > 0 ? taxList : [],
+      deminimisList: payDeminimisList.length > 0 ? payDeminimisList : [],
       earningsNumPayList:
-        earningsNumPayList.length > 0 ? earningsNumPayList : 0,
-      deducNumPayList: deducNumPayList.length > 0 ? deducNumPayList : 0,
-      bereavementList: payBereavementList.length > 0 ? payBereavementList : 0,
-      bonusList: paybonusList.length > 0 ? paybonusList : 0,
-      eRBonusList: payERBonusList.length > 0 ? payERBonusList : 0,
+        earningsNumPayList.length > 0 ? earningsNumPayList : [],
+      deducNumPayList: deducNumPayList.length > 0 ? deducNumPayList : [],
+      bereavementList: payBereavementList.length > 0 ? payBereavementList : [],
+      bonusList: paybonusList.length > 0 ? paybonusList : [],
+      eRBonusList: payERBonusList.length > 0 ? payERBonusList : [],
       separationPayList:
-        paySeparationPayList.length > 0 ? paySeparationPayList : 0,
+        paySeparationPayList.length > 0 ? paySeparationPayList : [],
       otherAllowancesList:
-        payOtherAllowancesList.length > 0 ? payOtherAllowancesList : 0,
-      tuitionList: payTuitionList.length > 0 ? payTuitionList : 0,
-      tithesList: payTithesList.length > 0 ? payTithesList : 0,
+        payOtherAllowancesList.length > 0 ? payOtherAllowancesList : [],
+      tuitionList: payTuitionList.length > 0 ? payTuitionList : [],
+      tithesList: payTithesList.length > 0 ? payTithesList : [],
       otherDeductionList:
-        payOtherDeductionList.length > 0 ? payOtherDeductionList : 0,
-      pagibigLoanList: payPagibigLoanList.length > 0 ? payPagibigLoanList : 0,
-      pagibigMP2List: payPagibigMP2List.length > 0 ? payPagibigMP2List : 0,
-      sSSLoanList: paySSSLoanList.length > 0 ? paySSSLoanList : 0,
+        payOtherDeductionList.length > 0 ? payOtherDeductionList : [],
+      pagibigLoanList: payPagibigLoanList.length > 0 ? payPagibigLoanList : [],
+      pagibigMP2List: payPagibigMP2List.length > 0 ? payPagibigMP2List : [],
+      sSSLoanList: paySSSLoanList.length > 0 ? paySSSLoanList : [],
       isPaid: 1,
       payItemTaxId: payrollTaxDeductionId,
       payItemHolidayId: holidayId,

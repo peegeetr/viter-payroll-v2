@@ -1,10 +1,10 @@
 <?php
 class PayrollType
 {
-    public $payroll_type_aid ;
+    public $payroll_type_aid;
     public $payroll_type_active;
     public $payroll_type_name;
-    
+
     public $payroll_type_created;
     public $payroll_type_datetime;
 
@@ -52,7 +52,7 @@ class PayrollType
             $sql = "select * ";
             $sql .= "from {$this->tblPayrollType} ";
             $sql .= "order by payroll_type_active desc ";
-            
+
             $query = $this->connection->query($sql);
         } catch (PDOException $ex) {
             $query = false;
@@ -60,18 +60,16 @@ class PayrollType
         return $query;
     }
 
-    public function update() {    
+    public function update()
+    {
         try {
             $sql = "update {$this->tblPayrollType} set ";
             $sql .= "payroll_type_name = :payroll_type_name, ";
-
-            $sql .= "payroll_type_created = :payroll_type_created, ";
             $sql .= "payroll_type_datetime = :payroll_type_datetime ";
-            $sql .= "where payroll_type_aid  = :payroll_type_aid ";
+            $sql .= "where payroll_type_aid = :payroll_type_aid ";
             $query = $this->connection->prepare($sql);
             $query->execute([
                 "payroll_type_name" => $this->payroll_type_name,
-                "payroll_type_created" => $this->payroll_type_created,
                 "payroll_type_datetime" => $this->payroll_type_datetime,
                 "payroll_type_aid" => $this->payroll_type_aid,
             ]);
@@ -81,12 +79,12 @@ class PayrollType
         return $query;
     }
 
-    
+
     public function delete()
     {
         try {
             $sql = "delete from {$this->tblPayrollType} ";
-            $sql .= "where payroll_type_aid  = :payroll_type_aid ";
+            $sql .= "where payroll_type_aid = :payroll_type_aid ";
             $query = $this->connection->prepare($sql);
             $query->execute([
                 "payroll_type_aid" => $this->payroll_type_aid,
@@ -131,6 +129,4 @@ class PayrollType
         }
         return $query;
     }
-
-
 }

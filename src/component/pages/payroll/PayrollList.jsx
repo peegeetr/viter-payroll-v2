@@ -24,6 +24,10 @@ import TableSpinner from "../../partials/spinners/TableSpinner";
 import StatusActive from "../../partials/status/StatusActive";
 import StatusInactive from "../../partials/status/StatusInactive";
 import { validatePrId } from "./FunctionPayroll";
+import {
+  payrollCategory13thMonthId,
+  payrollCategoryBonusId,
+} from "../../helpers/functions-payroll-category-id";
 
 const PayrollList = ({ setItemEdit }) => {
   const { store, dispatch } = React.useContext(StoreContext);

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 03, 2023 at 05:53 AM
+-- Generation Time: Apr 19, 2023 at 03:27 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -40,6 +40,13 @@ CREATE TABLE `prv2_settings_user_system` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
+-- Dumping data for table `prv2_settings_user_system`
+--
+
+INSERT INTO `prv2_settings_user_system` (`user_system_aid`, `user_system_is_active`, `user_system_name`, `user_system_email`, `user_system_role_id`, `user_system_key`, `user_system_password`, `user_system_created`, `user_system_datetime`) VALUES
+(1, 1, 'cycy', 'cyrene.lumabas@frontlinebusiness.com.ph', 1, '', '$2y$10$DBTF1cuvGkPgXm9MPcFqTOrVcKbfzKx9A6Recj2TYd5HiTr6/0tKy', '2023-04-19 03:05:40', '2023-04-19 09:24:25');
+
+--
 -- Indexes for dumped tables
 --
 
@@ -57,7 +64,7 @@ ALTER TABLE `prv2_settings_user_system`
 -- AUTO_INCREMENT for table `prv2_settings_user_system`
 --
 ALTER TABLE `prv2_settings_user_system`
-  MODIFY `user_system_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `user_system_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

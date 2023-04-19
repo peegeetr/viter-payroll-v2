@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 20, 2023 at 06:10 AM
+-- Generation Time: Apr 19, 2023 at 03:39 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -41,6 +41,7 @@ CREATE TABLE `prv2_deduction` (
   `deduction_details` varchar(100) NOT NULL,
   `deduction_frequency` varchar(5) NOT NULL,
   `deduction_is_installment` varchar(5) NOT NULL,
+  `deduction_installment_extra` tinyint(1) NOT NULL,
   `deduction_number_of_installment` smallint(2) NOT NULL,
   `deduction_start_pay_date` varchar(20) NOT NULL,
   `deduction_end_pay_date` varchar(20) NOT NULL,
@@ -68,11 +69,15 @@ CREATE TABLE `prv2_earnings` (
   `earnings_details` varchar(100) NOT NULL,
   `earnings_frequency` varchar(5) NOT NULL,
   `earnings_is_installment` varchar(5) NOT NULL,
+  `earnings_installment_extra` int(11) NOT NULL,
   `earnings_number_of_installment` smallint(2) NOT NULL,
   `earnings_start_pay_date` varchar(20) NOT NULL,
   `earnings_end_pay_date` varchar(20) NOT NULL,
   `earnings_hris_date` varchar(20) NOT NULL,
   `earnings_holidays_rate` varchar(5) NOT NULL,
+  `earnings_leave_hrs` varchar(5) NOT NULL,
+  `earnings_hrs` varchar(5) NOT NULL,
+  `earnings_rate` varchar(5) NOT NULL,
   `earnings_hris_undertime_out` varchar(10) NOT NULL,
   `earnings_created` datetime NOT NULL,
   `earnings_datetime` datetime NOT NULL
@@ -91,8 +96,7 @@ CREATE TABLE `prv2_holidays` (
   `holidays_type` varchar(30) NOT NULL,
   `holidays_rate` varchar(20) NOT NULL,
   `holidays_is_active` tinyint(1) NOT NULL,
-  `holidays_observed` tinyint(1) NOT NULL,
-  `holidays_created` datetime NOT NULL,
+  `holidays_created` varchar(20) NOT NULL,
   `holidays_datetime` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -100,10 +104,11 @@ CREATE TABLE `prv2_holidays` (
 -- Dumping data for table `prv2_holidays`
 --
 
-INSERT INTO `prv2_holidays` (`holidays_aid`, `holidays_name`, `holidays_date`, `holidays_type`, `holidays_rate`, `holidays_is_active`, `holidays_observed`, `holidays_created`, `holidays_datetime`) VALUES
-(25, 'test', '2023-03-13', 'special', '130', 1, 1, '2023-03-20 13:01:33', '2023-03-20 13:01:33'),
-(26, 'test2', '2023-03-13', 'special', '130', 1, 1, '2023-03-20 13:01:43', '2023-03-20 13:01:43'),
-(27, 'test3', '2023-03-14', 'regular', '200', 1, 1, '2023-03-20 13:01:55', '2023-03-20 13:01:55');
+INSERT INTO `prv2_holidays` (`holidays_aid`, `holidays_name`, `holidays_date`, `holidays_type`, `holidays_rate`, `holidays_is_active`, `holidays_created`, `holidays_datetime`) VALUES
+(3, 'vv', '2023-03-09', 'special', 'dff', 1, '2023-02-08', '2023-02-08 13:36:16'),
+(7, 'xx', '2023-02-09', 'regular', 'dff', 1, '2023-02-08', '2023-02-08 13:17:45'),
+(8, '22', '2023-02-20', 'special', 'dff', 1, '2023-02-08', '2023-02-08 13:36:51'),
+(9, 'asd111', '2023-02-18', 'special', 'dff', 1, '2023-02-08', '2023-02-08 13:37:18');
 
 -- --------------------------------------------------------
 
@@ -213,6 +218,8 @@ CREATE TABLE `prv2_payroll_list` (
   `payroll_list_nd_rate` varchar(20) NOT NULL,
   `payroll_list_hazard_pay` varchar(20) NOT NULL,
   `payroll_list_absences` varchar(20) NOT NULL,
+  `payroll_list_absences_hrs` varchar(5) NOT NULL,
+  `payroll_list_absences_rate` varchar(5) NOT NULL,
   `payroll_list_deminimis` varchar(20) NOT NULL,
   `payroll_list_13th_month` varchar(20) NOT NULL,
   `payroll_list_bonus` varchar(20) NOT NULL,
@@ -294,13 +301,6 @@ CREATE TABLE `prv2_settings_pagibig` (
   `pagibig_datetime` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `prv2_settings_pagibig`
---
-
-INSERT INTO `prv2_settings_pagibig` (`pagibig_aid`, `pagibig_er_amount`, `pagibig_ee_amount`, `pagibig_created`, `pagibig_datetime`) VALUES
-(1, 50, 50, '2023-03-13 13:48:28', '2023-03-13 13:48:28');
-
 -- --------------------------------------------------------
 
 --
@@ -311,7 +311,7 @@ CREATE TABLE `prv2_settings_payroll_type` (
   `payroll_type_aid` int(11) NOT NULL,
   `payroll_type_active` tinyint(1) NOT NULL,
   `payroll_type_name` varchar(100) NOT NULL,
-  `payroll_type_created` datetime NOT NULL,
+  `payroll_type_created` date NOT NULL,
   `payroll_type_datetime` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -320,9 +320,8 @@ CREATE TABLE `prv2_settings_payroll_type` (
 --
 
 INSERT INTO `prv2_settings_payroll_type` (`payroll_type_aid`, `payroll_type_active`, `payroll_type_name`, `payroll_type_created`, `payroll_type_datetime`) VALUES
-(6, 1, 'salary', '2023-03-09 09:09:27', '2023-03-09 09:09:27'),
-(7, 1, 'bonus', '2023-03-09 09:09:32', '2023-03-09 09:09:32'),
-(8, 1, '13th month', '2023-03-09 09:09:36', '2023-03-09 09:09:36');
+(1, 1, 'Salary', '0000-00-00', '2023-02-16 12:11:12'),
+(2, 1, '13th Month', '2023-02-16', '2023-02-16 14:01:10');
 
 -- --------------------------------------------------------
 
@@ -339,13 +338,6 @@ CREATE TABLE `prv2_settings_philhealth` (
   `philhealth_datetime` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `prv2_settings_philhealth`
---
-
-INSERT INTO `prv2_settings_philhealth` (`philhealth_aid`, `philhealth_percentage`, `philhealth_min`, `philhealth_max`, `philhealth_created`, `philhealth_datetime`) VALUES
-(1, 4, 400, 3200, '2023-03-06 14:32:07', '2023-03-13 14:17:24');
-
 -- --------------------------------------------------------
 
 --
@@ -359,22 +351,9 @@ CREATE TABLE `prv2_settings_rates` (
   `rates_percent` varchar(20) NOT NULL,
   `rates_paytype_id` varchar(20) NOT NULL,
   `rates_payitems_id` varchar(20) NOT NULL,
-  `rates_created` datetime NOT NULL,
+  `rates_created` varchar(20) NOT NULL,
   `rates_datetime` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `prv2_settings_rates`
---
-
-INSERT INTO `prv2_settings_rates` (`rates_aid`, `rates_active`, `rates_name`, `rates_percent`, `rates_paytype_id`, `rates_payitems_id`, `rates_created`, `rates_datetime`) VALUES
-(16, 1, 'Overtime rest day & holidays', '130', '1', '18', '2023-02-21 01:46:42', '2023-03-09 09:08:49'),
-(17, 1, 'Overtime regular days', '125', '1', '18', '2023-02-21 01:50:37', '2023-02-21 01:50:37'),
-(18, 1, 'Night Differential (10pm-6am)', '110', '1', '23', '2023-02-21 01:50:37', '2023-02-21 01:50:37'),
-(19, 1, 'Holiday Special or Rest day', '130', '1', '20', '2023-02-21 01:50:37', '2023-02-21 01:50:37'),
-(20, 1, 'Holiday Special and Rest Day', '150', '1', '20', '2023-02-21 01:50:37', '2023-02-21 01:50:37'),
-(21, 1, 'Holiday Regular and Rest Day', '230', '1', '20', '2023-02-21 01:53:57', '2023-02-21 01:53:57'),
-(22, 1, 'Holiday Regular', '200', '1', '20', '2023-02-21 01:53:57', '2023-02-21 01:53:57');
 
 -- --------------------------------------------------------
 
@@ -387,7 +366,7 @@ CREATE TABLE `prv2_settings_role` (
   `role_is_active` tinyint(1) NOT NULL,
   `role_name` varchar(100) NOT NULL,
   `role_description` text NOT NULL,
-  `role_created` varchar(20) NOT NULL,
+  `role_created` datetime NOT NULL,
   `role_datetime` datetime NOT NULL,
   `role_is_developer` tinyint(1) NOT NULL,
   `role_is_admin` tinyint(1) NOT NULL
@@ -398,8 +377,8 @@ CREATE TABLE `prv2_settings_role` (
 --
 
 INSERT INTO `prv2_settings_role` (`role_aid`, `role_is_active`, `role_name`, `role_description`, `role_created`, `role_datetime`, `role_is_developer`, `role_is_admin`) VALUES
-(14, 1, 'Developer', 'for developer', '2023-02-03', '2023-02-06 06:53:33', 1, 0),
-(19, 1, 'Admin', 'For all admin', '2023-03-03 07:23:20', '2023-03-03 07:23:20', 0, 1);
+(1, 1, 'Developer', 'for dev', '2023-04-19 03:04:24', '2023-04-19 03:04:24', 1, 0),
+(2, 1, 'Admin', 'for admin', '2023-04-19 09:25:00', '2023-04-19 09:25:00', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -419,13 +398,6 @@ CREATE TABLE `prv2_settings_semi_monthly` (
   `semi_monthly_datetime` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `prv2_settings_semi_monthly`
---
-
-INSERT INTO `prv2_settings_semi_monthly` (`semi_monthly_aid`, `semi_monthly_active`, `semi_monthly_range_from`, `semi_monthly_range_to`, `semi_monthly_less_amount`, `semi_monthly_rate`, `semi_monthly_additional_amount`, `semi_monthly_created`, `semi_monthly_datetime`) VALUES
-(6, 1, '111', '11', '111', '2', '111', '2023-03-09 12:42:15', '2023-03-09 12:42:15');
-
 -- --------------------------------------------------------
 
 --
@@ -444,13 +416,6 @@ CREATE TABLE `prv2_settings_sss_bracket` (
   `sss_bracket_active` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `prv2_settings_sss_bracket`
---
-
-INSERT INTO `prv2_settings_sss_bracket` (`sss_bracket_aid`, `sss_bracket_range_from`, `sss_bracket_range_to`, `sss_bracket_er`, `sss_bracket_ee`, `sss_bracket_total`, `sss_bracket_created`, `sss_bracket_datetime`, `sss_bracket_active`) VALUES
-(10, '100', '200', '100', '50', '150', '2023-03-09 12:18:46', '2023-03-09 12:19:48', 1);
-
 -- --------------------------------------------------------
 
 --
@@ -468,14 +433,6 @@ CREATE TABLE `prv2_settings_tax_monthly` (
   `tax_monthly_created` varchar(20) NOT NULL,
   `tax_monthly_datetime` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `prv2_settings_tax_monthly`
---
-
-INSERT INTO `prv2_settings_tax_monthly` (`tax_monthly_aid`, `tax_monthly_active`, `tax_monthly_range_from`, `tax_monthly_range_to`, `tax_monthly_less_amount`, `tax_monthly_rate`, `tax_monthly_additional_amount`, `tax_monthly_created`, `tax_monthly_datetime`) VALUES
-(4, 1, '2000', '3000', '234', '1234', '1234', '2023-02-03', '2023-03-09 12:23:26'),
-(5, 1, '111', '11', '1', '1', '1', '2023-02-03', '2023-03-09 12:23:33');
 
 -- --------------------------------------------------------
 
@@ -500,8 +457,7 @@ CREATE TABLE `prv2_settings_user_other` (
 --
 
 INSERT INTO `prv2_settings_user_other` (`user_other_aid`, `user_other_is_active`, `user_other_name`, `user_other_email`, `user_other_role_id`, `user_other_key`, `user_other_password`, `user_other_created`, `user_other_datetime`) VALUES
-(16, 1, 'Zaicy', 'cyrenemlumabas@gmail.com', 19, '07aafa6d514e9e150dbb3c650fb7d0eea5bd5f20af06ff1c6962339e66fbae16', '$2y$10$ZPx3T5NbBH6sJlFWKMPmBOR4n2OSMwgW8iXuK6DQqWi2WS/Fy4SfK', '2023-03-03 07:23:42', '2023-03-09 07:31:13'),
-(18, 1, 'cyrene lumabas', 'cyrene.lumabas@frontlinebusiness.com.ph', 19, '8b1aa4559512550389614545955c25422787528bf734cf24159446abda2f7f17', '', '2023-03-08 10:07:12', '2023-03-08 10:07:12');
+(9, 1, 'zaicy', 'zaicy@gmail.com', 2, '043ed588ddcee3f78fec49a0663c865f984f393474d136b2ad71273282155389', '$2y$10$DBTF1cuvGkPgXm9MPcFqTOrVcKbfzKx9A6Recj2TYd5HiTr6/0tKy', '2023-04-19 09:25:24', '2023-04-19 09:25:24');
 
 -- --------------------------------------------------------
 
@@ -526,8 +482,7 @@ CREATE TABLE `prv2_settings_user_system` (
 --
 
 INSERT INTO `prv2_settings_user_system` (`user_system_aid`, `user_system_is_active`, `user_system_name`, `user_system_email`, `user_system_role_id`, `user_system_key`, `user_system_password`, `user_system_created`, `user_system_datetime`) VALUES
-(11, 1, 'Lumabas Cyrene', 'cyrene.lumabas@frontlinebusiness.com.ph', 14, 'a57c331364db9e63c29b67e8d068a13d476b6aa74a0eb9b87739bfeab278ed73', '$2y$10$ZPx3T5NbBH6sJlFWKMPmBOR4n2OSMwgW8iXuK6DQqWi2WS/Fy4SfK', '2023-03-01', '2023-03-13 07:05:41'),
-(13, 1, 'zaicys', 'april9rhina@gmail.com', 14, '074027ea1bc18626d2207043ebe8dad17e242304e1d87fe91dade0746a8b901e', '', '2023-03-02 15:04:26', '0000-00-00 00:00:00');
+(1, 1, 'cycy', 'cyrene.lumabas@frontlinebusiness.com.ph', 1, '', '$2y$10$DBTF1cuvGkPgXm9MPcFqTOrVcKbfzKx9A6Recj2TYd5HiTr6/0tKy', '2023-04-19 03:05:40', '2023-04-19 09:24:25');
 
 --
 -- Indexes for dumped tables
@@ -655,7 +610,7 @@ ALTER TABLE `prv2_earnings`
 -- AUTO_INCREMENT for table `prv2_holidays`
 --
 ALTER TABLE `prv2_holidays`
-  MODIFY `holidays_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `holidays_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `prv2_payitem`
@@ -685,61 +640,61 @@ ALTER TABLE `prv2_paytype`
 -- AUTO_INCREMENT for table `prv2_settings_pagibig`
 --
 ALTER TABLE `prv2_settings_pagibig`
-  MODIFY `pagibig_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `pagibig_aid` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `prv2_settings_payroll_type`
 --
 ALTER TABLE `prv2_settings_payroll_type`
-  MODIFY `payroll_type_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `payroll_type_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `prv2_settings_philhealth`
 --
 ALTER TABLE `prv2_settings_philhealth`
-  MODIFY `philhealth_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `philhealth_aid` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `prv2_settings_rates`
 --
 ALTER TABLE `prv2_settings_rates`
-  MODIFY `rates_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `rates_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `prv2_settings_role`
 --
 ALTER TABLE `prv2_settings_role`
-  MODIFY `role_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `role_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `prv2_settings_semi_monthly`
 --
 ALTER TABLE `prv2_settings_semi_monthly`
-  MODIFY `semi_monthly_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `semi_monthly_aid` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `prv2_settings_sss_bracket`
 --
 ALTER TABLE `prv2_settings_sss_bracket`
-  MODIFY `sss_bracket_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `sss_bracket_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `prv2_settings_tax_monthly`
 --
 ALTER TABLE `prv2_settings_tax_monthly`
-  MODIFY `tax_monthly_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `tax_monthly_aid` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `prv2_settings_user_other`
 --
 ALTER TABLE `prv2_settings_user_other`
-  MODIFY `user_other_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `user_other_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `prv2_settings_user_system`
 --
 ALTER TABLE `prv2_settings_user_system`
-  MODIFY `user_system_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `user_system_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

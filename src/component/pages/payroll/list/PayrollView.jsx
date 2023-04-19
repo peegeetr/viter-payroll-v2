@@ -8,14 +8,14 @@ import { devApiUrl, getUrlParam } from "../../../helpers/functions-general";
 import BreadCrumbs from "../../../partials/BreadCrumbs";
 import Footer from "../../../partials/Footer";
 import Header from "../../../partials/Header";
-import ModalError from "../../../partials/modals/ModalError";
-import ModalRun from "../../../partials/modals/ModalRun";
-import ModalSuccess from "../../../partials/modals/ModalSuccess";
 import Navigation from "../../../partials/Navigation";
-import NoData from "../../../partials/NoData";
 import ServerError from "../../../partials/ServerError";
+import ModalError from "../../../partials/modals/ModalError";
+import ModalSuccess from "../../../partials/modals/ModalSuccess";
 import FetchingSpinner from "../../../partials/spinners/FetchingSpinner";
+import ModalNoSssBracket from "./ModalNoSssBracket";
 import PayrollViewList from "./PayrollViewList";
+import ModalRun from "../../../partials/modals/ModalRun";
 
 const PayrollView = () => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -141,22 +141,23 @@ const PayrollView = () => {
 
         <Footer />
       </div>
-
-      {store.isConfirm && (
-        <ModalRun
-          pid={pid}
-          isPaid={isPaid}
-          employees={payrollList?.data}
-          payrollEarnings={payrollEarnings?.data}
-          payrollDeductions={payrollDeductions?.data}
-          holidays={holidays?.data}
-          sssBracket={sssBracket?.data}
-          semiTax={semiMonthly?.data}
-          pagibig={pagibig?.data}
-          philhealth={philhealth?.data}
-          // monthlyTax={monthlyTax?.data}
-        />
-      )}
+      {sssBracket?.data.length > 0
+        ? store.isConfirm && (
+            <ModalRun
+              pid={pid}
+              isPaid={isPaid}
+              employees={payrollList?.data}
+              payrollEarnings={payrollEarnings?.data}
+              payrollDeductions={payrollDeductions?.data}
+              holidays={holidays?.data}
+              sssBracket={sssBracket?.data}
+              semiTax={semiMonthly?.data}
+              pagibig={pagibig?.data}
+              philhealth={philhealth?.data}
+              // monthlyTax={monthlyTax?.data}
+            />
+          )
+        : store.isConfirm && <ModalNoSssBracket />}
 
       {store.success && <ModalSuccess />}
       {store.error && <ModalError />}

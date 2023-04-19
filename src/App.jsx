@@ -367,26 +367,10 @@ function App() {
               }
             />
             <Route
-              path={`${devNavUrl}/settings/users/system`}
-              element={
-                <ProtectedRouteOther>
-                  <SystemUser />
-                </ProtectedRouteOther>
-              }
-            />
-            <Route
               path={`${devNavUrl}/settings/users/other`}
               element={
                 <ProtectedRouteOther>
                   <OtherUser />
-                </ProtectedRouteOther>
-              }
-            />
-            <Route
-              path={`${devNavUrl}/settings/users/role`}
-              element={
-                <ProtectedRouteOther>
-                  <Role />
                 </ProtectedRouteOther>
               }
             />

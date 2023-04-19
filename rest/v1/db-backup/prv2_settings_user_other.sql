@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 03, 2023 at 05:53 AM
+-- Generation Time: Apr 19, 2023 at 03:26 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -40,6 +40,13 @@ CREATE TABLE `prv2_settings_user_other` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
+-- Dumping data for table `prv2_settings_user_other`
+--
+
+INSERT INTO `prv2_settings_user_other` (`user_other_aid`, `user_other_is_active`, `user_other_name`, `user_other_email`, `user_other_role_id`, `user_other_key`, `user_other_password`, `user_other_created`, `user_other_datetime`) VALUES
+(9, 1, 'zaicy', 'zaicy@gmail.com', 2, '043ed588ddcee3f78fec49a0663c865f984f393474d136b2ad71273282155389', '$2y$10$DBTF1cuvGkPgXm9MPcFqTOrVcKbfzKx9A6Recj2TYd5HiTr6/0tKy', '2023-04-19 09:25:24', '2023-04-19 09:25:24');
+
+--
 -- Indexes for dumped tables
 --
 
@@ -57,7 +64,7 @@ ALTER TABLE `prv2_settings_user_other`
 -- AUTO_INCREMENT for table `prv2_settings_user_other`
 --
 ALTER TABLE `prv2_settings_user_other`
-  MODIFY `user_other_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `user_other_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

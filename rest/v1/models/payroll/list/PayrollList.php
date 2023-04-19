@@ -172,6 +172,7 @@ class PayrollList
         return $query;
     }
 
+
     public function readLimit()
     {
         try {
@@ -453,8 +454,6 @@ class PayrollList
         }
         return $query;
     }
-
-
 
     // create earnings
     public function createEarnings()
@@ -1097,6 +1096,35 @@ class PayrollList
                 "payroll_list_employee_id" => $this->payroll_list_employee_id,
                 "payroll_start_date" => $this->date_from,
                 "payroll_end_date" => $this->date_to,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    // read by payslip by id
+    public function readAllPayrollListCompute13thMonth($year, $payroll_category_type)
+    {
+        try {
+            $sql = "select ";
+            $sql .= "sum(payrollList.payroll_list_basic_pay) as total_basic_pay, ";
+            $sql .= "sum(payrollList.payroll_list_absences) as total_absences, ";
+            $sql .= "sum(payrollList.payroll_list_undertime) as total_undertime, ";
+            $sql .= "payrollList.payroll_list_employee_id, ";
+            $sql .= "payrollList.payroll_list_employee_name, ";
+            $sql .= "payroll.payroll_pay_date ";
+            $sql .= "from {$this->tblPayrollList} as payrollList, ";
+            $sql .= "{$this->tblPayroll} as payroll ";
+            $sql .= "where YEAR(payroll.payroll_pay_date) = :year ";
+            $sql .= "and payroll.payroll_category_type = :payroll_category_type ";
+            $sql .= "and payroll.payroll_id = payrollList.payroll_list_payroll_id ";
+            $sql .= "group by payrollList.payroll_list_employee_id ";
+            $sql .= "order by payrollList.payroll_list_employee_name asc ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "year" => $year,
+                "payroll_category_type" => $payroll_category_type,
             ]);
         } catch (PDOException $ex) {
             $query = false;

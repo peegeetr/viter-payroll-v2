@@ -8,20 +8,20 @@ import { devApiUrl, getUrlParam } from "../../../helpers/functions-general";
 import BreadCrumbs from "../../../partials/BreadCrumbs";
 import Footer from "../../../partials/Footer";
 import Header from "../../../partials/Header";
-import ModalError from "../../../partials/modals/ModalError";
-import ModalRun from "../../../partials/modals/ModalRun";
-import ModalSuccess from "../../../partials/modals/ModalSuccess";
 import Navigation from "../../../partials/Navigation";
-import NoData from "../../../partials/NoData";
 import ServerError from "../../../partials/ServerError";
+import ModalError from "../../../partials/modals/ModalError";
+import ModalSuccess from "../../../partials/modals/ModalSuccess";
 import FetchingSpinner from "../../../partials/spinners/FetchingSpinner";
+import ModalNoSssBracket from "./ModalNoSssBracket";
 import PayrollViewList from "./PayrollViewList";
+import ModalRun from "../../../partials/modals/ModalRun";
+import { payrollCategorySalaryId } from "../../../helpers/functions-payroll-category-id";
 
 const PayrollView = () => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [isPaid, setIsPaid] = React.useState(false);
   const pid = getUrlParam().get("payrollid");
-
   // use if not loadmore button undertime
   const { data: sssBracket } = useQueryData(
     `${devApiUrl}/v1/sss-bracket`, // endpoint
@@ -39,12 +39,26 @@ const PayrollView = () => {
     "get", // method
     "payrollList" // key
   );
+
+  let categoryId =
+    payrollList?.data.length > 0
+      ? payrollList?.data[0].payroll_category_type
+      : "0";
+
+  // use if not loadmore button undertime
+  const { data: category13thMonth } = useQueryData(
+    `${devApiUrl}/v1/payrollList/category/13month/${payrollCategorySalaryId}`, // endpoint
+    "get", // method
+    "category13thMonth" // key
+  );
+
   // use if not loadmore button undertime
   const { data: payrollEarnings } = useQueryData(
     `${devApiUrl}/v1/earnings`, // endpoint
     "get", // method
     "payrollEarnings" // key
   );
+  console.log(categoryId, payrollEarnings);
 
   // use if not loadmore button undertime
   const { data: payrollDeductions } = useQueryData(
@@ -81,12 +95,12 @@ const PayrollView = () => {
   );
 
   const handleRun = () => {
-    setIsPaid(true);
+    setIsPaid(false);
     dispatch(setIsConfirm(true));
   };
 
   const handleMarkPaid = () => {
-    setIsPaid(false);
+    setIsPaid(true);
     dispatch(setIsConfirm(true));
   };
   return (
@@ -141,22 +155,25 @@ const PayrollView = () => {
 
         <Footer />
       </div>
-
-      {store.isConfirm && (
-        <ModalRun
-          pid={pid}
-          isPaid={isPaid}
-          employees={payrollList?.data}
-          payrollEarnings={payrollEarnings?.data}
-          payrollDeductions={payrollDeductions?.data}
-          holidays={holidays?.data}
-          sssBracket={sssBracket?.data}
-          semiTax={semiMonthly?.data}
-          pagibig={pagibig?.data}
-          philhealth={philhealth?.data}
-          // monthlyTax={monthlyTax?.data}
-        />
-      )}
+      {sssBracket?.data.length > 0
+        ? store.isConfirm && (
+            <ModalRun
+              pid={pid}
+              isPaid={isPaid}
+              employees={payrollList?.data}
+              payrollEarnings={payrollEarnings?.data}
+              payrollDeductions={payrollDeductions?.data}
+              holidays={holidays?.data}
+              sssBracket={sssBracket?.data}
+              semiTax={semiMonthly?.data}
+              pagibig={pagibig?.data}
+              philhealth={philhealth?.data}
+              category13thMonth={category13thMonth?.data}
+              categoryId={categoryId}
+              // monthlyTax={monthlyTax?.data}
+            />
+          )
+        : store.isConfirm && <ModalNoSssBracket />}
 
       {store.success && <ModalSuccess />}
       {store.error && <ModalError />}

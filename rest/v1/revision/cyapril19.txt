@@ -1,0 +1,22 @@
+ 
+*controllers      
+    - payroll/list/compute-13month-pay.php
+    - payroll/list/functions.php
+    - payroll/list/update.php 
+
+*models 
+    - payroll/list/payrollList.php 
+    - settings/payroll-type/payrollType.php 
+  
+*htaccess 
+    - #payroll list paid
+
+*db tables 
+    -  
+
+*core 
+    - 
+
+*extra 
+    - 
+ 

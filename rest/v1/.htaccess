@@ -52,6 +52,7 @@ RewriteRule ^payrollList/page/by/employee/([0-9]+)/([0-9]+)$ controllers/payroll
 RewriteRule ^payrollList/report/employee-benefits/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/([0-9]+)$ controllers/payroll/list/report-employee-benefits.php?startDate=$1&endDate=$2&employeeId=$3 [L] 
 RewriteRule ^payrollList/report/wtax/monthly/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/([0-9]+)$ controllers/payroll/list/report-wtax-monthly.php?startDate=$1&endDate=$2&employeeId=$3 [L]   
 RewriteRule ^payrollList/report/wtax/yearly/([A-Za-z0-9-]+)/([0-9]+)$ controllers/payroll/list/report-wtax-yearly.php?year=$1&employeeId=$2 [L]   
+RewriteRule ^payrollList/category/13month/([0-9]+)$ controllers/payroll/list/compute-13month-pay.php?categoryId=$1 [L]   
      
 #earnings
 RewriteRule ^earnings$ controllers/earnings/earnings.php [L]

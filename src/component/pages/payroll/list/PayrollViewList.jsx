@@ -17,7 +17,6 @@ import LoadmoreRq from "../../../partials/LoadmoreRq";
 import NoData from "../../../partials/NoData";
 import SearchBarRq from "../../../partials/SearchBarRq";
 import ServerError from "../../../partials/ServerError";
-import FetchingSpinner from "../../../partials/spinners/FetchingSpinner";
 import TableSpinner from "../../../partials/spinners/TableSpinner";
 
 const PayrollViewList = () => {

@@ -1,11 +1,12 @@
+import { everyPayrollNumber } from "../../../helpers/functions-earning-refference";
+import { bonusId } from "../../../helpers/functions-payitemId";
 import {
-  everyPayrollNumber,
-  installmentNumber,
-  onetimeNumber,
-} from "../../../helpers/functions-earning-refference";
-import { getWorkingDays } from "../../../helpers/functions-general";
+  payrollCategory13thMonthId,
+  payrollCategoryBonusId,
+  payrollCategorySalaryId,
+} from "../../../helpers/functions-payroll-category-id";
 import {
-  employeeRate,
+  payCompute13thMonth,
   payComputeAbsences,
   payComputeAdjustment,
   payComputeBereavement,
@@ -41,7 +42,9 @@ export const runPayroll = (
   sssBracket,
   semiTax,
   pagibig,
-  philhealth
+  philhealth,
+  category13thMonth,
+  categoryId
 ) => {
   let grossAmount = 0;
   let deductionAmount = 0;
@@ -133,317 +136,393 @@ export const runPayroll = (
   let philhealthList = [];
   let earningsNumInstallmentList = [];
   let deducNumInstallmentList = [];
+  let zero = "0.00";
 
-  // if 13th month category payroll type
-  if (false) {
-    return;
-  }
-  // if bonues payroll type
-  if (false) {
-    return;
+  if (Number(categoryId) === payrollCategory13thMonthId) {
+    payrollList = payCompute13thMonth(category13thMonth);
   }
 
-  // if salary payroll type
-  // loop each employee records
-  employee.map((emp) => {
-    const days = getWorkingDays(
-      new Date(emp.payroll_start_date),
-      new Date(emp.payroll_end_date)
-    );
-    // loop each earnings for each employee
-    payrollEarnings.map((earning) => {
-      // loop earnings wages for each employee
-      if (
-        // earning.earnings_number_of_installment === onetimeNumber && // onetime payment and HRIS import
-        emp.payroll_category_type === earning.earnings_payroll_type_id && // payroll type
-        emp.payroll_list_payroll_id === earning.earnings_payroll_id && // payroll id
-        emp.payroll_list_employee_id === earning.earnings_employee_id && // employee id
-        new Date(emp.payroll_end_date) >=
-          new Date(earning.earnings_start_pay_date) && // payroll end date
-        new Date(emp.payroll_end_date) >=
-          new Date(earning.earnings_end_pay_date) // payroll end date
-      ) {
-        totalOtAmount += payComputeOt(earning).finalAmount;
-        totalOtHrs += payComputeOt(earning).otHrs;
-        totalLeaveAmount += payComputeLeave(earning).finalAmount;
-        totalLeaveHrs += payComputeLeave(earning).leaveHrs;
-        totalUndertimeAmount += payComputeUndertime(earning);
-        totalAbsencesAmount += payComputeAbsences(earning).finalAmount;
-        totalAbsencesHrs += payComputeAbsences(earning).leaveHrs;
-        totalHazardPayAmount += payComputeHazardPay(earning);
-        totalInflationAmount += payComputeInflationAdjustmen(earning);
-        totalAdjustmentAmount += payComputeAdjustment(earning);
-      }
-      // 13th mo & Other benefits
-      // loop earnings onetime and installment for each employee
-      if (
-        emp.payroll_list_employee_id === earning.earnings_employee_id && // employee id
-        earning.earnings_is_paid === 0 && // not paid
-        earning.earnings_is_installment !== everyPayrollNumber && //onetime or installment
-        earning.earnings_number_of_installment > earning.earnings_num_pay //number of payment
-      ) {
-        bereavementAmount = payComputeBereavement(emp, earning);
-        totalBereavement += bereavementAmount.finalAmount;
+  if (Number(categoryId) === payrollCategoryBonusId) {
+    // payrollList = payCompute13thMonth(category13thMonth);
+    employee.map((emp) => {
+      payrollEarnings.map((earning) => {
+        // 13th mo & Other benefits
+        // loop earnings onetime and installment for each employee
 
-        bonusAmount = payComputeBonus(emp, earning);
-        totalBonus += bonusAmount.finalAmount;
+        if (
+          emp.payroll_list_employee_id === earning.earnings_employee_id && // employee id
+          earning.earnings_is_paid === 0 && // not paid
+          earning.earnings_payitem_id === bonusId && //onetime or installment
+          earning.earnings_number_of_installment > earning.earnings_num_pay //number of payment
+        ) {
+          bonusAmount = payComputeBonus(emp, earning);
+          totalBonus += bonusAmount.finalAmount;
 
-        employeeReferralBonusAmount = payComputeEmployeeReferralBonus(
-          emp,
-          earning
-        );
-        totalEmployeeReferralBonus += employeeReferralBonusAmount.finalAmount;
+          // for updating number of pay if installment or one time
+          earningsNumInstallmentList.push({
+            earnings_num_pay: earning.earnings_num_pay + 1,
+            earnings_is_paid:
+              earning.earnings_num_pay + 1 ===
+              earning.earnings_number_of_installment
+                ? 1
+                : 0,
+            earnings_employee_id: emp.payroll_list_employee_id,
+            earnings_payitem_id: earning.earnings_payitem_id,
+          });
 
-        separationPayAmount = payComputeSeparationPay(emp, earning);
-        totalSeparationPay += separationPayAmount.finalAmount;
-
-        otherAllowancesAmount = payComputeOtherAllowances(emp, earning);
-        totalOtherAllowances += otherAllowancesAmount.finalAmount;
-
-        // for updating number of pay if installment or one time
-        earningsNumInstallmentList.push({
-          earnings_num_pay: earning.earnings_num_pay + 1,
-          earnings_is_paid:
-            earning.earnings_num_pay + 1 ===
-            earning.earnings_number_of_installment
-              ? 1
-              : 0,
-          earnings_employee_id: emp.payroll_list_employee_id,
-          earnings_payitem_id: earning.earnings_payitem_id,
-        });
-
-        // list of installment
-        // earnings
-        bereavementList.push(...bereavementAmount.bereavementList);
-        bonusList.push(...bonusAmount.bonusList);
-        eRBonusList.push(...employeeReferralBonusAmount.eRBonusList);
-        separationPayList.push(...separationPayAmount.separationPayList);
-        otherAllowancesList.push(...otherAllowancesAmount.otherAllowancesList);
-      }
+          bonusList.push(...bonusAmount.bonusList);
+          // data to send to server
+          payrollList.push({
+            payroll_list_employee_id: emp.payroll_list_employee_id,
+            payroll_list_employee_name: emp.payroll_list_employee_name,
+            payroll_list_gross: zero,
+            payroll_list_deduction: zero,
+            payroll_list_net_pay: zero,
+            payroll_list_basic_pay: zero,
+            payroll_list_overtime_pay: zero,
+            payroll_list_overtime_hrs: zero,
+            payroll_list_leave_pay: zero,
+            payroll_list_leave_hrs: zero,
+            payroll_list_holiday: zero,
+            payroll_list_holiday_hrs: zero,
+            payroll_list_inlfation_adjustment: zero,
+            payroll_list_adjustment_pay: zero,
+            payroll_list_night_shift_differential: zero,
+            payroll_list_nd_hrs: zero,
+            payroll_list_hazard_pay: zero,
+            payroll_list_absences: zero,
+            payroll_list_absences_hrs: zero,
+            payroll_list_deminimis: zero,
+            payroll_list_13th_month: zero,
+            payroll_list_bonus: totalBonus.toFixed(2),
+            payroll_list_employee_referral_bonus: zero,
+            payroll_list_bereavement: zero,
+            payroll_list_separation_pay: zero,
+            payroll_list_other_allowances: zero,
+            payroll_list_total_benefits: zero,
+            payroll_list_sss_er: zero,
+            payroll_list_philhealth_er: zero,
+            payroll_list_pagibig_er: zero,
+            payroll_list_hmo_er: zero,
+            payroll_list_sss_ee: zero,
+            payroll_list_philhealth_ee: zero,
+            payroll_list_pagibig_ee: zero,
+            payroll_list_hmo_ee: zero,
+            payroll_list_sss_loan: zero,
+            payroll_list_pagibig_loan: zero,
+            payroll_list_pagibig_mp2: zero,
+            payroll_list_fwc_tithes: zero,
+            payroll_list_fca_tuition: zero,
+            payroll_list_other_deduction: zero,
+            payroll_list_madatory_ee: zero,
+            payroll_list_tax: zero,
+            payroll_list_undertime: zero,
+          });
+        }
+      });
     });
+  }
 
-    diminimisAmount = payComputeDiminimis(emp);
-    totalDiminimis = diminimisAmount.finalAmount;
+  if (Number(categoryId) === payrollCategorySalaryId) {
+    // loop each employee records
+    employee.map((emp) => {
+      // loop each earnings for each employee
+      payrollEarnings.map((earning) => {
+        // loop earnings wages for each employee
+        if (
+          // earning.earnings_number_of_installment === onetimeNumber && // onetime payment and HRIS import
+          emp.payroll_category_type === earning.earnings_payroll_type_id && // payroll type
+          emp.payroll_list_payroll_id === earning.earnings_payroll_id && // payroll id
+          emp.payroll_list_employee_id === earning.earnings_employee_id && // employee id
+          new Date(emp.payroll_end_date) >=
+            new Date(earning.earnings_start_pay_date) && // payroll end date
+          new Date(emp.payroll_end_date) >=
+            new Date(earning.earnings_end_pay_date) // payroll end date
+        ) {
+          totalOtAmount += payComputeOt(earning).finalAmount;
+          totalOtHrs += payComputeOt(earning).otHrs;
+          totalLeaveAmount += payComputeLeave(earning).finalAmount;
+          totalLeaveHrs += payComputeLeave(earning).leaveHrs;
+          totalUndertimeAmount += payComputeUndertime(earning);
+          totalAbsencesAmount += payComputeAbsences(earning).finalAmount;
+          totalAbsencesHrs += payComputeAbsences(earning).leaveHrs;
+          totalHazardPayAmount += payComputeHazardPay(earning);
+          totalInflationAmount += payComputeInflationAdjustmen(earning);
+          totalAdjustmentAmount += payComputeAdjustment(earning);
+        }
+        // 13th mo & Other benefits
+        // loop earnings onetime and installment for each employee
+        if (
+          emp.payroll_list_employee_id === earning.earnings_employee_id && // employee id
+          earning.earnings_is_paid === 0 && // not paid
+          earning.earnings_is_installment !== everyPayrollNumber && //onetime or installment
+          earning.earnings_number_of_installment > earning.earnings_num_pay //number of payment
+        ) {
+          bereavementAmount = payComputeBereavement(emp, earning);
+          totalBereavement += bereavementAmount.finalAmount;
 
-    // Total 13th mo & Other benefits
-    totalBenefits =
-      totalBereavement +
-      totalBonus +
-      totalEmployeeReferralBonus +
-      totalSeparationPay +
-      totalOtherAllowances;
+          bonusAmount = payComputeBonus(emp, earning);
+          totalBonus += bonusAmount.finalAmount;
 
-    //  holiday for each employee
-    holidayAmount = payComputeHoliday(emp, holidays, payrollEarnings);
+          employeeReferralBonusAmount = payComputeEmployeeReferralBonus(
+            emp,
+            earning
+          );
+          totalEmployeeReferralBonus += employeeReferralBonusAmount.finalAmount;
 
-    totalHolidayAmount = holidayAmount.accumulatedAmount;
-    totalHolidayHrs = holidayAmount.accumulatedHrs;
+          separationPayAmount = payComputeSeparationPay(emp, earning);
+          totalSeparationPay += separationPayAmount.finalAmount;
 
-    // night diffirencial
-    nightDiffAmount = payComputeNightDiff(emp, holidays, payrollEarnings);
-    totalNightDiffAmount = nightDiffAmount.finalAmount;
-    totalNightDiffHrs = nightDiffAmount.totalHrs;
-    totalBasicPay = Number(emp.payroll_list_employee_salary) / 2;
-    // gross or total wages
-    grossAmount =
-      totalNightDiffAmount +
-      totalHolidayAmount +
-      // totalLeaveAmount +
-      // totalBasicPay +
-      (totalBasicPay -
-        (totalAbsencesAmount +
-          totalUndertimeAmount +
-          holidayAmount.regularAmount)) +
-      totalOtAmount +
-      totalHazardPayAmount +
-      totalInflationAmount +
-      totalAdjustmentAmount;
-    // totalAbsencesAmount -
-    // totalUndertimeAmount;
+          otherAllowancesAmount = payComputeOtherAllowances(emp, earning);
+          totalOtherAllowances += otherAllowancesAmount.finalAmount;
 
-    sssAmount = payComputeSssBracket(emp, sssBracket);
-    pagibigAmount = payComputePagibig(emp, pagibig);
-    philAmount = payComputePhil(emp, philhealth);
-    // Total madatory deduction ee
-    totalMadatoryEe =
-      sssAmount.sssEe + pagibigAmount.pagibigEe + philAmount.philhealthEe;
+          // for updating number of pay if installment or one time
+          earningsNumInstallmentList.push({
+            earnings_num_pay: earning.earnings_num_pay + 1,
+            earnings_is_paid:
+              earning.earnings_num_pay + 1 ===
+              earning.earnings_number_of_installment
+                ? 1
+                : 0,
+            earnings_employee_id: emp.payroll_list_employee_id,
+            earnings_payitem_id: earning.earnings_payitem_id,
+          });
 
-    // loop each deductions for each employee
-    payrollDeductions.map((deduction) => {
-      if (
-        emp.payroll_list_employee_id === deduction.deduction_employee_id && // employee id
-        deduction.deduction_is_paid === 0 && // not paid
-        deduction.deduction_is_installment !== everyPayrollNumber && //onetime or installment
-        deduction.deduction_number_of_installment > deduction.deduction_num_pay //number of payment
-      ) {
-        tuitionAmount = payComputeTuition(emp, deduction);
-        totalTuition += tuitionAmount.finalAmount;
+          // list of installment
+          // earnings
+          bereavementList.push(...bereavementAmount.bereavementList);
+          bonusList.push(...bonusAmount.bonusList);
+          eRBonusList.push(...employeeReferralBonusAmount.eRBonusList);
+          separationPayList.push(...separationPayAmount.separationPayList);
+          otherAllowancesList.push(
+            ...otherAllowancesAmount.otherAllowancesList
+          );
+        }
+      });
 
-        tithesAmount = payComputeTithes(emp, deduction);
-        totalTithes += tithesAmount.finalAmount;
+      diminimisAmount = payComputeDiminimis(emp);
+      totalDiminimis = diminimisAmount.finalAmount;
 
-        otherDeductionAmount = payComputeOtherDeduction(emp, deduction);
-        totalOtherDeduction += otherDeductionAmount.finalAmount;
+      // Total 13th mo & Other benefits
+      totalBenefits =
+        totalBereavement +
+        totalBonus +
+        totalEmployeeReferralBonus +
+        totalSeparationPay +
+        totalOtherAllowances;
 
-        pagibigLoanAmount = payComputePagibigLoan(emp, deduction);
-        totalPagibigLoan += pagibigLoanAmount.finalAmount;
+      //  holiday for each employee
+      holidayAmount = payComputeHoliday(emp, holidays, payrollEarnings);
 
-        pagibigMP2Amount = payComputePagibigMP2(emp, deduction);
-        totalPagibigMP2 += pagibigMP2Amount.finalAmount;
+      totalHolidayAmount = holidayAmount.accumulatedAmount;
+      totalHolidayHrs = holidayAmount.accumulatedHrs;
 
-        sSSLoanAmount = payComputeSSSLoan(emp, deduction);
-        totalSSSLoan += sSSLoanAmount.finalAmount;
+      // night diffirencial
+      nightDiffAmount = payComputeNightDiff(emp, holidays, payrollEarnings);
+      totalNightDiffAmount = nightDiffAmount.finalAmount;
+      totalNightDiffHrs = nightDiffAmount.totalHrs;
+      totalBasicPay = Number(emp.payroll_list_employee_salary) / 2;
+      // gross or total wages
+      grossAmount =
+        totalNightDiffAmount +
+        totalHolidayAmount +
+        // totalLeaveAmount +
+        // totalBasicPay +
+        (totalBasicPay -
+          (totalAbsencesAmount +
+            totalUndertimeAmount +
+            holidayAmount.regularAmount)) +
+        totalOtAmount +
+        totalHazardPayAmount +
+        totalInflationAmount +
+        totalAdjustmentAmount;
+      // totalAbsencesAmount -
+      // totalUndertimeAmount;
 
-        // for updating number of pay if installment or one time
-        deducNumInstallmentList.push({
-          deduction_num_pay: deduction.deduction_num_pay + 1,
-          deduction_is_paid:
-            deduction.deduction_num_pay + 1 ===
-            deduction.deduction_number_of_installment
-              ? 1
-              : 0,
-          deduction_employee_id: emp.payroll_list_employee_id,
-          deduction_payitem_id: deduction.deduction_payitem_id,
-        });
+      sssAmount = payComputeSssBracket(emp, sssBracket);
+      pagibigAmount = payComputePagibig(emp, pagibig);
+      philAmount = payComputePhil(emp, philhealth);
+      // Total madatory deduction ee
+      totalMadatoryEe =
+        sssAmount.sssEe + pagibigAmount.pagibigEe + philAmount.philhealthEe;
 
-        // list of installment
-        // deduction
-        tuitionList.push(...tuitionAmount.tuitionList);
-        tithesList.push(...tithesAmount.tithesList);
-        otherDeductionList.push(...otherDeductionAmount.otherDeductionList);
-        pagibigLoanList.push(...pagibigLoanAmount.pagibigLoanList);
-        pagibigMP2List.push(...pagibigMP2Amount.pagibigMP2List);
-        sSSLoanList.push(...sSSLoanAmount.sSSLoanList);
-      }
-      // console.log("tuitionList", tuitionAmount.tuitionList);
+      // loop each deductions for each employee
+      payrollDeductions.map((deduction) => {
+        if (
+          emp.payroll_list_employee_id === deduction.deduction_employee_id && // employee id
+          deduction.deduction_is_paid === 0 && // not paid
+          deduction.deduction_is_installment !== everyPayrollNumber && //onetime or installment
+          deduction.deduction_number_of_installment >
+            deduction.deduction_num_pay //number of payment
+        ) {
+          tuitionAmount = payComputeTuition(emp, deduction);
+          totalTuition += tuitionAmount.finalAmount;
+
+          tithesAmount = payComputeTithes(emp, deduction);
+          totalTithes += tithesAmount.finalAmount;
+
+          otherDeductionAmount = payComputeOtherDeduction(emp, deduction);
+          totalOtherDeduction += otherDeductionAmount.finalAmount;
+
+          pagibigLoanAmount = payComputePagibigLoan(emp, deduction);
+          totalPagibigLoan += pagibigLoanAmount.finalAmount;
+
+          pagibigMP2Amount = payComputePagibigMP2(emp, deduction);
+          totalPagibigMP2 += pagibigMP2Amount.finalAmount;
+
+          sSSLoanAmount = payComputeSSSLoan(emp, deduction);
+          totalSSSLoan += sSSLoanAmount.finalAmount;
+
+          // for updating number of pay if installment or one time
+          deducNumInstallmentList.push({
+            deduction_num_pay: deduction.deduction_num_pay + 1,
+            deduction_is_paid:
+              deduction.deduction_num_pay + 1 ===
+              deduction.deduction_number_of_installment
+                ? 1
+                : 0,
+            deduction_employee_id: emp.payroll_list_employee_id,
+            deduction_payitem_id: deduction.deduction_payitem_id,
+          });
+
+          // list of installment
+          // deduction
+          tuitionList.push(...tuitionAmount.tuitionList);
+          tithesList.push(...tithesAmount.tithesList);
+          otherDeductionList.push(...otherDeductionAmount.otherDeductionList);
+          pagibigLoanList.push(...pagibigLoanAmount.pagibigLoanList);
+          pagibigMP2List.push(...pagibigMP2Amount.pagibigMP2List);
+          sSSLoanList.push(...sSSLoanAmount.sSSLoanList);
+        }
+        // console.log("tuitionList", tuitionAmount.tuitionList);
+      });
+
+      // compute tax due
+      tax = payComputeTaxDue(
+        emp,
+        grossAmount,
+        semiTax,
+        totalBenefits,
+        totalMadatoryEe,
+        totalDiminimis
+      );
+      totalTaxAmount = Number(tax.taxDue.toFixed(2));
+      deductionAmount =
+        totalTaxAmount +
+        totalMadatoryEe +
+        totalTuition +
+        totalTithes +
+        totalOtherDeduction +
+        totalPagibigLoan +
+        totalPagibigMP2 +
+        totalSSSLoan;
+
+      netPay = grossAmount + totalBenefits - deductionAmount;
+      // console.log(totalAdjustmentAmount);
+      // data to send to server
+      payrollList.push({
+        payroll_list_employee_id: emp.payroll_list_employee_id,
+        payroll_list_employee_name: emp.payroll_list_employee_name,
+        payroll_list_gross: grossAmount.toFixed(2),
+        payroll_list_deduction: deductionAmount.toFixed(2),
+        payroll_list_net_pay: netPay.toFixed(2),
+        payroll_list_basic_pay: totalBasicPay.toFixed(2),
+        payroll_list_overtime_pay: totalOtAmount.toFixed(2),
+        payroll_list_overtime_hrs: totalOtHrs.toFixed(4),
+        payroll_list_leave_pay: totalLeaveAmount.toFixed(2),
+        payroll_list_leave_hrs: totalLeaveHrs,
+        payroll_list_holiday: totalHolidayAmount.toFixed(2),
+        payroll_list_holiday_hrs: totalHolidayHrs,
+        payroll_list_inlfation_adjustment: totalInflationAmount.toFixed(2),
+        payroll_list_adjustment_pay: totalAdjustmentAmount.toFixed(2),
+        payroll_list_night_shift_differential: totalNightDiffAmount.toFixed(2),
+        payroll_list_nd_hrs: totalNightDiffHrs.toFixed(2),
+        payroll_list_hazard_pay: totalHazardPayAmount.toFixed(2),
+        payroll_list_absences: totalAbsencesAmount.toFixed(2),
+        payroll_list_absences_hrs: totalAbsencesHrs,
+        payroll_list_deminimis: totalDiminimis,
+        payroll_list_13th_month: "0.00",
+        payroll_list_bonus: totalBonus.toFixed(2),
+        payroll_list_employee_referral_bonus:
+          totalEmployeeReferralBonus.toFixed(2),
+        payroll_list_bereavement: totalBereavement.toFixed(2),
+        payroll_list_separation_pay: totalSeparationPay.toFixed(2),
+        payroll_list_other_allowances: totalOtherAllowances.toFixed(2),
+        payroll_list_total_benefits: totalBenefits.toFixed(2),
+        payroll_list_sss_er: sssAmount.sssEr.toFixed(2),
+        payroll_list_philhealth_er: philAmount.philhealthEr.toFixed(2),
+        payroll_list_pagibig_er: pagibigAmount.pagibigEr.toFixed(2),
+        payroll_list_hmo_er: "0.00",
+        payroll_list_sss_ee: sssAmount.sssEe.toFixed(2),
+        payroll_list_philhealth_ee: philAmount.philhealthEe.toFixed(2),
+        payroll_list_pagibig_ee: pagibigAmount.pagibigEe.toFixed(2),
+        payroll_list_hmo_ee: "0.00",
+        payroll_list_sss_loan: totalSSSLoan.toFixed(2),
+        payroll_list_pagibig_loan: totalPagibigLoan.toFixed(2),
+        payroll_list_pagibig_mp2: totalPagibigMP2.toFixed(2),
+        payroll_list_fwc_tithes: totalTithes.toFixed(2),
+        payroll_list_fca_tuition: totalTuition.toFixed(2),
+        payroll_list_other_deduction: totalOtherDeduction.toFixed(2),
+        payroll_list_madatory_ee: totalMadatoryEe.toFixed(2),
+        payroll_list_tax: totalTaxAmount.toFixed(2),
+        payroll_list_undertime: totalUndertimeAmount.toFixed(2),
+      });
+
+      // tax List
+      taxList.push(...tax.taxList);
+      // SSS List
+      sssList.push(...sssAmount.sssList);
+      // pagibig List
+      pagibigList.push(...pagibigAmount.pagibigList);
+      // pagibig List
+      philhealthList.push(...philAmount.philhealthList);
+      // ND List
+      ndList.push(...nightDiffAmount.ndList);
+      // holiday List
+      holidayList.push(...holidayAmount.holidayList);
+      // deminimis List
+      deminimisList.push(...diminimisAmount.deminimisList);
+
+      // reset wages variables
+      grossAmount = 0;
+      deductionAmount = 0;
+      netPay = 0;
+      totalBasicPay = 0;
+      totalOtAmount = 0;
+      totalOtHrs = 0;
+      totalLeaveAmount = 0;
+      totalLeaveHrs = 0;
+      totalHolidayAmount = 0;
+      totalHolidayHrs = 0;
+      totalInflationAmount = 0;
+      totalAdjustmentAmount = 0;
+      totalNightDiffAmount = 0;
+      totalHazardPayAmount = 0;
+      totalAbsencesAmount = 0;
+      totalAbsencesHrs = 0;
+      totalDiminimis = 0;
+      total13thMoth = 0;
+      totalBonus = 0;
+      totalEmployeeReferralBonus = 0;
+      totalBereavement = 0;
+      totalSeparationPay = 0;
+      totalOtherAllowances = 0;
+
+      totalSSSLoan = 0;
+      totalPagibigLoan = 0;
+      totalPagibigMP2 = 0;
+      totalTithes = 0;
+      totalTuition = 0;
+      totalOtherDeduction = 0;
+      totalTaxAmount = 0;
+      totalUndertimeAmount = 0;
+
+      totalBenefits = 0;
+
+      lessItems = 0;
+      tax = 0;
     });
-
-    // compute tax due
-    tax = payComputeTaxDue(
-      emp,
-      grossAmount,
-      semiTax,
-      totalBenefits,
-      totalMadatoryEe,
-      totalDiminimis
-    );
-    totalTaxAmount = Number(tax.taxDue.toFixed(2));
-    deductionAmount =
-      totalTaxAmount +
-      totalMadatoryEe +
-      totalTuition +
-      totalTithes +
-      totalOtherDeduction +
-      totalPagibigLoan +
-      totalPagibigMP2 +
-      totalSSSLoan;
-
-    netPay = grossAmount + totalBenefits - deductionAmount;
-    // console.log(totalAdjustmentAmount);
-    // data to send to server
-    payrollList.push({
-      payroll_list_employee_id: emp.payroll_list_employee_id,
-      payroll_list_employee_name: emp.payroll_list_employee_name,
-      payroll_list_gross: grossAmount.toFixed(2),
-      payroll_list_deduction: deductionAmount.toFixed(2),
-      payroll_list_net_pay: netPay.toFixed(2),
-      payroll_list_basic_pay: totalBasicPay.toFixed(2),
-      payroll_list_overtime_pay: totalOtAmount.toFixed(2),
-      payroll_list_overtime_hrs: totalOtHrs.toFixed(4),
-      payroll_list_leave_pay: totalLeaveAmount.toFixed(2),
-      payroll_list_leave_hrs: totalLeaveHrs,
-      payroll_list_holiday: totalHolidayAmount.toFixed(2),
-      payroll_list_holiday_hrs: totalHolidayHrs,
-      payroll_list_inlfation_adjustment: totalInflationAmount.toFixed(2),
-      payroll_list_adjustment_pay: totalAdjustmentAmount.toFixed(2),
-      payroll_list_night_shift_differential: totalNightDiffAmount.toFixed(2),
-      payroll_list_nd_hrs: totalNightDiffHrs.toFixed(2),
-      payroll_list_hazard_pay: totalHazardPayAmount.toFixed(2),
-      payroll_list_absences: totalAbsencesAmount.toFixed(2),
-      payroll_list_absences_hrs: totalAbsencesHrs,
-      payroll_list_deminimis: totalDiminimis,
-      payroll_list_13th_month: "0.00",
-      payroll_list_bonus: totalBonus.toFixed(2),
-      payroll_list_employee_referral_bonus:
-        totalEmployeeReferralBonus.toFixed(2),
-      payroll_list_bereavement: totalBereavement.toFixed(2),
-      payroll_list_separation_pay: totalSeparationPay.toFixed(2),
-      payroll_list_other_allowances: totalOtherAllowances.toFixed(2),
-      payroll_list_total_benefits: totalBenefits.toFixed(2),
-      payroll_list_sss_er: sssAmount.sssEr.toFixed(2),
-      payroll_list_philhealth_er: philAmount.philhealthEr.toFixed(2),
-      payroll_list_pagibig_er: pagibigAmount.pagibigEr.toFixed(2),
-      payroll_list_hmo_er: "0.00",
-      payroll_list_sss_ee: sssAmount.sssEe.toFixed(2),
-      payroll_list_philhealth_ee: philAmount.philhealthEe.toFixed(2),
-      payroll_list_pagibig_ee: pagibigAmount.pagibigEe.toFixed(2),
-      payroll_list_hmo_ee: "0.00",
-      payroll_list_sss_loan: totalSSSLoan.toFixed(2),
-      payroll_list_pagibig_loan: totalPagibigLoan.toFixed(2),
-      payroll_list_pagibig_mp2: totalPagibigMP2.toFixed(2),
-      payroll_list_fwc_tithes: totalTithes.toFixed(2),
-      payroll_list_fca_tuition: totalTuition.toFixed(2),
-      payroll_list_other_deduction: totalOtherDeduction.toFixed(2),
-      payroll_list_madatory_ee: totalMadatoryEe.toFixed(2),
-      payroll_list_tax: totalTaxAmount.toFixed(2),
-      payroll_list_undertime: totalUndertimeAmount.toFixed(2),
-    });
-
-    // tax List
-    taxList.push(...tax.taxList);
-    // SSS List
-    sssList.push(...sssAmount.sssList);
-    // pagibig List
-    pagibigList.push(...pagibigAmount.pagibigList);
-    // pagibig List
-    philhealthList.push(...philAmount.philhealthList);
-    // ND List
-    ndList.push(...nightDiffAmount.ndList);
-    // holiday List
-    holidayList.push(...holidayAmount.holidayList);
-    // deminimis List
-    deminimisList.push(...diminimisAmount.deminimisList);
-
-    // reset wages variables
-    grossAmount = 0;
-    deductionAmount = 0;
-    netPay = 0;
-    totalBasicPay = 0;
-    totalOtAmount = 0;
-    totalOtHrs = 0;
-    totalLeaveAmount = 0;
-    totalLeaveHrs = 0;
-    totalHolidayAmount = 0;
-    totalHolidayHrs = 0;
-    totalInflationAmount = 0;
-    totalAdjustmentAmount = 0;
-    totalNightDiffAmount = 0;
-    totalHazardPayAmount = 0;
-    totalAbsencesAmount = 0;
-    totalAbsencesHrs = 0;
-    totalDiminimis = 0;
-    total13thMoth = 0;
-    totalBonus = 0;
-    totalEmployeeReferralBonus = 0;
-    totalBereavement = 0;
-    totalSeparationPay = 0;
-    totalOtherAllowances = 0;
-
-    totalSSSLoan = 0;
-    totalPagibigLoan = 0;
-    totalPagibigMP2 = 0;
-    totalTithes = 0;
-    totalTuition = 0;
-    totalOtherDeduction = 0;
-    totalTaxAmount = 0;
-    totalUndertimeAmount = 0;
-
-    totalBenefits = 0;
-
-    lessItems = 0;
-    tax = 0;
-  });
-
+  }
   return {
     payrollList,
     holidayList,

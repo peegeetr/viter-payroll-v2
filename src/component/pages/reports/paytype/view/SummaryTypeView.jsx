@@ -174,8 +174,7 @@ const SummaryTypeView = () => {
                               ? `${item.earnings_employee}`
                               : `${item.deduction_employee}`}
                           </td>
-
-                          <td className="w-[15rem] text-right">
+                          <td className="w-[15rem] text-right mt-2 pr-2 font-bold">
                             {item.paytype_category === "earnings"
                               ? `${numberWithCommas(
                                   Number(item.earnings_amount).toFixed(2)
@@ -191,7 +190,12 @@ const SummaryTypeView = () => {
                 ))}
               </tbody>
             </table>
-            Total: {numberWithCommas(total.toFixed(2))}
+            {status !== "loading" && (
+              <div className="text-right mt-2 pr-2 text-primary font-bold">
+                <span className="mr-8">Total :</span>{" "}
+                {numberWithCommas(total.toFixed(2))}
+              </div>
+            )}
             <div className="text-center print:hidden">
               <LoadmoreRq
                 fetchNextPage={fetchNextPage}

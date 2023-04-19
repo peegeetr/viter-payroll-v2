@@ -32,7 +32,6 @@ const SummaryTypeList = () => {
   const [paytype, setPaytype] = React.useState("");
   const [startDate, setStartDate] = React.useState("");
   const [endDate, setEndDate] = React.useState("");
-  const [payPeriod, setPayPeriod] = React.useState("");
 
   const [page, setPage] = React.useState(1);
   let counter = 1;
@@ -75,7 +74,7 @@ const SummaryTypeList = () => {
   }, [inView]);
 
   // use if not loadmore button undertime
-  const { data: payType } = useQueryData(
+  const { data: payType, isLoading: loadingPayType } = useQueryData(
     `${devApiUrl}/v1/paytype`, // endpoint
     "get", // method
     "payType" // key
@@ -110,8 +109,6 @@ const SummaryTypeList = () => {
             setStartDate(values.start_date);
             setEndDate(values.end_date);
 
-            setPayPeriod(category);
-
             // // refetch data of query
             // refetch();
           }}
@@ -132,7 +129,9 @@ const SummaryTypeList = () => {
                       type="text"
                       disabled={isFetching}
                     >
-                      <option value="" hidden></option>
+                      <option value="" hidden>
+                        {loadingPayType && "Loading..."}
+                      </option>
                       {payType?.data.map((paytype, key) => {
                         return (
                           <option
@@ -203,7 +202,7 @@ const SummaryTypeList = () => {
                 <th>Pay Item</th>
                 <th>Pay Type</th>
                 <th>Employee</th>
-                <th className="text-right">Total</th>
+                <th className="text-right pr-3">Total</th>
               </tr>
             </thead>
             <tbody>
@@ -256,7 +255,12 @@ const SummaryTypeList = () => {
           </table>
         </div>
       </div>
-      Total: {numberWithCommas(total.toFixed(2))}
+      {isFilter && status !== "loading" && (
+        <div className="text-right mt-2 pr-2 text-primary font-bold">
+          <span className="mr-8">Total :</span>{" "}
+          {numberWithCommas(total.toFixed(2))}
+        </div>
+      )}
       <div className="text-center">
         <LoadmoreRq
           fetchNextPage={fetchNextPage}

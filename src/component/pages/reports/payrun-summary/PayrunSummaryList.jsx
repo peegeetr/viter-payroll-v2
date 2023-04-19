@@ -61,7 +61,7 @@ const PayrunSummaryList = () => {
   }, [inView]);
 
   // use if not loadmore button undertime
-  const { data: employee } = useQueryData(
+  const { data: employee, isLoading: loadingEmployee } = useQueryData(
     `${hrisDevApiUrl}/v1/employees/pay`, // endpoint
     "get", // method
     "employees", // key
@@ -109,7 +109,9 @@ const PayrunSummaryList = () => {
                       type="text"
                       disabled={isFetching}
                     >
-                      <option value="" hidden></option>
+                      <option value="" hidden>
+                        {loadingEmployee && "Loading..."}
+                      </option>
                       <option value="0">All</option>
                       {employee?.data.map((eItem, key) => {
                         return (

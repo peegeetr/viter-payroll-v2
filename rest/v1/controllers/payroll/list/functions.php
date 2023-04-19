@@ -190,3 +190,19 @@ function checkReadEmployeePayrunByEmployeeIdByEmpId($object)
     checkQuery($query, "Empty records. (Read report Employee Payrun limit by employee id and date)");
     return $query;
 }
+
+// Read all payroll list in a year for 13th month
+function checkReadAllPayrollListCompute13thMonth($object, $year, $payroll_category_type)
+{
+    $query = $object->readAllPayrollListCompute13thMonth($year, $payroll_category_type);
+    checkQuery($query, "Empty records. (Read all payroll list in a year for 13th month)");
+    return $query;
+}
+
+// Update 
+function checkUpdate13thMonth($object)
+{
+    $query = $object->update13thMonth();
+    checkQuery($query, "There's a problem processing your request. (update payroll list 13th month)");
+    return $query;
+}

@@ -133,6 +133,17 @@ export const runPayroll = (
   let philhealthList = [];
   let earningsNumInstallmentList = [];
   let deducNumInstallmentList = [];
+
+  // if 13th month category payroll type
+  if (false) {
+    return;
+  }
+  // if bonues payroll type
+  if (false) {
+    return;
+  }
+
+  // if salary payroll type
   // loop each employee records
   employee.map((emp) => {
     const days = getWorkingDays(

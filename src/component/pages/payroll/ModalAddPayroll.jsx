@@ -35,7 +35,7 @@ const ModalAddPayroll = ({ item }) => {
     null, // id key
     false // devKey boolean
   );
-  console.log(result);
+
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: (values) =>
@@ -101,7 +101,7 @@ const ModalAddPayroll = ({ item }) => {
               initialValues={initVal}
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
-                // consoleLog(values);
+                // console.log(values, result.data);
 
                 mutation.mutate({
                   ...values,

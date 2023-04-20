@@ -1,7 +1,7 @@
 import React from "react";
 import { FaEnvelope, FaSave } from "react-icons/fa";
 import { ImPlay3 } from "react-icons/im";
-import { setIsConfirm } from "../../../../store/StoreAction";
+import { setIsAdd, setIsConfirm } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
 import useQueryData from "../../../custom-hooks/useQueryData";
 import { devApiUrl, getUrlParam } from "../../../helpers/functions-general";
@@ -55,6 +55,7 @@ const PayrollView = () => {
       : Number(categoryId) === payrollCategoryBonusId
       ? "Bonus"
       : "Salary";
+
   // use if not loadmore button undertime
   const { data: category13thMonth } = useQueryData(
     `${devApiUrl}/v1/payrollList/category/13month/${payrollCategorySalaryId}`, // endpoint
@@ -103,6 +104,10 @@ const PayrollView = () => {
     "philhealth" // key
   );
 
+  const handleEmailAll = () => {
+    dispatch(setIsAdd(true));
+  };
+
   const handleRun = () => {
     setIsPaid(false);
     dispatch(setIsConfirm(true));
@@ -123,10 +128,14 @@ const PayrollView = () => {
             {isLoading && <FetchingSpinner />}
             {payrollList?.data[0].payroll_list_is_paid === 1 ? (
               <>
-                <button type="button" className="btn-primary">
+                <button
+                  type="button"
+                  className="btn-primary"
+                  onClick={handleEmailAll}
+                >
                   <FaEnvelope />
                   <span>Email All</span>
-                </button>{" "}
+                </button>
               </>
             ) : (
               <>
@@ -188,6 +197,7 @@ const PayrollView = () => {
       {store.error && (
         <ModalError msg={`${categoryName} has no entry in earnings`} />
       )}
+      {store.isAdd && <ModalUpdatePhilhealth item={item} />}
     </>
   );
 };

@@ -89,6 +89,7 @@ class Payroll
             $sql = "insert into {$this->tblPayrollList} ";
             $sql .= "( payroll_list_payroll_id, ";
             $sql .= "payroll_list_employee_name, ";
+            $sql .= "payroll_list_employee_email, ";
             $sql .= "payroll_list_is_paid, ";
             $sql .= "payroll_list_employee_id, ";
             $sql .= "payroll_list_employee_salary, ";
@@ -101,6 +102,7 @@ class Payroll
             $sql .= "payroll_list_datetime ) values ( ";
             $sql .= ":payroll_list_payroll_id, ";
             $sql .= ":payroll_list_employee_name, ";
+            $sql .= ":payroll_list_employee_email, ";
             $sql .= ":payroll_list_is_paid, ";
             $sql .= ":payroll_list_employee_id, ";
             $sql .= ":payroll_list_employee_salary, ";
@@ -116,6 +118,7 @@ class Payroll
                 "payroll_list_payroll_id" => $this->payroll_id,
                 "payroll_list_is_paid" => $this->payroll_is_paid,
                 "payroll_list_employee_name" => $this->payroll_list_employee_name,
+                "payroll_list_employee_email" => $this->payroll_list_employee_email,
                 "payroll_list_employee_id" => $this->payroll_list_employee_id,
                 "payroll_list_employee_salary" => $this->payroll_list_employee_salary,
                 "payroll_list_night_diff_per_day" => $this->payroll_list_night_diff_per_day,

@@ -5,17 +5,17 @@ import { Link } from "react-router-dom";
 import { StoreContext } from "../../../../../store/StoreContext";
 import { getUserType } from "../../../../helpers/functions-general";
 
-const TaxMonthlyLink = () => {
+const TaxYearlyLink = () => {
   const { store, dispatch } = React.useContext(StoreContext);
   const link = getUserType(store.credentials.data.role_is_developer === 1);
   return (
     <div className="group flex items-center justify-between border-b border-solid border-gray-300">
-      <Link to={`${link}/settings/tax-bracket/monthly`} className="w-full py-1">
+      <Link to={`${link}/settings/tax-bracket/yearly`} className="w-full py-1">
         <div className="flex items-center">
           <span className="text-lg mr-4">
             <BsCalendar2MonthFill />
           </span>
-          <span className="font-bold">Monthly Tax</span>
+          <span className=" font-bold">Yearly Tax</span>
         </div>
         <p className="ml-[35px] my-0">
           Manage what actions and capabilities every account are can perform in
@@ -24,7 +24,7 @@ const TaxMonthlyLink = () => {
       </Link>
 
       <Link
-        to={`${link}/settings/tax-bracket/monthly`}
+        to={`${link}/settings/tax-bracket/yearly`}
         className="btn-action-table group-hover:bg-primary group-hover:text-white"
       >
         <SlArrowRight className="inline" />
@@ -33,4 +33,4 @@ const TaxMonthlyLink = () => {
   );
 };
 
-export default TaxMonthlyLink;
+export default TaxYearlyLink;

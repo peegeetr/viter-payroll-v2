@@ -62,6 +62,7 @@ import WTaxMonthly from "./component/pages/reports/w-tax/monthly-tax/WTaxMonthly
 import WTaxYearly from "./component/pages/reports/w-tax/yearly-tax/WTaxYearly";
 import Payslip13thMonth from "./component/pages/payroll/payslip-13th-month/Payslip13thMonth";
 import PayslipBonus from "./component/pages/payroll/payslip-bonus/PayslipBonus";
+import TaxYearly from "./component/pages/settings/tax-bracket/tax-yearly/TaxYearly";
 
 function App() {
   // Create a client
@@ -775,6 +776,15 @@ function App() {
               element={
                 <ProtectedRouteSystem>
                   <TaxSemi />
+                </ProtectedRouteSystem>
+              }
+            />
+
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/settings/tax-bracket/yearly`}
+              element={
+                <ProtectedRouteSystem>
+                  <TaxYearly />
                 </ProtectedRouteSystem>
               }
             />

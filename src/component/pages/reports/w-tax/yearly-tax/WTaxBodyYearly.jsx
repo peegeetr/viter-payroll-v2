@@ -17,9 +17,7 @@ const WTaxBodyYearly = ({ result, year, employeeId }) => {
                     <p className="m-0">Tax Summary</p>
                     <p className="m-0 text-primary font-bold">{year}</p>
                     <p className="m-0 text-primary font-bold">
-                      {employeeId === "0"
-                        ? "All Employee"
-                        : item.payroll_list_employee_name}
+                      {item.payroll_list_employee_name}
                     </p>
                   </>
                 )}

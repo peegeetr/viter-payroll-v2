@@ -947,6 +947,14 @@ class PayrollList
     {
         try {
             $sql = "select payrollList.*, ";
+            $sql .= "sum(payrollList.payroll_list_gross) as gross, ";
+            $sql .= "sum(payrollList.payroll_list_sss_ee) as sss, ";
+            $sql .= "sum(payrollList.payroll_list_philhealth_ee) as phic, ";
+            $sql .= "sum(payrollList.payroll_list_pagibig_ee) as pag, ";
+            $sql .= "sum(payrollList.payroll_list_deminimis) as deminimis, ";
+            $sql .= "sum(payrollList.payroll_list_13th_month) as month13, ";
+            $sql .= "sum(payrollList.payroll_list_bonus) as bonus, ";
+            $sql .= "sum(payrollList.payroll_list_total_benefits) as benefits, ";
             $sql .= "payroll.payroll_category_type, ";
             $sql .= "payroll.payroll_id, ";
             $sql .= "payroll.payroll_start_date, ";
@@ -992,7 +1000,7 @@ class PayrollList
             $sql .= "{$this->tblPayroll} as payroll ";
             $sql .= "where payrollList.payroll_list_payroll_id = payroll.payroll_id ";
             $sql .= "and YEAR(payroll.payroll_pay_date) = :payroll_pay_date ";
-            $sql .= "group by YEAR(payroll.payroll_pay_date) ";
+            $sql .= "group by payrollList.payroll_list_employee_id ";
             $sql .= "order by payrollList.payroll_list_payroll_id, ";
             $sql .= "payroll.payroll_end_date desc, ";
             $sql .= "payrollList.payroll_list_employee_name asc ";

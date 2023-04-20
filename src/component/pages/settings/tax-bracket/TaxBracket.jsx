@@ -7,6 +7,7 @@ import Header from "../../../partials/Header.jsx";
 import Navigation from "../../../partials/Navigation.jsx";
 import TaxMonthlyLink from "./tax-monthly/TaxMonthlyLink.jsx";
 import TaxSemiLink from "./tax-semi/TaxSemiLink.jsx";
+import TaxYearlyLink from "./tax-yearly/TaxYearlyLink";
 
 const TaxBracket = () => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -25,10 +26,13 @@ const TaxBracket = () => {
         <hr />
         <ul className="pt-2 pb-20 relative">
           <li className="py-2">
+            <TaxSemiLink />
+          </li>
+          <li className="py-2">
             <TaxMonthlyLink />
           </li>
           <li className="py-2">
-            <TaxSemiLink />
+            <TaxYearlyLink />
           </li>
         </ul>
         <Footer />

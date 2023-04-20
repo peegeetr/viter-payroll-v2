@@ -18,7 +18,7 @@ const TaxSemiLink = () => {
           <span className="text-lg mr-4">
             <BsCalendar2MonthFill />
           </span>
-          <span className=" font-bold">Semi Monthly</span>
+          <span className=" font-bold">Semi Monthly Tax</span>
         </div>
         <p className="ml-[35px] my-0">
           Manage what actions and capabilities every account are can perform in

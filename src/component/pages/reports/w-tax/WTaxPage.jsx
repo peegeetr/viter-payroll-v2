@@ -1,14 +1,10 @@
 import React from "react";
-import { BsFillCalculatorFill } from "react-icons/bs";
-import { SlArrowRight } from "react-icons/sl";
-import { Link } from "react-router-dom";
 import { StoreContext } from "../../../../store/StoreContext";
-import { getUserType } from "../../../helpers/functions-general";
+import BreadCrumbs from "../../../partials/BreadCrumbs";
+import Footer from "../../../partials/Footer";
 import Header from "../../../partials/Header";
 import Navigation from "../../../partials/Navigation";
-import Footer from "../../../partials/Footer";
 import WTaxMonthlyLink from "./monthly-tax/WTaxMonthlyLink";
-import BreadCrumbs from "../../../partials/BreadCrumbs";
 import WTaxYearlyLink from "./yearly-tax/WTaxYearlyLink";
 
 const WTaxPage = () => {

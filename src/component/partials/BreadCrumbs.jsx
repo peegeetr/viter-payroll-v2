@@ -18,7 +18,7 @@ const BreadCrumbs = ({ param = "", name = "" }) => {
     .split("/")
     .filter((crumb) => crumb !== "")
     .map((crumb, key) => {
-      currentLink += `/${crumb}`;
+      currentLink += `/${crumb.replace(" ", "-")}`;
       return (
         <li
           className="text-primary after:mr-2 after:content-['>'] last:after:hidden last:text-dark last:pointer-events-none print:hidden"

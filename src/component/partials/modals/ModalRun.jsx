@@ -36,6 +36,7 @@ import {
 import { queryData } from "../../helpers/queryData";
 import { runPayroll } from "../../pages/payroll/list/functions-payroll-list";
 import ButtonSpinner from "../spinners/ButtonSpinner";
+import { payrollCategoryBonusId } from "../../helpers/functions-payroll-category-id";
 
 const ModalRun = ({
   pid,
@@ -125,7 +126,6 @@ const ModalRun = ({
     let payPagibigMP2List = run.pagibigMP2List;
     let paySSSLoanList = run.sSSLoanList;
 
-    console.log(paybonusList);
     mutation.mutate({
       payrollPayList: payrollList.length > 0 ? payrollList : [],
       holidayList: holidayList.length > 0 ? holidayList : [],
@@ -163,17 +163,7 @@ const ModalRun = ({
       payItemPhilhealthErId: philhealthErId,
       payItemPhilhealthEeId: philhealthEeId,
       payItemDeminimisId: diminimisId,
-      payItemBereavementId: bereavementId,
-      payItemBonusId: bonusId,
-      payItemEmployeeReferralBonusId: employeeReferralBonusId,
-      payItemSeparationPayId: separationPayId,
-      payItemOtherAllowancesId: otherAllowancesId,
-      payItemFcaTutionId: fcaTutionId,
-      payItemFwcTithesId: fwcTithesId,
-      payItemOtherDeductionId: otherDeductionId,
-      payItemPagibigLoanId: PagibigLoanId,
-      payItemPagibigMP2Id: PagibigMP2Id,
-      payItemSSSLoanId: SSSLoanId,
+      category13thMonthId: payrollCategoryBonusId,
     });
   };
 

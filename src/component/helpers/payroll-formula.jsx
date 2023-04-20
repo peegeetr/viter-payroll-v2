@@ -43,7 +43,10 @@ import {
   paytypeOtherDeductionId,
   optionalDeductionId,
 } from "./functions-payitemId";
-import { payrollCategoryBonusId } from "./functions-payroll-category-id";
+import {
+  payrollCategory13thMonthId,
+  payrollCategoryBonusId,
+} from "./functions-payroll-category-id";
 
 export const employeeRate = (salary, workingDays) => {
   let list = {};
@@ -94,6 +97,7 @@ export const payComputeCategoryBonus = (employee, payrollEarnings) => {
         bonusList.push(...bonusAmount.bonusList);
         // data to send to server
         CategoryBonusList.push({
+          payroll_category: payrollCategoryBonusId,
           payroll_list_employee_id: emp.payroll_list_employee_id,
           payroll_list_employee_name: emp.payroll_list_employee_name,
           payroll_list_gross: zero,
@@ -156,6 +160,7 @@ export const payComputeCategory13thMonth = (category13thMonth) => {
     absencesUndertimeSum = cItem.total_absences + cItem.total_undertime;
     finalAmount = (cItem.total_basic_pay - absencesUndertimeSum) / 12;
     payrollList13thMonth.push({
+      payroll_category: payrollCategory13thMonthId,
       payroll_list_employee_id: cItem.payroll_list_employee_id,
       payroll_list_employee_name: cItem.payroll_list_employee_name,
       payroll_list_gross: zero,

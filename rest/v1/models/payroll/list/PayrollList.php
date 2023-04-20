@@ -373,7 +373,6 @@ class PayrollList
             $sql .= "payroll_list_hazard_pay = :payroll_list_hazard_pay, ";
             $sql .= "payroll_list_absences = :payroll_list_absences, ";
             $sql .= "payroll_list_absences_hrs = :payroll_list_absences_hrs, ";
-            $sql .= "payroll_list_absences_rate = :payroll_list_absences_rate, ";
             $sql .= "payroll_list_13th_month = :payroll_list_13th_month, ";
             $sql .= "payroll_list_bonus = :payroll_list_bonus, ";
             $sql .= "payroll_list_employee_referral_bonus = :payroll_list_employee_referral_bonus, ";
@@ -421,7 +420,6 @@ class PayrollList
                 "payroll_list_hazard_pay" => $this->payroll_list_hazard_pay,
                 "payroll_list_absences" => $this->payroll_list_absences,
                 "payroll_list_absences_hrs" => $this->payroll_list_absences_hrs,
-                "payroll_list_absences_rate" => $this->payroll_list_absences_rate,
                 "payroll_list_13th_month" => $this->payroll_list_13th_month,
                 "payroll_list_bonus" => $this->payroll_list_bonus,
                 "payroll_list_employee_referral_bonus" => $this->payroll_list_employee_referral_bonus,
@@ -1141,19 +1139,25 @@ class PayrollList
     }
 
     // read by payslip by id
-    public function readCategoryBonusIsEmpty()
+    public function readCategoryBonusIsEmpty($category13thMonthId)
     {
         try {
             $sql = "select payroll.payroll_category_type ";
             $sql .= "from {$this->tblPayrollList} as payrollList, ";
             $sql .= "{$this->tblPayroll} as payroll, ";
             $sql .= "{$this->tblEarnings} as earnings ";
-            $sql .= "where payroll.payroll_category_type = '3' ";
-            $sql .= "and earnings.earnings_payroll_type_id = '3' ";
+            $sql .= "where payroll.payroll_category_type = :payroll_category_type ";
+            $sql .= "and earnings.earnings_payroll_type_id = :earnings_payroll_type_id ";
+            $sql .= "and payrollList.payroll_list_payroll_id = :payroll_list_payroll_id ";
             $sql .= "and payrollList.payroll_list_payroll_id = payroll.payroll_id ";
             $sql .= "and earnings.earnings_payroll_id = payroll.payroll_id ";
             $sql .= "order by payrollList.payroll_list_payroll_id asc ";
-            $query = $this->connection->query($sql);
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "payroll_category_type" => $category13thMonthId,
+                "earnings_payroll_type_id" => $category13thMonthId,
+                "payroll_list_payroll_id" => $this->payroll_list_payroll_id,
+            ]);
         } catch (PDOException $ex) {
             $query = false;
         }

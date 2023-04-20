@@ -353,6 +353,7 @@ export const runPayroll = (
       // console.log(totalAdjustmentAmount);
       // data to send to server
       payrollList.push({
+        payroll_category: payrollCategorySalaryId,
         payroll_list_employee_id: emp.payroll_list_employee_id,
         payroll_list_employee_name: emp.payroll_list_employee_name,
         payroll_list_gross: grossAmount.toFixed(2),

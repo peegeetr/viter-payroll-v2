@@ -31,6 +31,8 @@ if (array_key_exists("listpayrollid", $_GET)) {
     $allTaxList = $data["taxList"];
     $allDeminimis = $data["deminimisList"];
 
+    $category13thMonthId = $data["category13thMonthId"];
+
     // installment 
     // list of installment Earnings 
     $allBereavementList = $data["bereavementList"];
@@ -49,6 +51,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
 
 
     for ($pl = 0; $pl < count($allPayrollPayList); $pl++) {
+        $payroll_category = $allPayrollPayList[$pl]["payroll_category"];
         $payrollList->payroll_list_employee_id = $allPayrollPayList[$pl]["payroll_list_employee_id"];
         $payrollList->payroll_list_deduction = $allPayrollPayList[$pl]["payroll_list_deduction"];
         $payrollList->payroll_list_gross =  $allPayrollPayList[$pl]["payroll_list_gross"];
@@ -376,8 +379,9 @@ if (array_key_exists("listpayrollid", $_GET)) {
     }
     // if category bonus is emplty in Earnings 
     // category bonus
-    $categoryBonusIsEmpty = $payrollList->readCategoryBonusIsEmpty();
-    if (count($allBonusList) === 0 && $categoryBonusIsEmpty->rowCount() == 0) {
+    checkId($category13thMonthId);
+    $categoryBonusIsEmpty = $payrollList->readCategoryBonusIsEmpty($category13thMonthId);
+    if (count($allBonusList) === 0 && $categoryBonusIsEmpty->rowCount() == 0 && $payroll_category === $category13thMonthId) {
         $response->setSuccess(false);
         $error["count"] = 0;
         $error["success"] = false;

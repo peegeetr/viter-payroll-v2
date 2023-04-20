@@ -326,11 +326,6 @@ if (array_key_exists("listpayrollid", $_GET)) {
     }
 
     // installment
-    // installment
-    // installment
-    // installment
-    // installment
-
     // list of installment  Earnings 
     // berevements
     // delete first existing PR ID and pay item id pagibig ER
@@ -367,28 +362,29 @@ if (array_key_exists("listpayrollid", $_GET)) {
     // delete first existing PR ID and pay item id pagibig ER
     $payrollList->payitem_id = $data["payItemBonusId"];
     checkId($payrollList->payitem_id);
-    checkDeleteNotInstallmentEarnings($payrollList);
-    if ($allBonusList !== 0) {
-
+    if (count($allBonusList) > 0) {
         for ($bonus = 0; $bonus < count($allBonusList); $bonus++) {
-            $payrollList->payroll_type_id = $allBonusList[$bonus]["earnings_payroll_type_id"];
-            $payrollList->num_pay = 1;
-            $payrollList->payroll_list_employee_name = $allBonusList[$bonus]["earnings_employee"];
-            $payrollList->payroll_list_employee_id = $allBonusList[$bonus]["earnings_employee_id"];
-            $payrollList->paytype_id = $allBonusList[$bonus]["earnings_paytype_id"];
-            $payrollList->payitem_id = $allBonusList[$bonus]["earnings_payitem_id"];
-            $payrollList->amount = $allBonusList[$bonus]["earnings_amount"];
-            $payrollList->frequency = $allBonusList[$bonus]["earnings_frequency"];
-            $payrollList->is_installment = $allBonusList[$bonus]["earnings_is_installment"];
-            $payrollList->number_of_installment = $allBonusList[$bonus]["earnings_number_of_installment"];
-            $payrollList->start_pay_date = $allBonusList[$bonus]["earnings_start_pay_date"];
-            $payrollList->end_pay_date = $allBonusList[$bonus]["earnings_end_pay_date"];
-            $payrollList->details = $allBonusList[$bonus]["earnings_details"];
-            $payrollList->installment_extra = $allBonusList[$bonus]["installment_extra"];
-            $payrollList->hris_date = "";
-            $payrollList->earnings_rate = "";
-            $payrollList->earnings_hrs = "";
-            $query = checkCreateEarnings($payrollList);
+            if ($allBonusList[$bonus]["installment_extra"] === "1") {
+                $payrollList->payroll_type_id = $allBonusList[$bonus]["earnings_payroll_type_id"];
+                $payrollList->num_pay = 1;
+                $payrollList->payroll_list_employee_name = $allBonusList[$bonus]["earnings_employee"];
+                $payrollList->payroll_list_employee_id = $allBonusList[$bonus]["earnings_employee_id"];
+                $payrollList->paytype_id = $allBonusList[$bonus]["earnings_paytype_id"];
+                $payrollList->payitem_id = $allBonusList[$bonus]["earnings_payitem_id"];
+                $payrollList->amount = $allBonusList[$bonus]["earnings_amount"];
+                $payrollList->frequency = $allBonusList[$bonus]["earnings_frequency"];
+                $payrollList->is_installment = $allBonusList[$bonus]["earnings_is_installment"];
+                $payrollList->number_of_installment = $allBonusList[$bonus]["earnings_number_of_installment"];
+                $payrollList->start_pay_date = $allBonusList[$bonus]["earnings_start_pay_date"];
+                $payrollList->end_pay_date = $allBonusList[$bonus]["earnings_end_pay_date"];
+                $payrollList->details = $allBonusList[$bonus]["earnings_details"];
+                $payrollList->installment_extra = $allBonusList[$bonus]["installment_extra"];
+                $payrollList->hris_date = "";
+                $payrollList->earnings_rate = "";
+                $payrollList->earnings_hrs = "";
+                // checkDeleteNotInstallmentEarnings($payrollList);
+                $query = checkCreateEarnings($payrollList);
+            }
         }
     }
 

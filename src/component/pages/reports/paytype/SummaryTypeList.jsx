@@ -182,7 +182,9 @@ const SummaryTypeList = () => {
           }}
         </Formik>
       </div>
-      <HeaderPrint />
+      <div className="print:pt-8">
+        <HeaderPrint />
+      </div>
       <div className="text-center pb-4 font-bold print:pt-4">
         {startDate !== "" && (
           <>

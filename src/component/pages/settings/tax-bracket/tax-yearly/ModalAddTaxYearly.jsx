@@ -37,7 +37,7 @@ const ModalAddTaxYearly = ({ itemEdit }) => {
       queryClient.invalidateQueries({ queryKey: ["taxBracketYearly"] });
       // show success box
       if (data.success) {
-        dispatch(setIsAdd(false));
+        // dispatch(setIsAdd(false));
         dispatch(setSuccess(true));
         dispatch(setMessage(`Successfuly ${itemEdit ? "updated." : "added."}`));
       }
@@ -76,7 +76,7 @@ const ModalAddTaxYearly = ({ itemEdit }) => {
         <div className="p-1 w-[350px] rounded-b-2xl">
           <div className="flex justify-between items-center bg-primary p-3 rounded-t-2xl">
             <h3 className="text-white text-sm">
-              {itemEdit ? "Update" : "Add"} Semi Monthly
+              {itemEdit ? "Update" : "Add"} Yearly
             </h3>
             <button
               type="button"

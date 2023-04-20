@@ -209,10 +209,18 @@ const PayrollViewList = () => {
                           {numberWithCommas(item.payroll_list_deduction)}
                         </td>
                         <td className="text-right px-2">
-                          {numberWithCommas(item.payroll_list_net_pay)}
+                          {Number(item.payroll_category_type) ===
+                          payrollCategoryBonusId
+                            ? `${numberWithCommas(item.payroll_list_bonus)}`
+                            : Number(item.payroll_category_type) ===
+                              payrollCategory13thMonthId
+                            ? `${numberWithCommas(
+                                item.payroll_list_13th_month
+                              )}`
+                            : `${numberWithCommas(item.payroll_list_net_pay)}`}
                         </td>
                         <td>
-                          {item.payroll_category_type ===
+                          {Number(item.payroll_category_type) ===
                           payrollCategoryBonusId ? (
                             <div className="flex items-center justify-end gap-1 mr-2">
                               <Link
@@ -223,7 +231,7 @@ const PayrollViewList = () => {
                                 <MdOutlineReceipt />
                               </Link>
                             </div>
-                          ) : item.payroll_category_type ===
+                          ) : Number(item.payroll_category_type) ===
                             payrollCategory13thMonthId ? (
                             <div className="flex items-center justify-end gap-1 mr-2">
                               <Link
@@ -235,16 +243,15 @@ const PayrollViewList = () => {
                               </Link>
                             </div>
                           ) : (
-                            // <div className="flex items-center justify-end gap-1 mr-2">
-                            //   <Link
-                            //     to={`${link}/payroll/list/payslip?payslipid=${item.payroll_list_aid}`}
-                            //     className="btn-action-table tooltip-action-table"
-                            //     data-tooltip="Payslip"
-                            //   >
-                            //     <MdOutlineReceipt />
-                            //   </Link>
-                            // </div>
-                            ""
+                            <div className="flex items-center justify-end gap-1 mr-2">
+                              <Link
+                                to={`${link}/payroll/list/payslip?payslipid=${item.payroll_list_aid}`}
+                                className="btn-action-table tooltip-action-table"
+                                data-tooltip="Payslip"
+                              >
+                                <MdOutlineReceipt />
+                              </Link>
+                            </div>
                           )}
                         </td>
                       </tr>

@@ -172,7 +172,15 @@ const PayrollList = ({ setItemEdit }) => {
                       </td>
                       <td className="text-center">{item.count}</td>
                       <td className="text-right">
-                        {numberWithCommas(Number(item.totalNet).toFixed(2))}
+                        {Number(item.payroll_category_type) ===
+                        payrollCategoryBonusId
+                          ? `${numberWithCommas(item.payroll_list_bonus)}`
+                          : Number(item.payroll_category_type) ===
+                            payrollCategory13thMonthId
+                          ? `${numberWithCommas(item.payroll_list_13th_month)}`
+                          : `${numberWithCommas(
+                              Number(item.totalNet).toFixed(2)
+                            )}`}
                       </td>
                       <td className="text-center">
                         {item.payroll_is_paid === 1 ? (

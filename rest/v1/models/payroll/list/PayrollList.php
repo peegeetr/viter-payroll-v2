@@ -1131,4 +1131,24 @@ class PayrollList
         }
         return $query;
     }
+
+    // read by payslip by id
+    public function readCategoryBonusIsEmpty()
+    {
+        try {
+            $sql = "select payroll.payroll_category_type ";
+            $sql .= "from {$this->tblPayrollList} as payrollList, ";
+            $sql .= "{$this->tblPayroll} as payroll, ";
+            $sql .= "{$this->tblEarnings} as earnings ";
+            $sql .= "where payroll.payroll_category_type = '3' ";
+            $sql .= "and earnings.earnings_payroll_type_id = '3' ";
+            $sql .= "and payrollList.payroll_list_payroll_id = payroll.payroll_id ";
+            $sql .= "and earnings.earnings_payroll_id = payroll.payroll_id ";
+            $sql .= "order by payrollList.payroll_list_payroll_id asc ";
+            $query = $this->connection->query($sql);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
 }

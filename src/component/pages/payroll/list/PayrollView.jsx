@@ -58,7 +58,7 @@ const PayrollView = () => {
     "get", // method
     "payrollEarnings" // key
   );
-  console.log(categoryId, payrollEarnings);
+  console.log("categoryId", payrollEarnings);
 
   // use if not loadmore button undertime
   const { data: payrollDeductions } = useQueryData(

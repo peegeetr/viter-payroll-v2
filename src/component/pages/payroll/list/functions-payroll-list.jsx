@@ -6,7 +6,7 @@ import {
   payrollCategorySalaryId,
 } from "../../../helpers/functions-payroll-category-id";
 import {
-  payCompute13thMonth,
+  payComputeCategory13thMonth,
   payComputeAbsences,
   payComputeAdjustment,
   payComputeBereavement,
@@ -32,6 +32,7 @@ import {
   payComputeTithes,
   payComputeTuition,
   payComputeUndertime,
+  payComputeCategoryBonus,
 } from "../../../helpers/payroll-formula";
 
 export const runPayroll = (
@@ -126,6 +127,8 @@ export const runPayroll = (
   let sSSLoanAmount = 0;
   let sSSLoanList = [];
 
+  let categoryBonus = 0;
+
   let payrollList = [];
   let taxList = [];
   let sssList = [];
@@ -139,88 +142,17 @@ export const runPayroll = (
   let zero = "0.00";
 
   if (Number(categoryId) === payrollCategory13thMonthId) {
-    payrollList = payCompute13thMonth(category13thMonth);
+    payrollList = payComputeCategory13thMonth(category13thMonth);
   }
 
   if (Number(categoryId) === payrollCategoryBonusId) {
-    // payrollList = payCompute13thMonth(category13thMonth);
-    employee.map((emp) => {
-      payrollEarnings.map((earning) => {
-        // 13th mo & Other benefits
-        // loop earnings onetime and installment for each employee
+    categoryBonus = payComputeCategoryBonus(employee, payrollEarnings);
 
-        if (
-          emp.payroll_list_employee_id === earning.earnings_employee_id && // employee id
-          earning.earnings_is_paid === 0 && // not paid
-          earning.earnings_payitem_id === bonusId && //onetime or installment
-          earning.earnings_number_of_installment > earning.earnings_num_pay //number of payment
-        ) {
-          bonusAmount = payComputeBonus(emp, earning);
-          totalBonus += bonusAmount.finalAmount;
-
-          // for updating number of pay if installment or one time
-          earningsNumInstallmentList.push({
-            earnings_num_pay: earning.earnings_num_pay + 1,
-            earnings_is_paid:
-              earning.earnings_num_pay + 1 ===
-              earning.earnings_number_of_installment
-                ? 1
-                : 0,
-            earnings_employee_id: emp.payroll_list_employee_id,
-            earnings_payitem_id: earning.earnings_payitem_id,
-          });
-
-          bonusList.push(...bonusAmount.bonusList);
-          // data to send to server
-          payrollList.push({
-            payroll_list_employee_id: emp.payroll_list_employee_id,
-            payroll_list_employee_name: emp.payroll_list_employee_name,
-            payroll_list_gross: zero,
-            payroll_list_deduction: zero,
-            payroll_list_net_pay: zero,
-            payroll_list_basic_pay: zero,
-            payroll_list_overtime_pay: zero,
-            payroll_list_overtime_hrs: zero,
-            payroll_list_leave_pay: zero,
-            payroll_list_leave_hrs: zero,
-            payroll_list_holiday: zero,
-            payroll_list_holiday_hrs: zero,
-            payroll_list_inlfation_adjustment: zero,
-            payroll_list_adjustment_pay: zero,
-            payroll_list_night_shift_differential: zero,
-            payroll_list_nd_hrs: zero,
-            payroll_list_hazard_pay: zero,
-            payroll_list_absences: zero,
-            payroll_list_absences_hrs: zero,
-            payroll_list_deminimis: zero,
-            payroll_list_13th_month: zero,
-            payroll_list_bonus: totalBonus.toFixed(2),
-            payroll_list_employee_referral_bonus: zero,
-            payroll_list_bereavement: zero,
-            payroll_list_separation_pay: zero,
-            payroll_list_other_allowances: zero,
-            payroll_list_total_benefits: zero,
-            payroll_list_sss_er: zero,
-            payroll_list_philhealth_er: zero,
-            payroll_list_pagibig_er: zero,
-            payroll_list_hmo_er: zero,
-            payroll_list_sss_ee: zero,
-            payroll_list_philhealth_ee: zero,
-            payroll_list_pagibig_ee: zero,
-            payroll_list_hmo_ee: zero,
-            payroll_list_sss_loan: zero,
-            payroll_list_pagibig_loan: zero,
-            payroll_list_pagibig_mp2: zero,
-            payroll_list_fwc_tithes: zero,
-            payroll_list_fca_tuition: zero,
-            payroll_list_other_deduction: zero,
-            payroll_list_madatory_ee: zero,
-            payroll_list_tax: zero,
-            payroll_list_undertime: zero,
-          });
-        }
-      });
-    });
+    bonusList.push(...categoryBonus.bonusList);
+    earningsNumInstallmentList.push(
+      ...categoryBonus.earningsNumInstallmentList
+    );
+    payrollList.push(...categoryBonus.CategoryBonusList);
   }
 
   if (Number(categoryId) === payrollCategorySalaryId) {
@@ -441,7 +373,7 @@ export const runPayroll = (
         payroll_list_absences: totalAbsencesAmount.toFixed(2),
         payroll_list_absences_hrs: totalAbsencesHrs,
         payroll_list_deminimis: totalDiminimis,
-        payroll_list_13th_month: "0.00",
+        payroll_list_13th_month: zero,
         payroll_list_bonus: totalBonus.toFixed(2),
         payroll_list_employee_referral_bonus:
           totalEmployeeReferralBonus.toFixed(2),
@@ -452,11 +384,11 @@ export const runPayroll = (
         payroll_list_sss_er: sssAmount.sssEr.toFixed(2),
         payroll_list_philhealth_er: philAmount.philhealthEr.toFixed(2),
         payroll_list_pagibig_er: pagibigAmount.pagibigEr.toFixed(2),
-        payroll_list_hmo_er: "0.00",
+        payroll_list_hmo_er: zero,
         payroll_list_sss_ee: sssAmount.sssEe.toFixed(2),
         payroll_list_philhealth_ee: philAmount.philhealthEe.toFixed(2),
         payroll_list_pagibig_ee: pagibigAmount.pagibigEe.toFixed(2),
-        payroll_list_hmo_ee: "0.00",
+        payroll_list_hmo_ee: zero,
         payroll_list_sss_loan: totalSSSLoan.toFixed(2),
         payroll_list_pagibig_loan: totalPagibigLoan.toFixed(2),
         payroll_list_pagibig_mp2: totalPagibigMP2.toFixed(2),
@@ -523,6 +455,7 @@ export const runPayroll = (
       tax = 0;
     });
   }
+
   return {
     payrollList,
     holidayList,

@@ -365,9 +365,9 @@ if (array_key_exists("listpayrollid", $_GET)) {
     // list of installment  Earnings 
     // bonus
     // delete first existing PR ID and pay item id pagibig ER
-    $payrollList->payitem_id = $data["payItemBonusId"];
-    checkId($payrollList->payitem_id);
-    checkDeleteNotInstallmentEarnings($payrollList);
+    // $payrollList->payitem_id = $data["payItemBonusId"];
+    // checkId($payrollList->payitem_id);
+    // checkDeleteNotInstallmentEarnings($payrollList);
     if ($allBonusList !== 0) {
 
         for ($bonus = 0; $bonus < count($allBonusList); $bonus++) {
@@ -388,6 +388,10 @@ if (array_key_exists("listpayrollid", $_GET)) {
             $payrollList->hris_date = "";
             $payrollList->earnings_rate = "";
             $payrollList->earnings_hrs = "";
+            // bonus
+            // delete first existing PR ID and pay item id pagibig ER
+            checkDeleteNotInstallmentEarnings($payrollList);
+            // bonus
             $query = checkCreateEarnings($payrollList);
         }
     }

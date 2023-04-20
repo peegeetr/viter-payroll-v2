@@ -18,6 +18,8 @@ import NoData from "../../../partials/NoData";
 import SearchBarRq from "../../../partials/SearchBarRq";
 import ServerError from "../../../partials/ServerError";
 import TableSpinner from "../../../partials/spinners/TableSpinner";
+import { payrollCategoryBonusId } from "../../../helpers/functions-payroll-category-id";
+import { payrollCategory13thMonthId } from "../../../helpers/functions-payroll-category-id";
 
 const PayrollViewList = () => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -80,6 +82,8 @@ const PayrollViewList = () => {
       fetchNextPage();
     }
   }, [inView]);
+
+  console.log(result);
 
   return (
     <>
@@ -208,15 +212,40 @@ const PayrollViewList = () => {
                           {numberWithCommas(item.payroll_list_net_pay)}
                         </td>
                         <td>
-                          <div className="flex items-center justify-end gap-1 mr-2">
-                            <Link
-                              to={`${link}/payroll/list/payslip?payslipid=${item.payroll_list_aid}`}
-                              className="btn-action-table tooltip-action-table"
-                              data-tooltip="Payslip"
-                            >
-                              <MdOutlineReceipt />
-                            </Link>
-                          </div>
+                          {item.payroll_category_type ===
+                          payrollCategoryBonusId ? (
+                            <div className="flex items-center justify-end gap-1 mr-2">
+                              <Link
+                                to={`${link}/payroll/list/payslip?payslipid=${item.payroll_list_aid}`}
+                                className="btn-action-table tooltip-action-table"
+                                data-tooltip="Payslip"
+                              >
+                                <MdOutlineReceipt />
+                              </Link>
+                            </div>
+                          ) : item.payroll_category_type ===
+                            payrollCategory13thMonthId ? (
+                            <div className="flex items-center justify-end gap-1 mr-2">
+                              <Link
+                                to={`${link}/payroll/list/payslip-13th-Month?payslipid=${item.payroll_list_aid}`}
+                                className="btn-action-table tooltip-action-table"
+                                data-tooltip="Payslip"
+                              >
+                                <MdOutlineReceipt />
+                              </Link>
+                            </div>
+                          ) : (
+                            // <div className="flex items-center justify-end gap-1 mr-2">
+                            //   <Link
+                            //     to={`${link}/payroll/list/payslip?payslipid=${item.payroll_list_aid}`}
+                            //     className="btn-action-table tooltip-action-table"
+                            //     data-tooltip="Payslip"
+                            //   >
+                            //     <MdOutlineReceipt />
+                            //   </Link>
+                            // </div>
+                            ""
+                          )}
                         </td>
                       </tr>
                     );

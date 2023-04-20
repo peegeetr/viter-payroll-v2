@@ -56,7 +56,7 @@ const PayrunSummaryBody = ({ result, startDate, endDate }) => {
               Number(item.payroll_list_other_deduction);
 
             return (
-              <div key={key} className="mb-8 print:mb-36">
+              <div key={key} className="mb-8 print:mb-36 print:pt-8">
                 <HeaderPrint />
                 <div className="text-center pb-4 font-bold print:pt-4">
                   {startDate !== "" && (

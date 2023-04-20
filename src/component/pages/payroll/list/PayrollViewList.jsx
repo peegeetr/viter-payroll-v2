@@ -224,7 +224,7 @@ const PayrollViewList = () => {
                           payrollCategoryBonusId ? (
                             <div className="flex items-center justify-end gap-1 mr-2">
                               <Link
-                                to={`${link}/payroll/list/payslip?payslipid=${item.payroll_list_aid}`}
+                                to={`${link}/payroll/list/payslip-bonus?payslipid=${item.payroll_list_aid}`}
                                 className="btn-action-table tooltip-action-table"
                                 data-tooltip="Payslip"
                               >

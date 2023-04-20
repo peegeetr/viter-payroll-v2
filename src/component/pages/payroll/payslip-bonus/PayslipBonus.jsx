@@ -12,10 +12,10 @@ import ServerError from "../../../partials/ServerError";
 import ModalError from "../../../partials/modals/ModalError";
 import ModalSuccess from "../../../partials/modals/ModalSuccess";
 import FetchingSpinner from "../../../partials/spinners/FetchingSpinner";
+import PayslipBonusList from "./PayslipBonusList";
 import NoData from "../../../partials/NoData";
-import Payslip13thMonthList from "./Payslip13thMonthList";
 
-const Payslip13thMonth = () => {
+const PayslipBonus = () => {
   const { store, dispatch } = React.useContext(StoreContext);
   // use if not loadmore button undertime
   const payslipId = getUrlParam().get("payslipid");
@@ -59,7 +59,7 @@ const Payslip13thMonth = () => {
 
         <div className="w-full pt-5 pb-20 mb-16">
           {payslip?.data.length > 0 ? (
-            <Payslip13thMonthList payslip={payslip} />
+            <PayslipBonusList payslip={payslip} />
           ) : (
             <NoData />
           )}
@@ -75,4 +75,4 @@ const Payslip13thMonth = () => {
   );
 };
 
-export default Payslip13thMonth;
+export default PayslipBonus;

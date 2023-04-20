@@ -61,6 +61,7 @@ import WTaxPage from "./component/pages/reports/w-tax/WTaxPage";
 import WTaxMonthly from "./component/pages/reports/w-tax/monthly-tax/WTaxMonthly";
 import WTaxYearly from "./component/pages/reports/w-tax/yearly-tax/WTaxYearly";
 import Payslip13thMonth from "./component/pages/payroll/payslip-13th-month/Payslip13thMonth";
+import PayslipBonus from "./component/pages/payroll/payslip-bonus/PayslipBonus";
 
 function App() {
   // Create a client
@@ -483,6 +484,14 @@ function App() {
               element={
                 <ProtectedRouteSystem>
                   <Payslip13thMonth />
+                </ProtectedRouteSystem>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/payroll/list/payslip-bonus`}
+              element={
+                <ProtectedRouteSystem>
+                  <PayslipBonus />
                 </ProtectedRouteSystem>
               }
             />

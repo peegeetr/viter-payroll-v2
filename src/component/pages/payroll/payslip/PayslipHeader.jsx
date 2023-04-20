@@ -1,12 +1,14 @@
-import React from "react";
 import useQueryData from "../../../custom-hooks/useQueryData";
 import {
   formatDate,
   getPayslipPeriod,
-  getWorkingDays,
   hrisDevApiUrl,
 } from "../../../helpers/functions-general";
-import FbsLogoSm from "../../../svg/FbsLogoSm";
+import {
+  payrollCategory13thMonthId,
+  payrollCategoryBonusId,
+  payrollCategorySalaryId,
+} from "../../../helpers/functions-payroll-category-id";
 import HeaderPrint from "../../../partials/HeaderPrint";
 
 const PayslipHeader = ({ payslip, empid, days }) => {
@@ -20,7 +22,7 @@ const PayslipHeader = ({ payslip, empid, days }) => {
     false // devKey boolean
   );
 
-  console.log(job);
+  console.log(payslip);
   return (
     <>
       <HeaderPrint />
@@ -39,17 +41,32 @@ const PayslipHeader = ({ payslip, empid, days }) => {
             <span className="font-semibold">Department : </span>{" "}
             {payslip?.data[0].payroll_list_employee_department}
           </p>
-          <p className="mb-0">
-            <span className="font-semibold">Frequency : </span> Semi-monthly
-          </p>
+          {Number(payslip?.data[0].payroll_category_type) ===
+          payrollCategoryBonusId ? (
+            <p className="mb-0">
+              <span className="font-semibold">Payroll Type : </span> Bonus
+            </p>
+          ) : Number(payslip?.data[0].payroll_category_type) ===
+            payrollCategory13thMonthId ? (
+            <p className="mb-0">
+              <span className="font-semibold">Payroll Type : </span> 13th Month
+            </p>
+          ) : (
+            <p className="mb-0">
+              <span className="font-semibold">Frequency : </span> Semi-monthly
+            </p>
+          )}
           <p className="mb-0">
             <span className="font-semibold">Position : </span>{" "}
             {job?.data.length > 0 ? job?.data[0].job_title_name : "N/A"}
           </p>
-          <p className="mb-0">
-            <span className="font-semibold">Pay Period : </span>{" "}
-            {getPayslipPeriod(payslip)} ({days} working days)
-          </p>
+          {Number(payslip?.data[0].payroll_category_type) ===
+            payrollCategorySalaryId && (
+            <p className="mb-0">
+              <span className="font-semibold">Pay Period : </span>{" "}
+              {getPayslipPeriod(payslip)} ({days} working days)
+            </p>
+          )}
         </div>
       </div>
     </>

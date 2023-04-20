@@ -4,6 +4,7 @@ class PayrollList
     public $payroll_list_aid;
     public $payroll_list_is_paid;
     public $payroll_list_employee_name;
+    public $payroll_list_employee_email;
     public $payroll_list_employee_id;
     public $payroll_list_employee_salary;
     public $payroll_list_payroll_id;

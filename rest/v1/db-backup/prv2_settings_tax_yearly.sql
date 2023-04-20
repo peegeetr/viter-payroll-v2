@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 20, 2023 at 08:26 AM
+-- Generation Time: Apr 20, 2023 at 08:56 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -24,10 +24,10 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `prv2_tax_yearly`
+-- Table structure for table `prv2_settings_tax_yearly`
 --
 
-CREATE TABLE `prv2_tax_yearly` (
+CREATE TABLE `prv2_settings_tax_yearly` (
   `tax_yearly_aid` int(11) NOT NULL,
   `tax_yearly_active` tinyint(1) NOT NULL,
   `tax_yearly_from` varchar(20) NOT NULL,
@@ -39,10 +39,10 @@ CREATE TABLE `prv2_tax_yearly` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `prv2_tax_yearly`
+-- Dumping data for table `prv2_settings_tax_yearly`
 --
 
-INSERT INTO `prv2_tax_yearly` (`tax_yearly_aid`, `tax_yearly_active`, `tax_yearly_from`, `tax_yearly_to`, `tax_yearly_fixed_tax`, `tax_yearly_rate`, `tax_yearly_created`, `tax_yearly_datetime`) VALUES
+INSERT INTO `prv2_settings_tax_yearly` (`tax_yearly_aid`, `tax_yearly_active`, `tax_yearly_from`, `tax_yearly_to`, `tax_yearly_fixed_tax`, `tax_yearly_rate`, `tax_yearly_created`, `tax_yearly_datetime`) VALUES
 (1, 1, '0.00', '250000', '0.00', '0', '2023-04-20 14:24:31', '2023-04-20 14:24:31'),
 (2, 1, '250000', '400000', '0.00', '20', '2023-04-20 14:25:03', '2023-04-20 14:25:46');
 
@@ -51,9 +51,9 @@ INSERT INTO `prv2_tax_yearly` (`tax_yearly_aid`, `tax_yearly_active`, `tax_yearl
 --
 
 --
--- Indexes for table `prv2_tax_yearly`
+-- Indexes for table `prv2_settings_tax_yearly`
 --
-ALTER TABLE `prv2_tax_yearly`
+ALTER TABLE `prv2_settings_tax_yearly`
   ADD PRIMARY KEY (`tax_yearly_aid`);
 
 --
@@ -61,9 +61,9 @@ ALTER TABLE `prv2_tax_yearly`
 --
 
 --
--- AUTO_INCREMENT for table `prv2_tax_yearly`
+-- AUTO_INCREMENT for table `prv2_settings_tax_yearly`
 --
-ALTER TABLE `prv2_tax_yearly`
+ALTER TABLE `prv2_settings_tax_yearly`
   MODIFY `tax_yearly_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 

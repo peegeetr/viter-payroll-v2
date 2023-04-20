@@ -17,7 +17,7 @@ class TaxYearly
     public function __construct($db)
     {
         $this->connection = $db;
-        $this->tbltaxYearly = "prv2_tax_yearly";
+        $this->tbltaxYearly = "prv2_settings_tax_yearly";
     }
 
     public function create()

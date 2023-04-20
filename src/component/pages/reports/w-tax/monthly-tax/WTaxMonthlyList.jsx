@@ -54,7 +54,6 @@ const WTaxMonthlyList = () => {
     refetchOnWindowFocus: false,
     cacheTime: 1000,
   });
-  console.log(result);
 
   React.useEffect(() => {
     if (inView) {

@@ -73,6 +73,13 @@ const WTaxYearlyList = () => {
     false // devKey boolean
   );
 
+  // use if not loadmore button monthly tax
+  const { data: monthlyTax } = useQueryData(
+    `${devApiUrl}/v1/tax/monthly`, // endpoint
+    "get", // method
+    "monthlyTax" // key
+  );
+
   const initVal = {
     employee_aid: "",
     year: "",
@@ -176,7 +183,11 @@ const WTaxYearlyList = () => {
             </tbody>
           </table>
         )}
-        <WTaxBodyYearly result={result} year={year} employeeId={employeeId} />
+        <WTaxBodyYearly
+          result={result}
+          year={year}
+          monthlyTax={monthlyTax?.data}
+        />
       </div>
     </>
   );

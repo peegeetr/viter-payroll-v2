@@ -31,11 +31,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
     $allTaxList = $data["taxList"];
     $allDeminimis = $data["deminimisList"];
 
-
     // installment 
-    // installment
-    // installment
-    // installment
     // list of installment Earnings 
     $allBereavementList = $data["bereavementList"];
     $allBonusList = $data["bonusList"];
@@ -95,18 +91,15 @@ if (array_key_exists("listpayrollid", $_GET)) {
         $payrollList->payroll_list_madatory_ee = $allPayrollPayList[$pl]["payroll_list_madatory_ee"];
         $payrollList->payroll_list_undertime = $allPayrollPayList[$pl]["payroll_list_undertime"];
         $payrollList->payroll_list_tax = $allPayrollPayList[$pl]["payroll_list_tax"];
-
         $query = checkUpdate($payrollList);
     }
 
 
-    // delete first existing PR ID and pay item id holiday
+    // delete first existing PR ID and pay item id de Minimis
     $payrollList->payitem_id = $data["payItemDeminimisId"];
     checkId($payrollList->payitem_id);
     checkDeleteNotInstallmentEarnings($payrollList);
-
-    if ($allDeminimis > 0) {
-
+    if (count($allDeminimis) > 0) {
         for ($d = 0; $d < count($allDeminimis); $d++) {
             $payrollList->payroll_type_id = $allDeminimis[$d]["earnings_payroll_type_id"];
             $payrollList->num_pay = 1;
@@ -125,7 +118,6 @@ if (array_key_exists("listpayrollid", $_GET)) {
             $payrollList->earnings_rate = "";
             $payrollList->earnings_hrs = "";
             $payrollList->installment_extra = "0";
-
             $query = checkCreateEarnings($payrollList);
         }
     }
@@ -134,9 +126,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
     $payrollList->payitem_id = $data["payItemHolidayId"];
     checkId($payrollList->payitem_id);
     checkDeleteNotInstallmentEarnings($payrollList);
-
-    if ($allHolidayList > 0) {
-
+    if (count($allHolidayList) > 0) {
         for ($h = 0; $h < count($allHolidayList); $h++) {
             $payrollList->payroll_type_id = $allHolidayList[$h]["earnings_payroll_type_id"];
             $payrollList->num_pay = 1;
@@ -155,7 +145,6 @@ if (array_key_exists("listpayrollid", $_GET)) {
             $payrollList->earnings_rate = $allHolidayList[$h]["earnings_rate"];
             $payrollList->earnings_hrs = $allHolidayList[$h]["earnings_hrs"];
             $payrollList->installment_extra = "0";
-
             $query = checkCreateEarnings($payrollList);
         }
     }
@@ -164,7 +153,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
     $payrollList->payitem_id = $data["payItemNightDiffId"];
     checkId($payrollList->payitem_id);
     checkDeleteNotInstallmentEarnings($payrollList);
-    if ($allNdList > 0) {
+    if (count($allNdList) > 0) {
         for ($nd = 0; $nd < count($allNdList); $nd++) {
             $payrollList->payroll_type_id = $allNdList[$nd]["earnings_payroll_type_id"];
             $payrollList->num_pay = 1;
@@ -183,7 +172,6 @@ if (array_key_exists("listpayrollid", $_GET)) {
             $payrollList->earnings_rate = $allNdList[$nd]["earnings_rate"];
             $payrollList->earnings_hrs = $allNdList[$nd]["earnings_hrs"];
             $payrollList->installment_extra = "0";
-
             $query = checkCreateEarnings($payrollList);
         }
     }
@@ -197,7 +185,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
     checkId($payrollList->payitem_id);
     checkDeleteNotInstallmentDeductions($payrollList);
     // earnings sss EE and deductions sss ER
-    if ($allSssList > 0) {
+    if (count($allSssList) > 0) {
         for ($sss = 0; $sss < count($allSssList); $sss++) {
             $payrollList->payroll_type_id = $allSssList[$sss]["earnings_payroll_type_id"];
             $payrollList->num_pay = 1;
@@ -234,7 +222,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
     checkId($payrollList->payitem_id);
     checkDeleteNotInstallmentDeductions($payrollList);
     // earnings Pagibig EE and deductions Pagibig ER
-    if ($allPagibigList > 0) {
+    if (count($allPagibigList) > 0) {
         for ($pgbg = 0; $pgbg < count($allPagibigList); $pgbg++) {
             $payrollList->payroll_type_id = $allPagibigList[$pgbg]["earnings_payroll_type_id"];
             $payrollList->num_pay = 1;
@@ -262,16 +250,16 @@ if (array_key_exists("listpayrollid", $_GET)) {
         }
     }
 
-    // delete first existing PR ID and pay item id pagibig ER
+    // delete first existing PR ID and pay item id phic ER
     $payrollList->payitem_id = $data["payItemPhilhealthErId"];
     checkId($payrollList->payitem_id);
     checkDeleteNotInstallmentEarnings($payrollList);
-    // delete first deduction PR ID and pay item id pagibig EE
+    // delete first deduction PR ID and pay item id phic EE
     $payrollList->payitem_id = $data["payItemPhilhealthEeId"];
     checkId($payrollList->payitem_id);
     checkDeleteNotInstallmentDeductions($payrollList);
     // earnings Phil EE and deductions Phil ER
-    if ($allPhilhealthList > 0) {
+    if (count($allPhilhealthList) > 0) {
         for ($phil = 0; $phil < count($allPhilhealthList); $phil++) {
             $payrollList->payroll_type_id = $allPhilhealthList[$phil]["earnings_payroll_type_id"];
             $payrollList->num_pay = 1;
@@ -298,12 +286,11 @@ if (array_key_exists("listpayrollid", $_GET)) {
             $query = checkCreateDeductions($payrollList);
         }
     }
-    // delete first deduction PR ID and pay item id pagibig EE
+    // delete first deduction PR ID and pay item id tax
     $payrollList->payitem_id = $data["payItemTaxId"];
     checkId($payrollList->payitem_id);
     checkDeleteNotInstallmentDeductions($payrollList);
-    // earnings Phil EE and deductions Phil ER
-    if ($allTaxList > 0) {
+    if (count($allTaxList) > 0) {
         for ($tax = 0; $tax < count($allTaxList); $tax++) {
             $payrollList->payroll_type_id = $allTaxList[$tax]["deduction_payroll_type_id"];
             $payrollList->num_pay = 1;
@@ -630,8 +617,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
     }
 
     // list of installment Deduction
-    // Pagibig MP2  
-    checkDeleteNotInstallmentDeductions($payrollList);
+    // SSS loan  
     if (count($allSSSLoanList) > 0) {
         for ($sss = 0; $sss < count($allSSSLoanList); $sss++) {
             if ($allSSSLoanList[$sss]["installment_extra"] === 1) {

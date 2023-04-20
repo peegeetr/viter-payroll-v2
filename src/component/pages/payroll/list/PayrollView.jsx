@@ -21,6 +21,7 @@ import {
   payrollCategoryBonusId,
   payrollCategorySalaryId,
 } from "../../../helpers/functions-payroll-category-id";
+import ModalPayslipEmailAll from "./ModalPayslipEmailAll";
 
 const PayrollView = () => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -41,7 +42,7 @@ const PayrollView = () => {
   } = useQueryData(
     `${devApiUrl}/v1/payrollList/${pid}`, // endpoint
     "get", // method
-    "payrollList" // key
+    "payslip-payrollList" // key
   );
 
   let categoryId =
@@ -197,7 +198,7 @@ const PayrollView = () => {
       {store.error && (
         <ModalError msg={`${categoryName} has no entry in earnings`} />
       )}
-      {store.isAdd && <ModalUpdatePhilhealth item={item} />}
+      {store.isAdd && <ModalPayslipEmailAll payrollList={payrollList?.data} />}
     </>
   );
 };

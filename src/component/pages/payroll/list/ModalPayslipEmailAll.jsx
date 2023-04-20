@@ -10,23 +10,22 @@ import {
   setMessage,
   setSuccess,
 } from "../../../../store/StoreAction";
+import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 
-const ModalEmailAll = ({ categoryId }) => {
+const ModalPayslipEmailAll = ({ payrollList }) => {
   const { store, dispatch } = React.useContext(StoreContext);
-  const [loading, setLoading] = React.useState(false);
-
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: (values) =>
-      queryData(`${devApiUrl}/v1/payrollList/email-all/payslip`, "put", values),
+      queryData(`${devApiUrl}/v1/payslip/email-all/payslip`, "put", values),
     onSuccess: (data) => {
       // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: ["payrollList-email-all"] });
+      queryClient.invalidateQueries({ queryKey: ["payslip-payrollList"] });
       // show success box
       if (data.success) {
         dispatch(setIsAdd(false));
         dispatch(setSuccess(true));
-        dispatch(setMessage(`Successfuly Email All`));
+        dispatch(setMessage(`Successfuly email all`));
       }
       // show error box
       if (!data.success) {
@@ -41,7 +40,7 @@ const ModalEmailAll = ({ categoryId }) => {
   const handleYes = async () => {
     // email all payroll
     mutation.mutate({
-      payrollPayList: payrollList.length > 0 ? payrollList : [],
+      allEmailEmployee: payrollList.length > 0 ? payrollList : [],
     });
   };
 
@@ -55,11 +54,11 @@ const ModalEmailAll = ({ categoryId }) => {
               <FaQuestionCircle className="my-0 mx-auto" />
             </span>
             <span className="text-sm font-bold">
-              Are you sure to {isPaid ? "run" : "mark as paid"}
+              Are you sure you want to email payslip
+              <br />
+              to all employee ?
             </span>
             <br />
-            <span className="text-sm font-bold break-all">"{pid}"?</span>
-            {!isPaid && <p>You can't undo this action.</p>}
             <div className="flex items-center gap-1 pt-5">
               <button
                 type="submit"
@@ -67,7 +66,7 @@ const ModalEmailAll = ({ categoryId }) => {
                 disabled={mutation.isLoading}
                 onClick={handleYes}
               >
-                {loading ? <ButtonSpinner /> : "Confirm"}
+                {mutation.isLoading ? <ButtonSpinner /> : "Confirm"}
               </button>
               <button
                 type="reset"
@@ -85,4 +84,4 @@ const ModalEmailAll = ({ categoryId }) => {
   );
 };
 
-export default ModalEmailAll;
+export default ModalPayslipEmailAll;

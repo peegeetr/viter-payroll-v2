@@ -38,6 +38,7 @@ RewriteRule ^payroll/search/([A-Za-z0-9-]+)$ controllers/payroll/search.php?sear
 RewriteRule ^payslip/([0-9]+)$ controllers/payroll/payslip/payslipById.php?payrollListId=$1 [L]
 RewriteRule ^payslip/earnings/([0-9]+)/([0-9]+)/([A-Za-z0-9-]+)$ controllers/payroll/payslip/payslipByEarnings.php?paytypeId=$1&empId=$2&payrollId=$3 [L]
 RewriteRule ^payslip/deductions/([0-9]+)/([0-9]+)/([A-Za-z0-9-]+)$ controllers/payroll/payslip/payslipByDeductions.php?paytypeId=$1&empId=$2&payrollId=$3 [L]
+RewriteRule ^payslip/email-all/payslip$ controllers/payroll/payslip/payslip-email-all.php [L]   
    
 #payroll list paid
 RewriteRule ^payrollList$ controllers/payroll/list/payrollView.php [L]

@@ -2,19 +2,22 @@
 *controllers       
     *ALL FILES
     - settings/tax-bracket/tax-yearly/  
+    -> payroll/payslip/payslip-email-all.php
 
 *models 
     - settings/tax-bracket/tax-yearly/TaxYearly.php
     
 *htaccess 
     - #SETTINGS TAX YEARLY BRACKET
+    -> #payslip
 
 *db tables 
     -  prv2_settings_tax_yearly.sql
 
 *core 
-    - 
-
+    -  
+    
 *extra 
-    - 
+    -> notification/template/email-payslip.php
+    -> notification/email-payslip.php
  

@@ -11,35 +11,24 @@ import {
 import { StoreContext } from "../../../store/StoreContext";
 import { devApiUrl } from "../../helpers/functions-general";
 import {
-  PagibigLoanId,
-  PagibigMP2Id,
-  SSSLoanId,
-  bereavementId,
-  bonusId,
   diminimisId,
-  employeeReferralBonusId,
-  fcaTutionId,
-  fwcTithesId,
   holidayId,
   nightDiffId,
-  otherAllowancesId,
-  otherDeductionId,
   pagibigEeId,
   pagibigErId,
   payrollTaxDeductionId,
   philhealthEeId,
   philhealthErId,
-  separationPayId,
   sssEeId,
   sssErId,
 } from "../../helpers/functions-payitemId";
-import { queryData } from "../../helpers/queryData";
-import { runPayroll } from "../../pages/payroll/list/functions-payroll-list";
-import ButtonSpinner from "../spinners/ButtonSpinner";
 import {
   payrollCategory13thMonthId,
   payrollCategoryBonusId,
 } from "../../helpers/functions-payroll-category-id";
+import { queryData } from "../../helpers/queryData";
+import { runPayroll } from "../../pages/payroll/list/functions-payroll-list";
+import ButtonSpinner from "../spinners/ButtonSpinner";
 
 const ModalRun = ({
   pid,
@@ -71,7 +60,7 @@ const ModalRun = ({
       ),
     onSuccess: (data) => {
       // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: ["payrollList"] });
+      queryClient.invalidateQueries({ queryKey: ["payslip-payrollList"] });
       dispatch(setIsConfirm(false));
       // show success box
       if (data.success) {

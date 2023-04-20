@@ -72,7 +72,6 @@ export const payComputeCategoryBonus = (employee, payrollEarnings) => {
     payrollEarnings.map((earning) => {
       // 13th mo & Other benefits
       // loop earnings onetime and installment for each employee
-      console.log(earning);
       if (
         emp.payroll_list_employee_id === earning.earnings_employee_id && // employee id
         earning.earnings_is_paid === 0 && // not paid

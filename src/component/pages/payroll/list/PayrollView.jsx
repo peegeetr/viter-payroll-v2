@@ -16,7 +16,11 @@ import FetchingSpinner from "../../../partials/spinners/FetchingSpinner";
 import ModalNoSssBracket from "./ModalNoSssBracket";
 import PayrollViewList from "./PayrollViewList";
 import ModalRun from "../../../partials/modals/ModalRun";
-import { payrollCategorySalaryId } from "../../../helpers/functions-payroll-category-id";
+import {
+  payrollCategory13thMonthId,
+  payrollCategoryBonusId,
+  payrollCategorySalaryId,
+} from "../../../helpers/functions-payroll-category-id";
 
 const PayrollView = () => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -45,6 +49,12 @@ const PayrollView = () => {
       ? payrollList?.data[0].payroll_category_type
       : "0";
 
+  let categoryName =
+    Number(categoryId) === payrollCategory13thMonthId
+      ? "13th Month"
+      : Number(categoryId) === payrollCategoryBonusId
+      ? "Bonus"
+      : "Salary";
   // use if not loadmore button undertime
   const { data: category13thMonth } = useQueryData(
     `${devApiUrl}/v1/payrollList/category/13month/${payrollCategorySalaryId}`, // endpoint
@@ -175,7 +185,9 @@ const PayrollView = () => {
         : store.isConfirm && <ModalNoSssBracket />}
 
       {store.success && <ModalSuccess />}
-      {store.error && <ModalError />}
+      {store.error && (
+        <ModalError msg={`${categoryName} has no entry in earnings`} />
+      )}
     </>
   );
 };

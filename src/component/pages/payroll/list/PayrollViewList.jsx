@@ -83,8 +83,6 @@ const PayrollViewList = () => {
     }
   }, [inView]);
 
-  console.log(result);
-
   return (
     <>
       <div className="xs:flex text-primary">
@@ -160,7 +158,9 @@ const PayrollViewList = () => {
                 <React.Fragment key={key}>
                   {page.data.map((item, key) => {
                     salariesAndWages += Number(item.payroll_list_gross);
-                    monthAndBonuses += Number(item.payroll_list_total_benefits);
+                    monthAndBonuses +=
+                      Number(item.payroll_list_total_benefits) +
+                      Number(item.payroll_list_bonus);
                     sssEr += Number(item.payroll_list_sss_er);
                     phicEr += Number(item.payroll_list_philhealth_er);
                     pagEr += Number(item.payroll_list_pagibig_er);
@@ -189,7 +189,14 @@ const PayrollViewList = () => {
                       Number(item.payroll_list_fwc_tithes) +
                       Number(item.payroll_list_fca_tuition) +
                       Number(item.payroll_list_other_deduction);
-                    netPay += Number(item.payroll_list_net_pay);
+                    netPay +=
+                      Number(item.payroll_category_type) ===
+                      payrollCategoryBonusId
+                        ? Number(item.payroll_list_bonus)
+                        : Number(item.payroll_category_type) ===
+                          payrollCategory13thMonthId
+                        ? Number(item.payroll_list_13th_month)
+                        : Number(item.payroll_list_net_pay);
                     cR =
                       sssPayable +
                       phicPayable +

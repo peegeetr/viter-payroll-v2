@@ -48,7 +48,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
     $allPagibigLoanList = $data["pagibigLoanList"];
     $allPagibigMP2List = $data["pagibigMP2List"];
     $allSSSLoanList = $data["sSSLoanList"];
-
+    $payroll_category = null;
 
     for ($pl = 0; $pl < count($allPayrollPayList); $pl++) {
         $payroll_category = $allPayrollPayList[$pl]["payroll_category"];
@@ -377,21 +377,21 @@ if (array_key_exists("listpayrollid", $_GET)) {
             }
         }
     }
-    // if category bonus is emplty in Earnings 
-    // category bonus
-    checkId($categoryBunosId);
-    if ($payroll_category === $categoryBunosId) {
-        $categoryBonusIsEmpty = $payrollList->readCategoryBonusIsEmpty($categoryBunosId);
-        if ($categoryBonusIsEmpty->rowCount() == 0) {
-            $response->setSuccess(false);
-            $error["count"] = 0;
-            $error["success"] = false;
-            $error['error'] = "There's no Bonus in Earnings.";
-            $response->setData($error);
-            $response->send();
-            exit;
-        }
-    }
+    // // if category bonus is emplty in Earnings 
+    // // category bonus
+    // checkId($categoryBunosId);
+    // if ($payroll_category === $categoryBunosId && $payroll_category !== null) {
+    //     $categoryBonusIsEmpty = $payrollList->readCategoryBonusIsEmpty($categoryBunosId);
+    //     if ($categoryBonusIsEmpty->rowCount() == 0) {
+    //         $response->setSuccess(false);
+    //         $error["count"] = 0;
+    //         $error["success"] = false;
+    //         $error['error'] = "There's no Bonus in Earnings.";
+    //         $response->setData($error);
+    //         $response->send();
+    //         exit;
+    //     }
+    // }
 
     // list of installment Earnings 
     // Employee Referal  
@@ -649,6 +649,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
             }
         }
     }
+
 
     returnSuccess($payrollList, "Payroll List", $query);
 }

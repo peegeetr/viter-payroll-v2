@@ -4,7 +4,7 @@ import { setError } from "../../../store/StoreAction";
 import { StoreContext } from "../../../store/StoreContext";
 import { GetFocus } from "../../helpers/functions-general";
 
-const ModalError = () => {
+const ModalError = ({ msg = "" }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   GetFocus("btnClose");
 
@@ -30,7 +30,7 @@ const ModalError = () => {
               <FaExclamationTriangle className="my-0 mx-auto" />
             </span>
             <span className="text-base font-bold">Error!</span>
-            <p>{store.message}</p>
+            <p>{msg === "" ? store.message : msg}</p>
             <div className="flex items-center gap-1 pt-5">
               <button
                 id="btnClose"

@@ -36,7 +36,10 @@ import {
 import { queryData } from "../../helpers/queryData";
 import { runPayroll } from "../../pages/payroll/list/functions-payroll-list";
 import ButtonSpinner from "../spinners/ButtonSpinner";
-import { payrollCategoryBonusId } from "../../helpers/functions-payroll-category-id";
+import {
+  payrollCategory13thMonthId,
+  payrollCategoryBonusId,
+} from "../../helpers/functions-payroll-category-id";
 
 const ModalRun = ({
   pid,
@@ -125,6 +128,26 @@ const ModalRun = ({
     let payPagibigLoanList = run.pagibigLoanList;
     let payPagibigMP2List = run.pagibigMP2List;
     let paySSSLoanList = run.sSSLoanList;
+
+    // modal error bonus categorty payroll;
+    if (
+      payrollList.length === 0 &&
+      Number(categoryId) === payrollCategoryBonusId
+    ) {
+      dispatch(setIsConfirm(false));
+      dispatch(setError(true));
+      return;
+    }
+
+    // modal error 13th month category error
+    if (
+      payrollList.length === 0 &&
+      NumNumber(categoryId) === payrollCategory13thMonthId
+    ) {
+      dispatch(setIsConfirm(false));
+      dispatch(setError(true));
+      return;
+    }
 
     mutation.mutate({
       payrollPayList: payrollList.length > 0 ? payrollList : [],

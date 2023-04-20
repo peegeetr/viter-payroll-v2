@@ -32,7 +32,7 @@ const TaxYearlyList = ({ setItemEdit, item }) => {
 
   const handleDelete = (item) => {
     dispatch(setIsRestore(true));
-    setId(item.semi_monthly_aid);
+    setId(item.tax_yearly_aid);
     setData(item);
     setDel(true);
   };
@@ -124,7 +124,7 @@ const TaxYearlyList = ({ setItemEdit, item }) => {
           isDel={isDel}
           mysqlApiDelete={`${devApiUrl}/v1/tax/bracket-yearly/${id}`}
           msg={"Are you sure you want to remove this data"}
-          item={`${dataItem.semi_monthly_range_from} to ${dataItem.semi_monthly_range_to}`}
+          item={`${dataItem.tax_yearly_from} to ${dataItem.tax_yearly_to}`}
           arrKey="taxBracketYearly"
         />
       )}

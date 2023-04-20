@@ -1,7 +1,7 @@
  
 *controllers       
     *ALL FILES
-    - settings/tax-bracket/tax-yearly/ 
+    - settings/tax-bracket/tax-yearly/  
 
 *models 
     - settings/tax-bracket/tax-yearly/TaxYearly.php
@@ -10,7 +10,7 @@
     - #SETTINGS TAX YEARLY BRACKET
 
 *db tables 
-    -  prv2_tax_yearly.sql
+    -  prv2_settings_tax_yearly.sql
 
 *core 
     - 

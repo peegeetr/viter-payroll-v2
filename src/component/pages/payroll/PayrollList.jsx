@@ -69,8 +69,6 @@ const PayrollList = ({ setItemEdit }) => {
     refetchOnWindowFocus: false,
   });
 
-  console.log(result);
-
   React.useEffect(() => {
     if (inView) {
       setPage((prev) => prev + 1);
@@ -101,12 +99,6 @@ const PayrollList = ({ setItemEdit }) => {
     setId(item.payroll_aid);
     setData(item);
     setDel(true);
-  };
-  const handleRestore = (item) => {
-    dispatch(setIsRestore(true));
-    setId(item.payroll_aid);
-    setData(item);
-    setDel(false);
   };
   return (
     <>

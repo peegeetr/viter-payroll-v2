@@ -35,7 +35,7 @@ const ModalAddPayroll = ({ item }) => {
     null, // id key
     false // devKey boolean
   );
-
+  console.log(result);
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: (values) =>

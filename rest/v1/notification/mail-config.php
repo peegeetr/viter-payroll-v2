@@ -3,7 +3,9 @@ define("USERNAME", "noreply@hris.frontlinebusiness.com.ph");
 define("PASSWORD", "b@11551gfN4b");
 define("FROM", "FBS Online Payroll");
 define("VERIFY_ACCOUNT", "Account Verification");
+define("EMAIL_PAYSLIP", "Payslip");
 define("RESET_PASSWORD", "Reset Password");
+define("SUBJECT_NEW_ACCOUNT", "New Account");
 define("DEVELOPER", "patrick.reyes@frontlinebusiness.com.ph");
 define("ADMIN", "jhonny.dichoso@frontlinebusiness.com.ph");
 

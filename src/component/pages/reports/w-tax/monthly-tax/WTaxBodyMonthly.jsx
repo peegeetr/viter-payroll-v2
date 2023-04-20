@@ -91,7 +91,7 @@ const WTaxBodyMonthly = ({ result, monthlyTax, startDate, endDate }) => {
                       <td className="w-[15rem]">
                         Less Non Taxable Compensation
                       </td>
-                      <td className="w-[8rem] text-right px-4">0.00</td>
+                      <td className="w-[8rem] text-right px-4"></td>
                       <td className=" text-right px-4"></td>
                     </tr>
                     <tr>

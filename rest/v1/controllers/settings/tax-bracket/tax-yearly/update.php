@@ -3,39 +3,38 @@
 $conn = null;
 $conn = checkDbConnection();
 // make instance of classes
-$taxMonthly = new TaxMonthly($conn);
+$taxYearly = new TaxYearly($conn);
 // get $_GET data
 // check if departmentid is in the url e.g. /department/1
 $error = [];
 $returnData = [];
-if (array_key_exists("taxmonthlyid", $_GET)) {
+if (array_key_exists("taxyearlyid", $_GET)) {
     // check data
     checkPayload($data);
     // get data
     // get departmentid from query string
-    $taxMonthly->tax_monthly_aid  = $_GET['taxmonthlyid'];
-    $taxMonthly->tax_monthly_range_from = checkIndex($data, "tax_monthly_range_from");
-    $taxMonthly->tax_monthly_range_to = checkIndex($data, "tax_monthly_range_to");
-    $taxMonthly->tax_monthly_less_amount = checkIndex($data, "tax_monthly_less_amount");
-    $taxMonthly->tax_monthly_rate = checkIndex($data, "tax_monthly_rate");
-    $taxMonthly->tax_monthly_additional_amount = checkIndex($data, "tax_monthly_additional_amount");
-    $taxMonthly->tax_monthly_datetime = date("Y-m-d H:i:s");
+    $taxYearly->tax_yearly_aid = $_GET['taxyearlyid'];
+    $taxYearly->tax_yearly_from = checkIndex($data, "tax_yearly_from");
+    $taxYearly->tax_yearly_to = checkIndex($data, "tax_yearly_to");
+    $taxYearly->tax_yearly_fixed_tax = checkIndex($data, "tax_yearly_fixed_tax");
+    $taxYearly->tax_yearly_rate = checkIndex($data, "tax_yearly_rate");
+    $taxYearly->tax_yearly_datetime = date("Y-m-d H:i:s");
 
-    $tax_monthly_range_from_old = strtolower($data["tax_monthly_range_from_old"]);
-    $tax_monthly_range_to_old = strtolower($data["tax_monthly_range_to_old"]);
+    $tax_yearly_from_old = strtolower($data["tax_yearly_from_old"]);
+    $tax_yearly_to_old = strtolower($data["tax_yearly_to_old"]);
 
     //check to see if task id in query string is not empty and is number, if not return json error
-    checkId($taxMonthly->tax_monthly_aid);
+    checkId($taxYearly->tax_yearly_aid);
 
     // check name
 
-    compareRangeFrom($taxMonthly, $tax_monthly_range_from_old, $taxMonthly->tax_monthly_range_from);
-    compareRangeTo($taxMonthly, $tax_monthly_range_to_old, $taxMonthly->tax_monthly_range_to);
+    compareRangeFrom($taxYearly, $tax_yearly_from_old, $taxYearly->tax_yearly_from);
+    compareRangeTo($taxYearly, $tax_yearly_to_old, $taxYearly->tax_yearly_to);
 
     // update
-    $query = checkUpdate($taxMonthly);
+    $query = checkUpdate($taxYearly);
 
-    returnSuccess($taxMonthly, "Tax Monthly", $query);
+    returnSuccess($taxYearly, "Tax Yearly", $query);
 }
 
 // return 404 error if endpoint not available

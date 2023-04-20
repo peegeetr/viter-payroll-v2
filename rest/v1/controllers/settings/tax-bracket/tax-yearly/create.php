@@ -23,4 +23,4 @@ isRangeFromExist($taxYearly, $taxYearly->tax_yearly_from);
 isRangeToExist($taxYearly, $taxYearly->tax_yearly_to);
 
 $query = checkCreate($taxYearly);
-returnSuccess($taxYearly, "Tax Monthly", $query);
+returnSuccess($taxYearly, "Tax Yearly", $query);

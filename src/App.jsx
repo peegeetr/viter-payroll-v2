@@ -406,6 +406,15 @@ function App() {
             />
 
             <Route
+              path={`${devNavUrl}/settings/tax-bracket/yearly`}
+              element={
+                <ProtectedRouteOther>
+                  <TaxYearly />
+                </ProtectedRouteOther>
+              }
+            />
+
+            <Route
               path={`${devNavUrl}/settings/pagibig`}
               element={
                 <ProtectedRouteOther>

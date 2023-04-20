@@ -34,9 +34,10 @@ const ModalAddTaxYearly = ({ itemEdit }) => {
       ),
     onSuccess: (data) => {
       // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: ["semiMonthly"] });
+      queryClient.invalidateQueries({ queryKey: ["taxBracketYearly"] });
       // show success box
       if (data.success) {
+        dispatch(setIsAdd(false));
         dispatch(setSuccess(true));
         dispatch(setMessage(`Successfuly ${itemEdit ? "updated." : "added."}`));
       }
@@ -100,16 +101,12 @@ const ModalAddTaxYearly = ({ itemEdit }) => {
                 const tax_yearly_rate = removeComma(
                   `${values.tax_yearly_rate}`
                 );
-                const semi_monthly_additional_amount = removeComma(
-                  `${values.semi_monthly_additional_amount}`
-                );
                 mutation.mutate({
                   ...values,
                   tax_yearly_from,
                   tax_yearly_to,
                   tax_yearly_fixed_tax,
                   tax_yearly_rate,
-                  semi_monthly_additional_amount,
                 });
               }}
             >
@@ -141,7 +138,7 @@ const ModalAddTaxYearly = ({ itemEdit }) => {
                     <div className="relative mb-5">
                       <InputText
                         num="num"
-                        label="Less Amount"
+                        label="Fixed Tax"
                         type="text"
                         name="tax_yearly_fixed_tax"
                         disabled={mutation.isLoading}
@@ -155,17 +152,6 @@ const ModalAddTaxYearly = ({ itemEdit }) => {
                         label="Rate %"
                         type="text"
                         name="tax_yearly_rate"
-                        disabled={mutation.isLoading}
-                        onKeyPress={(e) => handleNumOnly(e)}
-                      />
-                    </div>
-
-                    <div className="relative mb-5">
-                      <InputText
-                        num="num"
-                        label="Addt'l Amount"
-                        type="text"
-                        name="semi_monthly_additional_amount"
                         disabled={mutation.isLoading}
                         onKeyPress={(e) => handleNumOnly(e)}
                       />

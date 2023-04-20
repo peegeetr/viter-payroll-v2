@@ -96,9 +96,13 @@ RewriteRule ^payroll-type/active/([0-9]+)$ controllers/settings/payroll-type/act
 RewriteRule ^tax/semi-monthly$ controllers/settings/tax-bracket/semi-monthly/semi-monthly.php [L]
 RewriteRule ^tax/semi-monthly/([0-9]+)$ controllers/settings/tax-bracket/semi-monthly/semi-monthly.php?semimonthlyid=$1  [L]
 
-#SETTINGS TAX BRACKET
+#SETTINGS TAX MONTHLY BRACKET
 RewriteRule ^tax/monthly$ controllers/settings/tax-bracket/tax-monthly/tax-monthly.php [L]
 RewriteRule ^tax/monthly/([0-9]+)$ controllers/settings/tax-bracket/tax-monthly/tax-monthly.php?taxmonthlyid=$1  [L]
+
+#SETTINGS TAX YEARLY BRACKET
+RewriteRule ^tax/bracket-yearly$ controllers/settings/tax-bracket/tax-yearly/tax-yearly.php [L]
+RewriteRule ^tax/bracket-yearly/([0-9]+)$ controllers/settings/tax-bracket/tax-yearly/tax-yearly.php?taxyearlyid=$1  [L]
  
 #SETTINGS SSS BRACKET
 RewriteRule ^sss-bracket$ controllers/settings/sss-bracket/sss-bracket.php [L]

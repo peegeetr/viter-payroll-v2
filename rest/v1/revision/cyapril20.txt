@@ -1,15 +1,16 @@
  
 *controllers       
-    -> payroll/list/update.php 
+    *ALL FILES
+    - settings/tax-bracket/tax-yearly/ 
 
 *models 
-    -> payroll/list/payrollList.php 
+    - settings/tax-bracket/tax-yearly/TaxYearly.php
     
 *htaccess 
-    - 
+    - #SETTINGS TAX YEARLY BRACKET
 
 *db tables 
-    -  
+    -  prv2_tax_yearly.sql
 
 *core 
     - 

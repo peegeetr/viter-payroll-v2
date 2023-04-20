@@ -5,7 +5,7 @@ require '../../../../core/header.php';
 // use needed functions
 require '../../../../core/functions.php';
 // use needed classes
-require '../../../../models/settings/tax-bracket/tax-monthly/TaxMonthly.php';
+require '../../../../models/settings/tax-bracket/tax-yearly/TaxYearly.php';
 // custom function
 require './functions.php';
 

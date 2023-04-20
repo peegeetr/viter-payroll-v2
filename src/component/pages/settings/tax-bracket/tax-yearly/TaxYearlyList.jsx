@@ -25,7 +25,7 @@ const TaxYearlyList = ({ setItemEdit, item }) => {
   } = useQueryData(
     `${devApiUrl}/v1/tax/bracket-yearly`, // endpoint
     "get", // method
-    "bracketYearly" // key
+    "taxBracketYearly" // key
   );
 
   let counter = 0;
@@ -125,7 +125,7 @@ const TaxYearlyList = ({ setItemEdit, item }) => {
           mysqlApiDelete={`${devApiUrl}/v1/tax/bracket-yearly/${id}`}
           msg={"Are you sure you want to remove this data"}
           item={`${dataItem.semi_monthly_range_from} to ${dataItem.semi_monthly_range_to}`}
-          arrKey="bracketYearly"
+          arrKey="taxBracketYearly"
         />
       )}
     </>

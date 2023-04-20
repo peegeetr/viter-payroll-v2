@@ -3,20 +3,20 @@
 $conn = null;
 $conn = checkDbConnection();
 // make instance of classes
-$taxMonthly = new TaxMonthly($conn);
+$taxYearly = new TaxYearly($conn);
 // get $_GET data
 // check if departmentid is in the url e.g. /department/1
 $error = [];
 $returnData = [];
-if (array_key_exists("taxmonthlyid", $_GET)) {
+if (array_key_exists("taxyearlyid", $_GET)) {
     // get data
     // get task id from query string
-    $taxMonthly->tax_monthly_aid  = $_GET['taxmonthlyid'];
+    $taxYearly->tax_yearly_aid = $_GET['taxyearlyid'];
     //check to see if task id in query string is not empty and is number, if not return json error
-    checkId($taxMonthly->tax_monthly_aid);
-    $query = checkDelete($taxMonthly);
+    checkId($taxYearly->tax_yearly_aid);
+    $query = checkDelete($taxYearly);
 
-    returnSuccess($taxMonthly, "Tax Monthly", $query);
+    returnSuccess($taxYearly, "Tax Yearly", $query);
 }
 
 // return 404 error if endpoint not available

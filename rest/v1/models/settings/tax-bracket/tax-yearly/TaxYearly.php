@@ -2,14 +2,13 @@
 class TaxYearly
 {
     public $tax_yearly_aid;
-    public $tax_monthly_active;
-    public $tax_monthly_range_from;
-    public $tax_monthly_range_to;
-    public $tax_monthly_less_amount;
-    public $tax_monthly_rate;
-    public $tax_monthly_additional_amount;
-    public $tax_monthly_created;
-    public $tax_monthly_datetime;
+    public $tax_yearly_active;
+    public $tax_yearly_from;
+    public $tax_yearly_to;
+    public $tax_yearly_fixed_tax;
+    public $tax_yearly_rate;
+    public $tax_yearly_created;
+    public $tax_yearly_datetime;
 
     public $connection;
     public $lastInsertedId;
@@ -25,32 +24,29 @@ class TaxYearly
     {
         try {
             $sql = "insert into {$this->tbltaxYearly} ";
-            $sql .= "( tax_monthly_range_from, ";
-            $sql .= "tax_monthly_range_to, ";
-            $sql .= "tax_monthly_less_amount, ";
-            $sql .= "tax_monthly_rate, ";
-            $sql .= "tax_monthly_additional_amount, ";
-            $sql .= "tax_monthly_active, ";
-            $sql .= "tax_monthly_created, ";
-            $sql .= "tax_monthly_datetime ) values ( ";
-            $sql .= ":tax_monthly_range_from, ";
-            $sql .= ":tax_monthly_range_to, ";
-            $sql .= ":tax_monthly_less_amount, ";
-            $sql .= ":tax_monthly_rate, ";
-            $sql .= ":tax_monthly_additional_amount, ";
-            $sql .= ":tax_monthly_active, ";
-            $sql .= ":tax_monthly_created, ";
-            $sql .= ":tax_monthly_datetime ) ";
+            $sql .= "( tax_yearly_from, ";
+            $sql .= "tax_yearly_to, ";
+            $sql .= "tax_yearly_fixed_tax, ";
+            $sql .= "tax_yearly_rate, ";
+            $sql .= "tax_yearly_active, ";
+            $sql .= "tax_yearly_created, ";
+            $sql .= "tax_yearly_datetime ) values ( ";
+            $sql .= ":tax_yearly_from, ";
+            $sql .= ":tax_yearly_to, ";
+            $sql .= ":tax_yearly_fixed_tax, ";
+            $sql .= ":tax_yearly_rate, ";
+            $sql .= ":tax_yearly_active, ";
+            $sql .= ":tax_yearly_created, ";
+            $sql .= ":tax_yearly_datetime ) ";
             $query = $this->connection->prepare($sql);
             $query->execute([
-                "tax_monthly_active" => $this->tax_monthly_active,
-                "tax_monthly_range_from" => $this->tax_monthly_range_from,
-                "tax_monthly_range_to" => $this->tax_monthly_range_to,
-                "tax_monthly_less_amount" => $this->tax_monthly_less_amount,
-                "tax_monthly_rate" => $this->tax_monthly_rate,
-                "tax_monthly_additional_amount" => $this->tax_monthly_additional_amount,
-                "tax_monthly_created" => $this->tax_monthly_created,
-                "tax_monthly_datetime" => $this->tax_monthly_datetime,
+                "tax_yearly_active" => $this->tax_yearly_active,
+                "tax_yearly_from" => $this->tax_yearly_from,
+                "tax_yearly_to" => $this->tax_yearly_to,
+                "tax_yearly_fixed_tax" => $this->tax_yearly_fixed_tax,
+                "tax_yearly_rate" => $this->tax_yearly_rate,
+                "tax_yearly_created" => $this->tax_yearly_created,
+                "tax_yearly_datetime" => $this->tax_yearly_datetime,
             ]);
             $this->lastInsertedId = $this->connection->lastInsertId();
         } catch (PDOException $ex) {
@@ -64,9 +60,9 @@ class TaxYearly
         try {
             $sql = "select *  ";
             $sql .= "from {$this->tbltaxYearly} ";
-            $sql .= "order by tax_monthly_active desc, ";
-            // $sql .= "tax_monthly_range_from asc ";
-            $sql .= "CAST(tax_monthly_range_from AS DECIMAL(20,2)) asc ";
+            $sql .= "order by tax_yearly_active desc, ";
+            // $sql .= "tax_yearly_from asc ";
+            $sql .= "CAST(tax_yearly_from AS DECIMAL(20,2)) asc ";
             $query = $this->connection->query($sql);
         } catch (PDOException $ex) {
             $query = false;
@@ -79,21 +75,19 @@ class TaxYearly
     {
         try {
             $sql = "update {$this->tbltaxYearly} set ";
-            $sql .= "tax_monthly_range_from = :tax_monthly_range_from, ";
-            $sql .= "tax_monthly_range_to = :tax_monthly_range_to, ";
-            $sql .= "tax_monthly_less_amount = :tax_monthly_less_amount, ";
-            $sql .= "tax_monthly_rate = :tax_monthly_rate, ";
-            $sql .= "tax_monthly_additional_amount = :tax_monthly_additional_amount, ";
-            $sql .= "tax_monthly_datetime = :tax_monthly_datetime ";
+            $sql .= "tax_yearly_from = :tax_yearly_from, ";
+            $sql .= "tax_yearly_to = :tax_yearly_to, ";
+            $sql .= "tax_yearly_fixed_tax = :tax_yearly_fixed_tax, ";
+            $sql .= "tax_yearly_rate = :tax_yearly_rate, ";
+            $sql .= "tax_yearly_datetime = :tax_yearly_datetime ";
             $sql .= "where tax_yearly_aid  = :tax_yearly_aid ";
             $query = $this->connection->prepare($sql);
             $query->execute([
-                "tax_monthly_range_from" => $this->tax_monthly_range_from,
-                "tax_monthly_range_to" => $this->tax_monthly_range_to,
-                "tax_monthly_less_amount" => $this->tax_monthly_less_amount,
-                "tax_monthly_rate" => $this->tax_monthly_rate,
-                "tax_monthly_additional_amount" => $this->tax_monthly_additional_amount,
-                "tax_monthly_datetime" => $this->tax_monthly_datetime,
+                "tax_yearly_from" => $this->tax_yearly_from,
+                "tax_yearly_to" => $this->tax_yearly_to,
+                "tax_yearly_fixed_tax" => $this->tax_yearly_fixed_tax,
+                "tax_yearly_rate" => $this->tax_yearly_rate,
+                "tax_yearly_datetime" => $this->tax_yearly_datetime,
                 "tax_yearly_aid" => $this->tax_yearly_aid,
             ]);
         } catch (PDOException $ex) {
@@ -122,11 +116,11 @@ class TaxYearly
     public function checkRangeFrom()
     {
         try {
-            $sql = "select tax_monthly_range_from from {$this->tbltaxYearly} ";
-            $sql .= "where tax_monthly_range_from = :tax_monthly_range_from ";
+            $sql = "select tax_yearly_from from {$this->tbltaxYearly} ";
+            $sql .= "where tax_yearly_from = :tax_yearly_from ";
             $query = $this->connection->prepare($sql);
             $query->execute([
-                "tax_monthly_range_from" => "{$this->tax_monthly_range_from}",
+                "tax_yearly_from" => "{$this->tax_yearly_from}",
             ]);
         } catch (PDOException $ex) {
             $query = false;
@@ -137,11 +131,11 @@ class TaxYearly
     public function checkRangeTo()
     {
         try {
-            $sql = "select tax_monthly_range_to from {$this->tbltaxYearly} ";
-            $sql .= "where tax_monthly_range_to = :tax_monthly_range_to ";
+            $sql = "select tax_yearly_to from {$this->tbltaxYearly} ";
+            $sql .= "where tax_yearly_to = :tax_yearly_to ";
             $query = $this->connection->prepare($sql);
             $query->execute([
-                "tax_monthly_range_to" => "{$this->tax_monthly_range_to}",
+                "tax_yearly_to" => "{$this->tax_yearly_to}",
             ]);
         } catch (PDOException $ex) {
             $query = false;

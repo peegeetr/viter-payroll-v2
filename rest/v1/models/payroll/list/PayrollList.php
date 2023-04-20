@@ -1139,7 +1139,7 @@ class PayrollList
     }
 
     // read by payslip by id
-    public function readCategoryBonusIsEmpty($category13thMonthId)
+    public function readCategoryBonusIsEmpty($categoryBunosId)
     {
         try {
             $sql = "select payroll.payroll_category_type ";
@@ -1154,8 +1154,8 @@ class PayrollList
             $sql .= "order by payrollList.payroll_list_payroll_id asc ";
             $query = $this->connection->prepare($sql);
             $query->execute([
-                "payroll_category_type" => $category13thMonthId,
-                "earnings_payroll_type_id" => $category13thMonthId,
+                "payroll_category_type" => $categoryBunosId,
+                "earnings_payroll_type_id" => $categoryBunosId,
                 "payroll_list_payroll_id" => $this->payroll_list_payroll_id,
             ]);
         } catch (PDOException $ex) {

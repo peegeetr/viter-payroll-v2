@@ -163,7 +163,7 @@ const ModalRun = ({
       payItemPhilhealthErId: philhealthErId,
       payItemPhilhealthEeId: philhealthEeId,
       payItemDeminimisId: diminimisId,
-      category13thMonthId: payrollCategoryBonusId,
+      categoryBunosId: payrollCategoryBonusId,
     });
   };
 

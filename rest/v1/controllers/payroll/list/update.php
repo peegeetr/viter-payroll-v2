@@ -31,7 +31,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
     $allTaxList = $data["taxList"];
     $allDeminimis = $data["deminimisList"];
 
-    $category13thMonthId = $data["category13thMonthId"];
+    $categoryBunosId = $data["categoryBunosId"];
 
     // installment 
     // list of installment Earnings 
@@ -379,16 +379,18 @@ if (array_key_exists("listpayrollid", $_GET)) {
     }
     // if category bonus is emplty in Earnings 
     // category bonus
-    checkId($category13thMonthId);
-    $categoryBonusIsEmpty = $payrollList->readCategoryBonusIsEmpty($category13thMonthId);
-    if (count($allBonusList) === 0 && $categoryBonusIsEmpty->rowCount() == 0 && $payroll_category === $category13thMonthId) {
-        $response->setSuccess(false);
-        $error["count"] = 0;
-        $error["success"] = false;
-        $error['error'] = "There's no Bonus in Earnings.";
-        $response->setData($error);
-        $response->send();
-        exit;
+    checkId($categoryBunosId);
+    if ($payroll_category === $categoryBunosId) {
+        $categoryBonusIsEmpty = $payrollList->readCategoryBonusIsEmpty($categoryBunosId);
+        if ($categoryBonusIsEmpty->rowCount() == 0) {
+            $response->setSuccess(false);
+            $error["count"] = 0;
+            $error["success"] = false;
+            $error['error'] = "There's no Bonus in Earnings.";
+            $response->setData($error);
+            $response->send();
+            exit;
+        }
     }
 
     // list of installment Earnings 

@@ -6,27 +6,34 @@ require '../../../core/header.php';
 require '../../../core/functions.php';
 // use needed classes
 require '../../../models/payroll/list/PayrollList.php';
-// // use notification template
-// require '../../../notification/email-payslip.php';
+// use notification template
+require '../../../notification/email-payslip.php';
 // check database connection
 $conn = null;
 $conn = checkDbConnection();
 // make instance of classes
 $payrollList = new PayrollList($conn);
 $response = new Response();
+// get payload
+$body = file_get_contents("php://input");
+$data = json_decode($body, true);
+$error = [];
+$returnData = [];
 // validate api key
 if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
     checkApiKey();
+
+    // check data
+    checkPayload($data);
 
     $emailAllEmployee = $data["allEmailEmployee"];
 
     if (count($emailAllEmployee) > 0) {
         for ($emp = 0; $emp < count($emailAllEmployee); $emp++) {
             $payrollList->payroll_list_employee_email = $emailAllEmployee[$emp]["payroll_list_employee_email"];
-            // $mail = sendEmail(
-            //     $payrollList->payroll_list_employee_email
-            // );
-            $returnData["email"] = $payrollList->payroll_list_employee_email;
+            $mail = sendEmail(
+                $payrollList->payroll_list_employee_email
+            );
         }
         $returnData = [];
         $returnData["count"] = count($emailAllEmployee);

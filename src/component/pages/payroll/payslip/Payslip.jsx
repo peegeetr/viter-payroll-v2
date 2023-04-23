@@ -40,20 +40,14 @@ const Payslip = () => {
         <div className="flex items-center mb-1 justify-between whitespace-nowrap overflow-auto gap-2 print:hidden">
           <BreadCrumbs param={`${payrollUrl}`} />
           {isLoading && <FetchingSpinner />}
-          <div className="flex items-center gap-1">
-            <button type="button" className="btn-primary">
-              <FaEnvelope />
-              <span>Email</span>
-            </button>
-            <button
-              type="button"
-              className="btn-primary"
-              onClick={() => window.print()}
-            >
-              <AiFillPrinter />
-              <span>Print</span>
-            </button>
-          </div>
+          <button
+            type="button"
+            className="btn-primary"
+            onClick={() => window.print()}
+          >
+            <AiFillPrinter />
+            <span>Print</span>
+          </button>
         </div>
         <hr className="print:hidden" />
 

@@ -61,9 +61,10 @@ const ModalRun = ({
     onSuccess: (data) => {
       // Invalidate and refetch
       queryClient.invalidateQueries({ queryKey: ["payslip-payrollList"] });
-      dispatch(setIsConfirm(false));
+
       // show success box
       if (data.success) {
+        dispatch(setIsConfirm(false));
         dispatch(setSuccess(true));
         dispatch(setMessage(`Successfuly Done`));
       }

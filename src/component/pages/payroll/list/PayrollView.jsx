@@ -42,7 +42,7 @@ const PayrollView = () => {
   } = useQueryData(
     `${devApiUrl}/v1/payrollList/${pid}`, // endpoint
     "get", // method
-    "payslip-payrollList" // key
+    "payrollList" // key
   );
 
   let categoryId =
@@ -173,26 +173,21 @@ const PayrollView = () => {
             )}
 
             {payrollList?.data[0].payroll_list_is_paid === 0 && (
-              <>
-                <button
-                  type="button"
-                  className="btn-primary"
-                  onClick={handleRun}
-                >
-                  <ImPlay3 />
-                  <span>Run</span>
-                </button>
-                {payrollList?.data[0].payroll_list_gross !== "" && (
-                  <button
-                    type="button"
-                    className="btn-primary"
-                    onClick={handleMarkPaid}
-                  >
-                    <FaSave />
-                    <span>Mark Paid</span>
-                  </button>
-                )}
-              </>
+              <button type="button" className="btn-primary" onClick={handleRun}>
+                <ImPlay3 />
+                <span>Run</span>
+              </button>
+            )}
+
+            {payrollList?.data[0].payroll_list_is_paid === 0 && (
+              <button
+                type="button"
+                className="btn-primary"
+                onClick={handleMarkPaid}
+              >
+                <FaSave />
+                <span>Mark Paid</span>
+              </button>
             )}
           </div>
         </div>

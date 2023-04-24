@@ -46,7 +46,6 @@ const ModalRun = ({
   // monthlyTax,
 }) => {
   const { store, dispatch } = React.useContext(StoreContext);
-  const [loading, setLoading] = React.useState(false);
 
   const queryClient = useQueryClient();
   const mutation = useMutation({
@@ -60,7 +59,7 @@ const ModalRun = ({
       ),
     onSuccess: (data) => {
       // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: ["payslip-payrollList"] });
+      queryClient.invalidateQueries({ queryKey: ["payrollList"] });
 
       // show success box
       if (data.success) {
@@ -202,7 +201,7 @@ const ModalRun = ({
                 disabled={mutation.isLoading}
                 onClick={handleYes}
               >
-                {loading ? <ButtonSpinner /> : "Confirm"}
+                {mutation.isLoading ? <ButtonSpinner /> : "Confirm"}
               </button>
               <button
                 type="reset"

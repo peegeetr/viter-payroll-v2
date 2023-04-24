@@ -132,7 +132,7 @@ const ModalRun = ({
     // modal error 13th month category error
     if (
       payrollList.length === 0 &&
-      NumNumber(categoryId) === payrollCategory13thMonthId
+      Number(categoryId) === payrollCategory13thMonthId
     ) {
       dispatch(setIsConfirm(false));
       dispatch(setError(true));

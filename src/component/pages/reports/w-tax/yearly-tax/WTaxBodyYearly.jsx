@@ -5,12 +5,13 @@ import {
   numberWithCommas,
 } from "../../../../helpers/functions-general";
 
-const WTaxBodyYearly = ({ result, year, monthlyTax }) => {
+const WTaxBodyYearly = ({ result, year, monthlyTax, yearlyTax }) => {
   let totalShareEe = 0;
   let totalBenefits = 0;
-  let tax = 0;
-  let taxPayable = 0;
+  let taxMonthly = 0;
+  let taxYearly = 0;
   let taxWitheld = 0;
+  let taxPayable = 0;
   let nonTax = 0;
 
   const payComputeTaxDue = (
@@ -42,26 +43,27 @@ const WTaxBodyYearly = ({ result, year, monthlyTax }) => {
     return taxDue;
   };
 
-  // const computeTaxPayable = (
-  //   gross,
-  //   yearlyTax
-  // ) => {
-  //   let taxDue = 0;
-  //   const fromRange = 0;
-  //     yearlyTax.map((sTax) => {
-  //     if (
-  //       Number(taxableCompensationIncome) >=
-  //         Number(sTax.tax_monthly_range_from) &&
-  //       Number(taxableCompensationIncome) <= Number(sTax.tax_monthly_range_to)
-  //     ) {
-  //       taxDue =
-  //         (taxableCompensationIncome - Number(sTax.tax_monthly_less_amount)) *
-  //           (Number(sTax.tax_monthly_rate) / 100) +
-  //         Number(sTax.tax_monthly_additional_amount);
-  //     }
-  //   });
-  //   return taxDue;
-  // };
+  const computeTaxPayable = (gross, yearlyTax) => {
+    let taxDue = 0;
+    // const minimum = 250000;
+    // if (Number(gross) >= 0 && Number(gross) <= minimum) {
+    //   return taxPayable;
+    // }
+
+    yearlyTax.map((yTax) => {
+      if (
+        Number(gross) >= Number(yTax.tax_yearly_from) &&
+        Number(gross) <= Number(yTax.tax_yearly_to)
+      ) {
+        taxDue =
+          (Number(gross) - Number(yTax.tax_yearly_from)) *
+          (Number(yTax.tax_yearly_rate) / 100);
+      }
+    });
+
+    console.log(gross, taxDue);
+    return taxDue;
+  };
 
   return (
     <>
@@ -70,20 +72,22 @@ const WTaxBodyYearly = ({ result, year, monthlyTax }) => {
           {page.data.map((item, key) => {
             totalShareEe = 0;
             totalBenefits = 0;
-            tax = 0;
+            taxMonthly = 0;
             totalShareEe += item.sss + item.pag + item.phic;
             totalBenefits += item.month13 + item.bonus + item.benefits;
             // compute monthly tax due
-            tax = payComputeTaxDue(
+            taxMonthly = payComputeTaxDue(
               item.gross,
               monthlyTax,
               totalBenefits,
               totalShareEe,
               item.deminimis
             );
-            // gross += Number(item.gross);
-            // taxPayable = gross
-            taxWitheld = taxPayable - tax;
+
+            // compute yearly tax due
+            taxYearly = computeTaxPayable(item.gross, yearlyTax);
+            taxWitheld = taxYearly - taxMonthly;
+            console.log(taxWitheld);
             return (
               <div key={key} className="mb-8 print:mb-12">
                 <HeaderPrint />
@@ -158,7 +162,7 @@ const WTaxBodyYearly = ({ result, year, monthlyTax }) => {
                       <td className="w-[15rem] ">Tax Due</td>
                       <td className=" text-right px-4"></td>
                       <td className=" text-right px-4">
-                        {numberWithCommas(tax.toFixed(2))}
+                        {numberWithCommas(taxMonthly.toFixed(2))}
                       </td>
                     </tr>
                     <tr className="  bg-gray-200 hover:bg-gray-200 text-primary">

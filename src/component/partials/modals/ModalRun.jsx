@@ -189,7 +189,7 @@ const ModalRun = ({
               <FaQuestionCircle className="my-0 mx-auto" />
             </span>
             <span className="text-sm font-bold">
-              Are you sure to {isPaid ? "run" : "mark as paid"}
+              Are you sure to {isPaid ? "mark as paid" : "run"}
             </span>
             <br />
             <span className="text-sm font-bold break-all">"{pid}"?</span>

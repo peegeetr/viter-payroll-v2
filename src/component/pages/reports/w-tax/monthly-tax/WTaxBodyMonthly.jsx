@@ -20,9 +20,14 @@ const WTaxBodyMonthly = ({ result, monthlyTax, startDate, endDate }) => {
   ) => {
     let taxDue = 0;
     const totalNonTaxableCompensation =
-      Number(totalBenefits.toFixed(2)) + totalMadatoryEe + totalDiminimis;
+      Number(totalBenefits.toFixed(2)) +
+      Number(totalMadatoryEe) +
+      Number(totalDiminimis);
     let taxableCompensationIncome =
-      Number(gross.toFixed(2)) - totalNonTaxableCompensation;
+      Number(gross.toFixed(2)) +
+      Number(totalBenefits) -
+      totalNonTaxableCompensation;
+
     monthlyTax.map((sTax) => {
       if (
         Number(taxableCompensationIncome) >=

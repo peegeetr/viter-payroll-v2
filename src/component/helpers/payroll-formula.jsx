@@ -718,9 +718,13 @@ export const payComputeTaxDue = (
   let taxDue = 0;
   let taxList = [];
   const totalNonTaxableCompensation =
-    Number(totalBenefits.toFixed(2)) + totalMadatoryEe + totalDiminimis;
+    Number(totalBenefits.toFixed(2)) +
+    Number(totalMadatoryEe) +
+    Number(totalDiminimis);
   let taxableCompensationIncome =
-    Number(gross.toFixed(2)) - totalNonTaxableCompensation;
+    Number(gross.toFixed(2)) +
+    Number(totalBenefits) -
+    totalNonTaxableCompensation;
 
   semiTax.map((sTax) => {
     if (
@@ -749,6 +753,14 @@ export const payComputeTaxDue = (
     deduction_start_pay_date: emp.payroll_start_date,
     deduction_end_pay_date: emp.payroll_end_date,
   });
+
+  // console.log(
+  //   totalDiminimis,
+  //   totalMadatoryEe,
+  //   totalNonTaxableCompensation,
+  //   taxableCompensationIncome,
+  //   taxDue.toFixed(2)
+  // );
 
   return { taxDue, taxList };
 };

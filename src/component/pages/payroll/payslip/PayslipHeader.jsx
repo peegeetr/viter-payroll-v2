@@ -22,7 +22,6 @@ const PayslipHeader = ({ payslip, empid, days }) => {
     false // devKey boolean
   );
 
-  console.log(payslip);
   return (
     <>
       <HeaderPrint />

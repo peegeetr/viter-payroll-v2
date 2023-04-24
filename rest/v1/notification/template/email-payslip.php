@@ -38,14 +38,14 @@ function getHtmlEmailPayslip()
         <div
           style="
             background-image: url(https://demo.frontlinebusiness.com.ph/dev/notification-images/bg-white.jpg);
-            width: 120px;
+            width: 170px;
             display: inline-block;
           "
         >
           <img
             src="https://hris.frontlinebusiness.com.ph/img/logo-fbs.png"
             alt=""
-            width="120px"
+            width="170px"
           />
         </div>
       </div>

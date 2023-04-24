@@ -37,11 +37,13 @@ const ModalPayslipEmailAll = ({ payrollList }) => {
   const handleClose = () => {
     dispatch(setIsAdd(false));
   };
+
   const handleYes = async () => {
     // email all payroll
     mutation.mutate({
       allEmailEmployee: payrollList.length > 0 ? payrollList : [],
     });
+    console.log(payrollList.length, payrollList);
   };
 
   return (

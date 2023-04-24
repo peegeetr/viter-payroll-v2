@@ -1,15 +1,24 @@
  
 *controllers  
     - payroll/payslip/payslip-email-all.php
-    -> payroll/list/update.php
+    - payroll/list/update.php
+    - payroll/list/functions.php
+
+    *Aftrenoon
     -> payroll/list/functions.php
+    -> payroll/list/hris-filter-payslip-13thmonth-employee-id.php
+    -> payroll/list/hris-filter-payslip-bonus-employee-id.php
+    -> payroll/list/hris-filter-payslip-employee-id.php
 
 *models 
+    *Aftrenoon
     -> payroll/list/PayrollList.php
     
 *htaccess 
-    - 
     - #payslip
+
+    *Aftrenoon
+    -> #payroll list paid
 
 *db tables 
     - 

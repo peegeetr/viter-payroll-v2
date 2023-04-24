@@ -54,6 +54,9 @@ RewriteRule ^payrollList/report/employee-benefits/([A-Za-z0-9-]+)/([A-Za-z0-9-]+
 RewriteRule ^payrollList/report/wtax/monthly/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/([0-9]+)$ controllers/payroll/list/report-wtax-monthly.php?startDate=$1&endDate=$2&employeeId=$3 [L]   
 RewriteRule ^payrollList/report/wtax/yearly/([A-Za-z0-9-]+)/([0-9]+)$ controllers/payroll/list/report-wtax-yearly.php?year=$1&employeeId=$2 [L]   
 RewriteRule ^payrollList/category/13month/([0-9]+)$ controllers/payroll/list/compute-13month-pay.php?categoryId=$1 [L]   
+RewriteRule ^payrollList/my-info/payslip/filter/by-id/([0-9]+)/([0-9]+)/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)$ controllers/payroll/list/hris-filter-payslip-employee-id.php?employeeId=$1&payrollType=$2&startDate=$3&endDate=$4 [L]   
+RewriteRule ^payrollList/my-info/payslip/filter/13month/by-id/([0-9]+)/([0-9]+)/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)$ controllers/payroll/list/hris-filter-payslip-13thmonth-employee-id.php?employeeId=$1&payrollType=$2&yearFrom=$3&yearTo=$4 [L]   
+RewriteRule ^payrollList/my-info/payslip/filter/bonus/by-id/([0-9]+)/([0-9]+)/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)$ controllers/payroll/list/hris-filter-payslip-bonus-employee-id.php?employeeId=$1&payrollType=$2&startDate=$3&endDate=$4 [L]   
      
 #earnings
 RewriteRule ^earnings$ controllers/earnings/earnings.php [L]

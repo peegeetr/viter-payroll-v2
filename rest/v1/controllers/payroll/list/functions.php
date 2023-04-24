@@ -222,3 +222,36 @@ function checkUpdate13thMonth($object)
     checkQuery($query, "There's a problem processing your request. (update payroll list 13th month)");
     return $query;
 }
+
+
+//HRIS Read all payroll type by employee id
+function checkReadHrisPayslipFilterAllPayrollTypeByEmpId($object)
+{
+    $query = $object->readHrisPayslipFilterAllPayrollTypeByEmpId();
+    checkQuery($query, "Empty records.(Read all payroll Type by employee Id and date range)");
+    return $query;
+}
+
+//HRIS Filter Read Salary id by employee id
+function checkReadHrisPayslipFilterSalaryIdByEmpId($object, $payrollType)
+{
+    $query = $object->readHrisPayslipFilterSalaryIdByEmpId($payrollType);
+    checkQuery($query, "Empty records.(Read all salary by employee Id and date range)");
+    return $query;
+}
+
+//HRIS Filter Read 13th month id by employee id
+function checkReadHrisPayslipFilter13thMothIdByEmpId($object, $payrollType)
+{
+    $query = $object->readHrisPayslipFilter13thMothIdByEmpId($payrollType);
+    checkQuery($query, "Empty records.(Read all 13th month id by employee Id and date range)");
+    return $query;
+}
+
+//HRIS Filter Read Bonus id by employee id
+function checkReadHrisPayslipFilterBonusIdByEmpId($object, $payrollType)
+{
+    $query = $object->readHrisPayslipFilterBonusIdByEmpId($payrollType);
+    checkQuery($query, "Empty records.(Read all Bonus Id by employee Id and date range)");
+    return $query;
+}

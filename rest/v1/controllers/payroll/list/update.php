@@ -377,21 +377,6 @@ if (array_key_exists("listpayrollid", $_GET)) {
             }
         }
     }
-    // // if category bonus is emplty in Earnings 
-    // // category bonus
-    // checkId($categoryBunosId);
-    // if ($payroll_category === $categoryBunosId && $payroll_category !== null) {
-    //     $categoryBonusIsEmpty = $payrollList->readCategoryBonusIsEmpty($categoryBunosId);
-    //     if ($categoryBonusIsEmpty->rowCount() == 0) {
-    //         $response->setSuccess(false);
-    //         $error["count"] = 0;
-    //         $error["success"] = false;
-    //         $error['error'] = "There's no Bonus in Earnings.";
-    //         $response->setData($error);
-    //         $response->send();
-    //         exit;
-    //     }
-    // }
 
     // list of installment Earnings 
     // Employee Referal  
@@ -572,7 +557,6 @@ if (array_key_exists("listpayrollid", $_GET)) {
     if (count($allPagibigLoanList) > 0) {
         for ($pgbg = 0; $pgbg < count($allPagibigLoanList); $pgbg++) {
             if ($allPagibigLoanList[$pgbg]["installment_extra"] === 1) {
-
                 $payrollList->payroll_type_id = $allPagibigLoanList[$pgbg]["deduction_payroll_type_id"];
                 $payrollList->num_pay = 1;
                 $payrollList->payroll_list_employee_name = $allPagibigLoanList[$pgbg]["deduction_employee"];

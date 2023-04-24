@@ -766,7 +766,7 @@ class PayrollList
             $query = $this->connection->prepare($sql);
             $query->execute([
                 "payroll_list_payroll_id" => $this->payroll_list_payroll_id,
-                "payitem_id" => $this->payitem_id,
+                "payitem_id" => $this->deduction_payitem_id,
             ]);
         } catch (PDOException $ex) {
             $query = false;

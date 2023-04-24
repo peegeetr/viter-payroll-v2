@@ -87,6 +87,7 @@ class PayrollList
     public $tblPayroll;
     public $tblEarnings;
     public $tblDeductions;
+    public $tblPayrollType;
 
     public function __construct($db)
     {
@@ -95,6 +96,7 @@ class PayrollList
         $this->tblPayroll = "prv2_payroll";
         $this->tblEarnings = "prv2_earnings";
         $this->tblDeductions = "prv2_deduction";
+        $this->tblPayrollType = "prv2_settings_payroll_type";
     }
 
     // read all
@@ -836,58 +838,6 @@ class PayrollList
     }
 
 
-
-    // read by payslip by id
-    public function readPayslipEmpId()
-    {
-        try {
-            $sql = "select payrollList.*, ";
-            $sql .= "payroll.payroll_category_type, ";
-            $sql .= "payroll.payroll_start_date, ";
-            $sql .= "payroll.payroll_end_date ";
-            $sql .= "from {$this->tblPayrollList} as payrollList, ";
-            $sql .= "{$this->tblPayroll} as payroll ";
-            $sql .= "where payrollList.payroll_list_employee_id = :payroll_list_employee_id ";
-            $sql .= "and payrollList.payroll_list_payroll_id = payroll.payroll_id ";
-            $sql .= "order by payroll.payroll_start_date desc, ";
-            $sql .= "payrollList.payroll_list_payroll_id desc ";
-            $query = $this->connection->prepare($sql);
-            $query->execute([
-                "payroll_list_employee_id" => $this->payroll_list_employee_id,
-            ]);
-        } catch (PDOException $ex) {
-            $query = false;
-        }
-        return $query;
-    }
-
-    public function readPayslipEmpIdLimit()
-    {
-        try {
-            $sql = "select payrollList.*, ";
-            $sql .= "payroll.payroll_category_type, ";
-            $sql .= "payroll.payroll_start_date, ";
-            $sql .= "payroll.payroll_end_date ";
-            $sql .= "from {$this->tblPayrollList} as payrollList, ";
-            $sql .= "{$this->tblPayroll} as payroll ";
-            $sql .= "where payrollList.payroll_list_employee_id = :payroll_list_employee_id ";
-            $sql .= "and payrollList.payroll_list_payroll_id = payroll.payroll_id ";
-            $sql .= "order by payroll.payroll_start_date desc, ";
-            $sql .= "payrollList.payroll_list_payroll_id desc ";
-            $sql .= "limit :start, ";
-            $sql .= ":total ";
-            $query = $this->connection->prepare($sql);
-            $query->execute([
-                "payroll_list_employee_id" => $this->payroll_list_employee_id,
-                "start" => $this->payrollList_start - 1,
-                "total" => $this->payrollList_total,
-            ]);
-        } catch (PDOException $ex) {
-            $query = false;
-        }
-        return $query;
-    }
-
     // Report Benefits Filter
     public function readReportBenefitsByDate()
     {
@@ -1226,6 +1176,62 @@ class PayrollList
         return $query;
     }
 
+    // read by payslip by id
+    public function readPayslipEmpId()
+    {
+        try {
+            $sql = "select payrollList.*, ";
+            $sql .= "payroll.payroll_category_type, ";
+            $sql .= "category.payroll_type_name, ";
+            $sql .= "payroll.payroll_start_date, ";
+            $sql .= "payroll.payroll_end_date ";
+            $sql .= "from {$this->tblPayrollList} as payrollList, ";
+            $sql .= "{$this->tblPayroll} as payroll, ";
+            $sql .= "{$this->tblPayrollType} as category ";
+            $sql .= "where payrollList.payroll_list_employee_id = :payroll_list_employee_id ";
+            $sql .= "and payrollList.payroll_list_payroll_id = payroll.payroll_id ";
+            $sql .= "and category.payroll_type_aid = payroll.payroll_category_type ";
+            $sql .= "order by payroll.payroll_start_date desc, ";
+            $sql .= "payrollList.payroll_list_payroll_id desc ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "payroll_list_employee_id" => $this->payroll_list_employee_id,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    public function readPayslipEmpIdLimit()
+    {
+        try {
+            $sql = "select payrollList.*, ";
+            $sql .= "payroll.payroll_category_type, ";
+            $sql .= "category.payroll_type_name, ";
+            $sql .= "payroll.payroll_start_date, ";
+            $sql .= "payroll.payroll_end_date ";
+            $sql .= "from {$this->tblPayrollList} as payrollList, ";
+            $sql .= "{$this->tblPayroll} as payroll, ";
+            $sql .= "{$this->tblPayrollType} as category ";
+            $sql .= "where payrollList.payroll_list_employee_id = :payroll_list_employee_id ";
+            $sql .= "and payrollList.payroll_list_payroll_id = payroll.payroll_id ";
+            $sql .= "and category.payroll_type_aid = payroll.payroll_category_type ";
+            $sql .= "order by payroll.payroll_start_date desc, ";
+            $sql .= "payrollList.payroll_list_payroll_id desc ";
+            $sql .= "limit :start, ";
+            $sql .= ":total ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "payroll_list_employee_id" => $this->payroll_list_employee_id,
+                "start" => $this->payrollList_start - 1,
+                "total" => $this->payrollList_total,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
 
     //HRIS Filter Read all payroll type by employee id
     public function readHrisPayslipFilterAllPayrollTypeByEmpId()
@@ -1233,19 +1239,21 @@ class PayrollList
         try {
             $sql = "select payrollList.*, ";
             $sql .= "payroll.payroll_category_type, ";
+            $sql .= "category.payroll_type_name, ";
             $sql .= "payroll.payroll_id, ";
             $sql .= "payroll.payroll_start_date, ";
             $sql .= "payroll.payroll_end_date, ";
             $sql .= "payroll.payroll_pay_date ";
             $sql .= "from {$this->tblPayrollList} as payrollList, ";
-            $sql .= "{$this->tblPayroll} as payroll ";
+            $sql .= "{$this->tblPayroll} as payroll, ";
+            $sql .= "{$this->tblPayrollType} as category ";
             $sql .= "where payrollList.payroll_list_employee_id = :payroll_list_employee_id ";
             $sql .= "and payrollList.payroll_list_payroll_id = payroll.payroll_id ";
+            $sql .= "and category.payroll_type_aid = payroll.payroll_category_type ";
             $sql .= "and payroll.payroll_start_date >= :payroll_start_date ";
             $sql .= "and payroll.payroll_end_date <= :payroll_end_date ";
-            $sql .= "order by payrollList.payroll_list_payroll_id, ";
-            $sql .= "payroll.payroll_end_date desc, ";
-            $sql .= "payrollList.payroll_list_employee_name asc ";
+            $sql .= "order by payrollList.payroll_list_payroll_id desc, ";
+            $sql .= "payroll.payroll_end_date desc ";
             $query = $this->connection->prepare($sql);
             $query->execute([
                 "payroll_list_employee_id" => $this->payroll_list_employee_id,
@@ -1264,20 +1272,22 @@ class PayrollList
         try {
             $sql = "select payrollList.*, ";
             $sql .= "payroll.payroll_category_type, ";
+            $sql .= "category.payroll_type_name, ";
             $sql .= "payroll.payroll_id, ";
             $sql .= "payroll.payroll_start_date, ";
             $sql .= "payroll.payroll_end_date, ";
             $sql .= "payroll.payroll_pay_date ";
             $sql .= "from {$this->tblPayrollList} as payrollList, ";
-            $sql .= "{$this->tblPayroll} as payroll ";
+            $sql .= "{$this->tblPayroll} as payroll, ";
+            $sql .= "{$this->tblPayrollType} as category ";
             $sql .= "where payrollList.payroll_list_employee_id = :payroll_list_employee_id ";
             $sql .= "and payroll.payroll_category_type = :payroll_category_type ";
-            $sql .= "and payrollList.payroll_list_payroll_id = payroll.payroll_id ";
             $sql .= "and payroll.payroll_start_date = :payroll_start_date ";
             $sql .= "and payroll.payroll_end_date = :payroll_end_date ";
-            $sql .= "order by payrollList.payroll_list_payroll_id, ";
-            $sql .= "payroll.payroll_end_date desc, ";
-            $sql .= "payrollList.payroll_list_employee_name asc ";
+            $sql .= "and payrollList.payroll_list_payroll_id = payroll.payroll_id ";
+            $sql .= "and category.payroll_type_aid = payroll.payroll_category_type ";
+            $sql .= "order by payrollList.payroll_list_payroll_id desc, ";
+            $sql .= "payroll.payroll_end_date desc ";
             $query = $this->connection->prepare($sql);
             $query->execute([
                 "payroll_list_employee_id" => $this->payroll_list_employee_id,
@@ -1297,20 +1307,22 @@ class PayrollList
         try {
             $sql = "select payrollList.*, ";
             $sql .= "payroll.payroll_category_type, ";
+            $sql .= "category.payroll_type_name, ";
             $sql .= "payroll.payroll_id, ";
             $sql .= "payroll.payroll_start_date, ";
             $sql .= "payroll.payroll_end_date, ";
             $sql .= "payroll.payroll_pay_date ";
             $sql .= "from {$this->tblPayrollList} as payrollList, ";
-            $sql .= "{$this->tblPayroll} as payroll ";
+            $sql .= "{$this->tblPayroll} as payroll, ";
+            $sql .= "{$this->tblPayrollType} as category ";
             $sql .= "where payrollList.payroll_list_employee_id = :payroll_list_employee_id ";
             $sql .= "and payroll.payroll_category_type = :payroll_category_type ";
             $sql .= "and YEAR(payroll.payroll_pay_date) between ";
             $sql .= ":year_from and :year_to ";
             $sql .= "and payrollList.payroll_list_payroll_id = payroll.payroll_id ";
-            $sql .= "order by payrollList.payroll_list_payroll_id, ";
-            $sql .= "payroll.payroll_end_date desc, ";
-            $sql .= "payrollList.payroll_list_employee_name asc ";
+            $sql .= "and category.payroll_type_aid = payroll.payroll_category_type ";
+            $sql .= "order by payrollList.payroll_list_payroll_id desc, ";
+            $sql .= "payroll.payroll_end_date desc ";
             $query = $this->connection->prepare($sql);
             $query->execute([
                 "payroll_list_employee_id" => $this->payroll_list_employee_id,
@@ -1330,20 +1342,22 @@ class PayrollList
         try {
             $sql = "select payrollList.*, ";
             $sql .= "payroll.payroll_category_type, ";
+            $sql .= "category.payroll_type_name, ";
             $sql .= "payroll.payroll_id, ";
             $sql .= "payroll.payroll_start_date, ";
             $sql .= "payroll.payroll_end_date, ";
             $sql .= "payroll.payroll_pay_date ";
             $sql .= "from {$this->tblPayrollList} as payrollList, ";
-            $sql .= "{$this->tblPayroll} as payroll ";
+            $sql .= "{$this->tblPayroll} as payroll, ";
+            $sql .= "{$this->tblPayrollType} as category ";
             $sql .= "where payrollList.payroll_list_employee_id = :payroll_list_employee_id ";
             $sql .= "and payroll.payroll_category_type = :payroll_category_type ";
             $sql .= "and payroll.payroll_start_date >= :payroll_start_date ";
             $sql .= "and payroll.payroll_end_date <= :payroll_end_date ";
             $sql .= "and payrollList.payroll_list_payroll_id = payroll.payroll_id ";
-            $sql .= "order by payrollList.payroll_list_payroll_id, ";
-            $sql .= "payroll.payroll_end_date desc, ";
-            $sql .= "payrollList.payroll_list_employee_name asc ";
+            $sql .= "and category.payroll_type_aid = payroll.payroll_category_type ";
+            $sql .= "order by payrollList.payroll_list_payroll_id desc, ";
+            $sql .= "payroll.payroll_end_date desc ";
             $query = $this->connection->prepare($sql);
             $query->execute([
                 "payroll_list_employee_id" => $this->payroll_list_employee_id,

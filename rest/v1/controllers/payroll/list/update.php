@@ -50,6 +50,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
     $allSSSLoanList = $data["sSSLoanList"];
     $payroll_category = null;
 
+    // update payroll list
     for ($pl = 0; $pl < count($allPayrollPayList); $pl++) {
         $payroll_category = $allPayrollPayList[$pl]["payroll_category"];
         $payrollList->payroll_list_employee_id = $allPayrollPayList[$pl]["payroll_list_employee_id"];
@@ -98,7 +99,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
     }
 
 
-    // delete first existing PR ID and pay item id de Minimis
+    // delete earning first existing PR ID and pay item id de Minimis
     $payrollList->payitem_id = $data["payItemDeminimisId"];
     checkId($payrollList->payitem_id);
     checkDeleteNotInstallmentEarnings($payrollList);
@@ -125,7 +126,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
         }
     }
 
-    // delete first existing PR ID and pay item id holiday
+    // delete earning first existing PR ID and pay item id holiday
     $payrollList->payitem_id = $data["payItemHolidayId"];
     checkId($payrollList->payitem_id);
     checkDeleteNotInstallmentEarnings($payrollList);
@@ -152,7 +153,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
         }
     }
 
-    // delete first existing PR ID and pay item id night diff
+    // delete earning first existing PR ID and pay item id night diff
     $payrollList->payitem_id = $data["payItemNightDiffId"];
     checkId($payrollList->payitem_id);
     checkDeleteNotInstallmentEarnings($payrollList);
@@ -179,14 +180,16 @@ if (array_key_exists("listpayrollid", $_GET)) {
         }
     }
 
-    // delete first existing PR ID and pay item id SSS ER
+    // delete earning first existing PR ID and pay item id SSS ER
     $payrollList->payitem_id = $data["payItemSssErId"];
     checkId($payrollList->payitem_id);
     checkDeleteNotInstallmentEarnings($payrollList);
-    // delete first deduction PR ID and pay item id SSS EE
-    $payrollList->payitem_id = $data["payItemNSssEeId"];
-    checkId($payrollList->payitem_id);
+
+    // delete deduction first PR ID and pay item id SSS EE
+    $payrollList->deduction_payitem_id = $data["payItemNSssEeId"];
+    checkId($payrollList->deduction_payitem_id);
     checkDeleteNotInstallmentDeductions($payrollList);
+
     // earnings sss EE and deductions sss ER
     if (count($allSssList) > 0) {
         for ($sss = 0; $sss < count($allSssList); $sss++) {
@@ -216,13 +219,14 @@ if (array_key_exists("listpayrollid", $_GET)) {
         }
     }
 
-    // delete first existing PR ID and pay item id pagibig ER
+    // delete earning first existing PR ID and pay item id pagibig ER
     $payrollList->payitem_id = $data["payItemPagibigErId"];
     checkId($payrollList->payitem_id);
     checkDeleteNotInstallmentEarnings($payrollList);
-    // delete first deduction PR ID and pay item id pagibig EE
-    $payrollList->payitem_id = $data["payItemPagibigEeId"];
-    checkId($payrollList->payitem_id);
+
+    // delete deduction firstPR ID and pay item id pagibig EE
+    $payrollList->deduction_payitem_id = $data["payItemPagibigEeId"];
+    checkId($payrollList->deduction_payitem_id);
     checkDeleteNotInstallmentDeductions($payrollList);
     // earnings Pagibig EE and deductions Pagibig ER
     if (count($allPagibigList) > 0) {
@@ -253,13 +257,14 @@ if (array_key_exists("listpayrollid", $_GET)) {
         }
     }
 
-    // delete first existing PR ID and pay item id phic ER
+    // delete earning first existing PR ID and pay item id phic ER
     $payrollList->payitem_id = $data["payItemPhilhealthErId"];
     checkId($payrollList->payitem_id);
     checkDeleteNotInstallmentEarnings($payrollList);
-    // delete first deduction PR ID and pay item id phic EE
-    $payrollList->payitem_id = $data["payItemPhilhealthEeId"];
-    checkId($payrollList->payitem_id);
+
+    // delete deduction first PR ID and pay item id phic EE
+    $payrollList->deduction_payitem_id = $data["payItemPhilhealthEeId"];
+    checkId($payrollList->deduction_payitem_id);
     checkDeleteNotInstallmentDeductions($payrollList);
     // earnings Phil EE and deductions Phil ER
     if (count($allPhilhealthList) > 0) {
@@ -289,9 +294,9 @@ if (array_key_exists("listpayrollid", $_GET)) {
             $query = checkCreateDeductions($payrollList);
         }
     }
-    // delete first deduction PR ID and pay item id tax
-    $payrollList->payitem_id = $data["payItemTaxId"];
-    checkId($payrollList->payitem_id);
+    // delete deduction first PR ID and pay item id tax
+    $payrollList->deduction_payitem_id = $data["payItemTaxId"];
+    checkId($payrollList->deduction_payitem_id);
     checkDeleteNotInstallmentDeductions($payrollList);
     if (count($allTaxList) > 0) {
         for ($tax = 0; $tax < count($allTaxList); $tax++) {

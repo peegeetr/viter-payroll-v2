@@ -55,6 +55,14 @@ function checkDeleteNotInstallmentEarnings($object)
     return $query;
 }
 
+// delete not installment earnings by id
+function checkDeleteNotInstallmentEarningsByEmpId($object)
+{
+    $query = $object->deleteNotInstallmentEarningsByEmpId();
+    checkQuery($query, "There's a problem processing your request. (delete not installment earnings by emp id)");
+    return $query;
+}
+
 // delete earnings 
 function checkDeleteEarnings($object)
 {
@@ -68,6 +76,14 @@ function checkDeleteNotInstallmentDeductions($object)
 {
     $query = $object->deleteNotInstallmentDeductions();
     checkQuery($query, "There's a problem processing your request. (delete not installment deductions)");
+    return $query;
+}
+
+// delete not installment deductions by employee id
+function checkDeleteNotInstallmentDeductionsByEmpId($object)
+{
+    $query = $object->deleteNotInstallmentDeductionsByEmpId();
+    checkQuery($query, "There's a problem processing your request. (delete not installment deductions by emp id)");
     return $query;
 }
 

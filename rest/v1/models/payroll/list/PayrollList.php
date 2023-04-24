@@ -755,6 +755,27 @@ class PayrollList
         return $query;
     }
 
+    // delete Deductions by employee id
+    public function deleteNotInstallmentDeductionsByEmpId()
+    {
+        try {
+            $sql = "delete from {$this->tblDeductions} ";
+            $sql .= "where deduction_payroll_id = :payroll_list_payroll_id ";
+            $sql .= "and deduction_payitem_id = :payitem_id ";
+            $sql .= "and deduction_employee_id = :deduction_employee_id ";
+            $sql .= "and deduction_is_installment != '2' ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "payroll_list_payroll_id" => $this->payroll_list_payroll_id,
+                "payitem_id" => $this->deduction_payitem_id,
+                "deduction_employee_id" => $this->payroll_list_employee_id,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
     // delete Deductions
     public function deleteNotInstallmentDeductions()
     {
@@ -793,6 +814,27 @@ class PayrollList
         return $query;
     }
 
+    // delete Earnings not installment by employee id
+    public function deleteNotInstallmentEarningsByEmpId()
+    {
+        try {
+            $sql = "delete from {$this->tblEarnings} ";
+            $sql .= "where earnings_payroll_id = :payroll_list_payroll_id ";
+            $sql .= "and earnings_payitem_id = :payitem_id ";
+            $sql .= "and earnings_employee_id = :earnings_employee_id ";
+            $sql .= "and earnings_is_installment != '2' ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "payroll_list_payroll_id" => $this->payroll_list_payroll_id,
+                "earnings_employee_id" => $this->payroll_list_employee_id,
+                "payitem_id" => $this->payitem_id,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
 
 
     // read by payslip by id
@@ -806,7 +848,8 @@ class PayrollList
             $sql .= "{$this->tblPayroll} as payroll ";
             $sql .= "where payrollList.payroll_list_employee_id = :payroll_list_employee_id ";
             $sql .= "and payrollList.payroll_list_payroll_id = payroll.payroll_id ";
-            $sql .= "order by payrollList.payroll_list_payroll_id asc ";
+            $sql .= "order by payroll.payroll_start_date, ";
+            $sql .= "payrollList.payroll_list_payroll_id desc ";
             $query = $this->connection->prepare($sql);
             $query->execute([
                 "payroll_list_employee_id" => $this->payroll_list_employee_id,
@@ -827,7 +870,8 @@ class PayrollList
             $sql .= "{$this->tblPayroll} as payroll ";
             $sql .= "where payrollList.payroll_list_employee_id = :payroll_list_employee_id ";
             $sql .= "and payrollList.payroll_list_payroll_id = payroll.payroll_id ";
-            $sql .= "order by payrollList.payroll_list_payroll_id asc ";
+            $sql .= "order by payroll.payroll_start_date, ";
+            $sql .= "payrollList.payroll_list_payroll_id desc ";
             $sql .= "limit :start, ";
             $sql .= ":total ";
             $query = $this->connection->prepare($sql);

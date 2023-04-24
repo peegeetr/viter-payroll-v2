@@ -346,7 +346,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
                 $payrollList->earnings_rate = "";
                 $payrollList->earnings_hrs = "";
                 // delete first existing PR ID and pay item id pagibig ER 
-                checkDeleteNotInstallmentEarnings($payrollList);
+                checkDeleteNotInstallmentEarningsByEmpId($payrollList);
                 // create extra 
                 $query = checkCreateEarnings($payrollList);
             }
@@ -376,7 +376,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
                 $payrollList->earnings_rate = "";
                 $payrollList->earnings_hrs = "";
                 // delete first existing PR ID and pay item id pagibig ER 
-                checkDeleteNotInstallmentEarnings($payrollList);
+                checkDeleteNotInstallmentEarningsByEmpId($payrollList);
                 // create extra 
                 $query = checkCreateEarnings($payrollList);
             }
@@ -406,7 +406,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
                 $payrollList->earnings_rate = "";
                 $payrollList->earnings_hrs = "";
                 // delete first existing PR ID and pay item id pagibig ER 
-                checkDeleteNotInstallmentEarnings($payrollList);
+                checkDeleteNotInstallmentEarningsByEmpId($payrollList);
                 // create extra 
                 $query = checkCreateEarnings($payrollList);
             }
@@ -436,7 +436,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
                 $payrollList->earnings_rate = "";
                 $payrollList->earnings_hrs = "";
                 // delete first existing PR ID and pay item id pagibig ER 
-                checkDeleteNotInstallmentEarnings($payrollList);
+                checkDeleteNotInstallmentEarningsByEmpId($payrollList);
                 // create extra 
                 $query = checkCreateEarnings($payrollList);
             }
@@ -466,7 +466,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
                 $payrollList->earnings_rate = "";
                 $payrollList->earnings_hrs = "";
                 // delete first existing PR ID and pay item id pagibig ER 
-                checkDeleteNotInstallmentEarnings($payrollList);
+                checkDeleteNotInstallmentEarningsByEmpId($payrollList);
                 // create extra 
                 $query = checkCreateEarnings($payrollList);
             }
@@ -494,7 +494,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
                 $payrollList->installment_extra = $allTuitionList[$tu]["installment_extra"];
 
                 // delete first existing PR ID and pay item id pagibig ER 
-                checkDeleteNotInstallmentDeductions($payrollList);
+                checkDeleteNotInstallmentDeductionsByEmpId($payrollList);
                 // create extra 
                 $query = checkCreateDeductions($payrollList);
             }
@@ -521,7 +521,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
                 $payrollList->end_pay_date = $allTithesList[$ti]["deduction_end_pay_date"];
                 $payrollList->installment_extra = $allTithesList[$ti]["installment_extra"];
                 // delete first existing PR ID and pay item id pagibig ER 
-                checkDeleteNotInstallmentDeductions($payrollList);
+                checkDeleteNotInstallmentDeductionsByEmpId($payrollList);
                 // create extra 
                 $query = checkCreateDeductions($payrollList);
             }
@@ -550,7 +550,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
                 $payrollList->installment_extra =  $allOtherDeductionList[$od]["installment_extra"];
 
                 // delete first existing PR ID and pay item id pagibig ER 
-                checkDeleteNotInstallmentDeductions($payrollList);
+                checkDeleteNotInstallmentDeductionsByEmpId($payrollList);
                 // create extra  
                 $query = checkCreateDeductions($payrollList);
             }
@@ -577,7 +577,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
                 $payrollList->end_pay_date = $allPagibigLoanList[$pgbg]["deduction_end_pay_date"];
                 $payrollList->installment_extra = $allPagibigLoanList[$pgbg]["installment_extra"];
                 // delete first existing PR ID and pay item id pagibig ER 
-                checkDeleteNotInstallmentDeductions($payrollList);
+                checkDeleteNotInstallmentDeductionsByEmpId($payrollList);
                 // create extra  
                 $query = checkCreateDeductions($payrollList);
             }
@@ -604,7 +604,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
                 $payrollList->end_pay_date = $allPagibigMP2List[$mpt]["deduction_end_pay_date"];
                 $payrollList->installment_extra = $allPagibigMP2List[$mpt]["installment_extra"];
                 // delete first existing PR ID and pay item id pagibig ER 
-                checkDeleteNotInstallmentDeductions($payrollList);
+                checkDeleteNotInstallmentDeductionsByEmpId($payrollList);
                 // create extra  
                 $query = checkCreateDeductions($payrollList);
             }
@@ -632,7 +632,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
                 $payrollList->end_pay_date = $allSSSLoanList[$sss]["deduction_end_pay_date"];
                 $payrollList->installment_extra = $allSSSLoanList[$sss]["installment_extra"];
                 // delete first existing PR ID and pay item id pagibig ER 
-                checkDeleteNotInstallmentDeductions($payrollList);
+                checkDeleteNotInstallmentDeductionsByEmpId($payrollList);
                 // create extra 
                 $query = checkCreateDeductions($payrollList);
             }

@@ -1,6 +1,7 @@
  
 *controllers  
     - payroll/payslip/payslip-email-all.php
+    - payroll/list/update.php
 
 *models 
     -> payroll/list/PayrollList.php

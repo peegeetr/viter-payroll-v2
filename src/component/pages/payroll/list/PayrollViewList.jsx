@@ -158,9 +158,9 @@ const PayrollViewList = () => {
                 <React.Fragment key={key}>
                   {page.data.map((item, key) => {
                     salariesAndWages += Number(item.payroll_list_gross);
-                    monthAndBonuses +=
-                      Number(item.payroll_list_total_benefits) +
-                      Number(item.payroll_list_bonus);
+                    monthAndBonuses += Number(item.payroll_list_total_benefits);
+                    //  +
+                    // Number(item.payroll_list_bonus);
                     sssEr += Number(item.payroll_list_sss_er);
                     phicEr += Number(item.payroll_list_philhealth_er);
                     pagEr += Number(item.payroll_list_pagibig_er);

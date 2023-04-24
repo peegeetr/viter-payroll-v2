@@ -96,9 +96,6 @@ const Payslip13thMonthList = ({ payslip }) => {
             </tr>
 
             {/* netpay */}
-            <td colSpan={4} className=" print:py-[2px]">
-              &nbsp;
-            </td>
             <tr className="bg-primary hover:bg-primary text-white uppercase">
               <td
                 colSpan={3}

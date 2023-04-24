@@ -80,6 +80,13 @@ const WTaxYearlyList = () => {
     "monthlyTax" // key
   );
 
+  // use if not loadmore button monthly tax
+  const { data: yearlyTax } = useQueryData(
+    `${devApiUrl}/v1/tax/bracket-yearly`, // endpoint
+    "get", // method
+    "yearlyTax" // key
+  );
+
   const initVal = {
     employee_aid: "",
     year: "",
@@ -135,7 +142,6 @@ const WTaxYearlyList = () => {
                       disabled={isFetching}
                     >
                       <option value="" hidden></option>
-                      <option value="0">All</option>
                       {getYear()?.map((yItem, key) => {
                         return (
                           <option key={key} value={yItem.year}>
@@ -187,6 +193,7 @@ const WTaxYearlyList = () => {
           result={result}
           year={year}
           monthlyTax={monthlyTax?.data}
+          yearlyTax={yearlyTax?.data}
         />
       </div>
     </>

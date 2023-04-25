@@ -12,7 +12,7 @@ const Payslip13thMonthList = ({ payslip }) => {
   );
   let netPay =
     Number(payslip?.data[0].payroll_list_13th_month) -
-    Number(payslip?.data[0].payroll_list_tax);
+    Number(payslip?.data[0].payroll_list_deduction);
 
   return (
     <>
@@ -86,7 +86,7 @@ const Payslip13thMonthList = ({ payslip }) => {
               </td>
               <td className=" text-right px-4 print:py-[2px]">
                 {numberWithCommas(
-                  Number(payslip?.data[0].payroll_list_tax).toFixed(2)
+                  Number(payslip?.data[0].payroll_list_deduction).toFixed(2)
                 )}
               </td>
             </tr>

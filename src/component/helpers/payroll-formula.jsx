@@ -171,8 +171,8 @@ export const payComputeCategory13thMonth = (category13thMonth, yearlyTax) => {
       payroll_category: payrollCategory13thMonthId,
       payroll_list_employee_id: cItem.payroll_list_employee_id,
       payroll_list_employee_name: cItem.payroll_list_employee_name,
-      payroll_list_gross: zero,
-      payroll_list_deduction: zero,
+      payroll_list_gross: totalAmount.toFixed(2),
+      payroll_list_deduction: taxYearly.toFixed(2),
       payroll_list_net_pay: zero,
       payroll_list_basic_pay: zero,
       payroll_list_overtime_pay: zero,
@@ -211,7 +211,7 @@ export const payComputeCategory13thMonth = (category13thMonth, yearlyTax) => {
       payroll_list_fca_tuition: zero,
       payroll_list_other_deduction: zero,
       payroll_list_madatory_ee: zero,
-      payroll_list_tax: Number(taxYearly.toFixed(2)),
+      payroll_list_tax: taxYearly.toFixed(2),
       payroll_list_undertime: zero,
     });
   });

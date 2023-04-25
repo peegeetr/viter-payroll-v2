@@ -146,7 +146,7 @@ export const computeOvertime = (
           details: `OT (${
             otFinalAmount(otItem, eItem, holidays, payrollDraft).otRate
           }%) ${formatDate(otItem.task_created.split(" ")[0])} ${
-            otItem.task_time_started
+            otItem.task_time_started.split(" ")[1]
           } (${getUnderTimeSpent(otItem.task_spent)})`,
         });
       }

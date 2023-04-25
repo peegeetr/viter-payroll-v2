@@ -261,3 +261,21 @@ export const getYearCount = (hiredDate) => {
     return `${yearCount} years`;
   }
 };
+
+// get employee tenure
+export const getTenure = (dte) => {
+  const dStart = new Date(dte);
+  const dNow = new Date();
+  const mStart = dStart.getMonth();
+  const mNow = dNow.getMonth();
+  const yStart = dStart.getFullYear();
+  const yNow = dNow.getFullYear();
+  let tenure = 0;
+  if (mNow >= mStart) {
+    tenure = yNow - yStart;
+  } else {
+    tenure = yNow - yStart - 1;
+  }
+
+  return tenure > 1 ? `${tenure} yrs` : `${tenure} yr`;
+};

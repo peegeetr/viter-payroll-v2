@@ -15,7 +15,7 @@ if (array_key_exists("salaryHistoryId", $_GET)) {
 
     $salaryHistory->salary_history_aid = $_GET['salaryHistoryId'];
     $salaryHistory->salary_history_employee_id = checkIndex($data, "salary_history_employee_id");
-    $salaryHistory->salary_history_salary_amount = checkIndex($data, "salary_history_salary_amount");
+    $salaryHistory->salary_history_salary_amount = checkIndex($data, "amount");
     $salaryHistory->salary_history_date = checkIndex($data, "salary_history_date");
     $salaryHistory->salary_history_datetime = date("Y-m-d H:i:s");
 

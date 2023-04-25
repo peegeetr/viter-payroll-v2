@@ -19,13 +19,14 @@ import {
   devApiUrl,
   getDateNow,
   getUrlParam,
+  removeComma,
 } from "../../../helpers/functions-general";
 import { queryData } from "../../../helpers/queryData";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 
 const ModalSalaryHistory = ({ item }) => {
   const { store, dispatch } = React.useContext(StoreContext);
-  const empId = getUrlParam().get("employeeId");
+  const empId = getUrlParam().get("employeeid");
 
   const queryClient = useQueryClient();
   const mutation = useMutation({
@@ -42,7 +43,7 @@ const ModalSalaryHistory = ({ item }) => {
       queryClient.invalidateQueries({ queryKey: ["salaryHistory"] });
       // show success box
       if (data.success) {
-        dispatch(setIsAdd(false));
+        // dispatch(setIsAdd(false));
         dispatch(setSuccess(true));
         dispatch(setMessage(`Successfuly ${item ? "updated." : "added."}`));
       }
@@ -90,9 +91,10 @@ const ModalSalaryHistory = ({ item }) => {
               initialValues={initVal}
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
-                console.log(values, item);
-
-                mutation.mutate(values);
+                const amount = removeComma(
+                  `${values.salary_history_salary_amount}`
+                );
+                mutation.mutate({ ...values, amount });
               }}
             >
               {(props) => {
@@ -109,6 +111,7 @@ const ModalSalaryHistory = ({ item }) => {
                       </div>
                       <div className="relative mb-6 mt-5">
                         <InputText
+                          num="num"
                           label="Salary Amount"
                           type="text"
                           name="salary_history_salary_amount"

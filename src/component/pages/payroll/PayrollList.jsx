@@ -76,8 +76,6 @@ const PayrollList = ({ setItemEdit }) => {
     }
   }, [inView]);
 
-  console.log(result);
-
   const handleEdit = async (item) => {
     setLoading(true);
     let prId = item.payroll_id;
@@ -178,9 +176,9 @@ const PayrollList = ({ setItemEdit }) => {
                       </td>
                       <td className="text-center">
                         {item.payroll_is_paid === 1 ? (
-                          <StatusActive text={"paid"} />
+                          <StatusActive text={"Paid"} />
                         ) : (
-                          <StatusInactive text={"draft"} />
+                          <StatusInactive text={"Draft"} />
                         )}
                       </td>
                       <td>

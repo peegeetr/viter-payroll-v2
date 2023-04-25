@@ -6,6 +6,7 @@ import useQueryData from "../../../custom-hooks/useQueryData";
 import {
   devApiUrl,
   formatDate,
+  getTenure,
   getUrlParam,
   getYearCount,
   numberWithCommas,
@@ -47,9 +48,9 @@ const SalaryHistoryList = ({ setItemEdit, employee }) => {
   };
   return (
     <>
-      {employee?.data.length > 0 ? (
-        <>
-          <div className="grid md:grid-cols-2 lg:grid-cols-[1fr_1fr_1fr_1fr] pb-5 ">
+      <div className="grid md:grid-cols-2 lg:grid-cols-[1fr_1fr_1fr_1fr] pb-5 ">
+        {employee?.data.length > 0 ? (
+          <>
             <div className="mr-5 capitalize">
               <p className="mb-0">
                 Name:
@@ -78,7 +79,7 @@ const SalaryHistoryList = ({ setItemEdit, employee }) => {
               <p className="mb-0">
                 Tenure:
                 <span className="font-bold text-primary ml-2">
-                  {getYearCount(employee?.data[0].employee_job_hired_date)}
+                  {getTenure(employee?.data[0].employee_job_hired_date)}
                 </span>
               </p>
             </div>
@@ -96,7 +97,9 @@ const SalaryHistoryList = ({ setItemEdit, employee }) => {
                 Starting Pay:
                 <span className="font-bold text-primary ml-2">
                   {`P ${numberWithCommas(
-                    employee?.data[0].employee_job_starting_pay
+                    Number(employee?.data[0].employee_job_starting_pay).toFixed(
+                      2
+                    )
                   )}`}
                 </span>
               </p>
@@ -112,91 +115,94 @@ const SalaryHistoryList = ({ setItemEdit, employee }) => {
                 </span>
               </p>
             </div>
-          </div>
-          <div className="relative text-center overflow-x-auto z-0">
-            <table>
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Salary</th>
-                  <th>Date of Salary Raise</th>
-                  <th className="max-w-[5rem]">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {(isLoading || salaryHistory?.data.length === 0) && (
-                  <tr className="text-center ">
-                    <td colSpan="100%" className="p-10">
-                      {isLoading && <TableSpinner />}
-                      <NoData />
-                    </td>
-                  </tr>
-                )}
-                {error && (
-                  <tr className="text-center ">
-                    <td colSpan="100%" className="p-10">
-                      <ServerError />
-                    </td>
-                  </tr>
-                )}
-                {salaryHistory?.data.map((item, key) => {
-                  counter++;
-                  return (
-                    <tr key={key}>
-                      <td>{counter}</td>
-                      <td>{item.salary_history_salary_amount}</td>
-                      <td>{formatDate(item.salary_history_date)}</td>
+          </>
+        ) : (
+          "Loading..."
+        )}
+      </div>
 
-                      <td>
-                        <div className="flex items-center gap-2">
-                          <button
-                            type="button"
-                            className="btn-action-table tooltip-action-table"
-                            data-tooltip="Edit"
-                            onClick={() => handleEdit(item)}
-                          >
-                            <FaEdit />
-                          </button>
-                          <button
-                            type="button"
-                            className="btn-action-table tooltip-action-table"
-                            data-tooltip="Delete"
-                            onClick={() => handleDelete(item)}
-                          >
-                            <FaTrash />
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  );
-                })}
-                {(!isLoading || salaryHistory?.data.length > 0) && (
-                  <>
-                    <tr className="hover:bg-white">
-                      <td colSpan={4} className=" print:py-[2px]">
-                        &nbsp;
-                      </td>
-                    </tr>
-                    <tr className="bg-primary text-right text-white uppercase hover:bg-primary font-semibold">
-                      <td colSpan={3}>Current pay : </td>
-                      <td className="text-left">
-                        {`P ${numberWithCommas(
-                          employee?.data[0].employee_job_salary
-                        )}`}{" "}
-                      </td>
-                    </tr>
-                  </>
-                )}
-              </tbody>
-            </table>
-          </div>
-        </>
-      ) : (
-        <div className="relative w-full min-h-[616px] grid place-items-center">
-          {isLoading && <TableSpinner />}
-          <NoData />
-        </div>
-      )}
+      <div className="relative text-center overflow-x-auto z-0">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Salary</th>
+              <th>Date of Salary Raise</th>
+              <th className="max-w-[5rem]">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {(isLoading || salaryHistory?.data.length === 0) && (
+              <tr className="text-center ">
+                <td colSpan="100%" className="p-10">
+                  {isLoading && <TableSpinner />}
+                  <NoData />
+                </td>
+              </tr>
+            )}
+            {error && (
+              <tr className="text-center ">
+                <td colSpan="100%" className="p-10">
+                  <ServerError />
+                </td>
+              </tr>
+            )}
+            {salaryHistory?.data.map((item, key) => {
+              counter++;
+              return (
+                <tr key={key}>
+                  <td>{counter}</td>
+                  <td className="text-right">
+                    {`P ${numberWithCommas(
+                      Number(item.salary_history_salary_amount).toFixed(2)
+                    )}`}
+                  </td>
+                  <td>{formatDate(item.salary_history_date)}</td>
+
+                  <td>
+                    <div className="flex items-center gap-2">
+                      <button
+                        type="button"
+                        className="btn-action-table tooltip-action-table"
+                        data-tooltip="Edit"
+                        onClick={() => handleEdit(item)}
+                      >
+                        <FaEdit />
+                      </button>
+                      <button
+                        type="button"
+                        className="btn-action-table tooltip-action-table"
+                        data-tooltip="Delete"
+                        onClick={() => handleDelete(item)}
+                      >
+                        <FaTrash />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
+            {(!isLoading || salaryHistory?.data.length > 0) && (
+              <>
+                <tr className="hover:bg-white">
+                  <td colSpan={4} className=" print:py-[2px]">
+                    &nbsp;
+                  </td>
+                </tr>
+                <tr className="bg-primary text-right text-white uppercase hover:bg-primary font-semibold">
+                  <td colSpan={3}>Current pay: </td>
+                  <td className="text-left">
+                    {`P ${numberWithCommas(
+                      Number(employee?.data[0].employee_job_salary).toFixed(2)
+                    )}`}
+                  </td>
+                </tr>
+              </>
+            )}
+          </tbody>
+        </table>
+      </div>
+
       {store.isRestore && (
         <ModalDeleteRestoreRq
           id={id}

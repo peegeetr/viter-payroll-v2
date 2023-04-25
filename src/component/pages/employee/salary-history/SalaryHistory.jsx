@@ -19,7 +19,7 @@ const SalaryHistory = () => {
   const empId = getUrlParam().get("employeeid");
 
   // use if not loadmore button undertime
-  const { data: employee } = useQueryData(
+  const { data: employee, isLoading } = useQueryData(
     `${hrisDevApiUrl}/v1/employees/job/${empId}`, // endpoint
     "get", // method
     "employee", // key
@@ -50,6 +50,8 @@ const SalaryHistory = () => {
         <hr />
 
         <div className="w-full pt-5 pb-20">
+          {/* {isLoading && <TableSpinner />}
+          <NoData /> */}
           <SalaryHistoryList setItemEdit={setItemEdit} employee={employee} />
         </div>
         <Footer />

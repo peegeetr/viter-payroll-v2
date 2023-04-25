@@ -52,7 +52,7 @@ for ($i = 0; $i < count($allEmployee); $i++) {
     $employee_lname = $allEmployee[$i]["employee_lname"];
     $employee_fname = $allEmployee[$i]["employee_fname"];
 
-    $payroll->payroll_list_employee_name = "$employee_lname $employee_fname";
+    $payroll->payroll_list_employee_name = "{$employee_lname}, {$employee_fname}";
     $payroll->payroll_list_employee_id = $allEmployee[$i]["employee_aid"];
     $payroll->payroll_list_employee_email = $allEmployee[$i]["employee_job_email"];
     $payroll->payroll_list_employee_salary = $allEmployee[$i]["employee_job_salary"];

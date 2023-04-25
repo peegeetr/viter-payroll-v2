@@ -2,13 +2,28 @@
 *controllers  
     *All Files
     - employee/salary-history
+
+    -> payroll/list/functions.php 
+    -> payroll/list/hris-page-by-emp-id.php (note:not new, rename)
+    -> payroll/list/report-filter-summary.php (note:not new, rename)
+    -> payroll/list/report-summary.php (note:not new, rename)
+    -> payroll/list/report-basic-pay-page.php 
+    -> payroll/list/report-filter-basic-pay.php 
+    -> payroll/payslip/functions.php
+    -> payroll/payslip/payslipById.php
     
 *models  
     *All Files
     - employee/SalaryHistory.php
+
+    -> payroll/list/PayrollList.php
   
 *htaccess 
     - #SALARY HISTORY
+
+    -> #payroll list paid
+    -> #payslip
+    - 
 
 *db tables 
     - prv2_salary_history.sql

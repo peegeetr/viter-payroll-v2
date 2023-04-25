@@ -24,6 +24,7 @@ import { getErningsRate } from "../function-report-summary";
 import ModalViewDetails from "./ModalViewDetails";
 import { setIsAdd } from "../../../../../store/StoreAction";
 import { employeeRate } from "../../../../helpers/payroll-formula";
+import { payrollCategorySalaryId } from "../../../../helpers/functions-payroll-category-id";
 
 const SummaryEarningsList = () => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -52,8 +53,8 @@ const SummaryEarningsList = () => {
     queryKey: ["payrollList-summary", isSubmit],
     queryFn: async ({ pageParam = 1 }) =>
       await queryDataInfinite(
-        `${devApiUrl}/v1/payrollList/filter/${startDate}/${endDate}`, // search endpoint
-        `${devApiUrl}/v1/payrollList/summary/${pageParam}`, // list endpoint
+        `${devApiUrl}/v1/payrollList/report/filter/${startDate}/${endDate}/${payrollCategorySalaryId}`, // search endpoint
+        `${devApiUrl}/v1/payrollList/report/summary/${pageParam}/${payrollCategorySalaryId}`, // list endpoint
         isFilter // search boolean
       ),
     getNextPageParam: (lastPage) => {

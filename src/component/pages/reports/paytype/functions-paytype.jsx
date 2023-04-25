@@ -23,3 +23,21 @@ export const getPaytype = (item, paytype) => {
   console.log(list);
   return list;
 };
+
+// get beenifits leave
+export const getBasicPayReport = (payrollId, basicPay) => {
+  let list = [];
+  basicPay?.data.map((bpItem) => {
+    if (payrollId === bpItem.payroll_list_payroll_id) {
+      list.push({
+        payroll_id: bpItem.payroll_list_payroll_id,
+        payitem_name: "Basic Pay",
+        paytype_name: "Wages",
+        count: bpItem.empCount,
+        amount: bpItem.totalBasicSalary,
+      });
+    }
+  });
+  // console.log(list);
+  return list;
+};

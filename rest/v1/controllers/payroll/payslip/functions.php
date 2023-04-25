@@ -1,6 +1,14 @@
 <?php
 
 
+// Read payroll by employee id in HRIS 
+function checkReadHrisPayslipByEmpId($object)
+{
+    $query = $object->readHrisPayslipByEmpId();
+    checkQuery($query, "Empty records (Read payslip by employee id in HRIS).");
+    return $query;
+}
+
 // Read by draft
 function checkReadPayslipById($object)
 {

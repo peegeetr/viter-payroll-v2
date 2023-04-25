@@ -95,26 +95,34 @@ function checkDeleteDeductions($object)
     return $query;
 }
 
-// Read all
-function checkReadAllSummary($object)
+// Read all Basic pay
+function checkReadReportFilterBasicPay($object)
 {
-    $query = $object->readAllSummary();
-    checkQuery($query, "Empty records.(Read Summary)");
+    $query = $object->readReportFilterBasicPay();
+    checkQuery($query, "Empty records.(Read all basic pay)");
+    return $query;
+}
+
+// Read all
+function checkReadAllReportSummary($object, $salaryCategoryId)
+{
+    $query = $object->readAllReportSummary($salaryCategoryId);
+    checkQuery($query, "Empty records.(Read all report summary)");
     return $query;
 }
 
 // Read limit
-function checkReadSummaryLimit($object)
+function checkReadReportSummaryLimit($object, $salaryCategoryId)
 {
-    $query = $object->readSummaryLimit();
-    checkQuery($query, "Empty records.(Summary Limit)");
+    $query = $object->readReportSummaryLimit($salaryCategoryId);
+    checkQuery($query, "Empty records.(Read all limit report summary Limit)");
     return $query;
 }
 
 // filter by date
-function checkReadSummaryByDate($object)
+function checkReadReportSummaryByDate($object, $salaryCategoryId)
 {
-    $query = $object->readSummaryByDate();
+    $query = $object->readReportSummaryByDate($salaryCategoryId);
     checkQuery($query, "Empty records. (payroll list limit by date)");
     return $query;
 }
@@ -127,14 +135,14 @@ function checkReadSummaryBenefitsByEmpId($object)
     return $query;
 }
 
-// Read by emp id
+// HRIS Read by emp id
 function checkReadPayslipEmpId($object)
 {
     $query = $object->readPayslipEmpId();
     checkQuery($query, "Empty records (Read payslip by employee id).");
     return $query;
 }
-// Read limit by emp id 
+// HRIS Read limit by emp id 
 function checkReadPayslipEmpIdLimit($object)
 {
     $query = $object->readPayslipEmpIdLimit();
@@ -253,5 +261,22 @@ function checkReadHrisPayslipFilterBonusIdByEmpId($object, $payrollType)
 {
     $query = $object->readHrisPayslipFilterBonusIdByEmpId($payrollType);
     checkQuery($query, "Empty records.(Read all Bonus Id by employee Id and date range)");
+    return $query;
+}
+
+
+// Report Read all basic pay
+function checkReadByReportBasicPay($object)
+{
+    $query = $object->readByReportBasicPay();
+    checkQuery($query, "Empty records.(Read all report basic pay page)");
+    return $query;
+}
+
+// Report Read all limit basic pay
+function checkReadByReportBasicPayLimit($object)
+{
+    $query = $object->readByReportBasicPayLimit();
+    checkQuery($query, "Empty records.(Read all limit report basic pay page)");
     return $query;
 }

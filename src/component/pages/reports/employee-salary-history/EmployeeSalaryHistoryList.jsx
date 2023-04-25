@@ -3,21 +3,18 @@ import { Form, Formik } from "formik";
 import React from "react";
 import { MdFilterAlt } from "react-icons/md";
 import { useInView } from "react-intersection-observer";
-import { Link } from "react-router-dom";
 import * as Yup from "yup";
 import { StoreContext } from "../../../../store/StoreContext";
 import useQueryData from "../../../custom-hooks/useQueryData";
 import { InputSelect, InputText } from "../../../helpers/FormInputs";
 import {
   devApiUrl,
+  formatDate,
   getPayPeriod,
   getUserType,
+  hrisDevApiUrl,
   numberWithCommas,
 } from "../../../helpers/functions-general";
-import {
-  deMinimisEarningsId,
-  wagesEarningsId,
-} from "../../../helpers/functions-payitemId";
 import { queryDataInfinite } from "../../../helpers/queryDataInfinite";
 import LoadmoreRq from "../../../partials/LoadmoreRq";
 import NoData from "../../../partials/NoData";
@@ -25,23 +22,26 @@ import ServerError from "../../../partials/ServerError";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 import TableSpinner from "../../../partials/spinners/TableSpinner";
 import HeaderPrint from "../../../partials/HeaderPrint";
-import { getBasicPayReport } from "./functions-paytype";
 
-const SummaryTypeList = () => {
+const EmployeeSalaryHistoryList = () => {
   const { store, dispatch } = React.useContext(StoreContext);
   const link = getUserType(store.credentials.data.role_is_developer === 1);
   const [isFilter, setFilter] = React.useState(false);
   const [isSubmit, setSubmit] = React.useState(false);
-  const [category, setCategory] = React.useState("");
-  const [paytype, setPaytype] = React.useState("");
+  const [employeeId, setEmployee] = React.useState("");
   const [startDate, setStartDate] = React.useState("");
   const [endDate, setEndDate] = React.useState("");
 
   const [page, setPage] = React.useState(1);
-  let counter = Number(paytype) === wagesEarningsId ? 2 : 1;
+  let counter = 1;
   const { ref, inView } = useInView();
-  let total = 0;
-  let basicTotal = 0;
+  let totalSalary = 0;
+  let totalSss = 0;
+  let totalPag = 0;
+  let totalPhic = 0;
+  let totalSssLoan = 0;
+  let totalPagLoan = 0;
+  let totalMp2Loan = 0;
   // use if with loadmore button and search bar
   const {
     data: result,
@@ -52,11 +52,11 @@ const SummaryTypeList = () => {
     isFetchingNextPage,
     status,
   } = useInfiniteQuery({
-    queryKey: ["earnings-summary", isSubmit],
+    queryKey: ["benefits-summary", isSubmit],
     queryFn: async ({ pageParam = 1 }) =>
       await queryDataInfinite(
-        `${devApiUrl}/v1/paytype/report/filter/${paytype}/${category}/${startDate}/${endDate}`, // search endpoint
-        `${devApiUrl}/v1/payrollList/page/0/${pageParam}`, // list endpoint
+        `${devApiUrl}/v1/payrollList/report/employee-benefits/${startDate}/${endDate}/${employeeId}`, // filter endpoint
+        `${devApiUrl}/v1/payrollList/report/employee-benefits/${0}/${0}/${0}`, // list endpoint
         isFilter // search boolean
       ),
     getNextPageParam: (lastPage) => {
@@ -75,80 +75,63 @@ const SummaryTypeList = () => {
       fetchNextPage();
     }
   }, [inView]);
-  // use if not loadmore button undertime
-  const { data: basicPay } = useQueryData(
-    `${devApiUrl}/v1/payrollList/report/filter/basic-pay`, // endpoint filter
-    "get", // method
-    "basicPay" // key
-  );
 
   // use if not loadmore button undertime
-  const { data: payType, isLoading: loadingPayType } = useQueryData(
-    `${devApiUrl}/v1/paytype`, // endpoint
+  const { data: employee, isLoading: loadingEmployee } = useQueryData(
+    `${hrisDevApiUrl}/v1/employees/pay`, // endpoint
     "get", // method
-    "payType" // key
+    "employees", // key
+    {}, // formdata
+    null, // id key
+    false // devKey boolean
   );
-
-  const handleCategory = async (e) => {
-    // get employee id
-    setCategory(e.target.options[e.target.selectedIndex].id);
-  };
   const initVal = {
-    paytype_aid: "",
+    employee_aid: "",
     start_date: "",
     end_date: "",
   };
-
+  console.log(employee);
   const yupSchema = Yup.object({
-    paytype_aid: Yup.string().required("Required"),
+    employee_aid: Yup.string().required("Required"),
     start_date: Yup.string().required("Required"),
     end_date: Yup.string().required("Required"),
   });
   // payroll-type/summary/
   return (
     <>
-      <div className="relative overflow-x-auto z-0 w-full  print:hidden">
+      <div className="relative overflow-x-auto z-0 w-full print:hidden">
         <Formik
           initialValues={initVal}
           validationSchema={yupSchema}
           onSubmit={async (values, { setSubmitting, resetForm }) => {
             setFilter(true);
             setSubmit(!isSubmit);
-            setPaytype(values.paytype_aid);
+            setEmployee(values.employee_aid);
             setStartDate(values.start_date);
             setEndDate(values.end_date);
-
             // // refetch data of query
             // refetch();
           }}
         >
           {(props) => {
-            props.values.deminimis =
-              Number(props.values.paytype_aid) === deMinimisEarningsId
-                ? deMinimisEarningsId
-                : "0";
             return (
               <Form>
-                <div className="grid gap-5 grid-cols-1 md:grid-cols-[1fr_1fr_1fr_150px] pt-5 pb-5 items-center">
+                <div className="grid gap-5 grid-cols-1 md:grid-cols-[1fr_1fr_1fr_150px] pt-5 pb-4 items-center">
                   <div className="relative">
                     <InputSelect
-                      label="PayType"
-                      name="paytype_aid"
-                      onChange={handleCategory}
+                      label="Employee"
+                      name="employee_aid"
                       type="text"
                       disabled={isFetching}
                     >
                       <option value="" hidden>
-                        {loadingPayType && "Loading..."}
+                        {loadingEmployee && "Loading..."}
                       </option>
-                      {payType?.data.map((paytype, key) => {
+                      <option value="0">All</option>
+                      {employee?.data.map((eItem, key) => {
                         return (
-                          <option
-                            key={key}
-                            value={paytype.paytype_aid}
-                            id={paytype.paytype_category}
-                          >
-                            {paytype.paytype_name}
+                          <option key={key} value={eItem.employee_aid}>
+                            {`${eItem.employee_lname}, ${eItem.employee_fname}`}
                           </option>
                         );
                       })}
@@ -191,13 +174,14 @@ const SummaryTypeList = () => {
           }}
         </Formik>
       </div>
-      <div className="print:pt-8">
+      {/* startDate endDate  */}
+      <div className=" print:pt-8">
         <HeaderPrint />
       </div>
       <div className="text-center pb-4 font-bold print:pt-4">
         {startDate !== "" && (
           <>
-            <p className="m-0">Pay Run by Pay Item </p>
+            <p className="m-0">Employee Benefits</p>
             <p className="m-0 text-primary font-bold">
               {getPayPeriod(startDate, endDate)}
             </p>
@@ -208,17 +192,24 @@ const SummaryTypeList = () => {
         <div className="overflow-x-auto ">
           <table>
             <thead>
-              <tr>
-                <th>#</th>
-                <th>Pay Item</th>
-                <th>Pay Type</th>
-                <th>Employee</th>
-                <th className="text-right pr-3">Total</th>
+              <tr className="text-right">
+                <th className="text-left  print:py-[2px]">#</th>
+                <th className="text-left min-w-[12rem]  print:py-[2px]">
+                  Name
+                </th>
+                <th className=" print:py-[2px]">&nbsp;</th>
+                <th className=" print:py-[2px]">SALARY</th>
+                <th className=" print:py-[2px]">SSS</th>
+                <th className=" print:py-[2px]">PHIC</th>
+                <th className=" print:py-[2px]">PGBG</th>
+                <th className=" print:py-[2px]">SSS LOAN</th>
+                <th className=" print:py-[2px]">PGBG LOAN</th>
+                <th className=" print:py-[2px]">PGBG MP2</th>
               </tr>
             </thead>
             <tbody>
               {(status === "loading" || result?.pages[0].data.length === 0) && (
-                <tr className="text-center relative">
+                <tr className="text-center relative ">
                   <td colSpan="100%" className="p-10">
                     {status === "loading" && <TableSpinner />}
                     <NoData text="Filter data using above controls." />
@@ -232,74 +223,84 @@ const SummaryTypeList = () => {
                   </td>
                 </tr>
               )}
-
               {result?.pages.map((page, key) => (
                 <React.Fragment key={key}>
-                  {Number(paytype) === wagesEarningsId &&
-                    result?.pages[0].data.length > 0 &&
-                    getBasicPayReport(
-                      page.data[0].earnings_payroll_id,
-                      basicPay
-                    )?.map((item, key) => {
-                      basicTotal = Number(item.amount);
-                      return (
-                        <tr key={key}>
-                          <td>1.</td>
-                          <td>{item.payitem_name}</td>
-                          <td>{item.paytype_name}</td>
-                          <td>{item.count}</td>
-                          <td className="text-right text-primary ">
-                            <Link
-                              className="tooltip-action-table"
-                              data-tooltip="View"
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              to={`${link}/reports/paytype/basic-pay?payrollId=${item.payroll_id}`}
-                            >
-                              {numberWithCommas(Number(item.amount).toFixed(2))}
-                            </Link>
-                          </td>
-                        </tr>
-                      );
-                    })}
                   {page.data.map((item, key) => {
-                    total += Number(item.amount) + basicTotal;
+                    totalSalary += Number(item.payroll_list_employee_salary);
+                    totalSss += Number(item.payroll_list_sss_ee);
+                    totalPag += Number(item.payroll_list_pagibig_ee);
+                    totalPhic += Number(item.payroll_list_philhealth_ee);
+                    totalPagLoan += Number(item.payroll_list_pagibig_loan);
+                    totalSssLoan += Number(item.payroll_list_sss_loan);
+                    totalMp2Loan += Number(item.payroll_list_pagibig_mp2);
                     return (
-                      <tr key={key}>
-                        <td>{counter++}.</td>
-                        <td className="w-[15rem]">{item.payitem_name}</td>
-                        <td className="w-[15rem]">{item.paytype_name}</td>
-                        <td className="w-[15rem]">{item.count}</td>
-                        <td className="text-right text-primary ">
-                          <Link
-                            className="tooltip-action-table"
-                            data-tooltip="View"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            to={
-                              item.paytype_category === "earnings"
-                                ? `${link}/reports/paytype/view?payrollId=${item.earnings_payroll_id}&payitemId=${item.payitem_aid}`
-                                : `${link}/reports/paytype/view?payrollId=${item.deduction_payroll_id}&payitemId=${item.payitem_aid}`
-                            }
-                          >
-                            {numberWithCommas(Number(item.amount).toFixed(2))}
-                          </Link>
+                      <tr key={key} className="text-right">
+                        <td className="text-left print:py-[2px]">
+                          {counter++}.
+                        </td>
+                        <td colSpan={2} className="text-left print:py-[2px]">
+                          {item.payroll_list_employee_name}
+                        </td>
+                        <td className="w-[15rem] print:py-[2px]">
+                          {numberWithCommas(
+                            Number(item.payroll_list_employee_salary).toFixed(2)
+                          )}
+                        </td>
+                        <td className="w-[15rem] print:py-[2px]">
+                          {numberWithCommas(item.payroll_list_sss_ee)}
+                        </td>
+                        <td className="w-[15rem] print:py-[2px]">
+                          {numberWithCommas(item.payroll_list_philhealth_ee)}
+                        </td>
+                        <td className="w-[15rem] print:py-[2px]">
+                          {numberWithCommas(item.payroll_list_pagibig_ee)}
+                        </td>
+                        <td className="w-[15rem] print:py-[2px]">
+                          {numberWithCommas(item.payroll_list_sss_loan)}
+                        </td>
+                        <td className="w-[15rem] print:py-[2px]">
+                          {numberWithCommas(item.payroll_list_pagibig_loan)}
+                        </td>
+                        <td className="w-[15rem] print:py-[2px]">
+                          {numberWithCommas(item.payroll_list_pagibig_mp2)}
                         </td>
                       </tr>
                     );
                   })}
                 </React.Fragment>
               ))}
+              {status !== "loading" && result?.pages[0].data.length !== 0 && (
+                <tr className="font-bold text-right">
+                  <td colSpan={3} className="w-[15rem] print:py-[2px]">
+                    TOTAL
+                  </td>
+                  <td className="w-[15rem] print:py-[2px]">
+                    {numberWithCommas(totalSalary.toFixed(2))}
+                  </td>
+                  <td className="w-[15rem] print:py-[2px]">
+                    {numberWithCommas(totalSss.toFixed(2))}
+                  </td>
+                  <td className="w-[15rem] print:py-[2px]">
+                    {numberWithCommas(totalPhic.toFixed(2))}
+                  </td>
+                  <td className="w-[15rem] print:py-[2px]">
+                    {numberWithCommas(totalPag.toFixed(2))}
+                  </td>
+                  <td className="w-[15rem] print:py-[2px]">
+                    {numberWithCommas(totalSssLoan.toFixed(2))}
+                  </td>
+                  <td className="w-[15rem] print:py-[2px]">
+                    {numberWithCommas(totalPagLoan.toFixed(2))}
+                  </td>
+                  <td className="w-[15rem] print:py-[2px]">
+                    {numberWithCommas(totalMp2Loan.toFixed(2))}
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>
       </div>
-      {isFilter && status !== "loading" && (
-        <div className="text-right mt-2 pr-2 text-primary font-bold">
-          <span className="mr-8">Total :</span>{" "}
-          {numberWithCommas(total.toFixed(2))}
-        </div>
-      )}
       <div className="text-center">
         <LoadmoreRq
           fetchNextPage={fetchNextPage}
@@ -315,4 +316,4 @@ const SummaryTypeList = () => {
   );
 };
 
-export default SummaryTypeList;
+export default EmployeeSalaryHistoryList;

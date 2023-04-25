@@ -35,21 +35,22 @@ RewriteRule ^payroll/page/([0-9]+)$ controllers/payroll/page.php?start=$1 [L]
 RewriteRule ^payroll/search/([A-Za-z0-9-]+)$ controllers/payroll/search.php?search=$1 [L]
 
 #payslip
-RewriteRule ^payslip/([0-9]+)$ controllers/payroll/payslip/payslipById.php?payrollListId=$1 [L]
+RewriteRule ^payslip/([0-9]+)$ controllers/payroll/payslip/payslipById.php?payrollListId=$1 [L] 
+RewriteRule ^payslip/([0-9]+)/([0-9]+)$ controllers/payroll/payslip/payslipById.php?payrollListId=$1&empId=$2 [L] 
 RewriteRule ^payslip/earnings/([0-9]+)/([0-9]+)/([A-Za-z0-9-]+)$ controllers/payroll/payslip/payslipByEarnings.php?paytypeId=$1&empId=$2&payrollId=$3 [L]
 RewriteRule ^payslip/deductions/([0-9]+)/([0-9]+)/([A-Za-z0-9-]+)$ controllers/payroll/payslip/payslipByDeductions.php?paytypeId=$1&empId=$2&payrollId=$3 [L]
 RewriteRule ^payslip/email-all/payslip$ controllers/payroll/payslip/payslip-email-all.php [L]   
    
 #payroll list paid
 RewriteRule ^payrollList$ controllers/payroll/list/payrollView.php [L]
-RewriteRule ^payrollList/summary/([0-9]+)$ controllers/payroll/list/summary.php?start=$1 [L]  
-RewriteRule ^payrollList/filter/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)$ controllers/payroll/list/filter.php?startDate=$1&endDate=$2 [L]  
+RewriteRule ^payrollList/report/summary/([0-9]+)/([0-9]+)$ controllers/payroll/list/report-summary.php?start=$1&salaryId=$2 [L]  
+RewriteRule ^payrollList/report/filter/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/([0-9]+)$ controllers/payroll/list/report-filter-summary.php?startDate=$1&endDate=$2&salaryId=$3 [L]  
 RewriteRule ^payrollList/report/employee-run/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/([0-9]+)$ controllers/payroll/list/report-employee-payrun.php?startDate=$1&endDate=$2&employeeId=$3 [L]  
 RewriteRule ^payrollList/([A-Za-z0-9-]+)$ controllers/payroll/list/payrollView.php?listpayrollid=$1 [L]  
 RewriteRule ^payrollList/paid/([A-Za-z0-9-]+)$ controllers/payroll/list/paid.php?listpayrollid=$1 [L]  
 RewriteRule ^payrollList/page/([A-Za-z0-9-]+)/([0-9]+)$ controllers/payroll/list/page.php?listpayrollid=$1&start=$2 [L]
 RewriteRule ^payrollList/search/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)$ controllers/payroll/list/search.php?listpayrollid=$1&search=$2 [L]
-RewriteRule ^payrollList/page/by/employee/([0-9]+)/([0-9]+)$ controllers/payroll/list/page-by-emp-id.php?start=$1&empId=$2 [L] 
+RewriteRule ^payrollList/page/by/employee/([0-9]+)/([0-9]+)$ controllers/payroll/list/hris-page-by-emp-id.php?start=$1&empId=$2 [L] 
 RewriteRule ^payrollList/report/employee-benefits/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/([0-9]+)$ controllers/payroll/list/report-employee-benefits.php?startDate=$1&endDate=$2&employeeId=$3 [L] 
 RewriteRule ^payrollList/report/wtax/monthly/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/([0-9]+)$ controllers/payroll/list/report-wtax-monthly.php?startDate=$1&endDate=$2&employeeId=$3 [L]   
 RewriteRule ^payrollList/report/wtax/yearly/([A-Za-z0-9-]+)/([0-9]+)$ controllers/payroll/list/report-wtax-yearly.php?year=$1&employeeId=$2 [L]   
@@ -57,6 +58,8 @@ RewriteRule ^payrollList/category/13month/([0-9]+)$ controllers/payroll/list/com
 RewriteRule ^payrollList/my-info/payslip/filter/by-id/([0-9]+)/([0-9]+)/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)$ controllers/payroll/list/hris-filter-payslip-employee-id.php?employeeId=$1&payrollType=$2&startDate=$3&endDate=$4 [L]   
 RewriteRule ^payrollList/my-info/payslip/filter/13month/by-id/([0-9]+)/([0-9]+)/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)$ controllers/payroll/list/hris-filter-payslip-13thmonth-employee-id.php?employeeId=$1&payrollType=$2&yearFrom=$3&yearTo=$4 [L]   
 RewriteRule ^payrollList/my-info/payslip/filter/bonus/by-id/([0-9]+)/([0-9]+)/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)$ controllers/payroll/list/hris-filter-payslip-bonus-employee-id.php?employeeId=$1&payrollType=$2&startDate=$3&endDate=$4 [L]   
+RewriteRule ^payrollList/report/filter/basic-pay$ controllers/payroll/list/report-filter-basic-pay.php [L]   
+RewriteRule ^payrollList/report/basic-pay/page/([A-Za-z0-9-]+)/([0-9]+)$ controllers/payroll/list/report-basic-pay-page.php?listpayrollid=$1&start=$2 [L]
      
 #earnings
 RewriteRule ^earnings$ controllers/earnings/earnings.php [L]

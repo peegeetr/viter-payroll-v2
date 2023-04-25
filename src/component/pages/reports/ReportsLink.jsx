@@ -1,6 +1,7 @@
 import Footer from "../../partials/Footer.jsx";
 import Header from "../../partials/Header.jsx";
 import Navigation from "../../partials/Navigation.jsx";
+import EmployeeSalaryHistoryLink from "./employee-salary-history/EmployeeSalaryHistoryLink";
 import PayBenefitsLink from "./paybenefits/PayBenefitsLink.jsx";
 import PayrollSummaryLink from "./payroll-summary/PayrollSummaryLink.jsx";
 import PayrunSummaryLink from "./payrun-summary/PayrunSummaryLink";
@@ -30,6 +31,9 @@ const ReportsLink = () => {
           </li>
           <li className="py-2">
             <PayBenefitsLink />
+          </li>
+          <li className="py-2">
+            <EmployeeSalaryHistoryLink />
           </li>
         </ul>
         <Footer />

@@ -17,16 +17,17 @@ $response = new Response();
 if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
     checkApiKey();
 
-    if (array_key_exists("start", $_GET)) {
+    if (array_key_exists("start", $_GET) && array_key_exists("salaryId", $_GET)) {
         // get payroll id  
         // get task id from query string
         $payrollList->payrollList_start = $_GET['start'];
+        $salaryCategoryId = $_GET['salaryId'];
         $payrollList->payrollList_total = 5;
         //check to see if task id in query string is not empty and is number, if not return json error
         checkLimitId($payrollList->payrollList_start, $payrollList->payrollList_total);
-        $query = checkReadSummaryLimit($payrollList);
+        $query = checkReadReportSummaryLimit($payrollList, $salaryCategoryId);
         http_response_code(200);
-        $total_result = checkReadAllSummary($payrollList);
+        $total_result = checkReadAllReportSummary($payrollList, $salaryCategoryId);
         http_response_code(200);
 
         $returnData["data"] = getResultData($query);

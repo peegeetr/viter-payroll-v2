@@ -17,9 +17,23 @@ $response = new Response();
 if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
     checkApiKey();
 
+    if (array_key_exists("payrollListId", $_GET) && array_key_exists("empId", $_GET)) {
+
+        // get task id from query string 
+        $payrollList->payroll_list_aid = $_GET['payrollListId'];
+        $payrollList->payroll_list_employee_id = $_GET['empId'];
+
+        //check to see if task id in query string is not empty and is number, if not return json error
+        checkId($payrollList->payroll_list_aid);
+        checkId($payrollList->payroll_list_employee_id);
+        $query = checkReadHrisPayslipByEmpId($payrollList);
+        http_response_code(200);
+        getQueriedData($query);
+    }
+
     if (array_key_exists("payrollListId", $_GET)) {
 
-        // get task id from query string
+        // get task id from query string 
         $payrollList->payroll_list_aid = $_GET['payrollListId'];
 
         //check to see if task id in query string is not empty and is number, if not return json error

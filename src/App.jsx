@@ -63,6 +63,7 @@ import WTaxYearly from "./component/pages/reports/w-tax/yearly-tax/WTaxYearly";
 import Payslip13thMonth from "./component/pages/payroll/payslip-13th-month/Payslip13thMonth";
 import PayslipBonus from "./component/pages/payroll/payslip-bonus/PayslipBonus";
 import TaxYearly from "./component/pages/settings/tax-bracket/tax-yearly/TaxYearly";
+import SummaryTypeViewBasicPay from "./component/pages/reports/paytype/view/SummaryTypeViewBasicPay";
 
 function App() {
   // Create a client
@@ -348,6 +349,14 @@ function App() {
               element={
                 <ProtectedRouteOther>
                   <SummaryTypeView />
+                </ProtectedRouteOther>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/reports/paytype/basic-pay`}
+              element={
+                <ProtectedRouteOther>
+                  <SummaryTypeViewBasicPay />
                 </ProtectedRouteOther>
               }
             />
@@ -716,6 +725,14 @@ function App() {
               element={
                 <ProtectedRouteSystem>
                   <SummaryTypeView />
+                </ProtectedRouteSystem>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/reports/paytype/basic-pay`}
+              element={
+                <ProtectedRouteSystem>
+                  <SummaryTypeViewBasicPay />
                 </ProtectedRouteSystem>
               }
             />

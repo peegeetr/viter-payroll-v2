@@ -69,7 +69,7 @@ class PayType
         try {
             $sql = "select * from {$this->tblPayType} ";
             $sql .= "order by paytype_is_active desc, ";
-            $sql .= "paytype_category desc, paytype_name asc ";
+            $sql .= "paytype_name asc ";
             $query = $this->connection->query($sql);
         } catch (PDOException $ex) {
             $query = false;

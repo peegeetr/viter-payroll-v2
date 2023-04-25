@@ -64,6 +64,7 @@ import Payslip13thMonth from "./component/pages/payroll/payslip-13th-month/Paysl
 import PayslipBonus from "./component/pages/payroll/payslip-bonus/PayslipBonus";
 import TaxYearly from "./component/pages/settings/tax-bracket/tax-yearly/TaxYearly";
 import SummaryTypeViewBasicPay from "./component/pages/reports/paytype/view/SummaryTypeViewBasicPay";
+import EmployeeSalaryHistory from "./component/pages/reports/employee-salary-history/EmployeeSalaryHistory";
 
 function App() {
   // Create a client
@@ -725,6 +726,14 @@ function App() {
               element={
                 <ProtectedRouteSystem>
                   <SummaryTypeView />
+                </ProtectedRouteSystem>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/reports/salary-history`}
+              element={
+                <ProtectedRouteSystem>
+                  <EmployeeSalaryHistory />
                 </ProtectedRouteSystem>
               }
             />

@@ -161,7 +161,7 @@ const PayBenefitsList = () => {
 
                   <button
                     className="btn-modal-submit relative"
-                    type="submit "
+                    type="submit"
                     disabled={isFetching || !props.dirty}
                   >
                     {isFetching && <ButtonSpinner />}

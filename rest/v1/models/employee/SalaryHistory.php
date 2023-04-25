@@ -194,10 +194,52 @@ class SalaryHistory
         try {
             $sql = "select salary_history_date from {$this->tblSalaryHistory} ";
             $sql .= "where salary_history_date = :salary_history_date ";
+            $sql .= "and salary_history_employee_id = :salary_history_employee_id ";
             $query = $this->connection->prepare($sql);
             $query->execute([
                 "salary_history_date" => "{$this->salary_history_date}",
+                "salary_history_employee_id" => "{$this->salary_history_employee_id}",
             ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+
+    // Read report salary history by employee id
+    public function readReportSalaryHistoryByEmployeeId()
+    {
+        try {
+            $sql = "select salary_history_salary_amount, ";
+            $sql .= "salary_history_date, ";
+            $sql .= "salary_history_aid, ";
+            $sql .= "salary_history_employee_id ";
+            $sql .= "from {$this->tblSalaryHistory} ";
+            $sql .= "where salary_history_employee_id = :salary_history_employee_id ";
+            $sql .= "order by salary_history_date desc ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "salary_history_employee_id" => $this->salary_history_employee_id,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    // Read report salary history all employee 
+    public function readReportSalaryHistoryAllEmployee()
+    {
+        try {
+            $sql = "select salary_history_salary_amount, ";
+            $sql .= "salary_history_date, ";
+            $sql .= "salary_history_aid, ";
+            $sql .= "salary_history_employee_id ";
+            $sql .= "from {$this->tblSalaryHistory} ";
+            $sql .= "group by salary_history_employee_id ";
+            $sql .= "order by salary_history_date desc ";
+            $query = $this->connection->query($sql);
         } catch (PDOException $ex) {
             $query = false;
         }

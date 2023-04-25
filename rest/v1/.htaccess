@@ -149,3 +149,4 @@ RewriteRule ^philhealth/([0-9]+)$ controllers/settings/philhealth/philhealth.php
 RewriteRule ^salary-history$ controllers/employee/salary-history/salary-history.php [L]
 RewriteRule ^salary-history/([0-9]+)$ controllers/employee/salary-history/salary-history.php?salaryHistoryId=$1 [L]
 RewriteRule ^salary-history/by-employee-id/([0-9]+)$ controllers/employee/salary-history/read-by-employee-id.php?employeeId=$1 [L]
+RewriteRule ^salary-history/report/filter/([0-9]+)$ controllers/employee/salary-history/report-salary-history-filter.php?employeeId=$1 [L]

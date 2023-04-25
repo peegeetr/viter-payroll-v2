@@ -15,7 +15,7 @@ const PayrunSummaryLink = () => {
           <span className="text-lg mr-4">
             <FaUsers />
           </span>
-          <span className=" font-bold">Employee Payrun Summary</span>
+          <span className=" font-bold">Payrun Summary</span>
         </div>
         <p className="ml-[35px] my-0">
           Manage what actions and capabilities every account are can perform in

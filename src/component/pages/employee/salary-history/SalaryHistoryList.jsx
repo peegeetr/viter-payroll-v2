@@ -126,7 +126,9 @@ const SalaryHistoryList = ({ setItemEdit, employee }) => {
           <thead>
             <tr>
               <th>#</th>
-              <th>Salary</th>
+              <th className="min-w-[8rem] w-[20rem] text-right pr-4 ">
+                Salary
+              </th>
               <th>Date of Salary Raise</th>
               <th className="max-w-[5rem]">Action</th>
             </tr>
@@ -151,8 +153,8 @@ const SalaryHistoryList = ({ setItemEdit, employee }) => {
               counter++;
               return (
                 <tr key={key}>
-                  <td>{counter}</td>
-                  <td className="text-right">
+                  <td>{counter}.</td>
+                  <td className="text-right pr-4">
                     {`P ${numberWithCommas(
                       Number(item.salary_history_salary_amount).toFixed(2)
                     )}`}
@@ -189,12 +191,14 @@ const SalaryHistoryList = ({ setItemEdit, employee }) => {
                     &nbsp;
                   </td>
                 </tr>
-                <tr className="bg-primary text-right text-white uppercase hover:bg-primary font-semibold">
-                  <td colSpan={3}>Current pay: </td>
-                  <td className="text-left">
-                    {`P ${numberWithCommas(
-                      Number(employee?.data[0].employee_job_salary).toFixed(2)
-                    )}`}
+                <tr className="bg-primary text-right text-white uppercase hover:bg-primary  ">
+                  <td colSpan={4}>
+                    Current pay:
+                    <span className="ml-5">
+                      {`P ${numberWithCommas(
+                        Number(employee?.data[0].employee_job_salary).toFixed(2)
+                      )}`}
+                    </span>
                   </td>
                 </tr>
               </>

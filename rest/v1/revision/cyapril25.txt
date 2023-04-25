@@ -17,6 +17,7 @@
     - employee/SalaryHistory.php
 
     -> payroll/list/PayrollList.php
+    -> pay-type/PayType.php
   
 *htaccess 
     - #SALARY HISTORY

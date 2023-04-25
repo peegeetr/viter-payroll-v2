@@ -1,0 +1,21 @@
+
+*controllers    
+    - employee/salary-history/report-salary-history-filter.php
+    - employee/salary-history/functions.php
+    
+*models   
+    - employee/SalaryHistory.php 
+    - pay-type/PayType.php
+  
+*htaccess 
+    - #SALARY HISTORY 
+    - 
+
+*db tables 
+    - 
+
+*core 
+    - 
+
+*extra 
+    - 

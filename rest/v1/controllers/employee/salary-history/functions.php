@@ -22,3 +22,19 @@ function checkReadByEmployeeId($object)
     checkQuery($query, "Empty records. (Read employee by id)");
     return $query;
 }
+
+// Read report salary history by employee id
+function checkReadReportSalaryHistoryByEmployeeId($object)
+{
+    $query = $object->readReportSalaryHistoryByEmployeeId();
+    checkQuery($query, "Empty records. (Read report salary history by employee id)");
+    return $query;
+}
+
+// read by employee id 
+function checkReadReportSalaryHistoryAllEmployee($object)
+{
+    $query = $object->readReportSalaryHistoryAllEmployee();
+    checkQuery($query, "Empty records. (Read all employee )");
+    return $query;
+}

@@ -3,19 +3,16 @@ import { FaUserCog } from "react-icons/fa";
 import { SlArrowRight } from "react-icons/sl";
 import { Link } from "react-router-dom";
 import { StoreContext } from "../../../../store/StoreContext";
-import {
-  devNavUrl,
-  getUserType,
-  UrlAdmin,
-} from "../../../helpers/functions-general";
+import { getUrlParam, getUserType } from "../../../helpers/functions-general";
 
 const SalaryHistoryLink = () => {
+  const employeeid = getUrlParam().get("employeeid");
   const { store, dispatch } = React.useContext(StoreContext);
   const link = getUserType(store.credentials.data.role_is_developer === 1);
   return (
     <div className="group flex items-center justify-between border-b border-solid border-gray-300">
       <Link
-        to={`${link}/employee/details/salary-history`}
+        to={`${link}/employee/details/salary-history?employeeid=${employeeid}`}
         className="w-full py-1"
       >
         <div className="flex items-center">

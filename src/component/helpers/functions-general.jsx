@@ -239,3 +239,25 @@ export const removeComma = (value) => {
   return value.replace(/[,]/g, "");
   // console.log(value.replace(/[,]/g, ""));
 };
+
+export const getDateNow = () => {
+  return new Date(new Date().toString().split("GMT")[0] + " UTC")
+    .toISOString()
+    .split("T")[0];
+};
+
+export const getYearCount = (hiredDate) => {
+  let yearCount = 0;
+  const hired = new Date(hiredDate);
+  const current = new Date();
+  const hiredYear = hired.getYear();
+  const currentYear = current.getYear();
+
+  yearCount = currentYear - hiredYear;
+
+  if (yearCount <= 1) {
+    return `${yearCount} year`;
+  } else {
+    return `${yearCount} years`;
+  }
+};

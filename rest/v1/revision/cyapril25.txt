@@ -1,0 +1,20 @@
+
+*controllers  
+    *All Files
+    - employee/salary-history
+    
+*models  
+    *All Files
+    - employee/SalaryHistory.php
+  
+*htaccess 
+    - #SALARY HISTORY
+
+*db tables 
+    - prv2_salary_history.sql
+
+*core 
+    - 
+
+*extra 
+    - 

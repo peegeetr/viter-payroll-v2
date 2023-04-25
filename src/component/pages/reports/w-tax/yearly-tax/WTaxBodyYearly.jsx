@@ -4,6 +4,7 @@ import {
   getPayPeriod,
   numberWithCommas,
 } from "../../../../helpers/functions-general";
+import { computeTaxYearly } from "../../../../helpers/payroll-formula";
 
 const WTaxBodyYearly = ({ result, year, monthlyTax, yearlyTax }) => {
   let totalShareEe = 0;
@@ -57,11 +58,12 @@ const WTaxBodyYearly = ({ result, year, monthlyTax, yearlyTax }) => {
       ) {
         taxDue =
           (Number(gross) - Number(yTax.tax_yearly_from)) *
-          (Number(yTax.tax_yearly_rate) / 100);
+            (Number(yTax.tax_yearly_rate) / 100) +
+          Number(yTax.tax_yearly_fixed_tax);
       }
     });
 
-    console.log(gross, taxDue);
+    // console.log(gross, taxDue);
     return taxDue;
   };
 
@@ -85,7 +87,8 @@ const WTaxBodyYearly = ({ result, year, monthlyTax, yearlyTax }) => {
             );
 
             // compute yearly tax due
-            taxYearly = computeTaxPayable(item.gross, yearlyTax);
+            // taxYearly = computeTaxPayable(item.gross, yearlyTax);
+            taxYearly = computeTaxYearly(item.gross, yearlyTax);
             taxWitheld = taxYearly - taxMonthly;
             console.log(taxWitheld);
             return (

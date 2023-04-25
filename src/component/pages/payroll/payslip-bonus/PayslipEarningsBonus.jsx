@@ -3,28 +3,15 @@ import {
   devApiUrl,
   numberWithCommas,
 } from "../../../helpers/functions-general";
-import { nightDiffId } from "../../../helpers/functions-payitemId";
-const PayslipEarningsBonus = ({
-  paytypeId,
-  empid,
-  payrollid,
-  hourRate,
-  days,
-  payslip,
-}) => {
+const PayslipEarningsBonus = ({ paytypeId, empid, payrollid }) => {
   // use if not loadmore button undertime
   const { data: earnings, isLoading } = useQueryData(
     `${devApiUrl}/v1/payslip/earnings/${paytypeId}/${empid}/${payrollid}`, // endpoint
     "get", // method
     `earnings-${paytypeId}` // key
   );
-  let holidayHrs = Number(payslip?.data[0].payroll_list_holiday_hrs);
-  let leaveHrs = Number(payslip?.data[0].payroll_list_leave_hrs);
-  let totalHrs = holidayHrs + leaveHrs;
-  let basicHrs = days * 8 - totalHrs;
-  let basicPay = hourRate * basicHrs;
-  let totalAmount = basicPay;
-  // console.log(earnings, payslip);
+
+  let totalAmount = 0;
   return (
     <>
       {isLoading ? (
@@ -49,7 +36,7 @@ const PayslipEarningsBonus = ({
                   {item.earnings_details}
                 </td>
                 <td className=" text-right px-4 print:py-[2px]">
-                  {numberWithCommas(Number(item.earnings_amount).toFixed(2))}
+                  {numberWithCommas(Number(totalAmount).toFixed(2))}
                 </td>
               </tr>
             );

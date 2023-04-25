@@ -32,6 +32,8 @@ const PayslipBonus = () => {
   );
   let payrollUrl =
     payslip?.data.length > 0 ? `?payrollid=${payslip?.data[0].payroll_id}` : "";
+
+  console.log(payslip);
   return (
     <>
       <Header />
@@ -41,10 +43,6 @@ const PayslipBonus = () => {
           <BreadCrumbs param={`${payrollUrl}`} />
           {isLoading && <FetchingSpinner />}
           <div className="flex items-center gap-1">
-            <button type="button" className="btn-primary">
-              <FaEnvelope />
-              <span>Email</span>
-            </button>
             <button
               type="button"
               className="btn-primary"

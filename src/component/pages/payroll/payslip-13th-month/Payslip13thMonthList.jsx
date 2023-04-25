@@ -5,13 +5,14 @@ import {
 import PayslipHeader from "../payslip/PayslipHeader";
 
 const Payslip13thMonthList = ({ payslip }) => {
+  console.log(payslip);
   const days = getWorkingDays(
     new Date(payslip?.data[0].payroll_start_date),
     new Date(payslip?.data[0].payroll_end_date)
   );
   let netPay =
-    Number(payslip?.data[0].payroll_list_tax) -
-    Number(payslip?.data[0].payroll_list_deduction);
+    Number(payslip?.data[0].payroll_list_13th_month) -
+    Number(payslip?.data[0].payroll_list_tax);
 
   return (
     <>
@@ -85,7 +86,7 @@ const Payslip13thMonthList = ({ payslip }) => {
               </td>
               <td className=" text-right px-4 print:py-[2px]">
                 {numberWithCommas(
-                  Number(payslip?.data[0].payroll_list_deduction).toFixed(2)
+                  Number(payslip?.data[0].payroll_list_tax).toFixed(2)
                 )}
               </td>
             </tr>
@@ -104,7 +105,7 @@ const Payslip13thMonthList = ({ payslip }) => {
                 13th Month
               </td>
               <td className=" text-right px-4 print:py-[2px]">
-                {numberWithCommas(netPay.toFixed(2))}
+                {numberWithCommas(Number(netPay).toFixed(2))}
               </td>
             </tr>
           </tbody>

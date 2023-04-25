@@ -15,6 +15,8 @@ const PayslipDeduction = ({ paytypeId, empid, payrollid }) => {
     `deductions-${paytypeId}` // key
   );
 
+  let totalOtherDeductions = 0;
+
   return (
     <>
       {deductions?.data.length > 0 && paytypeId !== mandatoryDeductionId && (
@@ -32,6 +34,7 @@ const PayslipDeduction = ({ paytypeId, empid, payrollid }) => {
         </>
       )}
       {deductions?.data.map((item, key) => {
+        totalOtherDeductions += Number(item.deduction_amount);
         return (
           <tr key={key} className="hover:bg-transparent">
             <td className="w-[20rem] print:py-[2px]">
@@ -55,9 +58,7 @@ const PayslipDeduction = ({ paytypeId, empid, payrollid }) => {
               Total {deductions?.data[0].paytype_name}
             </td>
             <td className=" text-right px-4 print:py-[2px]">
-              {numberWithCommas(
-                Number(deductions?.data[0].deduction_amount).toFixed(2)
-              )}
+              {numberWithCommas(totalOtherDeductions.toFixed(2))}
             </td>
           </tr>
         </>

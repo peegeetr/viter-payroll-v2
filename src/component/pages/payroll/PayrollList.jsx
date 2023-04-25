@@ -176,9 +176,9 @@ const PayrollList = ({ setItemEdit }) => {
                       </td>
                       <td className="text-center">
                         {item.payroll_is_paid === 1 ? (
-                          <StatusActive text={"paid"} />
+                          <StatusActive text={"Paid"} />
                         ) : (
-                          <StatusInactive text={"draft"} />
+                          <StatusInactive text={"Draft"} />
                         )}
                       </td>
                       <td>

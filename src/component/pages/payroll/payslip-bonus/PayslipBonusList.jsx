@@ -1,48 +1,18 @@
 import useQueryData from "../../../custom-hooks/useQueryData";
 import {
-  devApiUrl,
   getWorkingDays,
   numberWithCommas,
 } from "../../../helpers/functions-general";
-import {
-  otherBenefitsEarningsId,
-  wagesEarningsId,
-} from "../../../helpers/functions-payitemId";
-import { employeeRate } from "../../../helpers/payroll-formula";
+import { otherBenefitsEarningsId } from "../../../helpers/functions-payitemId";
 import PayslipHeader from "../payslip/PayslipHeader";
 import PayslipEarningsBonus from "./PayslipEarningsBonus";
 
 const PayslipBonusList = ({ payslip }) => {
-  const empId = payslip?.data[0].payroll_list_employee_id;
-  const payrollId = payslip?.data[0].payroll_list_payroll_id;
-  // use if not loadmore button undertime
-  const { data: earnings, isLoading } = useQueryData(
-    `${devApiUrl}/v1/payslip/earnings/${wagesEarningsId}/${empId}/${payrollId}`, // endpoint
-    "get", // method
-    `earnings-wages` // key
-  );
   const days = getWorkingDays(
     new Date(payslip?.data[0].payroll_start_date),
     new Date(payslip?.data[0].payroll_end_date)
   );
-  let hourRate = Number(
-    employeeRate(payslip?.data[0].payroll_list_employee_salary, days).hourly
-  );
-  let totalEarnings =
-    Number(payslip?.data[0].payroll_list_gross) +
-    Number(payslip?.data[0].payroll_list_total_benefits);
-  let netPay = totalEarnings - Number(payslip?.data[0].payroll_list_deduction);
-  let deminimis = payslip?.data[0].payroll_list_deminimis;
-  let holidayHrs = payslip?.data[0].payroll_list_holiday_hrs;
-  let totalHrs = holidayHrs;
-  let basicHrs = days * 8 - totalHrs;
-  let basicPay = hourRate * basicHrs - holidayHrs;
-  console.log(
-    payslip
-    // Number(payslip?.data[0].payroll_list_gross),
-    // Number(payslip?.data[0].payroll_list_total_benefits),
-    // basicPay
-  );
+
   return (
     <>
       <PayslipHeader
@@ -58,9 +28,6 @@ const PayslipBonusList = ({ payslip }) => {
               paytypeId={otherBenefitsEarningsId}
               empid={payslip?.data[0].payroll_list_employee_id}
               payrollid={payslip?.data[0].payroll_list_payroll_id}
-              hourRate={hourRate}
-              days={days}
-              payslip={payslip}
             />
 
             {/* netpay */}
@@ -77,7 +44,9 @@ const PayslipBonusList = ({ payslip }) => {
                 Total Bonus
               </td>
               <td className=" text-right px-4 print:py-[2px]">
-                {numberWithCommas(netPay.toFixed(2))}
+                {numberWithCommas(
+                  Number(payslip?.data[0].payroll_list_bonus).toFixed(2)
+                )}
               </td>
             </tr>
           </tbody>

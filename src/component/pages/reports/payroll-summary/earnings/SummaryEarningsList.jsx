@@ -83,6 +83,8 @@ const SummaryEarningsList = () => {
     }
   }, [inView]);
 
+  console.log(result);
+
   // use if not loadmore button undertime
   const { data: earnings } = useQueryData(
     `${devApiUrl}/v1/earnings`, // endpoint

@@ -22,6 +22,7 @@ import {
   payrollCategorySalaryId,
 } from "../../../helpers/functions-payroll-category-id";
 import ModalPayslipEmailAll from "./ModalPayslipEmailAll";
+import NoData from "../../../partials/NoData";
 
 const PayrollView = () => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -125,77 +126,53 @@ const PayrollView = () => {
       <div className="wrapper">
         <div className="flex items-center mb-1 justify-between whitespace-nowrap overflow-auto gap-2">
           <BreadCrumbs param={`${location.search}`} />
+
           <div className="flex items-center gap-1">
             {isLoading && <FetchingSpinner />}
-            {/* {payrollList?.data[0].payroll_list_is_paid === 1 ? (
+            {payrollList?.data.length > 0 && (
               <>
-                <button
-                  type="button"
-                  className="btn-primary"
-                  onClick={handleEmailAll}
-                >
-                  <FaEnvelope />
-                  <span>Email All</span>
-                </button>
-              </>
-            ) : (
-              <>
-                <button
-                  type="button"
-                  className="btn-primary"
-                  onClick={handleRun}
-                >
-                  <ImPlay3 />
-                  <span>Run</span>
-                </button>
-                {payrollList?.data[0].payroll_list_gross !== "" && (
+                {payrollList?.data[0].payroll_list_is_paid === 1 && (
                   <button
                     type="button"
                     className="btn-primary"
-                    onClick={handleMarkPaid}
+                    onClick={handleEmailAll}
                   >
-                    <FaSave />
-                    <span>Mark Paid</span>
+                    <FaEnvelope />
+                    <span>Email All</span>
                   </button>
                 )}
+
+                {payrollList?.data[0].payroll_list_is_paid === 0 && (
+                  <button
+                    type="button"
+                    className="btn-primary"
+                    onClick={handleRun}
+                  >
+                    <ImPlay3 />
+                    <span>Run</span>
+                  </button>
+                )}
+
+                {payrollList?.data[0].payroll_list_is_paid === 0 &&
+                  payrollList?.data[0].payroll_list_gross !== "" && (
+                    <button
+                      type="button"
+                      className="btn-primary"
+                      onClick={handleMarkPaid}
+                    >
+                      <FaSave />
+                      <span>Mark Paid</span>
+                    </button>
+                  )}
               </>
-            )} */}
-
-            {payrollList?.data[0].payroll_list_is_paid === 1 && (
-              <button
-                type="button"
-                className="btn-primary"
-                onClick={handleEmailAll}
-              >
-                <FaEnvelope />
-                <span>Email All</span>
-              </button>
-            )}
-
-            {payrollList?.data[0].payroll_list_is_paid === 0 && (
-              <button type="button" className="btn-primary" onClick={handleRun}>
-                <ImPlay3 />
-                <span>Run</span>
-              </button>
-            )}
-
-            {payrollList?.data[0].payroll_list_is_paid === 0 && (
-              <button
-                type="button"
-                className="btn-primary"
-                onClick={handleMarkPaid}
-              >
-                <FaSave />
-                <span>Mark Paid</span>
-              </button>
             )}
           </div>
         </div>
         <hr />
 
         <div className="w-full pt-2 pb-20">
-          {/* {payrollList?.data.length > 0 ? <PayrollViewList /> : <NoData />} */}
-          {payrollList?.data.length > 0 && <PayrollViewList />}
+          {payrollList?.data.length > 0 ? <PayrollViewList /> : <NoData />}
+          {/* {payrollList?.data.length > 0 && <PayrollViewList />} */}
           {/* <PayrollViewList /> */}
         </div>
 

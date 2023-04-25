@@ -45,7 +45,8 @@ export const runPayroll = (
   pagibig,
   philhealth,
   category13thMonth,
-  categoryId
+  categoryId,
+  yearlyTax
 ) => {
   let grossAmount = 0;
   let deductionAmount = 0;
@@ -142,7 +143,7 @@ export const runPayroll = (
   let zero = "0.00";
 
   if (Number(categoryId) === payrollCategory13thMonthId) {
-    payrollList = payComputeCategory13thMonth(category13thMonth);
+    payrollList = payComputeCategory13thMonth(category13thMonth, yearlyTax);
   }
 
   if (Number(categoryId) === payrollCategoryBonusId) {

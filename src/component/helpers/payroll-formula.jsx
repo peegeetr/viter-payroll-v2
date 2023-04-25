@@ -149,15 +149,24 @@ export const payComputeCategoryBonus = (employee, payrollEarnings) => {
 };
 
 // category Id 13th month
-export const payComputeCategory13thMonth = (category13thMonth) => {
+export const payComputeCategory13thMonth = (category13thMonth, yearlyTax) => {
   let payrollList13thMonth = [];
   let finalAmount = 0;
+  let totalAmount = 0;
   let absencesUndertimeSum = 0;
   let zero = "0.00";
+  let taxYearly = 0;
+  let baseAmount = 90000;
 
   category13thMonth.map((cItem) => {
     absencesUndertimeSum = cItem.total_absences + cItem.total_undertime;
-    finalAmount = (cItem.total_basic_pay - absencesUndertimeSum) / 12;
+    totalAmount = (cItem.total_basic_pay - absencesUndertimeSum) / 12;
+    taxYearly =
+      Number(totalAmount) > baseAmount
+        ? computeTaxYearly(totalAmount, yearlyTax)
+        : 0;
+    finalAmount = totalAmount - taxYearly;
+    console.log(totalAmount, taxYearly);
     payrollList13thMonth.push({
       payroll_category: payrollCategory13thMonthId,
       payroll_list_employee_id: cItem.payroll_list_employee_id,
@@ -202,7 +211,7 @@ export const payComputeCategory13thMonth = (category13thMonth) => {
       payroll_list_fca_tuition: zero,
       payroll_list_other_deduction: zero,
       payroll_list_madatory_ee: zero,
-      payroll_list_tax: zero,
+      payroll_list_tax: Number(taxYearly.toFixed(2)),
       payroll_list_undertime: zero,
     });
   });
@@ -763,6 +772,30 @@ export const payComputeTaxDue = (
   // );
 
   return { taxDue, taxList };
+};
+
+// compute yearly tax due
+export const computeTaxYearly = (gross, yearlyTax) => {
+  let taxDue = 0;
+  // const minimum = 250000;
+  // if (Number(gross) >= 0 && Number(gross) <= minimum) {
+  //   return taxPayable;
+  // }
+
+  yearlyTax.map((yTax) => {
+    if (
+      Number(gross) >= Number(yTax.tax_yearly_from) &&
+      Number(gross) <= Number(yTax.tax_yearly_to)
+    ) {
+      taxDue =
+        (Number(gross) - Number(yTax.tax_yearly_from)) *
+          (Number(yTax.tax_yearly_rate) / 100) +
+        Number(yTax.tax_yearly_fixed_tax);
+    }
+  });
+
+  // console.log(gross, taxDue);
+  return taxDue;
 };
 
 // compute sss bracket

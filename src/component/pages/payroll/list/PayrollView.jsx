@@ -93,6 +93,13 @@ const PayrollView = () => {
     "semiMonthly" // key
   );
 
+  // use if not loadmore button monthly tax
+  const { data: yearlyTax } = useQueryData(
+    `${devApiUrl}/v1/tax/bracket-yearly`, // endpoint
+    "get", // method
+    "yearlyTax" // key
+  );
+
   // use if not loadmore button undertime
   const { data: pagibig } = useQueryData(
     `${devApiUrl}/v1/pagibig`, // endpoint
@@ -195,7 +202,7 @@ const PayrollView = () => {
               philhealth={philhealth?.data}
               category13thMonth={category13thMonth?.data}
               categoryId={categoryId}
-              // monthlyTax={monthlyTax?.data}
+              yearlyTax={yearlyTax?.data}
             />
           )
         : store.isConfirm && <ModalNoSssBracket />}

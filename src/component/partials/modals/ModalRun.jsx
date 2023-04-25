@@ -43,7 +43,7 @@ const ModalRun = ({
   philhealth,
   category13thMonth,
   categoryId,
-  // monthlyTax,
+  yearlyTax,
 }) => {
   const { store, dispatch } = React.useContext(StoreContext);
 
@@ -92,8 +92,8 @@ const ModalRun = ({
       pagibig,
       philhealth,
       category13thMonth,
-      categoryId
-      // monthlyTax
+      categoryId,
+      yearlyTax
     );
 
     let payrollList = run.payrollList;

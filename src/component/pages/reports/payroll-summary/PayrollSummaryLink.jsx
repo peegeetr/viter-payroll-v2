@@ -18,8 +18,7 @@ const PayrollSummaryLink = () => {
           <span className=" font-bold">Payroll Summary</span>
         </div>
         <p className="ml-[35px] my-0">
-          Manage what actions and capabilities every account are can perform in
-          the system.
+          Generate employee wages and deductions report.
         </p>
       </Link>
 

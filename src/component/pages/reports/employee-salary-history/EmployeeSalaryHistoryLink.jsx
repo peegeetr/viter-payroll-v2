@@ -18,8 +18,7 @@ const EmployeeSalaryHistoryLink = () => {
           <span className=" font-bold">Salary History</span>
         </div>
         <p className="ml-[35px] my-0">
-          Manage what actions and capabilities every account are can perform in
-          the system.
+          Generate employee salary history reports.
         </p>
       </Link>
 

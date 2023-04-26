@@ -17,10 +17,7 @@ const PayrunSummaryLink = () => {
           </span>
           <span className=" font-bold">Payrun Summary</span>
         </div>
-        <p className="ml-[35px] my-0">
-          Manage what actions and capabilities every account are can perform in
-          the system.
-        </p>
+        <p className="ml-[35px] my-0">Generate employee payrun reports</p>
       </Link>
 
       <Link

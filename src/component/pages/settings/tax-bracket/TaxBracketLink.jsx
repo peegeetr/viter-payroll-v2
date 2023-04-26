@@ -27,8 +27,7 @@ const TaxBracketLink = () => {
           <span className=" font-bold">Tax Bracket</span>
         </div>
         <p className="ml-[35px] my-0">
-          Manage what actions and capabilities every account are can perform in
-          the system.
+          Reference bracket for employee tax amount.
         </p>
       </Link>
 

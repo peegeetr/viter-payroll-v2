@@ -18,8 +18,7 @@ const PhilhealthLink = () => {
           <span className="font-bold">Philhealth</span>
         </div>
         <p className="ml-[35px] my-0">
-          Manage what actions and capabilities every account are can perform in
-          the system.
+          Assign values for percentage rates, minimum and maximum amount.
         </p>
       </Link>
 

@@ -18,8 +18,7 @@ const PayrollTypeLink = () => {
           <span className="font-bold">Payroll Type</span>
         </div>
         <p className="ml-[35px] my-0">
-          Manage what actions and capabilities every account are can perform in
-          the system.
+          Choose from types such as Salary, Bonuses, and 13th Month
         </p>
       </Link>
 

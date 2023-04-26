@@ -23,8 +23,7 @@ const SssBracketLink = () => {
           <span className="font-bold">SSS Bracket</span>
         </div>
         <p className="ml-[35px] my-0">
-          Manage what actions and capabilities every account are can perform in
-          the system.
+          Reference bracket for employee and employer contribution amount.
         </p>
       </Link>
 

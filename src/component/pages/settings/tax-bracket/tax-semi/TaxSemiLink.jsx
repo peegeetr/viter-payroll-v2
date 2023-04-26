@@ -20,10 +20,7 @@ const TaxSemiLink = () => {
           </span>
           <span className=" font-bold">Semi Monthly Tax</span>
         </div>
-        <p className="ml-[35px] my-0">
-          Manage what actions and capabilities every account are can perform in
-          the system.
-        </p>
+        <p className="ml-[35px] my-0">Semi-monthly tax bracket for employee.</p>
       </Link>
 
       <Link

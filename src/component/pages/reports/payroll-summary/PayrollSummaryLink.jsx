@@ -1,5 +1,5 @@
 import React from "react";
-import { GiReceiveMoney } from "react-icons/gi";
+import { GiBookPile } from "react-icons/gi";
 import { SlArrowRight } from "react-icons/sl";
 import { Link } from "react-router-dom";
 import { StoreContext } from "../../../../store/StoreContext";
@@ -13,7 +13,7 @@ const PayrollSummaryLink = () => {
       <Link to={`${link}/reports/summary`} className="w-full py-1">
         <div className="flex items-center">
           <span className="text-lg mr-4">
-            <GiReceiveMoney />
+            <GiBookPile />
           </span>
           <span className=" font-bold">Payroll Summary</span>
         </div>

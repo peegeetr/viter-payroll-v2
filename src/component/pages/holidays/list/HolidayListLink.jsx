@@ -1,5 +1,5 @@
 import React from "react";
-import { FaHands } from "react-icons/fa";
+import { GiPalmTree } from "react-icons/gi";
 import { SlArrowRight } from "react-icons/sl";
 import { Link } from "react-router-dom";
 import { StoreContext } from "../../../../store/StoreContext";
@@ -16,7 +16,7 @@ const HolidayListLink = () => {
       >
         <div className="flex items-center">
           <span className="text-lg mr-4">
-            <FaHands />
+            <GiPalmTree />
           </span>
           <span className=" font-bold">Holidays</span>
         </div>

@@ -1,5 +1,5 @@
 import React from "react";
-import { BsFillCalculatorFill } from "react-icons/bs";
+import { GiBookPile } from "react-icons/gi";
 import { SlArrowRight } from "react-icons/sl";
 import { Link } from "react-router-dom";
 import { StoreContext } from "../../../../store/StoreContext";
@@ -13,7 +13,7 @@ const WTaxLink = () => {
       <Link to={`${link}/reports/wtax`} className="w-full py-1">
         <div className="flex items-center">
           <span className="text-lg mr-4">
-            <BsFillCalculatorFill />
+            <GiBookPile />
           </span>
           <span className=" font-bold">WTax</span>
         </div>

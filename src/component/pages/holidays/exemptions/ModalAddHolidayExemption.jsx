@@ -31,7 +31,7 @@ const ModalAddHolidays = ({ item, isPayrollEmpty, employeeName }) => {
     item ? getEmployeeDetails(item, employeeName).isWorkOnHoliday : ""
   );
 
-  console.log(getEmployeeDetails(item, employeeName).isWorkOnHoliday);
+  // console.log(getEmployeeDetails(item, employeeName).isWorkOnHoliday);
 
   const queryClient = useQueryClient();
   const mutation = useMutation({
@@ -94,7 +94,7 @@ const ModalAddHolidays = ({ item, isPayrollEmpty, employeeName }) => {
       setIsObserved("1");
     }
     if (isWorkOnHoliday === "1") {
-      setIsObserved("1");
+      setIsObserved("0");
     }
   };
   const initVal = {

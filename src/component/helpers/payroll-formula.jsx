@@ -68,6 +68,8 @@ export const payComputeCategoryBonus = (employee, payrollEarnings) => {
   let bonusAmount = 0;
   let totalBonus = 0;
   let zero = "0.00";
+  let payrollTotalAmount = 0;
+
   employee.map((emp) => {
     payrollEarnings.map((earning) => {
       // 13th mo & Other benefits
@@ -79,7 +81,8 @@ export const payComputeCategoryBonus = (employee, payrollEarnings) => {
         earning.earnings_number_of_installment > earning.earnings_num_pay //number of payment
       ) {
         bonusAmount = payComputeBonus(emp, earning);
-        totalBonus += bonusAmount.finalAmount;
+        totalBonus = bonusAmount.finalAmount;
+        payrollTotalAmount += totalBonus;
 
         // for updating number of pay if installment or one time
         earningsNumInstallmentList.push({
@@ -141,6 +144,7 @@ export const payComputeCategoryBonus = (employee, payrollEarnings) => {
           payroll_list_madatory_ee: zero,
           payroll_list_tax: zero,
           payroll_list_undertime: zero,
+          payrollTotalAmount: payrollTotalAmount.toFixed(2),
         });
       }
     });
@@ -157,6 +161,7 @@ export const payComputeCategory13thMonth = (category13thMonth, yearlyTax) => {
   let zero = "0.00";
   let taxYearly = 0;
   let baseAmount = 90000;
+  let payrollTotalAmount = 0;
 
   category13thMonth.map((cItem) => {
     absencesUndertimeSum = cItem.total_absences + cItem.total_undertime;
@@ -166,7 +171,7 @@ export const payComputeCategory13thMonth = (category13thMonth, yearlyTax) => {
         ? computeTaxYearly(totalAmount, yearlyTax)
         : 0;
     finalAmount = totalAmount - taxYearly;
-    console.log(totalAmount, taxYearly);
+    payrollTotalAmount += finalAmount;
     payrollList13thMonth.push({
       payroll_category: payrollCategory13thMonthId,
       payroll_list_employee_id: cItem.payroll_list_employee_id,
@@ -213,6 +218,7 @@ export const payComputeCategory13thMonth = (category13thMonth, yearlyTax) => {
       payroll_list_madatory_ee: zero,
       payroll_list_tax: taxYearly.toFixed(2),
       payroll_list_undertime: zero,
+      payrollTotalAmount: payrollTotalAmount.toFixed(2),
     });
   });
 

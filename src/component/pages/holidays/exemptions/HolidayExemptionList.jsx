@@ -70,7 +70,7 @@ const HolidayExemptionList = ({ setItemEdit, employeeName }) => {
     setData(item);
     setDel(true);
   };
-  console.log(employeeName);
+  console.log(result);
   return (
     <>
       <SearchBarRq

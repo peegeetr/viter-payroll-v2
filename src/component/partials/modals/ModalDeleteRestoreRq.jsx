@@ -12,6 +12,7 @@ const ModalDeleteRestoreRq = ({
   mysqlApiRestore,
   msg,
   item,
+  pr_id,
   isDeveloper,
   arrKey,
 }) => {
@@ -48,6 +49,7 @@ const ModalDeleteRestoreRq = ({
       isDraft: 0,
       column_name: item,
       name: item,
+      payrollId: pr_id,
       isDeveloper: isDeveloper,
     });
   };

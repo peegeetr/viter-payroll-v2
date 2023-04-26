@@ -18,7 +18,7 @@ if (array_key_exists("paytypeid", $_GET)) {
     //check to see if task id in query string is not empty and is number, if not return json error
     checkId($payType->paytype_aid);
 
-    // drop column  isAssociated 
+    // delete column  isAssociated 
     isAssociated($payType, $name);
 
     // drop column  

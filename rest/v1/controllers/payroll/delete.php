@@ -20,6 +20,7 @@ if (array_key_exists("payrollid", $_GET)) {
     checkDeletePayrollList($payroll);
     checkDeleteEarnings($payroll);
     checkDeleteDeductions($payroll);
+    checkDeleteHolidayExemptions($payroll);
     // delete
     $query = checkDelete($payroll);
 

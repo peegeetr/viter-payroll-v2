@@ -17,11 +17,13 @@ class Holidays
     public $holidays_total;
     public $holidays_search;
     public $tblHolidays;
+    public $tblHolidayExemption;
 
     public function __construct($db)
     {
         $this->connection = $db;
         $this->tblHolidays = "prv2_holidays";
+        $this->tblHolidayExemption = "prv2_holiday_exemption";
     }
 
     public function create()
@@ -61,6 +63,7 @@ class Holidays
         }
         return $query;
     }
+
 
     public function readAll()
     {
@@ -184,6 +187,24 @@ class Holidays
             $query = $this->connection->prepare($sql);
             $query->execute([
                 "holidays_date" => "{$this->holidays_date}",
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    public function readAllCurrentYear($year)
+    {
+        try {
+            $sql = "select * ";
+            $sql .= "from {$this->tblHolidays} ";
+            $sql .= "where YEAR(holidays_date) = :year ";
+            $sql .= "order by holidays_is_active desc, ";
+            $sql .= "holidays_name asc ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "year" => $year,
             ]);
         } catch (PDOException $ex) {
             $query = false;

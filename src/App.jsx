@@ -379,6 +379,14 @@ function App() {
                 </ProtectedRouteOther>
               }
             />
+            <Route
+              path={`${devNavUrl}/reports/salary-history`}
+              element={
+                <ProtectedRouteOther>
+                  <EmployeeSalaryHistory />
+                </ProtectedRouteOther>
+              }
+            />
 
             {/* Settings Page */}
             <Route

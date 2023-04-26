@@ -7,18 +7,28 @@
     - payroll/list/search.php
     - settings/payroll-type/delete.php
     - settings/payroll-type/payroll-type.php
+
+    -> holidays/exemptions/create.php
+    -> holidays/exemptions/delete.php
+    -> holidays/functions.php
+    -> holidays/read-by-current-year.php
+    -> payroll/delete.php
+    -> payroll/functions.php
     
 *models   
     - payroll/list/PayrollList.php
     - settings/payroll-type/PayrollType.php
+
+    -> holidays/HolidayExemptions.php
+    -> holidays/Holidays.php
+    -> payroll/Payroll.php
   
 *htaccess 
-    - 
-
-    - 
+    -> #HOLIDAYS
+ 
 
 *db tables 
-    - 
+    - prv2_holiday_exemption.sql
 
 *core 
     - functions.php

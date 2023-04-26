@@ -19,6 +19,8 @@ import FetchingSpinner from "../../../../partials/spinners/FetchingSpinner";
 import { getRoleIdAdmin } from "../function-users";
 import ModalAddOtherUser from "./ModalAddOtherUser";
 import OtherUserList from "./OtherUserList";
+import TableSpinner from "../../../../partials/spinners/TableSpinner";
+import NoData from "../../../../partials/NoData";
 
 const OtherUser = () => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -43,7 +45,7 @@ const OtherUser = () => {
     <>
       <Header />
       <Navigation menu="settings" />
-      <div className="wrapper">
+      <div className="wrapper ">
         <div className="flex items-center justify-between whitespace-nowrap overflow-auto gap-2">
           <BreadCrumbs />
           {getRoleIdAdmin(role?.data) !== -1 && (
@@ -57,7 +59,7 @@ const OtherUser = () => {
         </div>
         <hr />
 
-        <div className="w-full pt-5 pb-20">
+        <div className=" w-full pt-5 pb-20">
           {isFetching && !isLoading ? (
             <FetchingSpinner />
           ) : getRoleIdAdmin(role?.data) === -1 ? (

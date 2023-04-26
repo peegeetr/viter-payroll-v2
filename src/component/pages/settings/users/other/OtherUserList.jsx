@@ -77,7 +77,7 @@ const OtherUserList = ({ setItemEdit }) => {
   return (
     <>
       <div className="relative text-center overflow-x-auto z-0">
-        {isFetching && !isLoading && <FetchingSpinner />}
+        {/* {isFetching && <FetchingSpinner />} */}
         <table>
           <thead>
             <tr>

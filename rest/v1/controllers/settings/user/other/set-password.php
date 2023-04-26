@@ -1,11 +1,9 @@
 <?php
 
-// use JWT
-require '../../../../jwt/vendor/autoload.php';
-// set encryption
-require '../../../../core/Encryption.php';
 // set http header
 require '../../../../core/header.php';
+// set encryption
+require '../../../../core/Encryption.php';
 // use needed functions
 require '../../../../core/functions.php';
 // use needed classes

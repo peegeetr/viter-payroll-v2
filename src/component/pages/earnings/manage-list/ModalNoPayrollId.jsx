@@ -3,7 +3,7 @@ import { FaExclamationTriangle, FaTimesCircle } from "react-icons/fa";
 import { setIsAdd } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
 
-const ModalNoPayrollId = () => {
+const ModalNoPayrollId = ({ text = "", item = null }) => {
   const { store, dispatch } = React.useContext(StoreContext);
 
   const handleClose = () => {
@@ -28,8 +28,10 @@ const ModalNoPayrollId = () => {
             </span>
             <span className="text-base font-bold">Error!</span>
             <p>
-              Please make sure there is employee list and Payroll draft with PR
-              ID created.
+              {item
+                ? `You can't edit this holiday because ${item.holiday_exemption_pr_id} is already paid`
+                : `Please make sure there is employee list and Payroll ${text}draft
+              with PR ID created.`}
             </p>
             <div className="flex items-center gap-1 pt-5">
               <button

@@ -16,6 +16,7 @@ import PageNotFound from "../../../partials/PageNotFound";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 import ContentSpinner from "../../../partials/spinners/ContentSpinner";
 import FbsLogoLg from "../../../svg/FbsLogoLg";
+import ModalError from "../../../partials/modals/ModalError";
 
 const CreateSystemPassword = () => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -29,7 +30,6 @@ const CreateSystemPassword = () => {
     `${devApiUrl}/v1/user-systems/key/${paramKey}`,
     "get"
   );
-
   const toggleNewPassword = () => {
     setNewPasswordShown(!newPasswordShown);
   };
@@ -68,8 +68,7 @@ const CreateSystemPassword = () => {
         <div className="relative h-screen">
           <ContentSpinner />
         </div>
-      ) : keyLoading &&
-        (key.length === 0 || paramKey === null || paramKey === "") ? (
+      ) : key.length === 0 || paramKey === null || paramKey === "" ? (
         <div className="relative h-screen">
           <PageNotFound />
         </div>
@@ -181,6 +180,7 @@ const CreateSystemPassword = () => {
           </div>
         </div>
       )}
+      {store.error && <ModalError />}
     </>
   );
 };

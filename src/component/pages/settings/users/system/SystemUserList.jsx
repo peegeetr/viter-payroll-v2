@@ -73,7 +73,7 @@ const SystemUserList = ({ setItemEdit }) => {
   return (
     <>
       <div className="relative text-center overflow-x-auto z-0">
-        {isFetching && !isLoading && <FetchingSpinner />}
+        {/* {isFetching && !isLoading && <FetchingSpinner />} */}
         <table>
           <thead>
             <tr>

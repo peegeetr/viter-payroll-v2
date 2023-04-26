@@ -1,13 +1,20 @@
 <?php
 
+// Read search
+function checkReadAllCurrentYear($object, $year)
+{
+    $query = $object->readAllCurrentYear($year);
+    checkQuery($query, "Empty records. (read all current year holiday)");
+    return $query;
+}
+
+
 function isHolidayNameExist($object, $name)
 {
     $query = $object->checkHolidayName();
     $count = $query->rowCount();
     checkExistence($count, "Holiday Name {$name} already exist.");
 }
-
-
 
 function isHolidayDateExist($object, $name)
 {

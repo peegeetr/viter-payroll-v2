@@ -1,25 +1,20 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { useInView } from "react-intersection-observer";
 import React from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
-import { StoreContext } from "../../../../store/StoreContext";
-import { queryDataInfinite } from "../../../helpers/queryDataInfinite";
+import { useInView } from "react-intersection-observer";
 import { setIsAdd, setIsRestore } from "../../../../store/StoreAction";
-import SearchBarRq from "../../../partials/SearchBarRq";
-import NoData from "../../../partials/NoData";
-import TableSpinner from "../../../partials/spinners/TableSpinner";
-import ServerError from "../../../partials/ServerError";
-import {
-  devApiUrl,
-  formatDate,
-  hrisDevApiUrl,
-} from "../../../helpers/functions-general";
+import { StoreContext } from "../../../../store/StoreContext";
+import { devApiUrl, formatDate } from "../../../helpers/functions-general";
+import { queryDataInfinite } from "../../../helpers/queryDataInfinite";
 import LoadmoreRq from "../../../partials/LoadmoreRq";
+import NoData from "../../../partials/NoData";
+import SearchBarRq from "../../../partials/SearchBarRq";
+import ServerError from "../../../partials/ServerError";
 import ModalDeleteRestoreRq from "../../../partials/modals/ModalDeleteRestoreRq";
-import useQueryData from "../../../custom-hooks/useQueryData";
-import { getEmployeeName } from "./functions-exemptions";
+import TableSpinner from "../../../partials/spinners/TableSpinner";
+import { getEmployeeDetails } from "./functions-exemptions";
 
-const HolidayExemptionList = ({ setItemEdit }) => {
+const HolidayExemptionList = ({ setItemEdit, employeeName }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [dataItem, setData] = React.useState(null);
   const [id, setId] = React.useState(null);
@@ -75,16 +70,7 @@ const HolidayExemptionList = ({ setItemEdit }) => {
     setData(item);
     setDel(true);
   };
-  // use if not loadmore button undertime
-  const { data: employeeName } = useQueryData(
-    `${hrisDevApiUrl}/v1/employees/pay`, // endpoint
-    "get", // method
-    "employeeName", // key
-    {}, // formdata
-    null, // id key
-    false // devKey boolean
-  );
-
+  console.log(employeeName);
   return (
     <>
       <SearchBarRq
@@ -102,6 +88,7 @@ const HolidayExemptionList = ({ setItemEdit }) => {
             <tr>
               <th>#</th>
               <th className="min-w-[10rem] w-[10rem]">Employee</th>
+              <th className="min-w-[10rem] ">Payroll Id</th>
               <th className="min-w-[10rem] ">Holidays Date</th>
               <th>Remarks</th>
               <th className="max-w-[5rem]">Actions</th>
@@ -128,7 +115,10 @@ const HolidayExemptionList = ({ setItemEdit }) => {
                 {page.data.map((item, key) => (
                   <tr key={key}>
                     <td>{counter++}.</td>
-                    <td>{getEmployeeName(item, employeeName)}</td>
+                    <td>
+                      {getEmployeeDetails(item, employeeName).employee_name}
+                    </td>
+                    <td>{item.holiday_exemption_pr_id}</td>
                     <td>
                       {`${formatDate(item.holiday_exemption_holiday_date)}`}
                     </td>
@@ -188,6 +178,7 @@ const HolidayExemptionList = ({ setItemEdit }) => {
           mysqlApiRestore={null}
           msg="Are you sure you want to delete this "
           item={`${formatDate(dataItem.holiday_exemption_holiday_date)}`}
+          pr_id={`${dataItem.holiday_exemption_pr_id}`}
           arrKey="holiday-exemptions"
         />
       )}

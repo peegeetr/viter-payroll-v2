@@ -49,6 +49,7 @@ export const runPayroll = (
   yearlyTax,
   holidayExemptions
 ) => {
+  let payrollTotalAmount = 0;
   let grossAmount = 0;
   let deductionAmount = 0;
   let netPay = 0;
@@ -357,6 +358,7 @@ export const runPayroll = (
         totalSSSLoan;
 
       netPay = grossAmount + totalBenefits - deductionAmount;
+      payrollTotalAmount += netPay;
       // console.log(totalAdjustmentAmount);
       // data to send to server
       payrollList.push({
@@ -406,6 +408,7 @@ export const runPayroll = (
         payroll_list_madatory_ee: totalMadatoryEe.toFixed(2),
         payroll_list_tax: totalTaxAmount.toFixed(2),
         payroll_list_undertime: totalUndertimeAmount.toFixed(2),
+        payrollTotalAmount: payrollTotalAmount.toFixed(2),
       });
 
       // tax List

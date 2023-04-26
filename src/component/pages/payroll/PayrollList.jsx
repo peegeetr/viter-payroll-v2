@@ -76,6 +76,8 @@ const PayrollList = ({ setItemEdit }) => {
     }
   }, [inView]);
 
+  console.log(result);
+
   const handleEdit = async (item) => {
     setLoading(true);
     let prId = item.payroll_id;

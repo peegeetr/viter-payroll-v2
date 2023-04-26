@@ -89,6 +89,14 @@ const PayrollViewList = () => {
         <p className="mr-8">
           ID : <span className="font-light text-black">{pid}</span>
         </p>
+        {/* <p className="mr-8">
+          Payroll Type :{" "}
+          <span className="font-light text-black">
+            {result?.pages[0].data.length > 0
+              ? `${result?.pages[0].data[0].payroll_end_date}`
+              : "--"}
+          </span>
+        </p> */}
         <p className="mr-8">
           Pay Period :{" "}
           <span className="font-light text-black">
@@ -101,7 +109,7 @@ const PayrollViewList = () => {
           </span>
         </p>
         <p className="">
-          Period Work Days:{" "}
+          Period Working Days:{" "}
           <span className="font-light text-black">
             {result?.pages[0].data.length > 0
               ? getWorkingDays(
@@ -157,7 +165,12 @@ const PayrollViewList = () => {
               {result?.pages.map((page, key) => (
                 <React.Fragment key={key}>
                   {page.data.map((item, key) => {
-                    salariesAndWages += Number(item.payroll_list_gross);
+                    // salariesAndWages += Number(item.payroll_list_gross);
+                    salariesAndWages +=
+                      Number(item.payroll_category_type) ===
+                      payrollCategory13thMonthId
+                        ? 0
+                        : Number(item.payroll_list_gross);
                     // monthAndBonuses += Number(item.payroll_list_total_benefits);
                     monthAndBonuses +=
                       Number(item.payroll_category_type) ===

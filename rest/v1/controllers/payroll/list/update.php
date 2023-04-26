@@ -49,6 +49,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
     $allPagibigMP2List = $data["pagibigMP2List"];
     $allSSSLoanList = $data["sSSLoanList"];
     $payroll_category = null;
+    $payrollTotalAmount = 0;
 
     // update payroll list
     for ($pl = 0; $pl < count($allPayrollPayList); $pl++) {
@@ -95,8 +96,11 @@ if (array_key_exists("listpayrollid", $_GET)) {
         $payrollList->payroll_list_madatory_ee = $allPayrollPayList[$pl]["payroll_list_madatory_ee"];
         $payrollList->payroll_list_undertime = $allPayrollPayList[$pl]["payroll_list_undertime"];
         $payrollList->payroll_list_tax = $allPayrollPayList[$pl]["payroll_list_tax"];
+        $payrollTotalAmount = $allPayrollPayList[$pl]["payrollTotalAmount"];
         $query = checkUpdate($payrollList);
     }
+
+    // delete employee without bonus based on prid
     if ($payroll_category === $categoryBunosId) {
         checkDeleteDontHaveBonusPayrollList($payrollList);
     }
@@ -641,6 +645,8 @@ if (array_key_exists("listpayrollid", $_GET)) {
         }
     }
 
+    // update payroll table with total payroll amount
+    // this has values $payrollTotalAmount
 
     returnSuccess($payrollList, "Payroll List", $query);
 }

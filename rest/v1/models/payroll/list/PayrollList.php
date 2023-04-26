@@ -757,6 +757,7 @@ class PayrollList
     }
 
 
+
     // delete Earnings
     public function deleteEarnings()
     {
@@ -1226,7 +1227,6 @@ class PayrollList
             $sql .= "{$this->tblPayrollType} as category ";
             $sql .= "where payrollList.payroll_list_employee_id = :payroll_list_employee_id ";
             $sql .= "and payrollList.payroll_list_payroll_id = payroll.payroll_id ";
-            $sql .= "and payrollList.payroll_list_bonus != '' ";
             $sql .= "and payrollList.payroll_list_is_paid = 1 ";
             $sql .= "and category.payroll_type_aid = payroll.payroll_category_type ";
             $sql .= "order by payroll.payroll_start_date desc, ";
@@ -1255,7 +1255,6 @@ class PayrollList
             $sql .= "{$this->tblPayrollType} as category ";
             $sql .= "where payrollList.payroll_list_employee_id = :payroll_list_employee_id ";
             $sql .= "and payrollList.payroll_list_payroll_id = payroll.payroll_id ";
-            $sql .= "and payrollList.payroll_list_bonus != '' ";
             $sql .= "and payrollList.payroll_list_is_paid = 1 ";
             $sql .= "and category.payroll_type_aid = payroll.payroll_category_type ";
             $sql .= "order by payroll.payroll_start_date desc, ";
@@ -1290,7 +1289,6 @@ class PayrollList
             $sql .= "{$this->tblPayrollType} as category ";
             $sql .= "where payrollList.payroll_list_employee_id = :payroll_list_employee_id ";
             $sql .= "and payrollList.payroll_list_payroll_id = payroll.payroll_id ";
-            $sql .= "and payrollList.payroll_list_bonus != '' ";
             $sql .= "and payrollList.payroll_list_is_paid = 1 ";
             $sql .= "and category.payroll_type_aid = payroll.payroll_category_type ";
             $sql .= "and payroll.payroll_start_date >= :payroll_start_date ";
@@ -1400,7 +1398,6 @@ class PayrollList
             $sql .= "and payroll.payroll_start_date >= :payroll_start_date ";
             $sql .= "and payroll.payroll_end_date <= :payroll_end_date ";
             $sql .= "and payrollList.payroll_list_payroll_id = payroll.payroll_id ";
-            $sql .= "and payrollList.payroll_list_bonus != '' ";
             $sql .= "and payrollList.payroll_list_is_paid = 1 ";
             $sql .= "and category.payroll_type_aid = payroll.payroll_category_type ";
             $sql .= "order by payrollList.payroll_list_payroll_id desc, ";
@@ -1491,6 +1488,24 @@ class PayrollList
                 "start" => $this->payrollList_start - 1,
                 "total" => $this->payrollList_total,
                 "payroll_list_payroll_id" => $this->payroll_list_payroll_id,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    // Delete all don't have bonus in payroll list
+    public function deleteDontHaveBonusPayrollList()
+    {
+        try {
+            $sql = "delete ";
+            $sql .= "from {$this->tblPayrollList} ";
+            $sql .= "where payroll_list_payroll_id = :payroll_list_payroll_id ";
+            $sql .= "and payroll_list_bonus = '' ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "payroll_list_payroll_id" => "{$this->payroll_list_payroll_id}",
             ]);
         } catch (PDOException $ex) {
             $query = false;

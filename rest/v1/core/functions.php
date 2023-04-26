@@ -455,11 +455,11 @@ function checkExistence($count, $msg = "")
 }
 
 // check association
-function isAssociated($object)
+function isAssociated($object, $name)
 {
     $query = $object->checkAssociation();
     $count = $query->rowCount();
-    checkExistence($count, "You cannot delete this item because it is already associated with other module.");
+    checkExistence($count, "You cannot delete {$name} because it is already associated with other module.");
 }
 
 // check name

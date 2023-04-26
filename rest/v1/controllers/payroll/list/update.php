@@ -97,7 +97,9 @@ if (array_key_exists("listpayrollid", $_GET)) {
         $payrollList->payroll_list_tax = $allPayrollPayList[$pl]["payroll_list_tax"];
         $query = checkUpdate($payrollList);
     }
-
+    if ($payroll_category === $categoryBunosId) {
+        checkDeleteDontHaveBonusPayrollList($payrollList);
+    }
 
     // delete earning first existing PR ID and pay item id de Minimis
     $payrollList->payitem_id = $data["payItemDeminimisId"];

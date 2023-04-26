@@ -101,7 +101,7 @@ const PayTypeLink = ({ setItemEdit }) => {
           <li key={key} className="py-2">
             <div className="group flex items-center justify-between border-b border-solid border-gray-300 ">
               <Link
-                to={`${devNavUrl}/pay-type/pay-item?paytypeid=${item.paytype_aid}`}
+                to={`${link}/pay-type/pay-item?paytypeid=${item.paytype_aid}`}
                 className="w-full py-1"
               >
                 <div className="text-left grid lg:grid-cols-[3fr_1fr] ">

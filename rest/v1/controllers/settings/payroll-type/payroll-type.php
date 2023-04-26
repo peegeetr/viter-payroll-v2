@@ -4,11 +4,8 @@
 require '../../../core/header.php';
 // use needed functions
 require '../../../core/functions.php';
-require 'functions.php';
 // use needed classes
 require '../../../models/settings/payroll-type/PayrollType.php';
-
-
 
 // get payload
 $body = file_get_contents("php://input");

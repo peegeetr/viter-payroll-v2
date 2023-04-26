@@ -1,0 +1,25 @@
+
+*controllers    
+    - pay-type/delete.php
+    - payroll/list/functions.php
+    - payroll/list/update.php
+    - settings/payroll-type/delete.php
+    - settings/payroll-type/payroll-type.php
+    
+*models   
+    - payroll/list/PayrollList.php
+    - settings/payroll-type/PayrollType.php
+  
+*htaccess 
+    - 
+
+    - 
+
+*db tables 
+    - 
+
+*core 
+    - functions.php
+
+*extra 
+    - 

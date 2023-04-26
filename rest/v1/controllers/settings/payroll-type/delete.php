@@ -17,7 +17,7 @@ if (array_key_exists("payrolltypeid", $_GET)) {
     $name = checkIndex($data, "name");
     //check to see if task id in query string is not empty and is number, if not return json error
     checkId($payrollType->payroll_type_aid);
-    isPayrollTypeAssociatedToPayroll($payrollType, $name);
+    isAssociated($payrollType, $name);
     $query = checkDelete($payrollType);
 
     returnSuccess($payrollType, "Payroll Type", $query);

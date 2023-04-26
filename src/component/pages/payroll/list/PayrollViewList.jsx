@@ -83,8 +83,6 @@ const PayrollViewList = () => {
     }
   }, [inView]);
 
-  console.log(result);
-
   return (
     <>
       <div className="xs:flex text-primary">
@@ -278,6 +276,8 @@ const PayrollViewList = () => {
             </tbody>
           </table>
         </div>
+      </div>
+      <div className="text-center">
         <LoadmoreRq
           fetchNextPage={fetchNextPage}
           isFetchingNextPage={isFetchingNextPage}

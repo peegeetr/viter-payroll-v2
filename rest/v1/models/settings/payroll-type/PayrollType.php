@@ -132,7 +132,7 @@ class PayrollType
         return $query;
     }
 
-    public function checkPayrollTypeAssociationToPayroll()
+    public function checkAssociation()
     {
         try {
             $sql = "select payroll_category_type from {$this->tblPayroll} ";

@@ -280,3 +280,11 @@ function checkReadByReportBasicPayLimit($object)
     checkQuery($query, "Empty records.(Read all limit report basic pay page)");
     return $query;
 }
+
+// Delete all don't have bonus in payroll list
+function checkDeleteDontHaveBonusPayrollList($object)
+{
+    $query = $object->deleteDontHaveBonusPayrollList();
+    checkQuery($query, "There's a problem processing your request. (delete all don't have bonus in payroll list)");
+    return $query;
+}

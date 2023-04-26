@@ -11,10 +11,7 @@ const RatesLink = () => {
   const link = getUserType(store.credentials.data.role_is_developer === 1);
 
   return (
-    <div
-      className="group flex items-center justify-between border-b border-solid border-gray-300"
-      onClick={() => dispatch(setStartIndex(0))}
-    >
+    <div className="group flex items-center justify-between border-b border-solid border-gray-300">
       <Link to={`${link}/settings/rates`} className="w-full py-1">
         <div className="flex items-center">
           <span className="text-lg mr-4">
@@ -23,8 +20,8 @@ const RatesLink = () => {
           <span className=" font-bold">Rates</span>
         </div>
         <p className="ml-[35px] my-0">
-          Manage what actions and capabilities every account are can perform in
-          the system.
+          Reference list for different types of rates for Holidays, Overtime,
+          and Rest days.
         </p>
       </Link>
 

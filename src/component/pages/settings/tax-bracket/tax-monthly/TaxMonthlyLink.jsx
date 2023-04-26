@@ -17,10 +17,7 @@ const TaxMonthlyLink = () => {
           </span>
           <span className="font-bold">Monthly Tax</span>
         </div>
-        <p className="ml-[35px] my-0">
-          Manage what actions and capabilities every account are can perform in
-          the system.
-        </p>
+        <p className="ml-[35px] my-0">Monthly tax bracket for employee.</p>
       </Link>
 
       <Link

@@ -18,8 +18,7 @@ const PagibigLink = () => {
           <span className="font-bold">Pag-Ibig</span>
         </div>
         <p className="ml-[35px] my-0">
-          Manage what actions and capabilities every account are can perform in
-          the system.
+          Assign values for employee and employer contribution amount.
         </p>
       </Link>
 

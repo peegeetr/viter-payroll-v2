@@ -26,8 +26,6 @@ import useQueryData from "../../../custom-hooks/useQueryData";
 
 const ModalAddHolidays = ({ item }) => {
   const { store, dispatch } = React.useContext(StoreContext);
-  const [employeeName, setEmployeeName] = React.useState("");
-  const [loading, setLoading] = React.useState(false);
 
   const queryClient = useQueryClient();
   const mutation = useMutation({
@@ -73,10 +71,7 @@ const ModalAddHolidays = ({ item }) => {
   const { data: holidayDate, isLoading } = useQueryData(
     `${devApiUrl}/v1/holidays`, // endpoint
     "get", // method
-    "holidayDate", // key
-    {}, // formdata
-    null, // id key
-    false // devKey boolean
+    "holidayDate" // key
   );
 
   const initVal = {
@@ -161,9 +156,9 @@ const ModalAddHolidays = ({ item }) => {
                         {holidayDate?.data.map((hdItem, key) => {
                           return (
                             <option key={key} value={hdItem.holidays_date}>
-                              {`${formatDate(hdItem.holidays_date)} (${
-                                hdItem.holidays_name
-                              } ${hdItem.holidays_rate}%)`}
+                              {`${hdItem.holidays_name} ${
+                                hdItem.holidays_rate
+                              }% (${formatDate(hdItem.holidays_date)})`}
                             </option>
                           );
                         })}

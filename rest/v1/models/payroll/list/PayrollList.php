@@ -113,6 +113,48 @@ class PayrollList
     }
 
 
+    // search  
+    public function search()
+    {
+        try {
+            $sql = "select payroll_list_payroll_id, ";
+            $sql .= "payroll_list_employee_name, ";
+            $sql .= "payroll_list_employee_id, ";
+            $sql .= "payroll_list_gross, ";
+            $sql .= "payroll_list_deduction, ";
+            $sql .= "payroll_list_net_pay, ";
+            $sql .= "payroll_list_is_paid, ";
+            $sql .= "payroll_list_aid ";
+            $sql .= "from {$this->tblPayrollList} ";
+            $sql .= "where payroll_list_employee_name like :search ";
+            $sql .= "order by payroll_list_employee_name asc ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "search" => "{$this->payrollList_search}%",
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    public function readLimit()
+    {
+        try {
+            $sql = "select * from {$this->tblPayrollList} ";
+            $sql .= "order by payroll_list_employee_name asc ";
+            $sql .= "limit :start, ";
+            $sql .= ":total ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "start" => $this->payrollList_start - 1,
+                "total" => $this->payrollList_total,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
     // read by id
     public function readById()
     {
@@ -143,6 +185,58 @@ class PayrollList
             $sql .= "order by payrollList.payroll_list_employee_name asc ";
             $query = $this->connection->prepare($sql);
             $query->execute([
+                "payroll_list_payroll_id" => $this->payroll_list_payroll_id,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+
+    public function readByIdLimit()
+    {
+        try {
+            $sql = "select *, sum(payrollList.payroll_list_gross) as salWages ";
+            $sql .= "from {$this->tblPayrollList} as payrollList, ";
+            $sql .= "{$this->tblPayroll} as payroll ";
+            $sql .= "where payrollList.payroll_list_payroll_id = :payroll_list_payroll_id ";
+            $sql .= "and payroll.payroll_id = payrollList.payroll_list_payroll_id ";
+            $sql .= "group by payrollList.payroll_list_employee_id ";
+            $sql .= "order by payrollList.payroll_list_employee_name asc ";
+            $sql .= "limit :start, ";
+            $sql .= ":total ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "start" => $this->payrollList_start - 1,
+                "total" => $this->payrollList_total,
+                "payroll_list_payroll_id" => $this->payroll_list_payroll_id,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    // search  
+    public function searchById()
+    {
+        try {
+            $sql = "select payroll_list_payroll_id, ";
+            $sql .= "payroll_list_employee_name, ";
+            $sql .= "payroll_list_employee_id, ";
+            $sql .= "payroll_list_gross, ";
+            $sql .= "payroll_list_deduction, ";
+            $sql .= "payroll_list_net_pay, ";
+            $sql .= "payroll_list_is_paid, ";
+            $sql .= "payroll_list_aid ";
+            $sql .= "from {$this->tblPayrollList} ";
+            $sql .= "where payroll_list_payroll_id = :payroll_list_payroll_id ";
+            $sql .= "and payroll_list_employee_name like :search ";
+            $sql .= "order by payroll_list_employee_name asc ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "search" => "{$this->payrollList_search}%",
                 "payroll_list_payroll_id" => $this->payroll_list_payroll_id,
             ]);
         } catch (PDOException $ex) {
@@ -203,72 +297,6 @@ class PayrollList
         return $query;
     }
 
-
-    public function readLimit()
-    {
-        try {
-            $sql = "select *, sum(payrollList.payroll_list_gross) as salWages ";
-            // $sql = "select payrollList.payroll_list_payroll_id, ";
-            // $sql .= "payrollList.payroll_list_aid, ";
-            // $sql .= "payrollList.payroll_list_is_paid, ";
-            // $sql .= "payrollList.payroll_list_gross, ";
-            // $sql .= "payrollList.payroll_list_deduction, ";
-            // $sql .= "payrollList.payroll_list_net_pay, ";
-            // $sql .= "payrollList.payroll_list_employee_name, ";
-            // $sql .= "payrollList.payroll_list_employee_salary, ";
-            // $sql .= "payrollList.payroll_list_night_diff_per_day, ";
-            // $sql .= "payrollList.payroll_list_employee_id, ";
-            // $sql .= "payroll.payroll_id, ";
-            // $sql .= "payroll.payroll_start_date, ";
-            // $sql .= "payroll.payroll_end_date, ";
-            // $sql .= "payroll.payroll_pay_date ";
-            $sql .= "from {$this->tblPayrollList} as payrollList, ";
-            $sql .= "{$this->tblPayroll} as payroll ";
-            $sql .= "where payrollList.payroll_list_payroll_id = :payroll_list_payroll_id ";
-            $sql .= "and payroll.payroll_id = payrollList.payroll_list_payroll_id ";
-            $sql .= "group by payrollList.payroll_list_employee_id ";
-            $sql .= "order by payrollList.payroll_list_employee_name asc ";
-            $sql .= "limit :start, ";
-            $sql .= ":total ";
-            $query = $this->connection->prepare($sql);
-            $query->execute([
-                "start" => $this->payrollList_start - 1,
-                "total" => $this->payrollList_total,
-                "payroll_list_payroll_id" => $this->payroll_list_payroll_id,
-            ]);
-        } catch (PDOException $ex) {
-            $query = false;
-        }
-        return $query;
-    }
-
-
-    // search  
-    public function search()
-    {
-        try {
-            $sql = "select payroll_list_payroll_id, ";
-            $sql .= "payroll_list_employee_name, ";
-            $sql .= "payroll_list_employee_id, ";
-            $sql .= "payroll_list_gross, ";
-            $sql .= "payroll_list_deduction, ";
-            $sql .= "payroll_list_net_pay, ";
-            $sql .= "payroll_list_is_paid, ";
-            $sql .= "payroll_list_aid ";
-            $sql .= "from {$this->tblPayrollList} ";
-            $sql .= "where payroll_list_payroll_id = :payroll_list_payroll_id ";
-            $sql .= "and payroll_list_employee_name like :search ";
-            $sql .= "order by payroll_list_employee_name asc ";
-            $query = $this->connection->prepare($sql);
-            $query->execute([
-                "search" => "{$this->payrollList_search}%",
-                "payroll_list_payroll_id" => $this->payroll_list_payroll_id,
-            ]);
-        } catch (PDOException $ex) {
-            $query = false;
-        }
-        return $query;
-    }
 
     // read by payslip by id
     public function readAllReportSummary($salaryCategoryId)

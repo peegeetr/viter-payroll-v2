@@ -3,6 +3,8 @@
     - pay-type/delete.php
     - payroll/list/functions.php
     - payroll/list/update.php
+    - payroll/list/page.php
+    - payroll/list/search.php
     - settings/payroll-type/delete.php
     - settings/payroll-type/payroll-type.php
     

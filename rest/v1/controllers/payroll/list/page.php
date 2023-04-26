@@ -4,6 +4,7 @@
 require '../../../core/header.php';
 // use needed functions
 require '../../../core/functions.php';
+require 'functions.php';
 // use needed classes
 require '../../../models/payroll/list/PayrollList.php';
 // check database connection
@@ -28,9 +29,9 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
         $payrollList->payrollList_total = 5;
         //check to see if task id in query string is not empty and is number, if not return json error
         checkLimitId($payrollList->payrollList_start, $payrollList->payrollList_total);
-        $query = checkReadLimit($payrollList);
+        $query = checkReadByIdLimit($payrollList);
         http_response_code(200);
-        $total_result = checkReadAll($payrollList);
+        $total_result = checkReadById($payrollList);
         http_response_code(200);
 
         $returnData["data"] = getResultData($query);

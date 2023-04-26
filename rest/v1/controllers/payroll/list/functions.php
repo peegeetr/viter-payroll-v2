@@ -288,3 +288,19 @@ function checkDeleteDontHaveBonusPayrollList($object)
     checkQuery($query, "There's a problem processing your request. (delete all don't have bonus in payroll list)");
     return $query;
 }
+
+// Read limit
+function checkReadByIdLimit($object)
+{
+    $query = $object->readByIdLimit();
+    checkQuery($query, "Empty records. (limit by payroll id)");
+    return $query;
+}
+
+// Read search
+function checkSearchById($object)
+{
+    $query = $object->searchById();
+    checkQuery($query, "Empty records. (search)");
+    return $query;
+}

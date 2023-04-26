@@ -22,7 +22,7 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
         $payrollList->payrollList_search = $_GET['search'];
         //check to see if search keyword in query string is not empty and less than 50 chars
         checkKeyword($payrollList->payrollList_search);
-        $query = checkSearch($payrollList);
+        $query = checkSearchById($payrollList);
         http_response_code(200);
 
         getQueriedData($query);

@@ -26,10 +26,7 @@ const JobDetailsLink = () => {
           </span>
           <span className="font-bold">Job Details</span>
         </div>
-        <p className="ml-[35px] my-0">
-          Manage what actions and capabilities every account are can perform in
-          the system.
-        </p>
+        <p className="ml-[35px] my-0">Manage employee job information.</p>
       </Link>
 
       <Link

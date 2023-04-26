@@ -145,7 +145,7 @@ const EmployeeList = () => {
                           </>
                         )}
                       </td>
-                      <td>{`${item.employee_lname} ${item.employee_fname}`}</td>
+                      <td>{`${item.employee_lname}, ${item.employee_fname}`}</td>
                       <td>{item.employee_job_number}</td>
                       <td>{item.employee_job_email}</td>
                       <td>

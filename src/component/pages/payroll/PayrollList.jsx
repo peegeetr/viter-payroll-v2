@@ -126,7 +126,7 @@ const PayrollList = ({ setItemEdit }) => {
                 <th className="text-center">#</th>
                 <th className="min-w-[6rem]">Payroll ID</th>
                 <th className="min-w-[5rem]">Type</th>
-                <th className="min-w-[9rem]">Pay Date</th>
+                <th className="min-w-[8rem]">Pay Date</th>
                 <th className="min-w-[8rem]">Pay period</th>
                 <th className="min-w-[8rem] text-center"># of Employee</th>
                 <th className="min-w-[8rem] text-right">Total Amount</th>
@@ -157,8 +157,8 @@ const PayrollList = ({ setItemEdit }) => {
                       <td className="text-center">{counter++}.</td>
                       <td>{item.payroll_id}</td>
                       <td>{item.payroll_type_name}</td>
-                      <td>{formatDate(item.payroll_pay_date)}</td>
-                      <td>
+                      <td className="">{formatDate(item.payroll_pay_date)}</td>
+                      <td className="">
                         {`${formatDate(item.payroll_start_date).split(" ")[1]} 
                       ${formatDate(item.payroll_start_date).split(" ")[2]} - ${
                           formatDate(item.payroll_end_date).split(" ")[2]
@@ -177,7 +177,7 @@ const PayrollList = ({ setItemEdit }) => {
                               Number(item.total13th).toFixed(2)
                             )}`
                           : `${numberWithCommas(
-                              Number(item.totalNet).toFixed(2)
+                              Number(item.payroll_total_amount).toFixed(2)
                             )}`}
                       </td>
                       <td className="text-center">

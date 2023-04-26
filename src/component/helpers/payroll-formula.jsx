@@ -102,7 +102,7 @@ export const payComputeCategoryBonus = (employee, payrollEarnings) => {
           payroll_category: payrollCategoryBonusId,
           payroll_list_employee_id: emp.payroll_list_employee_id,
           payroll_list_employee_name: emp.payroll_list_employee_name,
-          payroll_list_gross: zero,
+          payroll_list_gross: totalBonus.toFixed(2),
           payroll_list_deduction: zero,
           payroll_list_net_pay: zero,
           payroll_list_basic_pay: zero,

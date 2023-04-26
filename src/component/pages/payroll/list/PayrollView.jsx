@@ -106,12 +106,22 @@ const PayrollView = () => {
     "get", // method
     "pagibig" // key
   );
+
   // use if not loadmore button undertime
   const { data: philhealth } = useQueryData(
     `${devApiUrl}/v1/philhealth`, // endpoint
     "get", // method
     "philhealth" // key
   );
+
+  // use if not loadmore button undertime
+  const { data: holidayExemptions } = useQueryData(
+    `${devApiUrl}/v1/holiday-exemptions`, // endpoint
+    "get", // method
+    "holiday-exemptions" // key
+  );
+
+  console.log(payrollList, holidayExemptions);
 
   const handleEmailAll = () => {
     dispatch(setIsAdd(true));
@@ -203,6 +213,7 @@ const PayrollView = () => {
               category13thMonth={category13thMonth?.data}
               categoryId={categoryId}
               yearlyTax={yearlyTax?.data}
+              holidayExemptions={holidayExemptions?.data}
             />
           )
         : store.isConfirm && <ModalNoSssBracket />}

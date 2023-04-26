@@ -21,8 +21,7 @@ const HolidayExemptionLink = () => {
           <span className=" font-bold">Holidays Exemption</span>
         </div>
         <p className="ml-[35px] my-0">
-          Manage what actions and capabilities every account are can perform in
-          the system.
+          Manage employees holiday exemption (Observed or Not observed).
         </p>
       </Link>
 

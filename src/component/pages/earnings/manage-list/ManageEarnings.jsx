@@ -17,6 +17,7 @@ import Navigation from "../../../partials/Navigation";
 import ManageEarningsList from "./ManageEarningsList";
 import ModalAddManageEarnings from "./ModalAddManageEarnings";
 import ModalNoPayrollId from "./ModalNoPayrollId";
+import { payrollCategory13thMonthId } from "../../../helpers/functions-payroll-category-id";
 
 const ManageEarnings = () => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -84,6 +85,8 @@ const ManageEarnings = () => {
       </div>
       {draft?.count > 0 &&
       draft?.data[0].payroll_id !== "" &&
+      Number(draft?.data[0].payroll_category_type) !==
+        payrollCategory13thMonthId &&
       employee?.count > 0 &&
       store.isAdd ? (
         <ModalAddManageEarnings

@@ -1540,4 +1540,24 @@ class PayrollList
         }
         return $query;
     }
+
+    // update Payroll Total Amount
+    public function updatePayrollTotalAmount($payrollTotalAmount)
+    {
+        try {
+            $sql = "update {$this->tblPayroll} set ";
+            $sql .= "payroll_total_amount = :payroll_total_amount, ";
+            $sql .= "payroll_datetime = :payroll_datetime ";
+            $sql .= "where payroll_id = :payroll_id ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "payroll_total_amount" => $payrollTotalAmount,
+                "payroll_datetime" => $this->payroll_list_datetime,
+                "payroll_id" => $this->payroll_list_payroll_id,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
 }

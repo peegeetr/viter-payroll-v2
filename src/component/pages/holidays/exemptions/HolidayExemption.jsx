@@ -2,18 +2,18 @@ import React from "react";
 import { FaPlusCircle } from "react-icons/fa";
 import { setIsAdd } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
-import Footer from "../../../partials/Footer";
-import Header from "../../../partials/Header";
-import ModalError from "../../../partials/modals/ModalError";
-import ModalSuccess from "../../../partials/modals/ModalSuccess";
-import Navigation from "../../../partials/Navigation";
-import HolidayExemptionList from "./HolidayExemptionList";
-import ModalAddHolidayExemption from "./ModalAddHolidayExemption";
-import BreadCrumbs from "../../../partials/BreadCrumbs";
 import useQueryData from "../../../custom-hooks/useQueryData";
 import { devApiUrl, hrisDevApiUrl } from "../../../helpers/functions-general";
-import ModalNoPayrollId from "../../earnings/manage-list/ModalNoPayrollId";
 import { payrollCategorySalaryId } from "../../../helpers/functions-payroll-category-id";
+import BreadCrumbs from "../../../partials/BreadCrumbs";
+import Footer from "../../../partials/Footer";
+import Header from "../../../partials/Header";
+import Navigation from "../../../partials/Navigation";
+import ModalError from "../../../partials/modals/ModalError";
+import ModalSuccess from "../../../partials/modals/ModalSuccess";
+import ModalNoPayrollId from "../../earnings/manage-list/ModalNoPayrollId";
+import HolidayExemptionList from "./HolidayExemptionList";
+import ModalAddHolidayExemption from "./ModalAddHolidayExemption";
 
 const HolidayExemption = () => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -65,6 +65,7 @@ const HolidayExemption = () => {
       </div>
 
       {isPayrollEmpty?.count > 0 &&
+      isPayrollEmpty?.data[0].payroll_id !== "" &&
       Number(isPayrollEmpty?.data[0].payroll_category_type) ===
         payrollCategorySalaryId &&
       store.isAdd ? (

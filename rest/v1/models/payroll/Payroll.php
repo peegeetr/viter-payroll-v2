@@ -8,6 +8,7 @@ class Payroll
     public $payroll_end_date;
     public $payroll_pay_date;
     public $payroll_category_type;
+    public $payroll_total_amount;
     public $payroll_created;
     public $payroll_datetime;
 

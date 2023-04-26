@@ -23,6 +23,7 @@ function checkUpdateIsPaidPayroll($object)
     checkQuery($query, "There's a problem processing your request. (update payroll to paid)");
     return $query;
 }
+
 // Update Payroll List to paid
 function checkUpdateIsPaidPayrollList($object)
 {
@@ -302,5 +303,13 @@ function checkSearchById($object)
 {
     $query = $object->searchById();
     checkQuery($query, "Empty records. (search)");
+    return $query;
+}
+
+// Update Payroll Total Amount
+function checkUpdatePayrollTotalAmount($object, $payrollTotalAmount)
+{
+    $query = $object->updatePayrollTotalAmount($payrollTotalAmount);
+    checkQuery($query, "There's a problem processing your request. (update payroll to paid)");
     return $query;
 }

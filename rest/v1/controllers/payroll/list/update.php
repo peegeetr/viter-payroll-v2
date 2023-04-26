@@ -647,6 +647,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
 
     // update payroll table with total payroll amount
     // this has values $payrollTotalAmount
+    checkUpdatePayrollTotalAmount($payrollList, $payrollTotalAmount);
 
     returnSuccess($payrollList, "Payroll List", $query);
 }

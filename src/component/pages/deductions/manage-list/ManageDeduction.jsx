@@ -16,6 +16,7 @@ import Navigation from "../../../partials/Navigation";
 import ModalNoPayrollId from "../../earnings/manage-list/ModalNoPayrollId";
 import ManageDeductionList from "./ManageDeductionList";
 import ModalAddManageDeduction from "./ModalAddManageDeduction";
+import { payrollCategorySalaryId } from "../../../helpers/functions-payroll-category-id";
 
 const ManageDeduction = () => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -71,6 +72,8 @@ const ManageDeduction = () => {
       </div>
       {draft?.count > 0 &&
       draft?.data[0].payroll_id !== "" &&
+      Number(draft?.data[0].payroll_category_type) ===
+        payrollCategorySalaryId &&
       employee?.count > 0 &&
       store.isAdd ? (
         <ModalAddManageDeduction

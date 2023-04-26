@@ -101,12 +101,14 @@ class Holidays
     {
         try {
             $sql = "select * from {$this->tblHolidays} ";
-            $sql .= "where holidays_name like :search ";
+            $sql .= "where (holidays_name like :holidays_name ";
+            $sql .= "or MONTHNAME(holidays_date) like :holidays_date) ";
             $sql .= "order by holidays_is_active desc, ";
             $sql .= "holidays_name asc ";
             $query = $this->connection->prepare($sql);
             $query->execute([
-                "search" => "{$this->holidays_search}%",
+                "holidays_name" => "{$this->holidays_search}%",
+                "holidays_date" => "{$this->holidays_search}%",
             ]);
         } catch (PDOException $ex) {
             $query = false;

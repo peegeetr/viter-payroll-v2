@@ -7,7 +7,7 @@ import {
 } from "./component/helpers/functions-general";
 import Employee from "./component/pages/employee/Employee";
 import EmployeeLink from "./component/pages/employee/EmployeeLink";
-import Holidays from "./component/pages/holidays/Holidays";
+import Holidays from "./component/pages/holidays/list/Holidays";
 import PayItem from "./component/pages/pay-type/pay-item/PayItem";
 import PayTypeLink from "./component/pages/pay-type/PayTypePage";
 import Pagibig from "./component/pages/settings/pagibig/Pagibig.jsx";
@@ -65,6 +65,8 @@ import PayslipBonus from "./component/pages/payroll/payslip-bonus/PayslipBonus";
 import TaxYearly from "./component/pages/settings/tax-bracket/tax-yearly/TaxYearly";
 import SummaryTypeViewBasicPay from "./component/pages/reports/paytype/view/SummaryTypeViewBasicPay";
 import EmployeeSalaryHistory from "./component/pages/reports/employee-salary-history/EmployeeSalaryHistory";
+import HistoryLink from "./component/pages/holidays/HistoryLink";
+import HolidayExemption from "./component/pages/holidays/exemptions/HolidayExemption";
 
 function App() {
   // Create a client
@@ -255,10 +257,26 @@ function App() {
 
             {/* Holidays Page */}
             <Route
-              path={`${devNavUrl}/holidays`}
+              path={`${devNavUrl}/holiday-details`}
+              element={
+                <ProtectedRouteOther>
+                  <HistoryLink />
+                </ProtectedRouteOther>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/holiday-details/holidays-list`}
               element={
                 <ProtectedRouteOther>
                   <Holidays />
+                </ProtectedRouteOther>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/holiday-details/holiday-exemptions`}
+              element={
+                <ProtectedRouteOther>
+                  <HolidayExemption />
                 </ProtectedRouteOther>
               }
             />
@@ -631,10 +649,26 @@ function App() {
 
             {/* Holidays Page */}
             <Route
-              path={`${devNavUrl}/${UrlSystem}/holidays`}
+              path={`${devNavUrl}/${UrlSystem}/holiday-details`}
+              element={
+                <ProtectedRouteSystem>
+                  <HistoryLink />
+                </ProtectedRouteSystem>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/holiday-details/holidays-list`}
               element={
                 <ProtectedRouteSystem>
                   <Holidays />
+                </ProtectedRouteSystem>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/holiday-details/holiday-exemptions`}
+              element={
+                <ProtectedRouteSystem>
+                  <HolidayExemption />
                 </ProtectedRouteSystem>
               }
             />

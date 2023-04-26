@@ -214,9 +214,11 @@ class SalaryHistory
             $sql = "select salary_history_salary_amount, ";
             $sql .= "salary_history_date, ";
             $sql .= "salary_history_aid, ";
+            $sql .= "COUNT(salary_history_employee_id) as count, ";
             $sql .= "salary_history_employee_id ";
             $sql .= "from {$this->tblSalaryHistory} ";
             $sql .= "where salary_history_employee_id = :salary_history_employee_id ";
+            $sql .= "group by salary_history_employee_id ";
             $sql .= "order by salary_history_date desc ";
             $query = $this->connection->prepare($sql);
             $query->execute([
@@ -235,6 +237,7 @@ class SalaryHistory
             $sql = "select salary_history_salary_amount, ";
             $sql .= "salary_history_date, ";
             $sql .= "salary_history_aid, ";
+            $sql .= "COUNT(salary_history_employee_id) as count, ";
             $sql .= "salary_history_employee_id ";
             $sql .= "from {$this->tblSalaryHistory} ";
             $sql .= "group by salary_history_employee_id ";

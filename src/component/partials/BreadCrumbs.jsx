@@ -29,7 +29,11 @@ const BreadCrumbs = ({ param = "", name = "" }) => {
             to={`${link}${currentLink}${param}`}
             className="mr-2 text-base font-medium hover:text-primary capitalize"
           >
-            {name !== "" ? `${crumb.replace("view", `${name}`)}` : `${crumb}`}
+            {`${crumb.replace("-", " ").replace("view", `${name}`)}`}
+
+            {/* {name !== ""
+              ? `${crumb.replace("view", `${name}`)}`
+              : `${crumb.replace("-", " ")}`} */}
           </Link>
         </li>
       );

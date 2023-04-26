@@ -1,21 +1,23 @@
 import { Form, Formik } from "formik";
 import React from "react";
 import { FaTimesCircle } from "react-icons/fa";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import * as Yup from "yup";
+import { StoreContext } from "../../../../store/StoreContext";
+import { queryData } from "../../../helpers/queryData";
+import { devApiUrl } from "../../../helpers/functions-general";
 import {
   setError,
   setIsAdd,
   setMessage,
-  setStartIndex,
   setSuccess,
-} from "../../../store/StoreAction";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { StoreContext } from "../../../store/StoreContext";
-import { fetchData } from "../../helpers/fetchData";
-import { InputSelect, InputText, MyCheckbox } from "../../helpers/FormInputs";
-import { devApiUrl, removeComma } from "../../helpers/functions-general";
-import { queryData } from "../../helpers/queryData";
-import ButtonSpinner from "../../partials/spinners/ButtonSpinner";
+} from "../../../../store/StoreAction";
+import {
+  InputSelect,
+  InputText,
+  MyCheckbox,
+} from "../../../helpers/FormInputs";
+import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 
 const ModalAddHolidays = ({ item }) => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -36,7 +38,7 @@ const ModalAddHolidays = ({ item }) => {
       queryClient.invalidateQueries({ queryKey: ["holiday"] });
       // show success box
       if (data.success) {
-        item && dispatch(setIsAdd(false));
+        dispatch(setIsAdd(false));
         dispatch(setSuccess(true));
         dispatch(setMessage(`Successfuly ${item ? "updated." : "added."}`));
       }
@@ -52,7 +54,6 @@ const ModalAddHolidays = ({ item }) => {
   };
 
   const initVal = {
-    holidays_aid: item ? item.holidays_aid : "",
     holidays_name: item ? item.holidays_name : "",
     holidays_date: item ? item.holidays_date : "",
     holidays_type: item ? item.holidays_type : "",

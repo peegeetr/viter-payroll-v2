@@ -5,8 +5,13 @@
 
     *All files
     -> holidays/exemptions
+    
     -> holidays/create.php
     -> holidays/update.php
+
+    ->> settings/payroll-type/delete.php
+    ->> settings/payroll-type/functions.php
+    ->> settings/payroll-type/payroll-type.php
     
 *models   
     - employee/SalaryHistory.php 
@@ -16,6 +21,8 @@
     -> employee/SalaryHistory.php
     -> holidays/HolidayExemptions.php
     -> holidays/Holidays.php
+
+    ->> settings/payroll-type/PayrollType.php
   
 *htaccess 
     - #SALARY HISTORY 

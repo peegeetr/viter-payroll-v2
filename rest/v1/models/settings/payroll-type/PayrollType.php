@@ -13,11 +13,13 @@ class PayrollType
     public $payroll_type_start;
     public $payroll_type_search;
     public $tblPayrollType;
+    public $tblPayroll;
 
     public function __construct($db)
     {
         $this->connection = $db;
         $this->tblPayrollType = "prv2_settings_payroll_type";
+        $this->tblPayroll = "prv2_payroll";
     }
 
     public function create()
@@ -123,6 +125,21 @@ class PayrollType
                 "payroll_type_active" => $this->payroll_type_active,
                 "payroll_type_datetime" => $this->payroll_type_datetime,
                 "payroll_type_aid" => $this->payroll_type_aid,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    public function checkPayrollTypeAssociationToPayroll()
+    {
+        try {
+            $sql = "select payroll_category_type from {$this->tblPayroll} ";
+            $sql .= "where payroll_category_type = :payroll_type_aid ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "payroll_type_aid" => "{$this->payroll_type_aid}",
             ]);
         } catch (PDOException $ex) {
             $query = false;

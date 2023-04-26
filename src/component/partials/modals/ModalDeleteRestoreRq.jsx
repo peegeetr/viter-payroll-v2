@@ -47,6 +47,7 @@ const ModalDeleteRestoreRq = ({
       isActive: 1,
       isDraft: 0,
       column_name: item,
+      name: item,
       isDeveloper: isDeveloper,
     });
   };

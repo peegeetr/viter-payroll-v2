@@ -33,6 +33,7 @@ const ModalPayrollType = ({ itemEdit }) => {
       queryClient.invalidateQueries({ queryKey: ["payrollType"] });
       // show success box
       if (data.success) {
+        dispatch(setIsAdd(false));
         dispatch(setSuccess(true));
         dispatch(setMessage(`Successfuly ${itemEdit ? "updated." : "added."}`));
       }

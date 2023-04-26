@@ -37,7 +37,7 @@ const EmployeeSalaryHistoryList = () => {
     queryFn: async ({ pageParam = 1 }) =>
       await queryDataInfinite(
         `${devApiUrl}/v1/salary-history/report/filter/${employeeId}`, // filter endpoint
-        ``, // list endpoint
+        `${devApiUrl}/v1/salary-history/by-employee-id/0`, // list endpoint
         isFilter // search boolean
       ),
     getNextPageParam: (lastPage) => {

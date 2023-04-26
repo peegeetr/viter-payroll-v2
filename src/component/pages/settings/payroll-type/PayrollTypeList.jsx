@@ -162,7 +162,7 @@ const PayrollTypeList = ({ setItemEdit }) => {
           id={id}
           isDel={isDel}
           mysqlApiArchive={`${devApiUrl}/v1/payroll-type/active/${id}`}
-          msg={"Are you sure you want to archive this payroll type"}
+          msg={"Are you sure you want to archive "}
           item={`${dataItem.payroll_type_name}`}
           arrKey="payrollType"
         />
@@ -176,8 +176,8 @@ const PayrollTypeList = ({ setItemEdit }) => {
           mysqlApiRestore={`${devApiUrl}/v1/payroll-type/active/${id}`}
           msg={
             isDel
-              ? "Are you sure you want to delete this payroll type"
-              : "Are you sure you want to restore this payroll type"
+              ? "Are you sure you want to delete"
+              : "Are you sure you want to restore"
           }
           item={`${dataItem.payroll_type_name}`}
           arrKey="payrollType"

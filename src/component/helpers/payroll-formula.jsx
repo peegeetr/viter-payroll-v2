@@ -573,7 +573,12 @@ export const payComputeOtherAllowances = (emp, earning) => {
 };
 
 // compute holiday
-export const payComputeHoliday = (emp, holidays, payrollEarnings) => {
+export const payComputeHoliday = (
+  emp,
+  holidays,
+  payrollEarnings,
+  holidayExemptions
+) => {
   let finalAmount = 0;
   let regularAmount = 0;
   let holidayAmount = 0;
@@ -612,10 +617,27 @@ export const payComputeHoliday = (emp, holidays, payrollEarnings) => {
 
       if (!isAbsent) {
         holidayAmount = Number(
-          holidayTotalAmount(emp, holidaysItem).dailyAmount
+          holidayTotalAmount(emp, holidaysItem, holidayExemptions).dailyAmount
         );
 
-        regularAmount += holidayTotalAmount(emp, holidaysItem).dailyRate;
+        regularAmount += holidayTotalAmount(
+          emp,
+          holidaysItem,
+          holidayExemptions
+        ).dailyRate;
+
+        // overwrite if exemptions
+        isWorkHoliday = holidayTotalAmount(
+          emp,
+          holidaysItem,
+          holidayExemptions
+        ).workOnHoliday;
+        // overwrite if exemptions
+        isObserved = holidayTotalAmount(
+          emp,
+          holidaysItem,
+          holidayExemptions
+        ).holidayObserved;
 
         accumulatedAmount += holidayAmount;
         accumulatedHrs += 8;
@@ -657,7 +679,7 @@ export const payComputeHoliday = (emp, holidays, payrollEarnings) => {
 };
 
 // compute holiday
-export const holidayTotalAmount = (emp, holidaysItem) => {
+export const holidayTotalAmount = (emp, holidaysItem, holidayExemptions) => {
   const days = getWorkingDays(
     new Date(emp.payroll_start_date),
     new Date(emp.payroll_end_date)
@@ -665,6 +687,7 @@ export const holidayTotalAmount = (emp, holidaysItem) => {
 
   let rate = holidaysItem.holidays_rate / 100;
   let workOnHoliday = emp.payroll_list_employee_work_on_holiday;
+  let holidayObserved = holidaysItem.holidays_observed;
   let ratedAmount = 0;
   let regularAmount = 0;
   let dailyAmount = 0;
@@ -672,9 +695,39 @@ export const holidayTotalAmount = (emp, holidaysItem) => {
     employeeRate(emp.payroll_list_employee_salary, days).daily
   );
 
+  // check for employee with holiday exemptions
+  for (let h = 0; h < holidayExemptions.length; h++) {
+    if (
+      holidayExemptions[h].holiday_exemption_holiday_date ===
+        holidaysItem.holidays_date &&
+      holidayExemptions[h].holiday_exemption_eid ===
+        emp.payroll_list_employee_id &&
+      holidayExemptions[h].holiday_exemption_is_observe === 1
+    ) {
+      console.log(emp.payroll_list_employee_id);
+      workOnHoliday = 1;
+      holidayObserved = 1;
+      break;
+    }
+
+    // not observed
+    if (
+      holidayExemptions[h].holiday_exemption_holiday_date ===
+        holidaysItem.holidays_date &&
+      holidayExemptions[h].holiday_exemption_eid ===
+        emp.payroll_list_employee_id &&
+      holidayExemptions[h].holiday_exemption_is_observe === 0
+    ) {
+      console.log(emp.payroll_list_employee_id);
+      workOnHoliday = 0;
+      holidayObserved = 0;
+      break;
+    }
+  }
+
   if (holidaysItem.holidays_type === "regular") {
     // If employee has holiday and not observed
-    if (workOnHoliday === 0 && holidaysItem.holidays_observed === 0) {
+    if (workOnHoliday === 0 && holidayObserved === 0) {
       // no additional
       // dailyAmount = 0;
       dailyAmount = dailyRate;
@@ -683,7 +736,8 @@ export const holidayTotalAmount = (emp, holidaysItem) => {
     // If employee has holiday
     // if employee has holiday observed and other employee did not observed
     // 100% additional pay for working holiday
-    if (workOnHoliday === 1 || holidaysItem.holidays_observed === 1) {
+    if (workOnHoliday === 1 || holidayObserved === 1) {
+      console.log(workOnHoliday);
       // regularAmount += dailyRate;
       // ratedAmount += dailyRate * rate;
       dailyAmount = dailyRate * rate;
@@ -693,14 +747,14 @@ export const holidayTotalAmount = (emp, holidaysItem) => {
   // if employee has holiday observed and other employee did not observed
   // 30% additional pay for working special holiday
   if (holidaysItem.holidays_type === "special") {
-    if (workOnHoliday === 0 && holidaysItem.holidays_observed === 0) {
+    if (workOnHoliday === 0 && holidayObserved === 0) {
       // no additional
       dailyAmount = dailyRate;
     }
 
     // If employee has holiday
     // If employee has holiday and not observed
-    if (workOnHoliday === 1 || holidaysItem.holidays_observed === 1) {
+    if (workOnHoliday === 1 || holidayObserved === 1) {
       // 30% additional
       // regularAmount += dailyRate;
       // ratedAmount += dailyRate * rate;
@@ -711,8 +765,8 @@ export const holidayTotalAmount = (emp, holidaysItem) => {
   // dailyAmount += ratedAmount - regularAmount;
   // dailyRate -= dailyRate;
   dailyAmount = Number(dailyAmount.toFixed(2));
-
-  return { dailyAmount, dailyRate };
+  console.log(dailyAmount, rate);
+  return { dailyAmount, dailyRate, workOnHoliday, holidayObserved };
 };
 
 // compute tax due

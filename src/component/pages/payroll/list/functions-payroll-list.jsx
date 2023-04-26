@@ -46,7 +46,8 @@ export const runPayroll = (
   philhealth,
   category13thMonth,
   categoryId,
-  yearlyTax
+  yearlyTax,
+  holidayExemptions
 ) => {
   let grossAmount = 0;
   let deductionAmount = 0;
@@ -245,7 +246,12 @@ export const runPayroll = (
         totalOtherAllowances;
 
       //  holiday for each employee
-      holidayAmount = payComputeHoliday(emp, holidays, payrollEarnings);
+      holidayAmount = payComputeHoliday(
+        emp,
+        holidays,
+        payrollEarnings,
+        holidayExemptions
+      );
 
       totalHolidayAmount = holidayAmount.accumulatedAmount;
       totalHolidayHrs = holidayAmount.accumulatedHrs;

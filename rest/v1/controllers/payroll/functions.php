@@ -33,6 +33,14 @@ function checkDeleteDeductions($object)
     return $query;
 }
 
+// delete Holiday Exemptions 
+function checkDeleteHolidayExemptions($object)
+{
+    $query = $object->deleteHolidayExemptions();
+    checkQuery($query, "There's a problem processing your request. (delete Holiday Exemptions)");
+    return $query;
+}
+
 // check name
 function isEarningType($object, $name)
 {

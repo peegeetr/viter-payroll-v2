@@ -89,6 +89,7 @@ RewriteRule ^holidays$ controllers/holidays/holidays.php [L]
 RewriteRule ^holidays/([0-9]+)$ controllers/holidays/holidays.php?holidaysid=$1 [L]
 RewriteRule ^holidays/page/([0-9]+)$ controllers/holidays/page.php?start=$1 [L]
 RewriteRule ^holidays/search/([A-Za-z0-9-]+)$ controllers/holidays/search.php?search=$1 [L]
+RewriteRule ^holidays/this-year$ controllers/holidays/read-by-current-year.php [L]
 
 #SETTINGS RATES
 RewriteRule ^rates$ controllers/settings/rates/rates.php [L]

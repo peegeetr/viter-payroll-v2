@@ -10,11 +10,31 @@ import Navigation from "../../../partials/Navigation";
 import HolidayExemptionList from "./HolidayExemptionList";
 import ModalAddHolidayExemption from "./ModalAddHolidayExemption";
 import BreadCrumbs from "../../../partials/BreadCrumbs";
+import useQueryData from "../../../custom-hooks/useQueryData";
+import { devApiUrl, hrisDevApiUrl } from "../../../helpers/functions-general";
+import ModalNoPayrollId from "../../earnings/manage-list/ModalNoPayrollId";
+import { payrollCategorySalaryId } from "../../../helpers/functions-payroll-category-id";
 
 const HolidayExemption = () => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [itemEdit, setItemEdit] = React.useState(null);
 
+  // use if not loadmore button undertime
+  const { data: isPayrollEmpty } = useQueryData(
+    `${devApiUrl}/v1/payroll/list`, // endpoint
+    "get", // method
+    "isPayrollEmpty" // key
+  );
+
+  // use if not loadmore button undertime
+  const { data: employeeName } = useQueryData(
+    `${hrisDevApiUrl}/v1/employees/pay`, // endpoint
+    "get", // method
+    "employeeName", // key
+    {}, // formdata
+    null, // id key
+    false // devKey boolean
+  );
   const handleAdd = () => {
     dispatch(setIsAdd(true));
     setItemEdit(null);
@@ -36,12 +56,26 @@ const HolidayExemption = () => {
         <hr />
 
         <div className="w-full pt-5 pb-20">
-          <HolidayExemptionList setItemEdit={setItemEdit} />
+          <HolidayExemptionList
+            setItemEdit={setItemEdit}
+            employeeName={employeeName}
+          />
         </div>
         <Footer />
       </div>
 
-      {store.isAdd && <ModalAddHolidayExemption item={itemEdit} />}
+      {isPayrollEmpty?.count > 0 &&
+      Number(isPayrollEmpty?.data[0].payroll_category_type) ===
+        payrollCategorySalaryId &&
+      store.isAdd ? (
+        <ModalAddHolidayExemption
+          item={itemEdit}
+          isPayrollEmpty={isPayrollEmpty}
+          employeeName={employeeName}
+        />
+      ) : (
+        store.isAdd && <ModalNoPayrollId text="salary " item={itemEdit} />
+      )}
       {store.success && <ModalSuccess />}
       {store.error && <ModalError />}
     </>

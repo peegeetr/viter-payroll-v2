@@ -32,8 +32,6 @@ const PayrollDetails = () => {
     false // devKey boolean
   );
 
-  // consoleLog(result);
-
   return (
     <>
       <Header />

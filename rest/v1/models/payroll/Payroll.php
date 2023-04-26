@@ -32,6 +32,7 @@ class Payroll
     public $tblEarnings;
     public $tblDeductions;
     public $tblPayrollType;
+    public $tblHolidayExemption;
 
     public function __construct($db)
     {
@@ -41,6 +42,7 @@ class Payroll
         $this->tblEarnings = "prv2_earnings";
         $this->tblDeductions = "prv2_deduction";
         $this->tblPayrollType = "prv2_settings_payroll_type";
+        $this->tblHolidayExemption = "prv2_holiday_exemption";
     }
 
     // create
@@ -382,7 +384,7 @@ class Payroll
         return $query;
     }
 
-    // read by draft
+    // read by draft deleteHolidayExemptions
     public function readByDraft()
     {
         try {
@@ -393,6 +395,21 @@ class Payroll
             $sql .= "from {$this->tblPayroll} ";
             $sql .= "where payroll_is_paid = 0 ";
             $query = $this->connection->query($sql);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+    // delete Earnings
+    public function deleteHolidayExemptions()
+    {
+        try {
+            $sql = "delete from {$this->tblHolidayExemption} ";
+            $sql .= "where holiday_exemption_pr_id = :holiday_exemption_pr_id ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "holiday_exemption_pr_id" => $this->payroll_id,
+            ]);
         } catch (PDOException $ex) {
             $query = false;
         }

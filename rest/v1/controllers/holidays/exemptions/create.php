@@ -13,6 +13,7 @@ checkPayload($data);
 // get data
 
 $exemption->holiday_exemption_eid = checkIndex($data, "holiday_exemption_eid");
+$exemption->holiday_exemption_pr_id = checkIndex($data, "holiday_exemption_pr_id");
 $exemption->holiday_exemption_holiday_date = checkIndex($data, "holiday_exemption_holiday_date");
 $exemption->holiday_exemption_is_observe = checkIndex($data, "holiday_exemption_is_observe");
 $exemption->holiday_exemption_created = date("Y-m-d H:i:s");

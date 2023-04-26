@@ -20,6 +20,7 @@ import PageNotFound from "../../../partials/PageNotFound";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 import ContentSpinner from "../../../partials/spinners/ContentSpinner";
 import FbsLogoLg from "../../../svg/FbsLogoLg";
+import ModalError from "../../../partials/modals/ModalError";
 
 const CreateOtherPassword = () => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -65,15 +66,14 @@ const CreateOtherPassword = () => {
   React.useEffect(() => {
     dispatch(setCreatePassSuccess(true));
   }, []);
-
+  console.log("key", key.length);
   return (
     <>
       {keyLoading ? (
         <div className="relative h-screen">
           <ContentSpinner />
         </div>
-      ) : keyLoading &&
-        (key.length === 0 || paramKey === null || paramKey === "") ? (
+      ) : key.length === 0 || paramKey === null || paramKey === "" ? (
         <div className="relative h-screen">
           <PageNotFound />
         </div>
@@ -95,6 +95,7 @@ const CreateOtherPassword = () => {
                 initialValues={initVal}
                 validationSchema={yupSchema}
                 onSubmit={async (values, { setSubmitting, resetForm }) => {
+                  console.log(values);
                   fetchData(
                     setLoading,
                     `${devApiUrl}/v1/user-others/password`,
@@ -183,6 +184,7 @@ const CreateOtherPassword = () => {
           </div>
         </div>
       )}
+      {store.error && <ModalError />}
     </>
   );
 };

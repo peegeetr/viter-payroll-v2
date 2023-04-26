@@ -21,12 +21,12 @@ const SalaryHistoryBody = ({ item }) => {
   } = useQueryData(
     `${devApiUrl}/v1/salary-history/by-employee-id/${item.salary_history_employee_id}`, // endpoint
     "get", // method
-    "salaryHistory" // key
+    `${item.salary_history_employee_id}-salaryHistory` // key
   );
   const { data: employee } = useQueryData(
     `${hrisDevApiUrl}/v1/employees/job/${item.salary_history_employee_id}`, // endpoint
     "get", // method
-    "employee", // key
+    `${item.salary_history_employee_id}-employee`, // key
     {}, // formdata
     null, // id key
     false // devKey boolean
@@ -61,17 +61,17 @@ const SalaryHistoryBody = ({ item }) => {
                 </td>
               </tr>
             )}
-            {salaryHistory?.data.map((item, key) => {
+            {salaryHistory?.data.map((shItem, key) => {
               counter++;
               return (
                 <tr key={key}>
                   <td>{counter}.</td>
                   <td className="text-right pr-4">
                     {`P ${numberWithCommas(
-                      Number(item.salary_history_salary_amount).toFixed(2)
+                      Number(shItem.salary_history_salary_amount).toFixed(2)
                     )}`}
                   </td>
-                  <td>{formatDate(item.salary_history_date)}</td>
+                  <td>{formatDate(shItem.salary_history_date)}</td>
                 </tr>
               );
             })}
@@ -82,7 +82,7 @@ const SalaryHistoryBody = ({ item }) => {
                     &nbsp;
                   </td>
                 </tr>
-                <tr className="bg-primary text-right text-white uppercase hover:bg-primary ">
+                <tr className=" text-right uppercase font-bold hover:bg-white border-primary border-b-[2px] border-solid ">
                   <td colSpan={4}>
                     Current pay:
                     <span className="ml-5">

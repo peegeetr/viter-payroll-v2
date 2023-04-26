@@ -37,7 +37,7 @@ const EmployeeSalaryHistoryList = () => {
     queryFn: async ({ pageParam = 1 }) =>
       await queryDataInfinite(
         `${devApiUrl}/v1/salary-history/report/filter/${employeeId}`, // filter endpoint
-        `${devApiUrl}/v1/salary-history/by-employee-id/${0}`, // list endpoint
+        ``, // list endpoint
         isFilter // search boolean
       ),
     getNextPageParam: (lastPage) => {
@@ -79,7 +79,7 @@ const EmployeeSalaryHistoryList = () => {
   const yupSchema = Yup.object({
     payroll_employee: Yup.string().required("Required"),
   });
-  console.log(result);
+  console.log(result, employeeId);
   return (
     <>
       <div className=" z-0 w-full print:hidden">
@@ -94,7 +94,7 @@ const EmployeeSalaryHistoryList = () => {
                       name="payroll_employee"
                       type="name"
                       onChange={handleEmployee}
-                      disabled={isFetching}
+                      disabled={loadingEmployee || status === "loading"}
                     >
                       <option value="" hidden>
                         {loadingEmployee && "Loading..."}
@@ -134,7 +134,7 @@ const EmployeeSalaryHistoryList = () => {
         <React.Fragment key={key}>
           {page.data.map((item, key) => {
             return (
-              <div key={key} className="my-10 print:my-0">
+              <div key={key} className="my-10 print:my-0 print:mb-12">
                 <SalaryHistoryBody item={item} />
               </div>
             );

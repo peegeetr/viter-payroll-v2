@@ -150,3 +150,9 @@ RewriteRule ^salary-history$ controllers/employee/salary-history/salary-history.
 RewriteRule ^salary-history/([0-9]+)$ controllers/employee/salary-history/salary-history.php?salaryHistoryId=$1 [L]
 RewriteRule ^salary-history/by-employee-id/([0-9]+)$ controllers/employee/salary-history/read-by-employee-id.php?employeeId=$1 [L]
 RewriteRule ^salary-history/report/filter/([0-9]+)$ controllers/employee/salary-history/report-salary-history-filter.php?employeeId=$1 [L]
+ 
+#HOLIDAYS EXEMPTIONS
+RewriteRule ^holiday-exemptions$ controllers/holidays/exemptions/holidayExemptions.php [L]
+RewriteRule ^holiday-exemptions/([0-9]+)$ controllers/holidays/exemptions/holidayExemptions.php?exemptionId=$1 [L]
+RewriteRule ^holiday-exemptions/page/([0-9]+)$ controllers/holidays/exemptions/page.php?start=$1 [L]
+RewriteRule ^holiday-exemptions/search/([A-Za-z0-9-]+)$ controllers/holidays/exemptions/search.php?search=$1 [L]

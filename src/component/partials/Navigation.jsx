@@ -118,7 +118,7 @@ const Navigation = ({ menu }) => {
             }
           >
             <Link
-              to={`${link}/holidays`}
+              to={`${link}/holiday-details`}
               className="w-full flex items-center !p-4 md:justify-center lg:justify-start tooltip-navigation"
               onClick={handleShow}
               data-tooltip="Holidays"

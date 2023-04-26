@@ -2,18 +2,24 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { useInView } from "react-intersection-observer";
 import React from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
-import { setIsAdd, setIsRestore } from "../../../store/StoreAction";
-import { StoreContext } from "../../../store/StoreContext";
-import { devApiUrl, formatDate } from "../../helpers/functions-general";
-import { queryDataInfinite } from "../../helpers/queryDataInfinite";
-import ModalDeleteRestoreRq from "../../partials/modals/ModalDeleteRestoreRq";
-import NoData from "../../partials/NoData";
-import ServerError from "../../partials/ServerError";
-import TableSpinner from "../../partials/spinners/TableSpinner.jsx";
-import LoadmoreRq from "../../partials/LoadmoreRq";
-import SearchBarRq from "../../partials/SearchBarRq";
+import { StoreContext } from "../../../../store/StoreContext";
+import { queryDataInfinite } from "../../../helpers/queryDataInfinite";
+import { setIsAdd, setIsRestore } from "../../../../store/StoreAction";
+import SearchBarRq from "../../../partials/SearchBarRq";
+import NoData from "../../../partials/NoData";
+import TableSpinner from "../../../partials/spinners/TableSpinner";
+import ServerError from "../../../partials/ServerError";
+import {
+  devApiUrl,
+  formatDate,
+  hrisDevApiUrl,
+} from "../../../helpers/functions-general";
+import LoadmoreRq from "../../../partials/LoadmoreRq";
+import ModalDeleteRestoreRq from "../../../partials/modals/ModalDeleteRestoreRq";
+import useQueryData from "../../../custom-hooks/useQueryData";
+import { getEmployeeName } from "./functions-exemptions";
 
-const HolidaysList = ({ setItemEdit }) => {
+const HolidayExemptionList = ({ setItemEdit }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [dataItem, setData] = React.useState(null);
   const [id, setId] = React.useState(null);
@@ -35,11 +41,11 @@ const HolidaysList = ({ setItemEdit }) => {
     isFetchingNextPage,
     status,
   } = useInfiniteQuery({
-    queryKey: ["holiday", onSearch, store.isSearch],
+    queryKey: ["holiday-exemptions", onSearch, store.isSearch],
     queryFn: async ({ pageParam = 1 }) =>
       await queryDataInfinite(
-        `${devApiUrl}/v1/holidays/search/${search.current.value}`, // search endpoint
-        `${devApiUrl}/v1/holidays/page/${pageParam}`, // list endpoint
+        `${devApiUrl}/v1/holiday-exemptions/search/${search.current.value}`, // search endpoint
+        `${devApiUrl}/v1/holiday-exemptions/page/${pageParam}`, // list endpoint
         store.isSearch // search boolean
       ),
     getNextPageParam: (lastPage) => {
@@ -65,10 +71,19 @@ const HolidaysList = ({ setItemEdit }) => {
 
   const handleDelete = (item) => {
     dispatch(setIsRestore(true));
-    setId(item.holidays_aid);
+    setId(item.holiday_exemption_aid);
     setData(item);
     setDel(true);
   };
+  // use if not loadmore button undertime
+  const { data: employeeName } = useQueryData(
+    `${hrisDevApiUrl}/v1/employees/pay`, // endpoint
+    "get", // method
+    "employeeName", // key
+    {}, // formdata
+    null, // id key
+    false // devKey boolean
+  );
 
   return (
     <>
@@ -86,12 +101,9 @@ const HolidaysList = ({ setItemEdit }) => {
           <thead>
             <tr>
               <th>#</th>
-              <th className="min-w-[10rem] w-[10rem]">Holidays</th>
-              <th className="min-w-[10rem] w-[10rem]">Date</th>
-              <th className="min-w-[5rem] w-[10rem]">Type</th>
-              <th>Rate</th>
+              <th className="min-w-[10rem] w-[10rem]">Employee</th>
+              <th className="min-w-[10rem] ">Holidays Date</th>
               <th>Remarks</th>
-
               <th className="max-w-[5rem]">Actions</th>
             </tr>
           </thead>
@@ -116,18 +128,14 @@ const HolidaysList = ({ setItemEdit }) => {
                 {page.data.map((item, key) => (
                   <tr key={key}>
                     <td>{counter++}.</td>
-                    <td>{item.holidays_name}</td>
+                    <td>{getEmployeeName(item, employeeName)}</td>
                     <td>
-                      {`${formatDate(item.holidays_date).split(" ")[0]} 
-                      ${formatDate(item.holidays_date).split(" ")[1]} 
-                      ${formatDate(item.holidays_date).split(" ")[2]}
-                      ${formatDate(item.holidays_date).split(" ")[3]}
-                      `}
+                      {`${formatDate(item.holiday_exemption_holiday_date)}`}
                     </td>
-                    <td className="capitalize">{item.holidays_type} Holiday</td>
-                    <td>{item.holidays_rate}%</td>
                     <td>
-                      {item.holidays_observed ? "Observed" : "Not observed"}
+                      {item.holiday_exemption_is_observe === 1
+                        ? "Observed"
+                        : "Not observed"}
                     </td>
 
                     <td>
@@ -176,15 +184,15 @@ const HolidaysList = ({ setItemEdit }) => {
         <ModalDeleteRestoreRq
           id={id}
           isDel={isDel}
-          mysqlApiDelete={`${devApiUrl}/v1/holidays/${id}`}
+          mysqlApiDelete={`${devApiUrl}/v1/holiday-exemptions/${id}`}
           mysqlApiRestore={null}
           msg="Are you sure you want to delete this "
-          item={`${dataItem.holidays_name}`}
-          arrKey="holiday"
+          item={`${formatDate(dataItem.holiday_exemption_holiday_date)}`}
+          arrKey="holiday-exemptions"
         />
       )}
     </>
   );
 };
 
-export default HolidaysList;
+export default HolidayExemptionList;

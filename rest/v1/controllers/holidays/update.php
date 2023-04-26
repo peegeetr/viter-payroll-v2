@@ -29,7 +29,7 @@ if (array_key_exists("holidaysid", $_GET)) {
     checkId($holidays->holidays_aid);
 
     compareHolidayName($holidays, $holidays_name_old, $holidays->holidays_name);
-    // compareHolidayDate($holidays, $holidays_date_old, $holidays->holidays_date);
+    compareHolidayDate($holidays, $holidays_date_old, $holidays->holidays_date);
 
     // update
     $query = checkUpdate($holidays);

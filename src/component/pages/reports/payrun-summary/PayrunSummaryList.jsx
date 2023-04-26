@@ -112,7 +112,7 @@ const PayrunSummaryList = () => {
                       <option value="" hidden>
                         {loadingEmployee && "Loading..."}
                       </option>
-                      <option value="0">All</option>
+                      <option value="0"> All</option>
                       {employee?.data.map((eItem, key) => {
                         return (
                           <option key={key} value={eItem.employee_aid}>

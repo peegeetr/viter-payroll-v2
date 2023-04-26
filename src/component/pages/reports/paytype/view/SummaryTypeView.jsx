@@ -103,7 +103,7 @@ const SummaryTypeView = () => {
       <Navigation menu="reports" />
       <div className="wrapper print:pt-0">
         <div className="flex items-center mb-1 justify-between whitespace-nowrap overflow-auto gap-2 print:hidden">
-          <BreadCrumbs />
+          <BreadCrumbs name={`${payItem}`} />
           <div className="flex items-center gap-1">
             <button
               type="button"

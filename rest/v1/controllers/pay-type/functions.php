@@ -30,3 +30,11 @@ function checkReadReportDeductionPaytypeIdByDate($object)
     checkQuery($query, "Empty records.(read all paytype deduction)");
     return $query;
 }
+
+// // Read all paytype deduction
+// function checkReadReportAllPaytypeIdByDate($object)
+// {
+//     $query = $object->readReportAllPaytypeIdByDate();
+//     checkQuery($query, "Empty records.(read all paytype deduction)");
+//     return $query;
+// }

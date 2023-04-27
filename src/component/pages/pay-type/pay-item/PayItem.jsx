@@ -30,12 +30,14 @@ const PayItem = () => {
         {/* <h4 className="text-xl">Holidays</h4> */}
         <div className="flex items-center justify-between mb-3 whitespace-nowrap overflow-auto gap-2">
           <BreadCrumbs />
-          <div className="flex items-center gap-1">
-            <button type="button" className="btn-primary" onClick={handleAdd}>
-              <FaPlusCircle />
-              <span>Add</span>
-            </button>
-          </div>
+          {store.credentials.data.role_is_developer === 1 && (
+            <div className="flex items-center gap-1">
+              <button type="button" className="btn-primary" onClick={handleAdd}>
+                <FaPlusCircle />
+                <span>Add</span>
+              </button>
+            </div>
+          )}
         </div>
         <hr />
 

@@ -220,15 +220,23 @@ function App() {
             /> */}
 
             {/* Deductions Page */}
-            <Route
+            {/* <Route
               path={`${devNavUrl}/deductions`}
               element={
                 <ProtectedRouteOther>
                   <DeductionsPage />
                 </ProtectedRouteOther>
               }
-            />
+            /> */}
             <Route
+              path={`${devNavUrl}/deductions`}
+              element={
+                <ProtectedRouteOther>
+                  <ManageDeduction />
+                </ProtectedRouteOther>
+              }
+            />
+            {/* <Route
               path={`${devNavUrl}/deductions/manage`}
               element={
                 <ProtectedRouteOther>
@@ -243,7 +251,7 @@ function App() {
                   <FilterDeductions />
                 </ProtectedRouteOther>
               }
-            />
+            /> */}
 
             {/* Pay Type Page */}
             <Route

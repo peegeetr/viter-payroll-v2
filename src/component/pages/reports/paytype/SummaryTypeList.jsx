@@ -123,10 +123,10 @@ const SummaryTypeList = () => {
           }}
         >
           {(props) => {
-            props.values.deminimis =
-              Number(props.values.paytype_aid) === deMinimisEarningsId
-                ? deMinimisEarningsId
-                : "0";
+            // props.values.deminimis =
+            //   Number(props.values.paytype_aid) === deMinimisEarningsId
+            //     ? deMinimisEarningsId
+            //     : "0";
             return (
               <Form>
                 <div className="grid gap-5 grid-cols-1 md:grid-cols-[1fr_1fr_1fr_150px] pt-5 pb-5 items-center">
@@ -141,6 +141,7 @@ const SummaryTypeList = () => {
                       <option value="" hidden>
                         {loadingPayType && "Loading..."}
                       </option>
+                      <option value="0">All</option>
                       {payType?.data.map((paytype, key) => {
                         return (
                           <option

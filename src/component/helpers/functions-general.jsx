@@ -12,7 +12,7 @@ export const devApiUrl = "https://payroll-app.frontlinebusiness.com.ph/rest";
 export const devBaseUrl = "https://payroll-app.frontlinebusiness.com.ph";
 export const devNavUrl = "/v2";
 
-// // Online URL dev payroll
+// // Online URL production payroll
 // export const devBaseImgUrl = "https://payroll.frontlinebusiness.com.ph/v2/img";
 // export const devApiUrl = "https://payroll.frontlinebusiness.com.ph/v2/rest";
 // export const devBaseUrl = "https://payroll.frontlinebusiness.com.ph/v2";

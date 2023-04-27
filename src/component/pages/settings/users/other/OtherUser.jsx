@@ -19,8 +19,6 @@ import FetchingSpinner from "../../../../partials/spinners/FetchingSpinner";
 import { getRoleIdAdmin } from "../function-users";
 import ModalAddOtherUser from "./ModalAddOtherUser";
 import OtherUserList from "./OtherUserList";
-import TableSpinner from "../../../../partials/spinners/TableSpinner";
-import NoData from "../../../../partials/NoData";
 
 const OtherUser = () => {
   const { store, dispatch } = React.useContext(StoreContext);

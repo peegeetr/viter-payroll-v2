@@ -32,6 +32,8 @@ const SystemUser = () => {
     setItemEdit(null);
   };
 
+  console.log(role);
+
   return (
     <>
       <Header />

@@ -5,15 +5,18 @@
     - holidays/exemptions/created.php
     - holidays/exemptions/update.php
     - payroll/list/functions.php
-    - payroll/list/read-all-salary-category.php
+    - payroll/list/read-all-salary-category.php 
+    - payroll/list/search.php 
 
-    -> payroll/list/search.php 
+    -> settings/user/role/update.php 
     
 *models   
     - holidays/Holidays.php
     - payroll/Payroll.php 
     - holidays/HolidaysExemptions.php
     - payroll/list/PayrollList.php
+
+    -> settings/user/role/Role.php
   
 *htaccess 
     - #HOLIDAYS   

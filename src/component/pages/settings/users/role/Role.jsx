@@ -25,7 +25,7 @@ const Role = () => {
       <Header />
       <Navigation menu="settings" />
       <div className="wrapper">
-        <div className="flex items-center justify-between mb-3 whitespace-nowrap overflow-auto gap-2">
+        <div className="flex items-center justify-between mb-3 whitespace-nowrap overflow-auto gap-2 print:hidden">
           <BreadCrumbs />
           <div className="flex items-center gap-1">
             <button type="button" className="btn-primary" onClick={handleAdd}>
@@ -34,7 +34,7 @@ const Role = () => {
             </button>
           </div>
         </div>
-        <hr />
+        <hr className=" print:hidden" />
 
         <div className="w-full pt-5 pb-20">
           <RoleList setItemEdit={setItemEdit} />

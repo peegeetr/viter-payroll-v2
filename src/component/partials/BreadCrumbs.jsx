@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { setStartIndex } from "../../store/StoreAction";
+import { setIsSearch, setStartIndex } from "../../store/StoreAction";
 import { StoreContext } from "../../store/StoreContext";
 import { getUserType } from "../helpers/functions-general";
 
@@ -9,6 +9,10 @@ const BreadCrumbs = ({ param = "", name = "" }) => {
   const location = useLocation();
 
   let currentLink = "";
+  const handleShow = () => {
+    dispatch(setStartIndex(0));
+    dispatch(setIsSearch(false));
+  };
 
   const link = getUserType(store.credentials.data.role_is_developer === 1);
   const crumbs = location.pathname
@@ -23,7 +27,7 @@ const BreadCrumbs = ({ param = "", name = "" }) => {
         <li
           className="text-primary after:mr-2 after:content-['>'] last:after:hidden last:text-dark last:pointer-events-none print:hidden"
           key={key}
-          onClick={() => dispatch(setStartIndex(0))}
+          onClick={handleShow}
         >
           <Link
             to={`${link}${currentLink}${param}`}

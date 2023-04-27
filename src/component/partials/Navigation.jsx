@@ -11,7 +11,7 @@ import {
   GiBookPile,
 } from "react-icons/gi";
 import { Link } from "react-router-dom";
-import { setIsShow, setStartIndex } from "../../store/StoreAction";
+import { setIsSearch, setIsShow, setStartIndex } from "../../store/StoreAction";
 import { StoreContext } from "../../store/StoreContext";
 import { getUserType } from "../helpers/functions-general";
 
@@ -21,6 +21,7 @@ const Navigation = ({ menu }) => {
   const handleShow = () => {
     dispatch(setIsShow(!store.isShow));
     dispatch(setStartIndex(0));
+    dispatch(setIsSearch(false));
   };
 
   const link = getUserType(store.credentials.data.role_is_developer === 1);

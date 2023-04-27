@@ -141,7 +141,7 @@ const SummaryTypeList = () => {
                       <option value="" hidden>
                         {loadingPayType && "Loading..."}
                       </option>
-                      <option value="0">All</option>
+                      {/* <option value="0">All</option> */}
                       {payType?.data.map((paytype, key) => {
                         return (
                           <option

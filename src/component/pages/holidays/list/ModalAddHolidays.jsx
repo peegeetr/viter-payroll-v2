@@ -1,27 +1,26 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Form, Formik } from "formik";
 import React from "react";
-import { FaTimesCircle } from "react-icons/fa";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { FaCheck, FaTimesCircle } from "react-icons/fa";
+import { ImCross } from "react-icons/im";
 import * as Yup from "yup";
-import { StoreContext } from "../../../../store/StoreContext";
-import { queryData } from "../../../helpers/queryData";
-import { devApiUrl } from "../../../helpers/functions-general";
 import {
   setError,
   setIsAdd,
   setMessage,
   setSuccess,
 } from "../../../../store/StoreAction";
-import {
-  InputSelect,
-  InputText,
-  MyCheckbox,
-} from "../../../helpers/FormInputs";
+import { StoreContext } from "../../../../store/StoreContext";
+import { InputSelect, InputText } from "../../../helpers/FormInputs";
+import { devApiUrl } from "../../../helpers/functions-general";
+import { queryData } from "../../../helpers/queryData";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 
 const ModalAddHolidays = ({ item }) => {
   const { store, dispatch } = React.useContext(StoreContext);
-  const [loading, setLoading] = React.useState(false);
+  const [isObserved, setIsObserved] = React.useState(
+    item ? item.holidays_observed : ""
+  );
 
   const queryClient = useQueryClient();
   const mutation = useMutation({
@@ -51,6 +50,16 @@ const ModalAddHolidays = ({ item }) => {
   });
   const handleClose = () => {
     dispatch(setIsAdd(false));
+  };
+  const handleRateHoliday = async (e) => {
+    let isSpecialHolidayRate = e.target.value;
+    // get employee id
+    if (isSpecialHolidayRate === "special") {
+      setIsObserved("1");
+    }
+    if (isSpecialHolidayRate === "regular") {
+      setIsObserved("0");
+    }
   };
 
   const initVal = {
@@ -118,33 +127,31 @@ const ModalAddHolidays = ({ item }) => {
                         disabled={mutation.isLoading}
                       />
                     </div>
-                    <div className="relative mb-5">
+                    <div className="relative mb-10">
                       <InputSelect
                         name="holidays_type"
                         label="Type"
+                        onChange={handleRateHoliday}
                         disabled={mutation.isLoading}
-                        onFocus={(e) =>
-                          e.target.parentElement.classList.add("focused")
-                        }
                       >
-                        <optgroup label="Type">
-                          <option value="" disabled hidden></option>
-                          <option value="special">
-                            Special Holiday (130%)
-                          </option>
-                          <option value="regular">
-                            Regular Holiday (200%)
-                          </option>
-                        </optgroup>
+                        <option value="" disabled hidden></option>
+                        <option value="special">Special Holiday (130%)</option>
+                        <option value="regular">Regular Holiday (200%)</option>
                       </InputSelect>
-                    </div>
-                    <div className="relative mb-5 grid grid-cols-[1fr_8fr] items-center justify-center ">
-                      <MyCheckbox
-                        type="checkbox"
-                        name="holidays_observed"
-                        disabled={mutation.isLoading}
-                      />
-                      <p className="mb-0">Is this holiday observed?</p>
+
+                      {isObserved === "1" || isObserved === 1 ? (
+                        <div className="flex items-center absolute right-[100px] mt-4 text-primary">
+                          <FaCheck className="text-green-800" />
+                          <p className=" mb-0 ml-2">Will Observed</p>
+                        </div>
+                      ) : isObserved === "0" || isObserved === 0 ? (
+                        <div className="flex items-center absolute right-[86px] mt-4 text-primary">
+                          <ImCross />
+                          <p className=" mb-0 ml-2">Will Not Observed</p>
+                        </div>
+                      ) : (
+                        ""
+                      )}
                     </div>
                     <div className="flex items-center gap-1 pt-5">
                       <button

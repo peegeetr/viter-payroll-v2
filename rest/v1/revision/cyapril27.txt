@@ -2,13 +2,23 @@
 *controllers    
     - holidays/functions.php
     - holidays/read-by-current-year.php
+
+    -> holidays/exemptions/created.php
+    -> holidays/exemptions/update.php
+    -> payroll/list/functions.php
+    -> payroll/list/read-all-salary-category.php
     
 *models   
     - holidays/Holidays.php
     - payroll/Payroll.php
+
+    -> holidays/HolidaysExemptions.php
+    -> payroll/list/PayrollList.php
   
 *htaccess 
     - #HOLIDAYS  
+
+    -> #payroll list paid
 
 *db tables 
     - 

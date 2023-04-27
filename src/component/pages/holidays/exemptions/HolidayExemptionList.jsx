@@ -4,7 +4,11 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 import { useInView } from "react-intersection-observer";
 import { setIsAdd, setIsRestore } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
-import { devApiUrl, formatDate } from "../../../helpers/functions-general";
+import {
+  devApiUrl,
+  formatDate,
+  getPayPeriod,
+} from "../../../helpers/functions-general";
 import { queryDataInfinite } from "../../../helpers/queryDataInfinite";
 import LoadmoreRq from "../../../partials/LoadmoreRq";
 import NoData from "../../../partials/NoData";
@@ -12,9 +16,19 @@ import SearchBarRq from "../../../partials/SearchBarRq";
 import ServerError from "../../../partials/ServerError";
 import ModalDeleteRestoreRq from "../../../partials/modals/ModalDeleteRestoreRq";
 import TableSpinner from "../../../partials/spinners/TableSpinner";
-import { getEmployeeDetails } from "./functions-exemptions";
+import {
+  getEmployeeDetails,
+  getHolidayName,
+  getPayPeriodHoliday,
+} from "./functions-exemptions";
+import useQueryData from "../../../custom-hooks/useQueryData";
+import { payrollCategorySalaryId } from "../../../helpers/functions-payroll-category-id";
 
-const HolidayExemptionList = ({ setItemEdit, employeeName }) => {
+const HolidayExemptionList = ({
+  setItemEdit,
+  employeeName,
+  salaryCategoryId,
+}) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [dataItem, setData] = React.useState(null);
   const [id, setId] = React.useState(null);
@@ -59,6 +73,18 @@ const HolidayExemptionList = ({ setItemEdit, employeeName }) => {
     }
   }, [inView]);
 
+  const { data: payPeriodHoliday } = useQueryData(
+    `${devApiUrl}/v1/payrollList/all-salary-category/${payrollCategorySalaryId}`, // endpoint
+    "get", // method
+    "payPeriodHoliday" // key
+  );
+
+  // use if not loadmore button undertime
+  const { data: Allholiday } = useQueryData(
+    `${devApiUrl}/v1/holidays`, // endpoint
+    "get", // method
+    "Allholiday" // key
+  );
   const handleEdit = (item) => {
     dispatch(setIsAdd(true));
     setItemEdit(item);
@@ -70,7 +96,7 @@ const HolidayExemptionList = ({ setItemEdit, employeeName }) => {
     setData(item);
     setDel(true);
   };
-  console.log(result);
+
   return (
     <>
       <SearchBarRq
@@ -89,6 +115,8 @@ const HolidayExemptionList = ({ setItemEdit, employeeName }) => {
               <th>#</th>
               <th className="min-w-[10rem] w-[10rem]">Employee</th>
               <th className="min-w-[10rem] ">Payroll Id</th>
+              <th className="min-w-[10rem] ">PayPeriod</th>
+              <th className="min-w-[10rem] ">Holidays</th>
               <th className="min-w-[10rem] ">Holidays Date</th>
               <th>Remarks</th>
               <th className="max-w-[5rem]">Actions</th>
@@ -119,6 +147,8 @@ const HolidayExemptionList = ({ setItemEdit, employeeName }) => {
                       {getEmployeeDetails(item, employeeName).employee_name}
                     </td>
                     <td>{item.holiday_exemption_pr_id}</td>
+                    <td>{getPayPeriodHoliday(item, payPeriodHoliday)}</td>
+                    <td>{getHolidayName(item, Allholiday)}</td>
                     <td>
                       {`${formatDate(item.holiday_exemption_holiday_date)}`}
                     </td>

@@ -60,6 +60,7 @@ RewriteRule ^payrollList/my-info/payslip/filter/13month/by-id/([0-9]+)/([0-9]+)/
 RewriteRule ^payrollList/my-info/payslip/filter/bonus/by-id/([0-9]+)/([0-9]+)/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)$ controllers/payroll/list/hris-filter-payslip-bonus-employee-id.php?employeeId=$1&payrollType=$2&startDate=$3&endDate=$4 [L]   
 RewriteRule ^payrollList/report/filter/basic-pay$ controllers/payroll/list/report-filter-basic-pay.php [L]   
 RewriteRule ^payrollList/report/basic-pay/page/([A-Za-z0-9-]+)/([0-9]+)$ controllers/payroll/list/report-basic-pay-page.php?listpayrollid=$1&start=$2 [L]
+RewriteRule ^payrollList/all-salary-category/([0-9]+)$ controllers/payroll/list/read-all-salary-category.php?payrollSalaryCategoryId=$1 [L]
      
 #earnings
 RewriteRule ^earnings$ controllers/earnings/earnings.php [L]

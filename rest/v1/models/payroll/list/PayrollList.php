@@ -1560,4 +1560,28 @@ class PayrollList
         }
         return $query;
     }
+
+    // read by id
+    public function readAllSalaryCategory($payroll_category_type)
+    {
+        try {
+            $sql = "select payroll.payroll_id, ";
+            $sql .= "payroll.payroll_pay_date, ";
+            $sql .= "payroll.payroll_start_date, ";
+            $sql .= "payroll.payroll_end_date, ";
+            $sql .= "payrollList.payroll_list_employee_id ";
+            $sql .= "from {$this->tblPayrollList} as payrollList, ";
+            $sql .= "{$this->tblPayroll} as payroll ";
+            $sql .= "where payroll.payroll_category_type = :payroll_category_type ";
+            $sql .= "and payroll.payroll_id = payrollList.payroll_list_payroll_id ";
+            $sql .= "order by payrollList.payroll_list_employee_id desc ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "payroll_category_type" => $payroll_category_type,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
 }

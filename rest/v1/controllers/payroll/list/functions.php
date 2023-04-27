@@ -298,6 +298,7 @@ function checkReadByIdLimit($object)
     return $query;
 }
 
+
 // Read search
 function checkSearchById($object)
 {
@@ -311,5 +312,13 @@ function checkUpdatePayrollTotalAmount($object, $payrollTotalAmount)
 {
     $query = $object->updatePayrollTotalAmount($payrollTotalAmount);
     checkQuery($query, "There's a problem processing your request. (update payroll to paid)");
+    return $query;
+}
+
+// Read limit
+function checkReadAllSalaryCategory($object, $payroll_category_type)
+{
+    $query = $object->readAllSalaryCategory($payroll_category_type);
+    checkQuery($query, "Empty records. (read by all Salary Category)");
     return $query;
 }

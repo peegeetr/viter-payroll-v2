@@ -69,6 +69,7 @@ export const InputSelect = ({ label, onChange, ...props }) => {
     props.name === "rates_paytype_id" ||
     props.name === "rates_payitems_id" ||
     props.name === "is_installment" ||
+    props.name === "holidays_type" ||
     props.name === "employee_job_supervisor_name" ||
     props.name === "holiday_exemption_eid" ||
     props.name === "holiday_exemption_holiday_date" ||

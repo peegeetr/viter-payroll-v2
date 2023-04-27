@@ -26,6 +26,9 @@ import HolidayIsObserved from "./HolidayIsObserved";
 const ModalAddHolidays = ({ item, isPayrollEmpty, employeeName }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [isRate, setRate] = React.useState("");
+  const [holidayId, setHolidayId] = React.useState(
+    item ? item.holiday_exemption_holiday_id : ""
+  );
   const [isObserved, setIsObserved] = React.useState(
     item ? item.holiday_exemption_is_observe : ""
   );
@@ -80,7 +83,6 @@ const ModalAddHolidays = ({ item, isPayrollEmpty, employeeName }) => {
     "get", // method
     "holidayDate" // key
   );
-  console.log(holidayDate);
   const handleEmployee = async (e) => {
     // // get jobId id
     let workOnHoliday = e.target.options[e.target.selectedIndex].id;
@@ -94,23 +96,31 @@ const ModalAddHolidays = ({ item, isPayrollEmpty, employeeName }) => {
     if (
       item &&
       workOnHoliday === "0" &&
-      getRateDate(item, holidayDate) === "200"
+      getRateDate(item, holidayDate, "0") === "200"
     ) {
       setIsObserved("1");
     }
-    if (item && workOnHoliday === "1") {
+    if (workOnHoliday === "1") {
       setIsObserved("0");
     }
   };
 
   const handleRateHoliday = async (e) => {
     // get employee id
-    let isSpecialHolidayRate = e.target.options[e.target.selectedIndex].id;
-    setRate(isSpecialHolidayRate);
-    if (isWorkOnHoliday === "0" && isSpecialHolidayRate === "130") {
+    let date = e.target.value;
+    let holidayAid = e.target.options[e.target.selectedIndex].id;
+    setHolidayId(holidayAid);
+    setRate(getRateDate(null, holidayDate, date));
+    if (
+      isWorkOnHoliday === "0" &&
+      getRateDate(null, holidayDate, date) === "130"
+    ) {
       setIsObserved("0");
     }
-    if (isWorkOnHoliday === "0" && isSpecialHolidayRate === "200") {
+    if (
+      isWorkOnHoliday === "0" &&
+      getRateDate(null, holidayDate, date) === "200"
+    ) {
       setIsObserved("1");
     }
     if (isWorkOnHoliday === "1") {
@@ -156,11 +166,13 @@ const ModalAddHolidays = ({ item, isPayrollEmpty, employeeName }) => {
               initialValues={initVal}
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
+                console.log(values);
                 mutation.mutate(values);
               }}
             >
               {(props) => {
                 props.values.holiday_exemption_is_observe = isObserved;
+                props.values.holiday_exemption_holiday_id = holidayId;
                 props.values.holiday_exemption_pr_id =
                   isPayrollEmpty?.data[0].payroll_id;
                 return (
@@ -207,7 +219,7 @@ const ModalAddHolidays = ({ item, isPayrollEmpty, employeeName }) => {
                             <option
                               key={key}
                               value={hdItem.holidays_date}
-                              id={hdItem.holidays_rate}
+                              id={hdItem.holidays_aid}
                             >
                               {`${hdItem.holidays_name} ${
                                 hdItem.holidays_rate

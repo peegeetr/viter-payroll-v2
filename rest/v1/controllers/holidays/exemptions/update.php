@@ -15,6 +15,7 @@ if (array_key_exists("exemptionId", $_GET)) {
     // get exemptionId from query string
     $exemption->holiday_exemption_aid = $_GET['exemptionId'];
     $exemption->holiday_exemption_eid = checkIndex($data, "holiday_exemption_eid");
+    $exemption->holiday_exemption_holiday_id = checkIndex($data, "holiday_exemption_holiday_id");
     $exemption->holiday_exemption_holiday_date = checkIndex($data, "holiday_exemption_holiday_date");
     $exemption->holiday_exemption_is_observe = checkIndex($data, "holiday_exemption_is_observe");
     $exemption->holiday_exemption_datetime = date("Y-m-d H:i:s");

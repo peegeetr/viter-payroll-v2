@@ -1,10 +1,10 @@
 <?php
 
 // Read search
-function checkReadAllCurrentYear($object, $year)
+function checkReadAllCurrentYear($object)
 {
-    $query = $object->readAllCurrentYear($year);
-    checkQuery($query, "Empty records. (read all current year holiday)");
+    $query = $object->readAllCurrentYear();
+    checkQuery($query, "Empty records. (read all holiday by pay period)");
     return $query;
 }
 

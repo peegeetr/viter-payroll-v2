@@ -397,6 +397,7 @@ class Payroll
         try {
             $sql = "select payroll_id, ";
             $sql .= "payroll_category_type, ";
+            $sql .= "payroll_pay_date, ";
             $sql .= "payroll_start_date, ";
             $sql .= "payroll_end_date ";
             $sql .= "from {$this->tblPayroll} ";

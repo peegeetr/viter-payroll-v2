@@ -15,6 +15,8 @@ class Holidays
     public $lastInsertedId;
     public $holidays_start;
     public $holidays_total;
+    public $date_from;
+    public $date_to;
     public $holidays_search;
     public $tblHolidays;
     public $tblHolidayExemption;
@@ -71,6 +73,7 @@ class Holidays
             $sql = "select * ";
             $sql .= "from {$this->tblHolidays} ";
             $sql .= "order by holidays_is_active desc, ";
+            $sql .= "holidays_date desc, ";
             $sql .= "holidays_name asc ";
 
             $query = $this->connection->query($sql);
@@ -86,6 +89,7 @@ class Holidays
             $sql = "select * ";
             $sql .= "from {$this->tblHolidays} ";
             $sql .= "order by holidays_is_active desc, ";
+            $sql .= "holidays_date desc, ";
             $sql .= "holidays_name asc ";
             $sql .= "limit :start, ";
             $sql .= ":total ";
@@ -107,6 +111,7 @@ class Holidays
             $sql .= "where (holidays_name like :holidays_name ";
             $sql .= "or MONTHNAME(holidays_date) like :holidays_date) ";
             $sql .= "order by holidays_is_active desc, ";
+            $sql .= "holidays_date desc, ";
             $sql .= "holidays_name asc ";
             $query = $this->connection->prepare($sql);
             $query->execute([
@@ -194,17 +199,24 @@ class Holidays
         return $query;
     }
 
-    public function readAllCurrentYear($year)
+    public function readAllCurrentYear()
     {
         try {
-            $sql = "select * ";
+            $sql = "select holidays_date, ";
+            $sql .= "holidays_aid, ";
+            $sql .= "holidays_type, ";
+            $sql .= "holidays_name, ";
+            $sql .= "holidays_rate ";
             $sql .= "from {$this->tblHolidays} ";
-            $sql .= "where YEAR(holidays_date) = :year ";
-            $sql .= "order by holidays_is_active desc, ";
+            $sql .= "where holidays_is_active = 1 ";
+            $sql .= "and DATE(holidays_date) between ";
+            $sql .= ":date_from and :date_to ";
+            $sql .= "order by holidays_date desc, ";
             $sql .= "holidays_name asc ";
             $query = $this->connection->prepare($sql);
             $query->execute([
-                "year" => $year,
+                "date_from" => $this->date_from,
+                "date_to" => $this->date_to,
             ]);
         } catch (PDOException $ex) {
             $query = false;

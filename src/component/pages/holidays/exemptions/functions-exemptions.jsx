@@ -12,3 +12,14 @@ export const getEmployeeDetails = (item, employee) => {
   });
   return { employee_name, isWorkOnHoliday };
 };
+
+export const getRateDate = (item, holidayDate) => {
+  let rate = "";
+  holidayDate?.data.map((hItem) => {
+    // check if leave type aid is equal
+    if (hItem.holidays_date === item.holiday_exemption_holiday_date) {
+      rate = hItem.holidays_rate;
+    }
+  });
+  return rate;
+};

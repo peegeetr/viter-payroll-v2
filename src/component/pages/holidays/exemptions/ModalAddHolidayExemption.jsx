@@ -20,18 +20,20 @@ import {
 } from "../../../helpers/functions-general";
 import { queryData } from "../../../helpers/queryData";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
-import { getEmployeeDetails } from "./functions-exemptions";
+import { getEmployeeDetails, getRateDate } from "./functions-exemptions";
+import HolidayIsObserved from "./HolidayIsObserved";
 
 const ModalAddHolidays = ({ item, isPayrollEmpty, employeeName }) => {
   const { store, dispatch } = React.useContext(StoreContext);
+  const [isRate, setRate] = React.useState("");
   const [isObserved, setIsObserved] = React.useState(
     item ? item.holiday_exemption_is_observe : ""
   );
   const [isWorkOnHoliday, setIsWorkOnHoliday] = React.useState(
     item ? getEmployeeDetails(item, employeeName).isWorkOnHoliday : ""
   );
-
-  // console.log(getEmployeeDetails(item, employeeName).isWorkOnHoliday);
+  let startDate = isPayrollEmpty?.data[0].payroll_start_date;
+  let endDate = isPayrollEmpty?.data[0].payroll_end_date;
 
   const queryClient = useQueryClient();
   const mutation = useMutation({
@@ -74,19 +76,37 @@ const ModalAddHolidays = ({ item, isPayrollEmpty, employeeName }) => {
   );
   // use if not loadmore button undertime
   const { data: holidayDate, isLoading } = useQueryData(
-    `${devApiUrl}/v1/holidays/this-year`, // endpoint
+    `${devApiUrl}/v1/holidays/this-year/${startDate}/${endDate}`, // endpoint
     "get", // method
     "holidayDate" // key
   );
-
+  console.log(holidayDate);
   const handleEmployee = async (e) => {
-    // get employee id
-    setIsWorkOnHoliday(e.target.options[e.target.selectedIndex].id);
+    // // get jobId id
+    let workOnHoliday = e.target.options[e.target.selectedIndex].id;
+    setIsWorkOnHoliday(workOnHoliday);
+    if (workOnHoliday === "0" && isRate === "130") {
+      setIsObserved("0");
+    }
+    if (workOnHoliday === "0" && isRate === "200") {
+      setIsObserved("1");
+    }
+    if (
+      item &&
+      workOnHoliday === "0" &&
+      getRateDate(item, holidayDate) === "200"
+    ) {
+      setIsObserved("1");
+    }
+    if (item && workOnHoliday === "1") {
+      setIsObserved("0");
+    }
   };
 
   const handleRateHoliday = async (e) => {
     // get employee id
     let isSpecialHolidayRate = e.target.options[e.target.selectedIndex].id;
+    setRate(isSpecialHolidayRate);
     if (isWorkOnHoliday === "0" && isSpecialHolidayRate === "130") {
       setIsObserved("0");
     }
@@ -162,7 +182,7 @@ const ModalAddHolidays = ({ item, isPayrollEmpty, employeeName }) => {
                             <option
                               key={key}
                               value={eItem.employee_aid}
-                              id={eItem.employee_job_none_work_reg_hol}
+                              id={eItem.employee_job_work_reg_hol}
                             >
                               {`${eItem.employee_lname}, ${eItem.employee_fname}`}
                             </option>
@@ -196,19 +216,11 @@ const ModalAddHolidays = ({ item, isPayrollEmpty, employeeName }) => {
                           );
                         })}
                       </InputSelect>
-                      {isObserved === "1" || isObserved === 1 ? (
-                        <div className="flex items-center absolute mt-4 text-primary">
-                          <FaCheck />
-                          <p className=" mb-0 ml-2">Will Observed</p>
-                        </div>
-                      ) : isObserved === "0" || isObserved === 0 ? (
-                        <div className="flex items-center absolute mt-4 text-primary">
-                          <ImCross />
-                          <p className=" mb-0 ml-2">Will Not Observed</p>
-                        </div>
-                      ) : (
-                        " "
-                      )}
+                      <HolidayIsObserved
+                        item={item}
+                        isWorkOnHoliday={isWorkOnHoliday}
+                        isObserved={isObserved}
+                      />
                     </div>
                     <div className="flex items-center gap-1 pt-5">
                       <button

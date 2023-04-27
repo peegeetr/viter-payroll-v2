@@ -49,14 +49,12 @@ const ModalAddRole = ({ item }) => {
 
   const initVal = {
     role_aid: item ? item.role_aid : "",
-    role_name: item ? item.role_name : "",
+    role_name: "",
     role_description: item ? item.role_description : "",
-
-    role_name_old: item ? item.role_name : "",
   };
 
   const yupSchema = Yup.object({
-    role_name: Yup.string().required("Required"),
+    role_name: item && Yup.string().required("Required"),
     role_description: Yup.string().required("Required"),
   });
 
@@ -66,7 +64,7 @@ const ModalAddRole = ({ item }) => {
         <div className="p-1 w-[350px] rounded-b-2xl">
           <div className="flex justify-between items-center bg-primary p-3 rounded-t-2xl">
             <h3 className="text-white text-sm">
-              {item ? "Update" : "Add"} department
+              {item ? "Update" : "Add"} Role
             </h3>
             <button
               type="button"
@@ -88,14 +86,21 @@ const ModalAddRole = ({ item }) => {
               {(props) => {
                 return (
                   <Form>
-                    <div className="relative my-5">
-                      <InputText
-                        label="Name"
-                        type="text"
-                        name="role_name"
-                        disabled={mutation.isLoading}
-                      />
-                    </div>
+                    {item ? (
+                      <p className="relative mb-5">
+                        <span className="text-primary mr-2">Role Name:</span>
+                        {`${item.role_name}`}
+                      </p>
+                    ) : (
+                      <div className="relative my-5">
+                        <InputText
+                          label="Name"
+                          type="text"
+                          name="role_name"
+                          disabled={mutation.isLoading}
+                        />
+                      </div>
+                    )}
                     <div className="relative mb-5">
                       <InputTextArea
                         label="Description"

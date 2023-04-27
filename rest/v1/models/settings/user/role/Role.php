@@ -88,13 +88,11 @@ class Role
     {
         try {
             $sql = "update {$this->tblRole} set ";
-            $sql .= "role_name = :role_name, ";
             $sql .= "role_description = :role_description, ";
             $sql .= "role_datetime = :role_datetime ";
             $sql .= "where role_aid  = :role_aid ";
             $query = $this->connection->prepare($sql);
             $query->execute([
-                "role_name" => $this->role_name,
                 "role_description" => $this->role_description,
                 "role_datetime" => $this->role_datetime,
                 "role_aid" => $this->role_aid,
@@ -225,8 +223,8 @@ class Role
     public function checkUserSystemAssociation()
     {
         try {
-            $sql = "select user_system_role_id from {$this->tblUserSystem} "; 
-            $sql .= "where user_system_role_id = :role_aid "; 
+            $sql = "select user_system_role_id from {$this->tblUserSystem} ";
+            $sql .= "where user_system_role_id = :role_aid ";
             $query = $this->connection->prepare($sql);
             $query->execute([
                 "role_aid" => "{$this->role_aid}",
@@ -241,8 +239,8 @@ class Role
     public function checkUserOtherAssociation()
     {
         try {
-            $sql = "select user_other_role_id from {$this->tblUserOther} "; 
-            $sql .= "where user_other_role_id = :role_aid "; 
+            $sql = "select user_other_role_id from {$this->tblUserOther} ";
+            $sql .= "where user_other_role_id = :role_aid ";
             $query = $this->connection->prepare($sql);
             $query->execute([
                 "role_aid" => "{$this->role_aid}",
@@ -252,5 +250,4 @@ class Role
         }
         return $query;
     }
-
 }

@@ -1,7 +1,10 @@
 @font-face {
   font-family: "poppinsRegular";
-  src: url(font/Poppins-Regular.ttf) format("truetype");
+  src: url(/src/font/Poppins-Regular.ttf) format("truetype");
+  font-display: fallback;
 }
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -175,6 +178,7 @@
 
 @media print {
   body {
+    font-family: "Poppins", sans-serif;
     print-color-adjust: exact;
   }
 

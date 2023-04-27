@@ -14,20 +14,15 @@ if (array_key_exists("roleid", $_GET)) {
     // get data
     // get roleid from query string
     $role->role_aid = $_GET['roleid'];
-    $role->role_name = addslashes(trim($data["role_name"]));
     $role->role_description = addslashes(trim($data["role_description"]));
     $role->role_datetime = date("Y-m-d H:i:s");
-    $role_name_old = strtolower($data["role_name_old"]);
-    // string value convert to lower case
-    $column_name = strtolower($data["role_name"]);
+    // string value convert to lower case 
     //check to see if task id in query string is not empty and is number, if not return json error
     checkId($role->role_aid);
-    // check name
-    compareName($role, $role_name_old, $role->role_name);
+    // check name 
     // update
     $query = checkUpdate($role);
-    // update column name
-    checkUpdateColumnName($role, $column_name, $role_name_old);
+    // update column name 
 
     returnSuccess($role, "Role", $query);
 }

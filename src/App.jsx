@@ -186,15 +186,23 @@ function App() {
             />
 
             {/* Earnings Page ADMIN*/}
-            <Route
+            {/* <Route
               path={`${devNavUrl}/earnings`}
               element={
                 <ProtectedRouteOther>
                   <EarningsPage />
                 </ProtectedRouteOther>
               }
-            />
+            /> */}
             <Route
+              path={`${devNavUrl}/earnings`}
+              element={
+                <ProtectedRouteOther>
+                  <ManageEarnings />
+                </ProtectedRouteOther>
+              }
+            />
+            {/* <Route
               path={`${devNavUrl}/earnings/manage`}
               element={
                 <ProtectedRouteOther>
@@ -209,7 +217,7 @@ function App() {
                   <FilterEarnings />
                 </ProtectedRouteOther>
               }
-            />
+            /> */}
 
             {/* Deductions Page */}
             <Route
@@ -586,15 +594,23 @@ function App() {
             />
 
             {/* Earnings Page ADMIN*/}
-            <Route
+            {/* <Route
               path={`${devNavUrl}/${UrlSystem}/earnings`}
               element={
                 <ProtectedRouteSystem>
                   <EarningsPage />
                 </ProtectedRouteSystem>
+              } 
+            />*/}
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/earnings`}
+              element={
+                <ProtectedRouteSystem>
+                  <ManageEarnings />
+                </ProtectedRouteSystem>
               }
             />
-            <Route
+            {/* <Route
               path={`${devNavUrl}/${UrlSystem}/earnings/manage`}
               element={
                 <ProtectedRouteSystem>
@@ -609,18 +625,26 @@ function App() {
                   <FilterEarnings />
                 </ProtectedRouteSystem>
               }
-            />
+            /> */}
 
             {/* Deductions Page */}
-            <Route
+            {/* <Route
               path={`${devNavUrl}/${UrlSystem}/deductions`}
               element={
                 <ProtectedRouteSystem>
                   <DeductionsPage />
                 </ProtectedRouteSystem>
               }
-            />
+            /> */}
             <Route
+              path={`${devNavUrl}/${UrlSystem}/deductions`}
+              element={
+                <ProtectedRouteSystem>
+                  <ManageDeduction />
+                </ProtectedRouteSystem>
+              }
+            />
+            {/* <Route
               path={`${devNavUrl}/${UrlSystem}/deductions/manage`}
               element={
                 <ProtectedRouteSystem>
@@ -635,7 +659,7 @@ function App() {
                   <FilterDeductions />
                 </ProtectedRouteSystem>
               }
-            />
+            /> */}
 
             {/* Pay Type Page */}
             <Route

@@ -2,22 +2,18 @@ import React from "react";
 import { FaPlusCircle } from "react-icons/fa";
 import { setIsAdd } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
-import useLoadDraft from "../../../custom-hooks/useLoadDraft";
-import useLoadEmployee from "../../../custom-hooks/useLoadEmployee";
-import useLoadHolidays from "../../../custom-hooks/useLoadHolidays";
-import useLoadPayType from "../../../custom-hooks/useLoadPayType";
 import useQueryData from "../../../custom-hooks/useQueryData";
 import { devApiUrl, hrisDevApiUrl } from "../../../helpers/functions-general";
+import { payrollCategory13thMonthId } from "../../../helpers/functions-payroll-category-id";
 import BreadCrumbs from "../../../partials/BreadCrumbs";
 import Footer from "../../../partials/Footer";
 import Header from "../../../partials/Header";
+import Navigation from "../../../partials/Navigation";
 import ModalError from "../../../partials/modals/ModalError";
 import ModalSuccess from "../../../partials/modals/ModalSuccess";
-import Navigation from "../../../partials/Navigation";
 import ManageEarningsList from "./ManageEarningsList";
 import ModalAddManageEarnings from "./ModalAddManageEarnings";
 import ModalNoPayrollId from "./ModalNoPayrollId";
-import { payrollCategory13thMonthId } from "../../../helpers/functions-payroll-category-id";
 
 const ManageEarnings = () => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -63,8 +59,9 @@ const ManageEarnings = () => {
       <Header />
       <Navigation menu="earnings" />
       <div className="wrapper">
-        <div className="flex items-center mb-1 justify-between whitespace-nowrap overflow-auto gap-2">
-          <BreadCrumbs />
+        <div className="flex items-center mb-3 justify-between whitespace-nowrap overflow-auto gap-2">
+          {/* <BreadCrumbs /> */}
+          <h4 className="text-xl mb-3">Earnings</h4>
           <div className="flex items-center gap-1">
             <button
               type="button"

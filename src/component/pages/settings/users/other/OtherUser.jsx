@@ -26,11 +26,7 @@ const OtherUser = () => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [itemEdit, setItemEdit] = React.useState(null);
   // use if not loadmore button undertime
-  const {
-    isLoading,
-    isFetching,
-    data: role,
-  } = useQueryData(
+  const { isLoading, data: role } = useQueryData(
     `${devApiUrl}/v1/roles`, // endpoint
     "get", // method
     "role" // key
@@ -60,7 +56,7 @@ const OtherUser = () => {
         <hr />
 
         <div className=" w-full pt-5 pb-20">
-          {isFetching && !isLoading ? (
+          {isLoading ? (
             <FetchingSpinner />
           ) : getRoleIdAdmin(role?.data) === -1 ? (
             <p className="flex-col p-2">

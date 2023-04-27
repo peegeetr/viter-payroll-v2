@@ -26,10 +26,7 @@ const PayrollDetailsLink = () => {
           </span>
           <span className="font-bold">Payroll Details</span>
         </div>
-        <p className="ml-[35px] my-0">
-          Manage what actions and capabilities every account are can perform in
-          the system.
-        </p>
+        <p className="ml-[35px] my-0">Manage employee payroll information.</p>
       </Link>
 
       <Link

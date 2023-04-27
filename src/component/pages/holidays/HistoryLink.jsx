@@ -1,7 +1,7 @@
 import Footer from "../../partials/Footer";
 import Header from "../../partials/Header";
 import Navigation from "../../partials/Navigation";
-import HolidayExemptionLink from "./exemptions/HolidayListLink";
+import HolidayExemptionLink from "./exemptions/HolidayExemptionLink";
 import HolidayListLink from "./list/HolidayListLink";
 
 const HistoryLink = () => {

@@ -1,5 +1,5 @@
 import React from "react";
-import { FaHands } from "react-icons/fa";
+import { GiPalmTree } from "react-icons/gi";
 import { SlArrowRight } from "react-icons/sl";
 import { Link } from "react-router-dom";
 import { StoreContext } from "../../../../store/StoreContext";
@@ -16,13 +16,12 @@ const HolidayListLink = () => {
       >
         <div className="flex items-center">
           <span className="text-lg mr-4">
-            <FaHands />
+            <GiPalmTree />
           </span>
-          <span className=" font-bold">Holidays</span>
+          <span className=" font-bold">Holidays List</span>
         </div>
         <p className="ml-[35px] my-0">
-          Manage what actions and capabilities every account are can perform in
-          the system.
+          Manage all holidays for the current year.
         </p>
       </Link>
 

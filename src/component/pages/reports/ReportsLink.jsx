@@ -21,10 +21,10 @@ const ReportsLink = () => {
             <PayrollSummaryLink />
           </li>
           <li className="py-2">
-            <PayrunSummaryLink />
+            <WTaxLink />
           </li>
           <li className="py-2">
-            <WTaxLink />
+            <PayrunSummaryLink />
           </li>
           <li className="py-2">
             <SummaryTypeLink />

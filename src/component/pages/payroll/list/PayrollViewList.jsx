@@ -168,7 +168,10 @@ const PayrollViewList = () => {
                     // salariesAndWages += Number(item.payroll_list_gross);
                     salariesAndWages +=
                       Number(item.payroll_category_type) ===
-                      payrollCategory13thMonthId
+                      payrollCategoryBonusId
+                        ? 0
+                        : Number(item.payroll_category_type) ===
+                          payrollCategory13thMonthId
                         ? 0
                         : Number(item.payroll_list_gross);
                     // monthAndBonuses += Number(item.payroll_list_total_benefits);

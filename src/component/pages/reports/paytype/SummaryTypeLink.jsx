@@ -1,5 +1,5 @@
 import React from "react";
-import { FaClipboardList } from "react-icons/fa";
+import { GiBookPile } from "react-icons/gi";
 import { SlArrowRight } from "react-icons/sl";
 import { Link } from "react-router-dom";
 import { StoreContext } from "../../../../store/StoreContext";
@@ -13,14 +13,11 @@ const SummaryTypeLink = () => {
       <Link to={`${link}/reports/paytype`} className="w-full py-1">
         <div className="flex items-center">
           <span className="text-lg mr-4">
-            <FaClipboardList />
+            <GiBookPile />
           </span>
-          <span className=" font-bold">Paytype</span>
+          <span className=" font-bold">Pay Type</span>
         </div>
-        <p className="ml-[35px] my-0">
-          Manage what actions and capabilities every account are can perform in
-          the system.
-        </p>
+        <p className="ml-[35px] my-0">Generate employee pay type report.</p>
       </Link>
 
       <Link

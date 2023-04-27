@@ -1,5 +1,5 @@
 import React from "react";
-import { FaUsers } from "react-icons/fa";
+import { GiBookPile } from "react-icons/gi";
 import { SlArrowRight } from "react-icons/sl";
 import { Link } from "react-router-dom";
 import { StoreContext } from "../../../../store/StoreContext";
@@ -13,14 +13,11 @@ const PayrunSummaryLink = () => {
       <Link to={`${link}/reports/employee-payrun`} className="w-full py-1">
         <div className="flex items-center">
           <span className="text-lg mr-4">
-            <FaUsers />
+            <GiBookPile />
           </span>
           <span className=" font-bold">Payrun Summary</span>
         </div>
-        <p className="ml-[35px] my-0">
-          Manage what actions and capabilities every account are can perform in
-          the system.
-        </p>
+        <p className="ml-[35px] my-0">Generate employee payrun reports</p>
       </Link>
 
       <Link

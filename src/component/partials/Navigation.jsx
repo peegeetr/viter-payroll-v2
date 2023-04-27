@@ -1,8 +1,15 @@
 import React from "react";
 import { AiFillSetting } from "react-icons/ai";
 import { TbReportSearch } from "react-icons/tb";
+import { HiUserGroup } from "react-icons/hi";
 import { FaClipboardList, FaTasks, FaUsers } from "react-icons/fa";
-import { GiPayMoney, GiReceiveMoney, GiTakeMyMoney } from "react-icons/gi";
+import {
+  GiPayMoney,
+  GiBlackBook,
+  GiReceiveMoney,
+  GiPalmTree,
+  GiBookPile,
+} from "react-icons/gi";
 import { Link } from "react-router-dom";
 import { setIsShow, setStartIndex } from "../../store/StoreAction";
 import { StoreContext } from "../../store/StoreContext";
@@ -38,7 +45,7 @@ const Navigation = ({ menu }) => {
               onClick={handleShow}
               data-tooltip="Payroll"
             >
-              <GiReceiveMoney className="mr-4 w-4 h-4 md:mr-0 lg:mr-4" />
+              <GiBlackBook className="mr-4 w-4 h-4 md:mr-0 lg:mr-4" />
               <span className="md:hidden lg:block">Payroll</span>
             </Link>
           </li>
@@ -55,7 +62,7 @@ const Navigation = ({ menu }) => {
               onClick={handleShow}
               data-tooltip="Employee"
             >
-              <FaUsers className="mr-4 w-4 h-4 md:mr-0 lg:mr-4" />
+              <HiUserGroup className="mr-4 w-4 h-4 md:mr-0 lg:mr-4" />
               <span className="md:hidden lg:block">Employee</span>
             </Link>
           </li>
@@ -72,7 +79,7 @@ const Navigation = ({ menu }) => {
               onClick={handleShow}
               data-tooltip="Earnings"
             >
-              <GiTakeMyMoney className="mr-4 w-4 h-4 md:mr-0 lg:mr-4" />
+              <GiReceiveMoney className="mr-4 w-4 h-4 md:mr-0 lg:mr-4" />
               <span className="md:hidden lg:block">Earnings</span>
             </Link>
           </li>
@@ -123,7 +130,7 @@ const Navigation = ({ menu }) => {
               onClick={handleShow}
               data-tooltip="Holidays"
             >
-              <FaTasks className="mr-4 w-4 h-4 md:mr-0 lg:mr-4" />
+              <GiPalmTree className="mr-4 w-4 h-4 md:mr-0 lg:mr-4" />
               <span className="md:hidden lg:block">Holidays</span>
             </Link>
           </li>
@@ -140,7 +147,7 @@ const Navigation = ({ menu }) => {
               onClick={handleShow}
               data-tooltip="Reports"
             >
-              <TbReportSearch className="mr-4 w-4 h-4 md:mr-0 lg:mr-4" />
+              <GiBookPile className="mr-4 w-4 h-4 md:mr-0 lg:mr-4" />
               <span className="md:hidden lg:block">Reports</span>
             </Link>
           </li>

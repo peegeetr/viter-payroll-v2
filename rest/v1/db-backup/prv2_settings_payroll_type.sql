@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.1.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Feb 16, 2023 at 07:03 AM
--- Server version: 10.4.17-MariaDB
--- PHP Version: 8.0.0
+-- Host: localhost
+-- Generation Time: Apr 27, 2023 at 01:10 AM
+-- Server version: 5.7.39-42-log
+-- PHP Version: 7.4.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `fbs_payroll_v2`
+-- Database: `dbg5s9r5osiott`
 --
 
 -- --------------------------------------------------------
@@ -40,8 +40,9 @@ CREATE TABLE `prv2_settings_payroll_type` (
 --
 
 INSERT INTO `prv2_settings_payroll_type` (`payroll_type_aid`, `payroll_type_active`, `payroll_type_name`, `payroll_type_created`, `payroll_type_datetime`) VALUES
-(2, 1, 'xxxxxxxxx', '0000-00-00', '2023-02-16 12:11:12'),
-(6, 1, 'sss', '2023-02-16', '2023-02-16 14:01:10');
+(7, 1, 'Salary', '2023-04-26', '0000-00-00 00:00:00'),
+(8, 1, '13th Month', '2023-04-26', '0000-00-00 00:00:00'),
+(9, 1, 'Bonuses', '0000-00-00', '0000-00-00 00:00:00');
 
 --
 -- Indexes for dumped tables
@@ -61,7 +62,7 @@ ALTER TABLE `prv2_settings_payroll_type`
 -- AUTO_INCREMENT for table `prv2_settings_payroll_type`
 --
 ALTER TABLE `prv2_settings_payroll_type`
-  MODIFY `payroll_type_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `payroll_type_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

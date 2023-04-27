@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.1.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Mar 20, 2023 at 06:18 AM
--- Server version: 10.4.22-MariaDB
--- PHP Version: 8.1.2
+-- Host: localhost
+-- Generation Time: Apr 27, 2023 at 01:11 AM
+-- Server version: 5.7.39-42-log
+-- PHP Version: 7.4.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `fbs_payroll_v2`
+-- Database: `dbg5s9r5osiott`
 --
 
 -- --------------------------------------------------------
@@ -47,7 +47,7 @@ INSERT INTO `prv2_payitem` (`payitem_aid`, `payitem_is_active`, `payitem_name`, 
 (7, 1, 'Bereavement', 0, '11', '2023-02-02 00:00:00', '2023-02-10 12:29:04'),
 (8, 1, 'Separation Pay', 0, '11', '2023-02-02 00:00:00', '2023-02-02 10:22:44'),
 (9, 1, 'Other Allowances', 0, '11', '2023-02-02 00:00:00', '2023-02-02 10:22:53'),
-(11, 1, 'De Minimis', 0, '10', '2023-02-02 00:00:00', '2023-02-10 12:30:27'),
+(11, 1, 'De Minimis', 0, '10', '2023-02-02 00:00:00', '2023-04-26 08:47:23'),
 (13, 1, 'SSS Er', 0, '12', '2023-02-02 00:00:00', '2023-02-02 10:27:16'),
 (14, 1, 'PHIC Er', 0, '12', '2023-02-02 00:00:00', '2023-02-02 10:27:23'),
 (15, 1, 'PGBG Er', 0, '12', '2023-02-02 00:00:00', '2023-02-02 10:27:30'),
@@ -70,9 +70,7 @@ INSERT INTO `prv2_payitem` (`payitem_aid`, `payitem_is_active`, `payitem_name`, 
 (33, 1, 'Other Deductions', 0, '15', '2023-02-02 00:00:00', '2023-02-02 10:31:32'),
 (34, 1, 'Payroll Tax', 0, '16', '2023-02-02 00:00:00', '2023-02-02 10:32:09'),
 (36, 1, 'Absences', 1, '1', '2023-02-06 00:00:00', '2023-02-07 07:09:23'),
-(43, 1, 'Undertime', 1, '1', '2023-02-17 00:00:00', '2023-02-17 12:30:27'),
-(45, 0, 'asdfasdfadsfasdf', 0, '11', '2023-03-09 15:42:09', '2023-03-09 15:42:31'),
-(46, 0, 'asdfa', 0, '11', '2023-03-09 15:42:18', '2023-03-09 15:42:28');
+(43, 1, 'Undertime', 1, '1', '2023-02-17 00:00:00', '2023-02-17 12:30:27');
 
 --
 -- Indexes for dumped tables

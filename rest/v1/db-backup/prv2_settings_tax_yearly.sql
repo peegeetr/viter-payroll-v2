@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.1.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Apr 20, 2023 at 08:56 AM
--- Server version: 10.4.22-MariaDB
--- PHP Version: 8.1.2
+-- Host: localhost
+-- Generation Time: Apr 27, 2023 at 01:08 AM
+-- Server version: 5.7.39-42-log
+-- PHP Version: 7.4.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `fbs_payroll_v2`
+-- Database: `dbg5s9r5osiott`
 --
 
 -- --------------------------------------------------------
@@ -43,8 +43,12 @@ CREATE TABLE `prv2_settings_tax_yearly` (
 --
 
 INSERT INTO `prv2_settings_tax_yearly` (`tax_yearly_aid`, `tax_yearly_active`, `tax_yearly_from`, `tax_yearly_to`, `tax_yearly_fixed_tax`, `tax_yearly_rate`, `tax_yearly_created`, `tax_yearly_datetime`) VALUES
-(1, 1, '0.00', '250000', '0.00', '0', '2023-04-20 14:24:31', '2023-04-20 14:24:31'),
-(2, 1, '250000', '400000', '0.00', '20', '2023-04-20 14:25:03', '2023-04-20 14:25:46');
+(3, 1, '0', '250000', '0', '0', '2023-04-20 15:09:31', '2023-04-20 15:09:31'),
+(4, 1, '250000', '400000', '0', '15', '2023-04-20 15:09:51', '2023-04-20 15:09:51'),
+(5, 1, '400000', '800000', '22500', '20', '2023-04-20 15:10:12', '2023-04-20 15:10:12'),
+(6, 1, '800000', '2000000', '102500', '25', '2023-04-20 15:10:44', '2023-04-20 15:10:44'),
+(7, 1, '2000000', '8000000', '402500', '30', '2023-04-20 15:11:03', '2023-04-20 15:11:03'),
+(8, 1, '8000000', '100000000', '2202500', '35', '2023-04-20 15:11:51', '2023-04-20 15:11:51');
 
 --
 -- Indexes for dumped tables
@@ -64,7 +68,7 @@ ALTER TABLE `prv2_settings_tax_yearly`
 -- AUTO_INCREMENT for table `prv2_settings_tax_yearly`
 --
 ALTER TABLE `prv2_settings_tax_yearly`
-  MODIFY `tax_yearly_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `tax_yearly_aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

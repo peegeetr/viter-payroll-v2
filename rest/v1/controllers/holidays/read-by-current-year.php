@@ -17,10 +17,15 @@ $response = new Response();
 if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
     checkApiKey();
 
-    // if request is a GET e.g. /role
-    if (empty($_GET)) {
-        $year = date("Y");
-        $query = checkReadAllCurrentYear($holidays, $year);
+    // if request is a GET e.g. paydate
+    if (array_key_exists("startDate", $_GET) && array_key_exists("endDate", $_GET)) {
+        // $year = date("Y"); 
+        $holidays->date_from = $_GET['startDate'];
+        $holidays->date_to = $_GET['endDate'];
+        checkKeyword($holidays->date_from);
+        checkKeyword($holidays->date_to);
+
+        $query = checkReadAllCurrentYear($holidays);
         http_response_code(200);
         getQueriedData($query);
     }

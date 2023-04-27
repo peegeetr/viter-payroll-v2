@@ -35,6 +35,7 @@ const HolidayExemption = () => {
     null, // id key
     false // devKey boolean
   );
+  console.log(employeeName);
   const handleAdd = () => {
     dispatch(setIsAdd(true));
     setItemEdit(null);

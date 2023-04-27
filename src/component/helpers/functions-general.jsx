@@ -12,7 +12,7 @@ export const hrisDevApiUrl = "https://hris.frontlinebusiness.com.ph/rest";
 export const hrisdevBaseUrl = "https://hris.frontlinebusiness.com.ph";
 export const hrisdevNavUrl = "";
 
-// // // Online URL dev payroll
+// Online URL dev payroll
 export const devBaseImgUrl = "https://payroll-app.frontlinebusiness.com.ph/img";
 export const devApiUrl = "https://payroll-app.frontlinebusiness.com.ph/rest";
 export const devBaseUrl = "https://payroll-app.frontlinebusiness.com.ph";

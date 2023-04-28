@@ -250,6 +250,7 @@ export const otFinalAmount = (otItem, eItem, holidays, payrollDraft) => {
   let totalOtNightDiff = 0;
   let otDate = otItem.task_created.split(" ")[0];
   let otTimeHr = otItem.task_time_started.split(":")[0];
+  let isNd = otItem.task_ot_is_night_diff;
   holidays?.data.map((holidaysItem) => {
     // if overtime and holiday is same date
     if (holidaysItem.holidays_date === otDate) {
@@ -270,8 +271,9 @@ export const otFinalAmount = (otItem, eItem, holidays, payrollDraft) => {
 
         // if overtime is night shift and holiday
         if (
-          (otTimeHr >= 22 && otTimeHr <= 23) ||
-          (otTimeHr >= 0 && otTimeHr < 6)
+          isNd === 1 &&
+          ((otTimeHr >= 22 && otTimeHr <= 23) ||
+            (otTimeHr >= 0 && otTimeHr < 6))
         ) {
           regularAmount =
             Number(otItem.task_spent) *
@@ -301,8 +303,9 @@ export const otFinalAmount = (otItem, eItem, holidays, payrollDraft) => {
         console.log(totalOtHolidayAmount);
         isHoliday = true;
         if (
-          (otTimeHr >= 22 && otTimeHr <= 23) ||
-          (otTimeHr >= 0 && otTimeHr < 6)
+          isNd === 1 &&
+          ((otTimeHr >= 22 && otTimeHr <= 23) ||
+            (otTimeHr >= 0 && otTimeHr < 6))
         ) {
           console.log("holiday nd");
           regularAmount =
@@ -333,7 +336,10 @@ export const otFinalAmount = (otItem, eItem, holidays, payrollDraft) => {
     totalOtRestAmount = regularAmount * restRate30;
     isRestDay = true;
 
-    if ((otTimeHr >= 22 && otTimeHr <= 23) || (otTimeHr >= 0 && otTimeHr < 6)) {
+    if (
+      isNd === 1 &&
+      ((otTimeHr >= 22 && otTimeHr <= 23) || (otTimeHr >= 0 && otTimeHr < 6))
+    ) {
       regularAmount =
         Number(otItem.task_spent) *
         employeeRate(eItem.employee_job_salary, days).hourly;
@@ -354,7 +360,10 @@ export const otFinalAmount = (otItem, eItem, holidays, payrollDraft) => {
     otRate = (rate25 * regRate).toFixed(2);
     totalOtAmount25 = regularAmount * rate25;
 
-    if ((otTimeHr >= 22 && otTimeHr <= 23) || (otTimeHr >= 0 && otTimeHr < 6)) {
+    if (
+      isNd === 1 &&
+      ((otTimeHr >= 22 && otTimeHr <= 23) || (otTimeHr >= 0 && otTimeHr < 6))
+    ) {
       console.log("normal nd");
       regularAmount =
         Number(otItem.task_spent) *

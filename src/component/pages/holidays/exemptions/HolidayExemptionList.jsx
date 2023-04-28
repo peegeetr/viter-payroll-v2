@@ -113,12 +113,12 @@ const HolidayExemptionList = ({
           <thead>
             <tr>
               <th>#</th>
-              <th className="min-w-[10rem] w-[10rem]">Employee</th>
-              <th className="min-w-[10rem] ">Payroll Id</th>
+              <th className="min-w-[12rem]">Employee</th>
+              <th className="min-w-[6rem] ">Payroll Id</th>
               <th className="min-w-[10rem] ">PayPeriod</th>
-              <th className="min-w-[10rem] ">Holidays</th>
-              <th className="min-w-[10rem] ">Holidays Date</th>
-              <th>Remarks</th>
+              <th className="min-w-[12rem] ">Holidays</th>
+              <th className="min-w-[7rem] ">Holidays Date</th>
+              <th className="min-w-[7rem] ">Remarks</th>
               <th className="max-w-[5rem]">Actions</th>
             </tr>
           </thead>

@@ -20,7 +20,7 @@ const SettingsLink = () => {
       <Header />
       <Navigation menu="settings" />
       <div className="wrapper">
-        <h4 className="text-xl">Settings</h4>
+        <h4 className="text-xl">Setting</h4>
         <BreadCrumbs />
         <hr />
         <ul className="pt-2 pb-20 relative">

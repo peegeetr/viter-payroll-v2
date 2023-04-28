@@ -29,6 +29,7 @@ const ProtectedRouteSystem = ({ children }) => {
       if (typeof login === "undefined" || !login.success) {
         setLoading(false);
         setIsAuth("456");
+        localStorage.removeItem("fbsPayroll");
       } else {
         dispatch(setCredentials(login.data));
         setIsAuth("123");
@@ -54,7 +55,7 @@ const ProtectedRouteSystem = ({ children }) => {
   ) : isAuth === "123" ? (
     children
   ) : isAuth === "456" ? (
-    <Navigate to={`${devNavUrl}/system/login`} />
+    <Navigate to={`${devNavUrl}/login`} />
   ) : (
     <p>API end point error / Page not found.</p>
   );

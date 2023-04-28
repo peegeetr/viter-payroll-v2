@@ -29,15 +29,16 @@ const ProtectedRouteOther = ({ children }) => {
       if (typeof login === "undefined" || !login.success) {
         setLoading(false);
         setIsAuth("456");
+        localStorage.removeItem("fbsPayroll");
       } else {
         dispatch(setCredentials(login.data));
         setIsAuth("123");
         setLoading(false);
+        delete login.data.user_other_password;
+        delete login.data.role_description;
+        delete login.data.role_created;
+        delete login.data.role_datetime;
       }
-      delete login.data.user_other_password;
-      delete login.data.role_description;
-      delete login.data.role_created;
-      delete login.data.role_datetime;
     };
 
     if (fbsPayroll !== null) {

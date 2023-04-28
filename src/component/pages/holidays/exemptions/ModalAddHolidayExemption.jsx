@@ -53,7 +53,7 @@ const ModalAddHolidays = ({ item, isPayrollEmpty, employeeName }) => {
       queryClient.invalidateQueries({ queryKey: ["holiday-exemptions"] });
       // show success box
       if (data.success) {
-        !item && dispatch(setIsAdd(false));
+        item && dispatch(setIsAdd(false));
         dispatch(setSuccess(true));
         dispatch(setMessage(`Successfuly ${item ? "updated." : "added."}`));
       }

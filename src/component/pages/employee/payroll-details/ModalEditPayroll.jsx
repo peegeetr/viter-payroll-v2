@@ -18,6 +18,7 @@ import {
 import {
   handleNumOnly,
   hrisDevApiUrl,
+  removeComma,
 } from "../../../helpers/functions-general";
 import { queryData } from "../../../helpers/queryData";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
@@ -114,8 +115,25 @@ const ModalEditPayroll = ({ itemEdit }) => {
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
                 // console.log(values);
-
-                mutation.mutate(values);
+                const employee_job_salary = removeComma(
+                  `${values.employee_job_salary}`
+                );
+                const employee_job_deminimis = removeComma(
+                  `${values.employee_job_deminimis}`
+                );
+                const employee_job_pagibig_amount = removeComma(
+                  `${values.employee_job_pagibig_amount}`
+                );
+                const employee_job_starting_pay = removeComma(
+                  `${values.employee_job_starting_pay}`
+                );
+                mutation.mutate({
+                  ...values,
+                  employee_job_salary,
+                  employee_job_deminimis,
+                  employee_job_pagibig_amount,
+                  employee_job_starting_pay,
+                });
               }}
             >
               {(props) => {
@@ -123,7 +141,7 @@ const ModalEditPayroll = ({ itemEdit }) => {
                   <Form>
                     <div className="max-h-[28rem] overflow-y-scroll p-4">
                       <div className="relative mb-3 pt-5 flex items-center">
-                        <p className="w-1/2 m-0">Payroll Elegibility</p>
+                        <p className="w-1/2 m-0">Payroll Eligibility</p>
                         <span>
                           <MyCheckbox
                             type="checkbox"
@@ -144,7 +162,7 @@ const ModalEditPayroll = ({ itemEdit }) => {
                       </div>
 
                       <div className="relative mb-3 flex items-center">
-                        <p className="w-1/2 m-0">With Pag-IBIG deduction?</p>
+                        <p className="w-1/2 m-0">With Pag-ibig deduction?</p>
                         <span>
                           <MyCheckbox
                             type="checkbox"
@@ -166,7 +184,9 @@ const ModalEditPayroll = ({ itemEdit }) => {
                       </div>
 
                       <div className="relative mb-3 flex items-center">
-                        <p className="w-1/2 m-0">Work on regular holiday?</p>
+                        <p className="w-1/2 m-0">
+                          Work on regular (200%) holiday?
+                        </p>
                         <span>
                           <MyCheckbox
                             type="checkbox"
@@ -177,8 +197,9 @@ const ModalEditPayroll = ({ itemEdit }) => {
                       </div>
 
                       <div className="relative mb-3 flex items-center gap-2">
-                        <p className="w-full m-0">Deminimis</p>
+                        <p className="w-full m-0">De Minimis</p>
                         <InputText
+                          num="num"
                           type="text"
                           name="employee_job_deminimis"
                           disabled={mutation.isLoading}
@@ -188,19 +209,30 @@ const ModalEditPayroll = ({ itemEdit }) => {
                       <div className="relative mb-3 flex items-center gap-2">
                         <p className="w-full m-0">Pag-ibig addtl. amount</p>
                         <InputText
+                          num="num"
                           type="text"
                           name="employee_job_pagibig_amount"
                           disabled={mutation.isLoading}
                         />
                       </div>
 
-                      <div className="relative mb-3 flex items-center gap-2">
-                        <p className="w-full m-0">Salary</p>
+                      <div className="relative mb-5 flex items-center gap-2">
+                        <p className="w-full m-0">Monthly starting pay</p>
                         <InputText
+                          num="num"
+                          type="text"
+                          name="employee_job_starting_pay"
+                          disabled={mutation.isLoading}
+                        />
+                      </div>
+
+                      <div className="relative mb-3 flex items-center gap-2">
+                        <p className="w-full m-0">Monthly salary</p>
+                        <InputText
+                          num="num"
                           type="text"
                           name="employee_job_salary"
                           disabled={mutation.isLoading}
-                          onKeyPress={handleNumOnly}
                         />
                       </div>
 
@@ -224,16 +256,6 @@ const ModalEditPayroll = ({ itemEdit }) => {
                           type="text"
                           name="employee_job_account_number"
                           disabled={mutation.isLoading}
-                        />
-                      </div>
-
-                      <div className="relative mb-5 flex items-center gap-2">
-                        <p className="w-full m-0">Starting pay</p>
-                        <InputText
-                          type="text"
-                          name="employee_job_starting_pay"
-                          disabled={mutation.isLoading}
-                          onKeyPress={handleNumOnly}
                         />
                       </div>
                     </div>

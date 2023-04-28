@@ -69,9 +69,7 @@ const ModalConfirmRq = ({
         store.credentials.data.user_other_email === item)
     ) {
       localStorage.removeItem("fbsPayroll");
-      store.credentials.data.role_is_developer === 1
-        ? window.location.replace(`${link}/login`)
-        : window.location.replace(`${link}/login`);
+      window.location.replace(`${link}/login`);
       return;
     }
   };

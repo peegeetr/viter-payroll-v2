@@ -13,6 +13,7 @@ const initVal = {
   isFinish: false,
   isSearch: false,
   startIndex: 0,
+  isAccountUpdated: false,
   isCreatePassSuccess: false,
   isForgotPassSuccess: false,
   isLogin: false,

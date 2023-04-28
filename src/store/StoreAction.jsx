@@ -110,6 +110,12 @@ export const setIsLogout = (val) => {
   };
 };
 
+export const setIsAccountUpdated = (val) => {
+  return {
+    type: "IS_ACCOUNT_UPDATED",
+    payload: val,
+  };
+};
 export const setCredentials = (data) => {
   return {
     type: "CREDENTIALS",

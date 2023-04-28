@@ -1,17 +1,29 @@
 import React from "react";
 import { FaCheck, FaTimesCircle } from "react-icons/fa";
-import { setIsAdd, setSuccess } from "../../../store/StoreAction";
+import { setSuccess } from "../../../store/StoreAction";
 import { StoreContext } from "../../../store/StoreContext";
-import { GetFocus } from "../../helpers/functions-general";
+import {
+  GetFocus,
+  devNavUrl,
+  getUserType,
+} from "../../helpers/functions-general";
 
 const ModalSuccess = () => {
   const { store, dispatch } = React.useContext(StoreContext);
+  const link = getUserType(store.credentials.data.role_is_developer === 1);
   GetFocus("btnClose");
 
   const handleClose = () => {
     dispatch(setSuccess(false));
   };
 
+  // logout when there's a change in your own account
+  if (store.isAccountUpdated) {
+    localStorage.removeItem("fbsPayroll");
+    window.location.replace(`${link}/login`);
+    dispatch(setIsAccountUpdated(false));
+    return;
+  }
   return (
     <>
       <div className="fixed top-0 right-0 bottom-0 left-0 flex items-center justify-center bg-dark bg-opacity-50 z-50">

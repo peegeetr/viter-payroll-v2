@@ -20,9 +20,9 @@ const CreatePasswordSuccess = () => {
             Your password has been successfully set! You can now login using
             your new password
           </p>
-          <Link to={`${devNavUrl}${redirect}`} className="btn-primary">
+          <a href={`${devNavUrl}${redirect}`} className="btn-primary">
             Proceed to Login
-          </Link>
+          </a>
         </div>
       </div>
     </>

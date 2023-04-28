@@ -123,12 +123,12 @@ const SystemLogin = () => {
             </Formik>
             <p className="mt-5">
               Did you forget your password?{" "}
-              <Link
-                to={`${devNavUrl}/${UrlSystem}/forgot-password`}
+              <a
+                href={`${devNavUrl}/${UrlSystem}/forgot-password`}
                 className="w-full text-primary"
               >
                 <u> Forgot password</u>
-              </Link>
+              </a>
             </p>
           </div>
         </div>

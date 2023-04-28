@@ -4,6 +4,7 @@ import { FaTimesCircle } from "react-icons/fa";
 import * as Yup from "yup";
 import {
   setError,
+  setIsAccountUpdated,
   setIsAdd,
   setMessage,
   setStartIndex,
@@ -19,7 +20,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const ModalAddOtherUser = ({ item, roleId }) => {
   const { store, dispatch } = React.useContext(StoreContext);
-
+  const [isOldEmail, setIsOldEmail] = React.useState("");
+  let msgVerification = "Please check your email for verification.";
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: (values) =>
@@ -35,13 +37,19 @@ const ModalAddOtherUser = ({ item, roleId }) => {
       queryClient.invalidateQueries({ queryKey: ["otherUsers"] });
       // show success box
       if (data.success) {
+        item &&
+          store.credentials.data.user_other_email === item &&
+          dispatch(setIsAccountUpdated(true));
+        dispatch(setIsAdd(false));
         dispatch(setSuccess(true));
         dispatch(
           setMessage(
             `Successfuly ${
               item
-                ? "updated."
-                : "added, please check your email for verification."
+                ? store.credentials.data.user_other_email === item
+                  ? `${msgVerification}`
+                  : "Updated"
+                : `added, ${msgVerification}`
             }`
           )
         );

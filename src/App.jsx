@@ -67,6 +67,8 @@ import SummaryTypeViewBasicPay from "./component/pages/reports/paytype/view/Summ
 import EmployeeSalaryHistory from "./component/pages/reports/employee-salary-history/EmployeeSalaryHistory";
 import HistoryLink from "./component/pages/holidays/HistoryLink";
 import HolidayExemption from "./component/pages/holidays/exemptions/HolidayExemption";
+import ConfirmChangeEmailOtherUser from "./component/pages/access/confirm-change-email/ConfirmChangeEmailOtherUser";
+import ConfirmChangeEmailSystemUser from "./component/pages/access/confirm-change-email/ConfirmChangeEmailSystemUser";
 
 function App() {
   // Create a client
@@ -91,6 +93,10 @@ function App() {
             {/* OTHER LOGIN */}
 
             <Route path={`/${devNavUrl}`} element={<OtherLogin />} />
+            <Route
+              path={`${devNavUrl}/confirm-email-changes`}
+              element={<ConfirmChangeEmailOtherUser />}
+            />
             <Route path={`${devNavUrl}/login`} element={<OtherLogin />} />
             <Route
               path={`${devNavUrl}/create-password`}
@@ -104,6 +110,10 @@ function App() {
             {/* SYSTEM LOGIN */}
             {/* SYSTEM LOGIN */}
             {/* SYSTEM LOGIN */}
+            <Route
+              path={`${devNavUrl}/system/confirm-email-changes`}
+              element={<ConfirmChangeEmailSystemUser />}
+            />
             <Route
               path={`${devNavUrl}/${UrlSystem}/login`}
               element={<SystemLogin />}

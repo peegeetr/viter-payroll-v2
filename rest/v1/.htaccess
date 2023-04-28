@@ -128,6 +128,7 @@ RewriteRule ^user-systems/key/([A-Za-z0-9-]+)$ controllers/settings/user/system/
 RewriteRule ^user-systems/password$ controllers/settings/user/system/set-password.php [L]
 RewriteRule ^user-systems/login$ controllers/settings/user/system/login.php [L]
 RewriteRule ^user-systems/token$ controllers/settings/user/system/token.php [L]
+RewriteRule ^user-systems/change-email/([A-Za-z0-9-]+)$ controllers/settings/user/system/update-email.php?usersystemkey=$1 [L]
 
 #SETTINGS USER OTHER
 RewriteRule ^user-others$ controllers/settings/user/other/other.php [L]
@@ -138,6 +139,7 @@ RewriteRule ^user-others/key/([A-Za-z0-9-]+)$ controllers/settings/user/other/ke
 RewriteRule ^user-others/password$ controllers/settings/user/other/set-password.php [L]
 RewriteRule ^user-others/login$ controllers/settings/user/other/login.php [L]
 RewriteRule ^user-others/token$ controllers/settings/user/other/token.php [L]
+RewriteRule ^user-others/change-email/([A-Za-z0-9-]+)$ controllers/settings/user/other/update-email.php?userotherkey=$1 [L]
  
 #SETTINGS PAG-IBIG
 RewriteRule ^pagibig$ controllers/settings/pagibig/pagibig.php [L]

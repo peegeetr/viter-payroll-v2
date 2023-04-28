@@ -13,6 +13,7 @@ import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 import TableSpinner from "../../../partials/spinners/TableSpinner";
 import FbsLogoLg from "../../../svg/FbsLogoLg";
 import useOtherIsLogin from "../../../custom-hooks/useOtherIsLogin";
+import ModalSuccess from "../../../partials/modals/ModalSuccess";
 
 const OtherLogin = () => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -119,17 +120,18 @@ const OtherLogin = () => {
             </Formik>
             <p className="mt-5">
               Did you forget your password?{" "}
-              <Link
-                to={`${devNavUrl}/forgot-password`}
+              <a
+                href={`${devNavUrl}/forgot-password`}
                 className="w-full text-primary"
               >
                 <u> Forgot password</u>
-              </Link>
+              </a>
             </p>
           </div>
         </div>
       )}
 
+      {store.success && <ModalSuccess />}
       {store.error && <ModalError />}
     </>
   );

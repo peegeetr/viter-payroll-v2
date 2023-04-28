@@ -17,6 +17,7 @@ import ButtonSpinner from "../../../../partials/spinners/ButtonSpinner";
 
 const ModalAddSystemUser = ({ item, roleId }) => {
   const { store, dispatch } = React.useContext(StoreContext);
+  let msgVerification = "Please check your email for verification.";
 
   const queryClient = useQueryClient();
   const mutation = useMutation({
@@ -33,13 +34,19 @@ const ModalAddSystemUser = ({ item, roleId }) => {
       queryClient.invalidateQueries({ queryKey: ["userSystems"] });
       // show success box
       if (data.success) {
+        item &&
+          store.credentials.data.user_system_email === item &&
+          dispatch(setIsAccountUpdated(true));
+        dispatch(setIsAdd(false));
         dispatch(setSuccess(true));
         dispatch(
           setMessage(
             `Successfuly ${
               item
-                ? "updated."
-                : "added, please check your email for verification."
+                ? store.credentials.data.user_system_email === item
+                  ? `${msgVerification}`
+                  : "Updated"
+                : `added, ${msgVerification}`
             }`
           )
         );

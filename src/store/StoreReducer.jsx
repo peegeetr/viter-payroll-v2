@@ -96,6 +96,12 @@ export const StoreReducer = (state, action) => {
         isLogout: action.payload,
       };
 
+    case "IS_ACCOUNT_UPDATED":
+      return {
+        ...state,
+        isAccountUpdated: action.payload,
+      };
+
     case "CREDENTIALS":
       return {
         ...state,

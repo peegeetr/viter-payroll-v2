@@ -83,7 +83,7 @@ const ManageDeduction = () => {
           payrollDraft={draft}
         />
       ) : (
-        store.isAdd && <ModalNoPayrollId />
+        store.isAdd && <ModalNoPayrollId text="salary " />
       )}
       {store.success && <ModalSuccess />}
       {store.error && <ModalError />}

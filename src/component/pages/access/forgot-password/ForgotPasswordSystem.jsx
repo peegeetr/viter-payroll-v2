@@ -9,10 +9,11 @@ import {
 import { StoreContext } from "../../../../store/StoreContext";
 import { fetchData } from "../../../helpers/fetchData";
 import { InputText } from "../../../helpers/FormInputs";
-import { devApiUrl } from "../../../helpers/functions-general";
+import { devApiUrl, devNavUrl } from "../../../helpers/functions-general";
 import ModalError from "../../../partials/modals/ModalError";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 import FbsLogoLg from "../../../svg/FbsLogoLg";
+import { UrlSystem } from "../../../helpers/functions-general";
 
 const ForgotPasswordSystem = () => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -94,15 +95,12 @@ const ForgotPasswordSystem = () => {
           </Formik>
           <p className="mt-2">
             Go back to{" "}
-            <button
-              type="button"
-              onClick={() => {
-                navigate(-1);
-                dispatch(setStartIndex(0));
-              }}
+            <a
+              href={`${devNavUrl}/${UrlSystem}/login`}
+              className="w-full text-primary"
             >
               <u className="text-primary">Login</u>
-            </button>
+            </a>
           </p>
         </div>
       </div>

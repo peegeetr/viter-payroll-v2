@@ -25,9 +25,8 @@ const ModalConfirmRq = ({
   const { store, dispatch } = React.useContext(StoreContext);
   const link = getUserType(store.credentials.data.role_is_developer === 1);
   const queryClient = useQueryClient();
-  let message = isDel
-    ? "Reseting your own password will make you automatically logged out."
-    : "Suspending your own account will make you unable to login and use the system.";
+  let message =
+    "Suspending your own account will make you unable to login and use the system.";
 
   const mutation = useMutation({
     mutationFn: (values) =>
@@ -63,6 +62,7 @@ const ModalConfirmRq = ({
 
     // if reseting your own password
     if (
+      !isDel &&
       (arrKey === "userSystems" || arrKey === "otherUsers") &&
       store.credentials.data.role_aid === Number(role_id) &&
       (store.credentials.data.user_system_email === item ||
@@ -91,7 +91,8 @@ const ModalConfirmRq = ({
             <span className="text-5xl text-red-700 ">
               <FaQuestionCircle className="my-0 mx-auto" />
             </span>
-            {store.credentials.data.role_aid === Number(role_id) &&
+            {!isDel &&
+            store.credentials.data.role_aid === Number(role_id) &&
             (store.credentials.data.user_system_email === item ||
               store.credentials.data.user_other_email === item) ? (
               <span className="text-sm font-bold">

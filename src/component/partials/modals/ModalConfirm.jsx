@@ -54,7 +54,7 @@ const ModalConfirm = ({
     dispatch(setStartIndex(0));
     // if reseting your own password
     if (
-      (isUser && store.credentials.data.user_system_email === item) ||
+      (!isDel && isUser && store.credentials.data.user_system_email === item) ||
       store.credentials.data.user_other_email === item
     ) {
       setLoading(true);
@@ -83,8 +83,9 @@ const ModalConfirm = ({
             <span className="text-5xl text-red-700 ">
               <FaQuestionCircle className="my-0 mx-auto" />
             </span>
-            {store.credentials.data.user_system_email === item ||
-            store.credentials.data.user_other_email === item ? (
+            {!isDel &&
+            (store.credentials.data.user_system_email === item ||
+              store.credentials.data.user_other_email === item) ? (
               <span className="text-sm font-bold">
                 {message} <br />
                 Do you still want to proceed?

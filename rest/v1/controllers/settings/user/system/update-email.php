@@ -28,10 +28,8 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
         // check email is exist
         $readKey = $user_system->readKeyChangeEmail();
 
-        // check if reload or key empty
-        if ($readKey->rowCount() == 0) {
-            $newCount = 0;
-        }
+        // check if reload or key empty 
+        $newCount = 0;
 
         // update if first load
         if ($readKey->rowCount() > 0) {

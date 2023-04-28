@@ -92,7 +92,13 @@ const ModalEditPayroll = ({ itemEdit }) => {
         : 0,
   };
 
-  const yupSchema = Yup.object({});
+  const yupSchema = Yup.object({
+    employee_job_deminimis: Yup.string().required("Required"),
+    employee_job_pagibig_amount: Yup.string().required("Required"),
+    employee_job_starting_pay: Yup.string().required("Required"),
+    employee_job_salary: Yup.string().required("Required"),
+    employee_job_account_number: Yup.string().required("Required"),
+  });
 
   return (
     <>
@@ -196,7 +202,7 @@ const ModalEditPayroll = ({ itemEdit }) => {
                         </span>
                       </div>
 
-                      <div className="relative mb-3 flex items-center gap-2">
+                      <div className="relative mb-5 flex items-center gap-2">
                         <p className="w-full m-0">De Minimis</p>
                         <InputText
                           num="num"
@@ -206,7 +212,7 @@ const ModalEditPayroll = ({ itemEdit }) => {
                         />
                       </div>
 
-                      <div className="relative mb-3 flex items-center gap-2">
+                      <div className="relative mb-5 flex items-center gap-2">
                         <p className="w-full m-0">Pag-ibig addtl. amount</p>
                         <InputText
                           num="num"
@@ -226,7 +232,7 @@ const ModalEditPayroll = ({ itemEdit }) => {
                         />
                       </div>
 
-                      <div className="relative mb-3 flex items-center gap-2">
+                      <div className="relative mb-5 flex items-center gap-2">
                         <p className="w-full m-0">Monthly salary</p>
                         <InputText
                           num="num"
@@ -236,7 +242,7 @@ const ModalEditPayroll = ({ itemEdit }) => {
                         />
                       </div>
 
-                      <div className="relative mb-3 flex items-center gap-2">
+                      <div className="relative mb-5 flex items-center gap-2">
                         <p className="w-full m-0">Pay frequency</p>
                         <InputSelect
                           name="employee_job_pay_freq"
@@ -250,7 +256,7 @@ const ModalEditPayroll = ({ itemEdit }) => {
                         </InputSelect>
                       </div>
 
-                      <div className="relative mb-3 flex items-center gap-2">
+                      <div className="relative mb-5 flex items-center gap-2">
                         <p className="w-full m-0">Account number</p>
                         <InputText
                           type="text"

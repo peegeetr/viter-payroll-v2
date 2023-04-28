@@ -24,11 +24,7 @@ import {
 import useQueryData from "../../../custom-hooks/useQueryData";
 import { payrollCategorySalaryId } from "../../../helpers/functions-payroll-category-id";
 
-const HolidayExemptionList = ({
-  setItemEdit,
-  employeeName,
-  salaryCategoryId,
-}) => {
+const HolidayExemptionList = ({ setItemEdit, employeeName }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [dataItem, setData] = React.useState(null);
   const [id, setId] = React.useState(null);

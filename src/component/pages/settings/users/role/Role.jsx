@@ -10,9 +10,11 @@ import ModalSuccess from "../../../../partials/modals/ModalSuccess";
 import Navigation from "../../../../partials/Navigation";
 import ModalAddRole from "./ModalAddRole";
 import RoleList from "./RoleList";
+import PageNotFound from "../../../../partials/PageNotFound";
 
 const Role = () => {
   const { store, dispatch } = React.useContext(StoreContext);
+  const fbsPayroll = JSON.parse(localStorage.getItem("fbsPayroll"));
   const [itemEdit, setItemEdit] = React.useState(null);
 
   const handleAdd = () => {
@@ -20,6 +22,12 @@ const Role = () => {
     setItemEdit(null);
   };
 
+  if (
+    fbsPayroll.isDev === false ||
+    store.credentials.data.role_is_developer !== 1
+  ) {
+    return <PageNotFound />;
+  }
   return (
     <>
       <Header />

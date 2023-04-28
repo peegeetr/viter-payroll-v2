@@ -10,8 +10,11 @@ import RatesLink from "./rates/RatesLink.jsx";
 import SssBracketLink from "./sss-bracket/SssBracketLink.jsx";
 import TaxBracketLink from "./tax-bracket/TaxBracketLink.jsx";
 import UserLink from "./users/UserLink.jsx";
+import OtherUserLink from "./users/other/OtherUserLink";
+import { StoreContext } from "../../../store/StoreContext";
 
 const SettingsLink = () => {
+  const { store, dispatch } = React.useContext(StoreContext);
   return (
     <>
       <Header />
@@ -21,9 +24,15 @@ const SettingsLink = () => {
         <BreadCrumbs />
         <hr />
         <ul className="pt-2 pb-20 relative">
-          <li className="py-2">
-            <UserLink />
-          </li>
+          {store.credentials.data.role_is_developer === 1 ? (
+            <li className="py-2">
+              <UserLink />
+            </li>
+          ) : (
+            <li className="py-2">
+              <OtherUserLink />
+            </li>
+          )}
 
           <li className="py-2">
             <TaxBracketLink />

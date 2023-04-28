@@ -1,13 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { UrlSystem, devNavUrl } from "./component/helpers/functions-general";
-import SettingsLink from "./component/pages/settings/SettingsLink";
-import Pagibig from "./component/pages/settings/pagibig/Pagibig.jsx";
-import Philhealth from "./component/pages/settings/philhealth/philhealth.jsx";
-import SssBracket from "./component/pages/settings/sss-bracket/SssBracket.jsx";
-import TaxBracket from "./component/pages/settings/tax-bracket/TaxBracket.jsx";
-import TaxMonthly from "./component/pages/settings/tax-bracket/tax-monthly/TaxMonthly.jsx";
-import TaxSemi from "./component/pages/settings/tax-bracket/tax-semi/TaxSemi.jsx";
 import UserPage from "./component/pages/settings/users/UserPage";
 import OtherUser from "./component/pages/settings/users/other/OtherUser";
 import Role from "./component/pages/settings/users/role/Role";
@@ -50,28 +43,64 @@ import OtherUserPayType from "./component/pages/pay-type/links/OtherUserPayType"
 import SystemUserPayType from "./component/pages/pay-type/links/SystemUserPayType";
 import OtherUserPayItem from "./component/pages/pay-type/pay-item/links/OtherUserPayItem";
 import SystemUserPayItem from "./component/pages/pay-type/pay-item/links/SystemUserPayItem";
-import Payroll from "./component/pages/payroll/Payroll";
-import PayrollView from "./component/pages/payroll/list/PayrollView";
-import Payslip13thMonth from "./component/pages/payroll/payslip-13th-month/Payslip13thMonth";
-import PayslipBonus from "./component/pages/payroll/payslip-bonus/PayslipBonus";
-import Payslip from "./component/pages/payroll/payslip/Payslip";
-import ReportsLink from "./component/pages/reports/ReportsLink";
-import EmployeeSalaryHistory from "./component/pages/reports/employee-salary-history/EmployeeSalaryHistory";
-import PayBenefits from "./component/pages/reports/paybenefits/PayBenefits";
-import PayrollSummaryPage from "./component/pages/reports/payroll-summary/PayrollSummaryPage";
-import SummaryDeductions from "./component/pages/reports/payroll-summary/deductions/SummaryDeductions";
-import SummaryEarnings from "./component/pages/reports/payroll-summary/earnings/SummaryEarnings";
-import PayrunSummary from "./component/pages/reports/payrun-summary/PayrunSummary";
-import SummaryType from "./component/pages/reports/paytype/SummaryType";
-import SummaryTypeView from "./component/pages/reports/paytype/view/SummaryTypeView";
+import OtherUserPayrollList from "./component/pages/payroll/links/OtherUserPayrollList";
+import SystemUserPayrollList from "./component/pages/payroll/links/SystemUserPayrollList";
+import OtherUserPayrollView from "./component/pages/payroll/list/links/OtherUserPayrollView";
+import SystemUserPayrollView from "./component/pages/payroll/list/links/SystemUserPayrollView";
+import OtherUserPayslip13thMonth from "./component/pages/payroll/payslip-13th-month/links/OtherUserPayslip13thMonth";
+import SystemUserPayslip13thMonth from "./component/pages/payroll/payslip-13th-month/links/SystemUserPayslip13thMonth";
+import OtherUserPayslipBonus from "./component/pages/payroll/payslip-bonus/links/OtherUserPayslipBonus";
+import SystemUserPayslipBonus from "./component/pages/payroll/payslip-bonus/links/SystemUserPayslipBonus";
+import OtherUserPayslipSalary from "./component/pages/payroll/payslip/links/OtherUserPayslipSalary";
+import SystemUserPayslipSalary from "./component/pages/payroll/payslip/links/SystemUserPayslipSalary";
+import OtherUserEmployeeSalaryHistory from "./component/pages/reports/employee-salary-history/links/OtherUserEmployeeSalaryHistory";
+import SystemUserEmployeeSalaryHistory from "./component/pages/reports/employee-salary-history/links/SystemUserEmployeeSalaryHistory";
+import OtherUserReportsLink from "./component/pages/reports/links/OtherUserReportsLink";
+import SystemUserReportsLink from "./component/pages/reports/links/SystemUserReportsLink";
+import OtherUserPayBenefits from "./component/pages/reports/paybenefits/links/OtherUserPayBenefits";
+import SystemUserPayBenefits from "./component/pages/reports/paybenefits/links/SystemUserPayBenefits";
+import OtherUserSummaryDeductions from "./component/pages/reports/payroll-summary/deductions/links/OtherUserSummaryDeductions";
+import SystemUserSummaryDeductions from "./component/pages/reports/payroll-summary/deductions/links/SystemUserSummaryDeductions";
+import OtherUserSummaryEarnings from "./component/pages/reports/payroll-summary/earnings/links/OtherUserSummaryEarnings";
+import SystemUserSummaryEarnings from "./component/pages/reports/payroll-summary/earnings/links/SystemUserSummaryEarnings";
+import OtherUserPayrollSummaryPage from "./component/pages/reports/payroll-summary/links/OtherUserPayrollSummaryPage";
+import SystemUserPayrollSummaryPage from "./component/pages/reports/payroll-summary/links/SystemUserPayrollSummaryPage";
+import OtherUserPayrunSummary from "./component/pages/reports/payrun-summary/links/OtherUserPayrunSummary";
+import SystemUserPayrunSummary from "./component/pages/reports/payrun-summary/links/SystemUserPayrunSummary";
+import OtherUserSummaryType from "./component/pages/reports/paytype/links/OtherUserSummaryType";
+import SystemUserSummaryType from "./component/pages/reports/paytype/links/SystemUserSummaryType";
 import SummaryTypeViewBasicPay from "./component/pages/reports/paytype/view/SummaryTypeViewBasicPay";
-import WTaxPage from "./component/pages/reports/w-tax/WTaxPage";
-import WTaxMonthly from "./component/pages/reports/w-tax/monthly-tax/WTaxMonthly";
-import WTaxYearly from "./component/pages/reports/w-tax/yearly-tax/WTaxYearly";
-import PayrollType from "./component/pages/settings/payroll-type/PayrollType.jsx";
-import Rates from "./component/pages/settings/rates/Rates";
-import TaxYearly from "./component/pages/settings/tax-bracket/tax-yearly/TaxYearly";
+import OtherUserSummaryTypeView from "./component/pages/reports/paytype/view/links/OtherUserSummaryTypeView";
+import SystemUserSummaryTypeView from "./component/pages/reports/paytype/view/links/SystemUserSummaryTypeView";
+import OtherUserWTaxPage from "./component/pages/reports/w-tax/links/OtherUserWTaxPage";
+import SystemUserWTaxPage from "./component/pages/reports/w-tax/links/SystemUserWTaxPage";
+import OtherUserWTaxMonthly from "./component/pages/reports/w-tax/monthly-tax/links/OtherUserWTaxMonthly";
+import SystemUserWTaxMonthly from "./component/pages/reports/w-tax/monthly-tax/links/SystemUserWTaxMonthly";
+import OtherUserWTaxYearly from "./component/pages/reports/w-tax/yearly-tax/links/OtherUserWTaxYearly";
+import SystemUserWTaxYearly from "./component/pages/reports/w-tax/yearly-tax/links/SystemUserWTaxYearly";
+import OtherUserRates from "./component/pages/settings/Rates/links/OtherUserPayrollType";
+import SystemUserRates from "./component/pages/settings/Rates/links/SystemUserPayrollType";
+import OtherUserSettingsLink from "./component/pages/settings/links/OtherUserSettingsLink";
+import SystemUserSettingsLink from "./component/pages/settings/links/SystemUserSettingsLink";
+import OtherUserPagibig from "./component/pages/settings/pagibig/links/OtherUserPagibig";
+import SystemUserPagibig from "./component/pages/settings/pagibig/links/SystemUserPagibig";
+import OtherUserPayrollType from "./component/pages/settings/payroll-type/links/OtherUserPayrollType";
+import SystemUserPayrollType from "./component/pages/settings/payroll-type/links/SystemUserPayrollType";
+import OtherUserPhilhealth from "./component/pages/settings/philhealth/links/OtherUserPayrollType";
+import SystemUserPhilhealth from "./component/pages/settings/philhealth/links/SystemUserPayrollType";
+import OtherUserSssBracket from "./component/pages/settings/sss-bracket/links/OtherUserSssBracket";
+import SystemUserSssBracket from "./component/pages/settings/sss-bracket/links/SystemUserSssBracket";
+import OtherUserTaxBracket from "./component/pages/settings/tax-bracket/links/OtherUserTaxBracket";
+import SystemUserTaxBracket from "./component/pages/settings/tax-bracket/links/SystemUserTaxBracket";
+import OtherUserTaxMonthly from "./component/pages/settings/tax-bracket/tax-monthly/links/OtherUserTaxMonthly";
+import SystemUserTaxMonthly from "./component/pages/settings/tax-bracket/tax-monthly/links/SystemUserTaxMonthly";
+import OtherUserTaxSemi from "./component/pages/settings/tax-bracket/tax-semi/links/OtherUserTaxSemi";
+import SystemUserTaxSemi from "./component/pages/settings/tax-bracket/tax-semi/links/SystemUserTaxSemi";
+import OtherUserTaxYearly from "./component/pages/settings/tax-bracket/tax-yearly/links/OtherUserTaxYearly";
+import SystemUserTaxYearly from "./component/pages/settings/tax-bracket/tax-yearly/links/SystemUserTaxYearly";
 import { StoreProvider } from "./store/StoreContext";
+import SystemUserOtherUser from "./component/pages/settings/users/other/links/SystemUserOtherUser";
+import OtherUserOtherUser from "./component/pages/settings/users/other/links/OtherUserOtherUser";
 
 function App() {
   // Create a client
@@ -134,7 +163,7 @@ function App() {
               path={`${devNavUrl}/payroll`}
               element={
                 <ProtectedRouteOther>
-                  <Payroll />
+                  <OtherUserPayrollList />
                 </ProtectedRouteOther>
               }
             />
@@ -142,7 +171,7 @@ function App() {
               path={`${devNavUrl}/payroll/list`}
               element={
                 <ProtectedRouteOther>
-                  <PayrollView />
+                  <OtherUserPayrollView />
                 </ProtectedRouteOther>
               }
             />
@@ -150,7 +179,23 @@ function App() {
               path={`${devNavUrl}/payroll/list/payslip`}
               element={
                 <ProtectedRouteOther>
-                  <Payslip />
+                  <OtherUserPayslipSalary />
+                </ProtectedRouteOther>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/payroll/list/payslip-13th-Month`}
+              element={
+                <ProtectedRouteOther>
+                  <OtherUserPayslip13thMonth />
+                </ProtectedRouteOther>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/payroll/list/payslip-bonus`}
+              element={
+                <ProtectedRouteOther>
+                  <OtherUserPayslipBonus />
                 </ProtectedRouteOther>
               }
             />
@@ -265,7 +310,7 @@ function App() {
               path={`${devNavUrl}/reports`}
               element={
                 <ProtectedRouteOther>
-                  <ReportsLink />
+                  <OtherUserReportsLink />
                 </ProtectedRouteOther>
               }
             />
@@ -273,7 +318,7 @@ function App() {
               path={`${devNavUrl}/reports/summary`}
               element={
                 <ProtectedRouteOther>
-                  <PayrollSummaryPage />
+                  <OtherUserPayrollSummaryPage />
                 </ProtectedRouteOther>
               }
             />
@@ -281,7 +326,7 @@ function App() {
               path={`${devNavUrl}/reports/summary/earnings`}
               element={
                 <ProtectedRouteOther>
-                  <SummaryEarnings />
+                  <OtherUserSummaryEarnings />
                 </ProtectedRouteOther>
               }
             />
@@ -289,7 +334,7 @@ function App() {
               path={`${devNavUrl}/reports/summary/deductions`}
               element={
                 <ProtectedRouteOther>
-                  <SummaryDeductions />
+                  <OtherUserSummaryDeductions />
                 </ProtectedRouteOther>
               }
             />
@@ -298,7 +343,7 @@ function App() {
               path={`${devNavUrl}/reports/employee-payrun`}
               element={
                 <ProtectedRouteOther>
-                  <PayrunSummary />
+                  <OtherUserPayrunSummary />
                 </ProtectedRouteOther>
               }
             />
@@ -306,7 +351,7 @@ function App() {
               path={`${devNavUrl}/reports/wtax`}
               element={
                 <ProtectedRouteOther>
-                  <WTaxPage />
+                  <OtherUserWTaxPage />
                 </ProtectedRouteOther>
               }
             />
@@ -314,7 +359,7 @@ function App() {
               path={`${devNavUrl}/reports/wtax/monthly`}
               element={
                 <ProtectedRouteOther>
-                  <WTaxMonthly />
+                  <OtherUserWTaxMonthly />
                 </ProtectedRouteOther>
               }
             />
@@ -322,7 +367,7 @@ function App() {
               path={`${devNavUrl}/reports/wtax/yearly`}
               element={
                 <ProtectedRouteOther>
-                  <WTaxYearly />
+                  <OtherUserWTaxYearly />
                 </ProtectedRouteOther>
               }
             />
@@ -330,7 +375,7 @@ function App() {
               path={`${devNavUrl}/reports/benefits`}
               element={
                 <ProtectedRouteOther>
-                  <PayBenefits />
+                  <OtherUserPayBenefits />
                 </ProtectedRouteOther>
               }
             />
@@ -338,7 +383,7 @@ function App() {
               path={`${devNavUrl}/reports/paytype`}
               element={
                 <ProtectedRouteOther>
-                  <SummaryType />
+                  <OtherUserSummaryType />
                 </ProtectedRouteOther>
               }
             />
@@ -346,7 +391,7 @@ function App() {
               path={`${devNavUrl}/reports/paytype/view`}
               element={
                 <ProtectedRouteOther>
-                  <SummaryTypeView />
+                  <OtherUserSummaryTypeView />
                 </ProtectedRouteOther>
               }
             />
@@ -362,7 +407,7 @@ function App() {
               path={`${devNavUrl}/reports/salary-history`}
               element={
                 <ProtectedRouteOther>
-                  <EmployeeSalaryHistory />
+                  <OtherUserEmployeeSalaryHistory />
                 </ProtectedRouteOther>
               }
             />
@@ -372,23 +417,15 @@ function App() {
               path={`${devNavUrl}/settings`}
               element={
                 <ProtectedRouteOther>
-                  <SettingsLink />
+                  <OtherUserSettingsLink />
                 </ProtectedRouteOther>
               }
             />
             <Route
-              path={`${devNavUrl}/settings/users`}
+              path={`${devNavUrl}/settings/other`}
               element={
                 <ProtectedRouteOther>
-                  <UserPage />
-                </ProtectedRouteOther>
-              }
-            />
-            <Route
-              path={`${devNavUrl}/settings/users/other`}
-              element={
-                <ProtectedRouteOther>
-                  <OtherUser />
+                  <OtherUserOtherUser />
                 </ProtectedRouteOther>
               }
             />
@@ -397,7 +434,7 @@ function App() {
               path={`${devNavUrl}/settings/tax-bracket`}
               element={
                 <ProtectedRouteOther>
-                  <TaxBracket />
+                  <OtherUserTaxBracket />
                 </ProtectedRouteOther>
               }
             />
@@ -406,7 +443,7 @@ function App() {
               path={`${devNavUrl}/settings/tax-bracket/monthly`}
               element={
                 <ProtectedRouteOther>
-                  <TaxMonthly />
+                  <OtherUserTaxMonthly />
                 </ProtectedRouteOther>
               }
             />
@@ -415,7 +452,7 @@ function App() {
               path={`${devNavUrl}/settings/tax-bracket/semi-monthly`}
               element={
                 <ProtectedRouteOther>
-                  <TaxSemi />
+                  <OtherUserTaxSemi />
                 </ProtectedRouteOther>
               }
             />
@@ -424,7 +461,7 @@ function App() {
               path={`${devNavUrl}/settings/tax-bracket/yearly`}
               element={
                 <ProtectedRouteOther>
-                  <TaxYearly />
+                  <OtherUserTaxYearly />
                 </ProtectedRouteOther>
               }
             />
@@ -433,7 +470,7 @@ function App() {
               path={`${devNavUrl}/settings/pagibig`}
               element={
                 <ProtectedRouteOther>
-                  <Pagibig />
+                  <OtherUserPagibig />
                 </ProtectedRouteOther>
               }
             />
@@ -442,7 +479,7 @@ function App() {
               path={`${devNavUrl}/settings/philhealth`}
               element={
                 <ProtectedRouteOther>
-                  <Philhealth />
+                  <OtherUserPhilhealth />
                 </ProtectedRouteOther>
               }
             />
@@ -451,7 +488,7 @@ function App() {
               path={`${devNavUrl}/settings/sss-bracket`}
               element={
                 <ProtectedRouteOther>
-                  <SssBracket />
+                  <OtherUserSssBracket />
                 </ProtectedRouteOther>
               }
             />
@@ -460,7 +497,7 @@ function App() {
               path={`${devNavUrl}/settings/rates`}
               element={
                 <ProtectedRouteOther>
-                  <Rates />
+                  <OtherUserRates />
                 </ProtectedRouteOther>
               }
             />
@@ -469,7 +506,7 @@ function App() {
               path={`${devNavUrl}/settings/payroll-type`}
               element={
                 <ProtectedRouteOther>
-                  <PayrollType />
+                  <OtherUserPayrollType />
                 </ProtectedRouteOther>
               }
             />
@@ -484,7 +521,7 @@ function App() {
               path={`${devNavUrl}/${UrlSystem}/payroll`}
               element={
                 <ProtectedRouteSystem>
-                  <Payroll />
+                  <SystemUserPayrollList />
                 </ProtectedRouteSystem>
               }
             />
@@ -492,7 +529,7 @@ function App() {
               path={`${devNavUrl}/${UrlSystem}/payroll/list`}
               element={
                 <ProtectedRouteSystem>
-                  <PayrollView />
+                  <SystemUserPayrollView />
                 </ProtectedRouteSystem>
               }
             />
@@ -500,7 +537,7 @@ function App() {
               path={`${devNavUrl}/${UrlSystem}/payroll/list/payslip`}
               element={
                 <ProtectedRouteSystem>
-                  <Payslip />
+                  <SystemUserPayslipSalary />
                 </ProtectedRouteSystem>
               }
             />
@@ -508,7 +545,7 @@ function App() {
               path={`${devNavUrl}/${UrlSystem}/payroll/list/payslip-13th-Month`}
               element={
                 <ProtectedRouteSystem>
-                  <Payslip13thMonth />
+                  <SystemUserPayslip13thMonth />
                 </ProtectedRouteSystem>
               }
             />
@@ -516,7 +553,7 @@ function App() {
               path={`${devNavUrl}/${UrlSystem}/payroll/list/payslip-bonus`}
               element={
                 <ProtectedRouteSystem>
-                  <PayslipBonus />
+                  <SystemUserPayslipBonus />
                 </ProtectedRouteSystem>
               }
             />
@@ -630,7 +667,7 @@ function App() {
               path={`${devNavUrl}/${UrlSystem}/reports`}
               element={
                 <ProtectedRouteSystem>
-                  <ReportsLink />
+                  <SystemUserReportsLink />
                 </ProtectedRouteSystem>
               }
             />
@@ -638,7 +675,7 @@ function App() {
               path={`${devNavUrl}/${UrlSystem}/reports/summary`}
               element={
                 <ProtectedRouteSystem>
-                  <PayrollSummaryPage />
+                  <SystemUserPayrollSummaryPage />
                 </ProtectedRouteSystem>
               }
             />
@@ -646,7 +683,7 @@ function App() {
               path={`${devNavUrl}/${UrlSystem}/reports/summary/earnings`}
               element={
                 <ProtectedRouteSystem>
-                  <SummaryEarnings />
+                  <SystemUserSummaryEarnings />
                 </ProtectedRouteSystem>
               }
             />
@@ -654,7 +691,7 @@ function App() {
               path={`${devNavUrl}/${UrlSystem}/reports/summary/deductions`}
               element={
                 <ProtectedRouteSystem>
-                  <SummaryDeductions />
+                  <SystemUserSummaryDeductions />
                 </ProtectedRouteSystem>
               }
             />
@@ -663,7 +700,7 @@ function App() {
               path={`${devNavUrl}/${UrlSystem}/reports/employee-payrun`}
               element={
                 <ProtectedRouteSystem>
-                  <PayrunSummary />
+                  <SystemUserPayrunSummary />
                 </ProtectedRouteSystem>
               }
             />
@@ -671,7 +708,7 @@ function App() {
               path={`${devNavUrl}/${UrlSystem}/reports/wtax`}
               element={
                 <ProtectedRouteSystem>
-                  <WTaxPage />
+                  <SystemUserWTaxPage />
                 </ProtectedRouteSystem>
               }
             />
@@ -679,7 +716,7 @@ function App() {
               path={`${devNavUrl}/${UrlSystem}/reports/wtax/monthly`}
               element={
                 <ProtectedRouteSystem>
-                  <WTaxMonthly />
+                  <SystemUserWTaxMonthly />
                 </ProtectedRouteSystem>
               }
             />
@@ -687,7 +724,7 @@ function App() {
               path={`${devNavUrl}/${UrlSystem}/reports/wtax/yearly`}
               element={
                 <ProtectedRouteSystem>
-                  <WTaxYearly />
+                  <SystemUserWTaxYearly />
                 </ProtectedRouteSystem>
               }
             />
@@ -695,7 +732,7 @@ function App() {
               path={`${devNavUrl}/${UrlSystem}/reports/benefits`}
               element={
                 <ProtectedRouteSystem>
-                  <PayBenefits />
+                  <SystemUserPayBenefits />
                 </ProtectedRouteSystem>
               }
             />
@@ -703,7 +740,7 @@ function App() {
               path={`${devNavUrl}/${UrlSystem}/reports/paytype`}
               element={
                 <ProtectedRouteSystem>
-                  <SummaryType />
+                  <SystemUserSummaryType />
                 </ProtectedRouteSystem>
               }
             />
@@ -711,7 +748,7 @@ function App() {
               path={`${devNavUrl}/${UrlSystem}/reports/paytype/view`}
               element={
                 <ProtectedRouteSystem>
-                  <SummaryTypeView />
+                  <SystemUserSummaryTypeView />
                 </ProtectedRouteSystem>
               }
             />
@@ -719,7 +756,7 @@ function App() {
               path={`${devNavUrl}/${UrlSystem}/reports/salary-history`}
               element={
                 <ProtectedRouteSystem>
-                  <EmployeeSalaryHistory />
+                  <SystemUserEmployeeSalaryHistory />
                 </ProtectedRouteSystem>
               }
             />
@@ -737,7 +774,7 @@ function App() {
               path={`${devNavUrl}/${UrlSystem}/settings`}
               element={
                 <ProtectedRouteSystem>
-                  <SettingsLink />
+                  <SystemUserSettingsLink />
                 </ProtectedRouteSystem>
               }
             />
@@ -761,7 +798,7 @@ function App() {
               path={`${devNavUrl}/${UrlSystem}/settings/users/other`}
               element={
                 <ProtectedRouteSystem>
-                  <OtherUser />
+                  <SystemUserOtherUser />
                 </ProtectedRouteSystem>
               }
             />
@@ -778,7 +815,7 @@ function App() {
               path={`${devNavUrl}/${UrlSystem}/settings/tax-bracket`}
               element={
                 <ProtectedRouteSystem>
-                  <TaxBracket />
+                  <SystemUserTaxBracket />
                 </ProtectedRouteSystem>
               }
             />
@@ -787,7 +824,7 @@ function App() {
               path={`${devNavUrl}/${UrlSystem}/settings/tax-bracket/monthly`}
               element={
                 <ProtectedRouteSystem>
-                  <TaxMonthly />
+                  <SystemUserTaxMonthly />
                 </ProtectedRouteSystem>
               }
             />
@@ -796,7 +833,7 @@ function App() {
               path={`${devNavUrl}/${UrlSystem}/settings/tax-bracket/semi-monthly`}
               element={
                 <ProtectedRouteSystem>
-                  <TaxSemi />
+                  <SystemUserTaxSemi />
                 </ProtectedRouteSystem>
               }
             />
@@ -805,7 +842,7 @@ function App() {
               path={`${devNavUrl}/${UrlSystem}/settings/tax-bracket/yearly`}
               element={
                 <ProtectedRouteSystem>
-                  <TaxYearly />
+                  <SystemUserTaxYearly />
                 </ProtectedRouteSystem>
               }
             />
@@ -814,7 +851,7 @@ function App() {
               path={`${devNavUrl}/${UrlSystem}/settings/pagibig`}
               element={
                 <ProtectedRouteSystem>
-                  <Pagibig />
+                  <SystemUserPagibig />
                 </ProtectedRouteSystem>
               }
             />
@@ -823,7 +860,7 @@ function App() {
               path={`${devNavUrl}/${UrlSystem}/settings/philhealth`}
               element={
                 <ProtectedRouteSystem>
-                  <Philhealth />
+                  <SystemUserPhilhealth />
                 </ProtectedRouteSystem>
               }
             />
@@ -832,7 +869,7 @@ function App() {
               path={`${devNavUrl}/${UrlSystem}/settings/sss-bracket`}
               element={
                 <ProtectedRouteSystem>
-                  <SssBracket />
+                  <SystemUserSssBracket />
                 </ProtectedRouteSystem>
               }
             />
@@ -841,7 +878,7 @@ function App() {
               path={`${devNavUrl}/${UrlSystem}/settings/rates`}
               element={
                 <ProtectedRouteSystem>
-                  <Rates />
+                  <SystemUserRates />
                 </ProtectedRouteSystem>
               }
             />
@@ -850,7 +887,7 @@ function App() {
               path={`${devNavUrl}/${UrlSystem}/settings/payroll-type`}
               element={
                 <ProtectedRouteSystem>
-                  <PayrollType />
+                  <SystemUserPayrollType />
                 </ProtectedRouteSystem>
               }
             />

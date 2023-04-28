@@ -9,9 +9,17 @@ import OtherUser from "./other/OtherUser.jsx";
 import OtherUserLink from "./other/OtherUserLink.jsx";
 import RoleLink from "./role/RoleLink.jsx";
 import SystemUserLink from "./system/SystemUserLink.jsx";
+import PageNotFound from "../../../partials/PageNotFound";
 
 const UserPage = () => {
   const { store, dispatch } = React.useContext(StoreContext);
+  const fbsPayroll = JSON.parse(localStorage.getItem("fbsPayroll"));
+  if (
+    fbsPayroll.isDev === false ||
+    store.credentials.data.role_is_developer !== 1
+  ) {
+    return <PageNotFound />;
+  }
   return (
     <>
       {store.credentials.data.role_is_developer === 1 ? (

@@ -15,6 +15,7 @@ import FetchingSpinner from "../../../../partials/spinners/FetchingSpinner";
 import { getRoleIdDev } from "../function-users";
 import ModalAddSystemUser from "./ModalAddSystemUser";
 import SystemUserList from "./SystemUserList";
+import PageNotFound from "../../../../partials/PageNotFound";
 
 const SystemUser = () => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -32,7 +33,13 @@ const SystemUser = () => {
     setItemEdit(null);
   };
 
-  console.log(role);
+  const fbsPayroll = JSON.parse(localStorage.getItem("fbsPayroll"));
+  if (
+    fbsPayroll.isDev === false ||
+    store.credentials.data.role_is_developer !== 1
+  ) {
+    return <PageNotFound />;
+  }
 
   return (
     <>

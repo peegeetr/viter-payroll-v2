@@ -42,6 +42,7 @@ const OtherUser = () => {
       <div className="wrapper ">
         <div className="flex items-center justify-between whitespace-nowrap overflow-auto gap-2">
           <BreadCrumbs />
+
           {getRoleIdAdmin(role?.data) !== -1 && (
             <div className="flex items-center gap-1">
               <button type="button" className="btn-primary" onClick={handleAdd}>

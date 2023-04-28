@@ -1,9 +1,9 @@
 import React from "react";
-import { StoreContext } from "../../../../store/StoreContext";
-import PageNotFound from "../../../partials/PageNotFound";
-import HistoryLink from "../HistoryLink";
+import { StoreContext } from "../../../../../../store/StoreContext";
+import PageNotFound from "../../../../../partials/PageNotFound";
+import SummaryTypeView from "../SummaryTypeView";
 
-const SystemUserHistoryLink = () => {
+const SystemUserSummaryTypeView = () => {
   const { store } = React.useContext(StoreContext);
   const fbsPayroll = JSON.parse(localStorage.getItem("fbsPayroll"));
   if (
@@ -14,9 +14,9 @@ const SystemUserHistoryLink = () => {
   }
   return (
     <>
-      <HistoryLink />
+      <SummaryTypeView />
     </>
   );
 };
 
-export default SystemUserHistoryLink;
+export default SystemUserSummaryTypeView;

@@ -7,7 +7,9 @@
     - settings/user/system/functions.php 
     - settings/user/system/system.php 
     - settings/user/system/update-email.php 
-    - settings/user/system/update.php 
+    - settings/user/system/update.php
+
+    -> settings/user/system/login.php 
     
 *models   
     - settings/user/other/UserOther.php 
@@ -22,9 +24,10 @@
     - prv2_settings_user_system.sql (note:user_system_new_email varchar(200) )
 
 *core 
-    - 
+    -> functions.php
 
 *extra 
     - notification/template/change-email.php
     - notification/template/verify-account.php
-    - notification/email-confirm.php
+    -> notification/email-confirm.php
+    -> notification/mail-config.php

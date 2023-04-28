@@ -21,7 +21,7 @@ function sendEmail($oldEmail, $password_link, $name, $email, $key)
 	$mail->SMTPAuth = true;
 	$mail->Username =  USERNAME; // if gmail use your gmail email
 	$mail->Password = PASSWORD; // if gmail use your email password
-	$mail->Subject = VERIFY_ACCOUNT;
+	$mail->Subject = CHANGE_EMAIL;
 	$mail->setFrom(USERNAME, FROM);
 	$mail->isHTML(true);
 	$mail->Body = getHtmlConfirmEmail(

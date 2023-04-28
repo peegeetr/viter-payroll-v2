@@ -205,7 +205,8 @@ function loginAccess(
     $employee_email,
     $row,
     $result,
-    $key
+    $key,
+    $isDev = false
 ) {
     $response = new Response();
     $error = [];
@@ -215,12 +216,12 @@ function loginAccess(
             "iss" => "localhost", // A string containing the name or identifier of the issuer application.
             "aud" => "hris",
             "iat" => time(),  // timestamp of token issuing.
-            "data" => array("email" => $employee_email, "data" => $row), // App payload
+            "data" => array("email" => $employee_email, "data" => $row, "isDev" => $isDev), // App payload
         );
         $jwt = JWT::encode($payload, $key, 'HS256');
 
         http_response_code(200);
-        $returnData["data"] = [$row, $jwt];
+        $returnData["data"] = [$row, $jwt, $isDev];
         $returnData["count"] = $result->rowCount();
         $returnData["success"] = true;
         $returnData["message"] = "Access granted.";
@@ -264,6 +265,7 @@ function token(
             $returnData["count"] = $result->rowCount();
             $returnData["success"] = true;
             $returnData["message"] = "Access granted.";
+            $returnData["isDev"] = $decoded->data->isDev;
             $response->setData($returnData);
             $response->send();
             return $returnData;

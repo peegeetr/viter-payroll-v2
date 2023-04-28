@@ -1,16 +1,13 @@
 import React from "react";
-import { FaPlusCircle } from "react-icons/fa";
-import { setIsAdd } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
-import useLoadEmployee from "../../../custom-hooks/useLoadEmployee";
 import useQueryData from "../../../custom-hooks/useQueryData";
 import { getUrlParam, hrisDevApiUrl } from "../../../helpers/functions-general";
 import BreadCrumbs from "../../../partials/BreadCrumbs";
 import Footer from "../../../partials/Footer";
 import Header from "../../../partials/Header";
+import Navigation from "../../../partials/Navigation";
 import ModalError from "../../../partials/modals/ModalError";
 import ModalSuccess from "../../../partials/modals/ModalSuccess";
-import Navigation from "../../../partials/Navigation";
 import JobDetailsList from "./JobDetailsList";
 
 const JobDetails = () => {

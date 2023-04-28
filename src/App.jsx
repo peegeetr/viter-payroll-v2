@@ -1,74 +1,77 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import {
-  devNavUrl,
-  UrlAdmin,
-  UrlSystem,
-} from "./component/helpers/functions-general";
-import Employee from "./component/pages/employee/Employee";
-import EmployeeLink from "./component/pages/employee/EmployeeLink";
-import Holidays from "./component/pages/holidays/list/Holidays";
-import PayItem from "./component/pages/pay-type/pay-item/PayItem";
-import PayTypeLink from "./component/pages/pay-type/PayTypePage";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { UrlSystem, devNavUrl } from "./component/helpers/functions-general";
+import SettingsLink from "./component/pages/settings/SettingsLink";
 import Pagibig from "./component/pages/settings/pagibig/Pagibig.jsx";
 import Philhealth from "./component/pages/settings/philhealth/philhealth.jsx";
-import SettingsLink from "./component/pages/settings/SettingsLink";
 import SssBracket from "./component/pages/settings/sss-bracket/SssBracket.jsx";
+import TaxBracket from "./component/pages/settings/tax-bracket/TaxBracket.jsx";
 import TaxMonthly from "./component/pages/settings/tax-bracket/tax-monthly/TaxMonthly.jsx";
 import TaxSemi from "./component/pages/settings/tax-bracket/tax-semi/TaxSemi.jsx";
-import TaxBracket from "./component/pages/settings/tax-bracket/TaxBracket.jsx";
+import UserPage from "./component/pages/settings/users/UserPage";
 import OtherUser from "./component/pages/settings/users/other/OtherUser";
 import Role from "./component/pages/settings/users/role/Role";
 import SystemUser from "./component/pages/settings/users/system/SystemUser";
-import UserPage from "./component/pages/settings/users/UserPage";
 import PageNotFound from "./component/partials/PageNotFound";
 
-import SystemLogin from "./component/pages/access/login/SystemLogin";
-import DeductionsPage from "./component/pages/deductions/DeductionsPage";
-import FilterDeductions from "./component/pages/deductions/filter/FilterDeductions";
-import ManageDeduction from "./component/pages/deductions/manage-list/ManageDeduction";
-import EarningsPage from "./component/pages/earnings/EarningsPage";
-import FilterEarnings from "./component/pages/earnings/filter/FilterEarnings";
-import ManageEarnings from "./component/pages/earnings/manage-list/ManageEarnings";
-import JobDetails from "./component/pages/employee/job-details/JobDetails";
-import SalaryHistory from "./component/pages/employee/salary-history/SalaryHistory";
-import PayrollView from "./component/pages/payroll/list/PayrollView";
-import Payroll from "./component/pages/payroll/Payroll";
-import Payslip from "./component/pages/payroll/payslip/Payslip";
-import ReportsLink from "./component/pages/reports/ReportsLink";
-import PayrollType from "./component/pages/settings/payroll-type/PayrollType.jsx";
-import Rates from "./component/pages/settings/rates/Rates";
-import { StoreProvider } from "./store/StoreContext";
-import OtherLogin from "./component/pages/access/login/OtherLogin";
 import ProtectedRouteOther from "./component/pages/access/ProtectedRouteOther";
 import ProtectedRouteSystem from "./component/pages/access/ProtectedRouteSystem";
+import ConfirmChangeEmailOtherUser from "./component/pages/access/confirm-change-email/ConfirmChangeEmailOtherUser";
+import ConfirmChangeEmailSystemUser from "./component/pages/access/confirm-change-email/ConfirmChangeEmailSystemUser";
 import CreateOtherPassword from "./component/pages/access/create-password/CreateOtherPassword";
-import CreateSystemPassword from "./component/pages/access/create-password/CreateSystemPassword";
 import CreatePasswordSuccess from "./component/pages/access/create-password/CreatePasswordSuccess";
+import CreateSystemPassword from "./component/pages/access/create-password/CreateSystemPassword";
 import ForgotPassword from "./component/pages/access/forgot-password/ForgotPassword";
-import ForgotPasswordVerification from "./component/pages/access/forgot-password/ForgotPasswordVerification";
 import ForgotPasswordSystem from "./component/pages/access/forgot-password/ForgotPasswordSystem";
+import ForgotPasswordVerification from "./component/pages/access/forgot-password/ForgotPasswordVerification";
+import OtherLogin from "./component/pages/access/login/OtherLogin";
+import SystemLogin from "./component/pages/access/login/SystemLogin";
+import OtherUserManageDeduction from "./component/pages/deductions/links/OtherUserManageDeduction";
+import SystemUserManageDeduction from "./component/pages/deductions/links/SystemUserManageDeduction";
+import OtherUserManageEarnings from "./component/pages/earnings/links/OtherUserManageEarnings";
+import SystemUserManageEarnings from "./component/pages/earnings/links/SystemUserManageEarnings";
+import OtherUserJobDetails from "./component/pages/employee/job-details/links/OtherUserJobDetails";
+import SystemUserJobDetails from "./component/pages/employee/job-details/links/SystemUserJobDetails";
+import OtherUserEmployeeList from "./component/pages/employee/links-employee-list/OtherUserEmployeeList";
+import SystemUserEmployeeList from "./component/pages/employee/links-employee-list/SystemUserEmployeeList";
+import OtherUserEmployee from "./component/pages/employee/links/OtherUserEmployee";
+import SystemUserEmployee from "./component/pages/employee/links/SystemUserEmployee";
+import OtherUserPayrollDetails from "./component/pages/employee/payroll-details/links/OtherUserPayrollDetails";
+import SystemUserPayrollDetails from "./component/pages/employee/payroll-details/links/SystemUserPayrollDetails";
+import OtherUserSalaryHistory from "./component/pages/employee/salary-history/links/OtherUserSalaryHistory";
+import SystemUserSalaryHistory from "./component/pages/employee/salary-history/links/SystemUserSalaryHistory";
+import OtherUserHolidayExemption from "./component/pages/holidays/exemptions/links/OtherUserHolidayExemption";
+import SystemUserHolidayExemption from "./component/pages/holidays/exemptions/links/SystemUserHolidayExemption";
+import OtherUserHistoryLink from "./component/pages/holidays/links/OtherUserHistoryLink";
+import SystemUserHistoryLink from "./component/pages/holidays/links/SystemUserHistoryLink";
+import OtherUserHolidayList from "./component/pages/holidays/list/links/OtherUserHolidayList";
+import SystemUserHolidayList from "./component/pages/holidays/list/links/SystemUserHolidayList";
+import OtherUserPayType from "./component/pages/pay-type/links/OtherUserPayType";
+import SystemUserPayType from "./component/pages/pay-type/links/SystemUserPayType";
+import OtherUserPayItem from "./component/pages/pay-type/pay-item/links/OtherUserPayItem";
+import SystemUserPayItem from "./component/pages/pay-type/pay-item/links/SystemUserPayItem";
+import Payroll from "./component/pages/payroll/Payroll";
+import PayrollView from "./component/pages/payroll/list/PayrollView";
+import Payslip13thMonth from "./component/pages/payroll/payslip-13th-month/Payslip13thMonth";
+import PayslipBonus from "./component/pages/payroll/payslip-bonus/PayslipBonus";
+import Payslip from "./component/pages/payroll/payslip/Payslip";
+import ReportsLink from "./component/pages/reports/ReportsLink";
+import EmployeeSalaryHistory from "./component/pages/reports/employee-salary-history/EmployeeSalaryHistory";
+import PayBenefits from "./component/pages/reports/paybenefits/PayBenefits";
 import PayrollSummaryPage from "./component/pages/reports/payroll-summary/PayrollSummaryPage";
-import WTax from "./component/pages/reports/w-tax/monthly-tax/WTaxMonthly";
-import SummaryEarnings from "./component/pages/reports/payroll-summary/earnings/SummaryEarnings";
 import SummaryDeductions from "./component/pages/reports/payroll-summary/deductions/SummaryDeductions";
+import SummaryEarnings from "./component/pages/reports/payroll-summary/earnings/SummaryEarnings";
+import PayrunSummary from "./component/pages/reports/payrun-summary/PayrunSummary";
 import SummaryType from "./component/pages/reports/paytype/SummaryType";
 import SummaryTypeView from "./component/pages/reports/paytype/view/SummaryTypeView";
-import PayBenefits from "./component/pages/reports/paybenefits/PayBenefits";
-import PayrollDetails from "./component/pages/employee/payroll-details/PayrollDetails";
-import PayrunSummary from "./component/pages/reports/payrun-summary/PayrunSummary";
+import SummaryTypeViewBasicPay from "./component/pages/reports/paytype/view/SummaryTypeViewBasicPay";
 import WTaxPage from "./component/pages/reports/w-tax/WTaxPage";
 import WTaxMonthly from "./component/pages/reports/w-tax/monthly-tax/WTaxMonthly";
 import WTaxYearly from "./component/pages/reports/w-tax/yearly-tax/WTaxYearly";
-import Payslip13thMonth from "./component/pages/payroll/payslip-13th-month/Payslip13thMonth";
-import PayslipBonus from "./component/pages/payroll/payslip-bonus/PayslipBonus";
+import PayrollType from "./component/pages/settings/payroll-type/PayrollType.jsx";
+import Rates from "./component/pages/settings/rates/Rates";
 import TaxYearly from "./component/pages/settings/tax-bracket/tax-yearly/TaxYearly";
-import SummaryTypeViewBasicPay from "./component/pages/reports/paytype/view/SummaryTypeViewBasicPay";
-import EmployeeSalaryHistory from "./component/pages/reports/employee-salary-history/EmployeeSalaryHistory";
-import HistoryLink from "./component/pages/holidays/HistoryLink";
-import HolidayExemption from "./component/pages/holidays/exemptions/HolidayExemption";
-import ConfirmChangeEmailOtherUser from "./component/pages/access/confirm-change-email/ConfirmChangeEmailOtherUser";
-import ConfirmChangeEmailSystemUser from "./component/pages/access/confirm-change-email/ConfirmChangeEmailSystemUser";
+import { StoreProvider } from "./store/StoreContext";
 
 function App() {
   // Create a client
@@ -157,7 +160,7 @@ function App() {
               path={`${devNavUrl}/employee`}
               element={
                 <ProtectedRouteOther>
-                  <Employee />
+                  <OtherUserEmployee />
                 </ProtectedRouteOther>
               }
             />
@@ -166,7 +169,7 @@ function App() {
               path={`${devNavUrl}/employee/details`}
               element={
                 <ProtectedRouteOther>
-                  <EmployeeLink />
+                  <OtherUserEmployeeList />
                 </ProtectedRouteOther>
               }
             />
@@ -174,7 +177,7 @@ function App() {
               path={`${devNavUrl}/employee/details/job`}
               element={
                 <ProtectedRouteOther>
-                  <JobDetails />
+                  <OtherUserJobDetails />
                 </ProtectedRouteOther>
               }
             />
@@ -182,7 +185,7 @@ function App() {
               path={`${devNavUrl}/employee/details/payroll`}
               element={
                 <ProtectedRouteOther>
-                  <PayrollDetails />
+                  <OtherUserPayrollDetails />
                 </ProtectedRouteOther>
               }
             />
@@ -190,85 +193,35 @@ function App() {
               path={`${devNavUrl}/employee/details/salary-history`}
               element={
                 <ProtectedRouteOther>
-                  <SalaryHistory />
+                  <OtherUserSalaryHistory />
                 </ProtectedRouteOther>
               }
             />
 
             {/* Earnings Page ADMIN*/}
-            {/* <Route
-              path={`${devNavUrl}/earnings`}
-              element={
-                <ProtectedRouteOther>
-                  <EarningsPage />
-                </ProtectedRouteOther>
-              }
-            /> */}
             <Route
               path={`${devNavUrl}/earnings`}
               element={
                 <ProtectedRouteOther>
-                  <ManageEarnings />
+                  <OtherUserManageEarnings />
                 </ProtectedRouteOther>
               }
             />
-            {/* <Route
-              path={`${devNavUrl}/earnings/manage`}
-              element={
-                <ProtectedRouteOther>
-                  <ManageEarnings />
-                </ProtectedRouteOther>
-              }
-            />
-            <Route
-              path={`${devNavUrl}/earnings/filter`}
-              element={
-                <ProtectedRouteOther>
-                  <FilterEarnings />
-                </ProtectedRouteOther>
-              }
-            /> */}
-
-            {/* Deductions Page */}
-            {/* <Route
-              path={`${devNavUrl}/deductions`}
-              element={
-                <ProtectedRouteOther>
-                  <DeductionsPage />
-                </ProtectedRouteOther>
-              }
-            /> */}
             <Route
               path={`${devNavUrl}/deductions`}
               element={
                 <ProtectedRouteOther>
-                  <ManageDeduction />
+                  <OtherUserManageDeduction />
                 </ProtectedRouteOther>
               }
             />
-            {/* <Route
-              path={`${devNavUrl}/deductions/manage`}
-              element={
-                <ProtectedRouteOther>
-                  <ManageDeduction />
-                </ProtectedRouteOther>
-              }
-            />
-            <Route
-              path={`${devNavUrl}/deductions/filter`}
-              element={
-                <ProtectedRouteOther>
-                  <FilterDeductions />
-                </ProtectedRouteOther>
-              }
-            /> */}
 
             {/* Pay Type Page */}
             <Route
               path={`${devNavUrl}/pay-type`}
               element={
                 <ProtectedRouteOther>
-                  <PayTypeLink />
+                  <OtherUserPayType />
                 </ProtectedRouteOther>
               }
             />
@@ -276,7 +229,7 @@ function App() {
               path={`${devNavUrl}/pay-type/pay-item`}
               element={
                 <ProtectedRouteOther>
-                  <PayItem />
+                  <OtherUserPayItem />
                 </ProtectedRouteOther>
               }
             />
@@ -286,7 +239,7 @@ function App() {
               path={`${devNavUrl}/holiday-details`}
               element={
                 <ProtectedRouteOther>
-                  <HistoryLink />
+                  <OtherUserHistoryLink />
                 </ProtectedRouteOther>
               }
             />
@@ -294,7 +247,7 @@ function App() {
               path={`${devNavUrl}/holiday-details/holidays-list`}
               element={
                 <ProtectedRouteOther>
-                  <Holidays />
+                  <OtherUserHolidayList />
                 </ProtectedRouteOther>
               }
             />
@@ -302,7 +255,7 @@ function App() {
               path={`${devNavUrl}/holiday-details/holiday-exemptions`}
               element={
                 <ProtectedRouteOther>
-                  <HolidayExemption />
+                  <OtherUserHolidayExemption />
                 </ProtectedRouteOther>
               }
             />
@@ -573,7 +526,7 @@ function App() {
               path={`${devNavUrl}/${UrlSystem}/employee`}
               element={
                 <ProtectedRouteSystem>
-                  <Employee />
+                  <SystemUserEmployee />
                 </ProtectedRouteSystem>
               }
             />
@@ -582,7 +535,7 @@ function App() {
               path={`${devNavUrl}/${UrlSystem}/employee/details`}
               element={
                 <ProtectedRouteSystem>
-                  <EmployeeLink />
+                  <SystemUserEmployeeList />
                 </ProtectedRouteSystem>
               }
             />
@@ -590,7 +543,7 @@ function App() {
               path={`${devNavUrl}/${UrlSystem}/employee/details/job`}
               element={
                 <ProtectedRouteSystem>
-                  <JobDetails />
+                  <SystemUserJobDetails />
                 </ProtectedRouteSystem>
               }
             />
@@ -598,7 +551,7 @@ function App() {
               path={`${devNavUrl}/${UrlSystem}/employee/details/payroll`}
               element={
                 <ProtectedRouteSystem>
-                  <PayrollDetails />
+                  <SystemUserPayrollDetails />
                 </ProtectedRouteSystem>
               }
             />
@@ -606,85 +559,34 @@ function App() {
               path={`${devNavUrl}/${UrlSystem}/employee/details/salary-history`}
               element={
                 <ProtectedRouteSystem>
-                  <SalaryHistory />
+                  <SystemUserSalaryHistory />
                 </ProtectedRouteSystem>
               }
             />
 
             {/* Earnings Page ADMIN*/}
-            {/* <Route
-              path={`${devNavUrl}/${UrlSystem}/earnings`}
-              element={
-                <ProtectedRouteSystem>
-                  <EarningsPage />
-                </ProtectedRouteSystem>
-              } 
-            />*/}
             <Route
               path={`${devNavUrl}/${UrlSystem}/earnings`}
               element={
                 <ProtectedRouteSystem>
-                  <ManageEarnings />
+                  <SystemUserManageEarnings />
                 </ProtectedRouteSystem>
               }
             />
-            {/* <Route
-              path={`${devNavUrl}/${UrlSystem}/earnings/manage`}
-              element={
-                <ProtectedRouteSystem>
-                  <ManageEarnings />
-                </ProtectedRouteSystem>
-              }
-            />
-            <Route
-              path={`${devNavUrl}/${UrlSystem}/earnings/filter`}
-              element={
-                <ProtectedRouteSystem>
-                  <FilterEarnings />
-                </ProtectedRouteSystem>
-              }
-            /> */}
-
-            {/* Deductions Page */}
-            {/* <Route
-              path={`${devNavUrl}/${UrlSystem}/deductions`}
-              element={
-                <ProtectedRouteSystem>
-                  <DeductionsPage />
-                </ProtectedRouteSystem>
-              }
-            /> */}
             <Route
               path={`${devNavUrl}/${UrlSystem}/deductions`}
               element={
                 <ProtectedRouteSystem>
-                  <ManageDeduction />
+                  <SystemUserManageDeduction />
                 </ProtectedRouteSystem>
               }
             />
-            {/* <Route
-              path={`${devNavUrl}/${UrlSystem}/deductions/manage`}
-              element={
-                <ProtectedRouteSystem>
-                  <ManageDeduction />
-                </ProtectedRouteSystem>
-              }
-            />
-            <Route
-              path={`${devNavUrl}/${UrlSystem}/deductions/filter`}
-              element={
-                <ProtectedRouteSystem>
-                  <FilterDeductions />
-                </ProtectedRouteSystem>
-              }
-            /> */}
-
             {/* Pay Type Page */}
             <Route
               path={`${devNavUrl}/${UrlSystem}/pay-type`}
               element={
                 <ProtectedRouteSystem>
-                  <PayTypeLink />
+                  <SystemUserPayType />
                 </ProtectedRouteSystem>
               }
             />
@@ -692,7 +594,7 @@ function App() {
               path={`${devNavUrl}/${UrlSystem}/pay-type/pay-item`}
               element={
                 <ProtectedRouteSystem>
-                  <PayItem />
+                  <SystemUserPayItem />
                 </ProtectedRouteSystem>
               }
             />
@@ -702,7 +604,7 @@ function App() {
               path={`${devNavUrl}/${UrlSystem}/holiday-details`}
               element={
                 <ProtectedRouteSystem>
-                  <HistoryLink />
+                  <SystemUserHistoryLink />
                 </ProtectedRouteSystem>
               }
             />
@@ -710,7 +612,7 @@ function App() {
               path={`${devNavUrl}/${UrlSystem}/holiday-details/holidays-list`}
               element={
                 <ProtectedRouteSystem>
-                  <Holidays />
+                  <SystemUserHolidayList />
                 </ProtectedRouteSystem>
               }
             />
@@ -718,7 +620,7 @@ function App() {
               path={`${devNavUrl}/${UrlSystem}/holiday-details/holiday-exemptions`}
               element={
                 <ProtectedRouteSystem>
-                  <HolidayExemption />
+                  <SystemUserHolidayExemption />
                 </ProtectedRouteSystem>
               }
             />

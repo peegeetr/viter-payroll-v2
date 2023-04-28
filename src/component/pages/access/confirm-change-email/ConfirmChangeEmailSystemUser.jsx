@@ -34,8 +34,8 @@ const ConfirmChangeEmailSystemUser = () => {
           className="flex justify-center items-center"
           style={{ transform: "translateY(clamp(5rem,10vw,22rem))" }}
         >
-          <div className="w-96 p-6">
-            <div className="flex justify-center">
+          <div className="max-w-[25rem] w-full text-center p-6">
+            <div className="flex justify-center ">
               <FbsLogoLg />
             </div>
             <FaCheck className="mx-auto text-6xl my-2 fill-green-600" />

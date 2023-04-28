@@ -100,7 +100,7 @@ const ModalAddHolidays = ({ item, isPayrollEmpty, employeeName }) => {
     ) {
       setIsObserved("1");
     }
-    if (workOnHoliday === "1") {
+    if (workOnHoliday === "1" && isObserved !== "") {
       setIsObserved("0");
     }
   };

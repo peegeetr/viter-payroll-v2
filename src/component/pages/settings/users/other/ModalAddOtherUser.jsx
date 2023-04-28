@@ -20,8 +20,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const ModalAddOtherUser = ({ item, roleId }) => {
   const { store, dispatch } = React.useContext(StoreContext);
-  const [isOldEmail, setIsOldEmail] = React.useState("");
-  let msgVerification = "Please check your email for verification.";
+  const [isNewEmail, setIsNewEmail] = React.useState("");
+  let msgVerification = "Please check email for verification.";
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: (values) =>
@@ -46,7 +46,7 @@ const ModalAddOtherUser = ({ item, roleId }) => {
           setMessage(
             `Successfuly ${
               item
-                ? store.credentials.data.user_other_email === item
+                ? isNewEmail !== item
                   ? `${msgVerification}`
                   : "Updated"
                 : `added, ${msgVerification}`
@@ -100,7 +100,8 @@ const ModalAddOtherUser = ({ item, roleId }) => {
               initialValues={initVal}
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
-                console.log(values);
+                // console.log(values);
+                setIsNewEmail(values.user_other_email);
                 mutation.mutate(values);
               }}
             >

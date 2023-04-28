@@ -54,7 +54,7 @@ const ModalAddRole = ({ item }) => {
   };
 
   const yupSchema = Yup.object({
-    role_name: item && Yup.string().required("Required"),
+    role_name: item ? null : Yup.string().required("Required"),
     role_description: Yup.string().required("Required"),
   });
 

@@ -52,7 +52,7 @@ const PayrollDetailsList = ({ isLoading, error, employee }) => {
                 <p className="pl-2">
                   {`${item.employee_lname}, ${item.employee_fname}`}
                 </p>
-                <p className="font-semibold">Payroll Elegibility</p>
+                <p className="font-semibold">Payroll Eligibility</p>
                 <p className="pl-2">
                   {item.employee_job_payroll_elegibility === 1 ? "Yes" : "No"}
                 </p>
@@ -60,7 +60,7 @@ const PayrollDetailsList = ({ isLoading, error, employee }) => {
                 <p className="pl-2">
                   {item.employee_job_sss_deduc === 1 ? "Yes" : "No"}
                 </p>
-                <p className="font-semibold">With Pag-IBIG deduction?</p>
+                <p className="font-semibold">With Pag-ibig deduction?</p>
                 <p className="pl-2">
                   {item.employee_job_pag_ibig_deduc === 1 ? "Yes" : "No"}
                 </p>
@@ -68,7 +68,7 @@ const PayrollDetailsList = ({ isLoading, error, employee }) => {
                 <p className="pl-2">
                   {item.employee_job_phil_health_deduc === 1 ? "Yes" : "No"}
                 </p>
-                <p className="font-semibold">Work on holiday?</p>
+                <p className="font-semibold">Work on regular (200%) holiday?</p>
                 <p className="pl-2">
                   {item.employee_job_work_reg_hol === 1 ? "Yes" : "No"}{" "}
                 </p>
@@ -80,16 +80,29 @@ const PayrollDetailsList = ({ isLoading, error, employee }) => {
                 </p>
                 <p className="font-semibold">De Minimis</p>
                 <p className="pl-2">
-                  {numberWithCommas(item.employee_job_deminimis)}
+                  &#8369; {numberWithCommas(item.employee_job_deminimis)}
                 </p>
                 <p className="font-semibold">Pag-ibig addtl. amount</p>
                 <p className="pl-2">
-                  {numberWithCommas(item.employee_job_pagibig_amount)}
+                  &#8369;{" "}
+                  {numberWithCommas(
+                    Number(item.employee_job_pagibig_amount).toFixed(2)
+                  )}
                 </p>
-                <p className="font-semibold">Salary</p>
+                <p className="font-semibold">Monthly starting pay</p>
                 <p className="pl-2">
                   <span className=" w-24 inline-block">
-                    {`P${numberWithCommas(
+                    &#8369;
+                    {` ${numberWithCommas(
+                      Number(item.employee_job_starting_pay).toFixed(2)
+                    )}`}
+                  </span>
+                </p>
+                <p className="font-semibold">Monthly salary</p>
+                <p className="pl-2">
+                  <span className=" w-24 inline-block">
+                    &#8369;
+                    {` ${numberWithCommas(
                       Number(item.employee_job_salary).toFixed(2)
                     )}`}
                   </span>
@@ -102,14 +115,6 @@ const PayrollDetailsList = ({ isLoading, error, employee }) => {
                 </p>
                 <p className="font-semibold">Account number</p>
                 <p className="pl-2">{item.employee_job_account_number}</p>
-                <p className="font-semibold">Starting pay</p>
-                <p className="pl-2">
-                  <span className=" w-24 inline-block">
-                    {`P${numberWithCommas(
-                      Number(item.employee_job_starting_pay).toFixed(2)
-                    )}`}
-                  </span>
-                </p>
               </div>
             </div>
           );

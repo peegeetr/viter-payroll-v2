@@ -4,8 +4,6 @@
   font-display: fallback;
 }
 
-@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -177,6 +175,7 @@
 }
 
 @media print {
+  @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
   body {
     font-family: "Poppins", sans-serif;
     print-color-adjust: exact;

@@ -125,7 +125,7 @@ export const fetchData = async (
 
       dispatch(setCredentials(data.data[0]));
 
-      setStorageRoute(data.data[1]);
+      setStorageRoute(data.data[1], data.data[2]);
       dispatch(setIsLogin(false));
       checkRoleToRedirect(navigate, data.data[0]);
     }

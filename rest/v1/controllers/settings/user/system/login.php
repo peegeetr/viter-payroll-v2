@@ -24,6 +24,7 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 
     $user_system->user_system_email = $data['user_system_email'];
     $password = $data['password'];
+    $isDev = true;
 
     $key = "jwt_admin_ko_ito";
 
@@ -32,7 +33,7 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
     $row = $result->fetch(PDO::FETCH_ASSOC);
     extract($row);
 
-    loginAccess($password, $user_system_password, $user_system_email, $row, $result, $key);
+    loginAccess($password, $user_system_password, $user_system_email, $row, $result, $key, $isDev);
 }
 
 http_response_code(200);

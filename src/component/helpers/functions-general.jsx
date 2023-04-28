@@ -128,8 +128,8 @@ export const fetchFormData = (url, fd = {}) => {
 };
 
 // storage after login
-export function setStorageRoute(jwt, data) {
-  localStorage.setItem("fbsPayroll", JSON.stringify({ token: jwt, data }));
+export function setStorageRoute(jwt, isDev) {
+  localStorage.setItem("fbsPayroll", JSON.stringify({ token: jwt, isDev }));
 }
 
 // formatting date

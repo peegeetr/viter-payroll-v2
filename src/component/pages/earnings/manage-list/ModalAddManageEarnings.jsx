@@ -425,7 +425,7 @@ const ModalAddManageEarnings = ({
                             <option value="" hidden></option>
                             {isPayItem?.map((payitem, key) => {
                               return (
-                                payitem.payitem_aid !== Number(nightDiffId) &&
+                                payitem.payitem_aid !== Number(holidayId) &&
                                 payitem.payitem_aid !== Number(nightDiffId) &&
                                 payitem.payitem_is_active !== 0 && (
                                   <option

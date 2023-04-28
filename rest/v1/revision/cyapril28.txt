@@ -1,0 +1,30 @@
+
+*controllers    
+    - settings/user/other/functions.php 
+    - settings/user/other/other.php 
+    - settings/user/other/update-email.php 
+    - settings/user/other/update.php 
+    - settings/user/system/functions.php 
+    - settings/user/system/system.php 
+    - settings/user/system/update-email.php 
+    - settings/user/system/update.php 
+    
+*models   
+    - settings/user/other/UserOther.php 
+    - settings/user/system/UserSystem.php 
+  
+*htaccess 
+    - #SETTINGS USER OTHER   
+    - #SETTINGS USER SYSTEM
+
+*db tables 
+    - prv2_settings_user_other.sql (note:user_other_new_email varchar(200) )
+    - prv2_settings_user_system.sql (note:user_system_new_email varchar(200) )
+
+*core 
+    - 
+
+*extra 
+    - notification/template/change-email.php
+    - notification/template/verify-account.php
+    - notification/email-confirm.php

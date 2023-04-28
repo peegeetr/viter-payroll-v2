@@ -1,12 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
+<?php
 
+function getHtmlConfirmEmail(
+  $password_link,
+  $name,
+  $email,
+  $key,
+  $ROOT_DOMAIN
+) {
+  $html = '
   <style>
     @import url("https://fonts.cdnfonts.com/css/Helvetica Neue-neue-9");
     * {
@@ -64,7 +65,7 @@
             color: black;
           "
         >
-          Confirm change email
+          Confirm email
         </h1>
         <div
           style="
@@ -75,11 +76,10 @@
             border: 1px solid #ddd;
           "
         >
-          <p style="margin-bottom: 20px; font-size: 15px">Hi ' . $name . ',</p>
-          <p style="margin-bottom: 20px; font-size: 15px">
-            Please confirm that you want to change your account email address to
-            <strong> ' . $email . '</strong>. Please click the button below to
-            confirm the changes and start using Online Payroll System.
+        <p style="margin-bottom: 20px; font-size: 15px"> Hi ' . $name . ',</p>
+          <p style="margin-bottom: 20px; font-size: 15px"> Are you sure you want to 
+            change your email to <strong> ' . $email . '</strong>.
+            To proceed please click the button below.
           </p>
 
           <a
@@ -135,4 +135,6 @@
       </div>
     </div>
   </body>
-</html>
+';
+  return $html;
+}

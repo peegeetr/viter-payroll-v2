@@ -5,6 +5,7 @@ class UserSystem
     public $user_system_is_active;
     public $user_system_name;
     public $user_system_email;
+    public $user_system_new_email;
     public $user_system_role_id;
     public $user_system_key;
     public $user_system_password;
@@ -108,15 +109,39 @@ class UserSystem
         try {
             $sql = "update {$this->tblUserSystem} set ";
             $sql .= "user_system_name = :user_system_name, ";
-            $sql .= "user_system_email = :user_system_email, ";
+            $sql .= "user_system_new_email = :user_system_new_email, ";
+            $sql .= "user_system_key = :user_system_key, ";
             $sql .= "user_system_datetime = :user_system_datetime ";
             $sql .= "where user_system_aid  = :user_system_aid ";
             $query = $this->connection->prepare($sql);
             $query->execute([
                 "user_system_name" => $this->user_system_name,
-                "user_system_email" => $this->user_system_email,
+                "user_system_new_email" => $this->user_system_new_email,
+                "user_system_key" => $this->user_system_key,
                 "user_system_datetime" => $this->user_system_datetime,
                 "user_system_aid" => $this->user_system_aid,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    // update
+    public function updateEmail()
+    {
+        try {
+            $sql = "update {$this->tblUserSystem} set ";
+            $sql .= "user_system_email = :user_system_email, ";
+            $sql .= "user_system_new_email = '', ";
+            $sql .= "user_system_key = '', ";
+            $sql .= "user_system_datetime = :user_system_datetime ";
+            $sql .= "where user_system_key = :user_system_key ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "user_system_email" => $this->user_system_email,
+                "user_system_datetime" => $this->user_system_datetime,
+                "user_system_key" => $this->user_system_key,
             ]);
         } catch (PDOException $ex) {
             $query = false;
@@ -201,8 +226,7 @@ class UserSystem
         return $query;
     }
 
-    // validator
-
+    // validator 
     // name
     public function checkName()
     {
@@ -263,7 +287,26 @@ class UserSystem
     public function readKey()
     {
         try {
-            $sql = "select user_system_key from {$this->tblUserSystem} ";
+            $sql = "select user_system_key ";
+            $sql .= "from {$this->tblUserSystem} ";
+            $sql .= "where user_system_key = :user_system_key ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "user_system_key" => $this->user_system_key,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    // read key
+    public function readKeyChangeEmail()
+    {
+        try {
+            $sql = "select user_system_key, ";
+            $sql .= "user_system_new_email ";
+            $sql .= "from {$this->tblUserSystem} ";
             $sql .= "where user_system_key = :user_system_key ";
             $query = $this->connection->prepare($sql);
             $query->execute([

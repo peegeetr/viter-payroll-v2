@@ -8,7 +8,8 @@ function getHtmlVerifyAccount(
   $ROOT_DOMAIN
 ) {
   $html = '
-<style>
+
+  <style>
     @import url("https://fonts.cdnfonts.com/css/Helvetica Neue-neue-9");
     * {
       padding: 0;
@@ -18,12 +19,12 @@ function getHtmlVerifyAccount(
 
     p {
       margin-bottom: 10px;
-      font-size: 15px;
+      font-size: 14px;
     }
 
     .info td {
       padding: 2px;
-      font-size: 15px;
+      font-size: 14px;
     }
     table {
       border-spacing: 0;
@@ -38,8 +39,8 @@ function getHtmlVerifyAccount(
       background-color: #fff;
     "
   >
-    <div style="width: 100%; max-width: 600px; margin: 10px auto">
-    <div style="padding: 10px 10px 0px >
+    <div style="width: 100%; max-width: 500px; margin: 10px auto">
+      <div style="padding: 10px 10px 0px">
         <div
           style="
             background-image: url(https://demo.frontlinebusiness.com.ph/dev/notification-images/bg-white.jpg);
@@ -65,7 +66,7 @@ function getHtmlVerifyAccount(
             color: black;
           "
         >
-          Email Verification
+        Email Verification
         </h1>
         <div
           style="
@@ -76,12 +77,12 @@ function getHtmlVerifyAccount(
             border: 1px solid #ddd;
           "
         >
-          <p style="font-size: 15px;">Hi ' . $name . ',</p>
-          <p style="margin-bottom: 20px;font-size: 15px;">
+          <p style="margin-bottom: 20px; font-size: 15px"> Hi ' . $name . ',</p>
+          <p style="margin-bottom: 20px; font-size: 15px">
             Please confirm that you want to use
-            <strong> ' . $email . '</strong> as account email address.
-            Please click the button below to set your password
-            and start using Online Payroll System.
+            <strong> ' . $email . '</strong> as account email address. Please
+            click the button below to set your password and start using Online
+            Payroll System.
           </p>
 
           <a

@@ -27,9 +27,9 @@ const ForgotPasswordVerification = () => {
           <p className="mt-6 py-4 border-t-[1px] border-solid border-zinc-100 text-xs">
             Did not receive the mail? Check your spam or junk folder
           </p>
-          <Link to={`${devNavUrl}${redirect}`} className="btn-primary">
+          <a href={`${devNavUrl}${redirect}`} className="btn-primary">
             Proceed to Login
-          </Link>
+          </a>
         </div>
       </div>
     </>

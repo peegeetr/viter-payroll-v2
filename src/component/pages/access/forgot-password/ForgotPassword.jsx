@@ -9,7 +9,7 @@ import {
 import { StoreContext } from "../../../../store/StoreContext";
 import { fetchData } from "../../../helpers/fetchData";
 import { InputText } from "../../../helpers/FormInputs";
-import { devApiUrl } from "../../../helpers/functions-general";
+import { devApiUrl, devNavUrl } from "../../../helpers/functions-general";
 import ModalError from "../../../partials/modals/ModalError";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 import FbsLogoLg from "../../../svg/FbsLogoLg";
@@ -94,15 +94,9 @@ const ForgotPassword = () => {
           </Formik>
           <p className="mt-2">
             Go back to{" "}
-            <button
-              type="button"
-              onClick={() => {
-                navigate(-1);
-                dispatch(setStartIndex(0));
-              }}
-            >
+            <a href={`${devNavUrl}/login`} className="w-full text-primary">
               <u className="text-primary">Login</u>
-            </button>
+            </a>
           </p>
         </div>
       </div>

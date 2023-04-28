@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 19, 2023 at 03:27 AM
+-- Generation Time: Apr 28, 2023 at 05:54 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -32,6 +32,7 @@ CREATE TABLE `prv2_settings_user_system` (
   `user_system_is_active` tinyint(1) NOT NULL,
   `user_system_name` varchar(128) NOT NULL,
   `user_system_email` varchar(255) NOT NULL,
+  `user_system_new_email` varchar(200) NOT NULL,
   `user_system_role_id` int(11) NOT NULL,
   `user_system_key` varchar(255) NOT NULL,
   `user_system_password` varchar(255) NOT NULL,
@@ -43,8 +44,8 @@ CREATE TABLE `prv2_settings_user_system` (
 -- Dumping data for table `prv2_settings_user_system`
 --
 
-INSERT INTO `prv2_settings_user_system` (`user_system_aid`, `user_system_is_active`, `user_system_name`, `user_system_email`, `user_system_role_id`, `user_system_key`, `user_system_password`, `user_system_created`, `user_system_datetime`) VALUES
-(1, 1, 'cycy', 'cyrene.lumabas@frontlinebusiness.com.ph', 1, '', '$2y$10$DBTF1cuvGkPgXm9MPcFqTOrVcKbfzKx9A6Recj2TYd5HiTr6/0tKy', '2023-04-19 03:05:40', '2023-04-19 09:24:25');
+INSERT INTO `prv2_settings_user_system` (`user_system_aid`, `user_system_is_active`, `user_system_name`, `user_system_email`, `user_system_new_email`, `user_system_role_id`, `user_system_key`, `user_system_password`, `user_system_created`, `user_system_datetime`) VALUES
+(1, 1, 'cycy', 'cyrenemlumabas@gmail.com', '', 1, '', '$2y$10$Y6P.Cq4Ia4qjXKQXtNfDb.N/y3aH95pg66SmN1YBfb5X/v1nDm6LS', '2023-04-19 03:05:40', '2023-04-28 11:47:46');
 
 --
 -- Indexes for dumped tables

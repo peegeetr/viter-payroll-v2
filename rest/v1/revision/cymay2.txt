@@ -1,7 +1,7 @@
 
 *controllers     
     - settings/user/other/update.php 
-    - settings/user/system/functions.php 
+    - settings/user/other/other.php 
     - settings/user/system/system.php  
     - settings/user/system/update.php 
     

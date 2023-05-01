@@ -55,7 +55,7 @@ const ProtectedRouteOther = ({ children }) => {
   ) : isAuth === "123" ? (
     children
   ) : isAuth === "456" ? (
-    <Navigate to={`${devNavUrl}/system/login`} />
+    <Navigate to={`${devNavUrl}/login`} />
   ) : (
     <p>API end point error / Page not found.</p>
   );

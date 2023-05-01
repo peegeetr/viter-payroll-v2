@@ -6,10 +6,6 @@ require '../../../../core/header.php';
 require '../../../../core/functions.php';
 // use needed classes
 require '../../../../models/settings/user/other/UserOther.php';
-// use notification template
-require '../../../../notification/email-confirm.php';
-// check database connection
-require '../../../../core/Encryption.php';
 // get payload
 $body = file_get_contents("php://input");
 $data = json_decode($body, true);

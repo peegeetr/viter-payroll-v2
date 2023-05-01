@@ -1,4 +1,8 @@
 <?php
+// use notification template
+require '../../../../notification/reset-password.php';
+// check database connection
+require '../../../../core/Encryption.php';
 // check database connection
 $conn = null;
 $conn = checkDbConnection();

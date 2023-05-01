@@ -1,5 +1,9 @@
 <?php
 // check database connection
+// use notification template
+require '../../../../notification/email-confirm.php';
+// check database connection
+require '../../../../core/Encryption.php';
 $conn = null;
 $conn = checkDbConnection();
 // make instance of classes

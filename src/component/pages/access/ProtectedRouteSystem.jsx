@@ -55,7 +55,7 @@ const ProtectedRouteSystem = ({ children }) => {
   ) : isAuth === "123" ? (
     children
   ) : isAuth === "456" ? (
-    <Navigate to={`${devNavUrl}/login`} />
+    <Navigate to={`${devNavUrl}/system/login`} />
   ) : (
     <p>API end point error / Page not found.</p>
   );

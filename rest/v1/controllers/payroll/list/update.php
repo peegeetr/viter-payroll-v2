@@ -407,7 +407,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
                 $payrollList->start_pay_date = $allERBonusList[$erb]["earnings_start_pay_date"];
                 $payrollList->end_pay_date = $allERBonusList[$erb]["earnings_end_pay_date"];
                 $payrollList->details = $allERBonusList[$erb]["earnings_details"];
-                $payrollList->installment_extra = $allBereavementList[$be]["installment_extra"];
+                $payrollList->installment_extra = $allERBonusList[$erb]["installment_extra"];
                 $payrollList->hris_date = "";
                 $payrollList->earnings_rate = "";
                 $payrollList->earnings_hrs = "";
@@ -437,7 +437,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
                 $payrollList->start_pay_date = $allSeparationPayList[$sp]["earnings_start_pay_date"];
                 $payrollList->end_pay_date = $allSeparationPayList[$sp]["earnings_end_pay_date"];
                 $payrollList->details = $allSeparationPayList[$sp]["earnings_details"];
-                $payrollList->installment_extra = $allBereavementList[$be]["installment_extra"];
+                $payrollList->installment_extra = $allSeparationPayList[$sp]["installment_extra"];
                 $payrollList->hris_date = "";
                 $payrollList->earnings_rate = "";
                 $payrollList->earnings_hrs = "";
@@ -467,7 +467,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
                 $payrollList->start_pay_date = $allOtherAllowancesList[$oa]["earnings_start_pay_date"];
                 $payrollList->end_pay_date = $allOtherAllowancesList[$oa]["earnings_end_pay_date"];
                 $payrollList->details = $allOtherAllowancesList[$oa]["earnings_details"];
-                $payrollList->installment_extra = $allBereavementList[$be]["installment_extra"];
+                $payrollList->installment_extra = $allOtherAllowancesList[$oa]["installment_extra"];
                 $payrollList->hris_date = "";
                 $payrollList->earnings_rate = "";
                 $payrollList->earnings_hrs = "";

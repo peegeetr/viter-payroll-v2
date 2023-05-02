@@ -25,6 +25,7 @@ import {
 import {
   payrollCategory13thMonthId,
   payrollCategoryBonusId,
+  payrollCategorySalaryId,
 } from "../../helpers/functions-payroll-category-id";
 import { queryData } from "../../helpers/queryData";
 import { runPayroll } from "../../pages/payroll/list/functions-payroll-list";
@@ -78,6 +79,13 @@ const ModalRun = ({
   const handleClose = () => {
     dispatch(setIsConfirm(false));
   };
+
+  let categoryName =
+    Number(categoryId) === payrollCategory13thMonthId
+      ? "13th Month"
+      : Number(categoryId) === payrollCategoryBonusId
+      ? "Bonus"
+      : "Salary";
   // earningsNumInstallmentList,
   // deducNumInstallmentList,
   // console.log("run", runPayroll(employees, payrollEarnings));
@@ -127,6 +135,7 @@ const ModalRun = ({
     ) {
       dispatch(setIsConfirm(false));
       dispatch(setError(true));
+      dispatch(setMessage(`${categoryName} has no entry in earnings`));
       return;
     }
 
@@ -137,6 +146,20 @@ const ModalRun = ({
     ) {
       dispatch(setIsConfirm(false));
       dispatch(setError(true));
+      dispatch(setMessage(`${categoryName} has no entry in earnings`));
+      return;
+    }
+
+    // modal error 13th month category error
+    if (
+      payrollList.length === 0 &&
+      (Number(categoryId) !== payrollCategory13thMonthId ||
+        Number(categoryId) !== payrollCategoryBonusId ||
+        Number(categoryId) !== payrollCategorySalaryId)
+    ) {
+      dispatch(setIsConfirm(false));
+      dispatch(setError(true));
+      dispatch(setMessage(`Please check your earning type in payroll`));
       return;
     }
 

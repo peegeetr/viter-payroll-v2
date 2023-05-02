@@ -51,13 +51,6 @@ const PayrollView = () => {
       ? payrollList?.data[0].payroll_category_type
       : "0";
 
-  let categoryName =
-    Number(categoryId) === payrollCategory13thMonthId
-      ? "13th Month"
-      : Number(categoryId) === payrollCategoryBonusId
-      ? "Bonus"
-      : "Salary";
-
   // use if not loadmore button undertime
   const { data: category13thMonth } = useQueryData(
     `${devApiUrl}/v1/payrollList/category/13month/${payrollCategorySalaryId}`, // endpoint
@@ -219,9 +212,7 @@ const PayrollView = () => {
         : store.isConfirm && <ModalNoSssBracket />}
 
       {store.success && <ModalSuccess />}
-      {store.error && (
-        <ModalError msg={`${categoryName} has no entry in earnings`} />
-      )}
+      {store.error && <ModalError />}
       {store.isAdd && <ModalPayslipEmailAll payrollList={payrollList?.data} />}
     </>
   );

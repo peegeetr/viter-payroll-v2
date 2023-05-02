@@ -48,6 +48,7 @@ import {
   validateDataIsNotEmpty,
   validatePayPeriod,
 } from "./function-manage-list";
+import { payrollCategoryBonusId } from "../../../helpers/functions-payroll-category-id";
 
 const ModalAddManageEarnings = ({
   payType,
@@ -72,7 +73,7 @@ const ModalAddManageEarnings = ({
   let payroll_end_date = payrollDraft?.data[0].payroll_end_date;
   let payroll_id = payrollDraft?.data[0].payroll_id;
   let payroll_type_id = payrollDraft?.data[0].payroll_category_type;
-
+  // payrollCategoryBonusId
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
@@ -523,7 +524,10 @@ const ModalAddManageEarnings = ({
                                 <option value="" hidden></option>
                                 {/* <option value="0">Every payroll</option> */}
                                 <option value="1">One-time</option>
-                                <option value="2">Installment</option>
+                                {Number(payroll_type_id) !==
+                                  payrollCategoryBonusId && (
+                                  <option value="2">Installment</option>
+                                )}
                               </optgroup>
                             </InputSelect>
                           </div>

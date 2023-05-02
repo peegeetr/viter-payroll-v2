@@ -4,7 +4,11 @@ import { setIsAdd } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
 import useLoadEmployee from "../../../custom-hooks/useLoadEmployee";
 import useQueryData from "../../../custom-hooks/useQueryData";
-import { getUrlParam, hrisDevApiUrl } from "../../../helpers/functions-general";
+import {
+  devApiUrl,
+  getUrlParam,
+  hrisDevApiUrl,
+} from "../../../helpers/functions-general";
 import BreadCrumbs from "../../../partials/BreadCrumbs";
 import Footer from "../../../partials/Footer";
 import Header from "../../../partials/Header";
@@ -32,6 +36,13 @@ const PayrollDetails = () => {
     false // devKey boolean
   );
 
+  // use if not loadmore button undertime
+  const { data: draft } = useQueryData(
+    `${devApiUrl}/v1/payroll/list`, // endpoint
+    "get", // method
+    "draft" // key
+  );
+
   return (
     <>
       <Header />
@@ -44,6 +55,7 @@ const PayrollDetails = () => {
             isLoading={isLoading}
             error={error}
             employee={employee}
+            draft={draft}
           />
         </div>
         <Footer />

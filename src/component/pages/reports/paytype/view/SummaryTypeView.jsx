@@ -176,7 +176,10 @@ const SummaryTypeView = () => {
                               ? `${item.earnings_employee}`
                               : `${item.deduction_employee}`}
                           </td>
-                          <td>{`${item.earnings_rate}%`}</td>
+                          <td>
+                            {item.earnings_rate !== "" &&
+                              `${Number(item.earnings_rate)}%`}
+                          </td>
                           <td className="w-[15rem] text-right mt-2 pr-2 font-bold">
                             {item.paytype_category === "earnings"
                               ? `${numberWithCommas(

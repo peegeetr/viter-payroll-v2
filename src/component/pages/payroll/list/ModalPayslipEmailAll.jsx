@@ -43,7 +43,7 @@ const ModalPayslipEmailAll = ({ payrollList }) => {
     mutation.mutate({
       allEmailEmployee: payrollList.length > 0 ? payrollList : [],
     });
-    console.log(payrollList.length, payrollList);
+    // console.log(payrollList.length, payrollList);
   };
 
   return (

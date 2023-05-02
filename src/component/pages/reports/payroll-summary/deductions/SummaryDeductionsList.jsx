@@ -60,7 +60,7 @@ const SummaryDeductionsList = () => {
     cacheTime: 1000,
   });
 
-  console.log(result);
+  // console.log(result);
 
   React.useEffect(() => {
     if (inView) {

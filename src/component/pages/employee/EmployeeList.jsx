@@ -60,7 +60,7 @@ const EmployeeList = () => {
     // cacheTime: 1000,
   });
 
-  console.log(status, result);
+  // console.log(status, result);
 
   React.useEffect(() => {
     if (inView) {

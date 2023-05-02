@@ -76,7 +76,7 @@ const PayrollList = ({ setItemEdit }) => {
     }
   }, [inView]);
 
-  console.log(result);
+  // console.log(result);
 
   const handleEdit = async (item) => {
     setLoading(true);

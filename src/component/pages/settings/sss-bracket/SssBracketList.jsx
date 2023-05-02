@@ -74,7 +74,7 @@ const SssBracketList = ({ setItemEdit, setItemNum }) => {
     setId(item.sss_bracket_aid);
     setData(item);
     setDel(true);
-    console.log(item);
+    // console.log(item);
   };
 
   return (

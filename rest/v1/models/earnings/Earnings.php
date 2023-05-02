@@ -602,6 +602,7 @@ class Earnings
     {
         try {
             $sql = "select earnings.earnings_amount, ";
+            $sql .= "earnings.earnings_rate, ";
             $sql .= "earnings.earnings_employee, ";
             $sql .= "earnings.earnings_start_pay_date, ";
             $sql .= "earnings.earnings_end_pay_date, ";
@@ -640,6 +641,7 @@ class Earnings
     {
         try {
             $sql = "select earnings.earnings_amount, ";
+            $sql .= "earnings.earnings_rate, ";
             $sql .= "earnings.earnings_employee, ";
             $sql .= "earnings.earnings_start_pay_date, ";
             $sql .= "earnings.earnings_end_pay_date, ";

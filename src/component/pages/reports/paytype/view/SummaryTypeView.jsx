@@ -76,7 +76,7 @@ const SummaryTypeView = () => {
     cacheTime: 1000,
   });
 
-  console.log(result);
+  // console.log(result);
   React.useEffect(() => {
     if (inView) {
       setPage((prev) => prev + 1);
@@ -140,6 +140,7 @@ const SummaryTypeView = () => {
                 <tr>
                   <th>#</th>
                   <th>Employee</th>
+                  <th></th>
                   <th className="text-right">Amount</th>
                 </tr>
               </thead>
@@ -175,6 +176,7 @@ const SummaryTypeView = () => {
                               ? `${item.earnings_employee}`
                               : `${item.deduction_employee}`}
                           </td>
+                          <td>{`${item.earnings_rate}%`}</td>
                           <td className="w-[15rem] text-right mt-2 pr-2 font-bold">
                             {item.paytype_category === "earnings"
                               ? `${numberWithCommas(

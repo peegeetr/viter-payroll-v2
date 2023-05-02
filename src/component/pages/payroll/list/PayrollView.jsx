@@ -114,7 +114,7 @@ const PayrollView = () => {
     "holiday-exemptions" // key
   );
 
-  console.log(payrollList, holidayExemptions);
+  // console.log(payrollList, holidayExemptions);
 
   const handleEmailAll = () => {
     dispatch(setIsAdd(true));

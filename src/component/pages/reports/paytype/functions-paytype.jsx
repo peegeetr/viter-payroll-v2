@@ -20,7 +20,7 @@ export const getPaytype = (item, paytype) => {
       });
     }
   });
-  console.log(list);
+  // console.log(list);
   return list;
 };
 

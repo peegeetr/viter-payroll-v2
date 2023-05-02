@@ -82,7 +82,7 @@ const ModalAddManageEarnings = ({
     onSuccess: (data) => {
       // Invalidate and refetch
       queryClient.invalidateQueries({ queryKey: ["earnings"] });
-      console.log(data);
+      // console.log(data);
       // show success box
       if (data.success) {
         const msg = `Successfuly added.`;
@@ -141,7 +141,7 @@ const ModalAddManageEarnings = ({
     false // devKey boolean
   );
 
-  console.log(overtime);
+  // console.log(overtime);
 
   const handlePayType = async (e, props) => {
     let paytypeid = e.target.value;
@@ -279,7 +279,7 @@ const ModalAddManageEarnings = ({
               initialValues={initVal}
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
-                console.log(values);
+                // console.log(values);
                 let computedLeav = [];
                 let computedUndertime = [];
                 let computedUnpaid = [];

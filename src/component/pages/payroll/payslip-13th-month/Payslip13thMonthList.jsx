@@ -5,7 +5,7 @@ import {
 import PayslipHeader from "../payslip/PayslipHeader";
 
 const Payslip13thMonthList = ({ payslip }) => {
-  console.log(payslip);
+  // console.log(payslip);
   const days = getWorkingDays(
     new Date(payslip?.data[0].payroll_start_date),
     new Date(payslip?.data[0].payroll_end_date)

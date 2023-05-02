@@ -33,7 +33,7 @@ const PayslipBonus = () => {
   let payrollUrl =
     payslip?.data.length > 0 ? `?payrollid=${payslip?.data[0].payroll_id}` : "";
 
-  console.log(payslip);
+  // console.log(payslip);
   return (
     <>
       <Header />

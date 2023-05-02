@@ -103,7 +103,7 @@ const ModalEditJobDetails = ({
       setNightDiff("0");
     }
     if (startTime === "0") {
-      console.log("startTime", startTime);
+      // console.log("startTime", startTime);
       setNightDiff("5");
     }
     if (startTime === "1") {

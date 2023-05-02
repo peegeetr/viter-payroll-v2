@@ -79,7 +79,7 @@ const EmployeeSalaryHistoryList = () => {
   const yupSchema = Yup.object({
     payroll_employee: Yup.string().required("Required"),
   });
-  console.log(result, employeeId);
+  // console.log(result, employeeId);
   return (
     <>
       <div className=" z-0 w-full print:hidden">

@@ -83,7 +83,7 @@ const ModalUpdatePagibig = ({ item }) => {
               initialValues={initVal}
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
-                console.log(values);
+                // console.log(values);
                 const pagibig_er_amount = removeComma(values.pagibig_ee_amount);
                 const pagibig_ee_amount = removeComma(values.pagibig_er_amount);
                 mutation.mutate({

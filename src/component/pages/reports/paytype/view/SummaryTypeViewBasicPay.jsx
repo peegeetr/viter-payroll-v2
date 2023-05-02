@@ -59,7 +59,7 @@ const SummaryTypeViewBasicPay = () => {
       fetchNextPage();
     }
   }, [inView]);
-  console.log(result);
+  // console.log(result);
   return (
     <>
       <Header />

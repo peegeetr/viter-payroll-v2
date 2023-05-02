@@ -90,7 +90,7 @@ const WTaxBodyYearly = ({ result, year, monthlyTax, yearlyTax }) => {
             // taxYearly = computeTaxPayable(item.gross, yearlyTax);
             taxYearly = computeTaxYearly(item.gross, yearlyTax);
             taxWitheld = taxYearly - taxMonthly;
-            console.log(taxWitheld);
+            // console.log(taxWitheld);
             return (
               <div key={key} className="mb-8 print:mb-12">
                 <HeaderPrint />

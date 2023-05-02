@@ -5,7 +5,7 @@ export const getEmployeeDetails = (item, employee) => {
   let employee_name = "";
   let isWorkOnHoliday = "";
   employee?.data.map((eItem) => {
-    console.log(item);
+    // console.log(item);
     // check if leave type aid is equal
     if (eItem.employee_aid === Number(item.holiday_exemption_eid)) {
       employee_name = `${eItem.employee_lname}, ${eItem.employee_fname}`;

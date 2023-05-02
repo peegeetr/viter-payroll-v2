@@ -90,7 +90,7 @@ const PayBenefitsList = () => {
     start_date: "",
     end_date: "",
   };
-  console.log(employee);
+  // console.log(employee);
   const yupSchema = Yup.object({
     employee_aid: Yup.string().required("Required"),
     start_date: Yup.string().required("Required"),

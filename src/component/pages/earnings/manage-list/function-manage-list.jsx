@@ -291,7 +291,7 @@ export const otFinalAmount = (otItem, eItem, holidays, payrollDraft) => {
 
       //if overtime is regular or special holiday day not restday
       if (!isRestDay) {
-        console.log("holiday");
+        // console.log("holiday");
         otRate = ((rate25 + (holidayRate - 1)) * regRate).toFixed(2);
         totalOtHolidayAmount = otHolidayComputed(
           (regularAmount =
@@ -300,14 +300,14 @@ export const otFinalAmount = (otItem, eItem, holidays, payrollDraft) => {
           holidayRate,
           rate25
         );
-        console.log(totalOtHolidayAmount);
+        // console.log(totalOtHolidayAmount);
         isHoliday = true;
         if (
           isNd === 1 &&
           ((otTimeHr >= 22 && otTimeHr <= 23) ||
             (otTimeHr >= 0 && otTimeHr < 6))
         ) {
-          console.log("holiday nd");
+          // console.log("holiday nd");
           regularAmount =
             Number(otItem.task_spent) *
             employeeRate(eItem.employee_job_salary, days).hourly;
@@ -328,7 +328,7 @@ export const otFinalAmount = (otItem, eItem, holidays, payrollDraft) => {
     (new Date(otDate).getDay() == 0 || new Date(otDate).getDay() == 6) &&
     !isHoliday
   ) {
-    console.log("rest");
+    // console.log("rest");
     regularAmount =
       Number(otItem.task_spent) *
       employeeRate(eItem.employee_job_salary, days).hourly;
@@ -352,7 +352,7 @@ export const otFinalAmount = (otItem, eItem, holidays, payrollDraft) => {
 
   // if overtime is normal day
   if (!isRestDay && !isHoliday) {
-    console.log("normal");
+    // console.log("normal");
     regularAmount =
       Number(otItem.task_spent) *
       employeeRate(eItem.employee_job_salary, days).hourly;
@@ -364,7 +364,7 @@ export const otFinalAmount = (otItem, eItem, holidays, payrollDraft) => {
       isNd === 1 &&
       ((otTimeHr >= 22 && otTimeHr <= 23) || (otTimeHr >= 0 && otTimeHr < 6))
     ) {
-      console.log("normal nd");
+      // console.log("normal nd");
       regularAmount =
         Number(otItem.task_spent) *
         employeeRate(eItem.employee_job_salary, days).hourly;

@@ -21,6 +21,7 @@ const ModalAddHolidays = ({ item }) => {
   const [isObserved, setIsObserved] = React.useState(
     item ? item.holidays_observed : ""
   );
+  const [rate, setRate] = React.useState(item ? item.holidays_rate : "");
 
   const queryClient = useQueryClient();
   const mutation = useMutation({
@@ -54,10 +55,18 @@ const ModalAddHolidays = ({ item }) => {
   const handleRateHoliday = async (e) => {
     let isSpecialHolidayRate = e.target.value;
     // get employee id
-    if (isSpecialHolidayRate === "special") {
+    setRate(e.target.options[e.target.selectedIndex].id);
+    if (
+      isSpecialHolidayRate === "special" ||
+      isSpecialHolidayRate === "doubleS"
+    ) {
       setIsObserved("1");
     }
-    if (isSpecialHolidayRate === "regular") {
+    if (
+      isSpecialHolidayRate === "regular" ||
+      isSpecialHolidayRate === "doubleR" ||
+      isSpecialHolidayRate === "doubleSR"
+    ) {
       setIsObserved("0");
     }
   };
@@ -106,8 +115,7 @@ const ModalAddHolidays = ({ item }) => {
             >
               {(props) => {
                 props.values.holidays_observed = isObserved;
-                props.values.holidays_rate =
-                  props.values.holidays_type === "special" ? "130" : "200";
+                props.values.holidays_rate = rate;
                 return (
                   <Form>
                     <div className="relative mb-5 mt-5">
@@ -136,8 +144,21 @@ const ModalAddHolidays = ({ item }) => {
                         disabled={mutation.isLoading}
                       >
                         <option value="" disabled hidden></option>
-                        <option value="special">Special Holiday (130%)</option>
-                        <option value="regular">Regular Holiday (200%)</option>
+                        <option value="special" id="130">
+                          Special Holiday (130%)
+                        </option>
+                        <option value="regular" id="200">
+                          Regular Holiday (200%)
+                        </option>
+                        <option value="doubleS" id="260">
+                          Double Special Holiday (130% x 130%)
+                        </option>
+                        <option value="doubleR" id="400">
+                          Double Regular Holiday (200% x 200%)
+                        </option>
+                        <option value="doubleSR" id="330">
+                          Double Holiday (130% x 200%)
+                        </option>
                       </InputSelect>
 
                       {isObserved === "1" || isObserved === 1 ? (

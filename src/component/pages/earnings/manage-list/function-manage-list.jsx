@@ -89,7 +89,7 @@ export const computeLeave = (leaveData, employee, payrollDraft) => {
     new Date(payrollDraft?.data[0].payroll_end_date)
   );
 
-  console.log(leaveData, employee);
+  // console.log(leaveData, employee);
   let list = [];
   leaveData?.data.map((lItem) => {
     employee?.data.map((eItem) => {
@@ -116,7 +116,7 @@ export const computeLeave = (leaveData, employee, payrollDraft) => {
     });
   });
 
-  console.log(list);
+  // console.log(list);
   return list;
 };
 
@@ -130,7 +130,7 @@ export const computeOvertime = (
   let list = [];
   employee?.data.map((eItem) => {
     overtimeData?.data.map((otItem) => {
-      console.log(otItem);
+      // console.log(otItem);
       if (Number(otItem.task_employee_id) === Number(eItem.employee_aid)) {
         list.push({
           name: `${eItem.employee_lname}, ${eItem.employee_fname}`,
@@ -164,7 +164,7 @@ export const validateDataIsNotEmpty = (
   undertimeHrisData,
   dispatch
 ) => {
-  console.log(absencesHrisData);
+  // console.log(absencesHrisData);
   let val = false;
   // leaveId = 19 is leave
   // overtimeId = 18 is OT
@@ -224,7 +224,7 @@ export const otHolidayComputed = (regularAmount, holidayRate, rate) => {
   totalOtAmount = regularAmount * rate - regularAmount;
   // total of additional salary
   finalAmount = totalHolidayAmount + totalOtAmount + regularAmount;
-  console.log(finalAmount, regularAmount);
+  // console.log(finalAmount, regularAmount);
   return finalAmount;
 };
 

@@ -12,6 +12,7 @@ import useLoadKey from "../../../custom-hooks/useLoadKey";
 import { fetchData } from "../../../helpers/fetchData";
 import { InputText } from "../../../helpers/FormInputs";
 import {
+  consoleLog,
   devApiUrl,
   devNavUrl,
   getUrlParam,
@@ -66,7 +67,7 @@ const CreateOtherPassword = () => {
   React.useEffect(() => {
     dispatch(setCreatePassSuccess(true));
   }, []);
-  console.log("key", key.length);
+  consoleLog("key", key.length);
   return (
     <>
       {keyLoading ? (
@@ -95,7 +96,7 @@ const CreateOtherPassword = () => {
                 initialValues={initVal}
                 validationSchema={yupSchema}
                 onSubmit={async (values, { setSubmitting, resetForm }) => {
-                  console.log(values);
+                  // console.log(values);
                   fetchData(
                     setLoading,
                     `${devApiUrl}/v1/user-others/password`,

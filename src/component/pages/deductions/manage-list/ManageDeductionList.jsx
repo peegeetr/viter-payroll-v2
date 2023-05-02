@@ -5,6 +5,7 @@ import { useInView } from "react-intersection-observer";
 import { setIsRestore } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
 import {
+  consoleLog,
   devApiUrl,
   formatDate,
   numberWithCommas,
@@ -56,7 +57,7 @@ const ManageDeductionList = () => {
     refetchOnWindowFocus: false,
   });
 
-  console.log(result);
+  consoleLog(result);
 
   React.useEffect(() => {
     if (inView) {

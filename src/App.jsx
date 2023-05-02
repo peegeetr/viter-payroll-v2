@@ -101,6 +101,8 @@ import SystemUserTaxYearly from "./component/pages/settings/tax-bracket/tax-year
 import { StoreProvider } from "./store/StoreContext";
 import SystemUserOtherUser from "./component/pages/settings/users/other/links/SystemUserOtherUser";
 import OtherUserOtherUser from "./component/pages/settings/users/other/links/OtherUserOtherUser";
+import SystemUserSummaryTypeViewBasicPay from "./component/pages/reports/paytype/view/links-salary/SystemUserSummaryTypeViewBasicPay";
+import OtherUserSummaryTypeViewBasicPay from "./component/pages/reports/paytype/view/links-salary/OtherUserSummaryTypeViewBasicPay";
 
 function App() {
   // Create a client
@@ -399,7 +401,7 @@ function App() {
               path={`${devNavUrl}/reports/paytype/basic-pay`}
               element={
                 <ProtectedRouteOther>
-                  <SummaryTypeViewBasicPay />
+                  <OtherUserSummaryTypeViewBasicPay />
                 </ProtectedRouteOther>
               }
             />
@@ -764,7 +766,7 @@ function App() {
               path={`${devNavUrl}/${UrlSystem}/reports/paytype/basic-pay`}
               element={
                 <ProtectedRouteSystem>
-                  <SummaryTypeViewBasicPay />
+                  <SystemUserSummaryTypeViewBasicPay />
                 </ProtectedRouteSystem>
               }
             />

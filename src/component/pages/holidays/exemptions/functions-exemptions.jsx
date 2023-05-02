@@ -57,3 +57,25 @@ export const getHolidayName = (item, Allholiday) => {
   });
   return holidayName;
 };
+
+// getPayPeriod()
+export const getHolidayTypeName = (item) => {
+  let holidayTypeName = "";
+  // check if leave type aid is equal
+  if (item === "regular") {
+    holidayTypeName = `regular holiday`;
+  }
+  if (item === "special") {
+    holidayTypeName = `special holiday`;
+  }
+  if (item === "doubleS") {
+    holidayTypeName = `double special holiday`;
+  }
+  if (item === "doubleR") {
+    holidayTypeName = `double regular holiday`;
+  }
+  if (item === "doubleSR") {
+    holidayTypeName = `double special and regular holiday`;
+  }
+  return holidayTypeName;
+};

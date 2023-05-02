@@ -1,6 +1,6 @@
 import { setError, setMessage } from "../../store/StoreAction";
 import fetchApi from "./fetchApi";
-import { devApiUrl } from "./functions-general";
+import { consoleLog, devApiUrl } from "./functions-general";
 
 export async function verifyRecaptcha(response, dispatch, setLoading) {
   setLoading(true);
@@ -10,7 +10,7 @@ export async function verifyRecaptcha(response, dispatch, setLoading) {
     dispatch
   );
 
-  console.log(recapt);
+  consoleLog(recapt);
 
   if (typeof recapt === "undefined") {
     setLoading(false);

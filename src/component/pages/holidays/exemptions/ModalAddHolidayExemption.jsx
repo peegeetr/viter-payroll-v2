@@ -1,8 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Form, Formik } from "formik";
 import React from "react";
-import { FaCheck, FaTimesCircle } from "react-icons/fa";
-import { ImCross } from "react-icons/im";
+import { FaTimesCircle } from "react-icons/fa";
 import * as Yup from "yup";
 import {
   setError,
@@ -20,8 +19,8 @@ import {
 } from "../../../helpers/functions-general";
 import { queryData } from "../../../helpers/queryData";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
-import { getEmployeeDetails, getRateDate } from "./functions-exemptions";
 import HolidayIsObserved from "./HolidayIsObserved";
+import { getEmployeeDetails, getRateDate } from "./functions-exemptions";
 
 const ModalAddHolidays = ({ item, isPayrollEmpty, employeeName }) => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -87,16 +86,21 @@ const ModalAddHolidays = ({ item, isPayrollEmpty, employeeName }) => {
     // // get jobId id
     let workOnHoliday = e.target.options[e.target.selectedIndex].id;
     setIsWorkOnHoliday(workOnHoliday);
-    if (workOnHoliday === "0" && isRate === "130") {
+    if (workOnHoliday === "0" && (isRate === "130" || isRate === "260")) {
       setIsObserved("0");
     }
-    if (workOnHoliday === "0" && isRate === "200") {
+    if (
+      workOnHoliday === "0" &&
+      (isRate === "200" || isRate === "400" || isRate === "330")
+    ) {
       setIsObserved("1");
     }
     if (
       item &&
       workOnHoliday === "0" &&
-      getRateDate(item, holidayDate, "0") === "200"
+      (getRateDate(null, holidayDate, date) === "200" ||
+        getRateDate(null, holidayDate, date) === "400" ||
+        getRateDate(null, holidayDate, date) === "330")
     ) {
       setIsObserved("1");
     }
@@ -113,13 +117,16 @@ const ModalAddHolidays = ({ item, isPayrollEmpty, employeeName }) => {
     setRate(getRateDate(null, holidayDate, date));
     if (
       isWorkOnHoliday === "0" &&
-      getRateDate(null, holidayDate, date) === "130"
+      (getRateDate(null, holidayDate, date) === "130" ||
+        getRateDate(null, holidayDate, date) === "260")
     ) {
       setIsObserved("0");
     }
     if (
       isWorkOnHoliday === "0" &&
-      getRateDate(null, holidayDate, date) === "200"
+      (getRateDate(null, holidayDate, date) === "200" ||
+        getRateDate(null, holidayDate, date) === "400" ||
+        getRateDate(null, holidayDate, date) === "330")
     ) {
       setIsObserved("1");
     }

@@ -44,7 +44,7 @@ const useFetchDataLoadMore = (url, url2, perPage, search) => {
     consoleLog(result);
 
     if (typeof result === "undefined") {
-      console.log("undefined");
+      consoleLog("undefined");
       return;
     }
 

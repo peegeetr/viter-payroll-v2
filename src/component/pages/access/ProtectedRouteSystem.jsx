@@ -3,7 +3,11 @@ import { Navigate } from "react-router-dom";
 import { setCredentials, setError } from "../../../store/StoreAction";
 import { StoreContext } from "../../../store/StoreContext";
 import fetchApi from "../../helpers/fetchApi";
-import { devApiUrl, devNavUrl } from "../../helpers/functions-general";
+import {
+  consoleLog,
+  devApiUrl,
+  devNavUrl,
+} from "../../helpers/functions-general";
 import TableSpinner from "../../partials/spinners/TableSpinner";
 
 const ProtectedRouteSystem = ({ children }) => {
@@ -23,8 +27,8 @@ const ProtectedRouteSystem = ({ children }) => {
         "post"
       );
 
-      console.log(login);
-      console.log(typeof login);
+      consoleLog(login);
+      consoleLog(typeof login);
 
       if (typeof login === "undefined" || !login.success) {
         setLoading(false);

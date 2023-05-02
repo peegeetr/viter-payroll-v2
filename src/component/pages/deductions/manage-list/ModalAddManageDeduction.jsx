@@ -74,7 +74,7 @@ const ModalAddManageDeduction = ({ payType, employee, payrollDraft }) => {
       setIsPayItem(results.data);
     }
   };
-  console.log("payType", payType);
+  // console.log("payType", payType);
   const handleEmployee = async (e) => {
     // get employee id
     setEmployeeId(e.target.options[e.target.selectedIndex].id);
@@ -170,7 +170,7 @@ const ModalAddManageDeduction = ({ payType, employee, payrollDraft }) => {
               initialValues={initVal}
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
-                console.log(values);
+                // console.log(values);
                 // payroll date validation if installment
                 if (validatePayPeriod(values, payrollDraft, dispatch)) {
                   return;

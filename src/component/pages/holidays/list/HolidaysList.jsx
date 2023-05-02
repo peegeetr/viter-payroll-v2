@@ -12,6 +12,7 @@ import ServerError from "../../../partials/ServerError";
 import { devApiUrl, formatDate } from "../../../helpers/functions-general";
 import LoadmoreRq from "../../../partials/LoadmoreRq";
 import ModalDeleteRestoreRq from "../../../partials/modals/ModalDeleteRestoreRq";
+import { getHolidayTypeName } from "../exemptions/functions-exemptions";
 
 const HolidaysList = ({ setItemEdit }) => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -124,7 +125,9 @@ const HolidaysList = ({ setItemEdit }) => {
                       ${formatDate(item.holidays_date).split(" ")[3]}
                       `}
                     </td>
-                    <td className="capitalize">{item.holidays_type} Holiday</td>
+                    <td className="capitalize">
+                      {getHolidayTypeName(item.holidays_type)}
+                    </td>
                     <td>{item.holidays_rate}%</td>
                     <td>
                       {item.holidays_observed === 1

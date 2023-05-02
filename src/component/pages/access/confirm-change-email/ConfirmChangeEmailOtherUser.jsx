@@ -3,6 +3,7 @@ import { FaCheck } from "react-icons/fa";
 import { StoreContext } from "../../../../store/StoreContext";
 import useQueryData from "../../../custom-hooks/useQueryData";
 import {
+  consoleLog,
   devApiUrl,
   devNavUrl,
   getUrlParam,
@@ -21,7 +22,7 @@ const ConfirmChangeEmailOtherUser = () => {
     "get", // method
     "changeEmail" // key
   );
-  console.log(changeEmail);
+  consoleLog(changeEmail);
   return (
     <>
       {isLoading ? (

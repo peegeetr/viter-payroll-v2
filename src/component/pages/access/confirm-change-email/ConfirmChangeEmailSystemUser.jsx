@@ -4,6 +4,7 @@ import { StoreContext } from "../../../../store/StoreContext";
 import useQueryData from "../../../custom-hooks/useQueryData";
 import {
   UrlSystem,
+  consoleLog,
   devApiUrl,
   devNavUrl,
   getUrlParam,
@@ -22,7 +23,7 @@ const ConfirmChangeEmailSystemUser = () => {
     "get", // method
     "changeSystemEmail" // key
   );
-  console.log(changeSystemEmail);
+  consoleLog(changeSystemEmail);
   return (
     <>
       {isLoading ? (

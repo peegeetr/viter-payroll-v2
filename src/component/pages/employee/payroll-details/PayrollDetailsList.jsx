@@ -27,7 +27,7 @@ const PayrollDetailsList = ({ isLoading, error, employee, draft }) => {
   const eid = getUrlParam().get("employeeid");
 
   const handleEditPayroll = (item) => {
-    if (draft.count > 0) {
+    if (draft?.count > 0) {
       dispatch(setError(true));
       dispatch(
         setMessage("Payroll has ongoing draft. Editing is not allowed.")

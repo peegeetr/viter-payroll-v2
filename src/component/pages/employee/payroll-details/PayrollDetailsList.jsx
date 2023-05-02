@@ -1,6 +1,11 @@
 import React from "react";
 import { FaEdit } from "react-icons/fa";
-import { setIsAdd, setIsRestore } from "../../../../store/StoreAction";
+import {
+  setError,
+  setIsAdd,
+  setIsRestore,
+  setMessage,
+} from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
 import useQueryData from "../../../custom-hooks/useQueryData";
 import {
@@ -14,7 +19,7 @@ import ServerError from "../../../partials/ServerError";
 import TableSpinner from "../../../partials/spinners/TableSpinner";
 import ModalEditPayroll from "./ModalEditPayroll";
 
-const PayrollDetailsList = ({ isLoading, error, employee }) => {
+const PayrollDetailsList = ({ isLoading, error, employee, draft }) => {
   const { store, dispatch } = React.useContext(StoreContext);
 
   const [itemEdit, setItemEdit] = React.useState(null);
@@ -22,6 +27,13 @@ const PayrollDetailsList = ({ isLoading, error, employee }) => {
   const eid = getUrlParam().get("employeeid");
 
   const handleEditPayroll = (item) => {
+    if (draft.count > 0) {
+      dispatch(setError(true));
+      dispatch(
+        setMessage("Payroll has ongoing draft. Editing is not allowed.")
+      );
+      return;
+    }
     dispatch(setIsRestore(true));
     setItemEdit(item);
   };

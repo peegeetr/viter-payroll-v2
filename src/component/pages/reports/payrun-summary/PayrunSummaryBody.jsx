@@ -2,22 +2,51 @@ import React from "react";
 import { StoreContext } from "../../../../store/StoreContext";
 import {
   getPayPeriod,
+  getWorkingDays,
   numberWithCommas,
 } from "../../../helpers/functions-general";
 import HeaderPrint from "../../../partials/HeaderPrint";
+import { employeeRate } from "../../../helpers/payroll-formula";
 
 const PayrunSummaryBody = ({ result, startDate, endDate }) => {
+  // const days = getWorkingDays(
+  //   new Date(result?.pages[0].data[0].payroll_start_date),
+  //   new Date(result?.pages[0].data[0].payroll_end_date)
+  // );
+  // let hourRate = Number(
+  //   employeeRate(result?.pages[0].data[0].payroll_list_employee_salary, days)
+  //     .hourly
+  // );
+  let days = 0;
+  let hourRate = 0;
   let totalWages = 0;
   let totalEarnings = 0;
   let totalEr = 0;
   let totalEe = 0;
   let totalOptional = 0;
   let totalOtherDedTotal = 0;
+  let basicPay = 0;
+  let holidayHrs = 0;
+  let leaveHrs = 0;
+  let basicHrs = 0;
+
+  // console.log(result);
   return (
     <>
       {result?.pages.map((page, key) => (
         <React.Fragment key={key}>
           {page.data.map((item, key) => {
+            days = getWorkingDays(
+              new Date(item.payroll_start_date),
+              new Date(item.payroll_end_date)
+            );
+            hourRate = Number(
+              employeeRate(item.payroll_list_employee_salary, days).hourly
+            );
+            holidayHrs = Number(item.payroll_list_holiday_hrs);
+            leaveHrs = Number(item.payroll_list_leave_hrs);
+            basicHrs = days * 8 - (leaveHrs + holidayHrs);
+            basicPay = hourRate * basicHrs;
             totalWages = 0;
             totalEarnings = 0;
             totalEr = 0;
@@ -25,8 +54,10 @@ const PayrunSummaryBody = ({ result, startDate, endDate }) => {
             totalOptional = 0;
             totalOtherDedTotal = 0;
 
+            // console.log(days, hourRate, basicPay);
             totalWages +=
-              Number(item.payroll_list_basic_pay) +
+              // Number(item.payroll_list_basic_pay) +
+              Number(basicPay) +
               Number(item.payroll_list_overtime_pay) +
               Number(item.payroll_list_holiday) +
               Number(item.payroll_list_night_shift_differential) +
@@ -80,7 +111,8 @@ const PayrunSummaryBody = ({ result, startDate, endDate }) => {
                     <tr className="hover:bg-white ">
                       <td className="w-[15rem] print:py-[2px]">Basic Pay</td>
                       <td className="w-[8rem] text-right px-4 print:py-[2px]">
-                        {numberWithCommas(item.payroll_list_basic_pay)}
+                        {/* {numberWithCommas(item.payroll_list_basic_pay)} */}
+                        {numberWithCommas(Number(basicPay).toFixed(2))}
                       </td>
                     </tr>
                     <tr className="hover:bg-white ">

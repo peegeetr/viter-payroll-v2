@@ -1191,9 +1191,8 @@ class PayrollList
     {
         try {
             $sql = "select ";
-            $sql .= "sum(payrollList.payroll_list_basic_pay) as total_basic_pay, ";
-            $sql .= "sum(payrollList.payroll_list_absences) as total_absences, ";
-            $sql .= "sum(payrollList.payroll_list_undertime) as total_undertime, ";
+            $sql .= "sum(payrollList.payroll_list_total_benefits) as total_benefits, ";
+            $sql .= "sum(payrollList.payroll_list_gross) as total_gross, ";
             $sql .= "payrollList.payroll_list_employee_id, ";
             $sql .= "payrollList.payroll_list_employee_name, ";
             $sql .= "payroll.payroll_pay_date ";

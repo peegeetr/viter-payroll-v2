@@ -161,16 +161,23 @@ export const payComputeCategory13thMonth = (category13thMonth, yearlyTax) => {
   let zero = "0.00";
   let taxYearly = 0;
   let baseAmount = 90000;
+
   let payrollTotalAmount = 0;
+  let totalBenefits = 0;
+  let total13thAmount = 0;
 
   category13thMonth.map((cItem) => {
-    absencesUndertimeSum = cItem.total_absences + cItem.total_undertime;
-    totalAmount = (cItem.total_basic_pay - absencesUndertimeSum) / 12;
+    // absencesUndertimeSum = cItem.total_absences + cItem.total_undertime;
+    // totalAmount = (cItem.total_basic_pay - absencesUndertimeSum) / 12;
+    totalAmount = Number(cItem.total_gross) / 12;
+    totalBenefits = Number(cItem.total_benefits);
+    total13thAmount = totalAmount + totalBenefits;
+    console.log(total13thAmount);
     taxYearly =
-      Number(totalAmount) > baseAmount
-        ? computeTaxYearly(totalAmount, yearlyTax)
+      Number(total13thAmount) > baseAmount
+        ? computeTaxYearly(total13thAmount, yearlyTax)
         : 0;
-    finalAmount = totalAmount - taxYearly;
+    finalAmount = total13thAmount - taxYearly;
     payrollTotalAmount += finalAmount;
     payrollList13thMonth.push({
       payroll_category: payrollCategory13thMonthId,

@@ -172,7 +172,7 @@ export const payComputeCategory13thMonth = (category13thMonth, yearlyTax) => {
     totalAmount = Number(cItem.total_gross) / 12;
     totalBenefits = Number(cItem.total_benefits);
     total13thAmount = totalAmount + totalBenefits;
-    console.log(total13thAmount);
+    // console.log(total13thAmount);
     taxYearly =
       Number(total13thAmount) > baseAmount
         ? computeTaxYearly(total13thAmount, yearlyTax)

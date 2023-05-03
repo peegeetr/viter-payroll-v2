@@ -14,17 +14,14 @@ import {
   getUserType,
   numberWithCommas,
 } from "../../../helpers/functions-general";
-import {
-  deMinimisEarningsId,
-  wagesEarningsId,
-} from "../../../helpers/functions-payitemId";
+import { wagesEarningsId } from "../../../helpers/functions-payitemId";
 import { queryDataInfinite } from "../../../helpers/queryDataInfinite";
+import HeaderPrint from "../../../partials/HeaderPrint";
 import LoadmoreRq from "../../../partials/LoadmoreRq";
 import NoData from "../../../partials/NoData";
 import ServerError from "../../../partials/ServerError";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 import TableSpinner from "../../../partials/spinners/TableSpinner";
-import HeaderPrint from "../../../partials/HeaderPrint";
 import { getBasicPayReport } from "./functions-paytype";
 
 const SummaryTypeList = () => {
@@ -105,6 +102,7 @@ const SummaryTypeList = () => {
     end_date: Yup.string().required("Required"),
   });
   // payroll-type/summary/
+  console.log(result);
   return (
     <>
       <div className="relative overflow-x-auto z-0 w-full  print:hidden">
@@ -213,7 +211,7 @@ const SummaryTypeList = () => {
                 <th>#</th>
                 <th>Pay Item</th>
                 <th>Pay Type</th>
-                <th>Employee</th>
+                <th>Count</th>
                 <th className="text-right pr-3">Total</th>
               </tr>
             </thead>

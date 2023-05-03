@@ -8,21 +8,19 @@ function checkReadAllCurrentYear($object)
     return $query;
 }
 
-
 function isHolidayNameExist($object, $name)
 {
     $query = $object->checkHolidayName();
     $count = $query->rowCount();
-    checkExistence($count, "Holiday Name {$name} already exist.");
+    checkExistence($count, "Holiday name {$name} already exist.");
 }
 
 function isHolidayDateExist($object, $name)
 {
     $query = $object->checkHolidayDate();
     $count = $query->rowCount();
-    checkExistence($count, "Holiday Date {$name} already exist.");
+    checkExistence($count, "Holiday date {$name} already exist.");
 }
-
 
 function compareHolidayName($object, $name_old, $name)
 {
@@ -30,7 +28,6 @@ function compareHolidayName($object, $name_old, $name)
         isHolidayNameExist($object, $name);
     }
 }
-
 
 function compareHolidayDate($object, $name_old, $name)
 {

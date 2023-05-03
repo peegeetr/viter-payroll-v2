@@ -183,7 +183,7 @@ export const payComputeCategory13thMonth = (category13thMonth, yearlyTax) => {
       payroll_category: payrollCategory13thMonthId,
       payroll_list_employee_id: cItem.payroll_list_employee_id,
       payroll_list_employee_name: cItem.payroll_list_employee_name,
-      payroll_list_gross: totalAmount.toFixed(2),
+      payroll_list_gross: total13thAmount.toFixed(2),
       payroll_list_deduction: taxYearly.toFixed(2),
       payroll_list_net_pay: zero,
       payroll_list_basic_pay: zero,

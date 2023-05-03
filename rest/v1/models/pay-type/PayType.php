@@ -315,6 +315,7 @@ class PayType
             $sql = "select payitem.payitem_aid, ";
             $sql .= "payitem.payitem_name, ";
             $sql .= "earnings.earnings_payroll_id, ";
+            $sql .= "earnings.earnings_employee_id, ";
             $sql .= "sum(earnings.earnings_amount) as amount, ";
             $sql .= "earnings.earnings_start_pay_date, ";
             $sql .= "earnings.earnings_end_pay_date, ";

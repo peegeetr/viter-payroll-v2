@@ -1,27 +1,25 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import React from "react";
+import { AiFillPrinter } from "react-icons/ai";
 import { useInView } from "react-intersection-observer";
 import { StoreContext } from "../../../../../store/StoreContext";
+import useQueryData from "../../../../custom-hooks/useQueryData";
 import {
   devApiUrl,
-  formatDate,
   getPayPeriod,
   getUrlParam,
-  getUserType,
   numberWithCommas,
 } from "../../../../helpers/functions-general";
 import { queryDataInfinite } from "../../../../helpers/queryDataInfinite";
 import BreadCrumbs from "../../../../partials/BreadCrumbs";
 import Footer from "../../../../partials/Footer";
 import Header from "../../../../partials/Header";
+import HeaderPrint from "../../../../partials/HeaderPrint";
 import LoadmoreRq from "../../../../partials/LoadmoreRq";
 import Navigation from "../../../../partials/Navigation";
 import NoData from "../../../../partials/NoData";
 import ServerError from "../../../../partials/ServerError";
 import TableSpinner from "../../../../partials/spinners/TableSpinner";
-import useQueryData from "../../../../custom-hooks/useQueryData";
-import { AiFillPrinter } from "react-icons/ai";
-import HeaderPrint from "../../../../partials/HeaderPrint";
 
 const SummaryTypeView = () => {
   const { store, dispatch } = React.useContext(StoreContext);

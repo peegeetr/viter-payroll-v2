@@ -29,6 +29,7 @@ const PayrunSummaryBody = ({ result, startDate, endDate }) => {
   let holidayHrs = 0;
   let leaveHrs = 0;
   let basicHrs = 0;
+  let otherBenefits = 0;
 
   // console.log(result);
   return (
@@ -53,6 +54,7 @@ const PayrunSummaryBody = ({ result, startDate, endDate }) => {
             totalEe = 0;
             totalOptional = 0;
             totalOtherDedTotal = 0;
+            otherBenefits = 0;
 
             // console.log(days, hourRate, basicPay);
             totalWages +=
@@ -61,10 +63,17 @@ const PayrunSummaryBody = ({ result, startDate, endDate }) => {
               Number(item.payroll_list_overtime_pay) +
               Number(item.payroll_list_holiday) +
               Number(item.payroll_list_night_shift_differential) +
-              Number(item.payroll_list_leave_pay);
+              Number(item.payroll_list_leave_pay) -
+              Number(item.payroll_list_absences);
 
             totalEarnings +=
               totalWages + Number(item.payroll_list_total_benefits);
+
+            otherBenefits +=
+              Number(item.payroll_list_employee_referral_bonus) +
+              Number(item.payroll_list_bereavement) +
+              Number(item.payroll_list_separation_pay) +
+              Number(item.payroll_list_other_allowances);
 
             totalEr +=
               Number(item.payroll_list_sss_er) +
@@ -131,7 +140,9 @@ const PayrunSummaryBody = ({ result, startDate, endDate }) => {
                     <tr className="hover:bg-white ">
                       <td className="w-[15rem] print:py-[2px]">Absences</td>
                       <td className="w-[8rem] text-right px-4 print:py-[2px]">
-                        {numberWithCommas(item.payroll_list_absences)}
+                        {Number(item.payroll_list_absences) > 0
+                          ? `-${numberWithCommas(item.payroll_list_absences)}`
+                          : 0.0}
                       </td>
                     </tr>
                     <tr className="hover:bg-white ">
@@ -185,7 +196,7 @@ const PayrunSummaryBody = ({ result, startDate, endDate }) => {
                         Other Benefits
                       </td>
                       <td className="w-[8rem] text-right px-4 print:py-[2px]">
-                        {numberWithCommas(item.payroll_list_other_allowances)}
+                        {numberWithCommas(Number(otherBenefits).toFixed(2))}
                       </td>
                     </tr>
                     <tr className="hover:bg-white font-bold uppercase ">

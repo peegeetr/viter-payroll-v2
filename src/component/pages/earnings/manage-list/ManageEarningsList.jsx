@@ -7,15 +7,14 @@ import { StoreContext } from "../../../../store/StoreContext";
 import {
   devApiUrl,
   formatDate,
-  hrisDevApiUrl,
   numberWithCommas,
 } from "../../../helpers/functions-general";
 import { queryDataInfinite } from "../../../helpers/queryDataInfinite";
 import LoadmoreRq from "../../../partials/LoadmoreRq";
-import ModalDeleteRestoreRq from "../../../partials/modals/ModalDeleteRestoreRq";
 import NoData from "../../../partials/NoData";
 import SearchBarRq from "../../../partials/SearchBarRq";
 import ServerError from "../../../partials/ServerError";
+import ModalDeleteRestoreRq from "../../../partials/modals/ModalDeleteRestoreRq";
 import TableSpinner from "../../../partials/spinners/TableSpinner";
 import { getStatus } from "./function-manage-list";
 
@@ -174,55 +173,20 @@ const ManageEarningsList = () => {
                               )[3]
                             }`}
                       </td>
-                      {/* <td>
-                        {item.earnings_start_pay_date === "n/a"
-                          ? "N/A"
-                          : `${
-                              formatDate(item.earnings_start_pay_date).split(
-                                " "
-                              )[1]
-                            } 
-                        ${
-                          formatDate(item.earnings_start_pay_date).split(" ")[2]
-                        }
-                        ${
-                          formatDate(item.earnings_start_pay_date).split(" ")[3]
-                        }
-                        `}
-                      </td> */}
-                      {/* <td>
-                        {item.earnings_end_pay_date === "n/a"
-                          ? "N/A"
-                          : `${
-                              formatDate(item.earnings_end_pay_date).split(
-                                " "
-                              )[1]
-                            } 
-                      ${formatDate(item.earnings_end_pay_date).split(" ")[2]}
-                      ${formatDate(item.earnings_end_pay_date).split(" ")[3]}
-                      `}
-                      </td> */}
-
-                      {/* <td>{item.paytype_name}</td>
-                      <td>
-                        {item.earnings_frequency === "sm"
-                          ? "Semi-monthly"
-                          : "Monthly"}
-                      </td> */}
-
-                      {/* <td>{item.earnings_details}</td> */}
                       <td>{getStatus(item)}</td>
                       <td>
-                        <div className="flex items-center justify-end gap-2">
-                          <button
-                            type="button"
-                            className="btn-action-table tooltip-action-table"
-                            data-tooltip="Delete"
-                            onClick={() => handleDelete(item)}
-                          >
-                            <FaTrash />
-                          </button>
-                        </div>
+                        {item.earnings_is_paid === 0 && (
+                          <div className="flex items-center justify-end gap-2">
+                            <button
+                              type="button"
+                              className="btn-action-table tooltip-action-table"
+                              data-tooltip="Delete"
+                              onClick={() => handleDelete(item)}
+                            >
+                              <FaTrash />
+                            </button>
+                          </div>
+                        )}
                       </td>
                     </tr>
                   ))}

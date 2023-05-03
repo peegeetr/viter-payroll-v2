@@ -10,6 +10,7 @@ const WTaxBodyMonthly = ({ result, monthlyTax, startDate, endDate }) => {
   let totalBenefits = 0;
   let tax = 0;
   let nonTax = 0;
+  let totalCompensation = 0;
 
   const payComputeTaxDue = (
     gross,
@@ -44,7 +45,7 @@ const WTaxBodyMonthly = ({ result, monthlyTax, startDate, endDate }) => {
     nonTax = totalNonTaxableCompensation;
     return taxDue;
   };
-
+  console.log(result);
   return (
     <>
       {result?.pages.map((page, key) => (
@@ -54,7 +55,7 @@ const WTaxBodyMonthly = ({ result, monthlyTax, startDate, endDate }) => {
             totalBenefits = 0;
             tax = 0;
             totalShareEe += item.sss + item.pag + item.phic;
-            totalBenefits += item.month13 + item.bonus + item.benefits;
+            totalBenefits += item.month13 + item.benefits;
             // compute monthly tax due
             tax = payComputeTaxDue(
               item.gross,
@@ -63,8 +64,9 @@ const WTaxBodyMonthly = ({ result, monthlyTax, startDate, endDate }) => {
               totalShareEe,
               item.deminimis
             );
+            totalCompensation = Number(item.gross) + Number(item.benefits);
             return (
-              <div key={key} className="mb-8 print:mb-12">
+              <div key={key} className="mb-8 print:mb-32">
                 <HeaderPrint />
                 <div className="text-center pb-4 font-bold print:pt-4">
                   {startDate !== "" && (
@@ -89,7 +91,8 @@ const WTaxBodyMonthly = ({ result, monthlyTax, startDate, endDate }) => {
                       <td>Total Amount of Compensation</td>
                       <td className="w-[8rem] text-right px-4"></td>
                       <td className=" text-right px-4">
-                        {numberWithCommas(Number(item.gross).toFixed(2))}
+                        {/* {numberWithCommas(Number(item.gross).toFixed(2))} */}
+                        {numberWithCommas(totalCompensation.toFixed(2))}
                       </td>
                     </tr>
                     <tr>

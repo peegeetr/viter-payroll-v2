@@ -2,9 +2,10 @@
 *controllers     
     - payroll/functions.php   
     - payroll/update.php 
+    -> payroll/create.php 
     
 *models   
-    - payroll/Payroll.php  
+    -> payroll/Payroll.php  
   
 *htaccess 
     - 

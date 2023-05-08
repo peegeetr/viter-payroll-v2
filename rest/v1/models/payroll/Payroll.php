@@ -426,4 +426,18 @@ class Payroll
         }
         return $query;
     }
+
+    // read last payroll id
+    public function readLastPayrollId()
+    {
+        try {
+            $sql = "select payroll_id from ";
+            $sql .= "{$this->tblPayroll} ";
+            $sql .= "order by payroll_aid desc ";
+            $query = $this->connection->query($sql);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
 }

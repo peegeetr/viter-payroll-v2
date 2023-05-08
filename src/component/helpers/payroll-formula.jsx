@@ -172,12 +172,13 @@ export const payComputeCategory13thMonth = (category13thMonth, yearlyTax) => {
     totalAmount = Number(cItem.total_gross) / 12;
     totalBenefits = Number(cItem.total_benefits);
     total13thAmount = totalAmount + totalBenefits;
-    // console.log(total13thAmount);
+
     taxYearly =
       Number(total13thAmount) > baseAmount
         ? computeTaxYearly(total13thAmount, yearlyTax)
         : 0;
     finalAmount = total13thAmount - taxYearly;
+    console.log(total13thAmount, totalAmount, cItem.total_gross, taxYearly);
     payrollTotalAmount += finalAmount;
     payrollList13thMonth.push({
       payroll_category: payrollCategory13thMonthId,
@@ -876,7 +877,7 @@ export const computeTaxYearly = (gross, yearlyTax) => {
     }
   });
 
-  // console.log(gross, taxDue);
+  console.log(gross, taxDue);
   return taxDue;
 };
 

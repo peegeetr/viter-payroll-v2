@@ -9,6 +9,7 @@ import {
   devApiUrl,
   devNavUrl,
   formatDate,
+  getPayPeriod,
   getUserType,
   numberWithCommas,
   UrlSystem,
@@ -127,7 +128,7 @@ const PayrollList = ({ setItemEdit }) => {
                 <th className="min-w-[6rem]">Payroll ID</th>
                 <th className="min-w-[5rem]">Type</th>
                 <th className="min-w-[8rem]">Pay Date</th>
-                <th className="min-w-[8rem]">Pay period</th>
+                <th className="min-w-[10rem]">Pay period</th>
                 <th className="min-w-[8rem] text-center"># of Employee</th>
                 <th className="min-w-[8rem] text-right">Total Amount</th>
                 <th className="min-w-[5rem] text-center">Status</th>
@@ -159,10 +160,14 @@ const PayrollList = ({ setItemEdit }) => {
                       <td>{item.payroll_type_name}</td>
                       <td className="">{formatDate(item.payroll_pay_date)}</td>
                       <td className="">
-                        {`${formatDate(item.payroll_start_date).split(" ")[1]} 
+                        {/* {`${formatDate(item.payroll_start_date).split(" ")[1]} 
                       ${formatDate(item.payroll_start_date).split(" ")[2]} - ${
                           formatDate(item.payroll_end_date).split(" ")[2]
-                        },  ${formatDate(item.payroll_end_date).split(" ")[3]}`}
+                        },  ${formatDate(item.payroll_end_date).split(" ")[3]}`} */}
+                        {`${getPayPeriod(
+                          item.payroll_start_date,
+                          item.payroll_end_date
+                        )}`}
                       </td>
                       <td className="text-center">{item.count}</td>
                       <td className="text-right">

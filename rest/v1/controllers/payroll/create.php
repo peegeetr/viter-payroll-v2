@@ -13,7 +13,7 @@ checkPayload($data);
 // get data
 
 $id = "";
-$lastMemberId = $payroll->readAll();
+$lastMemberId = $payroll->readLastPayrollId();
 if ($lastMemberId->rowCount() == 0) {
     $id = "PR-001";
 } else {

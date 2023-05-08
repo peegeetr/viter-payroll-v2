@@ -1,0 +1,19 @@
+
+*controllers     
+    - payroll/functions.php   
+    - payroll/update.php 
+    
+*models   
+    - payroll/Payroll.php  
+  
+*htaccess 
+    - 
+
+*db tables 
+    - 
+
+*core 
+    - 
+
+*extra 
+    - 

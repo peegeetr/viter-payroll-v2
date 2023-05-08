@@ -65,3 +65,10 @@ function checkDateExist($object)
     $count = $query->rowCount();
     checkExistence($count, "Pay period is already exist.");
 }
+
+function comparePayDate($object, $name_old, $name)
+{
+    if (strtolower($name_old) !=  strtolower($name)) {
+        checkDateExist($object);
+    }
+}

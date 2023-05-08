@@ -71,6 +71,10 @@ const ModalAddPayroll = ({ item }) => {
     payroll_end_date: item ? item.payroll_end_date : "",
     payroll_pay_date: item ? item.payroll_pay_date : "",
     payroll_category_type: item ? item.payroll_category_type : "",
+
+    payroll_end_date_old: item ? item.payroll_end_date : "",
+    payroll_start_date_old: item ? item.payroll_start_date : "",
+    payroll_pay_date_old: item ? item.payroll_pay_date : "",
   };
 
   const yupSchema = Yup.object({

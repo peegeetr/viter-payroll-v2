@@ -2,16 +2,12 @@ import React from "react";
 import { FaEdit } from "react-icons/fa";
 import {
   setError,
-  setIsAdd,
   setIsRestore,
   setMessage,
 } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
-import useQueryData from "../../../custom-hooks/useQueryData";
 import {
-  formatDate,
   getUrlParam,
-  hrisDevApiUrl,
   numberWithCommas,
 } from "../../../helpers/functions-general";
 import NoData from "../../../partials/NoData";
@@ -19,12 +15,26 @@ import ServerError from "../../../partials/ServerError";
 import TableSpinner from "../../../partials/spinners/TableSpinner";
 import ModalEditPayroll from "./ModalEditPayroll";
 
-const PayrollDetailsList = ({ isLoading, error, employee, draft }) => {
+const PayrollDetailsList = ({
+  isLoading,
+  error,
+  employee,
+  draft,
+  draftLoading,
+}) => {
   const { store, dispatch } = React.useContext(StoreContext);
-
+  const [showSalary, setShowSalary] = React.useState(false);
+  const [showStarting, setShowStarting] = React.useState(false);
   const [itemEdit, setItemEdit] = React.useState(null);
-
   const eid = getUrlParam().get("employeeid");
+
+  const toggleShowSalary = () => {
+    setShowSalary(!showSalary);
+  };
+
+  const toggleShowStarting = () => {
+    setShowStarting(!showStarting);
+  };
 
   const handleEditPayroll = (item) => {
     if (draft?.count > 0) {
@@ -46,7 +56,7 @@ const PayrollDetailsList = ({ isLoading, error, employee, draft }) => {
             <div key={key} className="relative w-full max-w-[650px] pt-5 ">
               <div className="bg-gray-200 p-2 mb-5 flex justify-between items-center">
                 <h4>Payroll Details</h4>
-                {eid === null ? (
+                {eid === null || draftLoading ? (
                   ""
                 ) : (
                   <button
@@ -101,24 +111,42 @@ const PayrollDetailsList = ({ isLoading, error, employee, draft }) => {
                     Number(item.employee_job_pagibig_amount).toFixed(2)
                   )}
                 </p>
-                <p className="font-semibold">Monthly starting pay</p>
+                <p className="font-semibold">Monthly Starting pay</p>
                 <p className="pl-2">
                   <span className=" w-24 inline-block">
                     &#8369;
-                    {` ${numberWithCommas(
-                      Number(item.employee_job_starting_pay).toFixed(2)
-                    )}`}
+                    {showStarting
+                      ? ` ${numberWithCommas(
+                          Number(item.employee_job_starting_pay).toFixed(2)
+                        )}`
+                      : "######"}
+                  </span>
+
+                  <span
+                    className="ml-2 text-primary underline cursor-pointer"
+                    onClick={toggleShowStarting}
+                  >
+                    {showStarting ? "Hide" : "Show"}
                   </span>
                 </p>
-                <p className="font-semibold">Monthly salary</p>
+                <p className="font-semibold">Monthly Salary</p>
                 <p className="pl-2">
                   <span className=" w-24 inline-block">
                     &#8369;
-                    {` ${numberWithCommas(
-                      Number(item.employee_job_salary).toFixed(2)
-                    )}`}
+                    {showSalary
+                      ? ` ${numberWithCommas(
+                          Number(item.employee_job_salary).toFixed(2)
+                        )}`
+                      : "######"}
+                  </span>
+                  <span
+                    className="ml-2 text-primary underline cursor-pointer"
+                    onClick={toggleShowSalary}
+                  >
+                    {showSalary ? "Hide" : "Show"}
                   </span>
                 </p>
+
                 <p className="font-semibold">Pay frequency</p>
                 <p className="pl-2 capitalize">
                   {item.employee_job_pay_freq === "m"

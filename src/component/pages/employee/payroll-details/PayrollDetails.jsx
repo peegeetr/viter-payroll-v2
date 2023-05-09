@@ -37,7 +37,7 @@ const PayrollDetails = () => {
   );
 
   // use if not loadmore button undertime
-  const { data: draft } = useQueryData(
+  const { data: draft, isLoading: draftLoading } = useQueryData(
     `${devApiUrl}/v1/payroll/list`, // endpoint
     "get", // method
     "draft" // key
@@ -56,6 +56,7 @@ const PayrollDetails = () => {
             error={error}
             employee={employee}
             draft={draft}
+            draftLoading={draftLoading}
           />
         </div>
         <Footer />

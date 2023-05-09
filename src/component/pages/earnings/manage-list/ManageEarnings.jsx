@@ -26,7 +26,7 @@ const ManageEarnings = () => {
   );
 
   // use if not loadmore button undertime
-  const { data: draft } = useQueryData(
+  const { data: draft, isLoading } = useQueryData(
     `${devApiUrl}/v1/payroll/list`, // endpoint
     "get", // method
     "draft" // key
@@ -54,6 +54,8 @@ const ManageEarnings = () => {
     // dispatch(setIsFinish(true));
   };
 
+  console.log(isLoading);
+
   return (
     <>
       <Header />
@@ -63,14 +65,16 @@ const ManageEarnings = () => {
           {/* <BreadCrumbs /> */}
           <h4 className="text-xl mb-3">Earnings</h4>
           <div className="flex items-center gap-1">
-            <button
-              type="button"
-              className="btn-primary"
-              onClick={() => handleAdd()}
-            >
-              <FaPlusCircle />
-              <span>Add</span>
-            </button>
+            {!isLoading && (
+              <button
+                type="button"
+                className="btn-primary"
+                onClick={() => handleAdd()}
+              >
+                <FaPlusCircle />
+                <span>Add</span>
+              </button>
+            )}
           </div>
         </div>
         <hr />

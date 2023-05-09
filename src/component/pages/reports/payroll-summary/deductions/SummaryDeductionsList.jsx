@@ -264,7 +264,7 @@ const SummaryDeductionsList = () => {
                         <td className="text-left">
                           {item.payroll_list_employee_department}
                         </td>
-                        <td className="text-left">{`${getPayPeriod(
+                        <td className="text-right pr-4">{`${getPayPeriod(
                           item.payroll_start_date,
                           item.payroll_end_date
                         )}`}</td>

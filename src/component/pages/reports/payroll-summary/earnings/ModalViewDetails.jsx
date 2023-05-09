@@ -2,7 +2,10 @@ import React from "react";
 import { FaExclamationTriangle, FaTimesCircle } from "react-icons/fa";
 import { StoreContext } from "../../../../../store/StoreContext";
 import { setIsAdd } from "../../../../../store/StoreAction";
-import { getPayPeriod } from "../../../../helpers/functions-general";
+import {
+  getPayPeriod,
+  numberWithCommas,
+} from "../../../../helpers/functions-general";
 import { getErningsRate } from "../function-report-summary";
 
 const ModalViewDetails = ({ item, isView, earnings }) => {
@@ -56,7 +59,9 @@ const ModalViewDetails = ({ item, isView, earnings }) => {
                       <td className="text-left">{counter}.</td>
                       <td className="text-center">{eItem.hrs}</td>
                       <td className="text-center">{eItem.rate}%</td>
-                      <td className="pr-4 text-right">{eItem.amount}</td>
+                      <td className="pr-4 text-right">
+                        {numberWithCommas(Number(eItem.amount))}
+                      </td>
                     </tr>
                   );
                 })}

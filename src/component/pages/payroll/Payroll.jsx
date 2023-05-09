@@ -27,7 +27,7 @@ const Payroll = () => {
         <div className="flex items-center mb-3 justify-between whitespace-nowrap overflow-auto gap-2">
           <h4 className="text-xl">Payroll</h4>
           <div className="flex items-center gap-1">
-            <button type="button" className="btn-primary" onClick={handleAdd}>
+            <button type="button" className="btn-primary " onClick={handleAdd}>
               <FaPlusCircle />
               <span>Add</span>
             </button>

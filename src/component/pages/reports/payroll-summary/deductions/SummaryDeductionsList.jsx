@@ -96,7 +96,7 @@ const SummaryDeductionsList = () => {
           {(props) => {
             return (
               <Form>
-                <div className="grid gap-5 grid-cols-1 md:grid-cols-[1fr_1fr_150px] py-10 items-center">
+                <div className="grid gap-5 grid-cols-1 md:grid-cols-[1fr_1fr_150px] pt-5 pb-10 items-center">
                   <div className="relative">
                     <InputText
                       label="Start Pay Date"

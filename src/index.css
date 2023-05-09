@@ -159,7 +159,7 @@
   @apply appearance-none;
 }
 ::-webkit-scrollbar:vertical {
-  @apply w-1;
+  @apply w-2;
 }
 ::-webkit-scrollbar:horizontal {
   @apply h-2 bg-transparent;

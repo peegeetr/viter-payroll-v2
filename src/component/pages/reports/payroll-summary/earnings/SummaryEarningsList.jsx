@@ -192,62 +192,96 @@ const SummaryEarningsList = () => {
       <div className="text-center">
         <div className="overflow-x-auto max-h-[40rem] h-[40rem]">
           <table className="">
-            <thead className="relative z-0">
-              <tr className="border-none text-center sticky top-0 ">
+            <thead className="relative z-[9]">
+              <tr className="text-center sticky top-0">
                 <th className="text-center" rowSpan="2">
                   #
                 </th>
-                <th className="min-w-[12rem] text-left" rowSpan="2">
+                <th
+                  className="table-border border-white min-w-[12rem] text-left"
+                  rowSpan="2"
+                >
                   Name
                 </th>
                 <th
-                  className="table-border min-w-[13rem] text-center"
+                  className="table-border border-white relative min-w-[13rem] text-center"
                   rowSpan="2"
                 >
                   Department
                 </th>
-                <th className="table-border min-w-[12rem]" rowSpan="2">
+                <th
+                  className="table-border border-white min-w-[12rem]"
+                  rowSpan="2"
+                >
                   Pay Date
                 </th>
-                <th className="table-border min-w-[10rem]" rowSpan="2">
+                <th
+                  className="table-border border-white min-w-[10rem]"
+                  rowSpan="2"
+                >
                   Monthly Basic Pay
                 </th>
-                <th className="table-border min-w-[8rem]" rowSpan="2">
+                <th
+                  className="table-border border-white min-w-[8rem]"
+                  rowSpan="2"
+                >
                   Additional pay
                 </th>
-                <th className="table-border min-w-[6rem]" rowSpan="2">
+                <th
+                  className="table-border border-white min-w-[6rem]"
+                  rowSpan="2"
+                >
                   Total Pay
                 </th>
-                <th className="table-border  min-w-[11rem]" rowSpan="2">
+                <th
+                  className="table-border border-white min-w-[11rem]"
+                  rowSpan="2"
+                >
                   Regular Work Hours
                 </th>
-                <th className="table-border min-w-[6rem]" rowSpan="2">
+                <th
+                  className="table-border  border-white border-whitemin-w-[6rem]"
+                  rowSpan="2"
+                >
                   Rate
                 </th>
-                <th className="table-border  min-w-[9rem]" rowSpan="2">
+                <th
+                  className="table-border border-white min-w-[9rem]"
+                  rowSpan="2"
+                >
                   Total Reg Wage
                 </th>
-                <th className="table-border-center min-w-[12rem]" colSpan="3">
+                <th
+                  className="table-border-center min-w-[12rem] border-white"
+                  colSpan="3"
+                >
                   Leave
                 </th>
-                <th className="table-border-center ">Overtime</th>
-                <th className="table-border-center ">Holiday</th>
-                <th className="table-border-center min-w-[12rem]" colSpan="3">
+                <th className="table-border-center  border-white">Overtime</th>
+                <th className="table-border-center  border-white">Holiday</th>
+                <th
+                  className="table-border-center border-white min-w-[12rem]"
+                  colSpan="3"
+                >
                   Night Differential
                 </th>
-                <th className="min-w-[7rem]" rowSpan="2">
+                <th className="min-w-[7rem] border-white" rowSpan="2">
                   Gross Pay
                 </th>
               </tr>
               <tr className="text-center sticky top-[35px] ">
-                <th className="table-border">Hrs</th>
-                <th className="table-border">Rate</th>
-                <th className="table-border">Amount</th>
-                <th className="table-border min-w-[8rem]">Total Amount</th>
-                <th className="table-border min-w-[8rem]">Total Amount</th>
-                <th className="table-border">Hrs</th>
-                <th className="table-border">Rate</th>
-                <th className="table-border">Amount</th>
+                <th className="table-border border-white">Hrs</th>
+                <th className="table-border border-white">Rate</th>
+                <th className="table-border border-white">Amount</th>
+                <th className="table-border min-w-[8rem] border-white">
+                  Total Amount
+                </th>
+                <th className="table-border min-w-[8rem] border-white">
+                  Total Amount
+                </th>
+                <th className="table-border border-white">Hrs</th>
+                <th className="table-border border-white">Rate</th>
+                <th className="table-border border-white">Amount</th>
               </tr>
             </thead>
 
@@ -284,7 +318,7 @@ const SummaryEarningsList = () => {
                       <td className="text-left">
                         {item.payroll_list_employee_department}
                       </td>
-                      <td className="text-center">{`${getPayPeriod(
+                      <td className="text-left">{`${getPayPeriod(
                         item.payroll_start_date,
                         item.payroll_end_date
                       )}`}</td>

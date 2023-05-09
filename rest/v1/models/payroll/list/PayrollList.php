@@ -312,8 +312,7 @@ class PayrollList
             $sql .= "{$this->tblPayroll} as payroll ";
             $sql .= "where payrollList.payroll_list_payroll_id = payroll.payroll_id ";
             $sql .= "and payroll.payroll_category_type = :payroll_category_type ";
-            $sql .= "order by payrollList.payroll_list_payroll_id, ";
-            $sql .= "payroll.payroll_end_date desc, ";
+            $sql .= "order by payroll.payroll_pay_date desc, ";
             $sql .= "payrollList.payroll_list_employee_name asc ";
             $query = $this->connection->prepare($sql);
             $query->execute([
@@ -338,8 +337,7 @@ class PayrollList
             $sql .= "{$this->tblPayroll} as payroll ";
             $sql .= "where payrollList.payroll_list_payroll_id = payroll.payroll_id ";
             $sql .= "and payroll.payroll_category_type = :payroll_category_type ";
-            $sql .= "order by payrollList.payroll_list_payroll_id, ";
-            $sql .= "payroll.payroll_end_date desc, ";
+            $sql .= "order by payroll.payroll_pay_date desc, ";
             $sql .= "payrollList.payroll_list_employee_name asc ";
             $sql .= "limit :start, ";
             $sql .= ":total ";
@@ -371,8 +369,7 @@ class PayrollList
             $sql .= "and payroll.payroll_category_type = :payroll_category_type ";
             $sql .= "and payroll.payroll_start_date = :payroll_start_date ";
             $sql .= "and payroll.payroll_end_date = :payroll_end_date ";
-            $sql .= "order by payrollList.payroll_list_payroll_id, ";
-            $sql .= "payroll.payroll_end_date desc, ";
+            $sql .= "order by payroll.payroll_pay_date desc, ";
             $sql .= "payrollList.payroll_list_employee_name asc ";
             $query = $this->connection->prepare($sql);
             $query->execute([

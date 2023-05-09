@@ -22,7 +22,7 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
         // get task id from query string
         $payrollList->payrollList_start = $_GET['start'];
         $salaryCategoryId = $_GET['salaryId'];
-        $payrollList->payrollList_total = 5;
+        $payrollList->payrollList_total = 20;
         //check to see if task id in query string is not empty and is number, if not return json error
         checkLimitId($payrollList->payrollList_start, $payrollList->payrollList_total);
         $query = checkReadReportSummaryLimit($payrollList, $salaryCategoryId);

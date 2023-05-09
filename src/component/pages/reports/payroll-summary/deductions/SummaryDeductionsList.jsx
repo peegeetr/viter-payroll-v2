@@ -138,62 +138,98 @@ const SummaryDeductionsList = () => {
         <div className="overflow-x-auto max-h-[40rem] h-[40rem] ">
           <table>
             <thead>
-              <tr className="border-none text-center">
-                <th className="text-center" rowSpan="2">
+              <tr className="border-none text-center sticky top-0">
+                <th className="text-center border-white" rowSpan="2">
                   #
                 </th>
-                <th className="min-w-[18rem]" rowSpan="2">
+                <th
+                  className="min-w-[18rem] table-border border-white"
+                  rowSpan="2"
+                >
                   Name
                 </th>
-                <th className="table-border min-w-[12rem]" rowSpan="2">
+                <th
+                  className="table-border min-w-[12rem] border-white"
+                  rowSpan="2"
+                >
                   Department
                 </th>
-                <th className="table-border min-w-[12rem]" rowSpan="2">
+                <th
+                  className="table-border min-w-[12rem] border-white"
+                  rowSpan="2"
+                >
                   Pay Date
                 </th>
-                <th className="table-border-center min-w-[8rem]" colSpan="2">
+                <th
+                  className="table-border-center min-w-[8rem] border-white"
+                  colSpan="2"
+                >
                   SSS
                 </th>
-                <th className="table-border-center min-w-[8rem]" colSpan="2">
+                <th
+                  className="table-border-center min-w-[8rem] border-white"
+                  colSpan="2"
+                >
                   Phil. Health
                 </th>
-                <th className="table-border-center min-w-[5rem]" colSpan="2">
+                <th
+                  className="table-border-center min-w-[5rem] border-white"
+                  colSpan="2"
+                >
                   Pag-ibig
                 </th>
-                <th className="table-border-center min-w-[5rem]" colSpan="2">
+                <th
+                  className="table-border-center min-w-[5rem] border-white"
+                  colSpan="2"
+                >
                   Loans
                 </th>
-                <th className="table-border min-w-[10rem]" rowSpan="2">
+                <th
+                  className="table-border min-w-[10rem] border-white"
+                  rowSpan="2"
+                >
                   With Holding TAX
                 </th>
-                <th className="table-border min-w-[6rem]" rowSpan="2">
+                <th
+                  className="table-border min-w-[6rem] border-white"
+                  rowSpan="2"
+                >
                   PGBG MP2
                 </th>
-                <th className="table-border min-w-[10rem]" rowSpan="2">
+                <th
+                  className="table-border min-w-[10rem] border-white"
+                  rowSpan="2"
+                >
                   Other Deductions
                 </th>
                 <th
-                  className="text-center table-border border-b-[1px] min-w-[5rem]"
+                  className="text-center table-border border-b-[1px] min-w-[5rem] border-white"
                   rowSpan="2"
                 >
                   Total EE
                 </th>
-                <th className=" table-border min-w-[10rem]" rowSpan="2">
+                <th
+                  className=" table-border min-w-[10rem] border-white"
+                  rowSpan="2"
+                >
                   Total Deductions
                 </th>
-                <th className="min-w-[7rem] table-border" rowSpan="2">
+                <th
+                  className="min-w-[7rem] table-border border-white"
+                  rowSpan="2"
+                >
                   Net Pay
                 </th>
               </tr>
-              <tr className="text-center">
-                <th className="table-border">ER</th>
-                <th className="table-border">EE</th>
-                <th className="table-border">ER</th>
-                <th className="table-border">EE</th>
-                <th className="table-border">ER</th>
-                <th className="table-border">EE</th>
-                <th className="table-border">SSS</th>
-                <th className="table-border">PGBG</th>
+              <tr className="text-center sticky top-[35px]">
+                <th className="table-border border-white">ER</th>
+                <th className="table-border border-white">EE</th>
+                <th className="table-border border-white">ER</th>
+                <th className="table-border border-white">EE</th>
+                <th className="table-border border-white">ER</th>
+                <th className="table-border border-white">EE</th>
+                <th className="table-border border-white">SSS</th>
+                <th className="table-border border-white">PGBG</th>
               </tr>
             </thead>
             <tbody>
@@ -228,7 +264,7 @@ const SummaryDeductionsList = () => {
                         <td className="text-left">
                           {item.payroll_list_employee_department}
                         </td>
-                        <td className="text-center">{`${getPayPeriod(
+                        <td className="text-left">{`${getPayPeriod(
                           item.payroll_start_date,
                           item.payroll_end_date
                         )}`}</td>

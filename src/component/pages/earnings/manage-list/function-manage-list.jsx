@@ -249,7 +249,8 @@ export const otFinalAmount = (otItem, eItem, holidays, payrollDraft) => {
   let totalOtHolidayAmount = 0;
   let totalOtNightDiff = 0;
   let otDate = otItem.task_created.split(" ")[0];
-  let otTimeHr = otItem.task_time_started.split(":")[0];
+  let otTime = otItem.task_time_started.split(" ")[1];
+  let otTimeHr = otTime.split(":")[0];
   let isNd = otItem.task_ot_is_night_diff;
   holidays?.data.map((holidaysItem) => {
     // if overtime and holiday is same date
@@ -359,12 +360,11 @@ export const otFinalAmount = (otItem, eItem, holidays, payrollDraft) => {
     // if dont have holiday and not saturday or sunday
     otRate = (rate25 * regRate).toFixed(2);
     totalOtAmount25 = regularAmount * rate25;
-
+    console.log("normal nd", isNd, otTimeHr, otItem.task_time_started);
     if (
       isNd === 1 &&
       ((otTimeHr >= 22 && otTimeHr <= 23) || (otTimeHr >= 0 && otTimeHr < 6))
     ) {
-      // console.log("normal nd");
       regularAmount =
         Number(otItem.task_spent) *
         employeeRate(eItem.employee_job_salary, days).hourly;

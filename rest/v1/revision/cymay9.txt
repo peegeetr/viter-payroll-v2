@@ -3,7 +3,7 @@
     - payroll/list/report-summary.php 
     
 *models   
-    - payroll/list/PayrollList.php  
+    -> payroll/list/PayrollList.php  
   
 *htaccess 
     - 

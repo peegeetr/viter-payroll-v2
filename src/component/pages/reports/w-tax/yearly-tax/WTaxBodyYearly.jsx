@@ -26,7 +26,9 @@ const WTaxBodyYearly = ({
 
   const payComputeTaxDue = (emp, monthlyTax) => {
     let taxDue = 0;
-    monthlyGross.map((mg) => {
+    console.log(monthlyGross?.length);
+    // monthlyGross.length > 0 &&
+    monthlyGross?.map((mg) => {
       if (emp.payroll_list_employee_id === mg.payroll_list_employee_id) {
         let totalShareEe = mg.sss + mg.pag + mg.phic;
         let totalBenefits = mg.month13 + mg.bonus + mg.benefits;

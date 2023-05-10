@@ -858,26 +858,31 @@ export const payComputeTaxDue = (
 };
 
 // compute yearly tax due
-export const computeTaxYearly = (gross, yearlyTax) => {
+export const computeTaxYearly = (gross, yearlyTax, nonTax) => {
   let taxDue = 0;
+  let taxable = 0;
   // const minimum = 250000;
-  // if (Number(gross) >= 0 && Number(gross) <= minimum) {
-  //   return taxPayable;
-  // }
+  const minimum = Number(yearlyTax[0].tax_yearly_to);
 
+  // console.log(minimum);
   yearlyTax.map((yTax) => {
     if (
       Number(gross) >= Number(yTax.tax_yearly_from) &&
       Number(gross) <= Number(yTax.tax_yearly_to)
     ) {
+      taxable = Number(gross) - Number(nonTax);
+      if (Number(taxable) >= 0 && Number(taxable) <= minimum) {
+        return taxDue;
+      }
+
       taxDue =
-        (Number(gross) - Number(yTax.tax_yearly_from)) *
+        (taxable - Number(yTax.tax_yearly_from)) *
           (Number(yTax.tax_yearly_rate) / 100) +
         Number(yTax.tax_yearly_fixed_tax);
     }
   });
 
-  console.log(gross, taxDue);
+  // console.log(gross, taxDue);
   return taxDue;
 };
 

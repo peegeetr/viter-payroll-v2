@@ -24,7 +24,7 @@ const WTaxYearlyList = () => {
   const [isFilter, setFilter] = React.useState(false);
   const [isSubmit, setSubmit] = React.useState(false);
   const [employeeId, setEmployee] = React.useState("");
-  const [year, setYear] = React.useState("");
+  const [year, setYear] = React.useState("0");
 
   const [page, setPage] = React.useState(1);
   const { ref, inView } = useInView();
@@ -89,12 +89,12 @@ const WTaxYearlyList = () => {
 
   // use if not loadmore button monthly tax
   const { data: monthlyGross } = useQueryData(
-    `${devApiUrl}/v1/payrollList/report/wtax/monthly-gross/2023`, // endpoint
+    `${devApiUrl}/v1/payrollList/report/wtax/monthly-gross/${year}`, // endpoint
     "get", // method
-    "monthlyGross" // key
+    "monthlyGross", // key
+    {},
+    year
   );
-
-  console.log("monthlyGrosss", monthlyGross?.data);
 
   const initVal = {
     employee_aid: "",
@@ -204,6 +204,7 @@ const WTaxYearlyList = () => {
           year={year}
           monthlyTax={monthlyTax?.data}
           yearlyTax={yearlyTax?.data}
+          monthlyGross={monthlyGross?.data}
         />
       </div>
     </>

@@ -17,4 +17,8 @@
 
 *extra 
     - 
+
+Patrick
+    - Both uploaded to production and development
+
  

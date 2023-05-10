@@ -6,12 +6,13 @@ import { useInView } from "react-intersection-observer";
 import * as Yup from "yup";
 import { StoreContext } from "../../../../../store/StoreContext";
 import useQueryData from "../../../../custom-hooks/useQueryData";
-import { InputText } from "../../../../helpers/FormInputs";
+import { InputSelect, InputText } from "../../../../helpers/FormInputs";
 import {
   devApiUrl,
   getPayPeriod,
   getUserType,
   getWorkingDays,
+  hrisDevApiUrl,
   numberWithCommas,
 } from "../../../../helpers/functions-general";
 import { queryDataInfinite } from "../../../../helpers/queryDataInfinite";
@@ -35,6 +36,7 @@ const SummaryEarningsList = () => {
   const [isSubmit, setSubmit] = React.useState(false);
   const [startDate, setStartDate] = React.useState("");
   const [endDate, setEndDate] = React.useState("");
+  const [employeeId, setEmployee] = React.useState("");
 
   const [page, setPage] = React.useState(1);
   let counter = 1;
@@ -53,7 +55,7 @@ const SummaryEarningsList = () => {
     queryKey: ["payrollList-summary", isSubmit],
     queryFn: async ({ pageParam = 1 }) =>
       await queryDataInfinite(
-        `${devApiUrl}/v1/payrollList/report/filter/${startDate}/${endDate}/${payrollCategorySalaryId}`, // search endpoint
+        `${devApiUrl}/v1/payrollList/report/filter/${startDate}/${endDate}/${payrollCategorySalaryId}/${employeeId}`, // search endpoint
         `${devApiUrl}/v1/payrollList/report/summary/${pageParam}/${payrollCategorySalaryId}`, // list endpoint
         isFilter // search boolean
       ),
@@ -94,6 +96,7 @@ const SummaryEarningsList = () => {
   );
 
   const initVal = {
+    employee_aid: "",
     payStart_date: "",
     payEnd_date: "",
   };
@@ -101,8 +104,18 @@ const SummaryEarningsList = () => {
   const yupSchema = Yup.object({
     payStart_date: Yup.string().required("Required"),
     payEnd_date: Yup.string().required("Required"),
+    employee_aid: Yup.string().required("Required"),
   });
 
+  // use if not loadmore button undertime
+  const { data: employee, isLoading: loadingEmployee } = useQueryData(
+    `${hrisDevApiUrl}/v1/employees/pay`, // endpoint
+    "get", // method
+    "employees", // key
+    {}, // formdata
+    null, // id key
+    false // devKey boolean
+  );
   const getRegularWorkHrs = (item) => {
     const totalHrs = Number(
       getWorkingDays(
@@ -135,13 +148,14 @@ const SummaryEarningsList = () => {
 
   return (
     <>
-      <div className="relative overflow-x-auto z-0 w-full  lg:w-[35rem] ">
+      <div className="relative overflow-x-auto z-0 w-full  ">
         <Formik
           initialValues={initVal}
           validationSchema={yupSchema}
           onSubmit={async (values, { setSubmitting, resetForm }) => {
             setFilter(true);
             setSubmit(!isSubmit);
+            setEmployee(values.employee_aid);
             setStartDate(values.payStart_date);
             setEndDate(values.payEnd_date);
             // // refetch data of query
@@ -151,7 +165,27 @@ const SummaryEarningsList = () => {
           {(props) => {
             return (
               <Form>
-                <div className="grid gap-5 grid-cols-1 md:grid-cols-[1fr_1fr_150px] pt-5 pb-10 items-center">
+                <div className="grid gap-5 grid-cols-1 md:grid-cols-[1fr_1fr_1fr_150px] pt-5 pb-10 items-center">
+                  <div className="relative">
+                    <InputSelect
+                      label="Employee"
+                      name="employee_aid"
+                      type="text"
+                      disabled={isFetching}
+                    >
+                      <option value="" hidden>
+                        {loadingEmployee && "Loading..."}
+                      </option>
+                      <option value="0">All</option>
+                      {employee?.data.map((eItem, key) => {
+                        return (
+                          <option key={key} value={eItem.employee_aid}>
+                            {`${eItem.employee_lname}, ${eItem.employee_fname}`}
+                          </option>
+                        );
+                      })}
+                    </InputSelect>
+                  </div>
                   <div className="relative">
                     <InputText
                       label="Start Pay Date"

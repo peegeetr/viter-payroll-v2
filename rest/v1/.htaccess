@@ -44,7 +44,7 @@ RewriteRule ^payslip/email-all/payslip$ controllers/payroll/payslip/payslip-emai
 #payroll list paid
 RewriteRule ^payrollList$ controllers/payroll/list/payrollView.php [L]
 RewriteRule ^payrollList/report/summary/([0-9]+)/([0-9]+)$ controllers/payroll/list/report-summary.php?start=$1&salaryId=$2 [L]  
-RewriteRule ^payrollList/report/filter/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/([0-9]+)$ controllers/payroll/list/report-filter-summary.php?startDate=$1&endDate=$2&salaryId=$3 [L]  
+RewriteRule ^payrollList/report/filter/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/([0-9]+)/([0-9]+)$ controllers/payroll/list/report-filter-summary.php?startDate=$1&endDate=$2&salaryId=$3&employeeId=$4 [L]  
 RewriteRule ^payrollList/report/employee-run/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/([0-9]+)$ controllers/payroll/list/report-employee-payrun.php?startDate=$1&endDate=$2&employeeId=$3 [L]  
 RewriteRule ^payrollList/([A-Za-z0-9-]+)$ controllers/payroll/list/payrollView.php?listpayrollid=$1 [L]  
 RewriteRule ^payrollList/paid/([A-Za-z0-9-]+)$ controllers/payroll/list/paid.php?listpayrollid=$1 [L]  

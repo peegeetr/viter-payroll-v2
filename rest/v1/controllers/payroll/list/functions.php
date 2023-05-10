@@ -120,14 +120,6 @@ function checkReadReportSummaryLimit($object, $salaryCategoryId)
     return $query;
 }
 
-// filter by date
-function checkReadReportSummaryByDate($object, $salaryCategoryId)
-{
-    $query = $object->readReportSummaryByDate($salaryCategoryId);
-    checkQuery($query, "Empty records. (payroll list limit by date)");
-    return $query;
-}
-
 // filter by employee id and date
 function checkReadSummaryBenefitsByEmpId($object)
 {
@@ -327,5 +319,21 @@ function checkReadReportMonthlyWtaxGrossAllEmployeeByYear($object)
 {
     $query = $object->readReportMonthlyWtaxGrossAllEmployeeByYear();
     checkQuery($query, "Empty records. (Read report wtax monthly gross all employee by date)");
+    return $query;
+}
+
+// filter Report Summary All Employee By Date
+function checkReadReportSummaryAllEmployeeByDate($object, $salaryCategoryId)
+{
+    $query = $object->readReportSummaryAllEmployeeByDate($salaryCategoryId);
+    checkQuery($query, "Empty records. (report summary all employee by date)");
+    return $query;
+}
+
+// filter Report Summary By Employee And By Date
+function checkReadReportSummaryByEmployeeAndByDate($object, $salaryCategoryId)
+{
+    $query = $object->readReportSummaryByEmployeeAndByDate($salaryCategoryId);
+    checkQuery($query, "Empty records. (report summary all employee by date)");
     return $query;
 }

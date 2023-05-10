@@ -87,6 +87,21 @@ const WTaxYearlyList = () => {
     "yearlyTax" // key
   );
 
+  // use if with loadmore button and search bar
+  const { data: monthlyGross } = useInfiniteQuery({
+    queryKey: ["monthlyGross", isSubmit],
+    queryFn: async ({ pageParam = 1 }) =>
+      await queryDataInfinite(
+        `${devApiUrl}/v1/payrollList/report/wtax/monthly-gross/${year}/${employeeId}`, // filter endpoint
+        `${devApiUrl}/v1/payrollList/report/wtax/monthly-gross/0/0`, // list endpoint
+        isFilter // search boolean
+      ),
+    refetchOnWindowFocus: false,
+    cacheTime: 1000,
+  });
+
+  console.log("monthlyGrosss", monthlyGross?.pages[0].data);
+
   const initVal = {
     employee_aid: "",
     year: "",
@@ -97,6 +112,7 @@ const WTaxYearlyList = () => {
     employee_aid: Yup.string().required("Required"),
     year: Yup.string().required("Required"),
   });
+
   return (
     <>
       <div className="relative overflow-x-auto z-0 w-full  ">

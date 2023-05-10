@@ -1,16 +1,11 @@
-import React from "react";
-import { StoreContext } from "../../../../../store/StoreContext";
-import { getUserType } from "../../../../helpers/functions-general";
+import { AiFillPrinter } from "react-icons/ai";
 import BreadCrumbs from "../../../../partials/BreadCrumbs";
 import Footer from "../../../../partials/Footer";
 import Header from "../../../../partials/Header";
 import Navigation from "../../../../partials/Navigation";
-import { AiFillPrinter } from "react-icons/ai";
 import WTaxYearlyList from "./WTaxYearlyList";
 
 const WTaxYearly = () => {
-  const { store, dispatch } = React.useContext(StoreContext);
-  const link = getUserType(store.credentials.data.role_is_developer === 1);
   return (
     <>
       <Header />

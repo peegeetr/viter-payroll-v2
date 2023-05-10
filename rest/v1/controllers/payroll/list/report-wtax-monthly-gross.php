@@ -18,17 +18,11 @@ $response = new Response();
 if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
     checkApiKey();
 
-    if (array_key_exists("year", $_GET) && array_key_exists("employeeId", $_GET)) {
-        // get data
-        $payrollList->payroll_list_employee_id = $_GET['employeeId'];
+    if (array_key_exists("year", $_GET)) {
+        // get data 
         $payrollList->date_from = $_GET['year'];
-        checkId($payrollList->payroll_list_employee_id);
-        if ($payrollList->payroll_list_employee_id === '0') {
-            $query = checkReadReportMonthlyWtaxGrossAllEmployeeByDate($payrollList);
-            http_response_code(200);
-            getQueriedData($query);
-        }
-        $query = checkReadReportMonthlyWtaxGrossByEmployeeIdByEmpId($payrollList);
+        checkKeyword($payrollList->date_from);
+        $query = checkReadReportMonthlyWtaxGrossAllEmployeeByYear($payrollList);
         http_response_code(200);
         getQueriedData($query);
     }

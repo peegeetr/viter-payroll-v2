@@ -322,19 +322,10 @@ function checkReadAllSalaryCategory($object, $payroll_category_type)
     checkQuery($query, "Empty records. (read by all Salary Category)");
     return $query;
 }
-
-// REPORT Monthly Gross WTAX filter by employee id by date
-function checkReadReportMonthlyWtaxGrossByEmployeeIdByEmpId($object)
-{
-    $query = $object->readReportMonthlyWtaxGrossByEmployeeIdByEmpId();
-    checkQuery($query, "Empty records. (Read report wtax monthly gross by employee id and date)");
-    return $query;
-}
-
 // REPORT Monthly Gross WTAX filter all employee by date
-function checkReadReportMonthlyWtaxGrossAllEmployeeByDate($object)
+function checkReadReportMonthlyWtaxGrossAllEmployeeByYear($object)
 {
-    $query = $object->readReportMonthlyWtaxGrossAllEmployeeByDate();
+    $query = $object->readReportMonthlyWtaxGrossAllEmployeeByYear();
     checkQuery($query, "Empty records. (Read report wtax monthly gross all employee by date)");
     return $query;
 }

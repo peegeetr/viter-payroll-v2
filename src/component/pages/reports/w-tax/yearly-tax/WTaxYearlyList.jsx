@@ -87,20 +87,14 @@ const WTaxYearlyList = () => {
     "yearlyTax" // key
   );
 
-  // use if with loadmore button and search bar
-  const { data: monthlyGross } = useInfiniteQuery({
-    queryKey: ["monthlyGross", isSubmit],
-    queryFn: async ({ pageParam = 1 }) =>
-      await queryDataInfinite(
-        `${devApiUrl}/v1/payrollList/report/wtax/monthly-gross/${year}/${employeeId}`, // filter endpoint
-        `${devApiUrl}/v1/payrollList/report/wtax/monthly-gross/0/0`, // list endpoint
-        isFilter // search boolean
-      ),
-    refetchOnWindowFocus: false,
-    cacheTime: 1000,
-  });
+  // use if not loadmore button monthly tax
+  const { data: monthlyGross } = useQueryData(
+    `${devApiUrl}/v1/payrollList/report/wtax/monthly-gross/2023`, // endpoint
+    "get", // method
+    "monthlyGross" // key
+  );
 
-  console.log("monthlyGrosss", monthlyGross?.pages[0].data);
+  console.log("monthlyGrosss", monthlyGross?.data);
 
   const initVal = {
     employee_aid: "",

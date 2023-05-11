@@ -227,12 +227,18 @@ const PayBenefitsList = () => {
                 <React.Fragment key={key}>
                   {page.data.map((item, key) => {
                     totalSalary += Number(item.payroll_list_employee_salary);
-                    totalSss += Number(item.payroll_list_sss_ee);
-                    totalPag += Number(item.payroll_list_pagibig_ee);
-                    totalPhic += Number(item.payroll_list_philhealth_ee);
-                    totalPagLoan += Number(item.payroll_list_pagibig_loan);
-                    totalSssLoan += Number(item.payroll_list_sss_loan);
-                    totalMp2Loan += Number(item.payroll_list_pagibig_mp2);
+                    totalSss += Number(item.sss_ee);
+                    totalPag += Number(item.pagibig_ee);
+                    totalPhic += Number(item.philhealth_ee);
+                    totalPagLoan += Number(item.pagibig_loan);
+                    totalSssLoan += Number(item.sss_loan);
+                    totalMp2Loan += Number(item.pagibig_mp2);
+                    // totalSss += Number(item.payroll_list_sss_ee);
+                    // totalPag += Number(item.payroll_list_pagibig_ee);
+                    // totalPhic += Number(item.payroll_list_philhealth_ee);
+                    // totalPagLoan += Number(item.payroll_list_pagibig_loan);
+                    // totalSssLoan += Number(item.payroll_list_sss_loan);
+                    // totalMp2Loan += Number(item.payroll_list_pagibig_mp2);
                     return (
                       <tr key={key} className="text-right">
                         <td className="text-left print:py-[2px]">
@@ -247,22 +253,22 @@ const PayBenefitsList = () => {
                           )}
                         </td>
                         <td className="w-[15rem] print:py-[2px]">
-                          {numberWithCommas(item.payroll_list_sss_ee)}
+                          {numberWithCommas(Number(item.sss_ee))}
                         </td>
                         <td className="w-[15rem] print:py-[2px]">
-                          {numberWithCommas(item.payroll_list_philhealth_ee)}
+                          {numberWithCommas(Number(item.philhealth_ee))}
                         </td>
                         <td className="w-[15rem] print:py-[2px]">
-                          {numberWithCommas(item.payroll_list_pagibig_ee)}
+                          {numberWithCommas(Number(item.pagibig_ee))}
                         </td>
                         <td className="w-[15rem] print:py-[2px]">
-                          {numberWithCommas(item.payroll_list_sss_loan)}
+                          {numberWithCommas(Number(item.sss_loan))}
                         </td>
                         <td className="w-[15rem] print:py-[2px]">
-                          {numberWithCommas(item.payroll_list_pagibig_loan)}
+                          {numberWithCommas(Number(item.pagibig_loan))}
                         </td>
                         <td className="w-[15rem] print:py-[2px]">
-                          {numberWithCommas(item.payroll_list_pagibig_mp2)}
+                          {numberWithCommas(Number(item.pagibig_mp2))}
                         </td>
                       </tr>
                     );

@@ -159,6 +159,14 @@ function checkReadReportBenefitsByEmpId($object)
     return $query;
 }
 
+// Report Benefits by employee id Filter
+function checkReadReportBenefitsBenefits($object)
+{
+    $query = $object->readReportBenefitsBenefits();
+    checkQuery($query, "Empty records. (read default report benefits)");
+    return $query;
+}
+
 
 // REPORT Monthly WTAX filter all employee by date
 function checkReadReportMonthlyWtaxAllEmployeeByDate($object)

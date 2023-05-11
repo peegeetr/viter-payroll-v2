@@ -20,16 +20,22 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
     if (array_key_exists("startDate", $_GET) && array_key_exists("endDate", $_GET) && array_key_exists("employeeId", $_GET)) {
         // get data
         $payrollList->payroll_list_employee_id = $_GET['employeeId'];
-        $employee_id = $_GET['employeeId'];
         $payrollList->date_from = $_GET['startDate'];
         $payrollList->date_to = $_GET['endDate'];
+
         checkId($payrollList->payroll_list_employee_id);
+
+        if ($payrollList->date_from === '0' && $payrollList->date_to === '0' && $payrollList->payroll_list_employee_id === '0') {
+            $query = checkReadReportBenefitsBenefits($payrollList);
+            http_response_code(200);
+            getQueriedData($query);
+        }
         if ($payrollList->payroll_list_employee_id === '0') {
             $query = checkReadReportBenefitsByDate($payrollList);
             http_response_code(200);
             getQueriedData($query);
         }
-        $query = checkReadSummaryBenefitsByEmpId($payrollList);
+        $query = checkReadReportBenefitsByEmpId($payrollList);
         http_response_code(200);
         getQueriedData($query);
     }

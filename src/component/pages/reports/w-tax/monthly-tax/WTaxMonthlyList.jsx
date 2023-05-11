@@ -17,14 +17,15 @@ import ServerError from "../../../../partials/ServerError";
 import ButtonSpinner from "../../../../partials/spinners/ButtonSpinner";
 import TableSpinner from "../../../../partials/spinners/TableSpinner";
 import WTaxBodyMonthly from "./WTaxBodyMonthly";
+import { getMonth, getYear } from "../yearly-tax/functions-wtax";
 
 const WTaxMonthlyList = () => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [isFilter, setFilter] = React.useState(false);
   const [isSubmit, setSubmit] = React.useState(false);
   const [employeeId, setEmployee] = React.useState("");
-  const [startDate, setStartDate] = React.useState("");
-  const [endDate, setEndDate] = React.useState("");
+  const [month, setMonth] = React.useState("");
+  const [year, setYear] = React.useState("");
 
   const [page, setPage] = React.useState(1);
   const { ref, inView } = useInView();
@@ -41,7 +42,7 @@ const WTaxMonthlyList = () => {
     queryKey: ["earnings-summary", isSubmit],
     queryFn: async ({ pageParam = 1 }) =>
       await queryDataInfinite(
-        `${devApiUrl}/v1/payrollList/report/wtax/monthly/${startDate}/${endDate}/${employeeId}`, // filter endpoint
+        `${devApiUrl}/v1/payrollList/report/wtax/monthly/${month}/${year}/${employeeId}`, // filter endpoint
         `${devApiUrl}/v1/payrollList/page/0/${pageParam}`, // list endpoint
         isFilter // search boolean
       ),
@@ -81,14 +82,14 @@ const WTaxMonthlyList = () => {
 
   const initVal = {
     employee_aid: "",
-    start_date: "",
-    end_date: "",
+    year: "",
+    month: "",
   };
 
   const yupSchema = Yup.object({
     employee_aid: Yup.string().required("Required"),
-    start_date: Yup.string().required("Required"),
-    end_date: Yup.string().required("Required"),
+    year: Yup.string().required("Required"),
+    month: Yup.string().required("Required"),
   });
   return (
     <>
@@ -100,8 +101,8 @@ const WTaxMonthlyList = () => {
             setFilter(true);
             setSubmit(!isSubmit);
             setEmployee(values.employee_aid);
-            setStartDate(values.start_date);
-            setEndDate(values.end_date);
+            setMonth(values.month);
+            setYear(values.year);
 
             // // refetch data of query
             // refetch();
@@ -132,25 +133,42 @@ const WTaxMonthlyList = () => {
                     </InputSelect>
                   </div>
                   <div className="relative">
-                    <InputText
-                      label="Start Pay Date"
-                      name="start_date"
+                    <InputSelect
+                      label="Month"
+                      name="month"
                       type="text"
                       disabled={isFetching}
-                      onFocus={(e) => (e.target.type = "date")}
-                      onBlur={(e) => (e.target.type = "date")}
-                    />
+                    >
+                      <option value="" hidden>
+                        {loadingEmployee && "Loading..."}
+                      </option>
+                      {getMonth()?.map((yItem, key) => {
+                        return (
+                          <option key={key} value={yItem.month}>
+                            {`${yItem.month}`}
+                          </option>
+                        );
+                      })}
+                    </InputSelect>
                   </div>
-
                   <div className="relative">
-                    <InputText
-                      label="End Pay Date"
-                      name="end_date"
+                    <InputSelect
+                      label="Year"
+                      name="year"
                       type="text"
                       disabled={isFetching}
-                      onFocus={(e) => (e.target.type = "date")}
-                      onBlur={(e) => (e.target.type = "date")}
-                    />
+                    >
+                      <option value="" hidden>
+                        {loadingEmployee && "Loading..."}
+                      </option>
+                      {getYear()?.map((yItem, key) => {
+                        return (
+                          <option key={key} value={yItem.year}>
+                            {`${yItem.year}`}
+                          </option>
+                        );
+                      })}
+                    </InputSelect>
                   </div>
 
                   <button
@@ -193,8 +211,8 @@ const WTaxMonthlyList = () => {
         <WTaxBodyMonthly
           result={result}
           monthlyTax={monthlyTax?.data}
-          startDate={startDate}
-          endDate={endDate}
+          month={month}
+          year={year}
         />
       </div>
     </>

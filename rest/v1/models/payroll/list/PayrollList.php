@@ -947,16 +947,16 @@ class PayrollList
             $sql .= "from {$this->tblPayrollList} as payrollList, ";
             $sql .= "{$this->tblPayroll} as payroll ";
             $sql .= "where payrollList.payroll_list_payroll_id = payroll.payroll_id ";
-            $sql .= "and payroll.payroll_start_date >= :payroll_start_date ";
-            $sql .= "and payroll.payroll_end_date <= :payroll_end_date ";
+            $sql .= "and MONTHNAME(payroll.payroll_pay_date) = :month ";
+            $sql .= "and YEAR(payroll.payroll_pay_date) = :year ";
             $sql .= "group by payrollList.payroll_list_employee_id ";
             $sql .= "order by payrollList.payroll_list_payroll_id, ";
-            $sql .= "payroll.payroll_end_date desc, ";
+            $sql .= "payroll.payroll_pay_date desc, ";
             $sql .= "payrollList.payroll_list_employee_name asc ";
             $query = $this->connection->prepare($sql);
             $query->execute([
-                "payroll_start_date" => $this->date_from,
-                "payroll_end_date" => $this->date_to,
+                "month" => $this->date_from,
+                "year" => $this->date_to,
             ]);
         } catch (PDOException $ex) {
             $query = false;
@@ -987,8 +987,8 @@ class PayrollList
             $sql .= "{$this->tblPayroll} as payroll ";
             $sql .= "where payrollList.payroll_list_employee_id = :payroll_list_employee_id ";
             $sql .= "and payrollList.payroll_list_payroll_id = payroll.payroll_id ";
-            $sql .= "and payroll.payroll_start_date >= :payroll_start_date ";
-            $sql .= "and payroll.payroll_end_date <= :payroll_end_date ";
+            $sql .= "and MONTHNAME(payroll.payroll_pay_date) = :month ";
+            $sql .= "and YEAR(payroll.payroll_pay_date) = :year ";
             $sql .= "group by payrollList.payroll_list_employee_id ";
             $sql .= "order by payrollList.payroll_list_payroll_id, ";
             $sql .= "payroll.payroll_end_date desc, ";
@@ -996,8 +996,8 @@ class PayrollList
             $query = $this->connection->prepare($sql);
             $query->execute([
                 "payroll_list_employee_id" => $this->payroll_list_employee_id,
-                "payroll_start_date" => $this->date_from,
-                "payroll_end_date" => $this->date_to,
+                "month" => $this->date_from,
+                "year" => $this->date_to,
             ]);
         } catch (PDOException $ex) {
             $query = false;

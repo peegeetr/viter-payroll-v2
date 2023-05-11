@@ -16,12 +16,11 @@ $response = new Response();
 // validate api key
 if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
     checkApiKey();
-
-    if (array_key_exists("startDate", $_GET) && array_key_exists("endDate", $_GET) && array_key_exists("employeeId", $_GET)) {
+    if (array_key_exists("month", $_GET) && array_key_exists("year", $_GET) && array_key_exists("employeeId", $_GET)) {
         // get data
         $payrollList->payroll_list_employee_id = $_GET['employeeId'];
-        $payrollList->date_from = $_GET['startDate'];
-        $payrollList->date_to = $_GET['endDate'];
+        $payrollList->date_from = $_GET['month'];
+        $payrollList->date_to = $_GET['year'];
         checkId($payrollList->payroll_list_employee_id);
         if ($payrollList->payroll_list_employee_id === '0') {
             $query = checkReadReportMonthlyWtaxAllEmployeeByDate($payrollList);

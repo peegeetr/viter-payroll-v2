@@ -10,3 +10,31 @@ export const getYear = () => {
   }
   return list;
 };
+
+export const getMonth = () => {
+  let monthStart = 0;
+  let monthCount = 12;
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  let list = [];
+
+  for (let i = 0; i < monthCount; i++) {
+    monthStart++;
+    list.push({
+      month: `${months[Number(monthStart) - 1]}`,
+    });
+  }
+  return list;
+};

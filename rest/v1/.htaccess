@@ -52,7 +52,7 @@ RewriteRule ^payrollList/page/([A-Za-z0-9-]+)/([0-9]+)$ controllers/payroll/list
 RewriteRule ^payrollList/search/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)$ controllers/payroll/list/search.php?listpayrollid=$1&search=$2 [L]
 RewriteRule ^payrollList/page/by/employee/([0-9]+)/([0-9]+)$ controllers/payroll/list/hris-page-by-emp-id.php?start=$1&empId=$2 [L] 
 RewriteRule ^payrollList/report/employee-benefits/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/([0-9]+)$ controllers/payroll/list/report-employee-benefits.php?startDate=$1&endDate=$2&employeeId=$3 [L] 
-RewriteRule ^payrollList/report/wtax/monthly/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/([0-9]+)$ controllers/payroll/list/report-wtax-monthly.php?startDate=$1&endDate=$2&employeeId=$3 [L]   
+RewriteRule ^payrollList/report/wtax/monthly/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/([0-9]+)$ controllers/payroll/list/report-wtax-monthly.php?month=$1&year=$2&employeeId=$3 [L]   
 RewriteRule ^payrollList/report/wtax/yearly/([A-Za-z0-9-]+)/([0-9]+)$ controllers/payroll/list/report-wtax-yearly.php?year=$1&employeeId=$2 [L]   
 RewriteRule ^payrollList/category/13month/([0-9]+)$ controllers/payroll/list/compute-13month-pay.php?categoryId=$1 [L]   
 RewriteRule ^payrollList/my-info/payslip/filter/by-id/([0-9]+)/([0-9]+)/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)$ controllers/payroll/list/hris-filter-payslip-employee-id.php?employeeId=$1&payrollType=$2&startDate=$3&endDate=$4 [L]   

@@ -5,7 +5,7 @@ import {
   numberWithCommas,
 } from "../../../../helpers/functions-general";
 
-const WTaxBodyMonthly = ({ result, monthlyTax, startDate, endDate }) => {
+const WTaxBodyMonthly = ({ result, monthlyTax, month, year }) => {
   let totalShareEe = 0;
   let totalBenefits = 0;
   let tax = 0;
@@ -69,11 +69,11 @@ const WTaxBodyMonthly = ({ result, monthlyTax, startDate, endDate }) => {
               <div key={key} className="mb-8 print:mb-32">
                 <HeaderPrint />
                 <div className="text-center pb-4 font-bold print:pt-4">
-                  {startDate !== "" && (
+                  {month !== "" && (
                     <>
                       <p className="m-0">Tax Summary</p>
                       <p className="m-0 text-primary font-bold">
-                        {getPayPeriod(startDate, endDate)}
+                        {`${month} - ${year}`}
                       </p>
                     </>
                   )}

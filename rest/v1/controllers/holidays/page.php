@@ -21,7 +21,7 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
         // get data
         // get task id from query string
         $holidays->holidays_start = $_GET['start'];
-        $holidays->holidays_total = 5;
+        $holidays->holidays_total = 15;
         //check to see if task id in query string is not empty and is number, if not return json error
         checkLimitId($holidays->holidays_start, $holidays->holidays_total);
         $query = checkReadLimit($holidays);

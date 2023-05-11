@@ -20,7 +20,7 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
         // get data
         // get task id from query string
         $deductions->deduction_start = $_GET['start'];
-        $deductions->deduction_total = 5;
+        $deductions->deduction_total = 15;
         //check to see if task id in query string is not empty and is number, if not return json error
         checkLimitId($deductions->deduction_start, $deductions->deduction_total);
         $query = checkReadLimit($deductions);

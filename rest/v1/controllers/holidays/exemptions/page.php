@@ -21,7 +21,7 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
         // get data
         // get task id from query string
         $exemption->holiday_exemption_start = $_GET['start'];
-        $exemption->holiday_exemption_total = 5;
+        $exemption->holiday_exemption_total = 15;
         //check to see if task id in query string is not empty and is number, if not return json error
         checkLimitId($exemption->holiday_exemption_start, $exemption->holiday_exemption_total);
         $query = checkReadLimit($exemption);

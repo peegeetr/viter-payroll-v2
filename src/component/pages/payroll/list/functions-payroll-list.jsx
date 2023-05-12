@@ -47,7 +47,8 @@ export const runPayroll = (
   category13thMonth,
   categoryId,
   yearlyTax,
-  holidayExemptions
+  holidayExemptions,
+  employeesInstallment
 ) => {
   let payrollTotalAmount = 0;
   let grossAmount = 0;
@@ -157,7 +158,7 @@ export const runPayroll = (
     );
     payrollList.push(...categoryBonus.CategoryBonusList);
   }
-
+  // console.log(employeesInstallment);
   if (Number(categoryId) === payrollCategorySalaryId) {
     // loop each employee records
     employee.map((emp) => {
@@ -287,6 +288,25 @@ export const runPayroll = (
         sssAmount.sssEe + pagibigAmount.pagibigEe + philAmount.philhealthEe;
 
       // loop each deductions for each employee
+      employeesInstallment.map((dInstallment) => {
+        if (
+          emp.payroll_list_employee_id ===
+          dInstallment.employee_installment_employee_id
+        ) {
+          pagibigLoanAmount = payComputePagibigLoan(emp, dInstallment);
+          totalPagibigLoan += pagibigLoanAmount.finalAmount;
+
+          pagibigMP2Amount = payComputePagibigMP2(emp, dInstallment);
+          totalPagibigMP2 += pagibigMP2Amount.finalAmount;
+
+          sSSLoanAmount = payComputeSSSLoan(emp, dInstallment);
+          totalSSSLoan += sSSLoanAmount.finalAmount;
+
+          pagibigLoanList.push(...pagibigLoanAmount.pagibigLoanList);
+          pagibigMP2List.push(...pagibigMP2Amount.pagibigMP2List);
+          sSSLoanList.push(...sSSLoanAmount.sSSLoanList);
+        }
+      });
       payrollDeductions.map((deduction) => {
         if (
           emp.payroll_list_employee_id === deduction.deduction_employee_id && // employee id
@@ -304,14 +324,14 @@ export const runPayroll = (
           otherDeductionAmount = payComputeOtherDeduction(emp, deduction);
           totalOtherDeduction += otherDeductionAmount.finalAmount;
 
-          pagibigLoanAmount = payComputePagibigLoan(emp, deduction);
-          totalPagibigLoan += pagibigLoanAmount.finalAmount;
+          // pagibigLoanAmount = payComputePagibigLoan(emp, deduction);
+          // totalPagibigLoan += pagibigLoanAmount.finalAmount;
 
-          pagibigMP2Amount = payComputePagibigMP2(emp, deduction);
-          totalPagibigMP2 += pagibigMP2Amount.finalAmount;
+          // pagibigMP2Amount = payComputePagibigMP2(emp, deduction);
+          // totalPagibigMP2 += pagibigMP2Amount.finalAmount;
 
-          sSSLoanAmount = payComputeSSSLoan(emp, deduction);
-          totalSSSLoan += sSSLoanAmount.finalAmount;
+          // sSSLoanAmount = payComputeSSSLoan(emp, deduction);
+          // totalSSSLoan += sSSLoanAmount.finalAmount;
 
           // for updating number of pay if installment or one time
           deducNumInstallmentList.push({
@@ -330,9 +350,9 @@ export const runPayroll = (
           tuitionList.push(...tuitionAmount.tuitionList);
           tithesList.push(...tithesAmount.tithesList);
           otherDeductionList.push(...otherDeductionAmount.otherDeductionList);
-          pagibigLoanList.push(...pagibigLoanAmount.pagibigLoanList);
-          pagibigMP2List.push(...pagibigMP2Amount.pagibigMP2List);
-          sSSLoanList.push(...sSSLoanAmount.sSSLoanList);
+          // pagibigLoanList.push(...pagibigLoanAmount.pagibigLoanList);
+          // pagibigMP2List.push(...pagibigMP2Amount.pagibigMP2List);
+          // sSSLoanList.push(...sSSLoanAmount.sSSLoanList);
         }
         // console.log("tuitionList", tuitionAmount.tuitionList);
       });

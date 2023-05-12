@@ -13,6 +13,7 @@ import TableSpinner from "../../partials/spinners/TableSpinner.jsx";
 import JobDetailsLink from "./job-details/JobDetailsLink.jsx";
 import SalaryHistoryLink from "./salary-history/SalaryHistoryLink.jsx";
 import PayrollDetailsLink from "./payroll-details/PayrollDetailsLink";
+import DeductionInstallmentLink from "./deductions-installment/DeductionInstallmentLink";
 
 const EmployeeLink = () => {
   const employeeid = getUrlParam().get("employeeid");
@@ -51,6 +52,9 @@ const EmployeeLink = () => {
               </li>
               <li className="pb-2">
                 <PayrollDetailsLink />
+              </li>
+              <li className="py-2">
+                <DeductionInstallmentLink />
               </li>
               <li className="py-2">
                 <SalaryHistoryLink />

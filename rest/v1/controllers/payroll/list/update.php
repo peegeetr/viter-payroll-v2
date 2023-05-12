@@ -300,6 +300,90 @@ if (array_key_exists("listpayrollid", $_GET)) {
             $query = checkCreateDeductions($payrollList);
         }
     }
+
+
+    // list of installment Deduction 
+    // delete first existing PR ID and pay item id pagibig Loan  
+    $payrollList->deduction_payitem_id = $data["payItemPagibigLoanId"];
+    checkId($payrollList->deduction_payitem_id);
+    checkDeleteNotInstallmentDeductions($payrollList);
+    // Pagibig Loan  
+    if (count($allPagibigLoanList) > 0) {
+        for ($pgbg = 0; $pgbg < count($allPagibigLoanList); $pgbg++) {
+            $payrollList->payroll_type_id = $allPagibigLoanList[$pgbg]["deduction_payroll_type_id"];
+            $payrollList->num_pay = 1;
+            $payrollList->payroll_list_employee_name = $allPagibigLoanList[$pgbg]["deduction_employee"];
+            $payrollList->payroll_list_employee_id = $allPagibigLoanList[$pgbg]["deduction_employee_id"];
+            $payrollList->deduction_paytype_id = $allPagibigLoanList[$pgbg]["deduction_paytype_id"];
+            $payrollList->deduction_payitem_id = $allPagibigLoanList[$pgbg]["deduction_payitem_id"];
+            $payrollList->deduction_amount = $allPagibigLoanList[$pgbg]["deduction_amount"];
+            $payrollList->deduction_details = $allPagibigLoanList[$pgbg]["deduction_details"];
+            $payrollList->frequency = $allPagibigLoanList[$pgbg]["deduction_frequency"];
+            $payrollList->is_installment = $allPagibigLoanList[$pgbg]["deduction_is_installment"];
+            $payrollList->number_of_installment = $allPagibigLoanList[$pgbg]["deduction_number_of_installment"];
+            $payrollList->start_pay_date = $allPagibigLoanList[$pgbg]["deduction_start_pay_date"];
+            $payrollList->end_pay_date = $allPagibigLoanList[$pgbg]["deduction_end_pay_date"];
+            $payrollList->installment_extra = $allPagibigLoanList[$pgbg]["installment_extra"];
+            // create extra  
+            $query = checkCreateDeductions($payrollList);
+        }
+    }
+
+    // list of installment Deduction
+    // delete first existing PR ID and pay item id pagibig mp2  
+    $payrollList->deduction_payitem_id = $data["payItemPagibigMP2Id"];
+    checkId($payrollList->deduction_payitem_id);
+    checkDeleteNotInstallmentDeductions($payrollList);
+    // Pagibig MP2  
+    if (count($allPagibigMP2List) > 0) {
+        for ($mpt = 0; $mpt < count($allPagibigMP2List); $mpt++) {
+            $payrollList->payroll_type_id = $allPagibigMP2List[$mpt]["deduction_payroll_type_id"];
+            $payrollList->num_pay = 1;
+            $payrollList->payroll_list_employee_name = $allPagibigMP2List[$mpt]["deduction_employee"];
+            $payrollList->payroll_list_employee_id = $allPagibigMP2List[$mpt]["deduction_employee_id"];
+            $payrollList->deduction_paytype_id = $allPagibigMP2List[$mpt]["deduction_paytype_id"];
+            $payrollList->deduction_payitem_id = $allPagibigMP2List[$mpt]["deduction_payitem_id"];
+            $payrollList->deduction_amount = $allPagibigMP2List[$mpt]["deduction_amount"];
+            $payrollList->deduction_details = $allPagibigMP2List[$mpt]["deduction_details"];
+            $payrollList->frequency = $allPagibigMP2List[$mpt]["deduction_frequency"];
+            $payrollList->is_installment = $allPagibigMP2List[$mpt]["deduction_is_installment"];
+            $payrollList->number_of_installment = $allPagibigMP2List[$mpt]["deduction_number_of_installment"];
+            $payrollList->start_pay_date = $allPagibigMP2List[$mpt]["deduction_start_pay_date"];
+            $payrollList->end_pay_date = $allPagibigMP2List[$mpt]["deduction_end_pay_date"];
+            $payrollList->installment_extra = "0";
+            // create extra  
+            $query = checkCreateDeductions($payrollList);
+        }
+    }
+
+    // list of installment Deduction
+    // delete first existing PR ID and pay item id sss loan  
+    $payrollList->deduction_payitem_id = $data["payItemSSSLoanId"];
+    checkId($payrollList->deduction_payitem_id);
+    checkDeleteNotInstallmentDeductions($payrollList);
+    // SSS loan  
+    if (count($allSSSLoanList) > 0) {
+        for ($sss = 0; $sss < count($allSSSLoanList); $sss++) {
+
+            $payrollList->payroll_type_id = $allSSSLoanList[$sss]["deduction_payroll_type_id"];
+            $payrollList->num_pay = 1;
+            $payrollList->payroll_list_employee_name = $allSSSLoanList[$sss]["deduction_employee"];
+            $payrollList->payroll_list_employee_id = $allSSSLoanList[$sss]["deduction_employee_id"];
+            $payrollList->deduction_paytype_id = $allSSSLoanList[$sss]["deduction_paytype_id"];
+            $payrollList->deduction_payitem_id = $allSSSLoanList[$sss]["deduction_payitem_id"];
+            $payrollList->deduction_amount = $allSSSLoanList[$sss]["deduction_amount"];
+            $payrollList->deduction_details = $allSSSLoanList[$sss]["deduction_details"];
+            $payrollList->frequency = $allSSSLoanList[$sss]["deduction_frequency"];
+            $payrollList->is_installment = $allSSSLoanList[$sss]["deduction_is_installment"];
+            $payrollList->number_of_installment = $allSSSLoanList[$sss]["deduction_number_of_installment"];
+            $payrollList->start_pay_date = $allSSSLoanList[$sss]["deduction_start_pay_date"];
+            $payrollList->end_pay_date = $allSSSLoanList[$sss]["deduction_end_pay_date"];
+            $payrollList->installment_extra = $allSSSLoanList[$sss]["installment_extra"];
+            // create extra 
+            $query = checkCreateDeductions($payrollList);
+        }
+    }
+
     // delete deduction first PR ID and pay item id tax
     $payrollList->deduction_payitem_id = $data["payItemTaxId"];
     checkId($payrollList->deduction_payitem_id);
@@ -558,88 +642,6 @@ if (array_key_exists("listpayrollid", $_GET)) {
                 // delete first existing PR ID and pay item id pagibig ER 
                 checkDeleteNotInstallmentDeductionsByEmpId($payrollList);
                 // create extra  
-                $query = checkCreateDeductions($payrollList);
-            }
-        }
-    }
-
-    // list of installment Deduction
-    // Pagibig Loan  
-    if (count($allPagibigLoanList) > 0) {
-        for ($pgbg = 0; $pgbg < count($allPagibigLoanList); $pgbg++) {
-            if ($allPagibigLoanList[$pgbg]["installment_extra"] === 1) {
-                $payrollList->payroll_type_id = $allPagibigLoanList[$pgbg]["deduction_payroll_type_id"];
-                $payrollList->num_pay = 1;
-                $payrollList->payroll_list_employee_name = $allPagibigLoanList[$pgbg]["deduction_employee"];
-                $payrollList->payroll_list_employee_id = $allPagibigLoanList[$pgbg]["deduction_employee_id"];
-                $payrollList->deduction_paytype_id = $allPagibigLoanList[$pgbg]["deduction_paytype_id"];
-                $payrollList->deduction_payitem_id = $allPagibigLoanList[$pgbg]["deduction_payitem_id"];
-                $payrollList->deduction_amount = $allPagibigLoanList[$pgbg]["deduction_amount"];
-                $payrollList->deduction_details = $allPagibigLoanList[$pgbg]["deduction_details"];
-                $payrollList->frequency = $allPagibigLoanList[$pgbg]["deduction_frequency"];
-                $payrollList->is_installment = $allPagibigLoanList[$pgbg]["deduction_is_installment"];
-                $payrollList->number_of_installment = $allPagibigLoanList[$pgbg]["deduction_number_of_installment"];
-                $payrollList->start_pay_date = $allPagibigLoanList[$pgbg]["deduction_start_pay_date"];
-                $payrollList->end_pay_date = $allPagibigLoanList[$pgbg]["deduction_end_pay_date"];
-                $payrollList->installment_extra = $allPagibigLoanList[$pgbg]["installment_extra"];
-                // delete first existing PR ID and pay item id pagibig ER 
-                checkDeleteNotInstallmentDeductionsByEmpId($payrollList);
-                // create extra  
-                $query = checkCreateDeductions($payrollList);
-            }
-        }
-    }
-
-    // list of installment Deduction
-    // Pagibig MP2  
-    if (count($allPagibigMP2List) > 0) {
-        for ($mpt = 0; $mpt < count($allPagibigMP2List); $mpt++) {
-            if ($allPagibigMP2List[$mpt]["installment_extra"] === 1) {
-                $payrollList->payroll_type_id = $allPagibigMP2List[$mpt]["deduction_payroll_type_id"];
-                $payrollList->num_pay = 1;
-                $payrollList->payroll_list_employee_name = $allPagibigMP2List[$mpt]["deduction_employee"];
-                $payrollList->payroll_list_employee_id = $allPagibigMP2List[$mpt]["deduction_employee_id"];
-                $payrollList->deduction_paytype_id = $allPagibigMP2List[$mpt]["deduction_paytype_id"];
-                $payrollList->deduction_payitem_id = $allPagibigMP2List[$mpt]["deduction_payitem_id"];
-                $payrollList->deduction_amount = $allPagibigMP2List[$mpt]["deduction_amount"];
-                $payrollList->deduction_details = $allPagibigMP2List[$mpt]["deduction_details"];
-                $payrollList->frequency = $allPagibigMP2List[$mpt]["deduction_frequency"];
-                $payrollList->is_installment = $allPagibigMP2List[$mpt]["deduction_is_installment"];
-                $payrollList->number_of_installment = $allPagibigMP2List[$mpt]["deduction_number_of_installment"];
-                $payrollList->start_pay_date = $allPagibigMP2List[$mpt]["deduction_start_pay_date"];
-                $payrollList->end_pay_date = $allPagibigMP2List[$mpt]["deduction_end_pay_date"];
-                $payrollList->installment_extra = $allPagibigMP2List[$mpt]["installment_extra"];
-                // delete first existing PR ID and pay item id pagibig ER 
-                checkDeleteNotInstallmentDeductionsByEmpId($payrollList);
-                // create extra  
-                $query = checkCreateDeductions($payrollList);
-            }
-        }
-    }
-
-    // list of installment Deduction
-    // SSS loan  
-    if (count($allSSSLoanList) > 0) {
-        for ($sss = 0; $sss < count($allSSSLoanList); $sss++) {
-            if ($allSSSLoanList[$sss]["installment_extra"] === 1) {
-
-                $payrollList->payroll_type_id = $allSSSLoanList[$sss]["deduction_payroll_type_id"];
-                $payrollList->num_pay = 1;
-                $payrollList->payroll_list_employee_name = $allSSSLoanList[$sss]["deduction_employee"];
-                $payrollList->payroll_list_employee_id = $allSSSLoanList[$sss]["deduction_employee_id"];
-                $payrollList->deduction_paytype_id = $allSSSLoanList[$sss]["deduction_paytype_id"];
-                $payrollList->deduction_payitem_id = $allSSSLoanList[$sss]["deduction_payitem_id"];
-                $payrollList->deduction_amount = $allSSSLoanList[$sss]["deduction_amount"];
-                $payrollList->deduction_details = $allSSSLoanList[$sss]["deduction_details"];
-                $payrollList->frequency = $allSSSLoanList[$sss]["deduction_frequency"];
-                $payrollList->is_installment = $allSSSLoanList[$sss]["deduction_is_installment"];
-                $payrollList->number_of_installment = $allSSSLoanList[$sss]["deduction_number_of_installment"];
-                $payrollList->start_pay_date = $allSSSLoanList[$sss]["deduction_start_pay_date"];
-                $payrollList->end_pay_date = $allSSSLoanList[$sss]["deduction_end_pay_date"];
-                $payrollList->installment_extra = $allSSSLoanList[$sss]["installment_extra"];
-                // delete first existing PR ID and pay item id pagibig ER 
-                checkDeleteNotInstallmentDeductionsByEmpId($payrollList);
-                // create extra 
                 $query = checkCreateDeductions($payrollList);
             }
         }

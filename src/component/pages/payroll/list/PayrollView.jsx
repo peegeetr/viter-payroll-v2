@@ -4,7 +4,11 @@ import { ImPlay3 } from "react-icons/im";
 import { setIsAdd, setIsConfirm } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
 import useQueryData from "../../../custom-hooks/useQueryData";
-import { devApiUrl, getUrlParam } from "../../../helpers/functions-general";
+import {
+  devApiUrl,
+  getUrlParam,
+  hrisDevApiUrl,
+} from "../../../helpers/functions-general";
 import BreadCrumbs from "../../../partials/BreadCrumbs";
 import Footer from "../../../partials/Footer";
 import Header from "../../../partials/Header";
@@ -50,6 +54,16 @@ const PayrollView = () => {
     payrollList?.data.length > 0
       ? payrollList?.data[0].payroll_category_type
       : "0";
+
+  // use if not loadmore button undertime
+  const { data: employeesInstallment } = useQueryData(
+    `${hrisDevApiUrl}/v1/employees-installment/all-pending`, // endpoint
+    "get", // method
+    "employeesInstallment", // key
+    {}, // formdata
+    null, // id key
+    false // devKey boolean
+  );
 
   // use if not loadmore button undertime
   const { data: category13thMonth } = useQueryData(
@@ -207,6 +221,7 @@ const PayrollView = () => {
               categoryId={categoryId}
               yearlyTax={yearlyTax?.data}
               holidayExemptions={holidayExemptions?.data}
+              employeesInstallment={employeesInstallment?.data}
             />
           )
         : store.isConfirm && <ModalNoSssBracket />}

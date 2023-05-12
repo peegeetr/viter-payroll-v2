@@ -1,0 +1,25 @@
+
+*controllers          
+    - payroll/list/update.php   
+    
+*models   
+    -  
+  
+*htaccess 
+    - 
+
+*db tables 
+    - 
+
+*core 
+    - 
+
+*extra 
+    - 
+
+Patrick
+    - 
+
+
+
+ 

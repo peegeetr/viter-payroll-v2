@@ -66,7 +66,7 @@ const WTaxBodyMonthly = ({ result, monthlyTax, month, year }) => {
             );
             totalCompensation = Number(item.gross) + Number(item.benefits);
             return (
-              <div key={key} className="mb-8 print:mb-32">
+              <div key={key} className="mb-8 print:mb-20">
                 <HeaderPrint />
                 <div className="text-center pb-4 font-bold print:pt-4">
                   {month !== "" && (

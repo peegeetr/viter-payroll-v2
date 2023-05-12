@@ -371,8 +371,10 @@ class PayType
             $sql .= "and deduction.deduction_paytype_id = payitem.payitem_paytype_id ";
             $sql .= "and payitem.payitem_paytype_id = paytype.paytype_aid ";
             $sql .= "and deduction.deduction_is_installment != '2' ";
-            $sql .= "and DATE(deduction.deduction_start_pay_date) between ";
-            $sql .= ":date_from and :date_to ";
+            $sql .= "and deduction.deduction_start_pay_date = :date_from ";
+            $sql .= "and deduction.deduction_end_pay_date = :date_to ";
+            // $sql .= "and DATE(deduction.deduction_start_pay_date) between ";
+            // $sql .= ":date_from and :date_to ";
             $sql .= "GROUP BY deduction.deduction_payitem_id ";
             $sql .= "order by DATE(deduction.deduction_start_pay_date) desc ";
             $query = $this->connection->prepare($sql);

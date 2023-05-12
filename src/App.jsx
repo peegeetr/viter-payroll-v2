@@ -103,6 +103,14 @@ import SystemUserOtherUser from "./component/pages/settings/users/other/links/Sy
 import OtherUserOtherUser from "./component/pages/settings/users/other/links/OtherUserOtherUser";
 import SystemUserSummaryTypeViewBasicPay from "./component/pages/reports/paytype/view/links-salary/SystemUserSummaryTypeViewBasicPay";
 import OtherUserSummaryTypeViewBasicPay from "./component/pages/reports/paytype/view/links-salary/OtherUserSummaryTypeViewBasicPay";
+import OtherUserDeductionInstallment from "./component/pages/employee/deductions-installment/links/OtherUserDeductionInstallment";
+import SystemDeductionInstallment from "./component/pages/employee/deductions-installment/links/SystemDeductionInstallment";
+import OtherUserDeductionInstallmentSssLoan from "./component/pages/employee/deductions-installment/view/links-sss/OtherUserDeductionInstallmentSssLoan";
+import OtherUserDeductionInstallmentPagibigLoan from "./component/pages/employee/deductions-installment/view/links-pagibig/OtherUserDeductionInstallmentPagibigLoan";
+import OtherUserDeductionInstallmentMP2 from "./component/pages/employee/deductions-installment/view/links-mp2/OtherUserDeductionInstallmentMP2";
+import SystemDeductionInstallmentSssLoan from "./component/pages/employee/deductions-installment/view/links-sss/SystemDeductionInstallmentSssLoan";
+import SystemDeductionInstallmentPagibigLoan from "./component/pages/employee/deductions-installment/view/links-pagibig/SystemDeductionInstallmentPagibigLoan";
+import SystemDeductionInstallmentMP2 from "./component/pages/employee/deductions-installment/view/links-mp2/SystemDeductionInstallmentMP2";
 
 function App() {
   // Create a client
@@ -233,6 +241,38 @@ function App() {
               element={
                 <ProtectedRouteOther>
                   <OtherUserPayrollDetails />
+                </ProtectedRouteOther>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/employee/details/deduction-installment`}
+              element={
+                <ProtectedRouteOther>
+                  <OtherUserDeductionInstallment />
+                </ProtectedRouteOther>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/employee/details/deduction-installment/sss-loan`}
+              element={
+                <ProtectedRouteOther>
+                  <OtherUserDeductionInstallmentSssLoan />
+                </ProtectedRouteOther>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/employee/details/deduction-installment/pagibig-loan`}
+              element={
+                <ProtectedRouteOther>
+                  <OtherUserDeductionInstallmentPagibigLoan />
+                </ProtectedRouteOther>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/employee/details/deduction-installment/mp2`}
+              element={
+                <ProtectedRouteOther>
+                  <OtherUserDeductionInstallmentMP2 />
                 </ProtectedRouteOther>
               }
             />
@@ -591,6 +631,38 @@ function App() {
               element={
                 <ProtectedRouteSystem>
                   <SystemUserPayrollDetails />
+                </ProtectedRouteSystem>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/employee/details/deduction-installment`}
+              element={
+                <ProtectedRouteSystem>
+                  <SystemDeductionInstallment />
+                </ProtectedRouteSystem>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/employee/details/deduction-installment/sss-loan`}
+              element={
+                <ProtectedRouteSystem>
+                  <SystemDeductionInstallmentSssLoan />
+                </ProtectedRouteSystem>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/employee/details/deduction-installment/pagibig-loan`}
+              element={
+                <ProtectedRouteSystem>
+                  <SystemDeductionInstallmentPagibigLoan />
+                </ProtectedRouteSystem>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/employee/details/deduction-installment/mp2`}
+              element={
+                <ProtectedRouteSystem>
+                  <SystemDeductionInstallmentMP2 />
                 </ProtectedRouteSystem>
               }
             />

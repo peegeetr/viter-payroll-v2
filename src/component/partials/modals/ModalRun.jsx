@@ -11,6 +11,9 @@ import {
 import { StoreContext } from "../../../store/StoreContext";
 import { devApiUrl } from "../../helpers/functions-general";
 import {
+  PagibigLoanId,
+  PagibigMP2Id,
+  SSSLoanId,
   diminimisId,
   holidayId,
   nightDiffId,
@@ -46,6 +49,7 @@ const ModalRun = ({
   categoryId,
   yearlyTax,
   holidayExemptions,
+  employeesInstallment,
 }) => {
   const { store, dispatch } = React.useContext(StoreContext);
 
@@ -103,9 +107,10 @@ const ModalRun = ({
       category13thMonth,
       categoryId,
       yearlyTax,
-      holidayExemptions
+      holidayExemptions,
+      employeesInstallment
     );
-
+    console.log(run);
     let payrollList = run.payrollList;
     let holidayList = run.holidayList;
     let ndList = run.ndList;
@@ -199,6 +204,9 @@ const ModalRun = ({
       payItemPagibigEeId: pagibigEeId,
       payItemPhilhealthErId: philhealthErId,
       payItemPhilhealthEeId: philhealthEeId,
+      payItemPagibigLoanId: PagibigLoanId,
+      payItemPagibigMP2Id: PagibigMP2Id,
+      payItemSSSLoanId: SSSLoanId,
       payItemDeminimisId: diminimisId,
       categoryBunosId: payrollCategoryBonusId,
     });

@@ -203,16 +203,18 @@ const ManageDeductionList = () => {
                       </td> */}
                       <td>{getStatus(item)}</td>
                       <td>
-                        <div className="flex items-center justify-end gap-2">
-                          <button
-                            type="button"
-                            className="btn-action-table tooltip-action-table"
-                            data-tooltip="Delete"
-                            onClick={() => handleDelete(item)}
-                          >
-                            <FaTrash />
-                          </button>
-                        </div>
+                        {item.earnings_is_paid === 0 && (
+                          <div className="flex items-center justify-end gap-2">
+                            <button
+                              type="button"
+                              className="btn-action-table tooltip-action-table"
+                              data-tooltip="Delete"
+                              onClick={() => handleDelete(item)}
+                            >
+                              <FaTrash />
+                            </button>
+                          </div>
+                        )}
                       </td>
                     </tr>
                   ))}

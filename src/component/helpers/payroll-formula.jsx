@@ -1132,25 +1132,23 @@ export const payComputeOtherDeduction = (emp, deduction) => {
 export const payComputePagibigLoan = (emp, deduction) => {
   let finalAmount = 0;
   let pagibigLoanList = [];
-  if (deduction.deduction_payitem_id === PagibigLoanId) {
-    finalAmount += Number(deduction.deduction_amount);
-    if (deduction.deduction_is_installment === installmentNumber) {
-      pagibigLoanList.push({
-        deduction_payroll_type_id: emp.payroll_category_type,
-        deduction_employee: emp.payroll_list_employee_name,
-        deduction_employee_id: emp.payroll_list_employee_id,
-        deduction_paytype_id: optionalDeductionId,
-        deduction_payitem_id: PagibigLoanId,
-        deduction_amount: deduction.deduction_amount,
-        deduction_details: deduction.deduction_details,
-        deduction_frequency: isSemiMonthly,
-        deduction_is_installment: onetimeNumber,
-        deduction_number_of_installment: onetimeNumber,
-        deduction_start_pay_date: emp.payroll_start_date,
-        deduction_end_pay_date: emp.payroll_end_date,
-        installment_extra: 1,
-      });
-    }
+  if (deduction.employee_installment_paytype_id === PagibigLoanId) {
+    finalAmount = Number(deduction.employee_installment_amount) / 2;
+    pagibigLoanList.push({
+      deduction_payroll_type_id: emp.payroll_category_type,
+      deduction_employee: emp.payroll_list_employee_name,
+      deduction_employee_id: emp.payroll_list_employee_id,
+      deduction_paytype_id: optionalDeductionId,
+      deduction_payitem_id: PagibigLoanId,
+      deduction_amount: finalAmount,
+      deduction_details: `Pagibig Loan`,
+      deduction_frequency: isSemiMonthly,
+      deduction_is_installment: onetimeNumber,
+      deduction_number_of_installment: onetimeNumber,
+      deduction_start_pay_date: emp.payroll_start_date,
+      deduction_end_pay_date: emp.payroll_end_date,
+      installment_extra: 0,
+    });
   }
   return { finalAmount, pagibigLoanList };
 };
@@ -1159,25 +1157,30 @@ export const payComputePagibigLoan = (emp, deduction) => {
 export const payComputePagibigMP2 = (emp, deduction) => {
   let finalAmount = 0;
   let pagibigMP2List = [];
-  if (deduction.deduction_payitem_id === PagibigMP2Id) {
-    finalAmount += Number(deduction.deduction_amount);
-    if (deduction.deduction_is_installment === installmentNumber) {
-      pagibigMP2List.push({
-        deduction_payroll_type_id: emp.payroll_category_type,
-        deduction_employee: emp.payroll_list_employee_name,
-        deduction_employee_id: emp.payroll_list_employee_id,
-        deduction_paytype_id: optionalDeductionId,
-        deduction_payitem_id: PagibigMP2Id,
-        deduction_amount: deduction.deduction_amount,
-        deduction_details: deduction.deduction_details,
-        deduction_frequency: isSemiMonthly,
-        deduction_is_installment: onetimeNumber,
-        deduction_number_of_installment: onetimeNumber,
-        deduction_start_pay_date: emp.payroll_start_date,
-        deduction_end_pay_date: emp.payroll_end_date,
-        installment_extra: 1,
-      });
-    }
+  if (deduction.employee_installment_paytype_id === PagibigMP2Id) {
+    finalAmount = Number(deduction.employee_installment_amount) / 2;
+    pagibigMP2List.push({
+      deduction_payroll_type_id: emp.payroll_category_type,
+      deduction_employee: emp.payroll_list_employee_name,
+      deduction_employee_id: emp.payroll_list_employee_id,
+      deduction_paytype_id: optionalDeductionId,
+      deduction_payitem_id: PagibigMP2Id,
+      deduction_amount: finalAmount,
+      deduction_details: `Pagibig MP2`,
+      deduction_frequency: isSemiMonthly,
+      deduction_is_installment: onetimeNumber,
+      deduction_number_of_installment: onetimeNumber,
+      deduction_start_pay_date: emp.payroll_start_date,
+      deduction_end_pay_date: emp.payroll_end_date,
+      installment_extra: 0,
+    });
+    console.log(
+      "finalAmount",
+      finalAmount,
+      pagibigMP2List,
+      deduction.employee_installment_paytype_id,
+      deduction.employee_installment_amount
+    );
   }
   return { finalAmount, pagibigMP2List };
 };
@@ -1186,25 +1189,23 @@ export const payComputePagibigMP2 = (emp, deduction) => {
 export const payComputeSSSLoan = (emp, deduction) => {
   let finalAmount = 0;
   let sSSLoanList = [];
-  if (deduction.deduction_payitem_id === SSSLoanId) {
-    finalAmount += Number(deduction.deduction_amount);
-    if (deduction.deduction_is_installment === installmentNumber) {
-      sSSLoanList.push({
-        deduction_payroll_type_id: emp.payroll_category_type,
-        deduction_employee: emp.payroll_list_employee_name,
-        deduction_employee_id: emp.payroll_list_employee_id,
-        deduction_paytype_id: optionalDeductionId,
-        deduction_payitem_id: SSSLoanId,
-        deduction_amount: deduction.deduction_amount,
-        deduction_details: deduction.deduction_details,
-        deduction_frequency: isSemiMonthly,
-        deduction_is_installment: onetimeNumber,
-        deduction_number_of_installment: onetimeNumber,
-        deduction_start_pay_date: emp.payroll_start_date,
-        deduction_end_pay_date: emp.payroll_end_date,
-        installment_extra: 1,
-      });
-    }
+  if (deduction.employee_installment_paytype_id === SSSLoanId) {
+    finalAmount = Number(deduction.employee_installment_amount) / 2;
+    sSSLoanList.push({
+      deduction_payroll_type_id: emp.payroll_category_type,
+      deduction_employee: emp.payroll_list_employee_name,
+      deduction_employee_id: emp.payroll_list_employee_id,
+      deduction_paytype_id: optionalDeductionId,
+      deduction_payitem_id: SSSLoanId,
+      deduction_amount: finalAmount,
+      deduction_details: `SSS Loan`,
+      deduction_frequency: isSemiMonthly,
+      deduction_is_installment: onetimeNumber,
+      deduction_number_of_installment: onetimeNumber,
+      deduction_start_pay_date: emp.payroll_start_date,
+      deduction_end_pay_date: emp.payroll_end_date,
+      installment_extra: 0,
+    });
   }
   return { finalAmount, sSSLoanList };
 };

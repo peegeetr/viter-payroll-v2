@@ -3,7 +3,7 @@
     - payroll/list/update.php   
     
 *models   
-    -  
+    - pay-type/PayType.php
   
 *htaccess 
     - 

@@ -2,6 +2,7 @@ import useQueryData from "../../../custom-hooks/useQueryData";
 import {
   devApiUrl,
   getWorkingDays,
+  getWorkingDaysInMonth,
   numberWithCommas,
 } from "../../../helpers/functions-general";
 import {
@@ -26,12 +27,21 @@ const PayslipList = ({ payslip }) => {
     "get", // method
     `earnings-wages` // key
   );
-  const days = getWorkingDays(
+  const days = getWorkingDaysInMonth(
+    new Date(payslip?.data[0].payroll_start_date)
+  );
+  const daysPeriod = getWorkingDays(
     new Date(payslip?.data[0].payroll_start_date),
     new Date(payslip?.data[0].payroll_end_date)
   );
   let hourRate = Number(
     employeeRate(payslip?.data[0].payroll_list_employee_salary, days).hourly
+  );
+  let periodPay = Number(
+    employeeRate(payslip?.data[0].payroll_list_employee_salary, days).period
+  );
+  let dailyRate = Number(
+    employeeRate(payslip?.data[0].payroll_list_employee_salary, days).daily
   );
   let totalEarnings =
     Number(payslip?.data[0].payroll_list_gross) +
@@ -64,8 +74,10 @@ const PayslipList = ({ payslip }) => {
               empid={payslip?.data[0].payroll_list_employee_id}
               payrollid={payslip?.data[0].payroll_list_payroll_id}
               hourRate={hourRate}
-              days={days}
+              days={daysPeriod}
               payslip={payslip}
+              periodPay={periodPay}
+              dailyRate={dailyRate}
             />
             <PayslipEarnings
               paytypeId={otherBenefitsEarningsId}
@@ -74,6 +86,8 @@ const PayslipList = ({ payslip }) => {
               hourRate={hourRate}
               days={days}
               payslip={payslip}
+              periodPay={periodPay}
+              dailyRate={dailyRate}
             />
 
             {/* <tr className="font-semibold bg-gray-100 hover:bg-gray-100 uppercase">

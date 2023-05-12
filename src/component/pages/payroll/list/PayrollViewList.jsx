@@ -10,6 +10,7 @@ import {
   getUrlParam,
   getUserType,
   getWorkingDays,
+  getWorkingDaysInMonth,
   numberWithCommas,
 } from "../../../helpers/functions-general";
 import { queryDataInfinite } from "../../../helpers/queryDataInfinite";
@@ -109,14 +110,17 @@ const PayrollViewList = () => {
           </span>
         </p>
         <p className="">
-          Period Working Days:{" "}
+          Month Working Days:{" "}
           <span className="font-light text-black">
             {result?.pages[0].data.length > 0
-              ? getWorkingDays(
-                  new Date(result?.pages[0].data[0].payroll_start_date),
-                  new Date(result?.pages[0].data[0].payroll_end_date)
+              ? getWorkingDaysInMonth(
+                  new Date(result?.pages[0].data[0].payroll_start_date)
                 )
-              : "--"}
+              : // getWorkingDays(
+                //     new Date(result?.pages[0].data[0].payroll_start_date),
+                //     new Date(result?.pages[0].data[0].payroll_end_date)
+                //   )
+                "--"}
           </span>
         </p>
       </div>

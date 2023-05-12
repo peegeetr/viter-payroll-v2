@@ -63,7 +63,7 @@ const PayslipHeader = ({ payslip, empid, days }) => {
             payrollCategorySalaryId && (
             <p className="mb-0">
               <span className="font-semibold">Pay Period : </span>{" "}
-              {getPayslipPeriod(payslip)} ({days} working days)
+              {getPayslipPeriod(payslip)} (Month working days - {days})
             </p>
           )}
         </div>

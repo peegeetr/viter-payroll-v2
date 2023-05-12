@@ -5,6 +5,7 @@ import {
 } from "../../../helpers/functions-general";
 import {
   absencesId,
+  holidayId,
   nightDiffId,
   otherBenefitsEarningsId,
   undertimeId,
@@ -17,6 +18,8 @@ const PayslipEarnings = ({
   hourRate,
   days,
   payslip,
+  periodPay,
+  dailyRate,
 }) => {
   // use if not loadmore button undertime
   const { data: earnings, isLoading } = useQueryData(
@@ -31,11 +34,11 @@ const PayslipEarnings = ({
   let undertimeHrs = Number(payslip?.data[0].payroll_list_absences_hrs);
   let totalHrs = holidayHrs + leaveHrs;
   let basicHrs = days * 8 - totalHrs;
-  let basicPay = hourRate * basicHrs;
+  let basicPay = periodPay - dailyRate;
   let gross = payslip?.data[0].payroll_list_gross;
   let totalBenefits = payslip?.data[0].payroll_list_total_benefits;
   let totalAmount = basicPay;
-  // console.log(earnings, payslip);
+  console.log(periodPay, dailyRate);
   return (
     <>
       {isLoading ? (
@@ -62,7 +65,7 @@ const PayslipEarnings = ({
                     ? `(De Minimis inclusive ${numberWithCommas(deminimis)})`
                     : ``
                 }`}</td>
-                <td className="w-[10rem] print:py-[2px]">{basicHrs}</td>
+                <td className="w-[10rem] print:py-[2px]">{/* {basicHrs} */}</td>
                 <td className="text-right print:py-[2px] px-4">
                   {hourRate.toFixed(4)}
                 </td>
@@ -99,24 +102,36 @@ const PayslipEarnings = ({
                   {item.earnings_details}
                 </td>
                 <td className="w-[10rem] print:py-[2px]">
-                  {`${item.earnings_hrs} ${
-                    Number(nightDiffId) === item.payitem_aid
-                      ? `of ${days * 8}`
-                      : ``
-                  }`}
+                  {holidayId !== item.earnings_payitem_id &&
+                    absencesId !== item.earnings_payitem_id &&
+                    `${item.earnings_hrs} ${
+                      Number(nightDiffId) === item.payitem_aid
+                        ? `of ${days * 8}`
+                        : ``
+                    }`}
                 </td>
                 {/* <td className="w-[10rem]">{numberOfHolidays * 8}</td> */}
                 <td className=" text-right px-4 w-[5rem] print:py-[2px]">
-                  {Number(nightDiffId) === item.payitem_aid
-                    ? (
-                        hourRate * (Number(item.earnings_rate) / 100) -
-                        hourRate
-                      ).toFixed(4)
-                    : item.earnings_rate === ""
-                    ? ""
-                    : (hourRate * (Number(item.earnings_rate) / 100)).toFixed(
-                        4
-                      )}
+                  {holidayId !== item.earnings_payitem_id &&
+                    absencesId !== item.earnings_payitem_id &&
+                    Number(nightDiffId) !== item.payitem_aid &&
+                    (item.earnings_rate === ""
+                      ? ""
+                      : (hourRate * (Number(item.earnings_rate) / 100)).toFixed(
+                          4
+                        ))}
+                  {/* {holidayId !== item.earnings_payitem_id &&
+                    absencesId !== item.earnings_payitem_id &&
+                    (Number(nightDiffId) === item.payitem_aid
+                      ? (
+                          hourRate * (Number(item.earnings_rate) / 100) -
+                          hourRate
+                        ).toFixed(4)
+                      : item.earnings_rate === ""
+                      ? ""
+                      : (hourRate * (Number(item.earnings_rate) / 100)).toFixed(
+                          4
+                        ))} */}
                 </td>
                 <td className=" text-right px-4 print:py-[2px]">
                   {item.earnings_payitem_id === absencesId ||

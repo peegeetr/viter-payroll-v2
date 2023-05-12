@@ -1,5 +1,9 @@
 import { setError, setMessage } from "../../../../store/StoreAction";
-import { formatDate, getWorkingDays } from "../../../helpers/functions-general";
+import {
+  formatDate,
+  getWorkingDays,
+  getWorkingDaysInMonth,
+} from "../../../helpers/functions-general";
 import {
   absencesId,
   leaveId,
@@ -51,10 +55,13 @@ export const getUnderTimeSpent = (item) => {
 };
 // compute undertime
 export const computeUndertime = (undertimeData, employee, payrollDraft) => {
-  const days = getWorkingDays(
-    new Date(payrollDraft?.data[0].payroll_start_date),
-    new Date(payrollDraft?.data[0].payroll_end_date)
+  const days = getWorkingDaysInMonth(
+    new Date(payrollDraft?.data[0].payroll_start_date)
   );
+  // const days = getWorkingDays(
+  //   new Date(payrollDraft?.data[0].payroll_start_date),
+  //   new Date(payrollDraft?.data[0].payroll_end_date)
+  // );
   let list = [];
   undertimeData?.data.map((uItem) => {
     employee?.data.map((eItem) => {
@@ -84,12 +91,15 @@ export const computeUndertime = (undertimeData, employee, payrollDraft) => {
 
 // compute leave
 export const computeLeave = (leaveData, employee, payrollDraft) => {
-  const days = getWorkingDays(
-    new Date(payrollDraft?.data[0].payroll_start_date),
-    new Date(payrollDraft?.data[0].payroll_end_date)
+  // const days = getWorkingDays(
+  //   new Date(payrollDraft?.data[0].payroll_start_date),
+  //   new Date(payrollDraft?.data[0].payroll_end_date)
+  // );
+
+  const days = getWorkingDaysInMonth(
+    new Date(payrollDraft?.data[0].payroll_start_date)
   );
 
-  // console.log(leaveData, employee);
   let list = [];
   leaveData?.data.map((lItem) => {
     employee?.data.map((eItem) => {
@@ -230,10 +240,15 @@ export const otHolidayComputed = (regularAmount, holidayRate, rate) => {
 
 // computation amount of OT, OT + holiday, and OT + holiday + restday
 export const otFinalAmount = (otItem, eItem, holidays, payrollDraft) => {
-  const days = getWorkingDays(
-    new Date(payrollDraft?.data[0].payroll_start_date),
-    new Date(payrollDraft?.data[0].payroll_end_date)
+  // const days = getWorkingDays(
+  //   new Date(payrollDraft?.data[0].payroll_start_date),
+  //   new Date(payrollDraft?.data[0].payroll_end_date)
+  // );
+  const days = getWorkingDaysInMonth(
+    new Date(payrollDraft?.data[0].payroll_start_date)
   );
+
+  console.log(employeeRate(eItem.employee_job_salary, days).hourly);
   let rate25 = 125 / 100;
   let restRate30 = 130 / 100;
   let restRate10 = 110 / 100;
@@ -259,7 +274,8 @@ export const otFinalAmount = (otItem, eItem, holidays, payrollDraft) => {
 
       //if overtime is regular or special holiday day and restday
       if (new Date(otDate).getDay() == 0 || new Date(otDate).getDay() == 6) {
-        otRate = ((restRate30 + (holidayRate - 1)) * regRate).toFixed(2);
+        // otRate = ((restRate30 + (holidayRate - 1)) * regRate).toFixed(2);
+        otRate = (restRate30 * regRate).toFixed(2);
         totalOtHolidayRestAmount = otHolidayComputed(
           (regularAmount =
             Number(otItem.task_spent) *

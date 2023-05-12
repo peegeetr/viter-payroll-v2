@@ -4,7 +4,11 @@ import {
   isSemiMonthly,
   onetimeNumber,
 } from "./functions-earning-refference";
-import { formatDate, getWorkingDays } from "./functions-general";
+import {
+  formatDate,
+  getWorkingDays,
+  getWorkingDaysInMonth,
+} from "./functions-general";
 import {
   absencesId,
   bereavementId,
@@ -53,7 +57,8 @@ export const employeeRate = (salary, workingDays) => {
   let dayRate = 0;
   let hourRate = 0;
   let periodSalary = Number(salary) / 2;
-  dayRate = periodSalary / Number(workingDays);
+  // dayRate = periodSalary / Number(workingDays);
+  dayRate = salary / Number(workingDays);
   hourRate = dayRate / 8;
   list.daily = dayRate.toFixed(2);
   list.hourly = hourRate.toFixed(4);
@@ -278,6 +283,7 @@ export const payComputeUndertime = (earning) => {
 // compute Night Diffirencial
 export const payComputeNightDiff = (emp, holidays, payrollEarnings) => {
   let ndList = [];
+  const daysMonth = getWorkingDaysInMonth(new Date(emp.payroll_start_date));
   const days = getWorkingDays(
     new Date(emp.payroll_start_date),
     new Date(emp.payroll_end_date)
@@ -301,7 +307,7 @@ export const payComputeNightDiff = (emp, holidays, payrollEarnings) => {
     employeeRate(emp.payroll_list_employee_salary, days).daily
   );
   let hourRate = Number(
-    employeeRate(emp.payroll_list_employee_salary, days).hourly
+    employeeRate(emp.payroll_list_employee_salary, daysMonth).hourly
   );
 
   if (emp.payroll_list_night_diff_per_day > 0) {
@@ -702,10 +708,11 @@ export const payComputeHoliday = (
 
 // compute holiday
 export const holidayTotalAmount = (emp, holidaysItem, holidayExemptions) => {
-  const days = getWorkingDays(
-    new Date(emp.payroll_start_date),
-    new Date(emp.payroll_end_date)
-  );
+  // const days = getWorkingDays(
+  //   new Date(emp.payroll_start_date),
+  //   new Date(emp.payroll_end_date)
+  // );
+  const days = getWorkingDaysInMonth(new Date(emp.payroll_start_date));
 
   let rate = Number(holidaysItem.holidays_rate) / 100;
   let workOnHoliday = emp.payroll_list_employee_work_on_holiday;
@@ -714,6 +721,8 @@ export const holidayTotalAmount = (emp, holidaysItem, holidayExemptions) => {
   let dailyRate = Number(
     employeeRate(emp.payroll_list_employee_salary, days).daily
   );
+
+  console.log(dailyRate);
 
   // check for employee with holiday exemptions
   for (let h = 0; h < holidayExemptions.length; h++) {

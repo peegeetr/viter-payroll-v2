@@ -32,13 +32,14 @@ const PayslipEarnings = ({
   let leaveHrs = Number(payslip?.data[0].payroll_list_leave_hrs);
   let absencesHrs = Number(payslip?.data[0].payroll_list_absences_hrs);
   let undertimeHrs = Number(payslip?.data[0].payroll_list_absences_hrs);
+  let ndHrs = Number(payslip?.data[0].payroll_list_nd_hrs);
   let totalHrs = holidayHrs + leaveHrs;
   let basicHrs = days * 8 - totalHrs;
   let basicPay = periodPay - dailyRate;
   let gross = payslip?.data[0].payroll_list_gross;
   let totalBenefits = payslip?.data[0].payroll_list_total_benefits;
   let totalAmount = basicPay;
-  console.log(periodPay, dailyRate);
+  // console.log(earnings);
   return (
     <>
       {isLoading ? (
@@ -53,9 +54,11 @@ const PayslipEarnings = ({
             <>
               <tr className="font-semibold bg-gray-100 hover:bg-gray-100 uppercase ">
                 <td className="w-[30rem] print:py-[2px]">WAGES</td>
-                <td className="w-[10rem] print:py-[2px]">hours</td>
+                <td className="w-[10rem] print:py-[2px]">
+                  {`${undertimeHrs > 0 || ndHrs > 0 ? "hours" : ""}`}
+                </td>
                 <td className="w-[10rem] print:py-[2px] text-right px-4">
-                  rate
+                  hourly rate
                 </td>
                 <td className="text-right print:py-[2px] px-4">total</td>
               </tr>
@@ -112,14 +115,14 @@ const PayslipEarnings = ({
                 </td>
                 {/* <td className="w-[10rem]">{numberOfHolidays * 8}</td> */}
                 <td className=" text-right px-4 w-[5rem] print:py-[2px]">
-                  {holidayId !== item.earnings_payitem_id &&
+                  {/* {holidayId !== item.earnings_payitem_id &&
                     absencesId !== item.earnings_payitem_id &&
                     Number(nightDiffId) !== item.payitem_aid &&
                     (item.earnings_rate === ""
                       ? ""
                       : (hourRate * (Number(item.earnings_rate) / 100)).toFixed(
                           4
-                        ))}
+                        ))} */}
                   {/* {holidayId !== item.earnings_payitem_id &&
                     absencesId !== item.earnings_payitem_id &&
                     (Number(nightDiffId) === item.payitem_aid

@@ -161,3 +161,10 @@ RewriteRule ^holiday-exemptions$ controllers/holidays/exemptions/holidayExemptio
 RewriteRule ^holiday-exemptions/([0-9]+)$ controllers/holidays/exemptions/holidayExemptions.php?exemptionId=$1 [L]
 RewriteRule ^holiday-exemptions/page/([0-9]+)$ controllers/holidays/exemptions/page.php?start=$1 [L]
 RewriteRule ^holiday-exemptions/search/([A-Za-z0-9-]+)$ controllers/holidays/exemptions/search.php?search=$1 [L]
+
+#Employee Installment
+RewriteRule ^employees-installment$ controllers/employee/installment/employeeInstallment.php [L]
+RewriteRule ^employees-installment/([0-9]+)$ controllers/employee/installment/employeeInstallment.php?employeeInstallmentId=$1 [L]
+RewriteRule ^employees-installment/by-employee/([0-9]+)/([0-9]+)$ controllers/employee/installment/read-installment-by-employee-id.php?paytypeId=$1&employeeId=$2 [L]
+RewriteRule ^employees-installment/all-by-employee/([0-9]+)/([0-9]+)$ controllers/employee/installment/read-all-installment-by-employee-id.php?paytypeId=$1&employeeId=$2 [L]
+RewriteRule ^employees-installment/all-pending$ controllers/employee/installment/read-all-installment-pending.php [L]

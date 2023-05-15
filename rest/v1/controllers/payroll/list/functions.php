@@ -345,3 +345,11 @@ function checkReadReportSummaryByEmployeeAndByDate($object, $salaryCategoryId)
     checkQuery($query, "Empty records. (report summary all employee by date)");
     return $query;
 }
+
+// Update Payroll to paid
+function checkUpdateDeductionInstallemnt($object)
+{
+    $query = $object->updateDeductionInstallemnt();
+    checkQuery($query, "There's a problem processing your request. (update deduction installment to completed)");
+    return $query;
+}

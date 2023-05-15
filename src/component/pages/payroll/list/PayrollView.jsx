@@ -57,14 +57,10 @@ const PayrollView = () => {
 
   // use if not loadmore button undertime
   const { data: employeesInstallment } = useQueryData(
-    `${hrisDevApiUrl}/v1/employees-installment/all-pending`, // endpoint
+    `${devApiUrl}/v1/employees-installment/all-pending`, // endpoint
     "get", // method
-    "employeesInstallment", // key
-    {}, // formdata
-    null, // id key
-    false // devKey boolean
+    "employeesInstallment" // key
   );
-
   // use if not loadmore button undertime
   const { data: category13thMonth } = useQueryData(
     `${devApiUrl}/v1/payrollList/category/13month/${payrollCategorySalaryId}`, // endpoint

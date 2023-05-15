@@ -1,0 +1,27 @@
+
+*controllers          
+    - employee/installment (note: all files)   
+    - payroll/list/functions.php   
+    - payroll/list/paid.php   
+    - payroll/list/update.php   
+    
+*models   
+    - employee/EmployeeInstallment.php
+    - payroll/list/payrollList.php 
+  
+*htaccess 
+    - #Employee Installment
+
+*db tables 
+    - prv2_employee_installment.sql
+
+*core 
+    - 
+
+*extra 
+    - 
+
+Patrick
+    - 
+
+ 

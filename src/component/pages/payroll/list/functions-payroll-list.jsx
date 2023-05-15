@@ -33,6 +33,7 @@ import {
   payComputeTuition,
   payComputeUndertime,
   payComputeCategoryBonus,
+  getNumberOfMonths,
 } from "../../../helpers/payroll-formula";
 
 export const runPayroll = (
@@ -158,6 +159,7 @@ export const runPayroll = (
     );
     payrollList.push(...categoryBonus.CategoryBonusList);
   }
+
   // console.log(employeesInstallment);
   if (Number(categoryId) === payrollCategorySalaryId) {
     // loop each employee records
@@ -288,10 +290,14 @@ export const runPayroll = (
         sssAmount.sssEe + pagibigAmount.pagibigEe + philAmount.philhealthEe;
 
       // loop each deductions for each employee
+      console.log("123", employeesInstallment);
       employeesInstallment.map((dInstallment) => {
         if (
           emp.payroll_list_employee_id ===
-          dInstallment.employee_installment_employee_id
+            dInstallment.employee_installment_employee_id &&
+          getNumberOfMonths(dInstallment.employee_installment_start_date) <=
+            dInstallment.employee_installment_number_of_months &&
+          dInstallment.employee_installment_status === "0"
         ) {
           pagibigLoanAmount = payComputePagibigLoan(emp, dInstallment);
           totalPagibigLoan += pagibigLoanAmount.finalAmount;

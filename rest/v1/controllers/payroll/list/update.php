@@ -324,6 +324,8 @@ if (array_key_exists("listpayrollid", $_GET)) {
             $payrollList->start_pay_date = $allPagibigLoanList[$pgbg]["deduction_start_pay_date"];
             $payrollList->end_pay_date = $allPagibigLoanList[$pgbg]["deduction_end_pay_date"];
             $payrollList->installment_extra = $allPagibigLoanList[$pgbg]["installment_extra"];
+            $numMonths = $allPagibigLoanList[$pgbg]["installment_extra"];
+            $payrollList->installment_extra = $allPagibigLoanList[$pgbg]["installment_extra"];
             // create extra  
             $query = checkCreateDeductions($payrollList);
         }

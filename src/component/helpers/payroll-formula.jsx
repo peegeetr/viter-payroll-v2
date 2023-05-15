@@ -66,6 +66,43 @@ export const employeeRate = (salary, workingDays) => {
   return list;
 };
 
+// get number of Months
+export const getNumberOfMonths = (startDate) => {
+  const todayDate = new Date();
+  const sDate = new Date(startDate);
+  const todayYear = todayDate.getFullYear();
+  const sDateYear = sDate.getFullYear();
+  const todayMonth = todayDate.getMonth();
+  const sDateMonth = sDate.getMonth();
+  let totalMonth = 0;
+  let totalYear = todayYear - sDateYear;
+  let numberOfMonths = 0;
+
+  if (totalYear === 0) {
+    totalMonth = todayMonth - sDateMonth;
+    numberOfMonths = totalMonth < 0 ? 0 : totalMonth + 1;
+  }
+  if (totalYear === 1) {
+    let lastYearMonth = 0;
+    lastYearMonth = 11 - sDateMonth;
+    totalMonth = todayMonth + lastYearMonth + 1;
+    numberOfMonths = totalMonth + 1;
+  }
+
+  if (totalYear > 1) {
+    let startYearMonth = 0;
+    let todayYearMonth = 0;
+    let todayYearCount = 0;
+    startYearMonth = 11 - sDateMonth;
+    todayYearMonth = 11 - todayMonth;
+    todayYearCount = 12 * totalYear - todayYearMonth;
+    totalMonth = todayYearCount + startYearMonth;
+    numberOfMonths = totalMonth + 1;
+  }
+  // console.log(numberOfMonths, totalMonth);
+  return numberOfMonths;
+};
+
 export const payComputeCategoryBonus = (employee, payrollEarnings) => {
   let CategoryBonusList = [];
   let bonusList = [];
@@ -1148,6 +1185,14 @@ export const payComputePagibigLoan = (emp, deduction) => {
       deduction_start_pay_date: emp.payroll_start_date,
       deduction_end_pay_date: emp.payroll_end_date,
       installment_extra: 0,
+      numOfMonths: getNumberOfMonths(deduction.employee_installment_start_date),
+      // installment details
+      employee_installment_number_of_months:
+        deduction.employee_installment_number_of_months,
+      employee_installment_start_date:
+        deduction.employee_installment_start_date,
+      employee_installment_status: deduction.employee_installment_status,
+      employee_installment_aid: deduction.employee_installment_aid,
     });
   }
   return { finalAmount, pagibigLoanList };
@@ -1173,14 +1218,15 @@ export const payComputePagibigMP2 = (emp, deduction) => {
       deduction_start_pay_date: emp.payroll_start_date,
       deduction_end_pay_date: emp.payroll_end_date,
       installment_extra: 0,
+      numOfMonths: getNumberOfMonths(deduction.employee_installment_start_date),
+      // installment details
+      employee_installment_number_of_months:
+        deduction.employee_installment_number_of_months,
+      employee_installment_start_date:
+        deduction.employee_installment_start_date,
+      employee_installment_status: deduction.employee_installment_status,
+      employee_installment_aid: deduction.employee_installment_aid,
     });
-    console.log(
-      "finalAmount",
-      finalAmount,
-      pagibigMP2List,
-      deduction.employee_installment_paytype_id,
-      deduction.employee_installment_amount
-    );
   }
   return { finalAmount, pagibigMP2List };
 };
@@ -1205,6 +1251,14 @@ export const payComputeSSSLoan = (emp, deduction) => {
       deduction_start_pay_date: emp.payroll_start_date,
       deduction_end_pay_date: emp.payroll_end_date,
       installment_extra: 0,
+      numOfMonths: getNumberOfMonths(deduction.employee_installment_start_date),
+      // installment details
+      employee_installment_number_of_months:
+        deduction.employee_installment_number_of_months,
+      employee_installment_start_date:
+        deduction.employee_installment_start_date,
+      employee_installment_status: deduction.employee_installment_status,
+      employee_installment_aid: deduction.employee_installment_aid,
     });
   }
   return { finalAmount, sSSLoanList };

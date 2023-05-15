@@ -75,6 +75,9 @@ class PayrollList
     public $deduction_payitem_id;
     public $deduction_amount;
 
+    public $employee_installment_aid;
+    public $employee_installment_status;
+
 
     public $connection;
     public $payrollList_search;
@@ -88,6 +91,7 @@ class PayrollList
     public $tblEarnings;
     public $tblDeductions;
     public $tblPayrollType;
+    public $tblEmployeeInstallmet;
 
     public function __construct($db)
     {
@@ -97,6 +101,7 @@ class PayrollList
         $this->tblEarnings = "prv2_earnings";
         $this->tblDeductions = "prv2_deduction";
         $this->tblPayrollType = "prv2_settings_payroll_type";
+        $this->tblEmployeeInstallmet = "prv2_employee_installment";
     }
 
     // read all
@@ -1690,6 +1695,23 @@ class PayrollList
                 "payroll_list_employee_id" => $this->payroll_list_employee_id,
                 "payroll_start_date" => $this->date_from,
                 "payroll_end_date" => $this->date_to,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    public function updateDeductionInstallemnt()
+    {
+        try {
+            $sql = "update {$this->tblEmployeeInstallmet} set ";
+            $sql .= "employee_installment_status = :employee_installment_status ";
+            $sql .= "where employee_installment_aid = :employee_installment_aid ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "employee_installment_status" => $this->employee_installment_status,
+                "employee_installment_aid" => $this->employee_installment_aid,
             ]);
         } catch (PDOException $ex) {
             $query = false;

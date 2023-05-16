@@ -38,7 +38,7 @@ const DeductionInstallmentSssLoan = () => {
   return (
     <>
       <Header />
-      <Navigation menu="employees" />
+      <Navigation menu="employee" />
       <div className="wrapper">
         <BreadCrumbs param={`${location.search}`} />
         <hr />

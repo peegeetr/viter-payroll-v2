@@ -1,6 +1,6 @@
-export const getCurrentYear = () => {
+export const getCurrentMonth = () => {
   const d = new Date();
-  let currentYear = d.getFullYear();
+  let currentYear = d.getMonth() + 1;
   return currentYear;
 };
 export const getYear = () => {

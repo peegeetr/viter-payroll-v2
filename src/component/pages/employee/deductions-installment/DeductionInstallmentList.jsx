@@ -38,7 +38,7 @@ const DeductionInstallmentList = ({ draft, draftLoading }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [itemEdit, setItemEdit] = React.useState(null);
   const eid = getUrlParam().get("employeeid");
-  const link = getUserType(store);
+  const link = getUserType(store.credentials.data.role_is_developer === 1);
 
   const handleAddMp2 = () => {
     if (draft?.count > 0) {
@@ -173,6 +173,7 @@ const DeductionInstallmentList = ({ draft, draftLoading }) => {
                       </button>
                     )}
                     <Link
+                      target="_blank"
                       to={`${link}/employee/details/deduction-installment/mp2?employeeid=${eid}`}
                     >
                       <button
@@ -210,12 +211,7 @@ const DeductionInstallmentList = ({ draft, draftLoading }) => {
                     getNumberOfMonths(item.employee_installment_start_date),
                     item.employee_installment_number_of_months
                   )} /
-                  ${item.employee_installment_number_of_months}`}
-                </p>
-                <p className="font-semibold">Number of Payrun</p>
-                <p className="pl-2">
-                  {`${item.employee_installment_number_of_payrun} /
-                  ${Number(item.employee_installment_number_of_months) * 2}`}
+                    ${item.employee_installment_number_of_months}`}
                 </p>
                 <p className="font-semibold">Status</p>
                 <p className="pl-2">
@@ -297,6 +293,7 @@ const DeductionInstallmentList = ({ draft, draftLoading }) => {
                       </button>
                     )}
                     <Link
+                      target="_blank"
                       to={`${link}/employee/details/deduction-installment/pagibig-loan?employeeid=${eid}`}
                     >
                       <button
@@ -331,12 +328,7 @@ const DeductionInstallmentList = ({ draft, draftLoading }) => {
                     getNumberOfMonths(item.employee_installment_start_date),
                     item.employee_installment_number_of_months
                   )} /
-                  ${item.employee_installment_number_of_months}`}
-                </p>
-                <p className="font-semibold">Number of Payrun</p>
-                <p className="pl-2">
-                  {`${item.employee_installment_number_of_payrun} /
-                  ${Number(item.employee_installment_number_of_months) * 2}`}
+                    ${item.employee_installment_number_of_months}`}
                 </p>
                 <p className="font-semibold">Status</p>
                 <p className="pl-2">
@@ -418,6 +410,7 @@ const DeductionInstallmentList = ({ draft, draftLoading }) => {
                       </button>
                     )}
                     <Link
+                      target="_blank"
                       to={`${link}/employee/details/deduction-installment/sss-loan?employeeid=${eid}`}
                     >
                       <button
@@ -452,12 +445,7 @@ const DeductionInstallmentList = ({ draft, draftLoading }) => {
                     getNumberOfMonths(item.employee_installment_start_date),
                     item.employee_installment_number_of_months
                   )} /
-                  ${item.employee_installment_number_of_months}`}
-                </p>
-                <p className="font-semibold">Number of Payrun</p>
-                <p className="pl-2">
-                  {`${item.employee_installment_number_of_payrun} /
-                  ${Number(item.employee_installment_number_of_months) * 2}`}
+                    ${item.employee_installment_number_of_months}`}
                 </p>
 
                 <p className="font-semibold">Status</p>

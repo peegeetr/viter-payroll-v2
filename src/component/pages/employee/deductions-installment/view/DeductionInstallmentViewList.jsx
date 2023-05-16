@@ -69,18 +69,15 @@ const DeductionInstallmentViewList = ({ paytypeId, payItem }) => {
           <thead>
             <tr>
               <th className="text-center">#</th>
-              <th>Pay Type</th>
+              <th className="min-w-[10rem]">Pay Type</th>
               <th className="min-w-[10rem]">Start Date</th>
               <th className="min-w-[10rem]">End Date</th>
-              <th className="text-right pr-4">Amount</th>
+              <th className="min-w-[8rem] text-right pr-4">Amount</th>
               <th className="min-w-[10rem] text-right pr-4">
                 Number of Months
               </th>
-              <th className="min-w-[10rem] text-right pr-4">
-                Number of Payrun
-              </th>
               <th>Status</th>
-              <th className="text-right pr-4">Action</th>
+              {eid !== null && <th className="text-right pr-4">Action</th>}
             </tr>
           </thead>
           <tbody>
@@ -104,16 +101,16 @@ const DeductionInstallmentViewList = ({ paytypeId, payItem }) => {
               return (
                 <tr key={key}>
                   <td className="text-center">{counter++}.</td>
-                  <td>{formatDate(item.employee_installment_start_date)}</td>
-                  <td className="hidden sm:block">
-                    {formatDate(item.employee_installment_start_date)}
-                  </td>
-                  <td className="min-w-[10rem]">
-                    {getEndOfInstallment(
-                      item.employee_installment_number_of_months,
-                      item.employee_installment_start_date
+                  <td>
+                    {getPayItemName(
+                      payItem,
+                      item.employee_installment_paytype_id
                     )}
                   </td>
+                  <td className="">
+                    {formatDate(item.employee_installment_start_date)}
+                  </td>
+                  <td>{formatDate(item.employee_installment_end_date)}</td>
                   <td className="text-right pr-4">
                     &#8369;{" "}
                     {numberWithCommas(
@@ -123,11 +120,8 @@ const DeductionInstallmentViewList = ({ paytypeId, payItem }) => {
                   <td className="text-right pr-4">{`${getNumberOfMonths(
                     item.employee_installment_start_date
                   )} /
-                    ${item.employee_installment_number_of_months}`}</td>
-                  <td className="text-right pr-4">
-                    {`${item.employee_installment_number_of_payrun} /
-                   ${Number(item.employee_installment_number_of_months) * 2}`}
-                  </td>
+                  ${item.employee_installment_number_of_months}`}</td>
+
                   <td>
                     {item.employee_installment_status === "0" ? (
                       <Status text="ongoing" />
@@ -139,18 +133,20 @@ const DeductionInstallmentViewList = ({ paytypeId, payItem }) => {
                       ""
                     )}
                   </td>
-                  <td className="text-right pr-4">
-                    <button
-                      type="button"
-                      className="btn-action-table tooltip-action-table"
-                      data-tooltip="Delete"
-                      onClick={() => {
-                        handleDelete(item);
-                      }}
-                    >
-                      <FaTrash />
-                    </button>
-                  </td>
+                  {eid !== null && (
+                    <td className="text-right pr-4">
+                      <button
+                        type="button"
+                        className="btn-action-table tooltip-action-table"
+                        data-tooltip="Delete"
+                        onClick={() => {
+                          handleDelete(item);
+                        }}
+                      >
+                        <FaTrash />
+                      </button>
+                    </td>
+                  )}
                 </tr>
               );
             })}
@@ -161,7 +157,7 @@ const DeductionInstallmentViewList = ({ paytypeId, payItem }) => {
         <ModalDeleteRestoreRq
           id={id}
           isDel={isDel}
-          mysqlApiDelete={`${devApiUrl}/v1/employees-installment/${id}`}
+          mysqlApiDelete={`/v1/employees-installment/${id}`}
           msg={"Are you sure to delete "}
           item={getPayItemName(
             payItem,

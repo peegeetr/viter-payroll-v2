@@ -13,7 +13,7 @@ import {
 const DeductionInstallmentLink = () => {
   const { store, dispatch } = React.useContext(StoreContext);
   const eid = getUrlParam().get("employeeid");
-  const link = getUserType(store);
+  const link = getUserType(store.credentials.data.role_is_developer === 1);
   return (
     <div className="group flex items-center justify-between border-b border-solid border-gray-300 ">
       <Link

@@ -3,18 +3,53 @@ import HeaderPrint from "../../../../partials/HeaderPrint";
 import { numberWithCommas } from "../../../../helpers/functions-general";
 import { getMonthName } from "../yearly-tax/functions-wtax";
 
-const WTaxBodySummary = ({ result, month }) => {
+const WTaxBodySummary = ({ result, month, monthlyTax }) => {
   let totalShareEe = 0;
   let totalBenefits = 0;
   let taxMonthly = 0;
-  let taxYearly = 0;
-  let taxWitheld = 0;
-  let taxPayable = 0;
+  let totalCompensation = 0;
   let nonTax = 0;
+  let tax = 0;
+  console.log(monthlyTax);
 
   const getCurrentYear = () => {
     return new Date().getFullYear();
   };
+
+  const payComputeTaxDue = (
+    gross,
+    monthlyTax,
+    totalBenefits,
+    totalMadatoryEe,
+    totalDiminimis
+  ) => {
+    let taxDue = 0;
+    const totalNonTaxableCompensation =
+      Number(totalBenefits.toFixed(2)) +
+      Number(totalMadatoryEe) +
+      Number(totalDiminimis);
+    let taxableCompensationIncome =
+      Number(gross.toFixed(2)) +
+      Number(totalBenefits) -
+      totalNonTaxableCompensation;
+
+    monthlyTax?.map((sTax) => {
+      if (
+        Number(taxableCompensationIncome) >=
+          Number(sTax.tax_monthly_range_from) &&
+        Number(taxableCompensationIncome) <= Number(sTax.tax_monthly_range_to)
+      ) {
+        taxDue =
+          (taxableCompensationIncome - Number(sTax.tax_monthly_less_amount)) *
+            (Number(sTax.tax_monthly_rate) / 100) +
+          Number(sTax.tax_monthly_additional_amount);
+      }
+    });
+
+    nonTax = totalNonTaxableCompensation;
+    return taxDue;
+  };
+
   return (
     <>
       {result?.pages.map((page, key) => (
@@ -24,8 +59,15 @@ const WTaxBodySummary = ({ result, month }) => {
             totalShareEe = item.sss + item.pag + item.phic;
             totalBenefits = item.month13 + item.bonus + item.benefits;
             nonTax = totalBenefits + totalShareEe + item.deminimis;
-            taxPayable = taxYearly;
-            taxWitheld = taxPayable - taxMonthly;
+            // compute monthly tax due
+            tax = payComputeTaxDue(
+              item.gross,
+              monthlyTax,
+              totalBenefits,
+              totalShareEe,
+              item.deminimis
+            );
+            totalCompensation = Number(item.gross) + Number(item.benefits);
             return (
               <div key={key} className="mb-8 print:mb-12">
                 <HeaderPrint />
@@ -41,7 +83,7 @@ const WTaxBodySummary = ({ result, month }) => {
                       <td>Total Amount of Compensation</td>
                       <td className="w-[8rem] text-right px-4"></td>
                       <td className=" text-right px-4">
-                        {numberWithCommas(Number(item.gross).toFixed(2))}
+                        {numberWithCommas(Number(totalCompensation).toFixed(2))}
                       </td>
                     </tr>
                     <tr>
@@ -83,27 +125,13 @@ const WTaxBodySummary = ({ result, month }) => {
                         {numberWithCommas(nonTax.toFixed(2))}
                       </td>
                     </tr>
-                    <tr className="  bg-gray-200 hover:bg-gray-200 text-primary">
-                      <td className="w-[15rem] ">Tax Payable</td>
-                      <td className=" text-right px-4"></td>
-                      <td className=" text-right px-4">
-                        {numberWithCommas(taxPayable.toFixed(2))}
-                      </td>
-                    </tr>
 
                     <tr className="  bg-gray-200 hover:bg-gray-200 text-primary">
                       <td className="w-[15rem] ">Tax Withheld</td>
                       <td className=" text-right px-4"></td>
                       <td className=" text-right px-4">
-                        {numberWithCommas(taxMonthly.toFixed(2))}
+                        {numberWithCommas(tax.toFixed(2))}
                         {/* {taxMonthly} */}
-                      </td>
-                    </tr>
-                    <tr className="  bg-gray-200 hover:bg-gray-200 text-primary">
-                      <td className="w-[15rem] ">Tax Due</td>
-                      <td className=" text-right px-4"></td>
-                      <td className=" text-right px-4">
-                        {numberWithCommas(taxWitheld.toFixed(2))}
                       </td>
                     </tr>
                   </tbody>

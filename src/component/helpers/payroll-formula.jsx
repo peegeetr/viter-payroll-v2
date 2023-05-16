@@ -910,8 +910,8 @@ export const computeTaxYearly = (gross, yearlyTax, nonTax) => {
   // const minimum = 250000;
   const minimum = Number(yearlyTax[0].tax_yearly_to);
 
-  // console.log(minimum);
-  yearlyTax.map((yTax) => {
+  console.log(yearlyTax);
+  yearlyTax?.map((yTax) => {
     if (
       Number(gross) >= Number(yTax.tax_yearly_from) &&
       Number(gross) <= Number(yTax.tax_yearly_to)

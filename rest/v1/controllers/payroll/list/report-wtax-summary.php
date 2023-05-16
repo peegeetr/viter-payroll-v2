@@ -17,14 +17,12 @@ $response = new Response();
 if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
     checkApiKey();
 
-    if (array_key_exists("monthFrom", $_GET) && array_key_exists("monthTo", $_GET)) {
+    if (array_key_exists("month", $_GET)) {
         // get data
-        $payrollList->date_from = strtolower($_GET['monthFrom']);
-        $payrollList->date_to = strtolower($_GET['monthTo']);
+        $payrollList->date_from = strtolower($_GET['month']);
         $payrollList->current_year = date("Y");
         // check if not empty
         checkKeyword($payrollList->date_from);
-        checkKeyword($payrollList->date_to);
         $query = checkReadReportSummaryWtax($payrollList);
         http_response_code(200);
         getQueriedData($query);

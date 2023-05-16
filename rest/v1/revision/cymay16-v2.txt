@@ -1,0 +1,21 @@
+
+*controllers           
+    - payroll/list/report-wtax-summary.php  
+    
+*models    
+    - payroll/list/payrollList.php  
+  
+*htaccess 
+    - #payroll list paid
+
+*db tables 
+    - 
+
+*core 
+    - 
+
+*extra 
+    - 
+Patrick
+    - 
+ 

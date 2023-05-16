@@ -1,34 +1,24 @@
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { Form, Formik } from "formik";
 import React from "react";
-import { MdFilterAlt } from "react-icons/md";
-import { useInfiniteQuery } from "@tanstack/react-query";
 import { useInView } from "react-intersection-observer";
 import * as Yup from "yup";
 import { StoreContext } from "../../../../../store/StoreContext";
-import { InputSelect, InputText } from "../../../../helpers/FormInputs";
-import ButtonSpinner from "../../../../partials/spinners/ButtonSpinner";
-import { queryDataInfinite } from "../../../../helpers/queryDataInfinite";
 import useQueryData from "../../../../custom-hooks/useQueryData";
-import {
-  devApiUrl,
-  hrisDevApiUrl,
-} from "../../../../helpers/functions-general";
-import TableSpinner from "../../../../partials/spinners/TableSpinner";
+import { InputSelect } from "../../../../helpers/FormInputs";
+import { devApiUrl } from "../../../../helpers/functions-general";
+import { queryDataInfinite } from "../../../../helpers/queryDataInfinite";
 import NoData from "../../../../partials/NoData";
 import ServerError from "../../../../partials/ServerError";
+import TableSpinner from "../../../../partials/spinners/TableSpinner";
+import { getCurrentMonth, getMonth } from "../yearly-tax/functions-wtax";
 import WTaxBodyYearly from "./WTaxBodySummary";
-import {
-  getCurrentYear,
-  getMonth,
-  getYear,
-} from "../yearly-tax/functions-wtax";
 
 const WTaxSummaryList = () => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [isFilter, setFilter] = React.useState(false);
   const [isSubmit, setSubmit] = React.useState(false);
-  const [monthFrom, setMonthFrom] = React.useState("");
-  const [monthTo, setMonthTo] = React.useState("");
+  const [month, setMonth] = React.useState(`${getCurrentMonth()}`);
 
   const [page, setPage] = React.useState(1);
   const { ref, inView } = useInView();
@@ -45,8 +35,8 @@ const WTaxSummaryList = () => {
     queryKey: ["earnings-summary", isSubmit],
     queryFn: async ({ pageParam = 1 }) =>
       await queryDataInfinite(
-        `${devApiUrl}/v1/payrollList/report/wtax/summary/${monthFrom}/${monthTo}`, // filter endpoint
-        `${devApiUrl}/v1/payrollList/page/0/${pageParam}`, // list endpoint
+        `${devApiUrl}/v1/payrollList/report/wtax/summary/${month}`, // filter endpoint
+        `${devApiUrl}/v1/payrollList/report/wtax/summary/${month}`, // list endpoint
         isFilter // search boolean
       ),
     getNextPageParam: (lastPage) => {
@@ -74,56 +64,55 @@ const WTaxSummaryList = () => {
     "monthlyTax" // key
   );
 
-  // use if not loadmore button monthly tax
-  const { data: yearlyTax } = useQueryData(
-    `${devApiUrl}/v1/tax/bracket-yearly`, // endpoint
-    "get", // method
-    "yearlyTax" // key
-  );
+  // // use if not loadmore button monthly tax
+  // const { data: yearlyTax } = useQueryData(
+  //   `${devApiUrl}/v1/tax/bracket-yearly`, // endpoint
+  //   "get", // method
+  //   "yearlyTax" // key
+  // );
 
-  // use if not loadmore button monthly tax
-  const { data: monthlyGross } = useQueryData(
-    `${devApiUrl}/v1/payrollList/report/wtax/monthly-gross/${getCurrentYear()}`, // endpoint
-    "get", // method
-    "monthlyGross", // key
-    {},
-    `${getCurrentYear()}`
-  );
+  // // use if not loadmore button monthly tax
+  // const { data: monthlyGross } = useQueryData(
+  //   `${devApiUrl}/v1/payrollList/report/wtax/monthly-gross/${getCurrentMonth()}`, // endpoint
+  //   "get", // method
+  //   "monthlyGross", // key
+  //   {},
+  //   `${getCurrentMonth()}`
+  // );
 
+  const handleMonth = async (e) => {
+    let monthName = e.target.value;
+    setMonth(monthName);
+    setFilter(true);
+    setSubmit(!isSubmit);
+    // get employee id
+  };
   const initVal = {
-    month_from: "",
-    month_to: "",
+    month: "",
   };
 
   const yupSchema = Yup.object({
-    month_from: Yup.string().required("Required"),
-    month_to: Yup.string().required("Required"),
+    month: Yup.string().required("Required"),
   });
 
   return (
     <>
-      <div className="relative overflow-x-auto z-0 w-full  ">
-        <Formik
-          initialValues={initVal}
-          validationSchema={yupSchema}
-          onSubmit={async (values, { setSubmitting, resetForm }) => {
-            console.log(values);
-            setFilter(true);
-            setSubmit(!isSubmit);
-            setMonthFrom(values.month_from);
-            setMonthTo(values.month_to);
-          }}
-        >
+      <div className="relative overflow-x-auto z-0 w-full ">
+        <Formik initialValues={initVal} validationSchema={yupSchema}>
           {(props) => {
+            props.values.month = !isFilter
+              ? getCurrentMonth()
+              : props.values.month;
             return (
               <Form>
-                <div className="grid gap-5 grid-cols-1 md:grid-cols-[1fr_1fr_150px] pt-5 pb-5 items-center print:hidden md:w-1/2 md:min-w-[40rem]">
+                <div className="grid gap-5 grid-cols-1 md:grid-cols-[1fr] pt-5 pb-5 items-center print:hidden md:w-1/4 md:min-w-[20rem]">
                   <div className="relative">
                     <InputSelect
-                      label="Month From"
-                      name="month_from"
+                      label="Month"
+                      name="month"
                       type="text"
                       disabled={isFetching}
+                      onChange={handleMonth}
                     >
                       <option value="" hidden>
                         {status === "loading" && "Loading..."}
@@ -137,36 +126,6 @@ const WTaxSummaryList = () => {
                       })}
                     </InputSelect>
                   </div>
-
-                  <div className="relative">
-                    <InputSelect
-                      label="Month To"
-                      name="month_to"
-                      type="text"
-                      disabled={isFetching}
-                    >
-                      <option value="" hidden>
-                        {status === "loading" && "Loading..."}
-                      </option>
-                      {getMonth()?.map((yItem, key) => {
-                        return (
-                          <option key={key} value={yItem.month_aid}>
-                            {`${yItem.month_name}`}
-                          </option>
-                        );
-                      })}
-                    </InputSelect>
-                  </div>
-
-                  <button
-                    className="btn-modal-submit relative"
-                    type="submit "
-                    disabled={isFetching || !props.dirty}
-                  >
-                    {isFetching && <ButtonSpinner />}
-                    <MdFilterAlt className="text-lg" />
-                    <span>Filter</span>
-                  </button>
                 </div>
               </Form>
             );
@@ -197,11 +156,8 @@ const WTaxSummaryList = () => {
         )}
         <WTaxBodyYearly
           result={result}
-          monthFrom={monthFrom}
-          monthTo={monthTo}
+          month={month}
           monthlyTax={monthlyTax?.data}
-          yearlyTax={yearlyTax?.data}
-          monthlyGross={monthlyGross?.data}
         />
       </div>
     </>

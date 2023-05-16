@@ -12,6 +12,7 @@ import TaxBracketLink from "./tax-bracket/TaxBracketLink.jsx";
 import UserLink from "./users/UserLink.jsx";
 import OtherUserLink from "./users/other/OtherUserLink";
 import { StoreContext } from "../../../store/StoreContext";
+import SystemModeLink from "./system-mode/SystemModeLink";
 
 const SettingsLink = () => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -57,6 +58,11 @@ const SettingsLink = () => {
           <li className="py-2">
             <PayrollTypeLink />
           </li>
+          {store.credentials.data.role_is_developer === 1 && (
+            <li className="py-2">
+              <SystemModeLink />
+            </li>
+          )}
         </ul>
         <Footer />
       </div>

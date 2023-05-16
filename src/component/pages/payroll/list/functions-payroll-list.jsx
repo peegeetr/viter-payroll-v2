@@ -271,10 +271,7 @@ export const runPayroll = (
         totalHolidayAmount +
         // totalLeaveAmount +
         // totalBasicPay +
-        (totalBasicPay -
-          (totalAbsencesAmount +
-            totalUndertimeAmount +
-            holidayAmount.regularAmount)) +
+        (totalBasicPay - (totalAbsencesAmount + totalUndertimeAmount)) +
         totalOtAmount +
         totalHazardPayAmount +
         totalInflationAmount +

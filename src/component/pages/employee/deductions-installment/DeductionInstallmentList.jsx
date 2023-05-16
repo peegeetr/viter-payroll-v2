@@ -1,6 +1,5 @@
 import React from "react";
-import { FaEdit, FaPlusCircle } from "react-icons/fa";
-import { SlArrowRight } from "react-icons/sl";
+import { FaEdit, FaPlusCircle, FaListUl } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import {
   setError,
@@ -13,16 +12,20 @@ import { StoreContext } from "../../../../store/StoreContext";
 import useQueryData from "../../../custom-hooks/useQueryData";
 import {
   devApiUrl,
-  devNavUrl,
   formatDate,
   getUrlParam,
   getUserType,
-  hrisDevApiUrl,
   numberWithCommas,
 } from "../../../helpers/functions-general";
+import {
+  PagibigLoanId,
+  PagibigMP2Id,
+  SSSLoanId,
+} from "../../../helpers/functions-payitemId";
 import NoData from "../../../partials/NoData";
 import ServerError from "../../../partials/ServerError";
 import TableSpinner from "../../../partials/spinners/TableSpinner";
+import Status from "../../../partials/status/Status";
 import ModalAddMP2 from "./ModalAddMP2";
 import ModalAddPagibigLoan from "./ModalAddPagibigLoan";
 import ModalAddSSSLoan from "./ModalAddSSSLoan";
@@ -30,12 +33,6 @@ import {
   getNumMonth,
   getNumberOfMonths,
 } from "./functions-deductions-installment";
-import {
-  PagibigLoanId,
-  PagibigMP2Id,
-  SSSLoanId,
-} from "../../../helpers/functions-payitemId";
-import Status from "../../../partials/status/Status";
 
 const DeductionInstallmentList = ({ draft, draftLoading }) => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -182,7 +179,7 @@ const DeductionInstallmentList = ({ draft, draftLoading }) => {
                         className="tooltip-action-table"
                         data-tooltip="View Details"
                       >
-                        <SlArrowRight />
+                        <FaListUl />
                       </button>
                     </Link>
                   </div>
@@ -306,7 +303,7 @@ const DeductionInstallmentList = ({ draft, draftLoading }) => {
                         className="tooltip-action-table"
                         data-tooltip="View Details"
                       >
-                        <SlArrowRight />
+                        <FaListUl />
                       </button>
                     </Link>
                   </div>
@@ -427,7 +424,7 @@ const DeductionInstallmentList = ({ draft, draftLoading }) => {
                         className="tooltip-action-table"
                         data-tooltip="View Details"
                       >
-                        <SlArrowRight />
+                        <FaListUl />
                       </button>
                     </Link>
                   </div>

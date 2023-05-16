@@ -112,7 +112,7 @@ import SystemDeductionInstallmentSssLoan from "./component/pages/employee/deduct
 import SystemDeductionInstallmentPagibigLoan from "./component/pages/employee/deductions-installment/view/links-pagibig/SystemDeductionInstallmentPagibigLoan";
 import SystemDeductionInstallmentMP2 from "./component/pages/employee/deductions-installment/view/links-mp2/SystemDeductionInstallmentMP2";
 import OtherUserWTaxSummary from "./component/pages/reports/w-tax/summary-tax/links/OtherUserWTaxSummary";
-import SystemUserWTaxSummary from "./component/pages/reports/w-tax/summary-tax/links/SystemUserWTaxYearly";
+import SystemUserWTaxSummary from "./component/pages/reports/w-tax/summary-tax/links/SystemUserWTaxSummary";
 
 function App() {
   // Create a client

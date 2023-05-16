@@ -1,8 +1,10 @@
 import React from "react";
+import useQueryData from "../../../../custom-hooks/useQueryData";
+import { FaTrash } from "react-icons/fa";
 import {
+  devApiUrl,
   formatDate,
   getUrlParam,
-  hrisDevApiUrl,
   numberWithCommas,
 } from "../../../../helpers/functions-general";
 import NoData from "../../../../partials/NoData";
@@ -12,11 +14,22 @@ import Status from "../../../../partials/status/Status";
 import {
   getEndOfInstallment,
   getNumberOfMonths,
+  getPayItemName,
 } from "../functions-deductions-installment";
-import useQueryData from "../../../../custom-hooks/useQueryData";
+import {
+  setError,
+  setIsRestore,
+  setMessage,
+} from "../../../../../store/StoreAction";
+import ModalDeleteRestoreRq from "../../../../partials/modals/ModalDeleteRestoreRq";
+import { StoreContext } from "../../../../../store/StoreContext";
 
-const DeductionInstallmentViewList = ({ paytypeId }) => {
+const DeductionInstallmentViewList = ({ paytypeId, payItem }) => {
+  const { store, dispatch } = React.useContext(StoreContext);
   const eid = getUrlParam().get("employeeid");
+  const [dataItem, setData] = React.useState(null);
+  const [id, setId] = React.useState(null);
+  const [isDel, setDel] = React.useState(false);
   let counter = 1;
   // use if not loadmore button undertime
   const {
@@ -24,12 +37,28 @@ const DeductionInstallmentViewList = ({ paytypeId }) => {
     error,
     data: employeeInstallmentAll,
   } = useQueryData(
-    `${hrisDevApiUrl}/v1/employees-installment/all-by-employee/${paytypeId}/${eid}`, // endpoint
+    `${devApiUrl}/v1/employees-installment/all-by-employee/${paytypeId}/${eid}`, // endpoint
     "get", // method
-    `employeeInstallmentAll${paytypeId}`, // key
-    {}, // formdata
-    null, // id key
-    false // devKey boolean
+    `employeeInstallmentAll${paytypeId}` // key
+  );
+
+  const handleDelete = (item) => {
+    if (draft?.count > 0) {
+      dispatch(setError(true));
+      dispatch(setMessage("Payroll has ongoing draft. Adding is not allowed."));
+      return;
+    }
+    dispatch(setIsRestore(true));
+    setId(item.employee_installment_aid);
+    setData(item);
+    setDel(true);
+  };
+
+  // use if not loadmore button undertime
+  const { data: draft } = useQueryData(
+    `${devApiUrl}/v1/payroll/list`, // endpoint
+    "get", // method
+    "draft" // key
   );
   console.log(employeeInstallmentAll);
 
@@ -46,6 +75,7 @@ const DeductionInstallmentViewList = ({ paytypeId }) => {
               <th className="text-right pr-4">Amount</th>
               <th className="text-right pr-4">Months</th>
               <th>Status</th>
+              <th className="text-right pr-4">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -90,16 +120,27 @@ const DeductionInstallmentViewList = ({ paytypeId }) => {
                   )} /
                     ${item.employee_installment_number_of_months}`}</td>
                   <td>
-                    {" "}
                     {item.employee_installment_status === "0" ? (
-                      <Status text="stop" />
+                      <Status text="ongoing" />
                     ) : item.employee_installment_status === "1" ? (
-                      <Status text="pending" />
+                      <Status text="stop" />
                     ) : item.employee_installment_status === "2" ? (
                       <Status />
                     ) : (
                       ""
                     )}
+                  </td>
+                  <td className="text-right pr-4">
+                    <button
+                      type="button"
+                      className="btn-action-table tooltip-action-table"
+                      data-tooltip="Delete"
+                      onClick={() => {
+                        handleDelete(item);
+                      }}
+                    >
+                      <FaTrash />
+                    </button>
                   </td>
                 </tr>
               );
@@ -107,6 +148,19 @@ const DeductionInstallmentViewList = ({ paytypeId }) => {
           </tbody>
         </table>
       </div>
+      {store.isRestore && (
+        <ModalDeleteRestoreRq
+          id={id}
+          isDel={isDel}
+          mysqlApiDelete={`${devApiUrl}/v1/employees-installment/${id}`}
+          msg={"Are you sure to delete "}
+          item={getPayItemName(
+            payItem,
+            dataItem.employee_installment_paytype_id
+          )}
+          arrKey={`employeeInstallmentAll${paytypeId}`}
+        />
+      )}
     </>
   );
 };

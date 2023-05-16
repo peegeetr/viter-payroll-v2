@@ -85,6 +85,7 @@ class PayrollList
     public $payrollList_total;
     public $date_from;
     public $date_to;
+    public $current_year;
     public $lastInsertedId;
     public $tblPayrollList;
     public $tblPayroll;
@@ -1006,6 +1007,47 @@ class PayrollList
             $query->execute([
                 "month" => $this->date_from,
                 "year" => $this->date_to,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    // REPORT Summary WTAX filter 
+    // REPORT Summary WTAX filter
+    public function readReportSummaryWtax()
+    {
+        try {
+            $sql = "select payrollList.*, ";
+            $sql .= "sum(payrollList.payroll_list_gross) as gross, ";
+            $sql .= "sum(payrollList.payroll_list_sss_ee) as sss, ";
+            $sql .= "sum(payrollList.payroll_list_philhealth_ee) as phic, ";
+            $sql .= "sum(payrollList.payroll_list_pagibig_ee) as pag, ";
+            $sql .= "sum(payrollList.payroll_list_deminimis) as deminimis, ";
+            $sql .= "sum(payrollList.payroll_list_13th_month) as month13, ";
+            $sql .= "sum(payrollList.payroll_list_bonus) as bonuss, ";
+            $sql .= "sum(payrollList.payroll_list_total_benefits) as benefits, ";
+            $sql .= "payroll.payroll_category_type, ";
+            $sql .= "payroll.payroll_id, ";
+            $sql .= "payroll.payroll_start_date, ";
+            $sql .= "payroll.payroll_end_date, ";
+            $sql .= "payroll.payroll_pay_date ";
+            $sql .= "from {$this->tblPayrollList} as payrollList, ";
+            $sql .= "{$this->tblPayroll} as payroll ";
+            $sql .= "where payrollList.payroll_list_payroll_id = payroll.payroll_id ";
+            $sql .= "and MONTH(payroll.payroll_pay_date) between ";
+            $sql .= ":month_from and :month_to ";
+            $sql .= "and YEAR(payroll.payroll_pay_date) = :year ";
+            $sql .= "group by YEAR(payroll.payroll_pay_date) ";
+            $sql .= "order by payrollList.payroll_list_payroll_id, ";
+            $sql .= "payroll.payroll_end_date desc, ";
+            $sql .= "payrollList.payroll_list_employee_name asc ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "month_from" => $this->date_from,
+                "month_to" => $this->date_to,
+                "year" => $this->current_year,
             ]);
         } catch (PDOException $ex) {
             $query = false;

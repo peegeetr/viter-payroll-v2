@@ -62,6 +62,7 @@ RewriteRule ^payrollList/report/filter/basic-pay$ controllers/payroll/list/repor
 RewriteRule ^payrollList/report/basic-pay/page/([A-Za-z0-9-]+)/([0-9]+)$ controllers/payroll/list/report-basic-pay-page.php?listpayrollid=$1&start=$2 [L]
 RewriteRule ^payrollList/all-salary-category/([0-9]+)$ controllers/payroll/list/read-all-salary-category.php?payrollSalaryCategoryId=$1 [L]
 RewriteRule ^payrollList/report/wtax/monthly-gross/([A-Za-z0-9-]+)$ controllers/payroll/list/report-wtax-monthly-gross.php?year=$1 [L]   
+RewriteRule ^payrollList/report/wtax/summary/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)$ controllers/payroll/list/report-wtax-summary.php?monthFrom=$1&monthTo=$2 [L]   
      
 #earnings
 RewriteRule ^earnings$ controllers/earnings/earnings.php [L]

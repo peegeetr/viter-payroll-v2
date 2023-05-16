@@ -111,6 +111,8 @@ import OtherUserDeductionInstallmentMP2 from "./component/pages/employee/deducti
 import SystemDeductionInstallmentSssLoan from "./component/pages/employee/deductions-installment/view/links-sss/SystemDeductionInstallmentSssLoan";
 import SystemDeductionInstallmentPagibigLoan from "./component/pages/employee/deductions-installment/view/links-pagibig/SystemDeductionInstallmentPagibigLoan";
 import SystemDeductionInstallmentMP2 from "./component/pages/employee/deductions-installment/view/links-mp2/SystemDeductionInstallmentMP2";
+import OtherUserWTaxSummary from "./component/pages/reports/w-tax/summary-tax/links/OtherUserWTaxSummary";
+import SystemUserWTaxSummary from "./component/pages/reports/w-tax/summary-tax/links/SystemUserWTaxYearly";
 
 function App() {
   // Create a client
@@ -394,6 +396,14 @@ function App() {
               element={
                 <ProtectedRouteOther>
                   <OtherUserWTaxPage />
+                </ProtectedRouteOther>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/reports/wtax/summary`}
+              element={
+                <ProtectedRouteOther>
+                  <OtherUserWTaxSummary />
                 </ProtectedRouteOther>
               }
             />
@@ -783,6 +793,14 @@ function App() {
               element={
                 <ProtectedRouteSystem>
                   <SystemUserWTaxPage />
+                </ProtectedRouteSystem>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/reports/wtax/summary`}
+              element={
+                <ProtectedRouteSystem>
+                  <SystemUserWTaxSummary />
                 </ProtectedRouteSystem>
               }
             />

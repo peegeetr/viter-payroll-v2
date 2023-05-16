@@ -2,6 +2,7 @@ import React from "react";
 import { StoreContext } from "../../../../../store/StoreContext";
 import useQueryData from "../../../../custom-hooks/useQueryData";
 import {
+  devApiUrl,
   getUrlParam,
   hrisDevApiUrl,
 } from "../../../../helpers/functions-general";
@@ -28,6 +29,12 @@ const DeductionInstallmentPagibigLoan = () => {
     false // devKey boolean
   );
 
+  // use if not loadmore button undertime
+  const { data: payItem } = useQueryData(
+    `${devApiUrl}/v1/payitem/${PagibigLoanId}`, // endpoint
+    "get", // method
+    `payItem${PagibigLoanId}` // key
+  );
   return (
     <>
       <Header />
@@ -45,7 +52,10 @@ const DeductionInstallmentPagibigLoan = () => {
           </span>
         </p>
         <div className="w-full pb-40">
-          <DeductionInstallmentViewList paytypeId={PagibigLoanId} />
+          <DeductionInstallmentViewList
+            paytypeId={PagibigLoanId}
+            payItem={payItem?.data}
+          />
         </div>
         <Footer />
       </div>

@@ -12,6 +12,7 @@ import {
 import { StoreContext } from "../../../../store/StoreContext";
 import useQueryData from "../../../custom-hooks/useQueryData";
 import {
+  devApiUrl,
   devNavUrl,
   formatDate,
   getUrlParam,
@@ -25,7 +26,10 @@ import TableSpinner from "../../../partials/spinners/TableSpinner";
 import ModalAddMP2 from "./ModalAddMP2";
 import ModalAddPagibigLoan from "./ModalAddPagibigLoan";
 import ModalAddSSSLoan from "./ModalAddSSSLoan";
-import { getNumberOfMonths } from "./functions-deductions-installment";
+import {
+  getNumMonth,
+  getNumberOfMonths,
+} from "./functions-deductions-installment";
 import {
   PagibigLoanId,
   PagibigMP2Id,
@@ -111,12 +115,9 @@ const DeductionInstallmentList = ({ draft, draftLoading }) => {
     error: errorMP2,
     data: employeeMP2,
   } = useQueryData(
-    `${hrisDevApiUrl}/v1/employees-installment/by-employee/${PagibigMP2Id}/${eid}`, // endpoint
+    `${devApiUrl}/v1/employees-installment/by-employee/${PagibigMP2Id}/${eid}`, // endpoint
     "get", // method
-    "employeeMP2", // key
-    {}, // formdata
-    null, // id key
-    false // devKey boolean
+    "employeeMP2" // key
   );
 
   // use if not loadmore button undertime
@@ -125,12 +126,9 @@ const DeductionInstallmentList = ({ draft, draftLoading }) => {
     error: errorPagibigLoan,
     data: employeePagibigLoan,
   } = useQueryData(
-    `${hrisDevApiUrl}/v1/employees-installment/by-employee/${PagibigLoanId}/${eid}`, // endpoint
+    `${devApiUrl}/v1/employees-installment/by-employee/${PagibigLoanId}/${eid}`, // endpoint
     "get", // method
-    "employeePagibigLoan", // key
-    {}, // formdata
-    null, // id key
-    false // devKey boolean
+    "employeePagibigLoan" // key
   );
 
   // use if not loadmore button undertime
@@ -139,13 +137,11 @@ const DeductionInstallmentList = ({ draft, draftLoading }) => {
     error: errorSSSLoan,
     data: employeeSSSLoan,
   } = useQueryData(
-    `${hrisDevApiUrl}/v1/employees-installment/by-employee/${SSSLoanId}/${eid}`, // endpoint
+    `${devApiUrl}/v1/employees-installment/by-employee/${SSSLoanId}/${eid}`, // endpoint
     "get", // method
-    "employeeSSSLoan", // key
-    {}, // formdata
-    null, // id key
-    false // devKey boolean
+    "employeeSSSLoan" // key
   );
+  console.log("123456", employeePagibigLoan);
   return (
     <>
       <div className="text-center overflow-x-auto pb-2 z-0 ">
@@ -158,8 +154,9 @@ const DeductionInstallmentList = ({ draft, draftLoading }) => {
                   ""
                 ) : (
                   <div>
-                    {item.employee_installment_number_of_months ===
-                    getNumberOfMonths(item.employee_installment_start_date) ? (
+                    {item.employee_installment_number_of_months <
+                      getNumberOfMonths(item.employee_installment_start_date) ||
+                    item.employee_installment_status === "2" ? (
                       <button
                         type="button"
                         className="tooltip-action-table"
@@ -197,13 +194,13 @@ const DeductionInstallmentList = ({ draft, draftLoading }) => {
               >
                 <p className="font-semibold">Start Date</p>
                 <p className="pl-2">
-                  {formatDate(item.employee_installment_start_date)}
+                  {`${formatDate(item.employee_installment_start_date)}`}
                 </p>
                 <p className="font-semibold">End Date</p>
                 <p className="pl-2">
-                  {formatDate(item.employee_installment_end_date)}
+                  {`${formatDate(item.employee_installment_end_date)}`}
                 </p>
-                <p className="font-semibold">Monthly Amount</p>
+                <p className="font-semibold">Amortization</p>
                 <p className="pl-2">
                   &#8369;{" "}
                   {numberWithCommas(
@@ -212,15 +209,18 @@ const DeductionInstallmentList = ({ draft, draftLoading }) => {
                 </p>
                 <p className="font-semibold">Number of months</p>
                 <p className="pl-2">
-                  {`${getNumberOfMonths(item.employee_installment_start_date)} /
-                    ${item.employee_installment_number_of_months}`}
-                </p>
+                  {`${getNumMonth(
+                    getNumberOfMonths(item.employee_installment_start_date),
+                    item.employee_installment_number_of_months
+                  )} /
+                  ${item.employee_installment_number_of_months}`}
+                </p>{" "}
                 <p className="font-semibold">Status</p>
                 <p className="pl-2">
                   {item.employee_installment_status === "0" ? (
-                    <Status text="stop" />
+                    <Status text="ongoing" />
                   ) : item.employee_installment_status === "1" ? (
-                    <Status text="pending" />
+                    <Status text="stop" />
                   ) : item.employee_installment_status === "2" ? (
                     <Status />
                   ) : (
@@ -273,7 +273,9 @@ const DeductionInstallmentList = ({ draft, draftLoading }) => {
                   ""
                 ) : (
                   <div>
-                    {item.employee_installment_number_of_months === "0" ? (
+                    {item.employee_installment_number_of_months <
+                      getNumberOfMonths(item.employee_installment_start_date) ||
+                    item.employee_installment_status === "2" ? (
                       <button
                         type="button"
                         className="tooltip-action-table"
@@ -308,11 +310,11 @@ const DeductionInstallmentList = ({ draft, draftLoading }) => {
               <div className="text-left grid grid-cols-2 md:md:grid-cols-[1fr_1.5fr]  xs:pl-5 pl-2">
                 <p className="font-semibold">Start Date</p>
                 <p className="pl-2">
-                  {formatDate(item.employee_installment_start_date)}
+                  {`${formatDate(item.employee_installment_start_date)}`}
                 </p>
                 <p className="font-semibold">End Date</p>
                 <p className="pl-2">
-                  {formatDate(item.employee_installment_end_date)}
+                  {`${formatDate(item.employee_installment_end_date)}`}
                 </p>
                 <p className="font-semibold">Monthly Amount</p>
                 <p className="pl-2">
@@ -323,15 +325,18 @@ const DeductionInstallmentList = ({ draft, draftLoading }) => {
                 </p>
                 <p className="font-semibold">Number of months</p>
                 <p className="pl-2">
-                  {`${getNumberOfMonths(item.employee_installment_start_date)} /
-                    ${item.employee_installment_number_of_months}`}
+                  {`${getNumMonth(
+                    getNumberOfMonths(item.employee_installment_start_date),
+                    item.employee_installment_number_of_months
+                  )} /
+                  ${item.employee_installment_number_of_months}`}
                 </p>
                 <p className="font-semibold">Status</p>
                 <p className="pl-2">
                   {item.employee_installment_status === "0" ? (
-                    <Status text="stop" />
+                    <Status text="ongoing" />
                   ) : item.employee_installment_status === "1" ? (
-                    <Status text="pending" />
+                    <Status text="stop" />
                   ) : item.employee_installment_status === "2" ? (
                     <Status />
                   ) : (
@@ -384,7 +389,9 @@ const DeductionInstallmentList = ({ draft, draftLoading }) => {
                   ""
                 ) : (
                   <div>
-                    {item.employee_installment_number_of_months === "0" ? (
+                    {item.employee_installment_number_of_months <
+                      getNumberOfMonths(item.employee_installment_start_date) ||
+                    item.employee_installment_status === "2" ? (
                       <button
                         type="button"
                         className="tooltip-action-table"
@@ -419,11 +426,11 @@ const DeductionInstallmentList = ({ draft, draftLoading }) => {
               <div className="text-left grid grid-cols-2 md:md:grid-cols-[1fr_1.5fr]  xs:pl-5 pl-2">
                 <p className="font-semibold">Start Date</p>
                 <p className="pl-2">
-                  {formatDate(item.employee_installment_start_date)}
+                  {`${formatDate(item.employee_installment_start_date)}`}
                 </p>
                 <p className="font-semibold">End Date</p>
                 <p className="pl-2">
-                  {formatDate(item.employee_installment_end_date)}
+                  {`${formatDate(item.employee_installment_end_date)}`}
                 </p>
                 <p className="font-semibold">Monthly Amount</p>
                 <p className="pl-2">
@@ -434,15 +441,19 @@ const DeductionInstallmentList = ({ draft, draftLoading }) => {
                 </p>
                 <p className="font-semibold">Number of months</p>
                 <p className="pl-2">
-                  {`${getNumberOfMonths(item.employee_installment_start_date)} /
-                    ${item.employee_installment_number_of_months}`}
+                  {`${getNumMonth(
+                    getNumberOfMonths(item.employee_installment_start_date),
+                    item.employee_installment_number_of_months
+                  )} /
+                  ${item.employee_installment_number_of_months}`}
                 </p>
+
                 <p className="font-semibold">Status</p>
                 <p className="pl-2">
                   {item.employee_installment_status === "0" ? (
-                    <Status text="stop" />
+                    <Status text="ongoing" />
                   ) : item.employee_installment_status === "1" ? (
-                    <Status text="pending" />
+                    <Status text="stop" />
                   ) : item.employee_installment_status === "2" ? (
                     <Status />
                   ) : (

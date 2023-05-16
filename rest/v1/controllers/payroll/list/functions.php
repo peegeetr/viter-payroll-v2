@@ -353,3 +353,11 @@ function checkUpdateDeductionInstallemnt($object)
     checkQuery($query, "There's a problem processing your request. (update deduction installment to completed)");
     return $query;
 }
+
+// filter Report Summary W-TAX
+function checkReadReportSummaryWtax($object)
+{
+    $query = $object->readReportSummaryWtax();
+    checkQuery($query, "Empty records. (report filter summary w-tax)");
+    return $query;
+}

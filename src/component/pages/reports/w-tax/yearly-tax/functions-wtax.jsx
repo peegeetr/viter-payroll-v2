@@ -1,3 +1,8 @@
+export const getCurrentYear = () => {
+  const d = new Date();
+  let currentYear = d.getFullYear();
+  return currentYear;
+};
 export const getYear = () => {
   const d = new Date();
   let currentYear = d.getFullYear();
@@ -33,8 +38,20 @@ export const getMonth = () => {
   for (let i = 0; i < monthCount; i++) {
     monthStart++;
     list.push({
-      month: `${months[Number(monthStart) - 1]}`,
+      month_aid: Number(monthStart),
+      month_name: `${months[Number(monthStart) - 1]}`,
     });
   }
   return list;
+};
+
+export const getMonthName = (id) => {
+  let monthName = "";
+  getMonth()?.map((yItem) => {
+    // check if leave type aid is equal
+    if (yItem.month_aid === Number(id)) {
+      monthName = yItem.month_name;
+    }
+  });
+  return monthName;
 };

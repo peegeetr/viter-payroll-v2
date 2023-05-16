@@ -1,29 +1,69 @@
-import { formatDate } from "../../../helpers/functions-general";
+// formatting date
+function formatDateInstallment(date) {
+  var d = new Date(date),
+    month = "" + (d.getMonth() + 1),
+    day = "" + d.getDate(),
+    year = d.getFullYear();
+
+  if (month.length < 2) month = "0" + month;
+  if (day.length < 2) day = "0" + day;
+
+  return [year, month, day].join("-");
+}
 
 // get number of Months
-export const getNumberOfMonths = (date) => {
-  const today = new Date();
-  const d = new Date(date);
-  // let totalCount = today.getFullYear() - d.getFullYear();
-  let totalCount = today.getMonth() - d.getMonth();
-  const m = today.getMonth() - d.getMonth();
-  if (m < 0 || (m === 0 && today.getDate() < d.getDate())) {
-    totalCount--;
+export const getNumberOfMonths = (startDate) => {
+  const todayDate = new Date();
+  const sDate = new Date(startDate);
+  const todayYear = todayDate.getFullYear();
+  const sDateYear = sDate.getFullYear();
+  const todayMonth = todayDate.getMonth();
+  const sDateMonth = sDate.getMonth();
+  let totalMonth = 0;
+  let totalYear = todayYear - sDateYear;
+  let numberOfMonths = 0;
+
+  if (totalYear === 0) {
+    totalMonth = todayMonth - sDateMonth;
+    numberOfMonths = totalMonth < 0 ? 0 : totalMonth + 1;
   }
-  if (totalCount < 0) {
-    totalCount = 0;
-  } else {
-    totalCount = `${totalCount + 1}`;
+
+  if (totalYear === 1) {
+    let lastYearMonth = 0;
+    lastYearMonth = 11 - sDateMonth;
+    totalMonth = todayMonth + lastYearMonth + 1;
+    numberOfMonths = totalMonth + 1;
   }
-  return `${totalCount}`;
+
+  if (totalYear > 1) {
+    let startYearMonth = 0;
+    let todayYearMonth = 0;
+    let todayYearCount = 0;
+    startYearMonth = 11 - sDateMonth;
+    todayYearMonth = 11 - todayMonth;
+    todayYearCount = 12 * totalYear - todayYearMonth;
+    totalMonth = todayYearCount + startYearMonth;
+    numberOfMonths = totalMonth + 1;
+  }
+  return numberOfMonths;
+};
+
+export const getNumMonth = (numMonth, totalNumMonths) => {
+  let result = 0;
+  if (numMonth <= totalNumMonths) {
+    result = numMonth;
+  }
+  if (numMonth > totalNumMonths) {
+    result = totalNumMonths;
+  }
+
+  return `${result}`;
 };
 
 export const getEndOfInstallment = (numMonth, date) => {
   let startDate = new Date(date);
-  startDate.setMonth(startDate.getMonth() + Number(numMonth) - 1);
-  let endDate = new Date(startDate.toString().split("GMT")[0] + " UTC")
-    .toISOString()
-    .split("T")[0];
+  let newDate = startDate.setMonth(startDate.getMonth() + Number(numMonth) - 1);
+  let endDate = formatDateInstallment(newDate);
   return `${endDate}`;
 };
 
@@ -54,4 +94,15 @@ export const getMonths = () => {
     });
   }
   return list;
+};
+
+export const getPayItemName = (payItem, id) => {
+  let payTypeName = "";
+  payItem?.map((ptItem) => {
+    // check if leave type aid is equal
+    if (ptItem.payitem_aid === Number(id)) {
+      payTypeName = ptItem.payitem_name;
+    }
+  });
+  return payTypeName;
 };

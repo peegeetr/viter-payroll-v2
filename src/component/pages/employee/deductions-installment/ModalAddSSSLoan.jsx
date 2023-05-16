@@ -10,16 +10,16 @@ import {
   setSuccess,
 } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
-import { InputSelect, InputText } from "../../../helpers/FormInputs";
+import { InputText } from "../../../helpers/FormInputs";
 import {
+  devApiUrl,
   getDateNow,
   getUrlParam,
-  devApiUrl,
-  handleNumOnly,
+  removeComma,
 } from "../../../helpers/functions-general";
+import { SSSLoanId } from "../../../helpers/functions-payitemId";
 import { queryData } from "../../../helpers/queryData";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
-import { SSSLoanId } from "../../../helpers/functions-payitemId";
 import { getEndOfInstallment } from "./functions-deductions-installment";
 
 const ModalAddSSSLoan = ({ item }) => {
@@ -102,8 +102,18 @@ const ModalAddSSSLoan = ({ item }) => {
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
                 // console.log(values);
+                const employee_installment_amount = removeComma(
+                  `${values.employee_installment_amount}`
+                );
+                const employee_installment_number_of_months = removeComma(
+                  `${values.employee_installment_number_of_months}`
+                );
 
-                mutation.mutate(values);
+                mutation.mutate({
+                  ...values,
+                  employee_installment_amount,
+                  employee_installment_number_of_months,
+                });
               }}
             >
               {(props) => {
@@ -130,7 +140,7 @@ const ModalAddSSSLoan = ({ item }) => {
                         label="MP2 Amount"
                         type="text"
                         name="employee_installment_amount"
-                        onKeyPress={handleNumOnly}
+                        num="num"
                         disabled={mutation.isLoading}
                       />
                     </div>
@@ -139,7 +149,7 @@ const ModalAddSSSLoan = ({ item }) => {
                         label="Number of Months"
                         name="employee_installment_number_of_months"
                         type="text"
-                        onKeyPress={handleNumOnly}
+                        num="num"
                         disabled={mutation.isLoading}
                       />
                     </div>

@@ -42,7 +42,7 @@ function checkDeleteHolidayExemptions($object)
 }
 
 // check name
-function isEarningType($object, $name)
+function isEarningType($object)
 {
     $query = $object->checkEarningType();
     $count = $query->rowCount();

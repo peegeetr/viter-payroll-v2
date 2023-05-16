@@ -88,11 +88,11 @@ const WTaxSummaryList = () => {
     // get employee id
   };
   const initVal = {
-    month: "",
+    monthSummary: "",
   };
 
   const yupSchema = Yup.object({
-    month: Yup.string().required("Required"),
+    monthSummary: Yup.string().required("Required"),
   });
 
   return (
@@ -100,16 +100,16 @@ const WTaxSummaryList = () => {
       <div className="relative overflow-x-auto z-0 w-full ">
         <Formik initialValues={initVal} validationSchema={yupSchema}>
           {(props) => {
-            props.values.month = !isFilter
+            props.values.monthSummary = !isFilter
               ? getCurrentMonth()
-              : props.values.month;
+              : props.values.monthSummary;
             return (
               <Form>
                 <div className="grid gap-5 grid-cols-1 md:grid-cols-[1fr] pt-5 pb-5 items-center print:hidden md:w-1/4 md:min-w-[20rem]">
                   <div className="relative">
                     <InputSelect
                       label="Month"
-                      name="month"
+                      name="monthSummary"
                       type="text"
                       disabled={isFetching}
                       onChange={handleMonth}

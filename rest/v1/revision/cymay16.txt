@@ -1,13 +1,39 @@
 
 *controllers           
-    - payroll/list/functions.php   
-    - payroll/list/report-wtax-summary.php  
+    - payroll/list/report-wtax-summary.php 
+    - payroll/list/functions.php     
     
 *models    
-    - payroll/list/payrollList.php 
+    - payroll/list/payrollList.php  
   
 *htaccess 
     - #payroll list paid
+
+*db tables 
+    - 
+
+*core 
+    - 
+
+*extra 
+    - 
+Patrick
+    - 
+
+    #######Aftrenoon
+    #######Aftrenoon
+*controllers            
+    - payroll/list/functions.php    
+    - payroll/list/update.php   
+    - payroll/list/paid.php   
+    - employee/installment/create.php 
+    
+*models    
+    - payroll/list/payrollList.php 
+    - employee/employeeInstallment.php 
+  
+*htaccess 
+    - 
 
 *db tables 
     - 

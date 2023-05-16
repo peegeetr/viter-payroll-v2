@@ -14,7 +14,7 @@ import { InputSelect, InputText } from "../../../helpers/FormInputs";
 import {
   getDateNow,
   getUrlParam,
-  hrisDevApiUrl,
+  devApiUrl,
 } from "../../../helpers/functions-general";
 import { queryData } from "../../../helpers/queryData";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
@@ -31,8 +31,8 @@ const ModalAddMP2 = ({ item, employeeMP2 }) => {
     mutationFn: (values) =>
       queryData(
         item
-          ? `${hrisDevApiUrl}/v1/employees-installment/${item.employee_installment_aid}`
-          : `${hrisDevApiUrl}/v1/employees-installment`,
+          ? `${devApiUrl}/v1/employees-installment/${item.employee_installment_aid}`
+          : `${devApiUrl}/v1/employees-installment`,
         item ? "put" : "post",
         values,
         false

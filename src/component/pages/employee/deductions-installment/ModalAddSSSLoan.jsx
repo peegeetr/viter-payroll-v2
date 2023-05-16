@@ -11,7 +11,11 @@ import {
 } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
 import { InputSelect, InputText } from "../../../helpers/FormInputs";
-import { getDateNow, getUrlParam } from "../../../helpers/functions-general";
+import {
+  getDateNow,
+  getUrlParam,
+  devApiUrl,
+} from "../../../helpers/functions-general";
 import { queryData } from "../../../helpers/queryData";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 import { SSSLoanId } from "../../../helpers/functions-payitemId";
@@ -27,8 +31,8 @@ const ModalAddSSSLoan = ({ item }) => {
     mutationFn: (values) =>
       queryData(
         item
-          ? `${hrisDevApiUrl}/v1/employees-installment/${item.employee_installment_aid}`
-          : `${hrisDevApiUrl}/v1/employees-installment`,
+          ? `${devApiUrl}/v1/employees-installment/${item.employee_installment_aid}`
+          : `${devApiUrl}/v1/employees-installment`,
         item ? "put" : "post",
         values,
         false

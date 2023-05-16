@@ -325,7 +325,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
             $payrollList->end_pay_date = $allPagibigLoanList[$pgbg]["deduction_end_pay_date"];
             $payrollList->installment_extra = $allPagibigLoanList[$pgbg]["installment_extra"];
             $numMonths = $allPagibigLoanList[$pgbg]["installment_extra"];
-            $payrollList->installment_extra = $allPagibigLoanList[$pgbg]["installment_extra"];
+            $payrollList->installment_extra = 0;
             // create extra  
             $query = checkCreateDeductions($payrollList);
         }
@@ -352,7 +352,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
             $payrollList->number_of_installment = $allPagibigMP2List[$mpt]["deduction_number_of_installment"];
             $payrollList->start_pay_date = $allPagibigMP2List[$mpt]["deduction_start_pay_date"];
             $payrollList->end_pay_date = $allPagibigMP2List[$mpt]["deduction_end_pay_date"];
-            $payrollList->installment_extra = "0";
+            $payrollList->installment_extra = 0;
             // create extra  
             $query = checkCreateDeductions($payrollList);
         }
@@ -380,7 +380,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
             $payrollList->number_of_installment = $allSSSLoanList[$sss]["deduction_number_of_installment"];
             $payrollList->start_pay_date = $allSSSLoanList[$sss]["deduction_start_pay_date"];
             $payrollList->end_pay_date = $allSSSLoanList[$sss]["deduction_end_pay_date"];
-            $payrollList->installment_extra = $allSSSLoanList[$sss]["installment_extra"];
+            $payrollList->installment_extra = 0;
             // create extra 
             $query = checkCreateDeductions($payrollList);
         }

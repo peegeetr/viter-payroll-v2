@@ -77,6 +77,7 @@ class PayrollList
 
     public $employee_installment_aid;
     public $employee_installment_status;
+    public $employee_installment_number_of_payrun;
 
 
     public $connection;
@@ -1753,6 +1754,23 @@ class PayrollList
             $query = $this->connection->prepare($sql);
             $query->execute([
                 "employee_installment_status" => $this->employee_installment_status,
+                "employee_installment_aid" => $this->employee_installment_aid,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    public function updateDeductionInstallmentNumberOfPayrun()
+    {
+        try {
+            $sql = "update {$this->tblEmployeeInstallmet} set ";
+            $sql .= "employee_installment_number_of_payrun = :employee_installment_number_of_payrun ";
+            $sql .= "where employee_installment_aid = :employee_installment_aid ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "employee_installment_number_of_payrun" => $this->employee_installment_number_of_payrun,
                 "employee_installment_aid" => $this->employee_installment_aid,
             ]);
         } catch (PDOException $ex) {

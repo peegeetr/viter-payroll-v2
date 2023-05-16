@@ -214,7 +214,12 @@ const DeductionInstallmentList = ({ draft, draftLoading }) => {
                     item.employee_installment_number_of_months
                   )} /
                   ${item.employee_installment_number_of_months}`}
-                </p>{" "}
+                </p>
+                <p className="font-semibold">Number of Payrun</p>
+                <p className="pl-2">
+                  {`${item.employee_installment_number_of_payrun} /
+                  ${Number(item.employee_installment_number_of_months) * 2}`}
+                </p>
                 <p className="font-semibold">Status</p>
                 <p className="pl-2">
                   {item.employee_installment_status === "0" ? (
@@ -331,6 +336,11 @@ const DeductionInstallmentList = ({ draft, draftLoading }) => {
                   )} /
                   ${item.employee_installment_number_of_months}`}
                 </p>
+                <p className="font-semibold">Number of Payrun</p>
+                <p className="pl-2">
+                  {`${item.employee_installment_number_of_payrun} /
+                  ${Number(item.employee_installment_number_of_months) * 2}`}
+                </p>
                 <p className="font-semibold">Status</p>
                 <p className="pl-2">
                   {item.employee_installment_status === "0" ? (
@@ -446,6 +456,11 @@ const DeductionInstallmentList = ({ draft, draftLoading }) => {
                     item.employee_installment_number_of_months
                   )} /
                   ${item.employee_installment_number_of_months}`}
+                </p>
+                <p className="font-semibold">Number of Payrun</p>
+                <p className="pl-2">
+                  {`${item.employee_installment_number_of_payrun} /
+                  ${Number(item.employee_installment_number_of_months) * 2}`}
                 </p>
 
                 <p className="font-semibold">Status</p>

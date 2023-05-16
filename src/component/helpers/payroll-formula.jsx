@@ -1184,7 +1184,7 @@ export const payComputePagibigLoan = (emp, deduction) => {
       deduction_number_of_installment: onetimeNumber,
       deduction_start_pay_date: emp.payroll_start_date,
       deduction_end_pay_date: emp.payroll_end_date,
-      installment_extra: 0,
+      numOfPay: Number(deduction.employee_installment_number_of_payrun) + 1,
       numOfMonths: getNumberOfMonths(deduction.employee_installment_start_date),
       // installment details
       employee_installment_number_of_months:
@@ -1217,7 +1217,7 @@ export const payComputePagibigMP2 = (emp, deduction) => {
       deduction_number_of_installment: onetimeNumber,
       deduction_start_pay_date: emp.payroll_start_date,
       deduction_end_pay_date: emp.payroll_end_date,
-      installment_extra: 0,
+      numOfPay: Number(deduction.employee_installment_number_of_payrun) + 1,
       numOfMonths: getNumberOfMonths(deduction.employee_installment_start_date),
       // installment details
       employee_installment_number_of_months:
@@ -1250,7 +1250,7 @@ export const payComputeSSSLoan = (emp, deduction) => {
       deduction_number_of_installment: onetimeNumber,
       deduction_start_pay_date: emp.payroll_start_date,
       deduction_end_pay_date: emp.payroll_end_date,
-      installment_extra: 0,
+      numOfPay: Number(deduction.employee_installment_number_of_payrun) + 1,
       numOfMonths: getNumberOfMonths(deduction.employee_installment_start_date),
       // installment details
       employee_installment_number_of_months:

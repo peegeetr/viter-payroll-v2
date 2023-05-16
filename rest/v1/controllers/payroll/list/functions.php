@@ -24,6 +24,14 @@ function checkUpdateIsPaidPayroll($object)
     return $query;
 }
 
+// Update Payroll to paid
+function checkUpdateDeductionInstallmentNumberOfPayrun($object)
+{
+    $query = $object->updateDeductionInstallmentNumberOfPayrun();
+    checkQuery($query, "There's a problem processing your request. (update number of payrun in deductions installment)");
+    return $query;
+}
+
 // Update Payroll List to paid
 function checkUpdateIsPaidPayrollList($object)
 {

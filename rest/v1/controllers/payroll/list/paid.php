@@ -50,6 +50,8 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
         if ($allPagibigLoanList !== 0) {
             for ($pgbg = 0; $pgbg < count($allPagibigLoanList); $pgbg++) {
                 $payrollList->employee_installment_aid = $allPagibigLoanList[$pgbg]["employee_installment_aid"];
+                $payrollList->employee_installment_number_of_payrun = $allPagibigLoanList[$pgbg]["numOfPay"];
+
                 $employee_installment_status = $allPagibigLoanList[$pgbg]["employee_installment_status"];
                 $employee_installment_number_of_months = $allPagibigLoanList[$pgbg]["employee_installment_number_of_months"];
                 $numMonths = $allPagibigLoanList[$pgbg]["numOfMonths"];
@@ -60,6 +62,12 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
                 $EndPayDayDate = explode("-", $allPagibigLoanList[$pgbg]["deduction_end_pay_date"]);
                 $EndPayDay = intval($EndPayDayDate[2]);
 
+                if (
+                    $numMonths <= $employee_installment_number_of_months &&
+                    $employee_installment_status === "0"
+                ) {
+                    checkUpdateDeductionInstallmentNumberOfPayrun($payrollList);
+                }
                 if (
                     $numMonths >= $employee_installment_number_of_months &&
                     $employee_installment_status === "0" && $installmentDay <= $EndPayDay
@@ -74,6 +82,8 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
         if ($allPagibigMP2List !== 0) {
             for ($mp2 = 0; $mp2 < count($allPagibigMP2List); $mp2++) {
                 $payrollList->employee_installment_aid = $allPagibigMP2List[$mp2]["employee_installment_aid"];
+                $payrollList->employee_installment_number_of_payrun = $allPagibigMP2List[$mp2]["numOfPay"];
+
                 $employee_installment_status = $allPagibigMP2List[$mp2]["employee_installment_status"];
                 $employee_installment_number_of_months = $allPagibigMP2List[$mp2]["employee_installment_number_of_months"];
                 $numMonths = $allPagibigMP2List[$mp2]["numOfMonths"];
@@ -84,6 +94,12 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
                 $EndPayDayDate = explode("-", $allPagibigMP2List[$mp2]["deduction_end_pay_date"]);
                 $EndPayDay = intval($EndPayDayDate[2]);
 
+                if (
+                    $numMonths <= $employee_installment_number_of_months &&
+                    $employee_installment_status === "0"
+                ) {
+                    checkUpdateDeductionInstallmentNumberOfPayrun($payrollList);
+                }
                 if (
                     $numMonths >= $employee_installment_number_of_months &&
                     $employee_installment_status === "0" && $installmentDay <= $EndPayDay
@@ -98,6 +114,7 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
         if ($allSSSLoanList !== 0) {
             for ($sss = 0; $sss < count($allSSSLoanList); $sss++) {
                 $payrollList->employee_installment_aid = $allSSSLoanList[$sss]["employee_installment_aid"];
+                $payrollList->employee_installment_number_of_payrun = $allSSSLoanList[$sss]["numOfPay"];
 
                 $employee_installment_status = $allSSSLoanList[$sss]["employee_installment_status"];
                 $employee_installment_number_of_months = $allSSSLoanList[$sss]["employee_installment_number_of_months"];
@@ -109,6 +126,12 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
                 $EndPayDayDate = explode("-", $allSSSLoanList[$sss]["deduction_end_pay_date"]);
                 $EndPayDay = intval($EndPayDayDate[2]);
 
+                if (
+                    $numMonths <= $employee_installment_number_of_months &&
+                    $employee_installment_status === "0"
+                ) {
+                    checkUpdateDeductionInstallmentNumberOfPayrun($payrollList);
+                }
                 if (
                     $numMonths >= $employee_installment_number_of_months &&
                     $employee_installment_status === "0" && $installmentDay <= $EndPayDay

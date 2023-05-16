@@ -18,6 +18,6 @@
     - 
 
 Patrick
-    - Uploaded to dev only
+    - Both uploaded to production and development
 
  

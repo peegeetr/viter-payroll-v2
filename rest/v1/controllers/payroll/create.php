@@ -45,8 +45,9 @@ $payroll->payroll_datetime = date("Y-m-d H:i:s");
 $allEmployee = $data["employee"];
 
 // check if there's an existing payroll draft
-isEarningType($payroll, $payroll->payroll_category_type);
-
+isEarningType($payroll);
+// validate date
+checkDateExist($payroll);
 // create employee name and id
 for ($i = 0; $i < count($allEmployee); $i++) {
     $employee_lname = $allEmployee[$i]["employee_lname"];
@@ -69,7 +70,6 @@ for ($i = 0; $i < count($allEmployee); $i++) {
 
 
 // create
-checkDateExist($payroll);
 $query = checkCreate($payroll);
 
 

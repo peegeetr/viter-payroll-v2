@@ -1,6 +1,8 @@
 
 *controllers           
     - payroll/list/report-wtax-summary.php  
+    -> payroll/create.php 
+    -> payroll/functions.php 
     
 *models    
     - payroll/list/payrollList.php  

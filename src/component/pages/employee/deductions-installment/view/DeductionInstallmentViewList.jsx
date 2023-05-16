@@ -157,7 +157,7 @@ const DeductionInstallmentViewList = ({ paytypeId, payItem }) => {
         <ModalDeleteRestoreRq
           id={id}
           isDel={isDel}
-          mysqlApiDelete={`/v1/employees-installment/${id}`}
+          mysqlApiDelete={`${devApiUrl}/v1/employees-installment/${id}`}
           msg={"Are you sure to delete "}
           item={getPayItemName(
             payItem,

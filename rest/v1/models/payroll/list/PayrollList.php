@@ -1028,6 +1028,7 @@ class PayrollList
             $sql .= "sum(payrollList.payroll_list_13th_month) as month13, ";
             $sql .= "sum(payrollList.payroll_list_bonus) as bonus, ";
             $sql .= "sum(payrollList.payroll_list_total_benefits) as benefits, ";
+            $sql .= "sum(payrollList.payroll_list_tax) as tax, ";
             $sql .= "payroll.payroll_category_type, ";
             $sql .= "payroll.payroll_id, ";
             $sql .= "payroll.payroll_start_date, ";

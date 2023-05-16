@@ -61,7 +61,7 @@ const WTaxBodySummary = ({ result, month, monthlyTax }) => {
             nonTax = totalBenefits + totalShareEe + item.deminimis;
             // compute monthly tax due
             tax = payComputeTaxDue(
-              item.gross,
+              Number(item.gross),
               monthlyTax,
               totalBenefits,
               totalShareEe,
@@ -130,7 +130,7 @@ const WTaxBodySummary = ({ result, month, monthlyTax }) => {
                       <td className="w-[15rem] ">Tax Withheld</td>
                       <td className=" text-right px-4"></td>
                       <td className=" text-right px-4">
-                        {numberWithCommas(tax.toFixed(2))}
+                        {numberWithCommas(Number(item.tax).toFixed(2))}
                         {/* {taxMonthly} */}
                       </td>
                     </tr>

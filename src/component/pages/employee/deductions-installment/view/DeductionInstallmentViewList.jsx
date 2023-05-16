@@ -73,7 +73,12 @@ const DeductionInstallmentViewList = ({ paytypeId, payItem }) => {
               <th className="min-w-[10rem]">Start Date</th>
               <th className="min-w-[10rem]">End Date</th>
               <th className="text-right pr-4">Amount</th>
-              <th className="text-right pr-4">Months</th>
+              <th className="min-w-[10rem] text-right pr-4">
+                Number of Months
+              </th>
+              <th className="min-w-[10rem] text-right pr-4">
+                Number of Payrun
+              </th>
               <th>Status</th>
               <th className="text-right pr-4">Action</th>
             </tr>
@@ -119,6 +124,10 @@ const DeductionInstallmentViewList = ({ paytypeId, payItem }) => {
                     item.employee_installment_start_date
                   )} /
                     ${item.employee_installment_number_of_months}`}</td>
+                  <td className="text-right pr-4">
+                    {`${item.employee_installment_number_of_payrun} /
+                   ${Number(item.employee_installment_number_of_months) * 2}`}
+                  </td>
                   <td>
                     {item.employee_installment_status === "0" ? (
                       <Status text="ongoing" />

@@ -15,6 +15,7 @@ import {
   getDateNow,
   getUrlParam,
   devApiUrl,
+  handleNumOnly,
 } from "../../../helpers/functions-general";
 import { queryData } from "../../../helpers/queryData";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
@@ -129,6 +130,7 @@ const ModalAddMP2 = ({ item, employeeMP2 }) => {
                         label="MP2 Amount"
                         type="text"
                         name="employee_installment_amount"
+                        onKeyPress={handleNumOnly}
                         disabled={mutation.isLoading}
                       />
                     </div>

@@ -15,6 +15,7 @@ import {
   getDateNow,
   getUrlParam,
   devApiUrl,
+  handleNumOnly,
 } from "../../../helpers/functions-general";
 import { queryData } from "../../../helpers/queryData";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
@@ -129,6 +130,7 @@ const ModalAddSSSLoan = ({ item }) => {
                         label="MP2 Amount"
                         type="text"
                         name="employee_installment_amount"
+                        onKeyPress={handleNumOnly}
                         disabled={mutation.isLoading}
                       />
                     </div>
@@ -137,6 +139,7 @@ const ModalAddSSSLoan = ({ item }) => {
                         label="Number of Months"
                         name="employee_installment_number_of_months"
                         type="text"
+                        onKeyPress={handleNumOnly}
                         disabled={mutation.isLoading}
                       />
                     </div>

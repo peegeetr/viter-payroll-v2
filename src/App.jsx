@@ -113,6 +113,7 @@ import SystemDeductionInstallmentPagibigLoan from "./component/pages/employee/de
 import SystemDeductionInstallmentMP2 from "./component/pages/employee/deductions-installment/view/links-mp2/SystemDeductionInstallmentMP2";
 import OtherUserWTaxSummary from "./component/pages/reports/w-tax/summary-tax/links/OtherUserWTaxSummary";
 import SystemUserWTaxSummary from "./component/pages/reports/w-tax/summary-tax/links/SystemUserWTaxSummary";
+import SystemMode from "./component/pages/settings/system-mode/SystemMode";
 
 function App() {
   // Create a client
@@ -867,6 +868,14 @@ function App() {
               element={
                 <ProtectedRouteSystem>
                   <SystemUserSettingsLink />
+                </ProtectedRouteSystem>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/settings/system-mode`}
+              element={
+                <ProtectedRouteSystem>
+                  <SystemMode />
                 </ProtectedRouteSystem>
               }
             />

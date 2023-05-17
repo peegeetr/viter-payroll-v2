@@ -7,32 +7,32 @@ import {
   setIsConfirm,
   setIsRestore,
   setMessage,
-} from "../../../../store/StoreAction";
-import { StoreContext } from "../../../../store/StoreContext";
-import useQueryData from "../../../custom-hooks/useQueryData";
+} from "../../../../../store/StoreAction";
+import { StoreContext } from "../../../../../store/StoreContext";
+import useQueryData from "../../../../custom-hooks/useQueryData";
 import {
   devApiUrl,
   formatDate,
   getUrlParam,
   getUserType,
   numberWithCommas,
-} from "../../../helpers/functions-general";
+} from "../../../../helpers/functions-general";
 import {
   PagibigLoanId,
   PagibigMP2Id,
   SSSLoanId,
-} from "../../../helpers/functions-payitemId";
-import NoData from "../../../partials/NoData";
-import ServerError from "../../../partials/ServerError";
-import TableSpinner from "../../../partials/spinners/TableSpinner";
-import Status from "../../../partials/status/Status";
+} from "../../../../helpers/functions-payitemId";
+import NoData from "../../../../partials/NoData";
+import ServerError from "../../../../partials/ServerError";
+import TableSpinner from "../../../../partials/spinners/TableSpinner";
+import Status from "../../../../partials/status/Status";
 import ModalAddMP2 from "./ModalAddMP2";
 import ModalAddPagibigLoan from "./ModalAddPagibigLoan";
 import ModalAddSSSLoan from "./ModalAddSSSLoan";
 import {
   getNumMonth,
   getNumberOfMonths,
-} from "./functions-deductions-installment";
+} from "../functions-deductions-installment";
 
 const DeductionInstallmentList = ({ draft, draftLoading }) => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -174,7 +174,7 @@ const DeductionInstallmentList = ({ draft, draftLoading }) => {
                     )}
                     <Link
                       target="_blank"
-                      to={`${link}/employee/details/deduction-installment/mp2?employeeid=${eid}`}
+                      to={`${link}/employee/details/deduction-installment/optional-deduction/mp2?employeeid=${eid}`}
                     >
                       <button
                         className="tooltip-action-table"
@@ -294,7 +294,7 @@ const DeductionInstallmentList = ({ draft, draftLoading }) => {
                     )}
                     <Link
                       target="_blank"
-                      to={`${link}/employee/details/deduction-installment/pagibig-loan?employeeid=${eid}`}
+                      to={`${link}/employee/details/deduction-installment/optional-deduction/pagibig-loan?employeeid=${eid}`}
                     >
                       <button
                         className="tooltip-action-table"
@@ -411,7 +411,7 @@ const DeductionInstallmentList = ({ draft, draftLoading }) => {
                     )}
                     <Link
                       target="_blank"
-                      to={`${link}/employee/details/deduction-installment/sss-loan?employeeid=${eid}`}
+                      to={`${link}/employee/details/deduction-installment/optional-deduction/sss-loan?employeeid=${eid}`}
                     >
                       <button
                         className="tooltip-action-table"

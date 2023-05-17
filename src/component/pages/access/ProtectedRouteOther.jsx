@@ -17,6 +17,19 @@ const ProtectedRouteOther = ({ children }) => {
   const fbsPayroll = JSON.parse(localStorage.getItem("fbsPayroll"));
 
   React.useEffect(() => {
+    const fetchIsMaintenance = async () => {
+      const isMaintenance = await fetchApi(
+        `${devApiUrl}/v1/system-mode/maintenance`, // endpoint
+        {},
+        null,
+        "get"
+      );
+      if (isMaintenance?.count > 0 || isMaintenance?.data.length > 0) {
+        setLoading(false);
+        setIsAuth("456");
+        localStorage.removeItem("fbsPayroll");
+      }
+    };
     const fetchLogin = async () => {
       const login = await fetchApi(
         devApiUrl + "/v1/user-others/token",
@@ -47,6 +60,7 @@ const ProtectedRouteOther = ({ children }) => {
 
     if (fbsPayroll !== null) {
       fetchLogin();
+      fetchIsMaintenance();
     } else {
       setLoading(false);
       localStorage.removeItem("fbsPayroll");

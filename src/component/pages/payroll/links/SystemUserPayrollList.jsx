@@ -6,6 +6,7 @@ import Payroll from "../Payroll";
 const SystemUserPayrollList = () => {
   const { store } = React.useContext(StoreContext);
   const fbsPayroll = JSON.parse(localStorage.getItem("fbsPayroll"));
+
   if (
     fbsPayroll.isDev === false ||
     store.credentials.data.role_is_developer !== 1

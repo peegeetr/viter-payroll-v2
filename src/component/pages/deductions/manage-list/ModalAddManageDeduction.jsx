@@ -18,6 +18,9 @@ import {
 import { devApiUrl, handleNumOnly } from "../../../helpers/functions-general";
 import {
   mandatoryDeductionId,
+  optionalDeductionId,
+  otherDeductionId,
+  paytypeOtherDeductionId,
   taxDeductionId,
 } from "../../../helpers/functions-payitemId";
 import { queryData } from "../../../helpers/queryData";
@@ -74,7 +77,6 @@ const ModalAddManageDeduction = ({ payType, employee, payrollDraft }) => {
       setIsPayItem(results.data);
     }
   };
-  // console.log("payType", payType);
   const handleEmployee = async (e) => {
     // get employee id
     setEmployeeId(e.target.options[e.target.selectedIndex].id);
@@ -214,6 +216,7 @@ const ModalAddManageDeduction = ({ payType, employee, payrollDraft }) => {
                               return (
                                 paytype.paytype_aid !== mandatoryDeductionId &&
                                 paytype.paytype_aid !== taxDeductionId &&
+                                paytype.paytype_aid !== optionalDeductionId &&
                                 paytype.paytype_category === "deductions" && (
                                   <option key={key} value={paytype.paytype_aid}>
                                     {paytype.paytype_name}
@@ -239,14 +242,16 @@ const ModalAddManageDeduction = ({ payType, employee, payrollDraft }) => {
                             {!loadingSel &&
                               isPayItem?.map((payitem, key) => {
                                 return (
-                                  <option
-                                    key={key}
-                                    value={payitem.payitem_aid}
-                                    id={payitem.payitem_is_hris}
-                                  >
-                                    {payitem.payitem_name}{" "}
-                                    {payitem.payitem_is_hris === 1 && "(HRIS)"}
-                                  </option>
+                                  payitem.payitem_aid ===
+                                    Number(otherDeductionId) && (
+                                    <option
+                                      key={key}
+                                      value={payitem.payitem_aid}
+                                      id={payitem.payitem_is_hris}
+                                    >
+                                      {payitem.payitem_name}
+                                    </option>
+                                  )
                                 );
                               })}
                           </optgroup>

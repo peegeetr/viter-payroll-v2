@@ -17,6 +17,7 @@ import ModalNoPayrollId from "../../earnings/manage-list/ModalNoPayrollId";
 import ManageDeductionList from "./ManageDeductionList";
 import ModalAddManageDeduction from "./ModalAddManageDeduction";
 import { payrollCategorySalaryId } from "../../../helpers/functions-payroll-category-id";
+import { paytypeOtherDeductionId } from "../../../helpers/functions-payitemId";
 
 const ManageDeduction = () => {
   const { store, dispatch } = React.useContext(StoreContext);

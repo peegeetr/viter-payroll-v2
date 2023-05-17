@@ -5,28 +5,27 @@ import { FaTimesCircle } from "react-icons/fa";
 import * as Yup from "yup";
 import {
   setError,
-  setIsConfirm,
+  setIsRestore,
   setMessage,
   setSuccess,
-} from "../../../../store/StoreAction";
-import { StoreContext } from "../../../../store/StoreContext";
-import { InputText } from "../../../helpers/FormInputs";
+} from "../../../../../store/StoreAction";
+import { StoreContext } from "../../../../../store/StoreContext";
+import { InputText } from "../../../../helpers/FormInputs";
 import {
   devApiUrl,
   getDateNow,
   getUrlParam,
   removeComma,
-} from "../../../helpers/functions-general";
-import { SSSLoanId } from "../../../helpers/functions-payitemId";
-import { queryData } from "../../../helpers/queryData";
-import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
-import { getEndOfInstallment } from "./functions-deductions-installment";
+} from "../../../../helpers/functions-general";
+import { PagibigLoanId } from "../../../../helpers/functions-payitemId";
+import { queryData } from "../../../../helpers/queryData";
+import ButtonSpinner from "../../../../partials/spinners/ButtonSpinner";
+import { getEndOfInstallment } from "../functions-deductions-installment";
 
-const ModalAddSSSLoan = ({ item }) => {
+const ModalAddPagibigLoan = ({ item }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const eid = getUrlParam().get("employeeid");
-  // ModalAddPagibigLoan
-  // ModalAddSSSLoan
+
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: (values) =>
@@ -40,10 +39,10 @@ const ModalAddSSSLoan = ({ item }) => {
       ),
     onSuccess: (data) => {
       // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: ["employeeSSSLoan"] });
+      queryClient.invalidateQueries({ queryKey: ["employeePagibigLoan"] });
       // show success box
       if (data.success) {
-        dispatch(setIsConfirm(false));
+        dispatch(setIsRestore(false));
         dispatch(setSuccess(true));
         dispatch(setMessage(`Successfuly ${item ? "Update" : "Add"}`));
       }
@@ -55,7 +54,7 @@ const ModalAddSSSLoan = ({ item }) => {
     },
   });
   const handleClose = () => {
-    dispatch(setIsConfirm(false));
+    dispatch(setIsRestore(false));
   };
 
   const initVal = {
@@ -63,7 +62,7 @@ const ModalAddSSSLoan = ({ item }) => {
       ? item.employee_installment_start_date
       : getDateNow(),
     employee_installment_end_date: "",
-    employee_installment_paytype_id: SSSLoanId,
+    employee_installment_paytype_id: PagibigLoanId,
     employee_installment_employee_id: eid,
     employee_installment_number_of_months: item
       ? item.employee_installment_number_of_months
@@ -76,7 +75,6 @@ const ModalAddSSSLoan = ({ item }) => {
     employee_installment_start_date: Yup.string().required("Required"),
     employee_installment_amount: Yup.string().required("Required"),
     employee_installment_number_of_months: Yup.string().required("Required"),
-    employee_installment_status: item && Yup.string().required("Required"),
   });
 
   return (
@@ -85,7 +83,7 @@ const ModalAddSSSLoan = ({ item }) => {
         <div className="p-1 w-[350px] rounded-b-2xl">
           <div className="flex justify-between items-center bg-primary p-3 rounded-t-2xl">
             <h3 className="text-white text-sm">
-              {item ? "Update" : "Add"} SSS Loan Details
+              {item ? "Update" : "Add"} Pagibig Loan Details
             </h3>
             <button
               type="button"
@@ -181,4 +179,4 @@ const ModalAddSSSLoan = ({ item }) => {
   );
 };
 
-export default ModalAddSSSLoan;
+export default ModalAddPagibigLoan;

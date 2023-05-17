@@ -1,9 +1,9 @@
 import React from "react";
-import { StoreContext } from "../../../../../store/StoreContext";
-import PageNotFound from "../../../../partials/PageNotFound";
-import DeductionInstallmenPage from "../DeductionInstallmenPage";
+import OtherDeduction from "../OtherDeduction";
+import { StoreContext } from "../../../../../../store/StoreContext";
+import PageNotFound from "../../../../../partials/PageNotFound";
 
-const SystemDeductionInstallment = () => {
+const SystemOtherDeduction = () => {
   const { store, dispatch } = React.useContext(StoreContext);
   const fbsPayroll = JSON.parse(localStorage.getItem("fbsPayroll"));
 
@@ -15,9 +15,9 @@ const SystemDeductionInstallment = () => {
   }
   return (
     <>
-      <DeductionInstallmenPage />
+      <OtherDeduction />
     </>
   );
 };
 
-export default SystemDeductionInstallment;
+export default SystemOtherDeduction;

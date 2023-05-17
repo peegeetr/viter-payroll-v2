@@ -1,20 +1,20 @@
 import React from "react";
-import { StoreContext } from "../../../../store/StoreContext";
-import useQueryData from "../../../custom-hooks/useQueryData";
+import { StoreContext } from "../../../../../store/StoreContext";
+import useQueryData from "../../../../custom-hooks/useQueryData";
 import {
   devApiUrl,
   getUrlParam,
   hrisDevApiUrl,
-} from "../../../helpers/functions-general";
-import BreadCrumbs from "../../../partials/BreadCrumbs";
-import Footer from "../../../partials/Footer";
-import Header from "../../../partials/Header";
-import Navigation from "../../../partials/Navigation";
-import ModalError from "../../../partials/modals/ModalError";
-import ModalSuccess from "../../../partials/modals/ModalSuccess";
-import DeductionInstallmentList from "./DeductionInstallmentList";
+} from "../../../../helpers/functions-general";
+import BreadCrumbs from "../../../../partials/BreadCrumbs";
+import Footer from "../../../../partials/Footer";
+import Header from "../../../../partials/Header";
+import Navigation from "../../../../partials/Navigation";
+import ModalError from "../../../../partials/modals/ModalError";
+import ModalSuccess from "../../../../partials/modals/ModalSuccess";
+import OtherDeductionList from "./OtherDeductionList";
 
-const DeductionInstallment = () => {
+const OtherDeduction = () => {
   const { store, dispatch } = React.useContext(StoreContext);
   const eid = getUrlParam().get("employeeid");
 
@@ -56,7 +56,7 @@ const DeductionInstallment = () => {
         </p>
         <div className="w-full pb-40">
           {/* <MyPayslipPassword /> */}
-          <DeductionInstallmentList draft={draft} draftLoading={draftLoading} />
+          <OtherDeductionList draft={draft} draftLoading={draftLoading} />
         </div>
         <Footer />
       </div>
@@ -67,4 +67,4 @@ const DeductionInstallment = () => {
   );
 };
 
-export default DeductionInstallment;
+export default OtherDeduction;

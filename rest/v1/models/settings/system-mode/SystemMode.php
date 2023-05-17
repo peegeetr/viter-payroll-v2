@@ -50,6 +50,8 @@ class SystemMode
         try {
             $sql = "select settings_system_mode_aid, ";
             $sql .= "settings_system_mode_name, ";
+            $sql .= "settings_system_mode_is_maintenance, ";
+            $sql .= "settings_system_mode_is_test_mode, ";
             $sql .= "settings_system_mode_is_on ";
             $sql .= "from {$this->tblSystemMode} ";
             $sql .= "order by settings_system_mode_name asc ";
@@ -60,7 +62,6 @@ class SystemMode
         }
         return $query;
     }
-
 
     public function update()
     {
@@ -133,6 +134,21 @@ class SystemMode
                 "settings_system_mode_datetime" => $this->settings_system_mode_datetime,
                 "settings_system_mode_aid" => $this->settings_system_mode_aid,
             ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+    public function readMaintenanceOn()
+    {
+        try {
+            $sql = "select settings_system_mode_is_on as maintenance ";
+            $sql .= "from {$this->tblSystemMode} ";
+            $sql .= "where settings_system_mode_is_maintenance = '1' ";
+            $sql .= "and settings_system_mode_is_on = '1' ";
+            $sql .= "order by settings_system_mode_name asc ";
+
+            $query = $this->connection->query($sql);
         } catch (PDOException $ex) {
             $query = false;
         }

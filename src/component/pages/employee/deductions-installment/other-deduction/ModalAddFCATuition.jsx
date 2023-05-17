@@ -8,22 +8,22 @@ import {
   setIsAdd,
   setMessage,
   setSuccess,
-} from "../../../../store/StoreAction";
-import { StoreContext } from "../../../../store/StoreContext";
-import { InputSelect, InputText } from "../../../helpers/FormInputs";
+} from "../../../../../store/StoreAction";
+import { StoreContext } from "../../../../../store/StoreContext";
+import { InputSelect, InputText } from "../../../../helpers/FormInputs";
 import {
   getDateNow,
   getUrlParam,
   devApiUrl,
   handleNumOnly,
   removeComma,
-} from "../../../helpers/functions-general";
-import { queryData } from "../../../helpers/queryData";
-import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
-import { getEndOfInstallment } from "./functions-deductions-installment";
-import { PagibigMP2Id } from "../../../helpers/functions-payitemId";
+} from "../../../../helpers/functions-general";
+import { queryData } from "../../../../helpers/queryData";
+import ButtonSpinner from "../../../../partials/spinners/ButtonSpinner";
+import { getEndOfInstallment } from "../functions-deductions-installment";
+import { fcaTutionId } from "../../../../helpers/functions-payitemId";
 
-const ModalAddMP2 = ({ item, employeeMP2 }) => {
+const ModalAddFCATuition = ({ item }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const eid = getUrlParam().get("employeeid");
   // ModalAddPagibigLoan
@@ -41,7 +41,7 @@ const ModalAddMP2 = ({ item, employeeMP2 }) => {
       ),
     onSuccess: (data) => {
       // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: ["employeeMP2"] });
+      queryClient.invalidateQueries({ queryKey: ["employeeTuition"] });
       // show success box
       if (data.success) {
         dispatch(setIsAdd(false));
@@ -64,7 +64,7 @@ const ModalAddMP2 = ({ item, employeeMP2 }) => {
       ? item.employee_installment_start_date
       : getDateNow(),
     employee_installment_end_date: "",
-    employee_installment_paytype_id: PagibigMP2Id,
+    employee_installment_paytype_id: fcaTutionId,
     employee_installment_employee_id: eid,
     employee_installment_number_of_months: item
       ? item.employee_installment_number_of_months
@@ -79,14 +79,13 @@ const ModalAddMP2 = ({ item, employeeMP2 }) => {
     employee_installment_number_of_months: Yup.string().required("Required"),
     employee_installment_status: item && Yup.string().required("Required"),
   });
-  console.log(employeeMP2);
   return (
     <>
       <div className="fixed top-0 right-0 bottom-0 left-0 flex items-center justify-center bg-dark bg-opacity-50 z-50">
         <div className="p-1 w-[350px] rounded-b-2xl">
           <div className="flex justify-between items-center bg-primary p-3 rounded-t-2xl">
             <h3 className="text-white text-sm">
-              {item ? "Update" : "Add"} MP2 Details
+              {item ? "Update" : "Add"} FCA Tuition
             </h3>
             <button
               type="button"
@@ -106,10 +105,14 @@ const ModalAddMP2 = ({ item, employeeMP2 }) => {
                 const employee_installment_amount = removeComma(
                   `${values.employee_installment_amount}`
                 );
+                const employee_installment_number_of_months = removeComma(
+                  `${values.employee_installment_number_of_months}`
+                );
 
                 mutation.mutate({
                   ...values,
                   employee_installment_amount,
+                  employee_installment_number_of_months,
                 });
               }}
             >
@@ -142,33 +145,14 @@ const ModalAddMP2 = ({ item, employeeMP2 }) => {
                       />
                     </div>
                     <div className="relative mb-6">
-                      <InputSelect
-                        label="Number of Years"
+                      <InputText
+                        label="Number of Months"
                         name="employee_installment_number_of_months"
+                        type="text"
+                        num="num"
                         disabled={mutation.isLoading}
-                      >
-                        <option value="" hidden>
-                          --
-                        </option>
-                        <option value="60">5 year</option>
-                        <option value="24">2 year</option>
-                      </InputSelect>
+                      />
                     </div>
-                    {item && (
-                      <div className="relative mb-6">
-                        <InputSelect
-                          label="Status"
-                          name="employee_installment_status"
-                          disabled={mutation.isLoading}
-                        >
-                          <option value="" hidden>
-                            --
-                          </option>
-                          <option value="0">Stop</option>
-                          <option value="1">Ongoing</option>
-                        </InputSelect>
-                      </div>
-                    )}
                     <div className="flex items-center gap-1 p-4">
                       <button
                         type="submit"
@@ -197,4 +181,4 @@ const ModalAddMP2 = ({ item, employeeMP2 }) => {
   );
 };
 
-export default ModalAddMP2;
+export default ModalAddFCATuition;

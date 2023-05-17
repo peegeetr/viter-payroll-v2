@@ -1,7 +1,7 @@
 import React from "react";
 import { StoreContext } from "../../../../../store/StoreContext";
 import PageNotFound from "../../../../partials/PageNotFound";
-import DeductionInstallment from "../DeductionInstallment";
+import DeductionInstallmenPage from "../DeductionInstallmenPage";
 
 const OtherUserDeductionInstallment = () => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -12,7 +12,7 @@ const OtherUserDeductionInstallment = () => {
   }
   return (
     <>
-      <DeductionInstallment />
+      <DeductionInstallmenPage />
     </>
   );
 };

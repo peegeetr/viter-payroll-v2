@@ -114,6 +114,14 @@ import SystemDeductionInstallmentMP2 from "./component/pages/employee/deductions
 import OtherUserWTaxSummary from "./component/pages/reports/w-tax/summary-tax/links/OtherUserWTaxSummary";
 import SystemUserWTaxSummary from "./component/pages/reports/w-tax/summary-tax/links/SystemUserWTaxSummary";
 import SystemMode from "./component/pages/settings/system-mode/SystemMode";
+import OtherUserOptionalDeduction from "./component/pages/employee/deductions-installment/optional-deduction/link/OtherUserOptionalDeduction";
+import SystemOptionalDeduction from "./component/pages/employee/deductions-installment/optional-deduction/link/SystemOptionalDeduction";
+import SystemOtherDeduction from "./component/pages/employee/deductions-installment/other-deduction/link/SystemOtherDeduction";
+import SystemDeductionInstallmentFcaTuition from "./component/pages/employee/deductions-installment/view/links-tuition/SystemDeductionInstallmentFcaTuition";
+import SystemDeductionInstallmentFwcTithes from "./component/pages/employee/deductions-installment/view/links-tithes/SystemDeductionInstallmentFwcTithes";
+import OtherUserOtherDeduction from "./component/pages/employee/deductions-installment/other-deduction/link/OtherUserOtherDeduction";
+import OtherUserDeductionInstallmentFwcTithes from "./component/pages/employee/deductions-installment/view/links-tithes/OtherUserDeductionInstallmentFwcTithes";
+import OtherUserDeductionInstallmentFcaTuition from "./component/pages/employee/deductions-installment/view/links-tuition/OtherUserDeductionInstallmentFcaTuition";
 
 function App() {
   // Create a client
@@ -256,7 +264,15 @@ function App() {
               }
             />
             <Route
-              path={`${devNavUrl}/employee/details/deduction-installment/sss-loan`}
+              path={`${devNavUrl}/employee/details/deduction-installment/optional-deduction`}
+              element={
+                <ProtectedRouteOther>
+                  <OtherUserOptionalDeduction />
+                </ProtectedRouteOther>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/employee/details/deduction-installment/optional-deduction/sss-loan`}
               element={
                 <ProtectedRouteOther>
                   <OtherUserDeductionInstallmentSssLoan />
@@ -264,7 +280,7 @@ function App() {
               }
             />
             <Route
-              path={`${devNavUrl}/employee/details/deduction-installment/pagibig-loan`}
+              path={`${devNavUrl}/employee/details/deduction-installment/optional-deduction/pagibig-loan`}
               element={
                 <ProtectedRouteOther>
                   <OtherUserDeductionInstallmentPagibigLoan />
@@ -272,10 +288,35 @@ function App() {
               }
             />
             <Route
-              path={`${devNavUrl}/employee/details/deduction-installment/mp2`}
+              path={`${devNavUrl}/employee/details/deduction-installment/optional-deduction/mp2`}
               element={
                 <ProtectedRouteOther>
                   <OtherUserDeductionInstallmentMP2 />
+                </ProtectedRouteOther>
+              }
+            />
+
+            <Route
+              path={`${devNavUrl}/employee/details/deduction-installment/other-deduction`}
+              element={
+                <ProtectedRouteOther>
+                  <OtherUserOtherDeduction />
+                </ProtectedRouteOther>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/employee/details/deduction-installment/other-deduction/fwc-tithes`}
+              element={
+                <ProtectedRouteOther>
+                  <OtherUserDeductionInstallmentFwcTithes />
+                </ProtectedRouteOther>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/employee/details/deduction-installment/other-deduction/fca-tuition`}
+              element={
+                <ProtectedRouteOther>
+                  <OtherUserDeductionInstallmentFcaTuition />
                 </ProtectedRouteOther>
               }
             />
@@ -654,7 +695,15 @@ function App() {
               }
             />
             <Route
-              path={`${devNavUrl}/${UrlSystem}/employee/details/deduction-installment/sss-loan`}
+              path={`${devNavUrl}/${UrlSystem}/employee/details/deduction-installment/optional-deduction`}
+              element={
+                <ProtectedRouteSystem>
+                  <SystemOptionalDeduction />
+                </ProtectedRouteSystem>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/employee/details/deduction-installment/optional-deduction/sss-loan`}
               element={
                 <ProtectedRouteSystem>
                   <SystemDeductionInstallmentSssLoan />
@@ -662,7 +711,7 @@ function App() {
               }
             />
             <Route
-              path={`${devNavUrl}/${UrlSystem}/employee/details/deduction-installment/pagibig-loan`}
+              path={`${devNavUrl}/${UrlSystem}/employee/details/deduction-installment/optional-deduction/pagibig-loan`}
               element={
                 <ProtectedRouteSystem>
                   <SystemDeductionInstallmentPagibigLoan />
@@ -670,10 +719,34 @@ function App() {
               }
             />
             <Route
-              path={`${devNavUrl}/${UrlSystem}/employee/details/deduction-installment/mp2`}
+              path={`${devNavUrl}/${UrlSystem}/employee/details/deduction-installment/optional-deduction/mp2`}
               element={
                 <ProtectedRouteSystem>
                   <SystemDeductionInstallmentMP2 />
+                </ProtectedRouteSystem>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/employee/details/deduction-installment/other-deduction`}
+              element={
+                <ProtectedRouteSystem>
+                  <SystemOtherDeduction />
+                </ProtectedRouteSystem>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/employee/details/deduction-installment/other-deduction/fca-tuition`}
+              element={
+                <ProtectedRouteSystem>
+                  <SystemDeductionInstallmentFcaTuition />
+                </ProtectedRouteSystem>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/employee/details/deduction-installment/other-deduction/fwc-tithes`}
+              element={
+                <ProtectedRouteSystem>
+                  <SystemDeductionInstallmentFwcTithes />
                 </ProtectedRouteSystem>
               }
             />

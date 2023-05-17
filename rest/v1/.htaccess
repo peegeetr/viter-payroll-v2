@@ -174,3 +174,4 @@ RewriteRule ^employees-installment/all-pending$ controllers/employee/installment
 RewriteRule ^system-mode$ controllers/settings/system-mode/system-mode.php [L]
 RewriteRule ^system-mode/([0-9]+)$ controllers/settings/system-mode/system-mode.php?systemModeId=$1 [L]
 RewriteRule ^system-mode/active/([0-9]+)$ controllers/settings/system-mode/active.php?systemModeId=$1 [L]
+RewriteRule ^system-mode/maintenance$ controllers/settings/system-mode/read-maintenance-on.php [L]

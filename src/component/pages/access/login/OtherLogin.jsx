@@ -14,6 +14,9 @@ import TableSpinner from "../../../partials/spinners/TableSpinner";
 import FbsLogoLg from "../../../svg/FbsLogoLg";
 import useOtherIsLogin from "../../../custom-hooks/useOtherIsLogin";
 import ModalSuccess from "../../../partials/modals/ModalSuccess";
+import useQueryData from "../../../custom-hooks/useQueryData";
+import PageNotFound from "../../../partials/PageNotFound";
+import PageUnderMaintenance from "../../../partials/PageUnderMaintenance";
 
 const OtherLogin = () => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -26,6 +29,12 @@ const OtherLogin = () => {
     setPasswordShown(!passwordShown);
   };
 
+  // use if not loadmore button undertime
+  const { isLoading, data: isOnSystemMode } = useQueryData(
+    `${devApiUrl}/v1/system-mode/maintenance`, // endpoint
+    "get", // method
+    "isOnSystemMode" // key
+  );
   const initVal = {
     user_other_email: "",
     password: "",
@@ -38,8 +47,10 @@ const OtherLogin = () => {
 
   return (
     <>
-      {loginLoading ? (
+      {loginLoading || isLoading ? (
         <TableSpinner />
+      ) : isOnSystemMode?.count > 0 || isOnSystemMode?.data.length > 0 ? (
+        <PageUnderMaintenance />
       ) : (
         <div
           className="flex justify-center items-center"

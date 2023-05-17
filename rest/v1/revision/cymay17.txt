@@ -1,16 +1,18 @@
 
 *controllers           
     - settings/system-mode (note:all files) 
+    -> settings/system-mode/functions.php 
+    -> settings/system-mode/read-maintenance-on.php 
     
 *models     
     - payroll/list/payrollList.php  
-    - settings/system-mode/SystemMode.php 
+    -> settings/system-mode/SystemMode.php 
   
 *htaccess 
-    - #Settings System Mode
+    -> #SETTINGS SYSTEM MODE
 
 *db tables 
-    - prv2_settings_system_mode.sql
+    -> prv2_settings_system_mode.sql
 
 *core 
     - 

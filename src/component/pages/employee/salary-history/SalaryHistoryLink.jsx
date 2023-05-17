@@ -1,5 +1,5 @@
 import React from "react";
-import { FaUserCog } from "react-icons/fa";
+import { HiUserGroup } from "react-icons/hi";
 import { SlArrowRight } from "react-icons/sl";
 import { Link } from "react-router-dom";
 import { StoreContext } from "../../../../store/StoreContext";
@@ -17,7 +17,7 @@ const SalaryHistoryLink = () => {
       >
         <div className="flex items-center">
           <span className="text-lg mr-4">
-            <FaUserCog />
+            <HiUserGroup />
           </span>
           <span className=" font-bold">Salary History</span>
         </div>

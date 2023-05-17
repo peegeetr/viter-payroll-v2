@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 17, 2023 at 04:15 AM
+-- Generation Time: May 17, 2023 at 10:01 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -30,6 +30,8 @@ SET time_zone = "+00:00";
 CREATE TABLE `prv2_settings_system_mode` (
   `settings_system_mode_aid` int(11) NOT NULL,
   `settings_system_mode_name` varchar(100) NOT NULL,
+  `settings_system_mode_is_maintenance` tinyint(1) NOT NULL,
+  `settings_system_mode_is_test_mode` tinyint(1) NOT NULL,
   `settings_system_mode_is_on` tinyint(1) NOT NULL,
   `settings_system_mode_created` varchar(20) NOT NULL,
   `settings_system_mode_datetime` datetime NOT NULL
@@ -39,9 +41,9 @@ CREATE TABLE `prv2_settings_system_mode` (
 -- Dumping data for table `prv2_settings_system_mode`
 --
 
-INSERT INTO `prv2_settings_system_mode` (`settings_system_mode_aid`, `settings_system_mode_name`, `settings_system_mode_is_on`, `settings_system_mode_created`, `settings_system_mode_datetime`) VALUES
-(1, 'maintenance', 1, '2023-05-17 02:23:37.', '2023-05-17 09:44:37'),
-(2, 'test mode', 0, '2023-05-17 02:23:37.', '2023-05-17 02:23:37');
+INSERT INTO `prv2_settings_system_mode` (`settings_system_mode_aid`, `settings_system_mode_name`, `settings_system_mode_is_maintenance`, `settings_system_mode_is_test_mode`, `settings_system_mode_is_on`, `settings_system_mode_created`, `settings_system_mode_datetime`) VALUES
+(1, 'maintenance', 1, 0, 0, '2023-05-17 02:23:37.', '2023-05-17 13:05:44'),
+(2, 'test mode', 0, 1, 0, '2023-05-17 02:23:37.', '2023-05-17 02:23:37');
 
 --
 -- Indexes for dumped tables

@@ -2,22 +2,21 @@ import React from "react";
 import { HiUserGroup } from "react-icons/hi";
 import { SlArrowRight } from "react-icons/sl";
 import { Link } from "react-router-dom";
-import { setStartIndex } from "../../../../store/StoreAction";
-import { StoreContext } from "../../../../store/StoreContext";
+import { StoreContext } from "../../../../../store/StoreContext";
 import {
-  devNavUrl,
   getUrlParam,
   getUserType,
-} from "../../../helpers/functions-general";
+} from "../../../../helpers/functions-general";
+import { setStartIndex } from "../../../../../store/StoreAction";
 
-const DeductionInstallmentLink = () => {
+const OptionalDeductionLink = () => {
   const { store, dispatch } = React.useContext(StoreContext);
   const eid = getUrlParam().get("employeeid");
   const link = getUserType(store.credentials.data.role_is_developer === 1);
   return (
     <div className="group flex items-center justify-between border-b border-solid border-gray-300 ">
       <Link
-        to={`${link}/employee/details/deduction-installment?employeeid=${eid}`}
+        to={`${link}/employee/details/deduction-installment/optional-deduction?employeeid=${eid}`}
         className="w-full py-1 "
         onClick={() => dispatch(setStartIndex(0))}
       >
@@ -25,16 +24,13 @@ const DeductionInstallmentLink = () => {
           <span className="text-lg mr-4">
             <HiUserGroup />
           </span>
-          <span className="font-bold">Deductions Installment</span>
+          <span className="font-bold">Optional Deduction</span>
         </div>
-        <p className="ml-8 my-0">
-          Manage the basic information, address and contact information of
-          employee.
-        </p>
+        <p className="ml-8 my-0">Manage optional deduction information.</p>
       </Link>
 
       <Link
-        to={`${link}/employee/details/deduction-installment?employeeid=${eid}`}
+        to={`${link}/employee/details/deduction-installment/optional-deduction?employeeid=${eid}`}
         className="btn-action-table group-hover:bg-primary group-hover:text-white"
         onClick={() => dispatch(setStartIndex(0))}
       >
@@ -44,4 +40,4 @@ const DeductionInstallmentLink = () => {
   );
 };
 
-export default DeductionInstallmentLink;
+export default OptionalDeductionLink;

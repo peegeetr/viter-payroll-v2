@@ -826,7 +826,8 @@ export const holidayTotalAmount = (emp, holidaysItem, holidayExemptions) => {
       if (holidaysItem.holidays_type === "doubleSR") {
         dailyAmount = dailyRate * (Number(rate) - 2);
       } else {
-        dailyAmount = dailyRate;
+        // dailyAmount = dailyRate;
+        dailyAmount = 0;
       }
     }
 

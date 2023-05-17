@@ -58,7 +58,7 @@ const PayslipEarnings = ({
                   {`${undertimeHrs > 0 || ndHrs > 0 ? "hours" : ""}`}
                 </td>
                 <td className="w-[10rem] print:py-[2px] text-right px-4">
-                  hourly rate
+                  {/* hourly rate */}
                 </td>
                 <td className="text-right print:py-[2px] px-4">total</td>
               </tr>
@@ -70,7 +70,7 @@ const PayslipEarnings = ({
                 }`}</td>
                 <td className="w-[10rem] print:py-[2px]">{/* {basicHrs} */}</td>
                 <td className="text-right print:py-[2px] px-4">
-                  {hourRate.toFixed(4)}
+                  {/* {hourRate.toFixed(4)} */}
                 </td>
                 <td className="text-right print:py-[2px] px-4">
                   {numberWithCommas(basicPay.toFixed(2))}
@@ -107,11 +107,7 @@ const PayslipEarnings = ({
                 <td className="w-[10rem] print:py-[2px]">
                   {holidayId !== item.earnings_payitem_id &&
                     absencesId !== item.earnings_payitem_id &&
-                    `${item.earnings_hrs} ${
-                      Number(nightDiffId) === item.payitem_aid
-                        ? `of ${days * 8}`
-                        : ``
-                    }`}
+                    `${Number(item.earnings_hrs).toFixed(4)}`}
                 </td>
                 {/* <td className="w-[10rem]">{numberOfHolidays * 8}</td> */}
                 <td className=" text-right px-4 w-[5rem] print:py-[2px]">
@@ -123,18 +119,9 @@ const PayslipEarnings = ({
                       : (hourRate * (Number(item.earnings_rate) / 100)).toFixed(
                           4
                         ))} */}
-                  {/* {holidayId !== item.earnings_payitem_id &&
+                  {holidayId !== item.earnings_payitem_id &&
                     absencesId !== item.earnings_payitem_id &&
-                    (Number(nightDiffId) === item.payitem_aid
-                      ? (
-                          hourRate * (Number(item.earnings_rate) / 100) -
-                          hourRate
-                        ).toFixed(4)
-                      : item.earnings_rate === ""
-                      ? ""
-                      : (hourRate * (Number(item.earnings_rate) / 100)).toFixed(
-                          4
-                        ))} */}
+                    `${hourRate.toFixed(4)} / Hr`}
                 </td>
                 <td className=" text-right px-4 print:py-[2px]">
                   {item.earnings_payitem_id === absencesId ||

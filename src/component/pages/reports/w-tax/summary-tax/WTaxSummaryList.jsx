@@ -48,7 +48,7 @@ const WTaxSummaryList = () => {
     refetchOnWindowFocus: false,
     cacheTime: 200,
   });
-  console.log(result);
+  console.log("result", result);
 
   React.useEffect(() => {
     if (inView) {
@@ -131,7 +131,7 @@ const WTaxSummaryList = () => {
             );
           }}
         </Formik>
-        {(status === "loading" || result?.pages[0].data.length === 0) && (
+        {/* {(status === "loading" || result?.pages[0].data.length === 0) && (
           <table>
             <tbody>
               <tr className="text-center relative">
@@ -142,7 +142,7 @@ const WTaxSummaryList = () => {
               </tr>
             </tbody>
           </table>
-        )}
+        )} */}
         {error && (
           <table>
             <tbody>

@@ -3,6 +3,7 @@
     - settings/system-mode (note:all files) 
     
 *models     
+    - payroll/list/payrollList.php  
     - settings/system-mode/SystemMode.php 
   
 *htaccess 

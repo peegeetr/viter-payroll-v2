@@ -998,7 +998,7 @@ class PayrollList
             $sql .= "from {$this->tblPayrollList} as payrollList, ";
             $sql .= "{$this->tblPayroll} as payroll ";
             $sql .= "where payrollList.payroll_list_payroll_id = payroll.payroll_id ";
-            $sql .= "and MONTHNAME(payroll.payroll_pay_date) = :month ";
+            $sql .= "and MONTHNAME(payroll.payroll_pay_date) = :month_name ";
             $sql .= "and YEAR(payroll.payroll_pay_date) = :year ";
             $sql .= "group by payrollList.payroll_list_employee_id ";
             $sql .= "order by payrollList.payroll_list_payroll_id, ";
@@ -1006,7 +1006,7 @@ class PayrollList
             $sql .= "payrollList.payroll_list_employee_name asc ";
             $query = $this->connection->prepare($sql);
             $query->execute([
-                "month" => $this->date_from,
+                "month_name" => $this->date_from,
                 "year" => $this->date_to,
             ]);
         } catch (PDOException $ex) {
@@ -1020,7 +1020,8 @@ class PayrollList
     public function readReportSummaryWtax()
     {
         try {
-            $sql = "select sum(payrollList.payroll_list_gross) as gross, ";
+            $sql = "select payrollList.*, ";
+            $sql .= "sum(payrollList.payroll_list_gross) as gross, ";
             $sql .= "sum(payrollList.payroll_list_sss_ee) as sss, ";
             $sql .= "sum(payrollList.payroll_list_philhealth_ee) as phic, ";
             $sql .= "sum(payrollList.payroll_list_pagibig_ee) as pag, ";
@@ -1028,7 +1029,6 @@ class PayrollList
             $sql .= "sum(payrollList.payroll_list_13th_month) as month13, ";
             $sql .= "sum(payrollList.payroll_list_bonus) as bonus, ";
             $sql .= "sum(payrollList.payroll_list_total_benefits) as benefits, ";
-            $sql .= "sum(payrollList.payroll_list_tax) as tax, ";
             $sql .= "payroll.payroll_category_type, ";
             $sql .= "payroll.payroll_id, ";
             $sql .= "payroll.payroll_start_date, ";
@@ -1039,6 +1039,7 @@ class PayrollList
             $sql .= "where payrollList.payroll_list_payroll_id = payroll.payroll_id ";
             $sql .= "and MONTH(payroll.payroll_pay_date) = :month ";
             $sql .= "and YEAR(payroll.payroll_pay_date) = :year ";
+            $sql .= "group by payrollList.payroll_list_employee_id ";
             $sql .= "order by payrollList.payroll_list_payroll_id, ";
             $sql .= "payroll.payroll_end_date desc, ";
             $sql .= "payrollList.payroll_list_employee_name asc ";

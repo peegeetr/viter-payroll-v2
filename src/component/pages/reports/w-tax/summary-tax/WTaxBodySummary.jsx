@@ -52,95 +52,73 @@ const WTaxBodySummary = ({ result, month, monthlyTax }) => {
 
   return (
     <>
-      {result?.pages.map((page, key) => (
-        <React.Fragment key={key}>
-          {page.data.map((item, key) => {
-            taxMonthly = 0;
-            totalShareEe = item.sss + item.pag + item.phic;
-            totalBenefits = item.month13 + item.bonus + item.benefits;
-            nonTax = totalBenefits + totalShareEe + item.deminimis;
-            // compute monthly tax due
-            tax = payComputeTaxDue(
-              Number(item.gross),
-              monthlyTax,
-              totalBenefits,
-              totalShareEe,
-              item.deminimis
-            );
-            totalCompensation = Number(item.gross) + Number(item.benefits);
-            return (
-              <div key={key} className="mb-8 print:mb-12">
-                <HeaderPrint />
-                <div className="text-center pb-4 font-bold print:pt-4">
-                  <p className="m-0">Tax Summary</p>
-                  <p className="m-0 text-primary font-bold">
-                    {`${getMonthName(month)} - ${getCurrentYear()}`}
-                  </p>
-                </div>
-                <table>
-                  <tbody>
-                    <tr className="bg-gray-200 hover:bg-gray-200 text-primary">
-                      <td>Total Amount of Compensation</td>
-                      <td className="w-[8rem] text-right px-4"></td>
-                      <td className=" text-right px-4">
-                        {numberWithCommas(Number(totalCompensation).toFixed(2))}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="w-[15rem]">
-                        Less Non Taxable Compensation
-                      </td>
-                      <td className="w-[8rem] text-right px-4"></td>
-                      <td className=" text-right px-4"></td>
-                    </tr>
-                    <tr>
-                      <td className="w-[15rem]">13th Month & Other Benefits</td>
-                      <td className="w-[8rem] text-right px-4">
-                        {numberWithCommas(Number(totalBenefits).toFixed(2))}
-                      </td>
-                      <td className=" text-right px-4"></td>
-                    </tr>
-                    <tr>
-                      <td className="w-[15rem]">Deminimis</td>
-                      <td className="w-[8rem] text-right px-4">
-                        {numberWithCommas(Number(item.deminimis).toFixed(2))}
-                      </td>
-                      <td className=" text-right px-4"></td>
-                    </tr>
-                    <tr>
-                      <td className="w-[15rem]">
-                        Employee Share (SSS, PHIC, PGBG)
-                      </td>
-                      <td className="w-[8rem] text-right px-4">
-                        {numberWithCommas(Number(totalShareEe).toFixed(2))}
-                      </td>
-                      <td className=" text-right px-4"></td>
-                    </tr>
-                    <tr className="  bg-gray-200 hover:bg-gray-200 text-primary">
-                      <td className="w-[15rem] ">
-                        Total Non Taxable Compensation
-                      </td>
-                      <td className=" text-right px-4"></td>
-                      <td className=" text-right px-4">
-                        {numberWithCommas(nonTax.toFixed(2))}
-                      </td>
-                    </tr>
+      <div className="mb-8 print:mb-12">
+        <HeaderPrint />
+        <div className="text-center pb-4 font-bold print:pt-4">
+          <p className="m-0">Tax Summary</p>
+          <p className="m-0 text-primary font-bold">
+            {`${getMonthName(month)} - ${getCurrentYear()}`}
+          </p>
+        </div>
+        <table>
+          <tbody>
+            <tr className="bg-gray-200 hover:bg-gray-200 text-primary">
+              <td>Total Amount of Compensation</td>
+              <td className="w-[8rem] text-right px-4"></td>
+              <td className=" text-right px-4">
+                {/* {numberWithCommas(Number(totalCompensation).toFixed(2))} */}
+                0.00
+              </td>
+            </tr>
+            <tr>
+              <td className="w-[15rem]">Less Non Taxable Compensation</td>
+              <td className="w-[8rem] text-right px-4"></td>
+              <td className=" text-right px-4"></td>
+            </tr>
+            <tr>
+              <td className="w-[15rem]">13th Month & Other Benefits</td>
+              <td className="w-[8rem] text-right px-4">
+                {/* {numberWithCommas(Number(totalBenefits).toFixed(2))} */}
+                0.00
+              </td>
+              <td className=" text-right px-4"></td>
+            </tr>
+            <tr>
+              <td className="w-[15rem]">Deminimis</td>
+              <td className="w-[8rem] text-right px-4">
+                {/* {numberWithCommas(Number(item.deminimis).toFixed(2))} */}
+                0.00
+              </td>
+              <td className=" text-right px-4"></td>
+            </tr>
+            <tr>
+              <td className="w-[15rem]">Employee Share (SSS, PHIC, PGBG)</td>
+              <td className="w-[8rem] text-right px-4">
+                {/* {numberWithCommas(Number(totalShareEe).toFixed(2))} */}
+                0.00
+              </td>
+              <td className=" text-right px-4"></td>
+            </tr>
+            <tr className="  bg-gray-200 hover:bg-gray-200 text-primary">
+              <td className="w-[15rem] ">Total Non Taxable Compensation</td>
+              <td className=" text-right px-4"></td>
+              <td className=" text-right px-4">
+                {/* {numberWithCommas(nonTax.toFixed(2))} */}
+                0.00
+              </td>
+            </tr>
 
-                    <tr className="  bg-gray-200 hover:bg-gray-200 text-primary">
-                      <td className="w-[15rem] ">Tax Withheld</td>
-                      <td className=" text-right px-4"></td>
-                      <td className=" text-right px-4">
-                        {numberWithCommas(Number(item.tax).toFixed(2))}
-                        {/* {taxMonthly} */}
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            );
-          })}
-        </React.Fragment>
-      ))}
+            <tr className="  bg-gray-200 hover:bg-gray-200 text-primary">
+              <td className="w-[15rem] ">Tax Withheld</td>
+              <td className=" text-right px-4"></td>
+              <td className=" text-right px-4">
+                {/* {numberWithCommas(Number(item.tax).toFixed(2))} */}
+                0.00
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </>
   );
 };

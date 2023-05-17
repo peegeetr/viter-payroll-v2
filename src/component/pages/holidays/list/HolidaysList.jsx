@@ -50,6 +50,7 @@ const HolidaysList = ({ setItemEdit }) => {
       return;
     },
     refetchOnWindowFocus: false,
+    cacheTime: 200,
   });
 
   React.useEffect(() => {

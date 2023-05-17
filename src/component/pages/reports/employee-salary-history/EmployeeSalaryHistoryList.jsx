@@ -47,7 +47,7 @@ const EmployeeSalaryHistoryList = () => {
       return;
     },
     refetchOnWindowFocus: false,
-    cacheTime: 1000,
+    cacheTime: 200,
   });
 
   React.useEffect(() => {

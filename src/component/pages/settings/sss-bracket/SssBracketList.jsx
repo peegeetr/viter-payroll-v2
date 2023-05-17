@@ -53,7 +53,7 @@ const SssBracketList = ({ setItemEdit, setItemNum }) => {
       return;
     },
     refetchOnWindowFocus: false,
-    cacheTime: 1000,
+    cacheTime: 200,
   });
 
   React.useEffect(() => {

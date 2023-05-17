@@ -55,6 +55,7 @@ const ManageDeductionList = () => {
       return;
     },
     refetchOnWindowFocus: false,
+    cacheTime: 200,
   });
 
   consoleLog(result);

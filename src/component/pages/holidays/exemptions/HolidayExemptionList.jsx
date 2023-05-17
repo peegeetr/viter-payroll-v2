@@ -60,6 +60,7 @@ const HolidayExemptionList = ({ setItemEdit, employeeName }) => {
       return;
     },
     refetchOnWindowFocus: false,
+    cacheTime: 200,
   });
 
   React.useEffect(() => {

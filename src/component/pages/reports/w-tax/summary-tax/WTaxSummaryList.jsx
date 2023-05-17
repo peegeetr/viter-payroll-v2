@@ -46,7 +46,7 @@ const WTaxSummaryList = () => {
       return;
     },
     refetchOnWindowFocus: false,
-    cacheTime: 1000,
+    cacheTime: 200,
   });
   console.log(result);
 

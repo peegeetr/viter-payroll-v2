@@ -10,7 +10,7 @@
     - #Settings System Mode
 
 *db tables 
-    - 
+    - prv2_settings_system_mode.sql
 
 *core 
     - 

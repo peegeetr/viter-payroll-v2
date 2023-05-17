@@ -169,3 +169,8 @@ RewriteRule ^employees-installment/([0-9]+)$ controllers/employee/installment/em
 RewriteRule ^employees-installment/by-employee/([0-9]+)/([0-9]+)$ controllers/employee/installment/read-installment-by-employee-id.php?paytypeId=$1&employeeId=$2 [L]
 RewriteRule ^employees-installment/all-by-employee/([0-9]+)/([0-9]+)$ controllers/employee/installment/read-all-installment-by-employee-id.php?paytypeId=$1&employeeId=$2 [L]
 RewriteRule ^employees-installment/all-pending$ controllers/employee/installment/read-all-installment-pending.php [L]
+
+#SETTINGS SYSTEM MODE
+RewriteRule ^system-mode$ controllers/settings/system-mode/system-mode.php [L]
+RewriteRule ^system-mode/([0-9]+)$ controllers/settings/system-mode/system-mode.php?systemModeId=$1 [L]
+RewriteRule ^system-mode/active/([0-9]+)$ controllers/settings/system-mode/active.php?systemModeId=$1 [L]

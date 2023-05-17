@@ -1,0 +1,22 @@
+
+*controllers           
+    - settings/system-mode (note:all files) 
+    
+*models     
+    - settings/system-mode/SystemMode.php 
+  
+*htaccess 
+    - #Settings System Mode
+
+*db tables 
+    - 
+
+*core 
+    - 
+
+*extra 
+    - 
+Patrick
+    -  
+
+ 

@@ -1003,10 +1003,13 @@ export const payComputePagibig = (emp, pagibig) => {
   let pagibigEr = 0;
   let pagibigEe = 0;
   let pagibigList = [];
+
   if (pagibig.length > 0) {
     if (Number(emp.payroll_list_pagibig_additional) > 0) {
-      pagibigEr = Number(emp.payroll_list_pagibig_additional);
-      pagibigEe = Number(emp.payroll_list_pagibig_additional);
+      pagibigEr = Number(pagibig[0].pagibig_er_amount);
+      pagibigEe =
+        Number(pagibig[0].pagibig_ee_amount) +
+        Number(emp.payroll_list_pagibig_additional);
     } else {
       pagibigEr = pagibig[0].pagibig_er_amount;
       pagibigEe = pagibig[0].pagibig_ee_amount;

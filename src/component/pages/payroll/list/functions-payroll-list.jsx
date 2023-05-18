@@ -49,7 +49,7 @@ export const runPayroll = (
   categoryId,
   yearlyTax,
   holidayExemptions,
-  employeesInstallment
+  employeesDeductionInstallment
 ) => {
   let payrollTotalAmount = 0;
   let grossAmount = 0;
@@ -160,7 +160,7 @@ export const runPayroll = (
     payrollList.push(...categoryBonus.CategoryBonusList);
   }
 
-  // console.log(employeesInstallment);
+  // console.log(employeesDeductionInstallment);
   if (Number(categoryId) === payrollCategorySalaryId) {
     // loop each employee records
     employee.map((emp) => {
@@ -287,8 +287,8 @@ export const runPayroll = (
         sssAmount.sssEe + pagibigAmount.pagibigEe + philAmount.philhealthEe;
 
       // loop each deductions for each employee
-      console.log("123", employeesInstallment);
-      employeesInstallment.map((dInstallment) => {
+      console.log("123", employeesDeductionInstallment);
+      employeesDeductionInstallment.map((dInstallment) => {
         if (
           emp.payroll_list_employee_id ===
             dInstallment.employee_installment_employee_id &&
@@ -296,6 +296,7 @@ export const runPayroll = (
             dInstallment.employee_installment_number_of_months &&
           dInstallment.employee_installment_status === "0"
         ) {
+          // optional deduction
           pagibigLoanAmount = payComputePagibigLoan(emp, dInstallment);
           totalPagibigLoan += pagibigLoanAmount.finalAmount;
 
@@ -305,9 +306,20 @@ export const runPayroll = (
           sSSLoanAmount = payComputeSSSLoan(emp, dInstallment);
           totalSSSLoan += sSSLoanAmount.finalAmount;
 
+          // other deduction
+          tuitionAmount = payComputeTuition(emp, dInstallment);
+          totalTuition += tuitionAmount.finalAmount;
+
+          tithesAmount = payComputeTithes(emp, dInstallment);
+          totalTithes += tithesAmount.finalAmount;
+
+          // optional deduction list
           pagibigLoanList.push(...pagibigLoanAmount.pagibigLoanList);
           pagibigMP2List.push(...pagibigMP2Amount.pagibigMP2List);
           sSSLoanList.push(...sSSLoanAmount.sSSLoanList);
+          // other deduction list
+          tuitionList.push(...tuitionAmount.tuitionList);
+          tithesList.push(...tithesAmount.tithesList);
         }
       });
       payrollDeductions.map((deduction) => {
@@ -318,23 +330,8 @@ export const runPayroll = (
           deduction.deduction_number_of_installment >
             deduction.deduction_num_pay //number of payment
         ) {
-          tuitionAmount = payComputeTuition(emp, deduction);
-          totalTuition += tuitionAmount.finalAmount;
-
-          tithesAmount = payComputeTithes(emp, deduction);
-          totalTithes += tithesAmount.finalAmount;
-
           otherDeductionAmount = payComputeOtherDeduction(emp, deduction);
           totalOtherDeduction += otherDeductionAmount.finalAmount;
-
-          // pagibigLoanAmount = payComputePagibigLoan(emp, deduction);
-          // totalPagibigLoan += pagibigLoanAmount.finalAmount;
-
-          // pagibigMP2Amount = payComputePagibigMP2(emp, deduction);
-          // totalPagibigMP2 += pagibigMP2Amount.finalAmount;
-
-          // sSSLoanAmount = payComputeSSSLoan(emp, deduction);
-          // totalSSSLoan += sSSLoanAmount.finalAmount;
 
           // for updating number of pay if installment or one time
           deducNumInstallmentList.push({
@@ -349,15 +346,9 @@ export const runPayroll = (
           });
 
           // list of installment
-          // deduction
-          tuitionList.push(...tuitionAmount.tuitionList);
-          tithesList.push(...tithesAmount.tithesList);
+          // other deduction
           otherDeductionList.push(...otherDeductionAmount.otherDeductionList);
-          // pagibigLoanList.push(...pagibigLoanAmount.pagibigLoanList);
-          // pagibigMP2List.push(...pagibigMP2Amount.pagibigMP2List);
-          // sSSLoanList.push(...sSSLoanAmount.sSSLoanList);
         }
-        // console.log("tuitionList", tuitionAmount.tuitionList);
       });
 
       // compute tax due

@@ -1,0 +1,25 @@
+
+*controllers           
+    - payroll/list/paid.php 
+    - payroll/list/update.php 
+    - payroll/create.php 
+    
+*models     
+    - payroll/Payroll.php   
+  
+*htaccess 
+    - 
+
+*db tables 
+    - prv2_payroll_list.sql
+
+*core 
+    - 
+
+*extra 
+    - 
+    
+Patrick
+    -  
+
+ 

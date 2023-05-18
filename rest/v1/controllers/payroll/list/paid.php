@@ -40,12 +40,16 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 
         $allEarningsNumPayList = $data["earningsNumPayList"];
         $allDeducNumPayList = $data["deducNumPayList"];
-        // installment
+        // installment optional deduction
         $allPagibigLoanList = $data["pagibigLoanList"];
         $allPagibigMP2List = $data["pagibigMP2List"];
         $allSSSLoanList = $data["sSSLoanList"];
+        // installment other deduction
+        $allTuitionList = $data["tuitionList"];
+        $allTithesList = $data["tithesList"];
 
 
+        //optional deduction installment
         //update pagibig Loan to completed 
         if ($allPagibigLoanList !== 0) {
             for ($pgbg = 0; $pgbg < count($allPagibigLoanList); $pgbg++) {
@@ -78,6 +82,7 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
             }
         }
 
+        //optional deduction installment
         //update mp2 to completed 
         if ($allPagibigMP2List !== 0) {
             for ($mp2 = 0; $mp2 < count($allPagibigMP2List); $mp2++) {
@@ -110,6 +115,7 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
             }
         }
 
+        //optional deduction installment
         //update sss loan to completed 
         if ($allSSSLoanList !== 0) {
             for ($sss = 0; $sss < count($allSSSLoanList); $sss++) {
@@ -124,6 +130,72 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
                 $installmentDay = intval($installmentDayDate[2]);
                 // End pay date DAY
                 $EndPayDayDate = explode("-", $allSSSLoanList[$sss]["deduction_end_pay_date"]);
+                $EndPayDay = intval($EndPayDayDate[2]);
+
+                if (
+                    $numMonths <= $employee_installment_number_of_months &&
+                    $employee_installment_status === "0"
+                ) {
+                    checkUpdateDeductionInstallmentNumberOfPayrun($payrollList);
+                }
+                if (
+                    $numMonths >= $employee_installment_number_of_months &&
+                    $employee_installment_status === "0" && $installmentDay <= $EndPayDay
+                ) {
+                    $payrollList->employee_installment_status = 2;
+                    checkUpdateDeductionInstallemnt($payrollList);
+                }
+            }
+        }
+
+        //other deduction installment
+        //update fca tuition to completed 
+        if ($allTuitionList !== 0) {
+            for ($tu = 0; $tu < count($allTuitionList); $tu++) {
+                $payrollList->employee_installment_aid = $allTuitionList[$tu]["employee_installment_aid"];
+                $payrollList->employee_installment_number_of_payrun = $allTuitionList[$tu]["numOfPay"];
+
+                $employee_installment_status = $allTuitionList[$tu]["employee_installment_status"];
+                $employee_installment_number_of_months = $allTuitionList[$tu]["employee_installment_number_of_months"];
+                $numMonths = $allTuitionList[$tu]["numOfMonths"];
+                // installemt start date DAY
+                $installmentDayDate = explode("-", $allTuitionList[$tu]["employee_installment_start_date"]);
+                $installmentDay = intval($installmentDayDate[2]);
+                // End pay date DAY
+                $EndPayDayDate = explode("-", $allTuitionList[$tu]["deduction_end_pay_date"]);
+                $EndPayDay = intval($EndPayDayDate[2]);
+
+                if (
+                    $numMonths <= $employee_installment_number_of_months &&
+                    $employee_installment_status === "0"
+                ) {
+                    checkUpdateDeductionInstallmentNumberOfPayrun($payrollList);
+                }
+                if (
+                    $numMonths >= $employee_installment_number_of_months &&
+                    $employee_installment_status === "0" && $installmentDay <= $EndPayDay
+                ) {
+                    $payrollList->employee_installment_status = 2;
+                    checkUpdateDeductionInstallemnt($payrollList);
+                }
+            }
+        }
+
+        //other deduction installment
+        //update fwc Tithes to completed 
+        if ($allTithesList !== 0) {
+            for ($t = 0; $t < count($allTithesList); $t++) {
+                $payrollList->employee_installment_aid = $allTithesList[$t]["employee_installment_aid"];
+                $payrollList->employee_installment_number_of_payrun = $allTithesList[$t]["numOfPay"];
+
+                $employee_installment_status = $allTithesList[$t]["employee_installment_status"];
+                $employee_installment_number_of_months = $allTithesList[$t]["employee_installment_number_of_months"];
+                $numMonths = $allTithesList[$t]["numOfMonths"];
+                // installemt start date DAY
+                $installmentDayDate = explode("-", $allTithesList[$t]["employee_installment_start_date"]);
+                $installmentDay = intval($installmentDayDate[2]);
+                // End pay date DAY
+                $EndPayDayDate = explode("-", $allTithesList[$t]["deduction_end_pay_date"]);
                 $EndPayDay = intval($EndPayDayDate[2]);
 
                 if (

@@ -41,13 +41,14 @@ if (array_key_exists("listpayrollid", $_GET)) {
     $allSeparationPayList = $data["separationPayList"];
     $allOtherAllowancesList = $data["otherAllowancesList"];
 
-    // list of installment Deductions 
-    $allTuitionList = $data["tuitionList"];
-    $allTithesList = $data["tithesList"];
-    $allOtherDeductionList = $data["otherDeductionList"];
+    // list of installment optional Deductions 
     $allPagibigLoanList = $data["pagibigLoanList"];
     $allPagibigMP2List = $data["pagibigMP2List"];
     $allSSSLoanList = $data["sSSLoanList"];
+    // list of installment other Deductions 
+    $allTuitionList = $data["tuitionList"];
+    $allTithesList = $data["tithesList"];
+    $allOtherDeductionList = $data["otherDeductionList"];
     $payroll_category = null;
     $payrollTotalAmount = 0;
 
@@ -302,7 +303,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
     }
 
 
-    // list of installment Deduction 
+    // list of installment Optional Deduction 
     // delete first existing PR ID and pay item id pagibig Loan  
     $payrollList->deduction_payitem_id = $data["payItemPagibigLoanId"];
     checkId($payrollList->deduction_payitem_id);
@@ -323,15 +324,13 @@ if (array_key_exists("listpayrollid", $_GET)) {
             $payrollList->number_of_installment = $allPagibigLoanList[$pgbg]["deduction_number_of_installment"];
             $payrollList->start_pay_date = $allPagibigLoanList[$pgbg]["deduction_start_pay_date"];
             $payrollList->end_pay_date = $allPagibigLoanList[$pgbg]["deduction_end_pay_date"];
-            $payrollList->installment_extra = $allPagibigLoanList[$pgbg]["installment_extra"];
-            $numMonths = $allPagibigLoanList[$pgbg]["installment_extra"];
             $payrollList->installment_extra = 0;
             // create extra  
             $query = checkCreateDeductions($payrollList);
         }
     }
 
-    // list of installment Deduction
+    // list of installment Optional Deduction
     // delete first existing PR ID and pay item id pagibig mp2  
     $payrollList->deduction_payitem_id = $data["payItemPagibigMP2Id"];
     checkId($payrollList->deduction_payitem_id);
@@ -358,7 +357,7 @@ if (array_key_exists("listpayrollid", $_GET)) {
         }
     }
 
-    // list of installment Deduction
+    // list of installment Optional Deduction
     // delete first existing PR ID and pay item id sss loan  
     $payrollList->deduction_payitem_id = $data["payItemSSSLoanId"];
     checkId($payrollList->deduction_payitem_id);
@@ -380,6 +379,62 @@ if (array_key_exists("listpayrollid", $_GET)) {
             $payrollList->number_of_installment = $allSSSLoanList[$sss]["deduction_number_of_installment"];
             $payrollList->start_pay_date = $allSSSLoanList[$sss]["deduction_start_pay_date"];
             $payrollList->end_pay_date = $allSSSLoanList[$sss]["deduction_end_pay_date"];
+            $payrollList->installment_extra = 0;
+            // create extra 
+            $query = checkCreateDeductions($payrollList);
+        }
+    }
+
+    // list of installment Other Deduction
+    // delete first existing PR ID and pay item id fca tuition  
+    $payrollList->deduction_payitem_id = $data["payItemFcaTutionId"];
+    checkId($payrollList->deduction_payitem_id);
+    checkDeleteNotInstallmentDeductions($payrollList);
+    // SSS loan  
+    if (count($allTuitionList) > 0) {
+        for ($tu = 0; $tu < count($allTuitionList); $tu++) {
+
+            $payrollList->payroll_type_id = $allTuitionList[$tu]["deduction_payroll_type_id"];
+            $payrollList->num_pay = 1;
+            $payrollList->payroll_list_employee_name = $allTuitionList[$tu]["deduction_employee"];
+            $payrollList->payroll_list_employee_id = $allTuitionList[$tu]["deduction_employee_id"];
+            $payrollList->deduction_paytype_id = $allTuitionList[$tu]["deduction_paytype_id"];
+            $payrollList->deduction_payitem_id = $allTuitionList[$tu]["deduction_payitem_id"];
+            $payrollList->deduction_amount = $allTuitionList[$tu]["deduction_amount"];
+            $payrollList->deduction_details = $allTuitionList[$tu]["deduction_details"];
+            $payrollList->frequency = $allTuitionList[$tu]["deduction_frequency"];
+            $payrollList->is_installment = $allTuitionList[$tu]["deduction_is_installment"];
+            $payrollList->number_of_installment = $allTuitionList[$tu]["deduction_number_of_installment"];
+            $payrollList->start_pay_date = $allTuitionList[$tu]["deduction_start_pay_date"];
+            $payrollList->end_pay_date = $allTuitionList[$tu]["deduction_end_pay_date"];
+            $payrollList->installment_extra = 0;
+            // create extra 
+            $query = checkCreateDeductions($payrollList);
+        }
+    }
+
+    // list of installment Other Deduction
+    // delete first existing PR ID and pay item id fwc Tithes  
+    $payrollList->deduction_payitem_id = $data["payItemFwcTithesId"];
+    checkId($payrollList->deduction_payitem_id);
+    checkDeleteNotInstallmentDeductions($payrollList);
+    // SSS loan  
+    if (count($allTithesList) > 0) {
+        for ($ti = 0; $ti < count($allTithesList); $ti++) {
+
+            $payrollList->payroll_type_id = $allTithesList[$ti]["deduction_payroll_type_id"];
+            $payrollList->num_pay = 1;
+            $payrollList->payroll_list_employee_name = $allTithesList[$ti]["deduction_employee"];
+            $payrollList->payroll_list_employee_id = $allTithesList[$ti]["deduction_employee_id"];
+            $payrollList->deduction_paytype_id = $allTithesList[$ti]["deduction_paytype_id"];
+            $payrollList->deduction_payitem_id = $allTithesList[$ti]["deduction_payitem_id"];
+            $payrollList->deduction_amount = $allTithesList[$ti]["deduction_amount"];
+            $payrollList->deduction_details = $allTithesList[$ti]["deduction_details"];
+            $payrollList->frequency = $allTithesList[$ti]["deduction_frequency"];
+            $payrollList->is_installment = $allTithesList[$ti]["deduction_is_installment"];
+            $payrollList->number_of_installment = $allTithesList[$ti]["deduction_number_of_installment"];
+            $payrollList->start_pay_date = $allTithesList[$ti]["deduction_start_pay_date"];
+            $payrollList->end_pay_date = $allTithesList[$ti]["deduction_end_pay_date"];
             $payrollList->installment_extra = 0;
             // create extra 
             $query = checkCreateDeductions($payrollList);
@@ -565,60 +620,6 @@ if (array_key_exists("listpayrollid", $_GET)) {
         }
     }
 
-    // list of installment Deduction
-    // Tuition  
-    if (count($allTuitionList) > 0) {
-        for ($tu = 0; $tu < count($allTuitionList); $tu++) {
-            if ($allTuitionList[$tu]["installment_extra"] === 1) {
-                $payrollList->payroll_type_id = $allTuitionList[$tu]["deduction_payroll_type_id"];
-                $payrollList->num_pay = 1;
-                $payrollList->payroll_list_employee_name = $allTuitionList[$tu]["deduction_employee"];
-                $payrollList->payroll_list_employee_id = $allTuitionList[$tu]["deduction_employee_id"];
-                $payrollList->deduction_paytype_id = $allTuitionList[$tu]["deduction_paytype_id"];
-                $payrollList->deduction_payitem_id = $allTuitionList[$tu]["deduction_payitem_id"];
-                $payrollList->deduction_amount = $allTuitionList[$tu]["deduction_amount"];
-                $payrollList->deduction_details = $allTuitionList[$tu]["deduction_details"];
-                $payrollList->frequency = $allTuitionList[$tu]["deduction_frequency"];
-                $payrollList->is_installment = $allTuitionList[$tu]["deduction_is_installment"];
-                $payrollList->number_of_installment = $allTuitionList[$tu]["deduction_number_of_installment"];
-                $payrollList->start_pay_date = $allTuitionList[$tu]["deduction_start_pay_date"];
-                $payrollList->end_pay_date = $allTuitionList[$tu]["deduction_end_pay_date"];
-                $payrollList->installment_extra = $allTuitionList[$tu]["installment_extra"];
-
-                // delete first existing PR ID and pay item id pagibig ER 
-                checkDeleteNotInstallmentDeductionsByEmpId($payrollList);
-                // create extra 
-                $query = checkCreateDeductions($payrollList);
-            }
-        }
-    }
-
-    // list of installment Deduction
-    // Tithes  
-    if (count($allTithesList) > 0) {
-        for ($ti = 0; $ti < count($allTithesList); $ti++) {
-            if ($allTithesList[$ti]["installment_extra"] === 1) {
-                $payrollList->payroll_type_id = $allTithesList[$ti]["deduction_payroll_type_id"];
-                $payrollList->num_pay = 1;
-                $payrollList->payroll_list_employee_name = $allTithesList[$ti]["deduction_employee"];
-                $payrollList->payroll_list_employee_id = $allTithesList[$ti]["deduction_employee_id"];
-                $payrollList->deduction_paytype_id = $allTithesList[$ti]["deduction_paytype_id"];
-                $payrollList->deduction_payitem_id = $allTithesList[$ti]["deduction_payitem_id"];
-                $payrollList->deduction_amount = $allTithesList[$ti]["deduction_amount"];
-                $payrollList->deduction_details = $allTithesList[$ti]["deduction_details"];
-                $payrollList->frequency = $allTithesList[$ti]["deduction_frequency"];
-                $payrollList->is_installment = $allTithesList[$ti]["deduction_is_installment"];
-                $payrollList->number_of_installment = $allTithesList[$ti]["deduction_number_of_installment"];
-                $payrollList->start_pay_date = $allTithesList[$ti]["deduction_start_pay_date"];
-                $payrollList->end_pay_date = $allTithesList[$ti]["deduction_end_pay_date"];
-                $payrollList->installment_extra = $allTithesList[$ti]["installment_extra"];
-                // delete first existing PR ID and pay item id pagibig ER 
-                checkDeleteNotInstallmentDeductionsByEmpId($payrollList);
-                // create extra 
-                $query = checkCreateDeductions($payrollList);
-            }
-        }
-    }
 
     // list of installment Deduction
     // Other Deduction  

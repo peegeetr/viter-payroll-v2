@@ -22,6 +22,9 @@ class Payroll
     public $payroll_list_employee_work_on_holiday;
     public $payroll_list_pagibig_additional;
     public $payroll_list_employee_department;
+    public $payroll_list_deduc_employee_sss;
+    public $payroll_list_deduc_employee_pgbg;
+    public $payroll_list_deduc_employee_philhealth;
 
     public $connection;
     public $lastInsertedId;
@@ -101,6 +104,9 @@ class Payroll
             $sql .= "payroll_list_employee_work_on_holiday, ";
             $sql .= "payroll_list_pagibig_additional, ";
             $sql .= "payroll_list_employee_department, ";
+            $sql .= "payroll_list_deduc_employee_sss, ";
+            $sql .= "payroll_list_deduc_employee_pgbg, ";
+            $sql .= "payroll_list_deduc_employee_philhealth, ";
             $sql .= "payroll_list_created, ";
             $sql .= "payroll_list_datetime ) values ( ";
             $sql .= ":payroll_list_payroll_id, ";
@@ -114,6 +120,9 @@ class Payroll
             $sql .= ":payroll_list_employee_work_on_holiday, ";
             $sql .= ":payroll_list_pagibig_additional, ";
             $sql .= ":payroll_list_employee_department, ";
+            $sql .= ":payroll_list_deduc_employee_sss, ";
+            $sql .= ":payroll_list_deduc_employee_pgbg, ";
+            $sql .= ":payroll_list_deduc_employee_philhealth, ";
             $sql .= ":payroll_list_created, ";
             $sql .= ":payroll_list_datetime ) ";
             $query = $this->connection->prepare($sql);
@@ -129,6 +138,9 @@ class Payroll
                 "payroll_list_employee_work_on_holiday" => $this->payroll_list_employee_work_on_holiday,
                 "payroll_list_employee_department" => $this->payroll_list_employee_department,
                 "payroll_list_pagibig_additional" => $this->payroll_list_pagibig_additional,
+                "payroll_list_deduc_employee_sss" => $this->payroll_list_deduc_employee_sss,
+                "payroll_list_deduc_employee_pgbg" => $this->payroll_list_deduc_employee_pgbg,
+                "payroll_list_deduc_employee_philhealth" => $this->payroll_list_deduc_employee_philhealth,
                 "payroll_list_created" => $this->payroll_created,
                 "payroll_list_datetime" => $this->payroll_datetime,
             ]);

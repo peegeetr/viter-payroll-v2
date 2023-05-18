@@ -15,6 +15,8 @@ import {
   PagibigMP2Id,
   SSSLoanId,
   diminimisId,
+  fcaTutionId,
+  fwcTithesId,
   holidayId,
   nightDiffId,
   pagibigEeId,
@@ -49,7 +51,7 @@ const ModalRun = ({
   categoryId,
   yearlyTax,
   holidayExemptions,
-  employeesInstallment,
+  employeesDeductionInstallment,
 }) => {
   const { store, dispatch } = React.useContext(StoreContext);
 
@@ -108,7 +110,7 @@ const ModalRun = ({
       categoryId,
       yearlyTax,
       holidayExemptions,
-      employeesInstallment
+      employeesDeductionInstallment
     );
     console.log(run);
     let payrollList = run.payrollList;
@@ -207,6 +209,8 @@ const ModalRun = ({
       payItemPagibigLoanId: PagibigLoanId,
       payItemPagibigMP2Id: PagibigMP2Id,
       payItemSSSLoanId: SSSLoanId,
+      payItemFwcTithesId: fwcTithesId,
+      payItemFcaTutionId: fcaTutionId,
       payItemDeminimisId: diminimisId,
       categoryBunosId: payrollCategoryBonusId,
     });

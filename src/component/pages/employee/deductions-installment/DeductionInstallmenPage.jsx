@@ -35,7 +35,7 @@ const DeductionInstallmenPage = () => {
       <Header />
       <Navigation menu="employee" />
       <div className="wrapper ">
-        <BreadCrumbs />
+        <BreadCrumbs param={`${location.search}`} />
         <hr />
         {employee?.data.length ? (
           <>

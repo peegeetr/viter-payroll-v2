@@ -62,6 +62,9 @@ for ($i = 0; $i < count($allEmployee); $i++) {
     $payroll->payroll_list_deminimis = $allEmployee[$i]["employee_job_deminimis"];
     $payroll->payroll_list_pagibig_additional = $allEmployee[$i]["employee_job_pagibig_amount"];
     $payroll->payroll_list_employee_department = $allEmployee[$i]["department_name"];
+    $payroll->payroll_list_deduc_employee_sss = $allEmployee[$i]["employee_job_sss_deduc"];
+    $payroll->payroll_list_deduc_employee_pgbg = $allEmployee[$i]["employee_job_pag_ibig_deduc"];
+    $payroll->payroll_list_deduc_employee_philhealth = $allEmployee[$i]["employee_job_phil_health_deduc"];
     // create payroll list
     if ($allEmployee[$i]["employee_job_payroll_elegibility"] === 1) {
         checkCreatePayrollList($payroll);

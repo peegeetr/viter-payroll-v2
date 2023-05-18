@@ -939,15 +939,42 @@ export const payComputeSssBracket = (emp, sssBracket) => {
   let sssEr = 0;
   let sssEe = 0;
   let sssList = [];
-  sssBracket.map((item) => {
-    if (
-      Number(emp.payroll_list_employee_salary) >=
-        Number(item.sss_bracket_range_from) &&
-      Number(emp.payroll_list_employee_salary) <=
-        Number(item.sss_bracket_range_to)
-    ) {
-      sssEr = Number(item.sss_bracket_er) / 2;
-      sssEe = Number(item.sss_bracket_ee) / 2;
+  if (emp.payroll_list_deduc_employee_sss === 1) {
+    sssBracket.map((item) => {
+      if (
+        Number(emp.payroll_list_employee_salary) >=
+          Number(item.sss_bracket_range_from) &&
+        Number(emp.payroll_list_employee_salary) <=
+          Number(item.sss_bracket_range_to)
+      ) {
+        sssEr = Number(item.sss_bracket_er) / 2;
+        sssEe = Number(item.sss_bracket_ee) / 2;
+        // use to insert in earnings table
+        sssList.push({
+          earnings_payroll_type_id: emp.payroll_category_type,
+          earnings_employee: emp.payroll_list_employee_name,
+          earnings_employee_id: emp.payroll_list_employee_id,
+          deduction_paytype_id: mandatoryDeductionId,
+          earnings_paytype_id: empContributionEarningsId,
+          deduction_payitem_id: sssEeId,
+          earnings_payitem_id: sssErId,
+          deduction_amount: sssEe,
+          earnings_amount: sssEr,
+          earnings_details: "SSS Employer",
+          deduction_details: "SSS Employee",
+          earnings_frequency: isSemiMonthly,
+          earnings_is_installment: onetimeNumber,
+          earnings_number_of_installment: onetimeNumber,
+          earnings_start_pay_date: emp.payroll_start_date,
+          earnings_end_pay_date: emp.payroll_end_date,
+        });
+      }
+    });
+
+    // if out of bracket
+    if (sssEr === 0 || sssEe === 0) {
+      sssEr = Number(sssBracket[sssBracket.length - 1].sss_bracket_er) / 2;
+      sssEe = Number(sssBracket[sssBracket.length - 1].sss_bracket_ee) / 2;
       // use to insert in earnings table
       sssList.push({
         earnings_payroll_type_id: emp.payroll_category_type,
@@ -968,31 +995,6 @@ export const payComputeSssBracket = (emp, sssBracket) => {
         earnings_end_pay_date: emp.payroll_end_date,
       });
     }
-  });
-
-  // if out of bracket
-  if (sssEr === 0 || sssEe === 0) {
-    sssEr = Number(sssBracket[sssBracket.length - 1].sss_bracket_er) / 2;
-    sssEe = Number(sssBracket[sssBracket.length - 1].sss_bracket_ee) / 2;
-    // use to insert in earnings table
-    sssList.push({
-      earnings_payroll_type_id: emp.payroll_category_type,
-      earnings_employee: emp.payroll_list_employee_name,
-      earnings_employee_id: emp.payroll_list_employee_id,
-      deduction_paytype_id: mandatoryDeductionId,
-      earnings_paytype_id: empContributionEarningsId,
-      deduction_payitem_id: sssEeId,
-      earnings_payitem_id: sssErId,
-      deduction_amount: sssEe,
-      earnings_amount: sssEr,
-      earnings_details: "SSS Employer",
-      deduction_details: "SSS Employee",
-      earnings_frequency: isSemiMonthly,
-      earnings_is_installment: onetimeNumber,
-      earnings_number_of_installment: onetimeNumber,
-      earnings_start_pay_date: emp.payroll_start_date,
-      earnings_end_pay_date: emp.payroll_end_date,
-    });
   }
 
   return { sssEr, sssEe, sssList };
@@ -1003,34 +1005,37 @@ export const payComputePagibig = (emp, pagibig) => {
   let pagibigEr = 0;
   let pagibigEe = 0;
   let pagibigList = [];
-  if (pagibig.length > 0) {
-    if (Number(emp.payroll_list_pagibig_additional) > 0) {
-      pagibigEr = Number(emp.payroll_list_pagibig_additional);
-      pagibigEe = Number(emp.payroll_list_pagibig_additional);
-    } else {
-      pagibigEr = pagibig[0].pagibig_er_amount;
-      pagibigEe = pagibig[0].pagibig_ee_amount;
+  if (emp.payroll_list_deduc_employee_pgbg === 1) {
+    if (pagibig.length > 0) {
+      if (Number(emp.payroll_list_pagibig_additional) > 0) {
+        pagibigEr = Number(pagibig[0].pagibig_er_amount);
+        pagibigEe =
+          Number(pagibig[0].pagibig_ee_amount) +
+          Number(emp.payroll_list_pagibig_additional);
+      } else {
+        pagibigEr = pagibig[0].pagibig_er_amount;
+        pagibigEe = pagibig[0].pagibig_ee_amount;
+      }
     }
+    pagibigList.push({
+      earnings_payroll_type_id: emp.payroll_category_type,
+      earnings_employee: emp.payroll_list_employee_name,
+      earnings_employee_id: emp.payroll_list_employee_id,
+      deduction_paytype_id: mandatoryDeductionId,
+      earnings_paytype_id: empContributionEarningsId,
+      deduction_payitem_id: pagibigEeId,
+      earnings_payitem_id: pagibigErId,
+      deduction_amount: pagibigEe,
+      earnings_amount: pagibigEr,
+      earnings_details: "Pagibig Employer",
+      deduction_details: "Pagibig Employee",
+      earnings_frequency: isSemiMonthly,
+      earnings_is_installment: onetimeNumber,
+      earnings_number_of_installment: onetimeNumber,
+      earnings_start_pay_date: emp.payroll_start_date,
+      earnings_end_pay_date: emp.payroll_end_date,
+    });
   }
-  pagibigList.push({
-    earnings_payroll_type_id: emp.payroll_category_type,
-    earnings_employee: emp.payroll_list_employee_name,
-    earnings_employee_id: emp.payroll_list_employee_id,
-    deduction_paytype_id: mandatoryDeductionId,
-    earnings_paytype_id: empContributionEarningsId,
-    deduction_payitem_id: pagibigEeId,
-    earnings_payitem_id: pagibigErId,
-    deduction_amount: pagibigEe,
-    earnings_amount: pagibigEr,
-    earnings_details: "Pagibig Employer",
-    deduction_details: "Pagibig Employee",
-    earnings_frequency: isSemiMonthly,
-    earnings_is_installment: onetimeNumber,
-    earnings_number_of_installment: onetimeNumber,
-    earnings_start_pay_date: emp.payroll_start_date,
-    earnings_end_pay_date: emp.payroll_end_date,
-  });
-
   return { pagibigEr, pagibigEe, pagibigList };
 };
 
@@ -1041,47 +1046,48 @@ export const payComputePhil = (emp, philhealth) => {
   let totalSalary = 0;
   let philhealthList = [];
 
-  if (philhealth.length > 0) {
-    totalSalary =
-      Number(emp.payroll_list_employee_salary) *
-      (philhealth[0].philhealth_percentage / 100);
+  if (emp.payroll_list_deduc_employee_philhealth === 1) {
+    if (philhealth.length > 0) {
+      totalSalary =
+        Number(emp.payroll_list_employee_salary) *
+        (philhealth[0].philhealth_percentage / 100);
 
-    //if salary >= max
-    if (totalSalary >= philhealth[0].philhealth_max) {
-      philhealthEr = Number(philhealth[0].philhealth_max) / 4;
-      philhealthEe = Number(philhealth[0].philhealth_max) / 4;
-      // use to insert in earnings table
+      //if salary >= max
+      if (totalSalary >= philhealth[0].philhealth_max) {
+        philhealthEr = Number(philhealth[0].philhealth_max) / 4;
+        philhealthEe = Number(philhealth[0].philhealth_max) / 4;
+        // use to insert in earnings table
+      }
+      //if salary <= min
+      if (totalSalary <= philhealth[0].philhealth_min) {
+        philhealthEr = Number(philhealth[0].philhealth_min) / 4;
+        philhealthEe = Number(philhealth[0].philhealth_min) / 4;
+        // use to insert in earnings table
+      }
+      // if min, max are false
+      philhealthEr = Number(totalSalary) / 4;
+      philhealthEe = Number(totalSalary) / 4;
     }
-    //if salary <= min
-    if (totalSalary <= philhealth[0].philhealth_min) {
-      philhealthEr = Number(philhealth[0].philhealth_min) / 4;
-      philhealthEe = Number(philhealth[0].philhealth_min) / 4;
-      // use to insert in earnings table
-    }
-    // if min, max are false
-    philhealthEr = Number(totalSalary) / 4;
-    philhealthEe = Number(totalSalary) / 4;
+    // use to insert in earnings table
+    philhealthList.push({
+      earnings_payroll_type_id: emp.payroll_category_type,
+      earnings_employee: emp.payroll_list_employee_name,
+      earnings_employee_id: emp.payroll_list_employee_id,
+      deduction_paytype_id: mandatoryDeductionId,
+      earnings_paytype_id: empContributionEarningsId,
+      deduction_payitem_id: philhealthEeId,
+      earnings_payitem_id: philhealthErId,
+      deduction_amount: philhealthEe,
+      earnings_amount: philhealthEr,
+      earnings_details: "Philhealth Employer",
+      deduction_details: "Philhealth Employee ",
+      earnings_frequency: isSemiMonthly,
+      earnings_is_installment: onetimeNumber,
+      earnings_number_of_installment: onetimeNumber,
+      earnings_start_pay_date: emp.payroll_start_date,
+      earnings_end_pay_date: emp.payroll_end_date,
+    });
   }
-  // use to insert in earnings table
-  philhealthList.push({
-    earnings_payroll_type_id: emp.payroll_category_type,
-    earnings_employee: emp.payroll_list_employee_name,
-    earnings_employee_id: emp.payroll_list_employee_id,
-    deduction_paytype_id: mandatoryDeductionId,
-    earnings_paytype_id: empContributionEarningsId,
-    deduction_payitem_id: philhealthEeId,
-    earnings_payitem_id: philhealthErId,
-    deduction_amount: philhealthEe,
-    earnings_amount: philhealthEr,
-    earnings_details: "Philhealth Employer",
-    deduction_details: "Philhealth Employee ",
-    earnings_frequency: isSemiMonthly,
-    earnings_is_installment: onetimeNumber,
-    earnings_number_of_installment: onetimeNumber,
-    earnings_start_pay_date: emp.payroll_start_date,
-    earnings_end_pay_date: emp.payroll_end_date,
-  });
-
   return { philhealthEr, philhealthEe, philhealthList };
 };
 
@@ -1090,25 +1096,31 @@ export const payComputePhil = (emp, philhealth) => {
 export const payComputeTuition = (emp, deduction) => {
   let finalAmount = 0;
   let tuitionList = [];
-  if (deduction.deduction_payitem_id === fcaTutionId) {
-    finalAmount += Number(deduction.deduction_amount);
-    if (deduction.deduction_is_installment === installmentNumber) {
-      tuitionList.push({
-        deduction_payroll_type_id: emp.payroll_category_type,
-        deduction_employee: emp.payroll_list_employee_name,
-        deduction_employee_id: emp.payroll_list_employee_id,
-        deduction_paytype_id: paytypeOtherDeductionId,
-        deduction_payitem_id: fcaTutionId,
-        deduction_amount: deduction.deduction_amount,
-        deduction_details: deduction.deduction_details,
-        deduction_frequency: isSemiMonthly,
-        deduction_is_installment: onetimeNumber,
-        deduction_number_of_installment: onetimeNumber,
-        deduction_start_pay_date: emp.payroll_start_date,
-        deduction_end_pay_date: emp.payroll_end_date,
-        installment_extra: 1,
-      });
-    }
+  if (deduction.employee_installment_paytype_id === fcaTutionId) {
+    finalAmount = Number(deduction.employee_installment_amount) / 2;
+    tuitionList.push({
+      deduction_payroll_type_id: emp.payroll_category_type,
+      deduction_employee: emp.payroll_list_employee_name,
+      deduction_employee_id: emp.payroll_list_employee_id,
+      deduction_paytype_id: paytypeOtherDeductionId,
+      deduction_payitem_id: fcaTutionId,
+      deduction_amount: finalAmount,
+      deduction_details: `FCA Tuition`,
+      deduction_frequency: isSemiMonthly,
+      deduction_is_installment: onetimeNumber,
+      deduction_number_of_installment: onetimeNumber,
+      deduction_start_pay_date: emp.payroll_start_date,
+      deduction_end_pay_date: emp.payroll_end_date,
+      numOfPay: Number(deduction.employee_installment_number_of_payrun) + 1,
+      numOfMonths: getNumberOfMonths(deduction.employee_installment_start_date),
+      // installment details
+      employee_installment_number_of_months:
+        deduction.employee_installment_number_of_months,
+      employee_installment_start_date:
+        deduction.employee_installment_start_date,
+      employee_installment_status: deduction.employee_installment_status,
+      employee_installment_aid: deduction.employee_installment_aid,
+    });
   }
   return { finalAmount, tuitionList };
 };
@@ -1117,25 +1129,31 @@ export const payComputeTuition = (emp, deduction) => {
 export const payComputeTithes = (emp, deduction) => {
   let finalAmount = 0;
   let tithesList = [];
-  if (deduction.deduction_payitem_id === fwcTithesId) {
-    finalAmount += Number(deduction.deduction_amount);
-    if (deduction.deduction_is_installment === installmentNumber) {
-      tithesList.push({
-        deduction_payroll_type_id: emp.payroll_category_type,
-        deduction_employee: emp.payroll_list_employee_name,
-        deduction_employee_id: emp.payroll_list_employee_id,
-        deduction_paytype_id: paytypeOtherDeductionId,
-        deduction_payitem_id: fwcTithesId,
-        deduction_amount: deduction.deduction_amount,
-        deduction_details: deduction.deduction_details,
-        deduction_frequency: isSemiMonthly,
-        deduction_is_installment: onetimeNumber,
-        deduction_number_of_installment: onetimeNumber,
-        deduction_start_pay_date: emp.payroll_start_date,
-        deduction_end_pay_date: emp.payroll_end_date,
-        installment_extra: 1,
-      });
-    }
+  if (deduction.employee_installment_paytype_id === fwcTithesId) {
+    finalAmount = Number(deduction.employee_installment_amount) / 2;
+    tithesList.push({
+      deduction_payroll_type_id: emp.payroll_category_type,
+      deduction_employee: emp.payroll_list_employee_name,
+      deduction_employee_id: emp.payroll_list_employee_id,
+      deduction_paytype_id: paytypeOtherDeductionId,
+      deduction_payitem_id: fwcTithesId,
+      deduction_amount: finalAmount,
+      deduction_details: `FWC Tithes`,
+      deduction_frequency: isSemiMonthly,
+      deduction_is_installment: onetimeNumber,
+      deduction_number_of_installment: onetimeNumber,
+      deduction_start_pay_date: emp.payroll_start_date,
+      deduction_end_pay_date: emp.payroll_end_date,
+      numOfPay: Number(deduction.employee_installment_number_of_payrun) + 1,
+      numOfMonths: getNumberOfMonths(deduction.employee_installment_start_date),
+      // installment details
+      employee_installment_number_of_months:
+        deduction.employee_installment_number_of_months,
+      employee_installment_start_date:
+        deduction.employee_installment_start_date,
+      employee_installment_status: deduction.employee_installment_status,
+      employee_installment_aid: deduction.employee_installment_aid,
+    });
   }
   return { finalAmount, tithesList };
 };

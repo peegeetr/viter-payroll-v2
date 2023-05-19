@@ -6,6 +6,7 @@ import {
 import {
   absencesId,
   holidayId,
+  leaveId,
   nightDiffId,
   otherBenefitsEarningsId,
   undertimeId,
@@ -107,6 +108,7 @@ const PayslipEarnings = ({
                 <td className="w-[10rem] print:py-[2px]">
                   {holidayId !== item.earnings_payitem_id &&
                     absencesId !== item.earnings_payitem_id &&
+                    leaveId !== item.earnings_payitem_id &&
                     `${Number(item.earnings_hrs).toFixed(4)}`}
                 </td>
                 {/* <td className="w-[10rem]">{numberOfHolidays * 8}</td> */}
@@ -121,6 +123,7 @@ const PayslipEarnings = ({
                         ))} */}
                   {holidayId !== item.earnings_payitem_id &&
                     absencesId !== item.earnings_payitem_id &&
+                    leaveId !== item.earnings_payitem_id &&
                     `${hourRate.toFixed(4)} / Hr`}
                 </td>
                 <td className=" text-right px-4 print:py-[2px]">
@@ -128,7 +131,11 @@ const PayslipEarnings = ({
                   item.earnings_payitem_id === undertimeId
                     ? "-"
                     : ""}
-                  {numberWithCommas(Number(item.earnings_amount).toFixed(2))}
+                  {leaveId === item.earnings_payitem_id
+                    ? `(${numberWithCommas(
+                        Number(item.earnings_amount).toFixed(2)
+                      )})`
+                    : numberWithCommas(Number(item.earnings_amount).toFixed(2))}
                 </td>
               </tr>
             );

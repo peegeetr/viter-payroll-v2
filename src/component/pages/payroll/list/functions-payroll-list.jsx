@@ -261,7 +261,12 @@ export const runPayroll = (
       totalHolidayHrs = holidayAmount.accumulatedHrs;
 
       // night diffirencial
-      nightDiffAmount = payComputeNightDiff(emp, holidays, payrollEarnings);
+      nightDiffAmount = payComputeNightDiff(
+        emp,
+        holidays,
+        payrollEarnings,
+        holidayExemptions
+      );
       totalNightDiffAmount = nightDiffAmount.finalAmount;
       totalNightDiffHrs = nightDiffAmount.totalHrs;
       totalBasicPay = Number(emp.payroll_list_employee_salary) / 2;
@@ -287,7 +292,6 @@ export const runPayroll = (
         sssAmount.sssEe + pagibigAmount.pagibigEe + philAmount.philhealthEe;
 
       // loop each deductions for each employee
-      console.log("123", employeesDeductionInstallment);
       employeesDeductionInstallment.map((dInstallment) => {
         if (
           emp.payroll_list_employee_id ===

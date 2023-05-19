@@ -55,7 +55,6 @@ const PayrollView = () => {
       ? payrollList?.data[0].payroll_category_type
       : "0";
 
-  console.log("123456", payrollList);
   // use if not loadmore button undertime
   const { data: employeesDeductionInstallment } = useQueryData(
     `${devApiUrl}/v1/employees-installment/all-pending`, // endpoint

@@ -112,7 +112,7 @@ const ModalRun = ({
       holidayExemptions,
       employeesDeductionInstallment
     );
-    console.log(run);
+
     let payrollList = run.payrollList;
     let holidayList = run.holidayList;
     let ndList = run.ndList;

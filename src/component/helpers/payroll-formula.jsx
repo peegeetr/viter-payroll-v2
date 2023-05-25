@@ -541,6 +541,10 @@ export const payComputeNightDiff = (
       // check for employee with holiday exemptions
       for (let h = 0; h < holidayExemptions.length; h++) {
         if (
+          new Date(holidaysItem.holidays_date) >=
+            new Date(emp.payroll_start_date) &&
+          new Date(holidaysItem.holidays_date) <=
+            new Date(emp.payroll_end_date) &&
           holidayExemptions[h].holiday_exemption_holiday_date ===
             holidaysItem.holidays_date &&
           holidayExemptions[h].holiday_exemption_eid ===
@@ -554,6 +558,10 @@ export const payComputeNightDiff = (
 
         // not observed
         if (
+          new Date(holidaysItem.holidays_date) >=
+            new Date(emp.payroll_start_date) &&
+          new Date(holidaysItem.holidays_date) <=
+            new Date(emp.payroll_end_date) &&
           holidayExemptions[h].holiday_exemption_holiday_date ===
             holidaysItem.holidays_date &&
           holidayExemptions[h].holiday_exemption_eid ===
@@ -571,7 +579,7 @@ export const payComputeNightDiff = (
 
       // check if work or observed holiday
       if (
-        (workOnHoliday === 1 || holidayObserved === 1) &&
+        // (workOnHoliday === 1 || holidayObserved === 1) &&
         new Date(holidaysItem.holidays_date) >=
           new Date(emp.payroll_start_date) &&
         new Date(holidaysItem.holidays_date) <=
@@ -579,9 +587,6 @@ export const payComputeNightDiff = (
         new Date(holidayDate).getDay() != 0 &&
         new Date(holidayDate).getDay() != 6
       ) {
-        numberOfObservedHolidaysHrs += Number(
-          emp.payroll_list_night_diff_per_day
-        );
         // single holiday rate
         if (
           holidaysItem.holidays_type === "regular" ||
@@ -593,11 +598,13 @@ export const payComputeNightDiff = (
           }
 
           if (workOnHoliday === 1 || holidayObserved === 1) {
-            // holidayHrs = Number(emp.payroll_list_night_diff_per_day);
-            ndHolidayAmount = holidayHrs * hourRate;
+            numberOfObservedHolidaysHrs += Number(
+              emp.payroll_list_night_diff_per_day
+            );
+            ndHolidayAmount = numberOfObservedHolidaysHrs * hourRate;
             ndRatedHolidayAmount = ndHolidayAmount * holidayRate;
             // 10% + holiday rate additional
-            totalNDHolidayAmount += ndRatedHolidayAmount;
+            totalNDHolidayAmount = ndRatedHolidayAmount;
           }
         }
         // double holiday rate
@@ -620,14 +627,15 @@ export const payComputeNightDiff = (
           }
         }
 
-        totalMinusHrs = numberOfObservedHolidaysHrs;
+        totalMinusHrs += numberOfObservedHolidaysHrs;
       }
     });
     // night diff
     totalHrs =
       Number(emp.payroll_list_night_diff_per_day) * days - totalMinusHrs;
-    holidayHrs = numberOfHolidaysNd < numberOfHolidays ? 0 : totalHolidayHrs;
-    regularAmount = (totalHrs - holidayHrs) * hourRate;
+    // holidayHrs = numberOfHolidaysNd < numberOfHolidays ? 0 : totalHolidayHrs;
+    // regularAmount = (totalHrs - holidayHrs) * hourRate;
+    regularAmount = totalHrs * hourRate;
     ratedNdAmount = regularAmount * rate10;
     // 10% additional
     totalNDAmount += ratedNdAmount - regularAmount;
@@ -648,7 +656,7 @@ export const payComputeNightDiff = (
       earnings_paytype_id: wagesEarningsId,
       earnings_payitem_id: nightDiffId,
       earnings_amount: finalAmount,
-      earnings_hrs: totalHrs - numberOfHolidaysNdExcemption,
+      earnings_hrs: totalHrs,
       earnings_rate: rate10 * 100,
       earnings_details: `Night Differential (110%) ${emp.payroll_list_night_diff_per_day}hrs/day`,
       earnings_frequency: isSemiMonthly,

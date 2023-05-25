@@ -349,10 +349,11 @@ export const payComputeNightDiff = (
   let isAbsent = false;
   let numberOfObservedHolidaysHrs = 0;
   let numberOfExcemptedHolidaysHrs = 0;
+  let numberOfLeaveOrAbsencesHolidaysHrs = 0;
   let numberOfHolidays = 0;
   let numberOfHolidaysNd = 0;
   let numberOfHolidaysNdExcemption = 0;
-  let leaveOrAbsencesDate = null;
+  let leaveOrAbsencesDate = [];
 
   let dailyRate = Number(
     employeeRate(emp.payroll_list_employee_salary, days).daily
@@ -379,7 +380,11 @@ export const payComputeNightDiff = (
           earning.earnings_payitem_id === absencesId ||
           earning.earnings_payitem_id === leaveId
         ) {
-          leaveOrAbsencesDate = earning.earnings_hris_date;
+          // leaveOrAbsencesDate = earning.earnings_hris_date;
+          leaveOrAbsencesDate.push({
+            date: earning.earnings_hris_date,
+            id: earning.earnings_payitem_id,
+          });
           // minus nd per hour
           ndLeave +=
             Number(emp.payroll_list_night_diff_per_day) *
@@ -401,12 +406,11 @@ export const payComputeNightDiff = (
       totalMinusHrs = ndLeave + Number(ndUndertime);
     });
 
-    // get holiday rate night differentials
+    console.log(leaveOrAbsencesDate);
     holidays.map((holidaysItem) => {
       let holidayDate = holidaysItem.holidays_date;
       let holidayObserved = holidaysItem.holidays_observed;
       let holidayRate = Number(holidaysItem.holidays_rate) / 100 - 1;
-
       // check for employee with holiday exemptions
       for (let h = 0; h < holidayExemptions.length; h++) {
         if (
@@ -414,8 +418,8 @@ export const payComputeNightDiff = (
             new Date(emp.payroll_start_date) &&
           new Date(holidaysItem.holidays_date) <=
             new Date(emp.payroll_end_date) &&
-          leaveOrAbsencesDate !==
-            holidayExemptions[h].holiday_exemption_holiday_date &&
+          // absentOrLeave.earnings_hris_date !==
+          //   holidayExemptions[h].holiday_exemption_holiday_date &&
           holidayExemptions[h].holiday_exemption_holiday_date ===
             holidaysItem.holidays_date &&
           holidayExemptions[h].holiday_exemption_eid ===
@@ -433,8 +437,8 @@ export const payComputeNightDiff = (
             new Date(emp.payroll_start_date) &&
           new Date(holidaysItem.holidays_date) <=
             new Date(emp.payroll_end_date) &&
-          leaveOrAbsencesDate !==
-            holidayExemptions[h].holiday_exemption_holiday_date &&
+          // absentOrLeave.earnings_hris_date !==
+          //   holidayExemptions[h].holiday_exemption_holiday_date &&
           holidayExemptions[h].holiday_exemption_holiday_date ===
             holidaysItem.holidays_date &&
           holidayExemptions[h].holiday_exemption_eid ===
@@ -450,18 +454,30 @@ export const payComputeNightDiff = (
         }
       }
 
+      leaveOrAbsencesDate.map((dte) => {
+        if (dte.date === holidayDate) {
+          numberOfLeaveOrAbsencesHolidaysHrs += Number(
+            emp.payroll_list_night_diff_per_day
+          );
+          console.log(
+            dte.date,
+            holidayDate,
+            numberOfLeaveOrAbsencesHolidaysHrs
+          );
+        }
+      });
+
+      // single holiday rate
       // check if work or observed holiday
       if (
-        // (workOnHoliday === 1 || holidayObserved === 1) &&
         new Date(holidaysItem.holidays_date) >=
           new Date(emp.payroll_start_date) &&
         new Date(holidaysItem.holidays_date) <=
           new Date(emp.payroll_end_date) &&
-        leaveOrAbsencesDate !== holidaysItem.holidays_date &&
         new Date(holidayDate).getDay() != 0 &&
         new Date(holidayDate).getDay() != 6
       ) {
-        // single holiday rate
+        console.log(`${emp.payroll_list_employee_name}`, holidayDate);
         if (
           holidaysItem.holidays_type === "regular" ||
           holidaysItem.holidays_type === "special"
@@ -512,36 +528,32 @@ export const payComputeNightDiff = (
           }
         }
         totalMinusHrs +=
-          numberOfObservedHolidaysHrs + numberOfExcemptedHolidaysHrs;
+          numberOfObservedHolidaysHrs -
+          numberOfLeaveOrAbsencesHolidaysHrs +
+          numberOfExcemptedHolidaysHrs;
       }
     });
+    console.log("alhrs", numberOfLeaveOrAbsencesHolidaysHrs);
     // night diff
     totalHrs =
       Number(emp.payroll_list_night_diff_per_day) * days - totalMinusHrs;
-    // holidayHrs = numberOfHolidaysNd < numberOfHolidays ? 0 : totalHolidayHrs;
-    // regularAmount = (totalHrs - holidayHrs) * hourRate;
     regularAmount = totalHrs * hourRate;
     ratedNdAmount = regularAmount * rate10;
     // 10% additional
     totalNDAmount += ratedNdAmount - regularAmount;
     finalAmount = totalNDAmount + totalNDHolidayAmount;
-    // console.log(
-    //   emp.payroll_list_employee_name,
-    //   totalHrs,
-    //   totalNDAmount,
-    //   totalNDHolidayAmount,
-    //   totalHolidayHrs,
-    //   numberOfHolidaysNdExcemption,
-    //   `Holiday hrs ${holidayHrs}`
-    // );
+
     console.log(
       emp.payroll_list_employee_name,
       `\nRegular rate ND ${totalNDAmount}\n`,
       `Holiday rate ND ${totalNDHolidayAmount}\n`,
       `total hrs reg ND ${totalHrs}\n`,
-      `total hrs hol ND ${numberOfObservedHolidaysHrs}\n`,
+      `total hrs hol ND ${
+        numberOfObservedHolidaysHrs - numberOfLeaveOrAbsencesHolidaysHrs
+      }\n`,
       `Minus hrs ${totalMinusHrs}`
     );
+
     ndList.push({
       earnings_payroll_type_id: emp.payroll_category_type,
       earnings_employee: emp.payroll_list_employee_name,

@@ -1,0 +1,23 @@
+
+*controllers           
+    - 
+    
+*models     
+    - earnings/Earnings.php   
+  
+*htaccess 
+    - 
+
+*db tables 
+    - 
+
+*core 
+    - 
+
+*extra 
+    - 
+    
+Patrick
+    - Both uploaded to production and development
+
+ 

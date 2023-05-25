@@ -138,6 +138,7 @@ class Earnings
             $sql .= "earnings.earnings_leave_hrs, ";
             $sql .= "earnings.earnings_hrs, ";
             $sql .= "earnings.earnings_rate, ";
+            $sql .= "earnings.earnings_hris_date, ";
             $sql .= "earnings.earnings_details, ";
             $sql .= "earnings.earnings_frequency, ";
             $sql .= "earnings.earnings_number_of_installment, ";
@@ -186,6 +187,7 @@ class Earnings
             $sql .= "earnings.earnings_leave_hrs, ";
             $sql .= "earnings.earnings_hrs, ";
             $sql .= "earnings.earnings_rate, ";
+            $sql .= "earnings.earnings_hris_date, ";
             $sql .= "earnings.earnings_details, ";
             $sql .= "earnings.earnings_frequency, ";
             $sql .= "earnings.earnings_number_of_installment, ";
@@ -240,6 +242,7 @@ class Earnings
             $sql .= "earnings.earnings_leave_hrs, ";
             $sql .= "earnings.earnings_hrs, ";
             $sql .= "earnings.earnings_rate, ";
+            $sql .= "earnings.earnings_hris_date, ";
             $sql .= "earnings.earnings_details, ";
             $sql .= "earnings.earnings_frequency, ";
             $sql .= "earnings.earnings_number_of_installment, ";

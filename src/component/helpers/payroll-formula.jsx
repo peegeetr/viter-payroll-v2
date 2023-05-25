@@ -627,12 +627,13 @@ export const payComputeNightDiff = (
           }
         }
 
-        totalMinusHrs += numberOfObservedHolidaysHrs;
+        totalMinusHrs += Number(numberOfObservedHolidaysHrs);
       }
     });
     // night diff
     totalHrs =
-      Number(emp.payroll_list_night_diff_per_day) * days - totalMinusHrs;
+      Number(emp.payroll_list_night_diff_per_day) * days -
+      Number(totalMinusHrs);
     // holidayHrs = numberOfHolidaysNd < numberOfHolidays ? 0 : totalHolidayHrs;
     // regularAmount = (totalHrs - holidayHrs) * hourRate;
     regularAmount = totalHrs * hourRate;
@@ -640,14 +641,21 @@ export const payComputeNightDiff = (
     // 10% additional
     totalNDAmount += ratedNdAmount - regularAmount;
     finalAmount = totalNDAmount + totalNDHolidayAmount;
+    // console.log(
+    //   emp.payroll_list_employee_name,
+    //   totalHrs,
+    //   totalNDAmount,
+    //   totalNDHolidayAmount,
+    //   totalHolidayHrs,
+    //   numberOfHolidaysNdExcemption,
+    //   `Holiday hrs ${holidayHrs}`
+    // );
     console.log(
       emp.payroll_list_employee_name,
+      regularAmount,
+      finalAmount,
       totalHrs,
-      totalNDAmount,
-      totalNDHolidayAmount,
-      totalHolidayHrs,
-      numberOfHolidaysNdExcemption,
-      `Holiday hrs ${holidayHrs}`
+      `Holiday hrs ${totalMinusHrs}`
     );
     ndList.push({
       earnings_payroll_type_id: emp.payroll_category_type,

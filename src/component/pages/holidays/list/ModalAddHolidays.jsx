@@ -151,13 +151,13 @@ const ModalAddHolidays = ({ item }) => {
                           Regular Holiday (200%)
                         </option>
                         <option value="doubleS" id="260">
-                          Double Special Holiday (130% x 130%)
+                          Double Special Holiday (130% + 130%)
                         </option>
                         <option value="doubleR" id="400">
-                          Double Regular Holiday (200% x 200%)
+                          Double Regular Holiday (200% + 200%)
                         </option>
                         <option value="doubleSR" id="330">
-                          Double Holiday (130% x 200%)
+                          Double Holiday (130% + 200%)
                         </option>
                       </InputSelect>
 

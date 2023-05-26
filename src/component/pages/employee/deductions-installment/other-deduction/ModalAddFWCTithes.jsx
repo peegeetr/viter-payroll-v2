@@ -34,8 +34,7 @@ const ModalAddFWCTithes = ({ item }) => {
           ? `${devApiUrl}/v1/employees-installment/${item.employee_installment_aid}`
           : `${devApiUrl}/v1/employees-installment`,
         item ? "put" : "post",
-        values,
-        false
+        values
       ),
     onSuccess: (data) => {
       // Invalidate and refetch

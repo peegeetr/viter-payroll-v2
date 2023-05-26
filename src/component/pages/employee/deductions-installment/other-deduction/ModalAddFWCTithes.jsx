@@ -135,7 +135,7 @@ const ModalAddFWCTithes = ({ item }) => {
 
                     <div className="relative mb-6">
                       <InputText
-                        label="MP2 Amount"
+                        label="Amortization"
                         type="text"
                         name="employee_installment_amount"
                         num="num"

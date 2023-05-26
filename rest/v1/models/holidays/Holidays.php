@@ -223,4 +223,28 @@ class Holidays
         }
         return $query;
     }
+
+    public function readAllNotObserved($year)
+    {
+        try {
+            $sql = "select holidays_date, ";
+            $sql .= "holidays_aid, ";
+            $sql .= "holidays_type, ";
+            $sql .= "holidays_name, ";
+            $sql .= "holidays_observed ";
+            $sql .= "from {$this->tblHolidays} ";
+            $sql .= "where YEAR(holidays_date) = :year ";
+            $sql .= "and holidays_observed = '0' ";
+            $sql .= "and holidays_is_active = '1' ";
+            $sql .= "order by holidays_date desc, ";
+            $sql .= "holidays_name asc ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "year" => $year,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
 }

@@ -208,4 +208,26 @@ class HolidayExemptions
         }
         return $query;
     }
+
+    public function readAllExemptionNotObservedById($year)
+    {
+        try {
+            $sql = "select holiday_exemption_holiday_date, ";
+            $sql .= "holiday_exemption_aid, ";
+            $sql .= "holiday_exemption_eid ";
+            $sql .= "from {$this->tblHolidayExemption} ";
+            $sql .= "where YEAR(holiday_exemption_holiday_date) = :year ";
+            $sql .= "and holiday_exemption_eid = :holiday_exemption_eid ";
+            $sql .= "and holiday_exemption_is_observe = 0 ";
+            $sql .= "order by holiday_exemption_holiday_date desc ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "year" => $year,
+                "holiday_exemption_eid" => $this->holiday_exemption_eid,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
 }

@@ -93,6 +93,7 @@ RewriteRule ^holidays/([0-9]+)$ controllers/holidays/holidays.php?holidaysid=$1 
 RewriteRule ^holidays/page/([0-9]+)$ controllers/holidays/page.php?start=$1 [L]
 RewriteRule ^holidays/search/([A-Za-z0-9-]+)$ controllers/holidays/search.php?search=$1 [L]
 RewriteRule ^holidays/this-year/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)$ controllers/holidays/read-by-current-year.php?startDate=$1&endDate=$2 [L]
+RewriteRule ^holidays/read-all-not-observed$ controllers/holidays/read-all-not-observed.php [L]
 
 #SETTINGS RATES
 RewriteRule ^rates$ controllers/settings/rates/rates.php [L]
@@ -162,6 +163,7 @@ RewriteRule ^holiday-exemptions$ controllers/holidays/exemptions/holidayExemptio
 RewriteRule ^holiday-exemptions/([0-9]+)$ controllers/holidays/exemptions/holidayExemptions.php?exemptionId=$1 [L]
 RewriteRule ^holiday-exemptions/page/([0-9]+)$ controllers/holidays/exemptions/page.php?start=$1 [L]
 RewriteRule ^holiday-exemptions/search/([A-Za-z0-9-]+)$ controllers/holidays/exemptions/search.php?search=$1 [L]
+RewriteRule ^holiday-exemptions/read-all-not-observed/([0-9]+)$ controllers/holidays/exemptions/read-all-not-observed.php?memberId=$1 [L]
 
 #Employee Installment
 RewriteRule ^employees-installment$ controllers/employee/installment/employeeInstallment.php [L]

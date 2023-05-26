@@ -1,0 +1,28 @@
+
+*controllers           
+    - holidays/exemptions/functions.php
+    - holidays/exemptions/read-all-not-observed.php 
+    - holidays/functions.php
+    - holidays/read-all-not-observed.php 
+    
+*models     
+    - holidays/HolidayExemptions.php   
+    - holidays/Holidays.php   
+  
+*htaccess 
+    - #HOLIDAYS EXEMPTIONS
+    - #HOLIDAYS
+
+*db tables 
+    - 
+
+*core 
+    - 
+
+*extra 
+    - 
+    
+Patrick
+    - 
+
+ 

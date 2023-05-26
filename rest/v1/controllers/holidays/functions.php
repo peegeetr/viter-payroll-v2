@@ -35,3 +35,10 @@ function compareHolidayDate($object, $name_old, $name)
         isHolidayDateExist($object, $name);
     }
 }
+
+function checkReadAllNotObserved($object, $year)
+{
+    $query = $object->readAllNotObserved($year);
+    checkQuery($query, "Empty records. (read all not observed holiday)");
+    return $query;
+}

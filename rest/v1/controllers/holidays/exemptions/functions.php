@@ -14,3 +14,10 @@ function compareHolidayDate($object, $date_old, $date)
         isHolidayExemptionsEmployeeExist($object, $date);
     }
 }
+
+function checkReadAllExemptionNotObservedById($object, $year)
+{
+    $query = $object->readAllExemptionNotObservedById($year);
+    checkQuery($query, "Empty records. (read all not observed holiday exemptions)");
+    return $query;
+}

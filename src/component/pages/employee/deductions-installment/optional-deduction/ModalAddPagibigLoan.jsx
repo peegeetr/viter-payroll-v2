@@ -5,12 +5,13 @@ import { FaTimesCircle } from "react-icons/fa";
 import * as Yup from "yup";
 import {
   setError,
+  setIsAdd,
   setIsRestore,
   setMessage,
   setSuccess,
 } from "../../../../../store/StoreAction";
 import { StoreContext } from "../../../../../store/StoreContext";
-import { InputText } from "../../../../helpers/FormInputs";
+import { InputText, InputTextArea } from "../../../../helpers/FormInputs";
 import {
   devApiUrl,
   getDateNow,
@@ -38,10 +39,12 @@ const ModalAddPagibigLoan = ({ item }) => {
       ),
     onSuccess: (data) => {
       // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: ["employeePagibigLoan"] });
+      queryClient.invalidateQueries({
+        queryKey: [`employeeInstallmentAll${PagibigLoanId}`],
+      });
       // show success box
       if (data.success) {
-        dispatch(setIsRestore(false));
+        dispatch(setIsAdd(false));
         dispatch(setSuccess(true));
         dispatch(setMessage(`Successfuly ${item ? "Update" : "Add"}`));
       }
@@ -53,7 +56,7 @@ const ModalAddPagibigLoan = ({ item }) => {
     },
   });
   const handleClose = () => {
-    dispatch(setIsRestore(false));
+    dispatch(setIsAdd(false));
   };
 
   const initVal = {
@@ -68,12 +71,14 @@ const ModalAddPagibigLoan = ({ item }) => {
       : "",
     employee_installment_amount: item ? item.employee_installment_amount : "",
     employee_installment_status: item ? item.employee_installment_status : "1",
+    employee_installment_details: item ? item.employee_installment_details : "",
   };
 
   const yupSchema = Yup.object({
     employee_installment_start_date: Yup.string().required("Required"),
     employee_installment_amount: Yup.string().required("Required"),
     employee_installment_number_of_months: Yup.string().required("Required"),
+    employee_installment_details: Yup.string().required("Required"),
   });
 
   return (
@@ -146,6 +151,15 @@ const ModalAddPagibigLoan = ({ item }) => {
                         label="Number of Months"
                         name="employee_installment_number_of_months"
                         type="text"
+                        num="num"
+                        disabled={mutation.isLoading}
+                      />
+                    </div>
+                    <div className="relative mb-6">
+                      <InputTextArea
+                        label="Details"
+                        type="text"
+                        name="employee_installment_details"
                         num="num"
                         disabled={mutation.isLoading}
                       />

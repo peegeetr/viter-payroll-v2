@@ -1,6 +1,6 @@
 import React from "react";
 import useQueryData from "../../../../custom-hooks/useQueryData";
-import { FaTrash } from "react-icons/fa";
+import { FaTrash, FaEdit } from "react-icons/fa";
 import {
   devApiUrl,
   formatDate,
@@ -18,13 +18,16 @@ import {
 } from "../functions-deductions-installment";
 import {
   setError,
+  setIsAccountUpdated,
+  setIsAdd,
   setIsRestore,
   setMessage,
 } from "../../../../../store/StoreAction";
 import ModalDeleteRestoreRq from "../../../../partials/modals/ModalDeleteRestoreRq";
 import { StoreContext } from "../../../../../store/StoreContext";
+import { PagibigMP2Id } from "../../../../helpers/functions-payitemId";
 
-const DeductionInstallmentViewList = ({ paytypeId, payItem }) => {
+const DeductionInstallmentViewList = ({ setItemEdit, paytypeId, payItem }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const eid = getUrlParam().get("employeeid");
   const [dataItem, setData] = React.useState(null);
@@ -42,6 +45,12 @@ const DeductionInstallmentViewList = ({ paytypeId, payItem }) => {
     `employeeInstallmentAll${paytypeId}` // key
   );
 
+  // use if not loadmore button undertime
+  const { data: draft } = useQueryData(
+    `${devApiUrl}/v1/payroll/list`, // endpoint
+    "get", // method
+    "draft" // key
+  );
   const handleDelete = (item) => {
     if (draft?.count > 0) {
       dispatch(setError(true));
@@ -54,13 +63,17 @@ const DeductionInstallmentViewList = ({ paytypeId, payItem }) => {
     setDel(true);
   };
 
-  // use if not loadmore button undertime
-  const { data: draft } = useQueryData(
-    `${devApiUrl}/v1/payroll/list`, // endpoint
-    "get", // method
-    "draft" // key
-  );
-  console.log(employeeInstallmentAll);
+  const handleEditMp2 = (item) => {
+    if (draft?.count > 0) {
+      dispatch(setError(true));
+      dispatch(
+        setMessage("Payroll has ongoing draft. Editing is not allowed.")
+      );
+      return;
+    }
+    dispatch(setIsAdd(true));
+    setItemEdit(item);
+  };
 
   return (
     <>
@@ -70,6 +83,9 @@ const DeductionInstallmentViewList = ({ paytypeId, payItem }) => {
             <tr>
               <th className="text-center">#</th>
               <th className="min-w-[10rem]">Pay Type</th>
+              {paytypeId !== PagibigMP2Id && (
+                <th className="min-w-[10rem]">Detais</th>
+              )}
               <th className="min-w-[10rem]">Start Date</th>
               <th className="min-w-[10rem]">End Date</th>
               <th className="min-w-[8rem] text-right pr-4">Amount</th>
@@ -77,7 +93,7 @@ const DeductionInstallmentViewList = ({ paytypeId, payItem }) => {
                 Number of Months
               </th>
               <th>Status</th>
-              {eid !== null && <th className="text-right pr-4">Action</th>}
+              {eid !== null && <th className="!w-[5rem] pr-4">Action</th>}
             </tr>
           </thead>
           <tbody>
@@ -107,6 +123,9 @@ const DeductionInstallmentViewList = ({ paytypeId, payItem }) => {
                       item.employee_installment_paytype_id
                     )}
                   </td>
+                  {paytypeId !== PagibigMP2Id && (
+                    <td>{item.employee_installment_details}</td>
+                  )}
                   <td className="">
                     {formatDate(item.employee_installment_start_date)}
                   </td>
@@ -121,7 +140,6 @@ const DeductionInstallmentViewList = ({ paytypeId, payItem }) => {
                     item.employee_installment_start_date
                   )} /
                   ${item.employee_installment_number_of_months}`}</td>
-
                   <td>
                     {item.employee_installment_status === "0" ? (
                       <Status text="ongoing" />
@@ -134,17 +152,25 @@ const DeductionInstallmentViewList = ({ paytypeId, payItem }) => {
                     )}
                   </td>
                   {eid !== null && (
-                    <td className="text-right pr-4">
-                      <button
-                        type="button"
-                        className="btn-action-table tooltip-action-table"
-                        data-tooltip="Delete"
-                        onClick={() => {
-                          handleDelete(item);
-                        }}
-                      >
-                        <FaTrash />
-                      </button>
+                    <td>
+                      <div className="flex items-center gap-2">
+                        <button
+                          type="button"
+                          className="btn-action-table tooltip-action-table"
+                          data-tooltip="Edit"
+                          onClick={() => handleEditMp2(item)}
+                        >
+                          <FaEdit />
+                        </button>
+                        <button
+                          type="button"
+                          className="btn-action-table tooltip-action-table"
+                          data-tooltip="Delete"
+                          onClick={() => handleDelete(item)}
+                        >
+                          <FaTrash />
+                        </button>
+                      </div>
                     </td>
                   )}
                 </tr>

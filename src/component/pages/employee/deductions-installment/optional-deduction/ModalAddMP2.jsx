@@ -10,20 +10,23 @@ import {
   setSuccess,
 } from "../../../../../store/StoreAction";
 import { StoreContext } from "../../../../../store/StoreContext";
-import { InputSelect, InputText } from "../../../../helpers/FormInputs";
 import {
+  InputSelect,
+  InputText,
+  InputTextArea,
+} from "../../../../helpers/FormInputs";
+import {
+  devApiUrl,
   getDateNow,
   getUrlParam,
-  devApiUrl,
-  handleNumOnly,
   removeComma,
 } from "../../../../helpers/functions-general";
+import { PagibigMP2Id } from "../../../../helpers/functions-payitemId";
 import { queryData } from "../../../../helpers/queryData";
 import ButtonSpinner from "../../../../partials/spinners/ButtonSpinner";
 import { getEndOfInstallment } from "../functions-deductions-installment";
-import { PagibigMP2Id } from "../../../../helpers/functions-payitemId";
 
-const ModalAddMP2 = ({ item, employeeMP2 }) => {
+const ModalAddMP2 = ({ item }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const eid = getUrlParam().get("employeeid");
   // ModalAddPagibigLoan
@@ -40,7 +43,9 @@ const ModalAddMP2 = ({ item, employeeMP2 }) => {
       ),
     onSuccess: (data) => {
       // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: ["employeeMP2"] });
+      queryClient.invalidateQueries({
+        queryKey: [`employeeInstallmentAll${PagibigMP2Id}`],
+      });
       // show success box
       if (data.success) {
         dispatch(setIsAdd(false));
@@ -70,6 +75,9 @@ const ModalAddMP2 = ({ item, employeeMP2 }) => {
       : "",
     employee_installment_amount: item ? item.employee_installment_amount : "",
     employee_installment_status: item ? item.employee_installment_status : "",
+    employee_installment_details: item
+      ? item.employee_installment_details
+      : "Pag-ibig MP2",
   };
 
   const yupSchema = Yup.object({
@@ -78,7 +86,6 @@ const ModalAddMP2 = ({ item, employeeMP2 }) => {
     employee_installment_number_of_months: Yup.string().required("Required"),
     employee_installment_status: item && Yup.string().required("Required"),
   });
-  console.log(employeeMP2);
   return (
     <>
       <div className="fixed top-0 right-0 bottom-0 left-0 flex items-center justify-center bg-dark bg-opacity-50 z-50">

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 16, 2023 at 06:24 AM
+-- Generation Time: May 29, 2023 at 08:08 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -37,6 +37,7 @@ CREATE TABLE `prv2_employee_installment` (
   `employee_installment_start_date` varchar(20) NOT NULL,
   `employee_installment_end_date` varchar(20) NOT NULL,
   `employee_installment_status` varchar(5) NOT NULL,
+  `employee_installment_details` varchar(100) NOT NULL,
   `employee_installment_created` datetime NOT NULL,
   `employee_installment_datetime` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

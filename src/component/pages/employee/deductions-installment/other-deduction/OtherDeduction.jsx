@@ -32,12 +32,6 @@ const OtherDeduction = () => {
     false // devKey boolean
   );
 
-  // use if not loadmore button undertime
-  const { data: draft, isLoading: draftLoading } = useQueryData(
-    `${devApiUrl}/v1/payroll/list`, // endpoint
-    "get", // method
-    "draft" // key
-  );
   return (
     <>
       <Header />
@@ -56,7 +50,7 @@ const OtherDeduction = () => {
         </p>
         <div className="w-full pb-40">
           {/* <MyPayslipPassword /> */}
-          <OtherDeductionList draft={draft} draftLoading={draftLoading} />
+          <OtherDeductionList />
         </div>
         <Footer />
       </div>

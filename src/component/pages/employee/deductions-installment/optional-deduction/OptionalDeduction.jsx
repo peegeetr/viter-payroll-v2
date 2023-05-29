@@ -4,6 +4,7 @@ import useQueryData from "../../../../custom-hooks/useQueryData";
 import {
   devApiUrl,
   getUrlParam,
+  getUserType,
   hrisDevApiUrl,
 } from "../../../../helpers/functions-general";
 import BreadCrumbs from "../../../../partials/BreadCrumbs";
@@ -12,10 +13,11 @@ import Header from "../../../../partials/Header";
 import Navigation from "../../../../partials/Navigation";
 import ModalError from "../../../../partials/modals/ModalError";
 import ModalSuccess from "../../../../partials/modals/ModalSuccess";
-import OptionalDeductionList from "./OptionalDeductionList";
+import DeductionInstallmentList from "./OptionalDeductionList";
 
 const OptionalDeduction = () => {
   const { store, dispatch } = React.useContext(StoreContext);
+  const link = getUserType(store.credentials.data.role_is_developer === 1);
   const eid = getUrlParam().get("employeeid");
 
   // use if not loadmore button undertime
@@ -55,9 +57,11 @@ const OptionalDeduction = () => {
           </span>
         </p>
         <div className="w-full pb-40">
-          {/* <MyPayslipPassword /> */}
-          <OptionalDeductionList draft={draft} draftLoading={draftLoading} />
+          {/* <MyPayslipPassword />  */}
+          <DeductionInstallmentList />
         </div>
+
+        <div className="w-full pb-40"></div>
         <Footer />
       </div>
 

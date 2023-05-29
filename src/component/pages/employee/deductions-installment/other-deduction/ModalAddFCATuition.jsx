@@ -10,7 +10,11 @@ import {
   setSuccess,
 } from "../../../../../store/StoreAction";
 import { StoreContext } from "../../../../../store/StoreContext";
-import { InputSelect, InputText } from "../../../../helpers/FormInputs";
+import {
+  InputSelect,
+  InputText,
+  InputTextArea,
+} from "../../../../helpers/FormInputs";
 import {
   getDateNow,
   getUrlParam,
@@ -40,7 +44,9 @@ const ModalAddFCATuition = ({ item }) => {
       ),
     onSuccess: (data) => {
       // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: ["employeeTuition"] });
+      queryClient.invalidateQueries({
+        queryKey: [`employeeInstallmentAll${fcaTutionId}`],
+      });
       // show success box
       if (data.success) {
         dispatch(setIsAdd(false));
@@ -70,12 +76,14 @@ const ModalAddFCATuition = ({ item }) => {
       : "",
     employee_installment_amount: item ? item.employee_installment_amount : "",
     employee_installment_status: item ? item.employee_installment_status : "",
+    employee_installment_details: item ? item.employee_installment_details : "",
   };
 
   const yupSchema = Yup.object({
     employee_installment_start_date: Yup.string().required("Required"),
     employee_installment_amount: Yup.string().required("Required"),
     employee_installment_number_of_months: Yup.string().required("Required"),
+    employee_installment_details: Yup.string().required("Required"),
     employee_installment_status: item && Yup.string().required("Required"),
   });
   return (
@@ -148,6 +156,15 @@ const ModalAddFCATuition = ({ item }) => {
                         label="Number of Months"
                         name="employee_installment_number_of_months"
                         type="text"
+                        num="num"
+                        disabled={mutation.isLoading}
+                      />
+                    </div>
+                    <div className="relative mb-6">
+                      <InputTextArea
+                        label="Details"
+                        type="text"
+                        name="employee_installment_details"
                         num="num"
                         disabled={mutation.isLoading}
                       />

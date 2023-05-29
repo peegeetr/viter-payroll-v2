@@ -18,6 +18,7 @@ if (array_key_exists("employeeInstallmentId", $_GET)) {
     $installment->employee_installment_end_date = checkIndex($data, "employee_installment_end_date");
     $installment->employee_installment_status = checkIndex($data, "employee_installment_status");
     $installment->employee_installment_amount = checkIndex($data, "employee_installment_amount");
+    $installment->employee_installment_details = checkIndex($data, "employee_installment_details");
     $installment->employee_installment_number_of_months = checkIndex($data, "employee_installment_number_of_months");
     $installment->employee_installment_datetime = date("Y-m-d H:i:s");
 

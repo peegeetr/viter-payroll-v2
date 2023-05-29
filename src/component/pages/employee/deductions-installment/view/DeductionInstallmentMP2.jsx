@@ -1,6 +1,7 @@
 import React from "react";
 import { StoreContext } from "../../../../../store/StoreContext";
 import useQueryData from "../../../../custom-hooks/useQueryData";
+import { FaPlusCircle } from "react-icons/fa";
 import {
   devApiUrl,
   getUrlParam,
@@ -14,9 +15,16 @@ import ModalError from "../../../../partials/modals/ModalError";
 import ModalSuccess from "../../../../partials/modals/ModalSuccess";
 import DeductionInstallmentViewList from "./DeductionInstallmentViewList";
 import { PagibigMP2Id } from "../../../../helpers/functions-payitemId";
+import {
+  setError,
+  setIsAdd,
+  setMessage,
+} from "../../../../../store/StoreAction";
+import ModalAddMP2 from "../optional-deduction/ModalAddMP2";
 
 const DeductionInstallmentMP2 = () => {
   const { store, dispatch } = React.useContext(StoreContext);
+  const [itemEdit, setItemEdit] = React.useState(null);
   const eid = getUrlParam().get("employeeid");
 
   // use if not loadmore button undertime
@@ -35,24 +43,54 @@ const DeductionInstallmentMP2 = () => {
     "get", // method
     `payItem${PagibigMP2Id}` // key
   );
+
+  // use if not loadmore button undertime
+  const { data: draft, isLoading: draftLoading } = useQueryData(
+    `${devApiUrl}/v1/payroll/list`, // endpoint
+    "get", // method
+    "draft" // key
+  );
+  const handleAdd = () => {
+    if (draft?.count > 0) {
+      dispatch(setError(true));
+      dispatch(
+        setMessage("Payroll has ongoing draft. Editing is not allowed.")
+      );
+      return;
+    }
+    dispatch(setIsAdd(true));
+    setItemEdit(null);
+  };
   return (
     <>
       <Header />
       <Navigation menu="employee" />
       <div className="wrapper">
         <BreadCrumbs param={`${location.search}`} />
+
         <hr />
-        <p className="font-semibold pt-4 m-0">
-          Name :
-          <span className="font-light pl-4">
-            {isLoadingEmployee
-              ? "Loading..."
-              : `${employee?.data[0].employee_lname}, 
+        <div className="flex items-center pt-4 justify-between mb-3 whitespace-nowrap overflow-auto gap-2">
+          <p className="font-semibold m-0">
+            Name :
+            <span className="font-light pl-4">
+              {isLoadingEmployee
+                ? "Loading..."
+                : `${employee?.data[0].employee_lname}, 
             ${employee?.data[0].employee_fname}`}
-          </span>
-        </p>
+            </span>
+          </p>
+          {!draftLoading && (
+            <div className="flex items-center gap-1">
+              <button type="button" className="btn-primary" onClick={handleAdd}>
+                <FaPlusCircle />
+                <span>Add</span>
+              </button>
+            </div>
+          )}
+        </div>
         <div className="w-full pb-40">
           <DeductionInstallmentViewList
+            setItemEdit={setItemEdit}
             paytypeId={PagibigMP2Id}
             payItem={payItem?.data}
           />
@@ -60,6 +98,7 @@ const DeductionInstallmentMP2 = () => {
         <Footer />
       </div>
 
+      {store.isAdd && <ModalAddMP2 item={itemEdit} />}
       {store.success && <ModalSuccess />}
       {store.error && <ModalError />}
     </>

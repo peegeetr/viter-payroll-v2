@@ -1,19 +1,17 @@
 import React from "react";
 import { StoreContext } from "../../../../store/StoreContext";
+import useQueryData from "../../../custom-hooks/useQueryData";
 import {
   getUrlParam,
   getUserType,
   hrisDevApiUrl,
 } from "../../../helpers/functions-general";
-import JobDetailsLink from "../job-details/JobDetailsLink";
-import PayrollDetailsLink from "../payroll-details/PayrollDetailsLink";
+import BreadCrumbs from "../../../partials/BreadCrumbs";
+import Footer from "../../../partials/Footer";
 import Header from "../../../partials/Header";
 import Navigation from "../../../partials/Navigation";
-import BreadCrumbs from "../../../partials/BreadCrumbs";
-import TableSpinner from "../../../partials/spinners/TableSpinner";
 import NoData from "../../../partials/NoData";
-import Footer from "../../../partials/Footer";
-import useQueryData from "../../../custom-hooks/useQueryData";
+import TableSpinner from "../../../partials/spinners/TableSpinner";
 import OptionalDeductionLink from "./optional-deduction/OptionalDeductionLink";
 import OtherDeductionLink from "./other-deduction/OtherDeductionLink";
 

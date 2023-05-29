@@ -1,0 +1,24 @@
+
+*controllers           
+    - employee/installment/create.php   
+    - employee/installment/update.php   
+    
+*models     
+    - employee/EmployeeInstallment.php   
+  
+*htaccess 
+    - 
+
+*db tables 
+    - prv2_employee_installment.sql
+
+*core 
+    - 
+
+*extra 
+    - 
+    
+Patrick
+    - 
+
+ 

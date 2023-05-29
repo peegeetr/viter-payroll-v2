@@ -145,6 +145,7 @@ class EmployeeInstallment
             $sql .= "employee_installment_status ";
             $sql .= "from {$this->tblEmployeeInstallmet} ";
             $sql .= "where employee_installment_paytype_id = :employee_installment_paytype_id ";
+            $sql .= "and employee_installment_status = '0' ";
             $sql .= "and employee_installment_employee_id = :employee_installment_employee_id ";
             $sql .= "order by employee_installment_aid desc ";
             $sql .= "limit 1 ";

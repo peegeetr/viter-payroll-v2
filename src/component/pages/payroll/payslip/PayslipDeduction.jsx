@@ -38,7 +38,7 @@ const PayslipDeduction = ({ paytypeId, empid, payrollid }) => {
         return (
           <tr key={key} className="hover:bg-transparent">
             <td className="w-[20rem] print:py-[2px]">
-              {item.payitem_name} {item.earnings_details}
+              {item.deduction_details}
             </td>
             <td className="w-[10rem] print:py-[2px]"></td>
             <td className=" print:py-[2px]"></td>

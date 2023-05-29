@@ -151,7 +151,7 @@ const DeductionInstallmentViewList = ({ setItemEdit, paytypeId, payItem }) => {
                       ""
                     )}
                   </td>
-                  {eid !== null && (
+                  {eid !== null && item.employee_installment_status !== "2" && (
                     <td>
                       <div className="flex items-center gap-2">
                         <button

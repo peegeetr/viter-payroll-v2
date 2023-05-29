@@ -1369,7 +1369,7 @@ export const payComputePagibigMP2 = (emp, deduction) => {
       deduction_paytype_id: optionalDeductionId,
       deduction_payitem_id: PagibigMP2Id,
       deduction_amount: finalAmount,
-      deduction_details: `${deduction.employee_installment_details}`,
+      deduction_details: `Pag-Ibig MP2`,
       deduction_frequency: isSemiMonthly,
       deduction_is_installment: onetimeNumber,
       deduction_number_of_installment: onetimeNumber,

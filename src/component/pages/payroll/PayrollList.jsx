@@ -163,10 +163,6 @@ const PayrollList = ({ setItemEdit }) => {
                         {formatDate(item.payroll_pay_date)}
                       </td>
                       <td className=" text-right">
-                        {/* {`${formatDate(item.payroll_start_date).split(" ")[1]} 
-                      ${formatDate(item.payroll_start_date).split(" ")[2]} - ${
-                          formatDate(item.payroll_end_date).split(" ")[2]
-                        },  ${formatDate(item.payroll_end_date).split(" ")[3]}`} */}
                         {`${getPayPeriod(
                           item.payroll_start_date,
                           item.payroll_end_date
@@ -214,20 +210,8 @@ const PayrollList = ({ setItemEdit }) => {
                           >
                             <FaList />
                           </Link>
-                          {/* 
-                          {item.payroll_is_paid === 1 &&
-                            store.credentials.data.role_is_developer === 1 && (
-                              <button
-                                type="button"
-                                className="btn-action-table tooltip-action-table"
-                                data-tooltip="draft"
-                                onClick={() => handleRestore(item)}
-                              >
-                                <FaHistory />
-                              </button>
-                            )} */}
-
-                          {item.payroll_is_paid === 0 && (
+                          {(item.payroll_is_paid === 0 ||
+                            store.credentials.data.role_is_developer === 1) && (
                             <button
                               type="button"
                               className="btn-action-table tooltip-action-table"

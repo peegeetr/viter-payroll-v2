@@ -31,6 +31,7 @@ export const InputText = ({ label, ...props }) => {
           allowLeadingZeros
           thousandSeparator=","
           decimalScale={4}
+          className={meta.touched && meta.error ? "error-show" : null}
           // prefix={"P "}
         />
 

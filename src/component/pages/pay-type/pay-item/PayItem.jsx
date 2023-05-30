@@ -28,7 +28,7 @@ const PayItem = () => {
       <Navigation menu="pay-type" />
       <div className="wrapper">
         {/* <h4 className="text-xl">Holidays</h4> */}
-        <div className="flex items-center justify-between mb-3 whitespace-nowrap overflow-auto gap-2">
+        <div className="flex items-center justify-between whitespace-nowrap overflow-auto gap-2">
           <BreadCrumbs />
           {store.credentials.data.role_is_developer === 1 && (
             <div className="flex items-center gap-1">

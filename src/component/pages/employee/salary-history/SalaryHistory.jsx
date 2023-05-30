@@ -38,7 +38,7 @@ const SalaryHistory = () => {
       <Header />
       <Navigation menu="employee" />
       <div className="wrapper">
-        <div className="flex items-center justify-between mb-3 whitespace-nowrap overflow-auto gap-2">
+        <div className="flex items-center justify-between  whitespace-nowrap overflow-auto gap-2">
           <BreadCrumbs param={`${location.search}`} />
           <div className="flex items-center gap-1">
             <button type="button" className="btn-primary" onClick={handleAdd}>

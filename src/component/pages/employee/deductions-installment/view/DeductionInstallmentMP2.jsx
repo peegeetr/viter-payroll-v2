@@ -48,7 +48,7 @@ const DeductionInstallmentMP2 = () => {
   const { data: employeeInsPagibigMP2 } = useQueryData(
     `${devApiUrl}/v1/employees-installment/by-employee/${PagibigMP2Id}/${eid}`, // endpoint
     "get", // method
-    `employeeInsPagibigMP2${PagibigMP2Id}` // key
+    `employeeInstallmentAll${PagibigMP2Id}` // key
   );
   const handleAdd = () => {
     if (employeeInsPagibigMP2?.count > 0) {
@@ -64,7 +64,7 @@ const DeductionInstallmentMP2 = () => {
       <Header />
       <Navigation menu="employee" />
       <div className="wrapper">
-        <div className="flex items-center justify-between mb-3 whitespace-nowrap overflow-auto gap-2">
+        <div className="flex items-center justify-between  whitespace-nowrap overflow-auto gap-2">
           <BreadCrumbs param={`${location.search}`} />
           {employeeInsPagibigMP2?.count === 0 && (
             <div className="flex items-center gap-1">
@@ -76,7 +76,7 @@ const DeductionInstallmentMP2 = () => {
           )}
         </div>
         <hr />
-        <p className="font-semibold m-0">
+        <p className="font-semibold pt-4 m-0">
           Name :
           <span className="font-light pl-4">
             {isLoadingEmployee

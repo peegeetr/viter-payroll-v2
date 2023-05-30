@@ -23,7 +23,7 @@ const PayTypePage = () => {
       <Header />
       <Navigation menu="pay-type" />
       <div className="wrapper">
-        <div className="flex items-center justify-between mb-3 whitespace-nowrap overflow-auto gap-2">
+        <div className="flex items-center justify-between whitespace-nowrap overflow-auto gap-2">
           <h4 className="text-xl">Pay Type</h4>
           {store.credentials.data.role_is_developer === 1 && (
             <div className="flex items-center gap-1">

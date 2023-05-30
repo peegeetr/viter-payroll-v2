@@ -58,7 +58,7 @@ const DeductionInstallmentPagibigLoan = () => {
       <Header />
       <Navigation menu="employee" />
       <div className="wrapper">
-        <div className="flex items-center justify-between mb-3 whitespace-nowrap overflow-auto gap-2">
+        <div className="flex items-center justify-between whitespace-nowrap overflow-auto gap-2">
           <BreadCrumbs param={`${location.search}`} />
           <div className="flex items-center gap-1">
             <button type="button" className="btn-primary" onClick={handleAdd}>
@@ -68,7 +68,7 @@ const DeductionInstallmentPagibigLoan = () => {
           </div>
         </div>
         <hr />
-        <p className="font-semibold m-0">
+        <p className="font-semibold pt-4 m-0">
           Name :
           <span className="font-light pl-4">
             {isLoadingEmployee

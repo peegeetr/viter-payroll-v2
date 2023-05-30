@@ -15,6 +15,7 @@ import {
   getEndOfInstallment,
   getNumberOfMonths,
   getPayItemName,
+  getReadNumberOfMonths,
 } from "../functions-deductions-installment";
 import {
   setError,
@@ -136,8 +137,9 @@ const DeductionInstallmentViewList = ({ setItemEdit, paytypeId, payItem }) => {
                       )}
                     </td>
                   )}
-                  <td className="text-right pr-4">{`${getNumberOfMonths(
-                    item.employee_installment_start_date
+                  <td className="text-right pr-4">{`${getReadNumberOfMonths(
+                    item.employee_installment_start_date,
+                    item.employee_installment_number_of_months
                   )} /
                   ${item.employee_installment_number_of_months}`}</td>
                   <td>
@@ -151,7 +153,9 @@ const DeductionInstallmentViewList = ({ setItemEdit, paytypeId, payItem }) => {
                       ""
                     )}
                   </td>
-                  {eid !== null && item.employee_installment_status !== "2" && (
+                  {((eid !== null &&
+                    item.employee_installment_status !== "2") ||
+                    store.credentials.data.role_is_developer === 1) && (
                     <td>
                       <div className="flex items-center gap-2">
                         <button

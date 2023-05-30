@@ -21,7 +21,10 @@ import {
 import { PagibigLoanId } from "../../../../helpers/functions-payitemId";
 import { queryData } from "../../../../helpers/queryData";
 import ButtonSpinner from "../../../../partials/spinners/ButtonSpinner";
-import { getEndOfInstallment } from "../functions-deductions-installment";
+import {
+  getEndOfInstallment,
+  getNumberOfMonths,
+} from "../functions-deductions-installment";
 
 const ModalAddPagibigLoan = ({ item }) => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -64,6 +67,7 @@ const ModalAddPagibigLoan = ({ item }) => {
       ? item.employee_installment_start_date
       : getDateNow(),
     employee_installment_end_date: "",
+    total_month: "",
     employee_installment_paytype_id: PagibigLoanId,
     employee_installment_employee_id: eid,
     employee_installment_number_of_months: item
@@ -124,6 +128,9 @@ const ModalAddPagibigLoan = ({ item }) => {
                     props.values.employee_installment_number_of_months,
                     props.values.employee_installment_start_date
                   );
+                props.values.total_month = `${getNumberOfMonths(
+                  props.values.employee_installment_start_date
+                )}`;
                 return (
                   <Form>
                     <div className="relative mb-6 mt-2">

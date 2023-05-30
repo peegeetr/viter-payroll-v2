@@ -24,7 +24,10 @@ import {
 } from "../../../../helpers/functions-general";
 import { queryData } from "../../../../helpers/queryData";
 import ButtonSpinner from "../../../../partials/spinners/ButtonSpinner";
-import { getEndOfInstallment } from "../functions-deductions-installment";
+import {
+  getEndOfInstallment,
+  getNumberOfMonths,
+} from "../functions-deductions-installment";
 import { fcaTutionId } from "../../../../helpers/functions-payitemId";
 
 const ModalAddFCATuition = ({ item }) => {
@@ -74,6 +77,7 @@ const ModalAddFCATuition = ({ item }) => {
     employee_installment_number_of_months: item
       ? item.employee_installment_number_of_months
       : "",
+    total_month: "",
     employee_installment_amount: item ? item.employee_installment_amount : "",
     employee_installment_status: item ? item.employee_installment_status : "",
     employee_installment_details: item ? item.employee_installment_details : "",
@@ -129,6 +133,9 @@ const ModalAddFCATuition = ({ item }) => {
                     props.values.employee_installment_number_of_months,
                     props.values.employee_installment_start_date
                   );
+                props.values.total_month = `${getNumberOfMonths(
+                  props.values.employee_installment_start_date
+                )}`;
                 return (
                   <Form>
                     <div className="relative mb-6 mt-2">

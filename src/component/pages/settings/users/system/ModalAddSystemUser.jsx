@@ -36,7 +36,7 @@ const ModalAddSystemUser = ({ item, roleId }) => {
       // show success box
       if (data.success) {
         item &&
-          store.credentials.data.user_system_email === item &&
+          store.credentials.data.user_system_email === item.user_system_email &&
           dispatch(setIsAccountUpdated(true));
         dispatch(setIsAdd(false));
         dispatch(setSuccess(true));

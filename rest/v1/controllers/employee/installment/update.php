@@ -16,7 +16,6 @@ if (array_key_exists("employeeInstallmentId", $_GET)) {
     $installment->employee_installment_aid = $_GET['employeeInstallmentId'];
     $installment->employee_installment_start_date = checkIndex($data, "employee_installment_start_date");
     $installment->employee_installment_end_date = checkIndex($data, "employee_installment_end_date");
-    $installment->employee_installment_status = checkIndex($data, "employee_installment_status");
     $installment->employee_installment_amount = checkIndex($data, "employee_installment_amount");
     $installment->employee_installment_details = checkIndex($data, "employee_installment_details");
     $installment->employee_installment_number_of_months = checkIndex($data, "employee_installment_number_of_months");
@@ -25,6 +24,14 @@ if (array_key_exists("employeeInstallmentId", $_GET)) {
     //check to see if task id in query string is not empty and is number, if not return json error
     checkId($installment->employee_installment_aid);
     // check name 
+
+    $total_month = checkIndex($data, "total_month");
+
+    if ($total_month > $installment->employee_installment_number_of_months) {
+        $installment->employee_installment_status = 2;
+    } else {
+        $installment->employee_installment_status = checkIndex($data, "employee_installment_status");
+    }
     // update
     $query = checkUpdate($installment);
     returnSuccess($installment, "Announcement", $query);

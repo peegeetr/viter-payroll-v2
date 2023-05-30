@@ -48,6 +48,18 @@ export const getNumberOfMonths = (startDate) => {
   return numberOfMonths;
 };
 
+export const getReadNumberOfMonths = (date, months) => {
+  let totalMonths = getNumberOfMonths(date);
+  let result = 0;
+  if (totalMonths > months) {
+    result = months;
+  }
+  if (totalMonths <= months) {
+    result = totalMonths;
+  }
+  return result;
+};
+
 export const getNumMonth = (numMonth, totalNumMonths) => {
   let result = 0;
   if (numMonth <= totalNumMonths) {

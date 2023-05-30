@@ -21,7 +21,10 @@ import {
 import { SSSLoanId } from "../../../../helpers/functions-payitemId";
 import { queryData } from "../../../../helpers/queryData";
 import ButtonSpinner from "../../../../partials/spinners/ButtonSpinner";
-import { getEndOfInstallment } from "../functions-deductions-installment";
+import {
+  getEndOfInstallment,
+  getNumberOfMonths,
+} from "../functions-deductions-installment";
 
 const ModalAddSSSLoan = ({ item }) => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -70,6 +73,7 @@ const ModalAddSSSLoan = ({ item }) => {
     employee_installment_number_of_months: item
       ? item.employee_installment_number_of_months
       : "",
+    total_month: "",
     employee_installment_amount: item ? item.employee_installment_amount : "",
     employee_installment_status: item ? item.employee_installment_status : "1",
     employee_installment_details: item ? item.employee_installment_details : "",
@@ -126,6 +130,9 @@ const ModalAddSSSLoan = ({ item }) => {
                     props.values.employee_installment_number_of_months,
                     props.values.employee_installment_start_date
                   );
+                props.values.total_month = `${getNumberOfMonths(
+                  props.values.employee_installment_start_date
+                )}`;
                 return (
                   <Form>
                     <div className="relative mb-6 mt-2">

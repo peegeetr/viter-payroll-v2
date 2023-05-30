@@ -24,7 +24,10 @@ import {
 import { PagibigMP2Id } from "../../../../helpers/functions-payitemId";
 import { queryData } from "../../../../helpers/queryData";
 import ButtonSpinner from "../../../../partials/spinners/ButtonSpinner";
-import { getEndOfInstallment } from "../functions-deductions-installment";
+import {
+  getEndOfInstallment,
+  getNumberOfMonths,
+} from "../functions-deductions-installment";
 
 const ModalAddMP2 = ({ item }) => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -78,6 +81,7 @@ const ModalAddMP2 = ({ item }) => {
     employee_installment_details: item
       ? item.employee_installment_details
       : "Pag-ibig MP2",
+    total_month: "",
   };
 
   const yupSchema = Yup.object({
@@ -125,6 +129,9 @@ const ModalAddMP2 = ({ item }) => {
                     props.values.employee_installment_number_of_months,
                     props.values.employee_installment_start_date
                   );
+                props.values.total_month = `${getNumberOfMonths(
+                  props.values.employee_installment_start_date
+                )}`;
                 return (
                   <Form>
                     <div className="relative mb-6 mt-2">

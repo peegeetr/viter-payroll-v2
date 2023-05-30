@@ -1,5 +1,5 @@
 import { useField } from "formik";
-import { NumericFormat } from "react-number-format";
+import { NumericFormat, PatternFormat } from "react-number-format";
 import React from "react";
 
 export const InputTextArea = ({ label, ...props }) => {
@@ -22,6 +22,27 @@ export const InputTextArea = ({ label, ...props }) => {
 
 export const InputText = ({ label, ...props }) => {
   const [field, meta] = useField(props);
+  if (props.tin === "tin") {
+    return (
+      <>
+        <PatternFormat
+          {...field}
+          {...props}
+          format="###-###-###-###"
+          allowEmptyFormatting
+          mask="_"
+          className={meta.touched && meta.error ? "error-show" : null}
+          autoComplete="off"
+        />
+
+        <label htmlFor={props.id || props.name}>{label}</label>
+        {meta.touched && meta.error ? (
+          <span className="error-show">{meta.error}</span>
+        ) : null}
+      </>
+    );
+  }
+
   if (props.num === "num") {
     return (
       <>

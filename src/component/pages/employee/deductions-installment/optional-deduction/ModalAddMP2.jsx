@@ -179,6 +179,9 @@ const ModalAddMP2 = ({ item }) => {
                           </option>
                           <option value="0">Ongoing</option>
                           <option value="1">Stop</option>
+                          {item.employee_installment_status === "2" && (
+                            <option value="2">Complete</option>
+                          )}
                         </InputSelect>
                       </div>
                     )}

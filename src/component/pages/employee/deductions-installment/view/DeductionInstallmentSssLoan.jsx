@@ -70,10 +70,10 @@ const DeductionInstallmentSssLoan = () => {
         <hr />
         <p className="font-semibold pt-4 m-0">
           Name :
-          <span className="font-light pl-4">
+          <span className="font-light ">
             {isLoadingEmployee
               ? "Loading..."
-              : `${employee?.data[0].employee_lname}, 
+              : ` ${employee?.data[0].employee_lname}, 
             ${employee?.data[0].employee_fname}`}
           </span>
         </p>

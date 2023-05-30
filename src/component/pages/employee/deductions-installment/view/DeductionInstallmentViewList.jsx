@@ -63,7 +63,7 @@ const DeductionInstallmentViewList = ({ setItemEdit, paytypeId, payItem }) => {
 
   return (
     <>
-      <div className=" overflow-x-auto pt-4 pb-2 z-0">
+      <div className="relative overflow-x-auto pt-4 pb-2 z-0">
         <table>
           <thead>
             <tr>

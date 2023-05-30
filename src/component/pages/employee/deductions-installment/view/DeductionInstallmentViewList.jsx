@@ -70,16 +70,14 @@ const DeductionInstallmentViewList = ({ setItemEdit, paytypeId, payItem }) => {
               <th className="text-center">#</th>
               <th className="min-w-[10rem]">Pay Type</th>
               {paytypeId !== PagibigMP2Id && (
-                <th className="min-w-[10rem]">Detais</th>
+                <th className="min-w-[10rem]">Details</th>
               )}
               <th className="min-w-[10rem]">Start Date</th>
               <th className="min-w-[10rem]">End Date</th>
               <th className="min-w-[8rem] text-right pr-4">Amortization</th>
-              {paytypeId !== PagibigMP2Id &&
-                paytypeId !== fcaTutionId &&
-                paytypeId !== fwcTithesId && (
-                  <th className="min-w-[8rem] text-right pr-4">Amount</th>
-                )}
+              {paytypeId !== PagibigMP2Id && paytypeId !== fcaTutionId && (
+                <th className="min-w-[8rem] text-right pr-4">Amount</th>
+              )}
               <th className="min-w-[10rem] text-right pr-4">
                 Number of Months
               </th>
@@ -127,19 +125,17 @@ const DeductionInstallmentViewList = ({ setItemEdit, paytypeId, payItem }) => {
                       Number(item.employee_installment_amount).toFixed(2)
                     )}
                   </td>
-                  {paytypeId !== PagibigMP2Id &&
-                    paytypeId !== fcaTutionId &&
-                    paytypeId !== fwcTithesId && (
-                      <td className="text-right pr-4">
-                        &#8369;{" "}
-                        {numberWithCommas(
-                          (
-                            Number(item.employee_installment_amount) *
-                            Number(item.employee_installment_number_of_months)
-                          ).toFixed(2)
-                        )}
-                      </td>
-                    )}
+                  {paytypeId !== PagibigMP2Id && paytypeId !== fcaTutionId && (
+                    <td className="text-right pr-4">
+                      &#8369;{" "}
+                      {numberWithCommas(
+                        (
+                          Number(item.employee_installment_amount) *
+                          Number(item.employee_installment_number_of_months)
+                        ).toFixed(2)
+                      )}
+                    </td>
+                  )}
                   <td className="text-right pr-4">{`${getNumberOfMonths(
                     item.employee_installment_start_date
                   )} /

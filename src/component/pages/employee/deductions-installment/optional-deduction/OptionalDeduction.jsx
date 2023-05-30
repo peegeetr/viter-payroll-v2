@@ -34,12 +34,6 @@ const OptionalDeduction = () => {
     false // devKey boolean
   );
 
-  // use if not loadmore button undertime
-  const { data: draft, isLoading: draftLoading } = useQueryData(
-    `${devApiUrl}/v1/payroll/list`, // endpoint
-    "get", // method
-    "draft" // key
-  );
   return (
     <>
       <Header />

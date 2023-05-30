@@ -44,7 +44,18 @@ const DeductionInstallmentMP2 = () => {
     `payItem${PagibigMP2Id}` // key
   );
 
+  // use if not loadmore button undertime
+  const { data: employeeInsPagibigMP2 } = useQueryData(
+    `${devApiUrl}/v1/employees-installment/by-employee/${PagibigMP2Id}/${eid}`, // endpoint
+    "get", // method
+    `employeeInsPagibigMP2${PagibigMP2Id}` // key
+  );
   const handleAdd = () => {
+    if (employeeInsPagibigMP2?.count > 0) {
+      dispatch(setError(true));
+      dispatch(setMessage("You already have pending pagibig MP2"));
+      return;
+    }
     dispatch(setIsAdd(true));
     setItemEdit(null);
   };
@@ -55,12 +66,14 @@ const DeductionInstallmentMP2 = () => {
       <div className="wrapper">
         <div className="flex items-center justify-between mb-3 whitespace-nowrap overflow-auto gap-2">
           <BreadCrumbs param={`${location.search}`} />
-          <div className="flex items-center gap-1">
-            <button type="button" className="btn-primary" onClick={handleAdd}>
-              <FaPlusCircle />
-              <span>Add</span>
-            </button>
-          </div>
+          {employeeInsPagibigMP2?.count === 0 && (
+            <div className="flex items-center gap-1">
+              <button type="button" className="btn-primary" onClick={handleAdd}>
+                <FaPlusCircle />
+                <span>Add</span>
+              </button>
+            </div>
+          )}
         </div>
         <hr />
         <p className="font-semibold m-0">

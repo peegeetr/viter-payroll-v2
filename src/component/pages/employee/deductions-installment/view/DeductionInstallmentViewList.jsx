@@ -49,18 +49,7 @@ const DeductionInstallmentViewList = ({ setItemEdit, paytypeId, payItem }) => {
     `employeeInstallmentAll${paytypeId}` // key
   );
 
-  // use if not loadmore button undertime
-  const { data: draft } = useQueryData(
-    `${devApiUrl}/v1/payroll/list`, // endpoint
-    "get", // method
-    "draft" // key
-  );
   const handleDelete = (item) => {
-    if (draft?.count > 0) {
-      dispatch(setError(true));
-      dispatch(setMessage("Payroll has ongoing draft. Adding is not allowed."));
-      return;
-    }
     dispatch(setIsRestore(true));
     setId(item.employee_installment_aid);
     setData(item);
@@ -68,13 +57,6 @@ const DeductionInstallmentViewList = ({ setItemEdit, paytypeId, payItem }) => {
   };
 
   const handleEditMp2 = (item) => {
-    if (draft?.count > 0) {
-      dispatch(setError(true));
-      dispatch(
-        setMessage("Payroll has ongoing draft. Editing is not allowed.")
-      );
-      return;
-    }
     dispatch(setIsAdd(true));
     setItemEdit(item);
   };

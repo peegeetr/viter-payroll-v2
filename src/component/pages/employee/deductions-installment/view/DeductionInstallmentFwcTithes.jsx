@@ -43,20 +43,7 @@ const DeductionInstallmentFwcTithes = () => {
     "get", // method
     `payItem${fwcTithesId}` // key
   );
-  // use if not loadmore button undertime
-  const { data: draft, isLoading: draftLoading } = useQueryData(
-    `${devApiUrl}/v1/payroll/list`, // endpoint
-    "get", // method
-    "draft" // key
-  );
   const handleAdd = () => {
-    if (draft?.count > 0) {
-      dispatch(setError(true));
-      dispatch(
-        setMessage("Payroll has ongoing draft. Editing is not allowed.")
-      );
-      return;
-    }
     dispatch(setIsAdd(true));
     setItemEdit(null);
   };
@@ -67,14 +54,12 @@ const DeductionInstallmentFwcTithes = () => {
       <div className="wrapper">
         <div className="flex items-center justify-between mb-3 whitespace-nowrap overflow-auto gap-2">
           <BreadCrumbs param={`${location.search}`} />
-          {!draftLoading && (
-            <div className="flex items-center gap-1">
-              <button type="button" className="btn-primary" onClick={handleAdd}>
-                <FaPlusCircle />
-                <span>Add</span>
-              </button>
-            </div>
-          )}
+          <div className="flex items-center gap-1">
+            <button type="button" className="btn-primary" onClick={handleAdd}>
+              <FaPlusCircle />
+              <span>Add</span>
+            </button>
+          </div>
         </div>
         <hr />
         <p className="font-semibold m-0">

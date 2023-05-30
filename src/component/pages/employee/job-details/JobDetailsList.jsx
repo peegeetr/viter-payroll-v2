@@ -138,7 +138,7 @@ const JobDetailsList = ({ isLoading, error, employee }) => {
                 <p className="font-semibold">Regularized on :</p>
                 <p className="pl-2">
                   {item.employee_job_regularized === "" ||
-                  item.employee_job_separated === "na"
+                  item.employee_job_regularized === "na"
                     ? "n/a"
                     : formatDate(item.employee_job_regularized)}
                 </p>

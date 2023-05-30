@@ -1,7 +1,7 @@
 @font-face {
   font-family: "poppinsRegular";
   src: url(/src/font/Poppins-Regular.ttf) format("truetype");
-  font-display: fallback;
+  /* font-display: fallback; */
 }
 
 @tailwind base;

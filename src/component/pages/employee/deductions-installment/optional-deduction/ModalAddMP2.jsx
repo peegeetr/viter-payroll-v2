@@ -170,8 +170,8 @@ const ModalAddMP2 = ({ item }) => {
                           <option value="" hidden>
                             --
                           </option>
-                          <option value="0">Stop</option>
-                          <option value="1">Ongoing</option>
+                          <option value="0">Ongoing</option>
+                          <option value="1">Stop</option>
                         </InputSelect>
                       </div>
                     )}

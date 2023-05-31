@@ -54,8 +54,6 @@ const ManageEarnings = () => {
     // dispatch(setIsFinish(true));
   };
 
-  console.log(isLoading);
-
   return (
     <>
       <Header />

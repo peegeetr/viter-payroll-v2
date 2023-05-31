@@ -70,7 +70,7 @@ const ManageEarningsList = () => {
     setData(item);
     setDel(true);
   };
-  console.log("123", result);
+
   return (
     <>
       <SearchBarRq

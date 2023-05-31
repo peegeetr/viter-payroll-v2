@@ -42,7 +42,7 @@ function getHtmlConfirmEmail(
       <div style="padding: 10px 10px 0px">
         <div
           style="
-            background-image: url(https://demo.frontlinebusiness.com.ph/dev/notification-images/bg-white.jpg);
+          background-image: url(https://hris.frontlinebusiness.com.ph/img/fbs-logo-bg-email.jpg);
             width: 170px;
             display: inline-block;
           "

@@ -105,7 +105,7 @@ const ModalEditPayroll = ({ itemEdit }) => {
       <div className="fixed top-0 right-0 bottom-0 left-0 flex items-center justify-center bg-dark bg-opacity-50 z-50">
         <div className="p-1 w-[350px] rounded-b-2xl">
           <div className="flex justify-between items-center bg-primary p-3 rounded-t-2xl">
-            <h3 className="text-white text-sm">Update Job Details</h3>
+            <h3 className="text-white text-sm">Update Payroll Details</h3>
             <button
               type="button"
               className="text-gray-200 text-base"

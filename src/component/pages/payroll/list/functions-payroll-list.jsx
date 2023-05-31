@@ -107,6 +107,12 @@ export const runPayroll = (
 
   // list of installment
   // earnings
+  let hazardPayAmount = 0;
+  let hazardPayList = [];
+  let inflationAmount = 0;
+  let inflationList = [];
+  let adjustmentAmount = 0;
+  let adjustmentList = [];
   let bereavementAmount = 0;
   let bereavementList = [];
   let bonusAmount = 0;
@@ -184,9 +190,6 @@ export const runPayroll = (
           totalUndertimeAmount += payComputeUndertime(earning);
           totalAbsencesAmount += payComputeAbsences(earning).finalAmount;
           totalAbsencesHrs += payComputeAbsences(earning).leaveHrs;
-          totalHazardPayAmount += payComputeHazardPay(earning);
-          totalInflationAmount += payComputeInflationAdjustmen(earning);
-          totalAdjustmentAmount += payComputeAdjustment(earning);
         }
         // 13th mo & Other benefits
         // loop earnings onetime and installment for each employee
@@ -196,6 +199,15 @@ export const runPayroll = (
           earning.earnings_is_installment !== everyPayrollNumber && //onetime or installment
           earning.earnings_number_of_installment > earning.earnings_num_pay //number of payment
         ) {
+          hazardPayAmount = payComputeHazardPay(emp, earning);
+          totalHazardPayAmount += hazardPayAmount.finalAmount;
+
+          inflationAmount = payComputeInflationAdjustmen(emp, earning);
+          totalInflationAmount += inflationAmount.finalAmount;
+
+          adjustmentAmount = payComputeAdjustment(emp, earning);
+          totalAdjustmentAmount += adjustmentAmount.finalAmount;
+
           bereavementAmount = payComputeBereavement(emp, earning);
           totalBereavement += bereavementAmount.finalAmount;
 
@@ -228,6 +240,9 @@ export const runPayroll = (
 
           // list of installment
           // earnings
+          hazardPayList.push(...hazardPayAmount.hazardPayList);
+          inflationList.push(...inflationAmount.inflationList);
+          adjustmentList.push(...adjustmentAmount.adjustmentList);
           bereavementList.push(...bereavementAmount.bereavementList);
           bonusList.push(...bonusAmount.bonusList);
           eRBonusList.push(...employeeReferralBonusAmount.eRBonusList);
@@ -495,6 +510,9 @@ export const runPayroll = (
     taxList,
     deminimisList,
     bereavementList,
+    hazardPayList,
+    inflationList,
+    adjustmentList,
     bonusList,
     eRBonusList,
     separationPayList,

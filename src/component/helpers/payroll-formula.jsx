@@ -579,30 +579,87 @@ export const payComputeNightDiff = (
 };
 
 // compute Hazard Pay
-export const payComputeHazardPay = (earning) => {
+export const payComputeHazardPay = (emp, earning) => {
   let finalAmount = 0;
+  let hazardPayList = [];
   if (earning.earnings_payitem_id === hazardPayId) {
     finalAmount += Number(earning.earnings_amount);
+    // if installment create installment extra
+    if (earning.earnings_is_installment === installmentNumber) {
+      hazardPayList.push({
+        earnings_payroll_type_id: emp.payroll_category_type,
+        earnings_employee: emp.payroll_list_employee_name,
+        earnings_employee_id: emp.payroll_list_employee_id,
+        earnings_paytype_id: wagesEarningsId,
+        earnings_payitem_id: hazardPayId,
+        earnings_amount: earning.earnings_amount,
+        earnings_details: earning.earnings_details,
+        earnings_frequency: isSemiMonthly,
+        earnings_is_installment: onetimeNumber,
+        earnings_number_of_installment: onetimeNumber,
+        earnings_start_pay_date: emp.payroll_start_date,
+        earnings_end_pay_date: emp.payroll_end_date,
+        installment_extra: 1,
+      });
+    }
   }
-  return finalAmount;
+  return { finalAmount, hazardPayList };
 };
 
 // compute Inflation Adjustmen
-export const payComputeInflationAdjustmen = (earning) => {
+export const payComputeInflationAdjustmen = (emp, earning) => {
   let finalAmount = 0;
+  let inflationList = [];
   if (earning.earnings_payitem_id === inflationAdjustmentId) {
     finalAmount += Number(earning.earnings_amount);
+    // if installment create installment extra
+    if (earning.earnings_is_installment === installmentNumber) {
+      inflationList.push({
+        earnings_payroll_type_id: emp.payroll_category_type,
+        earnings_employee: emp.payroll_list_employee_name,
+        earnings_employee_id: emp.payroll_list_employee_id,
+        earnings_paytype_id: wagesEarningsId,
+        earnings_payitem_id: inflationAdjustmentId,
+        earnings_amount: earning.earnings_amount,
+        earnings_details: earning.earnings_details,
+        earnings_frequency: isSemiMonthly,
+        earnings_is_installment: onetimeNumber,
+        earnings_number_of_installment: onetimeNumber,
+        earnings_start_pay_date: emp.payroll_start_date,
+        earnings_end_pay_date: emp.payroll_end_date,
+        installment_extra: 1,
+      });
+    }
   }
-  return finalAmount;
+  return { finalAmount, inflationList };
 };
 
 // compute Pay Adjustment
-export const payComputeAdjustment = (earning) => {
+export const payComputeAdjustment = (emp, earning) => {
   let finalAmount = 0;
+  let adjustmentList = [];
   if (earning.earnings_payitem_id === payAdjustmentId) {
     finalAmount += Number(earning.earnings_amount);
+    // if installment create installment extra
+    if (earning.earnings_is_installment === installmentNumber) {
+      adjustmentList.push({
+        earnings_payroll_type_id: emp.payroll_category_type,
+        earnings_employee: emp.payroll_list_employee_name,
+        earnings_employee_id: emp.payroll_list_employee_id,
+        earnings_paytype_id: wagesEarningsId,
+        earnings_payitem_id: payAdjustmentId,
+        earnings_amount: earning.earnings_amount,
+        earnings_details: earning.earnings_details,
+        earnings_frequency: isSemiMonthly,
+        earnings_is_installment: onetimeNumber,
+        earnings_number_of_installment: onetimeNumber,
+        earnings_start_pay_date: emp.payroll_start_date,
+        earnings_end_pay_date: emp.payroll_end_date,
+        installment_extra: 1,
+      });
+    }
   }
-  return finalAmount;
+  return { finalAmount, adjustmentList };
 };
 
 // compute Pay Diminimis

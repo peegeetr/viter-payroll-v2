@@ -134,6 +134,9 @@ const ModalRun = ({
     let payPagibigLoanList = run.pagibigLoanList;
     let payPagibigMP2List = run.pagibigMP2List;
     let paySSSLoanList = run.sSSLoanList;
+    let payHazardPayList = run.hazardPayList;
+    let payInflationList = run.inflationList;
+    let payAdjustmentList = run.adjustmentList;
 
     // modal error bonus categorty payroll;
     if (
@@ -196,6 +199,9 @@ const ModalRun = ({
       pagibigLoanList: payPagibigLoanList.length > 0 ? payPagibigLoanList : [],
       pagibigMP2List: payPagibigMP2List.length > 0 ? payPagibigMP2List : [],
       sSSLoanList: paySSSLoanList.length > 0 ? paySSSLoanList : [],
+      hazardPayList: payHazardPayList.length > 0 ? payHazardPayList : [],
+      inflationList: payInflationList.length > 0 ? payInflationList : [],
+      adjustmentList: payAdjustmentList.length > 0 ? payAdjustmentList : [],
       isPaid: 1,
       payItemTaxId: payrollTaxDeductionId,
       payItemHolidayId: holidayId,

@@ -40,6 +40,9 @@ if (array_key_exists("listpayrollid", $_GET)) {
     $allERBonusList = $data["eRBonusList"];
     $allSeparationPayList = $data["separationPayList"];
     $allOtherAllowancesList = $data["otherAllowancesList"];
+    $allHazardPayList = $data["hazardPayList"];
+    $allInflationList = $data["inflationList"];
+    $allAdjustmentList = $data["adjustmentList"];
 
     // list of installment optional Deductions 
     $allPagibigLoanList = $data["pagibigLoanList"];
@@ -465,6 +468,102 @@ if (array_key_exists("listpayrollid", $_GET)) {
             $payrollList->earnings_hrs = "";
             $payrollList->installment_extra = "0";
             $query = checkCreateDeductions($payrollList);
+        }
+    }
+
+    // installment
+    // list of installment  Earnings 
+    // Hazard Pay 
+    if (count($allHazardPayList) > 0) {
+
+        for ($hp = 0; $hp < count($allHazardPayList); $hp++) {
+            if ($allHazardPayList[$hp]["installment_extra"] === 1) {
+                $payrollList->payroll_type_id = $allHazardPayList[$hp]["earnings_payroll_type_id"];
+                $payrollList->num_pay = 1;
+                $payrollList->payroll_list_employee_name = $allHazardPayList[$hp]["earnings_employee"];
+                $payrollList->payroll_list_employee_id = $allHazardPayList[$hp]["earnings_employee_id"];
+                $payrollList->paytype_id = $allHazardPayList[$hp]["earnings_paytype_id"];
+                $payrollList->payitem_id = $allHazardPayList[$hp]["earnings_payitem_id"];
+                $payrollList->amount = $allHazardPayList[$hp]["earnings_amount"];
+                $payrollList->frequency = $allHazardPayList[$hp]["earnings_frequency"];
+                $payrollList->is_installment = $allHazardPayList[$hp]["earnings_is_installment"];
+                $payrollList->number_of_installment = $allHazardPayList[$hp]["earnings_number_of_installment"];
+                $payrollList->start_pay_date = $allHazardPayList[$hp]["earnings_start_pay_date"];
+                $payrollList->end_pay_date = $allHazardPayList[$hp]["earnings_end_pay_date"];
+                $payrollList->details = $allHazardPayList[$hp]["earnings_details"];
+                $payrollList->installment_extra = $allHazardPayList[$hp]["installment_extra"];
+                $payrollList->hris_date = "";
+                $payrollList->earnings_rate = "";
+                $payrollList->earnings_hrs = "";
+                // delete first existing PR ID and pay item id pagibig ER 
+                checkDeleteNotInstallmentEarningsByEmpId($payrollList);
+                // create extra 
+                $query = checkCreateEarnings($payrollList);
+            }
+        }
+    }
+
+    // installment
+    // list of installment  Earnings 
+    // Inflation
+    if (count($allInflationList) > 0) {
+
+        for ($in = 0; $in < count($allInflationList); $in++) {
+            if ($allInflationList[$in]["installment_extra"] === 1) {
+                $payrollList->payroll_type_id = $allInflationList[$in]["earnings_payroll_type_id"];
+                $payrollList->num_pay = 1;
+                $payrollList->payroll_list_employee_name = $allInflationList[$in]["earnings_employee"];
+                $payrollList->payroll_list_employee_id = $allInflationList[$in]["earnings_employee_id"];
+                $payrollList->paytype_id = $allInflationList[$in]["earnings_paytype_id"];
+                $payrollList->payitem_id = $allInflationList[$in]["earnings_payitem_id"];
+                $payrollList->amount = $allInflationList[$in]["earnings_amount"];
+                $payrollList->frequency = $allInflationList[$in]["earnings_frequency"];
+                $payrollList->is_installment = $allInflationList[$in]["earnings_is_installment"];
+                $payrollList->number_of_installment = $allInflationList[$in]["earnings_number_of_installment"];
+                $payrollList->start_pay_date = $allInflationList[$in]["earnings_start_pay_date"];
+                $payrollList->end_pay_date = $allInflationList[$in]["earnings_end_pay_date"];
+                $payrollList->details = $allInflationList[$in]["earnings_details"];
+                $payrollList->installment_extra = $allInflationList[$in]["installment_extra"];
+                $payrollList->hris_date = "";
+                $payrollList->earnings_rate = "";
+                $payrollList->earnings_hrs = "";
+                // delete first existing PR ID and pay item id pagibig ER 
+                checkDeleteNotInstallmentEarningsByEmpId($payrollList);
+                // create extra 
+                $query = checkCreateEarnings($payrollList);
+            }
+        }
+    }
+
+    // installment
+    // list of installment  Earnings 
+    // Adjustment
+    if (count($allAdjustmentList) > 0) {
+
+        for ($ad = 0; $ad < count($allAdjustmentList); $ad++) {
+            if ($allAdjustmentList[$ad]["installment_extra"] === 1) {
+                $payrollList->payroll_type_id = $allAdjustmentList[$ad]["earnings_payroll_type_id"];
+                $payrollList->num_pay = 1;
+                $payrollList->payroll_list_employee_name = $allAdjustmentList[$ad]["earnings_employee"];
+                $payrollList->payroll_list_employee_id = $allAdjustmentList[$ad]["earnings_employee_id"];
+                $payrollList->paytype_id = $allAdjustmentList[$ad]["earnings_paytype_id"];
+                $payrollList->payitem_id = $allAdjustmentList[$ad]["earnings_payitem_id"];
+                $payrollList->amount = $allAdjustmentList[$ad]["earnings_amount"];
+                $payrollList->frequency = $allAdjustmentList[$ad]["earnings_frequency"];
+                $payrollList->is_installment = $allAdjustmentList[$ad]["earnings_is_installment"];
+                $payrollList->number_of_installment = $allAdjustmentList[$ad]["earnings_number_of_installment"];
+                $payrollList->start_pay_date = $allAdjustmentList[$ad]["earnings_start_pay_date"];
+                $payrollList->end_pay_date = $allAdjustmentList[$ad]["earnings_end_pay_date"];
+                $payrollList->details = $allAdjustmentList[$ad]["earnings_details"];
+                $payrollList->installment_extra = $allAdjustmentList[$ad]["installment_extra"];
+                $payrollList->hris_date = "";
+                $payrollList->earnings_rate = "";
+                $payrollList->earnings_hrs = "";
+                // delete first existing PR ID and pay item id pagibig ER 
+                checkDeleteNotInstallmentEarningsByEmpId($payrollList);
+                // create extra 
+                $query = checkCreateEarnings($payrollList);
+            }
         }
     }
 

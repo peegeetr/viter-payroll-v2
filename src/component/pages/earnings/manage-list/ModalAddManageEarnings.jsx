@@ -288,19 +288,19 @@ const ModalAddManageEarnings = ({
                 if (validatePayPeriod(values, payrollDraft, dispatch)) {
                   return;
                 }
-                // if Data in HRIS is empty
-                if (
-                  validateDataIsNotEmpty(
-                    payItem[0].payitem_aid,
-                    payLeave,
-                    absences,
-                    overtime,
-                    undertime,
-                    dispatch
-                  )
-                ) {
-                  return;
-                }
+                // // if Data in HRIS is empty
+                // if (
+                //   validateDataIsNotEmpty(
+                //     payItem[0].payitem_aid,
+                //     payLeave,
+                //     absences,
+                //     overtime,
+                //     undertime,
+                //     dispatch
+                //   )
+                // ) {
+                //   return;
+                // }
 
                 if (values.earnings_payitem_id === leaveId) {
                   // get computed leave amount

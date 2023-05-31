@@ -98,14 +98,15 @@ if ($data["payitem_is_hris"] === "0" && $earnings->earnings_employee !== "all") 
 // payitem 19 = leave 
 $payitem = $data["leaveId"];
 if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === $payitem) {
-    // check array length
-    if (count($allLeave) === 0) {
-        noDataFound();
-    }
     // delete first earnings PR ID and pay item id leave
     $earnings->earnings_payitem_id = $payitem;
     checkId($earnings->earnings_payitem_id);
     checkDeleteEarnings($earnings);
+
+    // check array length
+    if (count($allLeave) === 0) {
+        noDataFound();
+    }
     for ($l = 0; $l < count($allLeave); $l++) {
         // check name
         $earnings->earnings_employee_id = $allLeave[$l]["employeId"];
@@ -127,15 +128,16 @@ if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === $payi
 // payitem 18 = Overtime  
 $payitem = $data["overtimeId"];
 if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === $payitem) {
-    // check array length
-    if (count($allOvertimeLeave) === 0) {
-        noDataFound();
-    }
 
     // delete first earnings PR ID and pay item id Overtime
     $earnings->earnings_payitem_id = $payitem;
     checkId($earnings->earnings_payitem_id);
     checkDeleteEarnings($earnings);
+
+    // check array length
+    if (count($allOvertimeLeave) === 0) {
+        noDataFound();
+    }
 
     for ($o = 0; $o < count($allOvertimeLeave); $o++) {
         // check name
@@ -156,14 +158,14 @@ if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === $payi
 // payitem 36 = absences 
 $payitem = $data["absencesId"];
 if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === $payitem) {
-    // check array length
-    if (count($allUnPaidLeave) === 0) {
-        noDataFound();
-    }
     // delete first earnings PR ID and pay item id absences
     $earnings->earnings_payitem_id = $payitem;
     checkId($earnings->earnings_payitem_id);
     checkDeleteEarnings($earnings);
+    // check array length
+    if (count($allUnPaidLeave) === 0) {
+        noDataFound();
+    }
     for ($unp = 0; $unp < count($allUnPaidLeave); $unp++) {
         // check name
         $earnings->earnings_employee_id = $allUnPaidLeave[$unp]["employeId"];
@@ -185,14 +187,14 @@ if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === $payi
 // payitem 43 = undertime 
 $payitem = $data["undertimeId"];
 if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === $payitem) {
-    // check array length
-    if (count($allUndertime) === 0) {
-        noDataFound();
-    }
     // delete first earnings PR ID and pay item id undertime
     $earnings->earnings_payitem_id = $payitem;
     checkId($earnings->earnings_payitem_id);
     checkDeleteEarnings($earnings);
+    // check array length
+    if (count($allUndertime) === 0) {
+        noDataFound();
+    }
     for ($u = 0; $u < count($allUndertime); $u++) {
         // check name
         $earnings->earnings_employee_id = $allUndertime[$u]["employeId"];

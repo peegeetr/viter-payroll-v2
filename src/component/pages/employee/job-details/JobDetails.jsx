@@ -1,7 +1,11 @@
 import React from "react";
 import { StoreContext } from "../../../../store/StoreContext";
 import useQueryData from "../../../custom-hooks/useQueryData";
-import { getUrlParam, hrisDevApiUrl } from "../../../helpers/functions-general";
+import {
+  devApiUrl,
+  getUrlParam,
+  hrisDevApiUrl,
+} from "../../../helpers/functions-general";
 import BreadCrumbs from "../../../partials/BreadCrumbs";
 import Footer from "../../../partials/Footer";
 import Header from "../../../partials/Header";
@@ -29,6 +33,12 @@ const JobDetails = () => {
     false // devKey boolean
   );
 
+  // use if not loadmore button undertime
+  const { data: draft, isLoading: draftLoading } = useQueryData(
+    `${devApiUrl}/v1/payroll/list`, // endpoint
+    "get", // method
+    "draft" // key
+  );
   // consoleLog(result);
 
   return (
@@ -43,6 +53,8 @@ const JobDetails = () => {
             isLoading={isLoading}
             error={error}
             employee={employee}
+            draft={draft}
+            draftLoading={draftLoading}
           />
         </div>
         <Footer />

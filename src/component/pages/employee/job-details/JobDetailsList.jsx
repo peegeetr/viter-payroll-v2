@@ -1,6 +1,11 @@
 import React from "react";
 import { FaEdit } from "react-icons/fa";
-import { setIsAdd, setIsRestore } from "../../../../store/StoreAction";
+import {
+  setError,
+  setIsAdd,
+  setIsRestore,
+  setMessage,
+} from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
 import useQueryData from "../../../custom-hooks/useQueryData";
 import {
@@ -13,7 +18,13 @@ import ServerError from "../../../partials/ServerError";
 import TableSpinner from "../../../partials/spinners/TableSpinner";
 import ModalEditJobDetails from "./ModalEditJobDetails";
 
-const JobDetailsList = ({ isLoading, error, employee }) => {
+const JobDetailsList = ({
+  isLoading,
+  error,
+  employee,
+  draft,
+  draftLoading,
+}) => {
   const { store, dispatch } = React.useContext(StoreContext);
 
   const [itemEdit, setItemEdit] = React.useState(null);
@@ -61,6 +72,13 @@ const JobDetailsList = ({ isLoading, error, employee }) => {
   );
 
   const handleEdit = (item) => {
+    if (draft?.count > 0) {
+      dispatch(setError(true));
+      dispatch(
+        setMessage("Payroll has ongoing draft. Editing is not allowed.")
+      );
+      return;
+    }
     dispatch(setIsAdd(true));
     setItemEdit(item);
   };
@@ -73,8 +91,9 @@ const JobDetailsList = ({ isLoading, error, employee }) => {
             <div key={key} className="relative w-full max-w-[650px] pt-5 ">
               <div className="bg-gray-200 p-2 mb-5 flex justify-between items-center ">
                 <h4>Employment Status</h4>
-                {eid === null ? (
-                  ""
+
+                {eid === null || draftLoading ? (
+                  "Loading..."
                 ) : (
                   <button
                     type="button"

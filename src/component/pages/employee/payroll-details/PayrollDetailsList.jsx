@@ -57,7 +57,7 @@ const PayrollDetailsList = ({
               <div className="bg-gray-200 p-2 mb-5 flex justify-between items-center">
                 <h4>Payroll Details</h4>
                 {eid === null || draftLoading ? (
-                  ""
+                  "Loading..."
                 ) : (
                   <button
                     type="button"

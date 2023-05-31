@@ -1,0 +1,23 @@
+
+*controllers           
+    - settings/user/system/update.php
+    
+*models     
+    -   
+  
+*htaccess 
+    - 
+
+*db tables 
+    - 
+
+*core 
+    - 
+
+*extra 
+    - notification/template (note: All Files)
+    
+Patrick
+    - 
+
+ 

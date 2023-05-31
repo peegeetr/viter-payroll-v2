@@ -86,7 +86,7 @@ function getHtmlConfirmEmail(
             href="' . $ROOT_DOMAIN . '' . $password_link . '?key=' . $key . '"
             style="
               padding: 4px 25px;
-              background-color: #630b3c;
+              background-color: #0b6351;
               color: #fff;
               display: inline-block;
               text-decoration: none;

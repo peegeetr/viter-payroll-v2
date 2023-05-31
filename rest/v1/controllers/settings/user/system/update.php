@@ -1,6 +1,6 @@
 <?php
 // use notification template
-require '../../../../notification/reset-password.php';
+require '../../../../notification/email-confirm.php';
 // check database connection
 require '../../../../core/Encryption.php';
 // check database connection

@@ -75,14 +75,14 @@ function getHtmlEmailPayslip()
             In order to view your payslip, please login to your Human Resource
             Information System for authorization and security pursposes by
             clicking
-            <span style="color: #630b3c"> MyInfo > Payslip</span>.
+            <span style="color: #0b6351"> MyInfo > Payslip</span>.
           </p>
 
           <a
             href="https://hr-app.frontlinebusiness.com.ph/login"
             style="
               padding: 4px 25px;
-              background-color: #630b3c;
+              background-color: #0b6351;
               color: #fff;
               display: inline-block;
               text-decoration: none;

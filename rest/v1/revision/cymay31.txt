@@ -26,6 +26,6 @@
     - notification/template (note: All Files)
     
 Patrick
-    - 
+    - Both uploaded to dev and prod
 
  

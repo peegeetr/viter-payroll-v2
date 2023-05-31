@@ -115,8 +115,8 @@ class Holidays
             $sql .= "holidays_name asc ";
             $query = $this->connection->prepare($sql);
             $query->execute([
-                "holidays_name" => "{$this->holidays_search}%",
-                "holidays_date" => "{$this->holidays_search}%",
+                "holidays_name" => "%{$this->holidays_search}%",
+                "holidays_date" => "%{$this->holidays_search}%",
             ]);
         } catch (PDOException $ex) {
             $query = false;

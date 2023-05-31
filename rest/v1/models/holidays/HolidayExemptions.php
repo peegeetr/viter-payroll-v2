@@ -120,9 +120,9 @@ class HolidayExemptions
             $sql .= "order by holiday_exemption_holiday_date desc ";
             $query = $this->connection->prepare($sql);
             $query->execute([
-                "monthName" => "{$this->holiday_exemption_search}%",
-                "holiday_exemption_holiday_date" => "{$this->holiday_exemption_search}%",
-                "holiday_exemption_pr_id" => "{$this->holiday_exemption_search}%",
+                "monthName" => "%{$this->holiday_exemption_search}%",
+                "holiday_exemption_holiday_date" => "%{$this->holiday_exemption_search}%",
+                "holiday_exemption_pr_id" => "%{$this->holiday_exemption_search}%",
             ]);
         } catch (PDOException $ex) {
             $query = false;

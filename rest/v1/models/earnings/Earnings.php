@@ -266,7 +266,9 @@ class Earnings
             $sql .= "and earnings.earnings_payitem_id = payitem.payitem_aid ";
             $sql .= "and payitem.payitem_paytype_id = paytype.paytype_aid ";
             $sql .= "and earnings.earnings_installment_extra = 0 ";
-            $sql .= "and earnings.earnings_employee like :search ";
+            $sql .= "and (earnings.earnings_employee like :search ";
+            $sql .= "or MONTHNAME(earnings.earnings_start_pay_date) like :monthName ";
+            $sql .= "or earnings.earnings_payroll_id like :pr_id) ";
             $sql .= "order by ";
             $sql .= "earnings.earnings_is_paid, ";
             $sql .= "DATE(earnings.earnings_end_pay_date) desc, ";
@@ -275,7 +277,9 @@ class Earnings
             $sql .= "earnings.earnings_details ";
             $query = $this->connection->prepare($sql);
             $query->execute([
-                "search" => "{$this->earnings_search}%",
+                "search" => "%{$this->earnings_search}%",
+                "pr_id" => "%{$this->earnings_search}%",
+                "monthName" => "%{$this->earnings_search}%",
             ]);
         } catch (PDOException $ex) {
             $query = false;

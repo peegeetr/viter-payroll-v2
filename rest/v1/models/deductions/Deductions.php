@@ -218,7 +218,9 @@ class Deductions
             $sql .= "where deduction.deduction_paytype_id = paytype.paytype_aid ";
             $sql .= "and deduction.deduction_payitem_id = payitem.payitem_aid ";
             $sql .= "and deduction.deduction_installment_extra = 0 ";
-            $sql .= "and deduction.deduction_employee like :search ";
+            $sql .= "and (deduction.deduction_employee like :search ";
+            $sql .= "or MONTHNAME(deduction.deduction_start_pay_date) like :monthName ";
+            $sql .= "or deduction.deduction_payroll_id like :pr_id) ";
             $sql .= "order by ";
             $sql .= "deduction.deduction_is_paid asc, ";
             $sql .= "DATE(deduction.deduction_start_pay_date) desc, ";
@@ -226,6 +228,8 @@ class Deductions
             $query = $this->connection->prepare($sql);
             $query->execute([
                 "search" => "{$this->deduction_search}%",
+                "pr_id" => "%{$this->deduction_search}%",
+                "monthName" => "%{$this->deduction_search}%",
             ]);
         } catch (PDOException $ex) {
             $query = false;

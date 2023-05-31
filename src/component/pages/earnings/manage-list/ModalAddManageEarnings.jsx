@@ -463,7 +463,7 @@ const ModalAddManageEarnings = ({
                       {payItem.length > 0 &&
                       payItem[0].payitem_is_hris === 1 ? (
                         <p className="text-primary text-center">
-                          {`All Employee that have ${payItem[0].payitem_name} will be imported from HRIS.`}
+                          {`All Employees that have ${payItem[0].payitem_name} records will be imported from HRIS.`}
                         </p>
                       ) : (
                         <>

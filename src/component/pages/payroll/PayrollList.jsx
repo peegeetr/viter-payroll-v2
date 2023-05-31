@@ -3,7 +3,12 @@ import React from "react";
 import { FaEdit, FaList, FaTrash, FaHistory } from "react-icons/fa";
 import { useInView } from "react-intersection-observer";
 import { Link } from "react-router-dom";
-import { setIsAdd, setIsRestore } from "../../../store/StoreAction";
+import {
+  setIsAdd,
+  setIsRestore,
+  setIsSearch,
+  setStartIndex,
+} from "../../../store/StoreAction";
 import { StoreContext } from "../../../store/StoreContext";
 import {
   devApiUrl,
@@ -103,6 +108,10 @@ const PayrollList = ({ setItemEdit }) => {
     setId(item.payroll_aid);
     setData(item);
     setDel(true);
+  };
+  const handleShow = () => {
+    dispatch(setStartIndex(0));
+    dispatch(setIsSearch(false));
   };
   return (
     <>
@@ -207,6 +216,7 @@ const PayrollList = ({ setItemEdit }) => {
                             to={`${link}/payroll/list?payrollid=${item.payroll_id}`}
                             className="btn-action-table tooltip-action-table"
                             data-tooltip="View"
+                            onClick={handleShow}
                           >
                             <FaList />
                           </Link>

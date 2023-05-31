@@ -3,7 +3,15 @@
     - settings/user/system/update.php
     
 *models     
-    -   
+    -> deductions/Deductions.php
+    -> earnings/Earnings.php
+    -> employee/EmployeeInstallment.php
+    -> employee/SalaryHistory.php
+    -> holiday/HolidayExemptions.php
+    -> holiday/Holidays.php
+    -> payroll/list/PayrollList.php
+    -> payroll/Payroll.php
+    -> sss-bracket/SssBracket.php
   
 *htaccess 
     - 

@@ -78,7 +78,7 @@ export const computeUndertime = (undertimeData, employee, payrollDraft) => {
           details: `Undertime ${formatDate(
             uItem.undertime_date
           )}(${getUnderTimeSpent(uItem.undertime_spent)})`,
-          hrisDate: uItem.undertime_date,
+          hrisDate: uItem.undertime_created,
           hrisUndertimeOut: `${uItem.undertime_time_out} ${getUnderTimeSpent(
             uItem.undertime_spent
           )}`,
@@ -151,7 +151,7 @@ export const computeOvertime = (
             otFinalAmount(otItem, eItem, holidays, payrollDraft).otRate
           ),
           employeId: eItem.employee_aid,
-          hrisDate: otItem.task_created,
+          hrisDate: otItem.task_time_started,
           details: `OT ${
             otFinalAmount(otItem, eItem, holidays, payrollDraft).isHoliday
               ? "HOL"
@@ -162,7 +162,7 @@ export const computeOvertime = (
               : ""
           } (${
             otFinalAmount(otItem, eItem, holidays, payrollDraft).otRate
-          }%) ${formatDate(otItem.task_created.split(" ")[0])} ${
+          }%) ${formatDate(otItem.task_time_started.split(" ")[0])} ${
             otItem.task_time_started.split(" ")[1]
           } (${getUnderTimeSpent(otItem.task_spent)})`,
         });

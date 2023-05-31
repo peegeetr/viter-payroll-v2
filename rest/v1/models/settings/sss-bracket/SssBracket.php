@@ -128,7 +128,7 @@ class SssBracket
             $sql .= "CAST(sss_bracket_range_from AS DECIMAL(20,2)) asc ";
             $query = $this->connection->prepare($sql);
             $query->execute([
-                "search" => "{$this->sss_bracket_search}%",
+                "search" => "%{$this->sss_bracket_search}%",
             ]);
         } catch (PDOException $ex) {
             $query = false;

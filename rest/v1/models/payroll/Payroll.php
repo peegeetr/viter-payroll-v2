@@ -230,7 +230,7 @@ class Payroll
             $sql .= "pr.payroll_id desc ";
             $query = $this->connection->prepare($sql);
             $query->execute([
-                "search" => "{$this->payroll_search}%",
+                "search" => "%{$this->payroll_search}%",
             ]);
         } catch (PDOException $ex) {
             $query = false;

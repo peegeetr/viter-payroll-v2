@@ -124,8 +124,8 @@ class SalaryHistory
             $sql .= "order by salary_history_date desc ";
             $query = $this->connection->prepare($sql);
             $query->execute([
-                "salary_history_date" => "{$this->employee_search}%",
-                "salary_history_salary_amount" => "{$this->employee_search}%",
+                "salary_history_date" => "%{$this->employee_search}%",
+                "salary_history_salary_amount" => "%{$this->employee_search}%",
             ]);
         } catch (PDOException $ex) {
             $query = false;

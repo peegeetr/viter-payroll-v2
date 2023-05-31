@@ -137,7 +137,7 @@ class PayrollList
             $sql .= "order by payroll_list_employee_name asc ";
             $query = $this->connection->prepare($sql);
             $query->execute([
-                "search" => "{$this->payrollList_search}%",
+                "search" => "%{$this->payrollList_search}%",
             ]);
         } catch (PDOException $ex) {
             $query = false;

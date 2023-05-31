@@ -196,7 +196,7 @@ class EmployeeInstallment
             $sql .= "order by employee_installment_start_date desc ";
             $query = $this->connection->prepare($sql);
             $query->execute([
-                "search" => "{$this->employee_mp2_search}%",
+                "search" => "%{$this->employee_mp2_search}%",
             ]);
         } catch (PDOException $ex) {
             $query = false;

@@ -14,6 +14,7 @@ import ModalError from "../../../partials/modals/ModalError";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 import FbsLogoLg from "../../../svg/FbsLogoLg";
 import PageUnderMaintenance from "../../../partials/PageUnderMaintenance";
+import useQueryData from "../../../custom-hooks/useQueryData";
 
 const ForgotPassword = () => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -26,6 +27,7 @@ const ForgotPassword = () => {
     "get", // method
     "isOnSystemMode" // key
   );
+
   const initVal = {
     email: "",
     redirect_link: "/reset-password-success?redirect=/login",

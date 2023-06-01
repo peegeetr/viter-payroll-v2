@@ -7,6 +7,7 @@ module.exports = {
         primary: "#0b6351",
         secondary: "#39ad6b",
         dark: "#3a3b36",
+        lightWarning: "#fffde7",
       },
       fontSize: {
         huge: "clamp(2.4rem, 6vw, 5rem)",

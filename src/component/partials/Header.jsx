@@ -5,6 +5,8 @@ import { setIsLogout, setIsShow } from "../../store/StoreAction";
 import { StoreContext } from "../../store/StoreContext";
 import FbsLogoSm from "../svg/FbsLogoSm";
 import ModalLogout from "./modals/ModalLogout";
+import DemoMode from "./DemoMode";
+import { isDemoMode } from "../helpers/functions-general";
 
 const Header = () => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -24,9 +26,12 @@ const Header = () => {
 
   return (
     <>
-      <div className="fixed z-30 bg-white w-full flex justify-between items-center h-16 px-3 border-solid border-b-2 border-primary print:hidden">
+      <div
+        className={`${
+          isDemoMode === "1" ? "border-b-2 !border-[#f09a02] " : ""
+        }  fixed z-30 bg-white w-full flex justify-between items-center h-16 px-3 border-solid border-b-2 border-primary print:hidden`}
+      >
         <div className="flex items-center ">
-          {/* <span className="hidden xs:block"> */}
           <span>
             <FbsLogoSm />
           </span>
@@ -51,6 +56,7 @@ const Header = () => {
             {store.isShow ? <FaTimes /> : <GiHamburgerMenu />}
           </span>
         </div>
+        {isDemoMode === "1" && <DemoMode />}
       </div>
       {store.isLogout && <ModalLogout />}
     </>

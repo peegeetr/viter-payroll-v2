@@ -9,8 +9,8 @@ import React from "react";
 // const folderPathPayroll = "http://localhost/viter-payroll-v2";
 
 // // Cyrene
-// const folderPathHris = "http://localhost/projects/viter-hris-v3"
-// const folderPathPayroll = "http://localhost/projects/viter-payroll-v2"
+// const folderPathHris = "http://localhost/projects/viter-hris-v3";
+// const folderPathPayroll = "http://localhost/projects/viter-payroll-v2";
 
 // // Mac, Mon, Cy
 // export const hrisdevNavUrl = "/dev-app";

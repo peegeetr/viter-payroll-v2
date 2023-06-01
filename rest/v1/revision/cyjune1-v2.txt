@@ -1,0 +1,23 @@
+
+*controllers           
+    - 
+    
+*models     
+    - 
+  
+*htaccess 
+    - All search
+
+*db tables 
+    - 
+
+*core 
+    - 
+
+*extra 
+    - 
+    
+Patrick
+    - 
+
+ 

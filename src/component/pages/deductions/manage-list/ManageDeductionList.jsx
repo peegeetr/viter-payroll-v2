@@ -173,7 +173,7 @@ const ManageDeductionList = () => {
                       </td>
                       <td>{getStatus(item)}</td>
                       <td>
-                        {item.deduction_is_paid === 0 && (
+                        {Number(item.deduction_num_pay) < 1 && (
                           <div className="flex items-center justify-end gap-2">
                             <button
                               type="button"

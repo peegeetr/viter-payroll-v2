@@ -175,7 +175,7 @@ const ManageEarningsList = () => {
                       </td>
                       <td>{getStatus(item)}</td>
                       <td>
-                        {item.earnings_is_paid === 0 && (
+                        {Number(item.earnings_num_pay) < 1 && (
                           <div className="flex items-center justify-end gap-2">
                             <button
                               type="button"

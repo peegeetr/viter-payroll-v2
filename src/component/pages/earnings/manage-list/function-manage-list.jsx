@@ -160,12 +160,14 @@ export const computeOvertime = (
             otFinalAmount(otItem, eItem, holidays, payrollDraft).isRestDay
               ? "RD"
               : ""
-          } (${
-            otFinalAmount(otItem, eItem, holidays, payrollDraft).otRate
-          }%) ${formatDate(otItem.task_time_started.split(" ")[0])} ${
+          }      
+          ${formatDate(otItem.task_time_started.split(" ")[0])} ${
             otItem.task_time_started.split(" ")[1]
           } (${getUnderTimeSpent(otItem.task_spent)})`,
         });
+        // (${
+        //   otFinalAmount(otItem, eItem, holidays, payrollDraft).otRate
+        // }%)
       }
     });
   });

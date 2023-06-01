@@ -12,33 +12,23 @@ export const devApiUrl = "https://payroll-app.frontlinebusiness.com.ph/rest";
 export const devBaseUrl = "https://payroll-app.frontlinebusiness.com.ph";
 export const devNavUrl = "";
 
-// // Online URL prod hris
+// // Online prod hris
 // export const hrisDevBaseImgUrl = "https://hris.frontlinebusiness.com.ph/img";
 // export const hrisDevApiUrl = "https://hris.frontlinebusiness.com.ph/rest";
 // export const hrisdevBaseUrl = "https://hris.frontlinebusiness.com.ph";
 // export const hrisdevNavUrl = "";
 
-// // Online URL production payroll
+// // Online prod payroll
 // export const devBaseImgUrl = "https://payroll.frontlinebusiness.com.ph/v2/img";
 // export const devApiUrl = "https://payroll.frontlinebusiness.com.ph/v2/rest";
 // export const devBaseUrl = "https://payroll.frontlinebusiness.com.ph/v2";
 // export const devNavUrl = "/v2";
 
-// // Local URL dev
-// export const devApiUrl = "http://localhost/react-vite/viter-hris-v3/rest";
-// export const devBaseUrl = "http://localhost/react-vite/viter-hris-v3/public";
-// export const devBaseImgUrl =
-//   "https://hris.frontlinebusiness.com.ph/dev-app/img";
-// export const devBaseUrl = "https://hris.frontlinebusiness.com.ph/dev-app";
-// export const devNavUrl = "/dev-app";
+/* 
+// cy url
+//  
+*/
 
-// // Local URL dev
-// export const devApiUrl = "http://localhost/viter-payroll-v2/rest";
-// export const devBaseUrl = "http://localhost/viter-payroll-v2/public";
-// export const devBaseImgUrl = "http://localhost/viter-payroll-v2/public/img";
-// export const devNavUrl = "";
-
-// // cy url
 // export const devBaseImgUrl = "https://payroll-app.frontlinebusiness.com.ph/img";
 // export const devApiUrl = "http://localhost/projects/viter-payroll-v2/rest";
 // export const devBaseUrl = "http://localhost/projects/viter-payroll-v2/public";
@@ -51,14 +41,12 @@ export const devNavUrl = "";
 // export const hrisdevBaseUrl =
 //   "http://localhost/projects/viter-hris-v3/public/img";
 // export const hrisdevNavUrl = "/dev-app";
-// export const devKeyHr =
-//   "$2a$12$47wDvbLInZif/PVS8B6P3.7WxyJvUpBzZAWCsnWJUKq3nrn4qgmeO";
 
+export const baseUrl = "/";
 export const isDemoMode = "1";
 export const UrlAdmin = "";
 export const UrlSystem = "system";
 export const is_developer = "is_developer";
-export const baseUrl = "/";
 
 export const devKeyPr =
   "$2a$12$47wDvbLInZif/PVS8B6P3.7WxyJvUpBzZAWCsnWJUKq3nrn4qgmeO";

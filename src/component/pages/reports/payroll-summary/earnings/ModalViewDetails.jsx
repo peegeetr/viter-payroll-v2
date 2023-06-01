@@ -47,7 +47,7 @@ const ModalViewDetails = ({ item, isView, earnings }) => {
                 <tr>
                   <th className="text-left">#</th>
                   <th className="text-center">HRS</th>
-                  <th className="text-center">RATE</th>
+                  {/* <th className="text-center">RATE</th> */}
                   <th className="pr-4 !w-0 text-right">AMOUNT</th>
                 </tr>
               </thead>
@@ -58,7 +58,7 @@ const ModalViewDetails = ({ item, isView, earnings }) => {
                     <tr key={key}>
                       <td className="text-left">{counter}.</td>
                       <td className="text-center">{eItem.hrs}</td>
-                      <td className="text-center">{eItem.rate}%</td>
+                      {/* <td className="text-center">{eItem.rate}%</td> */}
                       <td className="pr-4 text-right">
                         {numberWithCommas(Number(eItem.amount))}
                       </td>

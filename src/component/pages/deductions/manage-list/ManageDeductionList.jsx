@@ -171,40 +171,9 @@ const ManageDeductionList = () => {
                               )[3]
                             }`}
                       </td>
-                      {/* <td>
-                        {item.deduction_start_pay_date === "n/a"
-                          ? "N/A"
-                          : `${
-                              formatDate(item.deduction_start_pay_date).split(
-                                " "
-                              )[1]
-                            } 
-                      ${formatDate(item.deduction_start_pay_date).split(" ")[2]}
-                      ${formatDate(item.deduction_start_pay_date).split(" ")[3]}
-                      `}
-                      </td> */}
-                      {/* <td>
-                        {item.deduction_end_pay_date === "n/a"
-                          ? "N/A"
-                          : `${
-                              formatDate(item.deduction_end_pay_date).split(
-                                " "
-                              )[1]
-                            } 
-                    ${formatDate(item.deduction_end_pay_date).split(" ")[2]}
-                    ${formatDate(item.deduction_end_pay_date).split(" ")[3]}
-                    `}
-                      </td> */}
-                      {/* <td>{item.paytype_name}</td>
-                       */}
-                      {/* <td>
-                        {item.deduction_frequency === "sm"
-                          ? "Semi-monthly"
-                          : "Monthly"}
-                      </td> */}
                       <td>{getStatus(item)}</td>
                       <td>
-                        {item.earnings_is_paid === 0 && (
+                        {item.deduction_is_paid === 0 && (
                           <div className="flex items-center justify-end gap-2">
                             <button
                               type="button"

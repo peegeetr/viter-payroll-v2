@@ -56,8 +56,8 @@ const Header = () => {
             {store.isShow ? <FaTimes /> : <GiHamburgerMenu />}
           </span>
         </div>
-        {isDemoMode === "1" && <DemoMode />}
       </div>
+      {isDemoMode === "1" && <DemoMode />}
       {store.isLogout && <ModalLogout />}
     </>
   );

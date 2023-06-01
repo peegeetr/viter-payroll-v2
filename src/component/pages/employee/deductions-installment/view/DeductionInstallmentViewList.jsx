@@ -1,36 +1,27 @@
 import React from "react";
+import { FaEdit, FaTrash } from "react-icons/fa";
+import { setIsAdd, setIsRestore } from "../../../../../store/StoreAction";
+import { StoreContext } from "../../../../../store/StoreContext";
 import useQueryData from "../../../../custom-hooks/useQueryData";
-import { FaTrash, FaEdit } from "react-icons/fa";
 import {
   devApiUrl,
   formatDate,
   getUrlParam,
   numberWithCommas,
 } from "../../../../helpers/functions-general";
-import NoData from "../../../../partials/NoData";
-import ServerError from "../../../../partials/ServerError";
-import TableSpinner from "../../../../partials/spinners/TableSpinner";
-import Status from "../../../../partials/status/Status";
-import {
-  getEndOfInstallment,
-  getNumberOfMonths,
-  getPayItemName,
-  getReadNumberOfMonths,
-} from "../functions-deductions-installment";
-import {
-  setError,
-  setIsAccountUpdated,
-  setIsAdd,
-  setIsRestore,
-  setMessage,
-} from "../../../../../store/StoreAction";
-import ModalDeleteRestoreRq from "../../../../partials/modals/ModalDeleteRestoreRq";
-import { StoreContext } from "../../../../../store/StoreContext";
 import {
   PagibigMP2Id,
   fcaTutionId,
-  fwcTithesId,
 } from "../../../../helpers/functions-payitemId";
+import NoData from "../../../../partials/NoData";
+import ServerError from "../../../../partials/ServerError";
+import ModalDeleteRestoreRq from "../../../../partials/modals/ModalDeleteRestoreRq";
+import TableSpinner from "../../../../partials/spinners/TableSpinner";
+import Status from "../../../../partials/status/Status";
+import {
+  getPayItemName,
+  getReadNumberOfMonths,
+} from "../functions-deductions-installment";
 
 const DeductionInstallmentViewList = ({ setItemEdit, paytypeId, payItem }) => {
   const { store, dispatch } = React.useContext(StoreContext);

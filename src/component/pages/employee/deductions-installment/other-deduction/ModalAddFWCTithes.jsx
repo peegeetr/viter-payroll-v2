@@ -108,17 +108,26 @@ const ModalAddFWCTithes = ({ item }) => {
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
                 // console.log(values);
+
                 const employee_installment_amount = removeComma(
                   `${values.employee_installment_amount}`
                 );
+
                 const employee_installment_number_of_months = removeComma(
                   `${values.employee_installment_number_of_months}`
                 );
+
+                const employee_installment_status =
+                  Number(values.total_month) <
+                  Number(employee_installment_number_of_months)
+                    ? "0" // ongoing
+                    : "2"; // complete
 
                 mutation.mutate({
                   ...values,
                   employee_installment_amount,
                   employee_installment_number_of_months,
+                  employee_installment_status,
                 });
               }}
             >

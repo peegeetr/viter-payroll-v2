@@ -31,11 +31,13 @@ import {
 } from "../../../helpers/functions-general";
 import {
   absencesId,
+  bonusId,
   deMinimisEarningsId,
   empContributionEarningsId,
   holidayId,
   leaveId,
   nightDiffId,
+  otherBenefitsEarningsId,
   overtimeId,
   undertimeId,
 } from "../../../helpers/functions-payitemId";
@@ -72,7 +74,7 @@ const ModalAddManageEarnings = ({
   let payroll_start_date = payrollDraft?.data[0].payroll_start_date;
   let payroll_end_date = payrollDraft?.data[0].payroll_end_date;
   let payroll_id = payrollDraft?.data[0].payroll_id;
-  let payroll_type_id = payrollDraft?.data[0].payroll_category_type;
+  let payroll_type_id = Number(payrollDraft?.data[0].payroll_category_type);
   // payrollCategoryBonusId
   const queryClient = useQueryClient();
 
@@ -365,13 +367,6 @@ const ModalAddManageEarnings = ({
                   props.values.earnings_number_of_installment === ""
                     ? "1"
                     : Number(props.values.earnings_number_of_installment));
-                // props.values.earnings_amount = (
-                //   Number(props.values.amount.replace(/[,]/g, "").slice(2)) /
-                //   (props.values.earnings_number_of_installment === "0" ||
-                //   props.values.earnings_number_of_installment === ""
-                //     ? "1"
-                //     : Number(props.values.earnings_number_of_installment))
-                // ).toFixed(2);
                 props.values.earnings_payroll_id =
                   payrollDraft?.data[0].payroll_id;
                 props.values.earnings_number_of_installment =
@@ -396,18 +391,37 @@ const ModalAddManageEarnings = ({
                         >
                           <optgroup label="Pay Type">
                             <option value="" hidden></option>
-                            {payType?.data.map((paytype, key) => {
-                              return (
-                                paytype.paytype_category === "earnings" &&
-                                paytype.paytype_aid !==
-                                  empContributionEarningsId &&
-                                paytype.paytype_aid !== deMinimisEarningsId && (
-                                  <option key={key} value={paytype.paytype_aid}>
-                                    {paytype.paytype_name}
-                                  </option>
-                                )
-                              );
-                            })}
+                            {payroll_type_id === payrollCategoryBonusId
+                              ? payType?.data.map((paytype, key) => {
+                                  return (
+                                    paytype.paytype_category === "earnings" &&
+                                    paytype.paytype_aid ===
+                                      otherBenefitsEarningsId && (
+                                      <option
+                                        key={key}
+                                        value={paytype.paytype_aid}
+                                      >
+                                        {paytype.paytype_name}
+                                      </option>
+                                    )
+                                  );
+                                })
+                              : payType?.data.map((paytype, key) => {
+                                  return (
+                                    paytype.paytype_category === "earnings" &&
+                                    paytype.paytype_aid !==
+                                      empContributionEarningsId &&
+                                    paytype.paytype_aid !==
+                                      deMinimisEarningsId && (
+                                      <option
+                                        key={key}
+                                        value={paytype.paytype_aid}
+                                      >
+                                        {paytype.paytype_name}
+                                      </option>
+                                    )
+                                  );
+                                })}
                           </optgroup>
                         </InputSelect>
                       </div>
@@ -424,22 +438,40 @@ const ModalAddManageEarnings = ({
                           <optgroup label="Pay Item">
                             {loadingSel && <option value="">Loading...</option>}
                             <option value="" hidden></option>
-                            {isPayItem?.map((payitem, key) => {
-                              return (
-                                payitem.payitem_aid !== Number(holidayId) &&
-                                payitem.payitem_aid !== Number(nightDiffId) &&
-                                payitem.payitem_is_active !== 0 && (
-                                  <option
-                                    key={key}
-                                    value={payitem.payitem_aid}
-                                    id={payitem.payitem_is_hris}
-                                  >
-                                    {payitem.payitem_name}{" "}
-                                    {payitem.payitem_is_hris === 1 && "(HRIS)"}
-                                  </option>
-                                )
-                              );
-                            })}
+                            {payroll_type_id === payrollCategoryBonusId
+                              ? isPayItem?.map((payitem, key) => {
+                                  return (
+                                    payitem.payitem_aid === Number(bonusId) && (
+                                      <option
+                                        key={key}
+                                        value={payitem.payitem_aid}
+                                        id={payitem.payitem_is_hris}
+                                      >
+                                        {payitem.payitem_name}{" "}
+                                        {payitem.payitem_is_hris === 1 &&
+                                          "(HRIS)"}
+                                      </option>
+                                    )
+                                  );
+                                })
+                              : isPayItem?.map((payitem, key) => {
+                                  return (
+                                    payitem.payitem_aid !== Number(holidayId) &&
+                                    payitem.payitem_aid !==
+                                      Number(nightDiffId) &&
+                                    payitem.payitem_is_active !== 0 && (
+                                      <option
+                                        key={key}
+                                        value={payitem.payitem_aid}
+                                        id={payitem.payitem_is_hris}
+                                      >
+                                        {payitem.payitem_name}{" "}
+                                        {payitem.payitem_is_hris === 1 &&
+                                          "(HRIS)"}
+                                      </option>
+                                    )
+                                  );
+                                })}
                           </optgroup>
                         </InputSelect>
                       </div>

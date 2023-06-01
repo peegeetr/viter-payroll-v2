@@ -12,7 +12,7 @@ RewriteRule ^departments$ controllers/settings/department/department.php [L]
 RewriteRule ^departments/([0-9]+)$ controllers/settings/department/department.php?departmentid=$1 [L]
 RewriteRule ^departments/active/([0-9]+)$ controllers/settings/department/active.php?departmentid=$1 [L]
 RewriteRule ^departments/limit/([0-9]+)/([0-9]+)$ controllers/settings/department/limit.php?start=$1&total=$2 [L]
-RewriteRule ^departments/search/([A-Za-z0-9-]+)$ controllers/settings/department/search.php?search=$1 [L]
+RewriteRule ^departments/search/([^.].*+)$ controllers/settings/department/search.php?search=$1 [L]
  
 #role
 RewriteRule ^roles$ controllers/settings/user/role/role.php [L]
@@ -32,7 +32,7 @@ RewriteRule ^payroll/list$ controllers/payroll/draft.php [L]
 RewriteRule ^payroll/([0-9]+)$ controllers/payroll/payroll.php?payrollid=$1 [L]
 RewriteRule ^payroll/active/([0-9]+)$ controllers/payroll/active.php?payrollid=$1 [L]
 RewriteRule ^payroll/page/([0-9]+)$ controllers/payroll/page.php?start=$1 [L]
-RewriteRule ^payroll/search/([A-Za-z0-9-]+)$ controllers/payroll/search.php?search=$1 [L]
+RewriteRule ^payroll/search/([^.].*+)$ controllers/payroll/search.php?search=$1 [L]
 
 #payslip
 RewriteRule ^payslip/([0-9]+)$ controllers/payroll/payslip/payslipById.php?payrollListId=$1 [L] 
@@ -49,7 +49,7 @@ RewriteRule ^payrollList/report/employee-run/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/([0
 RewriteRule ^payrollList/([A-Za-z0-9-]+)$ controllers/payroll/list/payrollView.php?listpayrollid=$1 [L]  
 RewriteRule ^payrollList/paid/([A-Za-z0-9-]+)$ controllers/payroll/list/paid.php?listpayrollid=$1 [L]  
 RewriteRule ^payrollList/page/([A-Za-z0-9-]+)/([0-9]+)$ controllers/payroll/list/page.php?listpayrollid=$1&start=$2 [L]
-RewriteRule ^payrollList/search/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)$ controllers/payroll/list/search.php?listpayrollid=$1&search=$2 [L]
+RewriteRule ^payrollList/search/([A-Za-z0-9-]+)/([^.].*+)$ controllers/payroll/list/search.php?listpayrollid=$1&search=$2 [L]
 RewriteRule ^payrollList/page/by/employee/([0-9]+)/([0-9]+)$ controllers/payroll/list/hris-page-by-emp-id.php?start=$1&empId=$2 [L] 
 RewriteRule ^payrollList/report/employee-benefits/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/([0-9]+)$ controllers/payroll/list/report-employee-benefits.php?startDate=$1&endDate=$2&employeeId=$3 [L] 
 RewriteRule ^payrollList/report/wtax/monthly/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/([0-9]+)$ controllers/payroll/list/report-wtax-monthly.php?month=$1&year=$2&employeeId=$3 [L]   
@@ -68,7 +68,7 @@ RewriteRule ^payrollList/report/wtax/summary/([A-Za-z0-9-]+)$ controllers/payrol
 RewriteRule ^earnings$ controllers/earnings/earnings.php [L]
 RewriteRule ^earnings/([0-9]+)$ controllers/earnings/earnings.php?earningsid=$1 [L] 
 RewriteRule ^earnings/page/([0-9]+)$ controllers/earnings/page.php?start=$1 [L]
-RewriteRule ^earnings/search/([A-Za-z0-9-]+)$ controllers/earnings/search.php?search=$1 [L]
+RewriteRule ^earnings/search/([^.].*+)$ controllers/earnings/search.php?search=$1 [L]
 RewriteRule ^earnings/validateId/([A-Za-z0-9-]+)$ controllers/earnings/validateId.php?prid=$1 [L]
 RewriteRule ^earnings/summary/([0-9]+)$ controllers/earnings/summary.php?start=$1 [L]  
 RewriteRule ^earnings/filter/([0-9]+)/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)$ controllers/earnings/filter.php?paytypeId=$1&startDate=$2&endDate=$3 [L]  
@@ -77,7 +77,7 @@ RewriteRule ^earnings/report/paytype/view/([0-9]+)/([A-Za-z0-9-]+)/([0-9]+)$ con
 #deductions
 RewriteRule ^deductions$ controllers/deductions/deductions.php [L]
 RewriteRule ^deductions/([0-9]+)$ controllers/deductions/deductions.php?deductionid=$1 [L]  
-RewriteRule ^deductions/search/([A-Za-z0-9-]+)$ controllers/deductions/search.php?search=$1 [L]
+RewriteRule ^deductions/search/([^.].*+)$ controllers/deductions/search.php?search=$1 [L]
 RewriteRule ^deductions/validateId/([A-Za-z0-9-]+)$ controllers/deductions/validateId.php?prid=$1 [L]
 RewriteRule ^deductions/page/([0-9]+)$ controllers/deductions/page.php?start=$1 [L]
 RewriteRule ^deductions/report/paytype/view/([0-9]+)/([A-Za-z0-9-]+)/([0-9]+)$ controllers/deductions/report-paytype-id.php?start=$1&payrollId=$2&payitemId=$3 [L]    
@@ -91,7 +91,7 @@ RewriteRule ^payitem/active/([0-9]+)$ controllers/pay-type/pay-item/active.php?p
 RewriteRule ^holidays$ controllers/holidays/holidays.php [L]
 RewriteRule ^holidays/([0-9]+)$ controllers/holidays/holidays.php?holidaysid=$1 [L]
 RewriteRule ^holidays/page/([0-9]+)$ controllers/holidays/page.php?start=$1 [L]
-RewriteRule ^holidays/search/([A-Za-z0-9-]+)$ controllers/holidays/search.php?search=$1 [L]
+RewriteRule ^holidays/search/([^.].*+)$ controllers/holidays/search.php?search=$1 [L]
 RewriteRule ^holidays/this-year/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)$ controllers/holidays/read-by-current-year.php?startDate=$1&endDate=$2 [L]
 RewriteRule ^holidays/read-all-not-observed$ controllers/holidays/read-all-not-observed.php [L]
 
@@ -120,7 +120,7 @@ RewriteRule ^tax/bracket-yearly/([0-9]+)$ controllers/settings/tax-bracket/tax-y
 RewriteRule ^sss-bracket$ controllers/settings/sss-bracket/sss-bracket.php [L]
 RewriteRule ^sss-bracket/([0-9]+)$ controllers/settings/sss-bracket/sss-bracket.php?sssbracketid=$1 [L]
 RewriteRule ^sss-bracket/page/([0-9]+)$ controllers/settings/sss-bracket/page.php?start=$1 [L]
-RewriteRule ^sss-bracket/search/([A-Za-z0-9-]+)$ controllers/settings/sss-bracket/search.php?search=$1 [L]
+RewriteRule ^sss-bracket/search/([^.].*+)$ controllers/settings/sss-bracket/search.php?search=$1 [L]
  
 #SETTINGS USER SYSTEM
 RewriteRule ^user-systems$ controllers/settings/user/system/system.php [L]
@@ -162,7 +162,7 @@ RewriteRule ^salary-history/report/filter/([0-9]+)$ controllers/employee/salary-
 RewriteRule ^holiday-exemptions$ controllers/holidays/exemptions/holidayExemptions.php [L]
 RewriteRule ^holiday-exemptions/([0-9]+)$ controllers/holidays/exemptions/holidayExemptions.php?exemptionId=$1 [L]
 RewriteRule ^holiday-exemptions/page/([0-9]+)$ controllers/holidays/exemptions/page.php?start=$1 [L]
-RewriteRule ^holiday-exemptions/search/([A-Za-z0-9-]+)$ controllers/holidays/exemptions/search.php?search=$1 [L]
+RewriteRule ^holiday-exemptions/search/([^.].*+)$ controllers/holidays/exemptions/search.php?search=$1 [L]
 RewriteRule ^holiday-exemptions/read-all-not-observed/([0-9]+)$ controllers/holidays/exemptions/read-all-not-observed.php?memberId=$1 [L]
 
 #Employee Installment

@@ -1,0 +1,19 @@
+
+*controllers     
+    - payroll/create.php 
+    
+*models 
+    - 
+  
+*htaccess 
+    - 
+
+*db tables 
+    -  
+
+*core 
+    - 
+
+*extra 
+    - 
+    

@@ -14,6 +14,7 @@ import {
   getWorkingDays,
   hrisDevApiUrl,
   numberWithCommas,
+  showTips,
 } from "../../../../helpers/functions-general";
 import { queryDataInfinite } from "../../../../helpers/queryDataInfinite";
 import LoadmoreRq from "../../../../partials/LoadmoreRq";
@@ -438,9 +439,12 @@ const SummaryEarningsList = () => {
                         {/* {item.payroll_list_night_diff_per_day === 0
                           ? "0"
                           : "10%"} */}
-                        10%
+                        110%
                       </td>
-                      <td className="pr-4">
+                      <td
+                        className="!pr-4 tooltip-action-table"
+                        data-tooltip={showTips(item)}
+                      >
                         {/* ND amount */}
                         {numberWithCommas(
                           item.payroll_list_night_shift_differential
@@ -448,10 +452,7 @@ const SummaryEarningsList = () => {
                       </td>
                       <td
                         className="text-right !pr-4 tooltip-action-table "
-                        data-tooltip={`${item.payroll_list_employee_name.substring(
-                          0,
-                          10
-                        )} . . .`}
+                        data-tooltip={showTips(item)}
                       >
                         {/* gross pay */}
                         {numberWithCommas(item.payroll_list_gross)}

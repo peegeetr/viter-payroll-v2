@@ -16,5 +16,5 @@
     - 
 
 *extra 
-    - 
+    - Both uploaded to dev and prod
     

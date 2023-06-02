@@ -47,22 +47,23 @@ $bonusId = $data["bonusId"];
 
 // if not december check if there's an existing payroll draft 
 // any payroll type
-if ($isDecMonth !== 12) {
+if ($isDecMonth != "12") {
     isPayrollType($payroll);
 }
-if ($isDecMonth === 12) {
-    if ($payroll->payroll_category_type === $bonusId) {
-        $response = new Response();
-        $error = [];
-        $response->setSuccess(false);
-        $error["count"] = 0;
-        $error["success"] = false;
-        $error['error'] = "Please complete drafts first before creating bonus payroll type.";
-        $response->setData($error);
-        $response->send();
-        exit;
-    }
-}
+
+// if ($isDecMonth == 12) {
+//     if ($payroll->payroll_category_type === $bonusId) {
+//         $response = new Response();
+//         $error = [];
+//         $response->setSuccess(false);
+//         $error["count"] = 0;
+//         $error["success"] = false;
+//         $error['error'] = "Please complete drafts first before creating bonus payroll type.";
+//         $response->setData($error);
+//         $response->send();
+//         exit;
+//     }
+// }
 
 // // validate date
 checkDateExist($payroll);

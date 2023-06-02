@@ -41,11 +41,14 @@ $payroll->payroll_is_paid = 0;
 $payroll->payroll_created = date("Y-m-d H:i:s");
 $payroll->payroll_datetime = date("Y-m-d H:i:s");
 
-
+$isDecMonth = date("m");
 $allEmployee = $data["employee"];
 
-// check if there's an existing payroll draft
-isEarningType($payroll);
+// if not december check if there's an existing payroll draft 
+// any payroll type
+if ($isDecMonth !== 12) {
+    isEarningType($payroll);
+}
 // validate date
 checkDateExist($payroll);
 // create employee name and id

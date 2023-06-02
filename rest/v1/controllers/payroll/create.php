@@ -47,7 +47,7 @@ $bonusId = $data["bonusId"];
 
 // if not december check if there's an existing payroll draft 
 // any payroll type
-if ($isDecMonth != "12") {
+if ($isDecMonth != 12) {
     isPayrollType($payroll);
 }
 

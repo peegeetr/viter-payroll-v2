@@ -15,6 +15,7 @@ import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 import FbsLogoLg from "../../../svg/FbsLogoLg";
 import PageUnderMaintenance from "../../../partials/PageUnderMaintenance";
 import useQueryData from "../../../custom-hooks/useQueryData";
+import TableSpinner from "../../../partials/spinners/TableSpinner";
 
 const ForgotPassword = () => {
   const { store, dispatch } = React.useContext(StoreContext);

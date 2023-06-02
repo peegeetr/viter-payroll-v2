@@ -294,5 +294,5 @@ export const getTenure = (dte) => {
 
 // tooltips
 export const showTips = (item) => {
-  return `${item.payroll_list_employee_name.substring(0, 10)} . . .`;
+  return `${item.payroll_list_employee_name}`;
 };

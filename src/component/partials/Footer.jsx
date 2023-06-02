@@ -1,5 +1,6 @@
 import React from "react";
 import FbsLogoDark from "../svg/FbsLogoDark";
+import DemoMode from "./DemoMode";
 
 const Footer = () => {
   const getCurrentYear = () => {

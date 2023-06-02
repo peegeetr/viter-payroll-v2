@@ -357,15 +357,24 @@ const SummaryEarningsList = () => {
                         item.payroll_start_date,
                         item.payroll_end_date
                       )}`}</td>
-                      <td className="pr-6">
+                      <td
+                        className="!pr-6 tooltip-action-table "
+                        data-tooltip={showTips(item)}
+                      >
                         {numberWithCommas(
                           (Number(item.payroll_list_basic_pay) * 2).toFixed(2)
                         )}
                       </td>
-                      <td className="text-right pr-4">
+                      <td
+                        className="text-right !pr-4 tooltip-action-table "
+                        data-tooltip={showTips(item)}
+                      >
                         {numberWithCommas(item.payroll_list_adjustment_pay)}
                       </td>
-                      <td className="text-right pr-4">
+                      <td
+                        className="text-right !pr-4 tooltip-action-table "
+                        data-tooltip={showTips(item)}
+                      >
                         {numberWithCommas(
                           (
                             Number(item.payroll_list_basic_pay) * 2 +
@@ -376,10 +385,16 @@ const SummaryEarningsList = () => {
                       <td className="text-center pr-4">
                         {getRegularWorkHrs(item)}
                       </td>
-                      <td className="text-right pr-4">
+                      <td
+                        className="text-right !pr-4 tooltip-action-table "
+                        data-tooltip={showTips(item)}
+                      >
                         {getEmployeeRate(item)}
                       </td>
-                      <td className="text-right pr-4">
+                      <td
+                        className="text-right !pr-4 tooltip-action-table "
+                        data-tooltip={showTips(item)}
+                      >
                         {getTotalRegWage(item)}
                       </td>
                       <td className="text-center">
@@ -390,7 +405,10 @@ const SummaryEarningsList = () => {
                         {/* leave rate */}
                         100%
                       </td>
-                      <td className="text-right pr-4">
+                      <td
+                        className="text-right !pr-4 tooltip-action-table "
+                        data-tooltip={showTips(item)}
+                      >
                         {/* leave pay */}
                         {numberWithCommas(item.payroll_list_leave_pay)}
                       </td>
@@ -408,7 +426,10 @@ const SummaryEarningsList = () => {
                           </span>
                         </td>
                       ) : (
-                        <td className="pr-4">
+                        <td
+                          className="!pr-4 tooltip-action-table "
+                          data-tooltip={showTips(item)}
+                        >
                           {numberWithCommas(item.payroll_list_overtime_pay)}
                         </td>
                       )}
@@ -426,7 +447,10 @@ const SummaryEarningsList = () => {
                           </span>
                         </td>
                       ) : (
-                        <td className="pr-4">
+                        <td
+                          className="!pr-4 tooltip-action-table "
+                          data-tooltip={showTips(item)}
+                        >
                           {numberWithCommas(item.payroll_list_holiday)}
                         </td>
                       )}

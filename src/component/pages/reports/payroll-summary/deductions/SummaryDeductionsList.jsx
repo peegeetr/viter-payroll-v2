@@ -12,6 +12,7 @@ import {
   getUserType,
   hrisDevApiUrl,
   numberWithCommas,
+  showTips,
 } from "../../../../helpers/functions-general";
 import { queryDataInfinite } from "../../../../helpers/queryDataInfinite";
 import LoadmoreRq from "../../../../partials/LoadmoreRq";
@@ -303,49 +304,91 @@ const SummaryDeductionsList = () => {
                           item.payroll_start_date,
                           item.payroll_end_date
                         )}`}</td>
-                        <td className="px-6">
+                        <td
+                          className="!px-6 tooltip-action-table "
+                          data-tooltip={showTips(item)}
+                        >
                           {numberWithCommas(item.payroll_list_sss_er)}
                         </td>
-                        <td className="px-6">
+                        <td
+                          className="!px-6 tooltip-action-table "
+                          data-tooltip={showTips(item)}
+                        >
                           {numberWithCommas(item.payroll_list_sss_ee)}
                         </td>
-                        <td className="px-6">
+                        <td
+                          className="!px-6 tooltip-action-table "
+                          data-tooltip={showTips(item)}
+                        >
                           {numberWithCommas(item.payroll_list_philhealth_er)}
                         </td>
-                        <td className="px-6">
+                        <td
+                          className="!px-6 tooltip-action-table "
+                          data-tooltip={showTips(item)}
+                        >
                           {numberWithCommas(item.payroll_list_philhealth_ee)}
                         </td>
-                        <td className="px-6">
+                        <td
+                          className="!px-6 tooltip-action-table "
+                          data-tooltip={showTips(item)}
+                        >
                           {numberWithCommas(item.payroll_list_pagibig_er)}
                         </td>
-                        <td className="px-6">
+                        <td
+                          className="!px-6 tooltip-action-table "
+                          data-tooltip={showTips(item)}
+                        >
                           {numberWithCommas(item.payroll_list_pagibig_ee)}
                         </td>
-                        <td className="px-6">
+                        <td
+                          className="!px-6 tooltip-action-table "
+                          data-tooltip={showTips(item)}
+                        >
                           {numberWithCommas(item.payroll_list_sss_loan)}
                         </td>
-                        <td className="px-6">
+                        <td
+                          className="!px-6 tooltip-action-table "
+                          data-tooltip={showTips(item)}
+                        >
                           {numberWithCommas(item.payroll_list_pagibig_loan)}
                         </td>
-                        <td className="px-6">
+                        <td
+                          className="!px-6 tooltip-action-table "
+                          data-tooltip={showTips(item)}
+                        >
                           {numberWithCommas(item.payroll_list_tax)}
                         </td>
-                        <td className="px-6">
+                        <td
+                          className="!px-6 tooltip-action-table "
+                          data-tooltip={showTips(item)}
+                        >
                           {numberWithCommas(item.payroll_list_pagibig_mp2)}
                         </td>
-                        <td className="px-6">
+                        <td
+                          className="!px-6 tooltip-action-table "
+                          data-tooltip={showTips(item)}
+                        >
                           {/* other deductions */}
                           {numberWithCommas(item.payroll_list_other_deduction)}
                         </td>
-                        <td className="px-6">
+                        <td
+                          className="!px-6 tooltip-action-table "
+                          data-tooltip={showTips(item)}
+                        >
                           {/* total ee */}
                           {numberWithCommas(totalEe.toFixed(2))}
                         </td>
-                        <td className="px-6">
+                        <td
+                          className="!px-6 tooltip-action-table "
+                          data-tooltip={showTips(item)}
+                        >
                           {/* total deduction */}
                           {numberWithCommas(item.payroll_list_deduction)}
                         </td>
-                        <td className="px-6">
+                        <td
+                          className="!px-6 tooltip-action-table "
+                          data-tooltip={showTips(item)}
+                        >
                           {/* net pay */}
                           {numberWithCommas(item.payroll_list_net_pay)}
                         </td>

@@ -390,8 +390,8 @@ class Payroll
         return $query;
     }
 
-    // name
-    public function checkEarningType()
+    // check if there's an existing payroll draft 
+    public function checkPayrollType()
     {
         try {
             $sql = "select * from {$this->tblPayroll} ";

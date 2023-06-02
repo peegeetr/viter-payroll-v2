@@ -15,6 +15,7 @@ import { InputSelect, InputText } from "../../helpers/FormInputs";
 import { devApiUrl, hrisDevApiUrl } from "../../helpers/functions-general";
 import { queryData } from "../../helpers/queryData";
 import ButtonSpinner from "../../partials/spinners/ButtonSpinner";
+import { payrollCategoryBonusId } from "../../helpers/functions-payroll-category-id";
 
 const ModalAddPayroll = ({ item }) => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -105,10 +106,10 @@ const ModalAddPayroll = ({ item }) => {
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
                 // console.log(values, result.data);
-
                 mutation.mutate({
                   ...values,
                   employee: result.data,
+                  bonusId: `${payrollCategoryBonusId}`,
                 });
               }}
             >

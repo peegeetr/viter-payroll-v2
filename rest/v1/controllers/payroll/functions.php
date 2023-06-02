@@ -41,14 +41,13 @@ function checkDeleteHolidayExemptions($object)
     return $query;
 }
 
-// check name
-function isEarningType($object)
+// check if there's an existing payroll draft 
+function isPayrollType($object)
 {
-    $query = $object->checkEarningType();
+    $query = $object->checkPayrollType();
     $count = $query->rowCount();
     checkExistence($count, "Payroll draft already exist. Please complete it first before creating a new draft.");
 }
-
 
 // Read by draft
 function checkReadByDraft($object)

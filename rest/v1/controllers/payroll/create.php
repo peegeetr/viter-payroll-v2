@@ -43,13 +43,28 @@ $payroll->payroll_datetime = date("Y-m-d H:i:s");
 
 $isDecMonth = date("m");
 $allEmployee = $data["employee"];
+$bonusId = $data["bonusId"];
 
 // if not december check if there's an existing payroll draft 
 // any payroll type
 if ($isDecMonth !== 12) {
-    isEarningType($payroll);
+    isPayrollType($payroll);
 }
-// validate date
+if ($isDecMonth === 12) {
+    if ($payroll->payroll_category_type === $bonusId) {
+        $response = new Response();
+        $error = [];
+        $response->setSuccess(false);
+        $error["count"] = 0;
+        $error["success"] = false;
+        $error['error'] = "Please complete drafts first before creating bonus payroll type.";
+        $response->setData($error);
+        $response->send();
+        exit;
+    }
+}
+
+// // validate date
 checkDateExist($payroll);
 // create employee name and id
 for ($i = 0; $i < count($allEmployee); $i++) {
@@ -73,7 +88,6 @@ for ($i = 0; $i < count($allEmployee); $i++) {
         checkCreatePayrollList($payroll);
     }
 }
-
 
 // create
 $query = checkCreate($payroll);

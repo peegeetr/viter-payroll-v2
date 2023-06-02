@@ -291,3 +291,8 @@ export const getTenure = (dte) => {
 
   return tenure > 1 ? `${tenure} yrs` : `${tenure} yr`;
 };
+
+// tooltips
+export const showTips = (item) => {
+  return `${item.payroll_list_employee_name.substring(0, 10)} . . .`;
+};

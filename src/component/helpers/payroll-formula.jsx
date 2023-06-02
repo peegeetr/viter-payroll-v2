@@ -207,17 +207,21 @@ export const payComputeCategory13thMonth = (category13thMonth, yearlyTax) => {
   let payrollTotalAmount = 0;
   let totalBenefits = 0;
   let total13thAmount = 0;
+  let totalShareEe = 0;
+  let nonTax = 0;
 
   category13thMonth.map((cItem) => {
     // absencesUndertimeSum = cItem.total_absences + cItem.total_undertime;
     // totalAmount = (cItem.total_basic_pay - absencesUndertimeSum) / 12;
     totalAmount = Number(cItem.total_gross) / 12;
-    totalBenefits = Number(cItem.total_benefits);
+    totalBenefits = Number(cItem.total_benefits) + Number(cItem.bonus);
     total13thAmount = totalAmount + totalBenefits;
+    totalShareEe = cItem.sss + cItem.pag + cItem.phic;
+    nonTax = totalBenefits + totalShareEe + cItem.deminimis;
 
     taxYearly =
       Number(total13thAmount) > baseAmount
-        ? computeTaxYearly(total13thAmount, yearlyTax)
+        ? computeTaxYearly(total13thAmount, yearlyTax, nonTax)
         : 0;
     finalAmount = total13thAmount - taxYearly;
     // console.log(total13thAmount, totalAmount, cItem.total_gross, taxYearly);
@@ -1102,7 +1106,7 @@ export const payComputeTaxDue = (
 };
 
 // compute yearly tax due
-export const computeTaxYearly = (gross, yearlyTax, nonTax) => {
+export const computeTaxYearly = (gross, yearlyTax, nonTax = 0) => {
   let taxDue = 0;
   let taxable = 0;
   // const minimum = 250000;
@@ -1114,10 +1118,10 @@ export const computeTaxYearly = (gross, yearlyTax, nonTax) => {
       Number(gross) <= Number(yTax.tax_yearly_to)
     ) {
       taxable = Number(gross) - Number(nonTax);
+      console.log(taxable, Number(nonTax), minimum);
       if (Number(taxable) >= 0 && Number(taxable) <= minimum) {
         return taxDue;
       }
-
       taxDue =
         (taxable - Number(yTax.tax_yearly_from)) *
           (Number(yTax.tax_yearly_rate) / 100) +
@@ -1125,7 +1129,6 @@ export const computeTaxYearly = (gross, yearlyTax, nonTax) => {
     }
   });
 
-  // console.log(gross, taxDue);
   return taxDue;
 };
 

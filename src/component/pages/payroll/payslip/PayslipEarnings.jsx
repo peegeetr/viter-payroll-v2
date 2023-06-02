@@ -5,10 +5,15 @@ import {
 } from "../../../helpers/functions-general";
 import {
   absencesId,
+  employeeReferralBonusId,
+  hazardPayId,
   holidayId,
+  inflationAdjustmentId,
   leaveId,
   nightDiffId,
   otherBenefitsEarningsId,
+  overtimeId,
+  payAdjustmentId,
   undertimeId,
   wagesEarningsId,
 } from "../../../helpers/functions-payitemId";
@@ -106,10 +111,18 @@ const PayslipEarnings = ({
                   {item.earnings_details}
                 </td>
                 <td className="w-[10rem] print:py-[2px]">
-                  {holidayId !== item.earnings_payitem_id &&
+                  {(overtimeId === item.earnings_payitem_id ||
+                    nightDiffId === item.earnings_payitem_id ||
+                    undertimeId === item.earnings_payitem_id) &&
+                    `${Number(item.earnings_hrs).toFixed(4)}`}
+                  {/* {holidayId !== item.earnings_payitem_id &&
                     absencesId !== item.earnings_payitem_id &&
                     leaveId !== item.earnings_payitem_id &&
-                    `${Number(item.earnings_hrs).toFixed(4)}`}
+                    hazardPayId !== item.earnings_payitem_id &&
+                    payAdjustmentId !== item.earnings_payitem_id &&
+                    inflationAdjustmentId !== item.earnings_payitem_id &&
+                    employeeReferralBonusId !== item.earnings_payitem_id &&
+                    `${Number(item.earnings_hrs).toFixed(4)}`} */}
                 </td>
                 {/* <td className="w-[10rem]">{numberOfHolidays * 8}</td> */}
                 <td className=" text-right px-4 w-[5rem] print:py-[2px]">
@@ -121,10 +134,18 @@ const PayslipEarnings = ({
                       : (hourRate * (Number(item.earnings_rate) / 100)).toFixed(
                           4
                         ))} */}
-                  {holidayId !== item.earnings_payitem_id &&
+                  {(overtimeId === item.earnings_payitem_id ||
+                    nightDiffId === item.earnings_payitem_id ||
+                    undertimeId === item.earnings_payitem_id) &&
+                    `${hourRate.toFixed(4)} / Hr`}
+                  {/* {holidayId !== item.earnings_payitem_id &&
                     absencesId !== item.earnings_payitem_id &&
                     leaveId !== item.earnings_payitem_id &&
-                    `${hourRate.toFixed(4)} / Hr`}
+                    hazardPayId !== item.earnings_payitem_id &&
+                    payAdjustmentId !== item.earnings_payitem_id &&
+                    inflationAdjustmentId !== item.earnings_payitem_id &&
+                    employeeReferralBonusId !== item.earnings_payitem_id &&
+                    `${hourRate.toFixed(4)} / Hr`} */}
                 </td>
                 <td className=" text-right px-4 print:py-[2px]">
                   {item.earnings_payitem_id === absencesId ||

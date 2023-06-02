@@ -446,7 +446,13 @@ const SummaryEarningsList = () => {
                           item.payroll_list_night_shift_differential
                         )}
                       </td>
-                      <td className="text-right pr-4">
+                      <td
+                        className="text-right !pr-4 tooltip-action-table "
+                        data-tooltip={`${item.payroll_list_employee_name.substring(
+                          0,
+                          10
+                        )} . . .`}
+                      >
                         {/* gross pay */}
                         {numberWithCommas(item.payroll_list_gross)}
                       </td>

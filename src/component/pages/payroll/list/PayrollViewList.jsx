@@ -21,6 +21,7 @@ import ServerError from "../../../partials/ServerError";
 import TableSpinner from "../../../partials/spinners/TableSpinner";
 import { payrollCategoryBonusId } from "../../../helpers/functions-payroll-category-id";
 import { payrollCategory13thMonthId } from "../../../helpers/functions-payroll-category-id";
+import { payrollCategorySalaryId } from "../../../helpers/functions-payroll-category-id";
 
 const PayrollViewList = () => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -90,14 +91,6 @@ const PayrollViewList = () => {
         <p className="mr-8">
           ID : <span className="font-light text-black">{pid}</span>
         </p>
-        {/* <p className="mr-8">
-          Payroll Type :{" "}
-          <span className="font-light text-black">
-            {result?.pages[0].data.length > 0
-              ? `${result?.pages[0].data[0].payroll_end_date}`
-              : "--"}
-          </span>
-        </p> */}
         <p className="mr-8">
           Pay Period :{" "}
           <span className="font-light text-black">
@@ -109,20 +102,33 @@ const PayrollViewList = () => {
               : "--"}
           </span>
         </p>
-        <p className="">
-          Month Working Days:{" "}
-          <span className="font-light text-black">
-            {result?.pages[0].data.length > 0
-              ? getWorkingDaysInMonth(
-                  new Date(result?.pages[0].data[0].payroll_start_date)
-                )
-              : // getWorkingDays(
-                //     new Date(result?.pages[0].data[0].payroll_start_date),
-                //     new Date(result?.pages[0].data[0].payroll_end_date)
-                //   )
-                "--"}
-          </span>
-        </p>
+        {Number(result?.pages[0].data[0].payroll_category_type) ===
+          payrollCategorySalaryId && (
+          <p className="">
+            Month Working Days:{" "}
+            <span className="font-light text-black">
+              {result?.pages[0].data.length > 0
+                ? getWorkingDaysInMonth(
+                    new Date(result?.pages[0].data[0].payroll_start_date)
+                  )
+                : "--"}
+            </span>
+          </p>
+        )}
+        {Number(result?.pages[0].data[0].payroll_category_type) ===
+          payrollCategory13thMonthId && (
+          <p className="">
+            Year Working Days:{" "}
+            <span className="font-light text-black">
+              {result?.pages[0].data.length > 0
+                ? getWorkingDays(
+                    new Date(result?.pages[0].data[0].payroll_start_date),
+                    new Date(result?.pages[0].data[0].payroll_end_date)
+                  )
+                : "--"}
+            </span>
+          </p>
+        )}
       </div>
       <SearchBarRq
         search={search}

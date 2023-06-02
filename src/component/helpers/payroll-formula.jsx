@@ -597,7 +597,11 @@ export const payComputeHazardPay = (emp, earning) => {
         earnings_paytype_id: wagesEarningsId,
         earnings_payitem_id: hazardPayId,
         earnings_amount: earning.earnings_amount,
-        earnings_details: earning.earnings_details,
+        earnings_details: `${earning.payitem_name} - ${
+          earning.earnings_details
+        } (${Number(earning.earnings_num_pay) + 1}/${
+          earning.earnings_number_of_installment
+        }) `,
         earnings_frequency: isSemiMonthly,
         earnings_is_installment: onetimeNumber,
         earnings_number_of_installment: onetimeNumber,
@@ -625,7 +629,11 @@ export const payComputeInflationAdjustmen = (emp, earning) => {
         earnings_paytype_id: wagesEarningsId,
         earnings_payitem_id: inflationAdjustmentId,
         earnings_amount: earning.earnings_amount,
-        earnings_details: earning.earnings_details,
+        earnings_details: `${earning.payitem_name} - ${
+          earning.earnings_details
+        } (${Number(earning.earnings_num_pay) + 1}/${
+          earning.earnings_number_of_installment
+        }) `,
         earnings_frequency: isSemiMonthly,
         earnings_is_installment: onetimeNumber,
         earnings_number_of_installment: onetimeNumber,
@@ -653,7 +661,11 @@ export const payComputeAdjustment = (emp, earning) => {
         earnings_paytype_id: wagesEarningsId,
         earnings_payitem_id: payAdjustmentId,
         earnings_amount: earning.earnings_amount,
-        earnings_details: earning.earnings_details,
+        earnings_details: `${earning.payitem_name} - ${
+          earning.earnings_details
+        } (${Number(earning.earnings_num_pay) + 1}/${
+          earning.earnings_number_of_installment
+        }) `,
         earnings_frequency: isSemiMonthly,
         earnings_is_installment: onetimeNumber,
         earnings_number_of_installment: onetimeNumber,
@@ -705,7 +717,11 @@ export const payComputeBereavement = (emp, earning) => {
         earnings_paytype_id: otherBenefitsEarningsId,
         earnings_payitem_id: bereavementId,
         earnings_amount: earning.earnings_amount,
-        earnings_details: earning.earnings_details,
+        earnings_details: `${earning.payitem_name} - ${
+          earning.earnings_details
+        } (${Number(earning.earnings_num_pay) + 1}/${
+          earning.earnings_number_of_installment
+        }) `,
         earnings_frequency: isSemiMonthly,
         earnings_is_installment: onetimeNumber,
         earnings_number_of_installment: onetimeNumber,
@@ -734,7 +750,11 @@ export const payComputeBonus = (emp, earning) => {
         earnings_paytype_id: otherBenefitsEarningsId,
         earnings_payitem_id: bonusId,
         earnings_amount: earning.earnings_amount,
-        earnings_details: earning.earnings_details,
+        earnings_details: `${earning.payitem_name} - ${
+          earning.earnings_details
+        } (${Number(earning.earnings_num_pay) + 1}/${
+          earning.earnings_number_of_installment
+        }) `,
         earnings_frequency: isSemiMonthly,
         earnings_is_installment: onetimeNumber,
         earnings_number_of_installment: onetimeNumber,
@@ -763,7 +783,11 @@ export const payComputeEmployeeReferralBonus = (emp, earning) => {
         earnings_paytype_id: otherBenefitsEarningsId,
         earnings_payitem_id: employeeReferralBonusId,
         earnings_amount: earning.earnings_amount,
-        earnings_details: `${earning.payitem_name} - ${earning.earnings_details}`,
+        earnings_details: `${earning.payitem_name} - ${
+          earning.earnings_details
+        } (${Number(earning.earnings_num_pay) + 1}/${
+          earning.earnings_number_of_installment
+        }) `,
         earnings_frequency: isSemiMonthly,
         earnings_is_installment: onetimeNumber,
         earnings_number_of_installment: onetimeNumber,
@@ -790,7 +814,11 @@ export const payComputeSeparationPay = (emp, earning) => {
         earnings_paytype_id: otherBenefitsEarningsId,
         earnings_payitem_id: separationPayId,
         earnings_amount: earning.earnings_amount,
-        earnings_details: earning.earnings_details,
+        earnings_details: `${earning.payitem_name} - ${
+          earning.earnings_details
+        } (${Number(earning.earnings_num_pay) + 1}/${
+          earning.earnings_number_of_installment
+        }) `,
         earnings_frequency: isSemiMonthly,
         earnings_is_installment: onetimeNumber,
         earnings_number_of_installment: onetimeNumber,
@@ -818,7 +846,11 @@ export const payComputeOtherAllowances = (emp, earning) => {
         earnings_paytype_id: otherBenefitsEarningsId,
         earnings_payitem_id: otherAllowancesId,
         earnings_amount: earning.earnings_amount,
-        earnings_details: earning.earnings_details,
+        earnings_details: `${earning.payitem_name} - ${
+          earning.earnings_details
+        } (${Number(earning.earnings_num_pay) + 1}/${
+          earning.earnings_number_of_installment
+        }) `,
         earnings_frequency: isSemiMonthly,
         earnings_is_installment: onetimeNumber,
         earnings_number_of_installment: onetimeNumber,
@@ -1370,7 +1402,11 @@ export const payComputeOtherDeduction = (emp, deduction) => {
         deduction_paytype_id: paytypeOtherDeductionId,
         deduction_payitem_id: otherDeductionId,
         deduction_amount: deduction.deduction_amount,
-        deduction_details: deduction.deduction_details,
+        deduction_details: `${deduction.payitem_name} - ${
+          deduction.deduction_details
+        } (${Number(deduction.deduction_num_pay) + 1}/${
+          deduction.deduction_number_of_installment
+        })`,
         deduction_frequency: isSemiMonthly,
         deduction_is_installment: onetimeNumber,
         deduction_number_of_installment: onetimeNumber,

@@ -116,7 +116,7 @@
     @apply relative p-1 bg-transparent leading-none;
   }
   .tooltip-action-table::before {
-    @apply content-[''] absolute w-0 h-0 left-2/4 -translate-x-2/4 bottom-full border-t-4 border-r-4 border-l-4 border-solid border-transparent border-t-dark/80 opacity-0 pointer-events-none;
+    @apply content-[''] absolute z-10 w-0 h-0 left-2/4 -translate-x-2/4 bottom-full border-t-4 border-r-4 border-l-4 border-solid border-transparent border-t-dark/80 opacity-0 pointer-events-none;
   }
   .tooltip-action-table::after {
     @apply content-[attr(data-tooltip)] absolute left-2/4 -translate-x-2/4 bottom-full -top-[26px] bg-dark/80 text-white p-1 rounded-sm h-fit leading-none z-10 whitespace-nowrap text-center opacity-0 text-sm pointer-events-none;
@@ -127,6 +127,7 @@
   .tooltip-action-table:hover::after {
     @apply opacity-100;
   }
+
   .tooltip-navigation {
     @apply relative p-1 bg-transparent leading-none;
   }

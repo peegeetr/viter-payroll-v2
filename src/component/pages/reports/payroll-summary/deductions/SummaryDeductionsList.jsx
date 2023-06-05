@@ -170,10 +170,10 @@ const SummaryDeductionsList = () => {
           }}
         </Formik>
       </div>
-      <div className="relative text-center">
+      <div className="text-center">
         <div className="overflow-x-auto max-h-[40rem] h-[40rem] ">
           <table>
-            <thead>
+            <thead className="relative z-[9]">
               <tr className="border-none text-center sticky top-0">
                 <th className="text-center border-white" rowSpan="2">
                   #

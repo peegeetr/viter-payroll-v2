@@ -163,6 +163,7 @@ const SummaryTypeView = () => {
                 {result?.pages.map((page, key) => (
                   <React.Fragment key={key}>
                     {page.data.map((item, key) => {
+                      console.log(item.earnings_rate);
                       item.earnings_amount === undefined
                         ? (total += Number(item.deduction_amount))
                         : (total += Number(item.earnings_amount));
@@ -176,6 +177,7 @@ const SummaryTypeView = () => {
                           </td>
                           <td>
                             {item.earnings_rate !== "" &&
+                              item.earnings_rate !== undefined &&
                               `${Number(item.earnings_rate)}%`}
                           </td>
                           <td className="w-[15rem] text-right mt-2 pr-2 font-bold">

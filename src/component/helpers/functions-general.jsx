@@ -22,45 +22,46 @@ import React from "react";
 // export const hrisdevNavUrl = "/dev-app";
 // export const devNavUrl = "/v2";
 
-// // Patrick
-// const urlHris = `https://hr-app.frontlinebusiness.com.ph`;
-// const urlHrisImg = `https://hr-app.frontlinebusiness.com.ph/img`;
-// const urlPayroll = `https://payroll-app.frontlinebusiness.com.ph`;
-// const urlPayrollImg = `https://payroll-app.frontlinebusiness.com.ph/img`;
-// export const hrisdevNavUrl = "";
-// export const devNavUrl = "";
-
-// // ONLINE DEV and LOCAL hris
-// export const hrisDevBaseImgUrl = `${urlHrisImg}`;
-// export const hrisDevApiUrl = `${urlHris}/rest`;
-// export const hrisdevBaseUrl = `${urlHris}`;
-
-// // ONLINE DEV and LOCAL payroll
-// export const devBaseImgUrl = `${urlPayrollImg}`;
-// export const devApiUrl = `${urlPayroll}/rest`;
-// export const devBaseUrl = `${urlPayroll}`;
-
-// // Online prod hris
-export const hrisDevBaseImgUrl = "https://hris.frontlinebusiness.com.ph/img";
-export const hrisDevApiUrl = "https://hris.frontlinebusiness.com.ph/rest";
-export const hrisdevBaseUrl = "https://hris.frontlinebusiness.com.ph";
+// Patrick
+const urlHris = `https://hr-app.frontlinebusiness.com.ph`;
+const urlHrisImg = `https://hr-app.frontlinebusiness.com.ph/img`;
+const urlPayroll = `https://payroll-app.frontlinebusiness.com.ph`;
+const urlPayrollImg = `https://payroll-app.frontlinebusiness.com.ph/img`;
 export const hrisdevNavUrl = "";
+export const devNavUrl = "";
 
-// Online prod payroll
-export const devBaseImgUrl = "https://payroll.frontlinebusiness.com.ph/v2/img";
-export const devApiUrl = "https://payroll.frontlinebusiness.com.ph/v2/rest";
-export const devBaseUrl = "https://payroll.frontlinebusiness.com.ph/v2";
-export const devNavUrl = "/v2";
+// ONLINE DEV and LOCAL hris
+export const hrisDevBaseImgUrl = `${urlHrisImg}`;
+export const hrisDevApiUrl = `${urlHris}/rest`;
+export const hrisdevBaseUrl = `${urlHris}`;
 
-export const baseUrl = "/v2";
+// ONLINE DEV and LOCAL payroll
+export const devBaseImgUrl = `${urlPayrollImg}`;
+export const devApiUrl = `${urlPayroll}/rest`;
+export const devBaseUrl = `${urlPayroll}`;
+
+// // // Online prod hris
+// export const hrisDevBaseImgUrl = "https://hris.frontlinebusiness.com.ph/img";
+// export const hrisDevApiUrl = "https://hris.frontlinebusiness.com.ph/rest";
+// export const hrisdevBaseUrl = "https://hris.frontlinebusiness.com.ph";
+// export const hrisdevNavUrl = "";
+
+// // Online prod payroll
+// export const devBaseImgUrl = "https://payroll.frontlinebusiness.com.ph/v2/img";
+// export const devApiUrl = "https://payroll.frontlinebusiness.com.ph/v2/rest";
+// export const devBaseUrl = "https://payroll.frontlinebusiness.com.ph/v2";
+// export const devNavUrl = "/v2";
+
+export const baseUrl = "/";
 export const isDemoMode = "0";
 export const UrlAdmin = "";
 export const UrlSystem = "system";
 export const is_developer = "is_developer";
 
-export const devKeyPr = "sKPgVdamzw7hL9IqTKFLOqrGVJaHaOwSN4nYhm8Hv9dwjtHZg88e";
+export const devKeyPr =
+  "$2a$12$47wDvbLInZif/PVS8B6P3.7WxyJvUpBzZAWCsnWJUKq3nrn4qgmeO";
 export const devKeyHr =
-  "$2a$05$9mjWb0WZnCU9k79dNAn85ecjwAQfFjz.EZhgNYBvb5Lwgth7FZBXW";
+  "$2a$12$5obsBD1n0We9BIAM01RJy.4F0t4W2KmMPJppAur2eY1tmpG4y87vO";
 
 // console log values
 export const consoleLog = (values, param2 = null) => {

@@ -102,33 +102,35 @@ const PayrollViewList = () => {
               : "--"}
           </span>
         </p>
-        {Number(result?.pages[0].data[0].payroll_category_type) ===
-          payrollCategorySalaryId && (
-          <p className="">
-            Month Working Days:{" "}
-            <span className="font-light text-black">
-              {result?.pages[0].data.length > 0
-                ? getWorkingDaysInMonth(
-                    new Date(result?.pages[0].data[0].payroll_start_date)
-                  )
-                : "--"}
-            </span>
-          </p>
-        )}
-        {Number(result?.pages[0].data[0].payroll_category_type) ===
-          payrollCategory13thMonthId && (
-          <p className="">
-            Year Working Days:{" "}
-            <span className="font-light text-black">
-              {result?.pages[0].data.length > 0
-                ? getWorkingDays(
-                    new Date(result?.pages[0].data[0].payroll_start_date),
-                    new Date(result?.pages[0].data[0].payroll_end_date)
-                  )
-                : "--"}
-            </span>
-          </p>
-        )}
+        {result?.pages[0].data.length > 0 &&
+          Number(result?.pages[0].data[0].payroll_category_type) ===
+            payrollCategorySalaryId && (
+            <p className="">
+              Month Working Days:{" "}
+              <span className="font-light text-black">
+                {result?.pages[0].data.length > 0
+                  ? getWorkingDaysInMonth(
+                      new Date(result?.pages[0].data[0].payroll_start_date)
+                    )
+                  : "--"}
+              </span>
+            </p>
+          )}
+        {result?.pages[0].data.length > 0 &&
+          Number(result?.pages[0].data[0].payroll_category_type) ===
+            payrollCategory13thMonthId && (
+            <p className="">
+              Year Working Days:{" "}
+              <span className="font-light text-black">
+                {result?.pages[0].data.length > 0
+                  ? getWorkingDays(
+                      new Date(result?.pages[0].data[0].payroll_start_date),
+                      new Date(result?.pages[0].data[0].payroll_end_date)
+                    )
+                  : "--"}
+              </span>
+            </p>
+          )}
       </div>
       <SearchBarRq
         search={search}

@@ -57,7 +57,7 @@ const PayslipHeader = ({ payslip, empid, days }) => {
           )}
           <p className="mb-0">
             <span className="font-semibold">Position : </span>{" "}
-            {job?.data.length > 0 ? job?.data[0].job_title_name : "N/A"}
+            {job?.data.length > 0 ? job?.data[0].job_title_name : "Loading..."}
           </p>
           {Number(payslip?.data[0].payroll_category_type) ===
             payrollCategorySalaryId && (

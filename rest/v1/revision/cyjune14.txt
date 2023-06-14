@@ -2,15 +2,17 @@
 *controllers           
     - payroll/list/functions.php
     - payroll/list/report-bank-template.php 
+    -> payroll/create.php 
     
 *models     
-    - payroll/list/PayrollList.php
+    -> payroll/list/PayrollList.php
+    -> payroll/Payroll.php
   
 *htaccess 
     - #payroll list paid
 
 *db tables 
-    - 
+    -> prv2_payroll_list.sql
 
 *core 
     - 

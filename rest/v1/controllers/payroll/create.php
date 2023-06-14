@@ -84,6 +84,7 @@ for ($i = 0; $i < count($allEmployee); $i++) {
     $payroll->payroll_list_deduc_employee_sss = $allEmployee[$i]["employee_job_sss_deduc"];
     $payroll->payroll_list_deduc_employee_pgbg = $allEmployee[$i]["employee_job_pag_ibig_deduc"];
     $payroll->payroll_list_deduc_employee_philhealth = $allEmployee[$i]["employee_job_phil_health_deduc"];
+    $payroll->payroll_list_employee_account_number = $allEmployee[$i]["employee_job_account_number"];
     // create payroll list
     if ($allEmployee[$i]["employee_job_payroll_elegibility"] === 1) {
         checkCreatePayrollList($payroll);

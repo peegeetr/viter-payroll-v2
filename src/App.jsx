@@ -122,6 +122,8 @@ import SystemDeductionInstallmentFwcTithes from "./component/pages/employee/dedu
 import OtherUserOtherDeduction from "./component/pages/employee/deductions-installment/other-deduction/link/OtherUserOtherDeduction";
 import OtherUserDeductionInstallmentFwcTithes from "./component/pages/employee/deductions-installment/view/links-tithes/OtherUserDeductionInstallmentFwcTithes";
 import OtherUserDeductionInstallmentFcaTuition from "./component/pages/employee/deductions-installment/view/links-tuition/OtherUserDeductionInstallmentFcaTuition";
+import OtherUserBankTemplate from "./component/pages/reports/bank-template/links/OtherUserBankTemplate";
+import SystemUserBankTemplate from "./component/pages/reports/bank-template/links/SystemUserBankTemplate";
 
 function App() {
   // Create a client
@@ -502,6 +504,14 @@ function App() {
               element={
                 <ProtectedRouteOther>
                   <OtherUserEmployeeSalaryHistory />
+                </ProtectedRouteOther>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/reports/bank-template`}
+              element={
+                <ProtectedRouteOther>
+                  <OtherUserBankTemplate />
                 </ProtectedRouteOther>
               }
             />
@@ -931,6 +941,14 @@ function App() {
               element={
                 <ProtectedRouteSystem>
                   <SystemUserSummaryTypeViewBasicPay />
+                </ProtectedRouteSystem>
+              }
+            />
+            <Route
+              path={`${devNavUrl}/${UrlSystem}/reports/bank-template`}
+              element={
+                <ProtectedRouteSystem>
+                  <SystemUserBankTemplate />
                 </ProtectedRouteSystem>
               }
             />

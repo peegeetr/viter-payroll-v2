@@ -4,6 +4,7 @@ import {
   getPayPeriod,
   getWorkingDays,
   numberWithCommas,
+  pesoSign,
 } from "../../../helpers/functions-general";
 import HeaderPrint from "../../../partials/HeaderPrint";
 import { employeeRate } from "../../../helpers/payroll-formula";
@@ -101,7 +102,7 @@ const PayrunSummaryBody = ({ result, startDate, endDate }) => {
                 <div className="text-center pb-4 font-bold print:pt-4">
                   {startDate !== "" && (
                     <>
-                      <p className="m-0">Employee Pay Run Summary</p>
+                      <p className="m-0  text-lg">Employee Pay Run Summary</p>
                       <p className="m-0 text-primary font-bold">
                         {getPayPeriod(startDate, endDate)}
                       </p>
@@ -120,6 +121,7 @@ const PayrunSummaryBody = ({ result, startDate, endDate }) => {
                     <tr className="hover:bg-white ">
                       <td className="w-[15rem] print:py-[2px]">Basic Pay</td>
                       <td className="w-[8rem] text-right px-4 print:py-[2px]">
+                        {pesoSign}
                         {/* {numberWithCommas(item.payroll_list_basic_pay)} */}
                         {numberWithCommas(Number(basicPay).toFixed(2))}
                       </td>
@@ -127,12 +129,14 @@ const PayrunSummaryBody = ({ result, startDate, endDate }) => {
                     <tr className="hover:bg-white ">
                       <td className="w-[15rem] print:py-[2px]">Overtime Pay</td>
                       <td className="w-[8rem] text-right px-4 print:py-[2px]">
+                        {pesoSign}
                         {numberWithCommas(item.payroll_list_overtime_pay)}
                       </td>
                     </tr>
                     <tr className="hover:bg-white ">
                       <td className="w-[15rem] print:py-[2px]">Paid Leave</td>
                       <td className="w-[8rem] text-right px-4 print:py-[2px]">
+                        {pesoSign}
                         {numberWithCommas(item.payroll_list_leave_pay)}
                       </td>
                       <td></td>
@@ -140,6 +144,7 @@ const PayrunSummaryBody = ({ result, startDate, endDate }) => {
                     <tr className="hover:bg-white ">
                       <td className="w-[15rem] print:py-[2px]">Absences</td>
                       <td className="w-[8rem] text-right px-4 print:py-[2px]">
+                        {pesoSign}
                         {Number(item.payroll_list_absences) > 0
                           ? `-${numberWithCommas(item.payroll_list_absences)}`
                           : 0.0}
@@ -148,6 +153,7 @@ const PayrunSummaryBody = ({ result, startDate, endDate }) => {
                     <tr className="hover:bg-white ">
                       <td className="w-[15rem] print:py-[2px]">Holiday</td>
                       <td className="w-[8rem] text-right px-4 print:py-[2px]">
+                        {pesoSign}
                         {numberWithCommas(item.payroll_list_holiday)}
                       </td>
                     </tr>
@@ -156,6 +162,7 @@ const PayrunSummaryBody = ({ result, startDate, endDate }) => {
                         Night Shift Differential
                       </td>
                       <td className="w-[8rem] text-right px-4 print:py-[2px]">
+                        {pesoSign}
                         {numberWithCommas(
                           item.payroll_list_night_shift_differential
                         )}
@@ -166,6 +173,7 @@ const PayrunSummaryBody = ({ result, startDate, endDate }) => {
                         Wages Total (De Minimis Inclusive)
                       </td>
                       <td className="w-[8rem] text-right px-4 print:py-[2px]">
+                        {pesoSign}
                         {numberWithCommas(totalWages.toFixed(2))}
                       </td>
                     </tr>
@@ -174,6 +182,7 @@ const PayrunSummaryBody = ({ result, startDate, endDate }) => {
                         De Minimis Total
                       </td>
                       <td className="w-[8rem] text-right px-4 print:py-[2px]">
+                        {pesoSign}
                         {numberWithCommas(
                           Number(item.payroll_list_deminimis).toFixed(2)
                         )}
@@ -182,12 +191,14 @@ const PayrunSummaryBody = ({ result, startDate, endDate }) => {
                     <tr className="hover:bg-white ">
                       <td className="w-[15rem] print:py-[2px]">13th month</td>
                       <td className="w-[8rem] text-right px-4 print:py-[2px]">
+                        {pesoSign}
                         {numberWithCommas(item.payroll_list_13th_month)}
                       </td>
                     </tr>
                     <tr className="hover:bg-white ">
                       <td className="w-[15rem] print:py-[2px]">Bonus</td>
                       <td className="w-[8rem] text-right px-4 print:py-[2px]">
+                        {pesoSign}
                         {numberWithCommas(item.payroll_list_bonus)}
                       </td>
                     </tr>
@@ -196,6 +207,7 @@ const PayrunSummaryBody = ({ result, startDate, endDate }) => {
                         Other Benefits
                       </td>
                       <td className="w-[8rem] text-right px-4 print:py-[2px]">
+                        {pesoSign}
                         {numberWithCommas(Number(otherBenefits).toFixed(2))}
                       </td>
                     </tr>
@@ -204,6 +216,7 @@ const PayrunSummaryBody = ({ result, startDate, endDate }) => {
                         13th month & other benefits total
                       </td>
                       <td className="w-[8rem] text-right px-4 print:py-[2px]">
+                        {pesoSign}
                         {numberWithCommas(item.payroll_list_total_benefits)}
                       </td>
                     </tr>
@@ -214,6 +227,7 @@ const PayrunSummaryBody = ({ result, startDate, endDate }) => {
                       </td>
                       <td></td>
                       <td className="w-[8rem] text-right px-4 print:py-[2px]">
+                        {pesoSign}
                         {numberWithCommas(totalEarnings.toFixed(2))}
                       </td>
                     </tr>
@@ -221,18 +235,21 @@ const PayrunSummaryBody = ({ result, startDate, endDate }) => {
                     <tr className="hover:bg-white ">
                       <td className="w-[15rem] print:py-[2px]">SSS Er</td>
                       <td className="w-[8rem] text-right px-4 print:py-[2px]">
+                        {pesoSign}
                         {numberWithCommas(item.payroll_list_sss_er)}
                       </td>
                     </tr>
                     <tr className="hover:bg-white ">
                       <td className="w-[15rem] print:py-[2px]">PGBG Er</td>
                       <td className="w-[8rem] text-right px-4 print:py-[2px]">
+                        {pesoSign}
                         {numberWithCommas(item.payroll_list_pagibig_er)}
                       </td>
                     </tr>
                     <tr className="hover:bg-white ">
                       <td className="w-[15rem] print:py-[2px]">PHIC Er</td>
                       <td className="w-[8rem] text-right px-4 print:py-[2px]">
+                        {pesoSign}
                         {numberWithCommas(item.payroll_list_philhealth_er)}
                       </td>
                     </tr>
@@ -242,6 +259,7 @@ const PayrunSummaryBody = ({ result, startDate, endDate }) => {
                       </td>
                       <td></td>
                       <td className="w-[8rem] text-right px-4 print:py-[2px]">
+                        {pesoSign}
                         {numberWithCommas(totalEr.toFixed(2))}
                       </td>
                     </tr>
@@ -249,18 +267,21 @@ const PayrunSummaryBody = ({ result, startDate, endDate }) => {
                     <tr className="hover:bg-white ">
                       <td className="w-[15rem] print:py-[2px]">SSS Ee</td>
                       <td className="w-[8rem] text-right px-4 print:py-[2px]">
+                        {pesoSign}
                         {numberWithCommas(item.payroll_list_sss_ee)}
                       </td>
                     </tr>
                     <tr className="hover:bg-white ">
                       <td className="w-[15rem] print:py-[2px]">PGBG Ee</td>
                       <td className="w-[8rem] text-right px-4 print:py-[2px]">
+                        {pesoSign}
                         {numberWithCommas(item.payroll_list_pagibig_ee)}
                       </td>
                     </tr>
                     <tr className="hover:bg-white ">
                       <td className="w-[15rem] print:py-[2px]">PHIC Ee</td>
                       <td className="w-[8rem] text-right px-4 print:py-[2px]">
+                        {pesoSign}
                         {numberWithCommas(item.payroll_list_philhealth_ee)}
                       </td>
                     </tr>
@@ -269,6 +290,7 @@ const PayrunSummaryBody = ({ result, startDate, endDate }) => {
                         Mandatory deductions total
                       </td>
                       <td className="w-[8rem] text-right px-4 print:py-[2px]">
+                        {pesoSign}
                         {numberWithCommas(totalEe.toFixed(2))}
                       </td>
                     </tr>
@@ -276,18 +298,21 @@ const PayrunSummaryBody = ({ result, startDate, endDate }) => {
                     <tr className="hover:bg-white ">
                       <td className="w-[15rem] print:py-[2px]">SSS Loan</td>
                       <td className="w-[8rem] text-right px-4 print:py-[2px]">
+                        {pesoSign}
                         {numberWithCommas(item.payroll_list_sss_loan)}
                       </td>
                     </tr>
                     <tr className="hover:bg-white ">
                       <td className="w-[15rem] print:py-[2px]">PGBG Loan</td>
                       <td className="w-[8rem] text-right px-4 print:py-[2px]">
+                        {pesoSign}
                         {numberWithCommas(item.payroll_list_pagibig_loan)}
                       </td>
                     </tr>
                     <tr className="hover:bg-white ">
                       <td className="w-[15rem] print:py-[2px]">PGBG MP2</td>
                       <td className="w-[8rem] text-right px-4 print:py-[2px]">
+                        {pesoSign}
                         {numberWithCommas(item.payroll_list_pagibig_mp2)}
                       </td>
                     </tr>
@@ -296,6 +321,7 @@ const PayrunSummaryBody = ({ result, startDate, endDate }) => {
                         Optional deductions total
                       </td>
                       <td className="w-[8rem] text-right px-4 print:py-[2px]">
+                        {pesoSign}
                         {numberWithCommas(totalOptional.toFixed(2))}
                       </td>
                     </tr>
@@ -303,12 +329,14 @@ const PayrunSummaryBody = ({ result, startDate, endDate }) => {
                     <tr className="hover:bg-white ">
                       <td className="w-[15rem] print:py-[2px]">FWC Thesis</td>
                       <td className="w-[8rem] text-right px-4 print:py-[2px]">
+                        {pesoSign}
                         {numberWithCommas(item.payroll_list_fwc_tithes)}
                       </td>
                     </tr>
                     <tr className="hover:bg-white ">
                       <td className="w-[15rem] print:py-[2px]">FCA Tuition</td>
                       <td className="w-[8rem] text-right px-4 print:py-[2px]">
+                        {pesoSign}
                         {numberWithCommas(item.payroll_list_fca_tuition)}
                       </td>
                     </tr>
@@ -317,6 +345,7 @@ const PayrunSummaryBody = ({ result, startDate, endDate }) => {
                         Other Deductions
                       </td>
                       <td className="w-[8rem] text-right px-4 print:py-[2px]">
+                        {pesoSign}
                         {numberWithCommas(item.payroll_list_other_deduction)}
                       </td>
                     </tr>
@@ -325,6 +354,7 @@ const PayrunSummaryBody = ({ result, startDate, endDate }) => {
                         Other deductions total
                       </td>
                       <td className="w-[8rem] text-right px-4 print:py-[2px]">
+                        {pesoSign}
                         {numberWithCommas(totalOtherDedTotal.toFixed(2))}
                       </td>
                     </tr>
@@ -333,6 +363,7 @@ const PayrunSummaryBody = ({ result, startDate, endDate }) => {
                         Payroll Tax total
                       </td>
                       <td className="w-[8rem] text-right px-4 print:py-[2px]">
+                        {pesoSign}
                         {numberWithCommas(item.payroll_list_tax)}
                       </td>
                     </tr>
@@ -342,6 +373,7 @@ const PayrunSummaryBody = ({ result, startDate, endDate }) => {
                       </td>
                       <td></td>
                       <td className="w-[8rem] text-right px-4 print:py-[2px]">
+                        {pesoSign}
                         {numberWithCommas(item.payroll_list_deduction)}
                       </td>
                     </tr>
@@ -349,6 +381,7 @@ const PayrunSummaryBody = ({ result, startDate, endDate }) => {
                       <td className="w-[15rem] print:py-[2px]">Netpay</td>
                       <td></td>
                       <td className="w-[8rem] text-right px-4 print:py-[2px]">
+                        {pesoSign}
                         {numberWithCommas(item.payroll_list_net_pay)}
                       </td>
                     </tr>

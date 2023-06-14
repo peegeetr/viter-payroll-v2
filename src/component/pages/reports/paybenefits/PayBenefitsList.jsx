@@ -14,6 +14,7 @@ import {
   getUserType,
   hrisDevApiUrl,
   numberWithCommas,
+  pesoSign,
 } from "../../../helpers/functions-general";
 import { queryDataInfinite } from "../../../helpers/queryDataInfinite";
 import LoadmoreRq from "../../../partials/LoadmoreRq";
@@ -181,7 +182,7 @@ const PayBenefitsList = () => {
       <div className="text-center pb-4 font-bold print:pt-4">
         {startDate !== "" && (
           <>
-            <p className="m-0">Employee Benefits</p>
+            <p className="m-0  text-lg">Employee Benefits</p>
             <p className="m-0 text-primary font-bold">
               {getPayPeriod(startDate, endDate)}
             </p>
@@ -194,7 +195,7 @@ const PayBenefitsList = () => {
             <thead>
               <tr className="text-right">
                 <th className="text-left  print:py-[2px]">#</th>
-                <th className="text-left min-w-[12rem]  print:py-[2px]">
+                <th className="text-left min-w-[12rem] capitalize print:py-[2px]">
                   Name
                 </th>
                 <th className=" print:py-[2px]">&nbsp;</th>
@@ -248,27 +249,40 @@ const PayBenefitsList = () => {
                           {item.payroll_list_employee_name}
                         </td>
                         <td className="w-[15rem] print:py-[2px]">
+                          {pesoSign}
                           {numberWithCommas(
                             Number(item.payroll_list_employee_salary).toFixed(2)
                           )}
                         </td>
                         <td className="w-[15rem] print:py-[2px]">
-                          {numberWithCommas(Number(item.sss_ee))}
+                          {pesoSign}
+                          {numberWithCommas(Number(item.sss_ee).toFixed(2))}
                         </td>
                         <td className="w-[15rem] print:py-[2px]">
-                          {numberWithCommas(Number(item.philhealth_ee))}
+                          {pesoSign}
+                          {numberWithCommas(
+                            Number(item.philhealth_ee).toFixed(2)
+                          )}
                         </td>
                         <td className="w-[15rem] print:py-[2px]">
-                          {numberWithCommas(Number(item.pagibig_ee))}
+                          {pesoSign}
+                          {numberWithCommas(Number(item.pagibig_ee).toFixed(2))}
                         </td>
                         <td className="w-[15rem] print:py-[2px]">
-                          {numberWithCommas(Number(item.sss_loan))}
+                          {pesoSign}
+                          {numberWithCommas(Number(item.sss_loan).toFixed(2))}
                         </td>
                         <td className="w-[15rem] print:py-[2px]">
-                          {numberWithCommas(Number(item.pagibig_loan))}
+                          {pesoSign}
+                          {numberWithCommas(
+                            Number(item.pagibig_loan).toFixed(2)
+                          )}
                         </td>
                         <td className="w-[15rem] print:py-[2px]">
-                          {numberWithCommas(Number(item.pagibig_mp2))}
+                          {pesoSign}
+                          {numberWithCommas(
+                            Number(item.pagibig_mp2).toFixed(2)
+                          )}
                         </td>
                       </tr>
                     );
@@ -281,24 +295,31 @@ const PayBenefitsList = () => {
                     TOTAL
                   </td>
                   <td className="w-[15rem] print:py-[2px]">
+                    {pesoSign}
                     {numberWithCommas(totalSalary.toFixed(2))}
                   </td>
                   <td className="w-[15rem] print:py-[2px]">
+                    {pesoSign}
                     {numberWithCommas(totalSss.toFixed(2))}
                   </td>
                   <td className="w-[15rem] print:py-[2px]">
+                    {pesoSign}
                     {numberWithCommas(totalPhic.toFixed(2))}
                   </td>
                   <td className="w-[15rem] print:py-[2px]">
+                    {pesoSign}
                     {numberWithCommas(totalPag.toFixed(2))}
                   </td>
                   <td className="w-[15rem] print:py-[2px]">
+                    {pesoSign}
                     {numberWithCommas(totalSssLoan.toFixed(2))}
                   </td>
                   <td className="w-[15rem] print:py-[2px]">
+                    {pesoSign}
                     {numberWithCommas(totalPagLoan.toFixed(2))}
                   </td>
                   <td className="w-[15rem] print:py-[2px]">
+                    {pesoSign}
                     {numberWithCommas(totalMp2Loan.toFixed(2))}
                   </td>
                 </tr>

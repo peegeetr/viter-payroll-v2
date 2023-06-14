@@ -3,6 +3,7 @@ import HeaderPrint from "../../../../partials/HeaderPrint";
 import {
   getPayPeriod,
   numberWithCommas,
+  pesoSign,
 } from "../../../../helpers/functions-general";
 
 const WTaxBodyMonthly = ({ result, monthlyTax, month, year }) => {
@@ -71,7 +72,7 @@ const WTaxBodyMonthly = ({ result, monthlyTax, month, year }) => {
                 <div className="text-center pb-4 font-bold print:pt-4">
                   {month !== "" && (
                     <>
-                      <p className="m-0">Tax Summary</p>
+                      <p className="m-0 text-lg">Tax Summary</p>
                       <p className="m-0 text-primary font-bold">
                         {`${month} - ${year}`}
                       </p>
@@ -91,6 +92,7 @@ const WTaxBodyMonthly = ({ result, monthlyTax, month, year }) => {
                       <td>Total Amount of Compensation</td>
                       <td className="w-[8rem] text-right px-4"></td>
                       <td className=" text-right px-4">
+                        {pesoSign}
                         {/* {numberWithCommas(Number(item.gross).toFixed(2))} */}
                         {numberWithCommas(totalCompensation.toFixed(2))}
                       </td>
@@ -105,6 +107,7 @@ const WTaxBodyMonthly = ({ result, monthlyTax, month, year }) => {
                     <tr>
                       <td className="w-[15rem]">13th Month & Other Benefits</td>
                       <td className="w-[8rem] text-right px-4">
+                        {pesoSign}
                         {numberWithCommas(Number(totalBenefits).toFixed(2))}
                       </td>
                       <td className=" text-right px-4"></td>
@@ -112,6 +115,7 @@ const WTaxBodyMonthly = ({ result, monthlyTax, month, year }) => {
                     <tr>
                       <td className="w-[15rem]">De Minimis</td>
                       <td className="w-[8rem] text-right px-4">
+                        {pesoSign}
                         {numberWithCommas(Number(item.deminimis).toFixed(2))}
                       </td>
                       <td className=" text-right px-4"></td>
@@ -121,6 +125,7 @@ const WTaxBodyMonthly = ({ result, monthlyTax, month, year }) => {
                         Employee Share (SSS, PHIC, PGBG)
                       </td>
                       <td className="w-[8rem] text-right px-4">
+                        {pesoSign}
                         {numberWithCommas(Number(totalShareEe).toFixed(2))}
                       </td>
                       <td className=" text-right px-4"></td>
@@ -131,6 +136,7 @@ const WTaxBodyMonthly = ({ result, monthlyTax, month, year }) => {
                       </td>
                       <td className=" text-right px-4"></td>
                       <td className=" text-right px-4">
+                        {pesoSign}
                         {numberWithCommas(nonTax.toFixed(2))}
                       </td>
                     </tr>
@@ -138,6 +144,7 @@ const WTaxBodyMonthly = ({ result, monthlyTax, month, year }) => {
                       <td className="w-[15rem] ">Tax Withheld</td>
                       <td className=" text-right px-4"></td>
                       <td className=" text-right px-4">
+                        {pesoSign}
                         {numberWithCommas(tax.toFixed(2))}
                       </td>
                     </tr>

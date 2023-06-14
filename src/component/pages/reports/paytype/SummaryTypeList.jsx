@@ -13,6 +13,7 @@ import {
   getPayPeriod,
   getUserType,
   numberWithCommas,
+  pesoSign,
 } from "../../../helpers/functions-general";
 import { wagesEarningsId } from "../../../helpers/functions-payitemId";
 import { queryDataInfinite } from "../../../helpers/queryDataInfinite";
@@ -196,7 +197,7 @@ const SummaryTypeList = () => {
       <div className="text-center pb-4 font-bold print:pt-4">
         {startDate !== "" && (
           <>
-            <p className="m-0">Pay Run by Pay Item </p>
+            <p className="m-0 text-lg">Pay Run by Pay Item </p>
             <p className="m-0 text-primary font-bold">
               {getPayPeriod(startDate, endDate)}
             </p>
@@ -255,6 +256,7 @@ const SummaryTypeList = () => {
                               rel="noopener noreferrer"
                               to={`${link}/reports/paytype/basic-pay?payrollId=${item.payroll_id}`}
                             >
+                              {pesoSign}
                               {numberWithCommas(Number(item.amount).toFixed(2))}
                             </Link>
                           </td>
@@ -281,6 +283,7 @@ const SummaryTypeList = () => {
                                 : `${link}/reports/paytype/view?payrollId=${item.deduction_payroll_id}&payitemId=${item.payitem_aid}`
                             }
                           >
+                            {pesoSign}
                             {numberWithCommas(Number(item.amount).toFixed(2))}
                           </Link>
                         </td>
@@ -295,8 +298,8 @@ const SummaryTypeList = () => {
       </div>
       {isFilter && status !== "loading" && (
         <div className="text-right mt-2 pr-2 text-primary font-bold">
-          <span className="mr-8">Total :</span>{" "}
-          {numberWithCommas(total.toFixed(2))}
+          <span className="mr-8">Total :</span>
+          {pesoSign} {numberWithCommas(total.toFixed(2))}
         </div>
       )}
       <div className="text-center">

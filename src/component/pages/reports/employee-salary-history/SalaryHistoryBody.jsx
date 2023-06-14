@@ -4,6 +4,7 @@ import {
   formatDate,
   hrisDevApiUrl,
   numberWithCommas,
+  pesoSign,
 } from "../../../helpers/functions-general";
 import NoData from "../../../partials/NoData";
 import ServerError from "../../../partials/ServerError";
@@ -67,7 +68,8 @@ const SalaryHistoryBody = ({ item }) => {
                 <tr key={key}>
                   <td>{counter}.</td>
                   <td className="text-right pr-4">
-                    {`P ${numberWithCommas(
+                    {pesoSign}
+                    {` ${numberWithCommas(
                       Number(shItem.salary_history_salary_amount).toFixed(2)
                     )}`}
                   </td>
@@ -86,7 +88,8 @@ const SalaryHistoryBody = ({ item }) => {
                   <td colSpan={4}>
                     Current pay:
                     <span className="ml-5">
-                      {`P ${numberWithCommas(
+                      {pesoSign}
+                      {` ${numberWithCommas(
                         Number(employee?.data[0].employee_job_salary).toFixed(2)
                       )}`}
                     </span>

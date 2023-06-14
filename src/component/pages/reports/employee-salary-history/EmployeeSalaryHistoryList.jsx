@@ -8,12 +8,10 @@ import useQueryData from "../../../custom-hooks/useQueryData";
 import { InputSelect } from "../../../helpers/FormInputs";
 import { devApiUrl, hrisDevApiUrl } from "../../../helpers/functions-general";
 import { queryDataInfinite } from "../../../helpers/queryDataInfinite";
-import LoadmoreRq from "../../../partials/LoadmoreRq";
-import SalaryHistoryBody from "./SalaryHistoryBody";
-import SalaryHistoryHeader from "./SalaryHistoryHeader";
-import TableSpinner from "../../../partials/spinners/TableSpinner";
 import NoData from "../../../partials/NoData";
 import ServerError from "../../../partials/ServerError";
+import TableSpinner from "../../../partials/spinners/TableSpinner";
+import SalaryHistoryBody from "./SalaryHistoryBody";
 
 const EmployeeSalaryHistoryList = () => {
   const { store, dispatch } = React.useContext(StoreContext);

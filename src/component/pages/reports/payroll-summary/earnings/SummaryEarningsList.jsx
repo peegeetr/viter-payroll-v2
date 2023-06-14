@@ -14,6 +14,7 @@ import {
   getWorkingDays,
   hrisDevApiUrl,
   numberWithCommas,
+  pesoSign,
   showTips,
 } from "../../../../helpers/functions-general";
 import { queryDataInfinite } from "../../../../helpers/queryDataInfinite";
@@ -275,7 +276,7 @@ const SummaryEarningsList = () => {
                   Regular Work Hours
                 </th>
                 <th
-                  className="table-border  border-white border-whitemin-w-[6rem]"
+                  className="table-border border-white min-w-[7rem]"
                   rowSpan="2"
                 >
                   Rate
@@ -361,6 +362,7 @@ const SummaryEarningsList = () => {
                         className="!pr-6 tooltip-action-table "
                         data-tooltip={showTips(item)}
                       >
+                        {pesoSign}
                         {numberWithCommas(
                           (Number(item.payroll_list_basic_pay) * 2).toFixed(2)
                         )}
@@ -369,12 +371,14 @@ const SummaryEarningsList = () => {
                         className="text-right !pr-4 tooltip-action-table "
                         data-tooltip={showTips(item)}
                       >
+                        {pesoSign}
                         {numberWithCommas(item.payroll_list_adjustment_pay)}
                       </td>
                       <td
                         className="text-right !pr-4 tooltip-action-table "
                         data-tooltip={showTips(item)}
                       >
+                        {pesoSign}
                         {numberWithCommas(
                           (
                             Number(item.payroll_list_basic_pay) * 2 +
@@ -389,12 +393,14 @@ const SummaryEarningsList = () => {
                         className="text-right !pr-4 tooltip-action-table "
                         data-tooltip={showTips(item)}
                       >
+                        {pesoSign}
                         {getEmployeeRate(item)}
                       </td>
                       <td
                         className="text-right !pr-4 tooltip-action-table "
                         data-tooltip={showTips(item)}
                       >
+                        {pesoSign}
                         {getTotalRegWage(item)}
                       </td>
                       <td className="text-center">
@@ -409,6 +415,7 @@ const SummaryEarningsList = () => {
                         className="text-right !pr-4 tooltip-action-table "
                         data-tooltip={showTips(item)}
                       >
+                        {pesoSign}
                         {/* leave pay */}
                         {numberWithCommas(item.payroll_list_leave_pay)}
                       </td>
@@ -422,6 +429,7 @@ const SummaryEarningsList = () => {
                             data-tooltip="View Deatils"
                             onClick={() => handleOt(item)}
                           >
+                            {pesoSign}
                             {numberWithCommas(item.payroll_list_overtime_pay)}
                           </span>
                         </td>
@@ -430,6 +438,7 @@ const SummaryEarningsList = () => {
                           className="!pr-4 tooltip-action-table "
                           data-tooltip={showTips(item)}
                         >
+                          {pesoSign}
                           {numberWithCommas(item.payroll_list_overtime_pay)}
                         </td>
                       )}
@@ -443,6 +452,7 @@ const SummaryEarningsList = () => {
                             data-tooltip="View Deatils"
                             onClick={() => handleHoliday(item)}
                           >
+                            {pesoSign}
                             {numberWithCommas(item.payroll_list_holiday)}
                           </span>
                         </td>
@@ -451,6 +461,7 @@ const SummaryEarningsList = () => {
                           className="!pr-4 tooltip-action-table "
                           data-tooltip={showTips(item)}
                         >
+                          {pesoSign}
                           {numberWithCommas(item.payroll_list_holiday)}
                         </td>
                       )}
@@ -469,6 +480,7 @@ const SummaryEarningsList = () => {
                         className="!pr-4 tooltip-action-table"
                         data-tooltip={showTips(item)}
                       >
+                        {pesoSign}
                         {/* ND amount */}
                         {numberWithCommas(
                           item.payroll_list_night_shift_differential
@@ -478,6 +490,7 @@ const SummaryEarningsList = () => {
                         className="text-right !pr-4 tooltip-action-table "
                         data-tooltip={showTips(item)}
                       >
+                        {pesoSign}
                         {/* gross pay */}
                         {numberWithCommas(item.payroll_list_gross)}
                       </td>

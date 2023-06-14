@@ -12,6 +12,7 @@ import {
   getUserType,
   hrisDevApiUrl,
   numberWithCommas,
+  pesoSign,
   showTips,
 } from "../../../../helpers/functions-general";
 import { queryDataInfinite } from "../../../../helpers/queryDataInfinite";
@@ -175,97 +176,99 @@ const SummaryDeductionsList = () => {
           <table>
             <thead className="relative z-[9]">
               <tr className="border-none text-center sticky top-0">
-                <th className="text-center border-white" rowSpan="2">
+                <th className="text-center !border-white" rowSpan="2">
                   #
                 </th>
                 <th
-                  className="min-w-[18rem] table-border border-white"
+                  className="min-w-[18rem] table-border !border-white"
                   rowSpan="2"
                 >
                   Name
                 </th>
                 <th
-                  className="table-border min-w-[12rem] border-white"
+                  className="table-border min-w-[12rem] !border-white"
                   rowSpan="2"
                 >
                   Department
                 </th>
                 <th
-                  className="table-border min-w-[12rem] border-white"
+                  className="table-border min-w-[12rem] !border-white"
                   rowSpan="2"
                 >
                   Pay Date
                 </th>
                 <th
-                  className="table-border-center min-w-[8rem] border-white"
+                  className="table-border-center min-w-[8rem] !border-white"
                   colSpan="2"
                 >
                   SSS
                 </th>
                 <th
-                  className="table-border-center min-w-[8rem] border-white"
+                  className="table-border-center min-w-[8rem] !border-white"
                   colSpan="2"
                 >
                   Phil. Health
                 </th>
                 <th
-                  className="table-border-center min-w-[5rem] border-white"
+                  className="table-border-center min-w-[5rem] !border-white"
                   colSpan="2"
                 >
                   Pag-ibig
                 </th>
                 <th
-                  className="table-border-center min-w-[5rem] border-white"
+                  className="table-border-center min-w-[5rem] !border-white"
                   colSpan="2"
                 >
                   Loans
                 </th>
                 <th
-                  className="table-border min-w-[10rem] border-white"
+                  className="table-border min-w-[10rem] !border-white"
                   rowSpan="2"
                 >
                   With Holding TAX
                 </th>
                 <th
-                  className="table-border min-w-[6rem] border-white"
+                  className="table-border min-w-[8rem] !border-white"
                   rowSpan="2"
                 >
                   PGBG MP2
                 </th>
                 <th
-                  className="table-border min-w-[10rem] border-white"
+                  className="table-border min-w-[10rem] !border-white"
                   rowSpan="2"
                 >
                   Other Deductions
                 </th>
                 <th
-                  className="text-center table-border border-b-[1px] min-w-[5rem] border-white"
+                  className="text-center table-border min-w-[8rem] !border-white"
                   rowSpan="2"
                 >
                   Total EE
                 </th>
                 <th
-                  className=" table-border min-w-[10rem] border-white"
+                  className=" table-border min-w-[10rem] !border-white"
                   rowSpan="2"
                 >
                   Total Deductions
                 </th>
                 <th
-                  className="min-w-[7rem] table-border border-white"
+                  className="min-w-[9rem] table-border !border-white"
                   rowSpan="2"
                 >
                   Net Pay
                 </th>
               </tr>
               <tr className="text-center sticky top-[35px]">
-                <th className="table-border border-white">ER</th>
-                <th className="table-border border-white">EE</th>
-                <th className="table-border border-white">ER</th>
-                <th className="table-border border-white">EE</th>
-                <th className="table-border border-white">ER</th>
-                <th className="table-border border-white">EE</th>
-                <th className="table-border border-white">SSS</th>
-                <th className="table-border border-white">PGBG</th>
+                <th className="table-border min-w-[7rem] !border-white">ER</th>
+                <th className="table-border min-w-[7rem] !border-white">EE</th>
+                <th className="table-border min-w-[7rem] !border-white">ER</th>
+                <th className="table-border min-w-[7rem] !border-white">EE</th>
+                <th className="table-border min-w-[7rem] !border-white">ER</th>
+                <th className="table-border min-w-[7rem] !border-white">EE</th>
+                <th className="table-border min-w-[7rem] !border-white">SSS</th>
+                <th className="table-border min-w-[7rem] !border-white">
+                  PGBG
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -308,66 +311,77 @@ const SummaryDeductionsList = () => {
                           className="!px-6 tooltip-action-table "
                           data-tooltip={showTips(item)}
                         >
+                          {pesoSign}
                           {numberWithCommas(item.payroll_list_sss_er)}
                         </td>
                         <td
                           className="!px-6 tooltip-action-table "
                           data-tooltip={showTips(item)}
                         >
+                          {pesoSign}
                           {numberWithCommas(item.payroll_list_sss_ee)}
                         </td>
                         <td
                           className="!px-6 tooltip-action-table "
                           data-tooltip={showTips(item)}
                         >
+                          {pesoSign}
                           {numberWithCommas(item.payroll_list_philhealth_er)}
                         </td>
                         <td
                           className="!px-6 tooltip-action-table "
                           data-tooltip={showTips(item)}
                         >
+                          {pesoSign}
                           {numberWithCommas(item.payroll_list_philhealth_ee)}
                         </td>
                         <td
                           className="!px-6 tooltip-action-table "
                           data-tooltip={showTips(item)}
                         >
+                          {pesoSign}
                           {numberWithCommas(item.payroll_list_pagibig_er)}
                         </td>
                         <td
                           className="!px-6 tooltip-action-table "
                           data-tooltip={showTips(item)}
                         >
+                          {pesoSign}
                           {numberWithCommas(item.payroll_list_pagibig_ee)}
                         </td>
                         <td
                           className="!px-6 tooltip-action-table "
                           data-tooltip={showTips(item)}
                         >
+                          {pesoSign}
                           {numberWithCommas(item.payroll_list_sss_loan)}
                         </td>
                         <td
                           className="!px-6 tooltip-action-table "
                           data-tooltip={showTips(item)}
                         >
+                          {pesoSign}
                           {numberWithCommas(item.payroll_list_pagibig_loan)}
                         </td>
                         <td
                           className="!px-6 tooltip-action-table "
                           data-tooltip={showTips(item)}
                         >
+                          {pesoSign}
                           {numberWithCommas(item.payroll_list_tax)}
                         </td>
                         <td
                           className="!px-6 tooltip-action-table "
                           data-tooltip={showTips(item)}
                         >
+                          {pesoSign}
                           {numberWithCommas(item.payroll_list_pagibig_mp2)}
                         </td>
                         <td
                           className="!px-6 tooltip-action-table "
                           data-tooltip={showTips(item)}
                         >
+                          {pesoSign}
                           {/* other deductions */}
                           {numberWithCommas(item.payroll_list_other_deduction)}
                         </td>
@@ -375,6 +389,7 @@ const SummaryDeductionsList = () => {
                           className="!px-6 tooltip-action-table "
                           data-tooltip={showTips(item)}
                         >
+                          {pesoSign}
                           {/* total ee */}
                           {numberWithCommas(totalEe.toFixed(2))}
                         </td>
@@ -382,6 +397,7 @@ const SummaryDeductionsList = () => {
                           className="!px-6 tooltip-action-table "
                           data-tooltip={showTips(item)}
                         >
+                          {pesoSign}
                           {/* total deduction */}
                           {numberWithCommas(item.payroll_list_deduction)}
                         </td>
@@ -389,6 +405,7 @@ const SummaryDeductionsList = () => {
                           className="!px-6 tooltip-action-table "
                           data-tooltip={showTips(item)}
                         >
+                          {pesoSign}
                           {/* net pay */}
                           {numberWithCommas(item.payroll_list_net_pay)}
                         </td>

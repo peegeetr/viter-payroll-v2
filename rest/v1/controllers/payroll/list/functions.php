@@ -128,6 +128,7 @@ function checkReadReportSummaryLimit($object, $salaryCategoryId)
     return $query;
 }
 
+
 // filter by employee id and date
 function checkReadSummaryBenefitsByEmpId($object)
 {
@@ -367,5 +368,13 @@ function checkReadReportSummaryWtax($object)
 {
     $query = $object->readReportSummaryWtax();
     checkQuery($query, "Empty records. (report filter summary w-tax)");
+    return $query;
+}
+
+// filter by date in payroll list
+function checkReadReportBankTemplate($object)
+{
+    $query = $object->readReportBankTemplate();
+    checkQuery($query, "Empty records. (read report bank template)");
     return $query;
 }

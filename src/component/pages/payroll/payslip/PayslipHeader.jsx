@@ -13,7 +13,7 @@ import HeaderPrint from "../../../partials/HeaderPrint";
 
 const PayslipHeader = ({ payslip, empid, days }) => {
   // use if not loadmore button undertime
-  const { data: job } = useQueryData(
+  const { data: job, isLoading } = useQueryData(
     `${hrisDevApiUrl}/v1/employees/job/${empid}`, // endpoint
     "get", // method
     "job", // key
@@ -57,7 +57,11 @@ const PayslipHeader = ({ payslip, empid, days }) => {
           )}
           <p className="mb-0">
             <span className="font-semibold">Position : </span>{" "}
-            {job?.data.length > 0 ? job?.data[0].job_title_name : "N/A"}
+            {isLoading
+              ? "Loading"
+              : job?.data.length > 0
+              ? job?.data[0].job_title_name
+              : "N/A"}
           </p>
           {Number(payslip?.data[0].payroll_category_type) ===
             payrollCategorySalaryId && (

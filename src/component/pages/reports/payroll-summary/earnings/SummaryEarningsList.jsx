@@ -264,7 +264,7 @@ const SummaryEarningsList = () => {
                   Additional pay
                 </th>
                 <th
-                  className="table-border border-white min-w-[6rem]"
+                  className="table-border border-white min-w-[10rem]"
                   rowSpan="2"
                 >
                   Total Pay
@@ -276,7 +276,7 @@ const SummaryEarningsList = () => {
                   Regular Work Hours
                 </th>
                 <th
-                  className="table-border border-white min-w-[7rem]"
+                  className="table-border border-white min-w-[8rem]"
                   rowSpan="2"
                 >
                   Rate
@@ -301,15 +301,17 @@ const SummaryEarningsList = () => {
                 >
                   Night Differential
                 </th>
-                <th className="min-w-[7rem] border-white" rowSpan="2">
+                <th className="min-w-[9rem] border-white" rowSpan="2">
                   Gross Pay
                 </th>
               </tr>
               <tr className="text-center sticky top-[35px] ">
                 <th className="table-border border-white">Hrs</th>
                 <th className="table-border border-white">Rate</th>
-                <th className="table-border border-white">Amount</th>
-                <th className="table-border min-w-[8rem] border-white">
+                <th className="table-border border-white min-w-[8rem]">
+                  Amount
+                </th>
+                <th className="table-border min-w-[8rem] border-white ">
                   Total Amount
                 </th>
                 <th className="table-border min-w-[8rem] border-white">
@@ -317,7 +319,9 @@ const SummaryEarningsList = () => {
                 </th>
                 <th className="table-border border-white">Hrs</th>
                 <th className="table-border border-white">Rate</th>
-                <th className="table-border border-white">Amount</th>
+                <th className="table-border border-white min-w-[8rem]">
+                  Amount
+                </th>
               </tr>
             </thead>
 

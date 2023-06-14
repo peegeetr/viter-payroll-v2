@@ -240,7 +240,7 @@ const SummaryDeductionsList = () => {
                   Other Deductions
                 </th>
                 <th
-                  className="text-center table-border min-w-[8rem] !border-white"
+                  className="text-center table-border min-w-[10rem] !border-white"
                   rowSpan="2"
                 >
                   Total EE
@@ -259,14 +259,16 @@ const SummaryDeductionsList = () => {
                 </th>
               </tr>
               <tr className="text-center sticky top-[35px]">
-                <th className="table-border min-w-[7rem] !border-white">ER</th>
-                <th className="table-border min-w-[7rem] !border-white">EE</th>
-                <th className="table-border min-w-[7rem] !border-white">ER</th>
-                <th className="table-border min-w-[7rem] !border-white">EE</th>
-                <th className="table-border min-w-[7rem] !border-white">ER</th>
-                <th className="table-border min-w-[7rem] !border-white">EE</th>
-                <th className="table-border min-w-[7rem] !border-white">SSS</th>
-                <th className="table-border min-w-[7rem] !border-white">
+                <th className="table-border min-w-[10rem] !border-white">ER</th>
+                <th className="table-border min-w-[10rem] !border-white">EE</th>
+                <th className="table-border min-w-[10rem] !border-white">ER</th>
+                <th className="table-border min-w-[10rem] !border-white">EE</th>
+                <th className="table-border min-w-[10rem] !border-white">ER</th>
+                <th className="table-border min-w-[10rem] !border-white">EE</th>
+                <th className="table-border min-w-[10rem] !border-white">
+                  SSS
+                </th>
+                <th className="table-border min-w-[10rem] !border-white">
                   PGBG
                 </th>
               </tr>
@@ -308,77 +310,77 @@ const SummaryDeductionsList = () => {
                           item.payroll_end_date
                         )}`}</td>
                         <td
-                          className="!px-6 tooltip-action-table "
+                          className="!pr-6 tooltip-action-table "
                           data-tooltip={showTips(item)}
                         >
                           {pesoSign}
                           {numberWithCommas(item.payroll_list_sss_er)}
                         </td>
                         <td
-                          className="!px-6 tooltip-action-table "
+                          className="!pr-6 tooltip-action-table "
                           data-tooltip={showTips(item)}
                         >
                           {pesoSign}
                           {numberWithCommas(item.payroll_list_sss_ee)}
                         </td>
                         <td
-                          className="!px-6 tooltip-action-table "
+                          className="!pr-6 tooltip-action-table "
                           data-tooltip={showTips(item)}
                         >
                           {pesoSign}
                           {numberWithCommas(item.payroll_list_philhealth_er)}
                         </td>
                         <td
-                          className="!px-6 tooltip-action-table "
+                          className="!pr-6 tooltip-action-table "
                           data-tooltip={showTips(item)}
                         >
                           {pesoSign}
                           {numberWithCommas(item.payroll_list_philhealth_ee)}
                         </td>
                         <td
-                          className="!px-6 tooltip-action-table "
+                          className="!pr-6 tooltip-action-table "
                           data-tooltip={showTips(item)}
                         >
                           {pesoSign}
                           {numberWithCommas(item.payroll_list_pagibig_er)}
                         </td>
                         <td
-                          className="!px-6 tooltip-action-table "
+                          className="!pr-6 tooltip-action-table "
                           data-tooltip={showTips(item)}
                         >
                           {pesoSign}
                           {numberWithCommas(item.payroll_list_pagibig_ee)}
                         </td>
                         <td
-                          className="!px-6 tooltip-action-table "
+                          className="!pr-6 tooltip-action-table "
                           data-tooltip={showTips(item)}
                         >
                           {pesoSign}
                           {numberWithCommas(item.payroll_list_sss_loan)}
                         </td>
                         <td
-                          className="!px-6 tooltip-action-table "
+                          className="!pr-6 tooltip-action-table "
                           data-tooltip={showTips(item)}
                         >
                           {pesoSign}
                           {numberWithCommas(item.payroll_list_pagibig_loan)}
                         </td>
                         <td
-                          className="!px-6 tooltip-action-table "
+                          className="!pr-6 tooltip-action-table "
                           data-tooltip={showTips(item)}
                         >
                           {pesoSign}
                           {numberWithCommas(item.payroll_list_tax)}
                         </td>
                         <td
-                          className="!px-6 tooltip-action-table "
+                          className="!pr-6 tooltip-action-table "
                           data-tooltip={showTips(item)}
                         >
                           {pesoSign}
                           {numberWithCommas(item.payroll_list_pagibig_mp2)}
                         </td>
                         <td
-                          className="!px-6 tooltip-action-table "
+                          className="!pr-6 tooltip-action-table "
                           data-tooltip={showTips(item)}
                         >
                           {pesoSign}
@@ -386,7 +388,7 @@ const SummaryDeductionsList = () => {
                           {numberWithCommas(item.payroll_list_other_deduction)}
                         </td>
                         <td
-                          className="!px-6 tooltip-action-table "
+                          className="!pr-6 tooltip-action-table "
                           data-tooltip={showTips(item)}
                         >
                           {pesoSign}
@@ -394,7 +396,7 @@ const SummaryDeductionsList = () => {
                           {numberWithCommas(totalEe.toFixed(2))}
                         </td>
                         <td
-                          className="!px-6 tooltip-action-table "
+                          className="!pr-6 tooltip-action-table "
                           data-tooltip={showTips(item)}
                         >
                           {pesoSign}
@@ -402,7 +404,7 @@ const SummaryDeductionsList = () => {
                           {numberWithCommas(item.payroll_list_deduction)}
                         </td>
                         <td
-                          className="!px-6 tooltip-action-table "
+                          className="!pr-6 tooltip-action-table "
                           data-tooltip={showTips(item)}
                         >
                           {pesoSign}

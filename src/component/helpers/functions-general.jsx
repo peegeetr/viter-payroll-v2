@@ -53,7 +53,7 @@ export const devBaseUrl = `${urlPayroll}`;
 // export const devNavUrl = "/v2";
 
 export const baseUrl = "/";
-export const isDemoMode = "0";
+export const isDemoMode = "1";
 export const UrlAdmin = "";
 export const UrlSystem = "system";
 export const is_developer = "is_developer";

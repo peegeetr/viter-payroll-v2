@@ -10,6 +10,7 @@ import {
   devApiUrl,
   getPayPeriod,
   getUserType,
+  numberWithCommas,
   pesoSign,
 } from "../../../helpers/functions-general";
 import { queryDataInfinite } from "../../../helpers/queryDataInfinite";
@@ -170,15 +171,14 @@ const BankTemplateList = ({ setShow, setDataExport, setExportDate }) => {
                   </td>
                 </tr>
               )}
-              {status === "loading" ||
-                (result?.pages[0].data.length === 0 && (
-                  <tr className="text-center relative ">
-                    <td colSpan="100%" className="p-10">
-                      {status === "loading" && <TableSpinner />}
-                      <NoData text="Filter data using above controls." />
-                    </td>
-                  </tr>
-                ))}
+              {(status === "loading" || result?.pages[0].data.length === 0) && (
+                <tr className="text-center relative ">
+                  <td colSpan="100%" className="p-10">
+                    {status === "loading" && <TableSpinner />}
+                    <NoData text="Filter data using above controls." />
+                  </td>
+                </tr>
+              )}
               {result?.pages.map((page, key) => (
                 <React.Fragment key={key}>
                   {page.data.map((item, key) => {
@@ -194,7 +194,7 @@ const BankTemplateList = ({ setShow, setDataExport, setExportDate }) => {
 
                         <td className="text-right print:py-[2px]">
                           {pesoSign}
-                          {item.payroll_list_net_pay}
+                          {numberWithCommas(item.payroll_list_net_pay)}
                         </td>
                       </tr>
                     );

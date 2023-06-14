@@ -145,7 +145,7 @@ const SummaryEarningsList = () => {
           new Date(item.payroll_end_date)
         )
       ).hourly
-    ).toFixed(4);
+    ).toFixed(2);
   };
 
   return (
@@ -264,7 +264,7 @@ const SummaryEarningsList = () => {
                   Additional pay
                 </th>
                 <th
-                  className="table-border border-white min-w-[6rem]"
+                  className="table-border border-white min-w-[8rem]"
                   rowSpan="2"
                 >
                   Total Pay
@@ -394,7 +394,7 @@ const SummaryEarningsList = () => {
                         data-tooltip={showTips(item)}
                       >
                         {pesoSign}
-                        {getEmployeeRate(item)}
+                        {numberWithCommas(getEmployeeRate(item))}
                       </td>
                       <td
                         className="text-right !pr-4 tooltip-action-table "

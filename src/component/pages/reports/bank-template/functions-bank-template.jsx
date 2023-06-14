@@ -11,10 +11,13 @@ export const handleExportLeave = (dataExport, exportDate) => {
     window.URL.revokeObjectURL(url);
   };
 
-  let str =
-    "ACCOUNT NO., LAST NAME, FIRST NAME, MIDDLE NAME, START DATE, RETURN DATE, NETPAY";
+  let totalNet = 0;
+  let totalEmployee = 0;
+  let str = "ACCOUNT NO., LAST NAME, FIRST NAME, MIDDLE NAME, NETPAY";
   console.log(dataExport);
   dataExport?.map((item, i, row) => {
+    totalNet += Number(item.netPay);
+    totalEmployee++;
     str +=
       "\n" +
       item.employee_job_number
@@ -27,12 +30,10 @@ export const handleExportLeave = (dataExport, exportDate) => {
       "," +
       ` ${item.employee_mname.replace(/,/g, " ")}` +
       "," +
-      formatDate(item.start_date).replace(/,/g, " ") +
-      "," +
-      formatDate(item.end_date).replace(/,/g, " ") +
-      "," +
       item.netPay.replace(/,/g, " ").replace(/(\r\n|\n|\r)/g, " ");
   });
+  str += "\n\n\n , , , TOTAL NETPAY" + "," + totalNet.toFixed(4);
+  str += "\n, , , TOTAL EMPLOYEE" + "," + totalEmployee.toFixed(4);
 
   const data = str;
   const fileName = `${exportDate}`;

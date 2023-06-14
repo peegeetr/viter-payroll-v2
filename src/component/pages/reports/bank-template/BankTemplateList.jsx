@@ -70,7 +70,7 @@ const BankTemplateList = ({
     cacheTime: 200,
   });
 
-  let exportDate = `PBTR ${getPayPeriod(startDate, endDate)}`;
+  let exportDate = `Bank-Tempalte-${getPayPeriod(startDate, endDate)}`;
 
   React.useEffect(() => {
     setDataExport(result?.pages[0].data);

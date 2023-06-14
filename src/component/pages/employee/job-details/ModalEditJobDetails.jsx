@@ -18,6 +18,7 @@ import {
 import { hrisDevApiUrl } from "../../../helpers/functions-general";
 import { queryData } from "../../../helpers/queryData";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
+import { getNightDiffTime } from "./functions-job";
 
 const ModalEditJobDetails = ({
   itemEdit,
@@ -75,6 +76,7 @@ const ModalEditJobDetails = ({
     employee_job_leave_type_id: itemEdit.employee_job_leave_type_id,
     employee_job_comments: itemEdit.employee_job_comments,
     employee_job_nd_per_day: itemEdit.employee_job_nd_per_day,
+    employee_job_work_from_home: itemEdit.employee_job_work_from_home,
 
     employee_job_email_old: itemEdit.employee_job_email,
   };
@@ -99,15 +101,11 @@ const ModalEditJobDetails = ({
 
   const handleGetNightDiff = (e) => {
     let startTime = e.target.value;
-    if (startTime !== "0" || startTime !== "1") {
+    if (startTime !== "ft") {
+      setNightDiff(getNightDiffTime(startTime));
+    }
+    if (startTime === "ft") {
       setNightDiff("0");
-    }
-    if (startTime === "0") {
-      // console.log("startTime", startTime);
-      setNightDiff("5");
-    }
-    if (startTime === "1") {
-      setNightDiff("4");
     }
   };
 
@@ -254,6 +252,25 @@ const ModalEditJobDetails = ({
                           </optgroup>
                         </InputSelect>
                       </div>
+                      {/* work from home */}
+                      <div
+                        className={
+                          itemEdit ? "relative mb-5 " : "relative mb-5 label"
+                        }
+                      >
+                        <InputSelect
+                          name="employee_job_work_from_home"
+                          disabled={mutation.isLoading}
+                          label="Work From Home Day"
+                        >
+                          <optgroup label="Work start time">
+                            <option value="" hidden></option>
+                            <option value="2">Tuesday</option>
+                            <option value="3">Wenesday</option>
+                            <option value="4">Thursday</option>
+                          </optgroup>
+                        </InputSelect>
+                      </div>
                       {/* work start time */}
                       <div
                         className={
@@ -272,10 +289,12 @@ const ModalEditJobDetails = ({
                             <option value="9">9 AM</option>
                             <option value="0">12 AM</option>
                             <option value="1">1 AM</option>
+                            <option value="22">10 PM</option>
                             <option value="ft">Flexitime</option>
                           </optgroup>
                         </InputSelect>
                       </div>
+
                       {/* work email */}
                       <div className="relative mb-5">
                         <InputText

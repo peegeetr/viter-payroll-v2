@@ -17,6 +17,7 @@ import NoData from "../../../partials/NoData";
 import ServerError from "../../../partials/ServerError";
 import TableSpinner from "../../../partials/spinners/TableSpinner";
 import ModalEditJobDetails from "./ModalEditJobDetails";
+import { getWorkFromHome, getWorkTime } from "./functions-job";
 
 const JobDetailsList = ({
   isLoading,
@@ -134,17 +135,16 @@ const JobDetailsList = ({
                     ? "n/a"
                     : item.employee_job_supervisor_name}
                 </p>
+
+                <p className="font-semibold">Work From Home Day :</p>
+                <p className="pl-2">
+                  {getWorkFromHome(item.employee_job_work_from_home)}
+                </p>
                 <p className="font-semibold">Work Start Time :</p>
                 <p className="pl-2">
                   {item.employee_job_start_time === "ft"
                     ? "Flexitime"
-                    : item.employee_job_start_time === ""
-                    ? ""
-                    : `${
-                        item.employee_job_start_time === "0"
-                          ? 12
-                          : item.employee_job_start_time
-                      } AM`}
+                    : getWorkTime(item.employee_job_start_time)}
                 </p>
                 <p className="font-semibold">Work Email :</p>
                 <p className="pl-2 break-all">{item.employee_job_email}</p>

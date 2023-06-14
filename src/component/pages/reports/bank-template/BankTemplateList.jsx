@@ -5,33 +5,22 @@ import { MdFilterAlt } from "react-icons/md";
 import { useInView } from "react-intersection-observer";
 import * as Yup from "yup";
 import { StoreContext } from "../../../../store/StoreContext";
-import useQueryData from "../../../custom-hooks/useQueryData";
-import { InputSelect, InputText } from "../../../helpers/FormInputs";
+import { InputText } from "../../../helpers/FormInputs";
 import {
   devApiUrl,
-  formatDate,
   getPayPeriod,
   getUserType,
-  hrisDevApiUrl,
-  numberWithCommas,
   pesoSign,
 } from "../../../helpers/functions-general";
 import { queryDataInfinite } from "../../../helpers/queryDataInfinite";
+import HeaderPrint from "../../../partials/HeaderPrint";
 import LoadmoreRq from "../../../partials/LoadmoreRq";
 import NoData from "../../../partials/NoData";
 import ServerError from "../../../partials/ServerError";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 import TableSpinner from "../../../partials/spinners/TableSpinner";
-import HeaderPrint from "../../../partials/HeaderPrint";
-import { getBankTemplateList, getNetAmount } from "./functions-bank-template";
 
-const BankTemplateList = ({
-  employee,
-  loadingEmployee,
-  setShow,
-  setDataExport,
-  setExportDate,
-}) => {
+const BankTemplateList = ({ setShow, setDataExport, setExportDate }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const link = getUserType(store.credentials.data.role_is_developer === 1);
   const [isFilter, setFilter] = React.useState(false);
@@ -90,7 +79,7 @@ const BankTemplateList = ({
     start_date: Yup.string().required("Required"),
     end_date: Yup.string().required("Required"),
   });
-  console.log("list", getBankTemplateList(employee, result?.pages[0].data));
+
   return (
     <>
       <div className="relative overflow-x-auto z-0 w-full print:hidden">
@@ -111,7 +100,7 @@ const BankTemplateList = ({
                 <div className="grid gap-5 grid-cols-1 md:grid-cols-[1fr_1fr_150px] pt-5 pb-4 items-center">
                   <div className="relative">
                     <InputText
-                      label="Start Pay Date"
+                      label="Start Date"
                       name="start_date"
                       type="text"
                       disabled={isFetching}
@@ -122,7 +111,7 @@ const BankTemplateList = ({
 
                   <div className="relative">
                     <InputText
-                      label="End Pay Date"
+                      label="End Date"
                       name="end_date"
                       type="text"
                       disabled={isFetching}
@@ -165,20 +154,12 @@ const BankTemplateList = ({
           <table>
             <thead>
               <tr>
-                <th className="">#</th>
-                <th className="!w-[10rem] min-w-[8rem] print:py-[2px]">
-                  Account no.
+                <th>#</th>
+                <th className="min-w-[8rem] print:py-[2px]">Account no.</th>
+                <th className="min-w-[12rem] print:py-[2px]">Employee Name</th>
+                <th className="min-w-[8rem] text-right print:py-[2px]">
+                  Amount
                 </th>
-                <th className="!w-[10rem] min-w-[12rem] print:py-[2px]">
-                  Last Name
-                </th>
-                <th className="!w-[10rem] min-w-[12rem] print:py-[2px]">
-                  First Name
-                </th>
-                <th className="!w-[10rem] min-w-[10rem] print:py-[2px]">
-                  Middle Name
-                </th>
-                <th className="text-right print:py-[2px]">Amount</th>
               </tr>
             </thead>
             <tbody>
@@ -189,33 +170,37 @@ const BankTemplateList = ({
                   </td>
                 </tr>
               )}
-              {(status === "loading" && loadingEmployee) ||
-              (result?.pages[0].data.length === 0 && employee?.data.length) ? (
-                <tr className="text-center relative ">
-                  <td colSpan="100%" className="p-10">
-                    {status === "loading" && <TableSpinner />}
-                    <NoData text="Filter data using above controls." />
-                  </td>
-                </tr>
-              ) : (
-                employee?.data.map((item, key) => {
-                  return (
-                    <tr key={key}>
-                      <td className="print:py-[2px]">{counter++}.</td>
-                      <td className="print:py-[2px]">
-                        {item.employee_job_number}
-                      </td>
-                      <td className="print:py-[2px]">{item.employee_lname}</td>
-                      <td className="print:py-[2px]">{item.employee_fname}</td>
-                      <td className="print:py-[2px]">{item.employee_mname}</td>
-                      <td className="text-right print:py-[2px]">
-                        {pesoSign}
-                        {numberWithCommas(getNetAmount(item, result?.pages[0]))}
-                      </td>
-                    </tr>
-                  );
-                })
-              )}
+              {status === "loading" ||
+                (result?.pages[0].data.length === 0 && (
+                  <tr className="text-center relative ">
+                    <td colSpan="100%" className="p-10">
+                      {status === "loading" && <TableSpinner />}
+                      <NoData text="Filter data using above controls." />
+                    </td>
+                  </tr>
+                ))}
+              {result?.pages.map((page, key) => (
+                <React.Fragment key={key}>
+                  {page.data.map((item, key) => {
+                    return (
+                      <tr key={key}>
+                        <td className="print:py-[2px]">{counter++}.</td>
+                        <td className="print:py-[2px]">
+                          {item.payroll_list_employee_account_number}
+                        </td>
+                        <td className="print:py-[2px]">
+                          {item.payroll_list_employee_name}
+                        </td>
+
+                        <td className="text-right print:py-[2px]">
+                          {pesoSign}
+                          {item.payroll_list_net_pay}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </React.Fragment>
+              ))}
             </tbody>
           </table>
         </div>

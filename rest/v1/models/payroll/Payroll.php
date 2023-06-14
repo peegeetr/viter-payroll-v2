@@ -25,6 +25,7 @@ class Payroll
     public $payroll_list_deduc_employee_sss;
     public $payroll_list_deduc_employee_pgbg;
     public $payroll_list_deduc_employee_philhealth;
+    public $payroll_list_employee_account_number;
 
     public $connection;
     public $lastInsertedId;
@@ -107,6 +108,7 @@ class Payroll
             $sql .= "payroll_list_deduc_employee_sss, ";
             $sql .= "payroll_list_deduc_employee_pgbg, ";
             $sql .= "payroll_list_deduc_employee_philhealth, ";
+            $sql .= "payroll_list_employee_account_number, ";
             $sql .= "payroll_list_created, ";
             $sql .= "payroll_list_datetime ) values ( ";
             $sql .= ":payroll_list_payroll_id, ";
@@ -123,6 +125,7 @@ class Payroll
             $sql .= ":payroll_list_deduc_employee_sss, ";
             $sql .= ":payroll_list_deduc_employee_pgbg, ";
             $sql .= ":payroll_list_deduc_employee_philhealth, ";
+            $sql .= ":payroll_list_employee_account_number, ";
             $sql .= ":payroll_list_created, ";
             $sql .= ":payroll_list_datetime ) ";
             $query = $this->connection->prepare($sql);
@@ -141,6 +144,7 @@ class Payroll
                 "payroll_list_deduc_employee_sss" => $this->payroll_list_deduc_employee_sss,
                 "payroll_list_deduc_employee_pgbg" => $this->payroll_list_deduc_employee_pgbg,
                 "payroll_list_deduc_employee_philhealth" => $this->payroll_list_deduc_employee_philhealth,
+                "payroll_list_employee_account_number" => $this->payroll_list_employee_account_number,
                 "payroll_list_created" => $this->payroll_created,
                 "payroll_list_datetime" => $this->payroll_datetime,
             ]);

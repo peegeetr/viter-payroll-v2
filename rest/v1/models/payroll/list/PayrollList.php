@@ -1788,6 +1788,7 @@ class PayrollList
         try {
             $sql = "select payrollList.payroll_list_aid, ";
             $sql .= "payrollList.payroll_list_payroll_id, ";
+            $sql .= "payrollList.payroll_list_employee_account_number, ";
             $sql .= "payrollList.payroll_list_net_pay, ";
             $sql .= "payrollList.payroll_list_employee_name, ";
             $sql .= "payrollList.payroll_list_employee_id, ";

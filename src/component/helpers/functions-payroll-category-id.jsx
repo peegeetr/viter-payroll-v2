@@ -1,10 +1,6 @@
 // payroll category aid
 
-<<<<<<< HEAD
-// // online dev
-=======
 // online dev
->>>>>>> bfcf436cf89ae56e9335d7308d0d2afc9545476e
 export const payrollCategorySalaryId = 7; // salary category id
 export const payrollCategory13thMonthId = 8; // 13th month category id
 export const payrollCategoryBonusId = 9; // bonus category id

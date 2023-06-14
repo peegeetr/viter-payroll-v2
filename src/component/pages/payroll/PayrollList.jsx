@@ -142,7 +142,7 @@ const PayrollList = ({ setItemEdit }) => {
                 <th className="min-w-[8rem] text-center"># of Employee</th>
                 <th className="min-w-[8rem] text-right">Total Amount</th>
                 <th className="min-w-[5rem] text-center">Status</th>
-                <th className="min-w-[10rem]">Actions</th>
+                <th className="!w-[5rem]">Actions</th>
               </tr>
             </thead>
             <tbody>

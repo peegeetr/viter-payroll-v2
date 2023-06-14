@@ -21,6 +21,6 @@
     - 
     
 Patrick
-    - 
+    - both uploaded to prod and dev
 
  

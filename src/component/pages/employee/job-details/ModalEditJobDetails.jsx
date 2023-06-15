@@ -263,7 +263,7 @@ const ModalEditJobDetails = ({
                           disabled={mutation.isLoading}
                           label="Work From Home Day"
                         >
-                          <optgroup label="Work start time">
+                          <optgroup label="Work From Home Day">
                             <option value="" hidden></option>
                             <option value="7">N/A</option>
                             <option value="2">Tuesday</option>
@@ -285,7 +285,9 @@ const ModalEditJobDetails = ({
                           label="Work start time"
                         >
                           <optgroup label="Work start time">
-                            <option value="" hidden></option>
+                            <option value="" hidden>
+                              --
+                            </option>
                             <option value="7">7 AM</option>
                             <option value="9">9 AM</option>
                             <option value="0">12 AM</option>

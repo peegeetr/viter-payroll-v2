@@ -265,6 +265,7 @@ const ModalEditJobDetails = ({
                         >
                           <optgroup label="Work start time">
                             <option value="" hidden></option>
+                            <option value="7">N/A</option>
                             <option value="2">Tuesday</option>
                             <option value="3">Wenesday</option>
                             <option value="4">Thursday</option>

@@ -55,5 +55,6 @@ export const getWorkFromHome = (day) => {
     "Friday",
     "Saturday",
   ];
+  if (days[d] === undefined) return "N/A";
   return `${days[d]} `;
 };

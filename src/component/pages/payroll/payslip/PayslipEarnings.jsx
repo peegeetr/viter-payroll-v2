@@ -105,6 +105,7 @@ const PayslipEarnings = ({
             )}
           {earnings?.data.map((item, key) => {
             totalAmount += Number(item.earnings_amount);
+            console.log(item.earnings_rate);
             return (
               <tr key={key} className="hover:bg-transparent">
                 <td className="w-[20rem] print:py-[2px]">
@@ -137,7 +138,12 @@ const PayslipEarnings = ({
                   {(overtimeId === item.earnings_payitem_id ||
                     nightDiffId === item.earnings_payitem_id ||
                     undertimeId === item.earnings_payitem_id) &&
-                    `${hourRate.toFixed(4)} / Hr`}
+                    (Number(item.earnings_rate) === 110
+                      ? `${hourRate.toFixed(4)} / Hr`
+                      : `${(
+                          Number(item.earnings_amount) /
+                          Number(item.earnings_hrs)
+                        ).toFixed(4)} / Hr`)}
                   {/* {holidayId !== item.earnings_payitem_id &&
                     absencesId !== item.earnings_payitem_id &&
                     leaveId !== item.earnings_payitem_id &&

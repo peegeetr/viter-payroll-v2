@@ -4,13 +4,15 @@ import React from "react";
 import { FaQuestionCircle } from "react-icons/fa";
 import { StoreContext } from "../../../../store/StoreContext";
 import { queryData } from "../../../helpers/queryData";
-import { devApiUrl } from "../../../helpers/functions-general";
+import { devApiUrl, hrisDevApiUrl } from "../../../helpers/functions-general";
 import {
   setIsAdd,
   setMessage,
   setSuccess,
 } from "../../../../store/StoreAction";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
+import useQueryData from "../../../custom-hooks/useQueryData";
+import { getNewEmployeList } from "../FunctionPayroll";
 
 const ModalPayslipEmailAll = ({ payrollList }) => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -38,12 +40,23 @@ const ModalPayslipEmailAll = ({ payrollList }) => {
     dispatch(setIsAdd(false));
   };
 
+  // use if not loadmore button undertime
+  const { data: employeeRole } = useQueryData(
+    `${hrisDevApiUrl}/v1/user-others`, // endpoint
+    "get", // method
+    "hrisEmployeeRole", // key
+    {}, // formdata
+    null, // id key
+    false // devKey boolean
+  );
+
   const handleYes = async () => {
+    const payrollEmailList = getNewEmployeList(payrollList, employeeRole);
+
     // email all payroll
     mutation.mutate({
-      allEmailEmployee: payrollList.length > 0 ? payrollList : [],
+      allEmailEmployee: payrollEmailList.length > 0 ? payrollEmailList : [],
     });
-    // console.log(payrollList.length, payrollList);
   };
 
   return (

@@ -124,7 +124,7 @@ const PayrollView = () => {
     "holiday-exemptions" // key
   );
 
-  // console.log(payrollEarnings);
+  // console.log(payrollList);
   // console.log(payrollList, holidayExemptions);
 
   const handleEmailAll = () => {

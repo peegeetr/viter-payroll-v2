@@ -11,7 +11,7 @@ require 'PHPMailer/Exception.php';
 include_once("mail-config.php");
 include_once("template/email-payslip.php");
 
-function sendEmail($email)
+function sendEmail($email, $link)
 {
 	$mail = new PHPMailer(true);
 	$mail->isSMTP();
@@ -24,7 +24,10 @@ function sendEmail($email)
 	$mail->Subject = EMAIL_PAYSLIP;
 	$mail->setFrom(USERNAME, FROM);
 	$mail->isHTML(true);
-	$mail->Body = getHtmlEmailPayslip();
+	$mail->Body = getHtmlEmailPayslip(
+		$link,
+		ROOT_DOMAIN
+	);
 	$mail->addAddress($email);
 
 	if ($mail->Send()) {

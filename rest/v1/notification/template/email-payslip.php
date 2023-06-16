@@ -1,7 +1,9 @@
 <?php
 
-function getHtmlEmailPayslip()
-{
+function getHtmlEmailPayslip(
+  $link,
+  $ROOT_DOMAIN
+) {
   $html = '
   <style>
     @import url("https://fonts.cdnfonts.com/css/Helvetica Neue-neue-9");
@@ -79,7 +81,7 @@ function getHtmlEmailPayslip()
           </p>
 
           <a
-            href="https://hr-app.frontlinebusiness.com.ph/login"
+            href="' . $ROOT_DOMAIN . '' . $link . '"
             style="
               padding: 4px 25px;
               background-color: #0b6351;
@@ -108,7 +110,7 @@ function getHtmlEmailPayslip()
                 font-family: Helvetica Neue, san-serif;
                 color: #505050;
               "
-              >https://hr-app.frontlinebusiness.com.ph/login</a
+              >' . $ROOT_DOMAIN . '' . $link . '</a
             >
           </p>
         </div>

@@ -1,0 +1,24 @@
+
+*controllers           
+    - payroll/payslip/payslip-email-all.php
+    
+*models     
+    -  
+  
+*htaccess 
+    - 
+
+*db tables 
+    - 
+
+*core 
+    - 
+
+*extra 
+    - notification/email-payslip.php
+    - notification/template/email-payslip.php
+    
+Patrick
+    - 
+
+ 

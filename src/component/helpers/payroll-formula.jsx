@@ -345,6 +345,8 @@ export const payComputeNightDiff = (
   let finalAmount = 0;
   let totalNDHolidayAmount = 0;
   let totalNDAmount = 0;
+  let addedRate = 0;
+  let newRate = 0;
   let totalHrs = 0;
   let holidayHrs = 0;
   let totalHolidayHrs = 0;
@@ -499,9 +501,11 @@ export const payComputeNightDiff = (
               emp.payroll_list_night_diff_per_day
             );
             holidayHrs = Number(emp.payroll_list_night_diff_per_day);
-            ndHolidayAmount = holidayHrs * hourRate;
-            ndRatedHolidayAmount = ndHolidayAmount * holidayRate;
-            // 10% + holiday rate additional
+            addedRate = hourRate * holidayRate;
+            newRate = addedRate + hourRate;
+            // 10% rate additional
+            ndHolidayAmount = newRate * (rate10 - 1);
+            ndRatedHolidayAmount = (newRate + ndHolidayAmount) * holidayHrs;
             totalNDHolidayAmount += ndRatedHolidayAmount;
           }
         }
@@ -525,26 +529,40 @@ export const payComputeNightDiff = (
               emp.payroll_list_night_diff_per_day
             );
             holidayHrs = Number(emp.payroll_list_night_diff_per_day);
-            ndHolidayAmount = holidayHrs * hourRate;
-            ndRatedHolidayAmount = ndHolidayAmount * (holidayRate - 1);
-            // 10% + holiday rate additional
+            addedRate = hourRate * (holidayRate - 1);
+            newRate = addedRate + hourRate;
+            // 10% rate additional
+            ndHolidayAmount = newRate * (rate10 - 1);
+            ndRatedHolidayAmount = (newRate + ndHolidayAmount) * holidayHrs;
             totalNDHolidayAmount += ndRatedHolidayAmount;
+
+            // ndHolidayAmount = holidayHrs * hourRate;
+            // ndRatedHolidayAmount = ndHolidayAmount * (holidayRate - 1);
+            // // 10% + holiday rate additional
+            // totalNDHolidayAmount += ndRatedHolidayAmount;
           }
         }
         totalMinusHrs +=
           numberOfObservedHolidaysHrs -
           numberOfLeaveOrAbsencesHolidaysHrs +
           numberOfExcemptedHolidaysHrs;
+
+        numberOfObservedHolidaysHrs = 0;
+        numberOfLeaveOrAbsencesHolidaysHrs = 0;
+        numberOfExcemptedHolidaysHrs = 0;
+        // console.log(totalMinusHrs);
       }
     });
-    console.log("alhrs", numberOfLeaveOrAbsencesHolidaysHrs);
+    console.log("alhrs", numberOfLeaveOrAbsencesHolidaysHrs, totalMinusHrs);
     // night diff
     totalHrs =
       Number(emp.payroll_list_night_diff_per_day) * days - totalMinusHrs;
-    regularAmount = totalHrs * hourRate;
-    ratedNdAmount = regularAmount * rate10;
+    // regularAmount = hourRate * rate10;
+    // regularAmount = totalHrs * hourRate;
+    ratedNdAmount = hourRate * rate10 - hourRate;
     // 10% additional
-    totalNDAmount += ratedNdAmount - regularAmount;
+    // totalNDAmount += ratedNdAmount - regularAmount;
+    totalNDAmount += (ratedNdAmount + hourRate) * totalHrs;
     finalAmount = totalNDAmount + totalNDHolidayAmount;
 
     console.log(
@@ -556,7 +574,14 @@ export const payComputeNightDiff = (
         numberOfObservedHolidaysHrs - numberOfLeaveOrAbsencesHolidaysHrs
       }\n`,
       `Minus hrs ${totalMinusHrs}`,
-      holidayHrs
+      addedRate,
+      rate10,
+      totalNDHolidayAmount,
+      ndLeave,
+      numberOfExcemptedHolidaysHrs,
+      days,
+      numberOfObservedHolidaysHrs,
+      numberOfLeaveOrAbsencesHolidaysHrs
     );
 
     ndList.push({
@@ -570,7 +595,11 @@ export const payComputeNightDiff = (
       earnings_rate: rate10 * 100,
       earnings_details: `Night Differential (110%) ${
         emp.payroll_list_night_diff_per_day
-      }hrs/day ${holidayHrs > 0 ? `(with ${holidayHrs}hrs Holiday)` : ``}`,
+      }hrs/day ${
+        numberOfObservedHolidaysHrs > 0
+          ? `(with ${numberOfObservedHolidaysHrs}hrs Holiday)`
+          : ``
+      }`,
       earnings_frequency: isSemiMonthly,
       earnings_is_installment: isHrisNumber,
       earnings_number_of_installment: onetimeNumber,

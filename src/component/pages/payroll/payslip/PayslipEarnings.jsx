@@ -105,7 +105,7 @@ const PayslipEarnings = ({
             )}
           {earnings?.data.map((item, key) => {
             totalAmount += Number(item.earnings_amount);
-            console.log(item.earnings_rate);
+            // console.log(item.earnings_rate);
             return (
               <tr key={key} className="hover:bg-transparent">
                 <td className="w-[20rem] print:py-[2px]">

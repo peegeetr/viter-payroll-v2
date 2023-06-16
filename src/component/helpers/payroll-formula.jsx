@@ -555,7 +555,8 @@ export const payComputeNightDiff = (
       `total hrs hol ND ${
         numberOfObservedHolidaysHrs - numberOfLeaveOrAbsencesHolidaysHrs
       }\n`,
-      `Minus hrs ${totalMinusHrs}`
+      `Minus hrs ${totalMinusHrs}`,
+      holidayHrs
     );
 
     ndList.push({
@@ -567,7 +568,9 @@ export const payComputeNightDiff = (
       earnings_amount: finalAmount,
       earnings_hrs: totalHrs + numberOfObservedHolidaysHrs,
       earnings_rate: rate10 * 100,
-      earnings_details: `Night Differential (110%) ${emp.payroll_list_night_diff_per_day}hrs/day`,
+      earnings_details: `Night Differential (110%) ${
+        emp.payroll_list_night_diff_per_day
+      }hrs/day ${holidayHrs > 0 ? `(with ${holidayHrs}hrs Holiday)` : ``}`,
       earnings_frequency: isSemiMonthly,
       earnings_is_installment: isHrisNumber,
       earnings_number_of_installment: onetimeNumber,

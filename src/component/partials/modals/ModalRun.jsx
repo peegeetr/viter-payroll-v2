@@ -85,16 +85,14 @@ const ModalRun = ({
   const handleClose = () => {
     dispatch(setIsConfirm(false));
   };
-
+  console.log("dinstallment", employeesDeductionInstallment);
   let categoryName =
     Number(categoryId) === payrollCategory13thMonthId
       ? "13th Month"
       : Number(categoryId) === payrollCategoryBonusId
       ? "Bonus"
       : "Salary";
-  // earningsNumInstallmentList,
-  // deducNumInstallmentList,
-  // console.log("run", runPayroll(employees, payrollEarnings));
+
   const handleYes = async () => {
     // run payroll
     const run = runPayroll(

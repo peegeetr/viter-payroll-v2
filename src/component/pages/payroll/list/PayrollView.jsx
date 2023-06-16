@@ -4,29 +4,21 @@ import { ImPlay3 } from "react-icons/im";
 import { setIsAdd, setIsConfirm } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
 import useQueryData from "../../../custom-hooks/useQueryData";
-import {
-  devApiUrl,
-  getUrlParam,
-  hrisDevApiUrl,
-} from "../../../helpers/functions-general";
+import { devApiUrl, getUrlParam } from "../../../helpers/functions-general";
+import { payrollCategorySalaryId } from "../../../helpers/functions-payroll-category-id";
 import BreadCrumbs from "../../../partials/BreadCrumbs";
 import Footer from "../../../partials/Footer";
 import Header from "../../../partials/Header";
 import Navigation from "../../../partials/Navigation";
+import NoData from "../../../partials/NoData";
 import ServerError from "../../../partials/ServerError";
 import ModalError from "../../../partials/modals/ModalError";
+import ModalRun from "../../../partials/modals/ModalRun";
 import ModalSuccess from "../../../partials/modals/ModalSuccess";
 import FetchingSpinner from "../../../partials/spinners/FetchingSpinner";
 import ModalNoSssBracket from "./ModalNoSssBracket";
-import PayrollViewList from "./PayrollViewList";
-import ModalRun from "../../../partials/modals/ModalRun";
-import {
-  payrollCategory13thMonthId,
-  payrollCategoryBonusId,
-  payrollCategorySalaryId,
-} from "../../../helpers/functions-payroll-category-id";
 import ModalPayslipEmailAll from "./ModalPayslipEmailAll";
-import NoData from "../../../partials/NoData";
+import PayrollViewList from "./PayrollViewList";
 
 const PayrollView = () => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -124,7 +116,7 @@ const PayrollView = () => {
     "holiday-exemptions" // key
   );
 
-  // console.log(payrollEarnings);
+  // console.log(payrollList);
   // console.log(payrollList, holidayExemptions);
 
   const handleEmailAll = () => {

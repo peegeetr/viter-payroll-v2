@@ -22,7 +22,7 @@ import React from "react";
 // export const hrisdevNavUrl = "/dev-app";
 // export const devNavUrl = "/v2";
 
-// // Patrick
+// Patrick
 const urlHris = `https://hr-app.frontlinebusiness.com.ph`;
 const urlHrisImg = `https://hr-app.frontlinebusiness.com.ph/img`;
 const urlPayroll = `https://payroll-app.frontlinebusiness.com.ph`;
@@ -40,7 +40,7 @@ export const devBaseImgUrl = `${urlPayrollImg}`;
 export const devApiUrl = `${urlPayroll}/rest`;
 export const devBaseUrl = `${urlPayroll}`;
 
-// // // Online prod hris
+// // // // Online prod hris
 // export const hrisDevBaseImgUrl = "https://hris.frontlinebusiness.com.ph/img";
 // export const hrisDevApiUrl = "https://hris.frontlinebusiness.com.ph/rest";
 // export const hrisdevBaseUrl = "https://hris.frontlinebusiness.com.ph";

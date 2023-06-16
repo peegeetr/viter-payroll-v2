@@ -69,7 +69,6 @@ const EmployeeList = () => {
     }
   }, [inView]);
 
-  console.log(result?.pages[0].data);
   return (
     <>
       <SearchBarRq

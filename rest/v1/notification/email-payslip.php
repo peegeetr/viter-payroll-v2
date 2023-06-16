@@ -11,7 +11,7 @@ require 'PHPMailer/Exception.php';
 include_once("mail-config.php");
 include_once("template/email-payslip.php");
 
-function sendEmail($email)
+function sendEmail($email, $payrollId, $link)
 {
 	$mail = new PHPMailer(true);
 	$mail->isSMTP();
@@ -21,10 +21,13 @@ function sendEmail($email)
 	$mail->SMTPAuth = true;
 	$mail->Username =  USERNAME; // if gmail use your gmail email
 	$mail->Password = PASSWORD; // if gmail use your email password
-	$mail->Subject = EMAIL_PAYSLIP;
+	$mail->Subject = EMAIL_PAYSLIP . '-' . $payrollId;
 	$mail->setFrom(USERNAME, FROM);
 	$mail->isHTML(true);
-	$mail->Body = getHtmlEmailPayslip();
+	$mail->Body = getHtmlEmailPayslip(
+		$link,
+		ROOT_DOMAIN
+	);
 	$mail->addAddress($email);
 
 	if ($mail->Send()) {

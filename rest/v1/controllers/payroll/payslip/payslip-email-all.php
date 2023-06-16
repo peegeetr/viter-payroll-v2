@@ -30,9 +30,13 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 
     if (count($emailAllEmployee) > 0) {
         for ($emp = 0; $emp < count($emailAllEmployee); $emp++) {
-            $payrollList->payroll_list_employee_email = $emailAllEmployee[$emp]["payroll_list_employee_email"];
+            $email = $emailAllEmployee[$emp]["payroll_list_employee_email"];
+            $link = $emailAllEmployee[$emp]["link"];
+            $payrollId = $emailAllEmployee[$emp]["payrollId"];
             $mail = sendEmail(
-                $payrollList->payroll_list_employee_email
+                $email,
+                $payrollId,
+                $link,
             );
         }
         $returnData = [];

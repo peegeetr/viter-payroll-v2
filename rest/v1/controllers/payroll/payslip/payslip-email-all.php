@@ -32,9 +32,11 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
         for ($emp = 0; $emp < count($emailAllEmployee); $emp++) {
             $email = $emailAllEmployee[$emp]["payroll_list_employee_email"];
             $link = $emailAllEmployee[$emp]["link"];
+            $payrollId = $emailAllEmployee[$emp]["payrollId"];
             $mail = sendEmail(
                 $email,
-                $link
+                $payrollId,
+                $link,
             );
         }
         $returnData = [];

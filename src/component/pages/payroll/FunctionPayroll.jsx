@@ -86,6 +86,7 @@ export const getNewEmployeList = (payrollList, employee) => {
         list.push({
           payroll_list_employee_email: plItem.payroll_list_employee_email,
           link: `${role}/my-info/payslip/view?payslipid=${plItem.payroll_list_aid}`,
+          payrollId: plItem.payroll_list_payroll_id,
         });
       }
     });

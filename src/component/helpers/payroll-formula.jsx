@@ -1023,7 +1023,8 @@ export const holidayTotalAmount = (emp, holidaysItem, holidayExemptions) => {
   // );
   const days = getWorkingDaysInMonth(new Date(emp.payroll_start_date));
 
-  let rate = Number(holidaysItem.holidays_rate) / 100 - 1;
+  // let rate = Number(holidaysItem.holidays_rate) / 100 - 1;
+  let rate = Number(holidaysItem.holidays_rate) / 100;
   let workOnHoliday = emp.payroll_list_employee_work_on_holiday;
   let holidayObserved = holidaysItem.holidays_observed;
   let dailyAmount = 0;
@@ -1105,7 +1106,8 @@ export const holidayTotalAmount = (emp, holidaysItem, holidayExemptions) => {
     // If employee has holiday and not observed
     if (workOnHoliday === 1 || holidayObserved === 1) {
       // 160% 0r 300% or 260%  additional
-      dailyAmount = dailyRate * (Number(rate) - 1);
+      // dailyAmount = dailyRate * (Number(rate) - 1);
+      dailyAmount = dailyRate * Number(rate);
     }
   }
 

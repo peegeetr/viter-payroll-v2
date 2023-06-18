@@ -91,7 +91,7 @@ const ModalAddHolidays = ({ item, isPayrollEmpty, employeeName }) => {
     }
     if (
       workOnHoliday === "0" &&
-      (isRate === "200" || isRate === "400" || isRate === "330")
+      (isRate === "200" || isRate === "400" || isRate === "300")
     ) {
       setIsObserved("1");
     }
@@ -100,7 +100,7 @@ const ModalAddHolidays = ({ item, isPayrollEmpty, employeeName }) => {
       workOnHoliday === "0" &&
       (getRateDate(null, holidayDate, date) === "200" ||
         getRateDate(null, holidayDate, date) === "400" ||
-        getRateDate(null, holidayDate, date) === "330")
+        getRateDate(null, holidayDate, date) === "300")
     ) {
       setIsObserved("1");
     }
@@ -126,7 +126,7 @@ const ModalAddHolidays = ({ item, isPayrollEmpty, employeeName }) => {
       isWorkOnHoliday === "0" &&
       (getRateDate(null, holidayDate, date) === "200" ||
         getRateDate(null, holidayDate, date) === "400" ||
-        getRateDate(null, holidayDate, date) === "330")
+        getRateDate(null, holidayDate, date) === "300")
     ) {
       setIsObserved("1");
     }

@@ -138,7 +138,7 @@ const PayslipEarnings = ({
                   {(overtimeId === item.earnings_payitem_id ||
                     nightDiffId === item.earnings_payitem_id ||
                     undertimeId === item.earnings_payitem_id) &&
-                    (Number(item.earnings_rate) === 110
+                    (Number(item.earnings_rate) === 10
                       ? `${hourRate.toFixed(4)} / Hr`
                       : `${(
                           Number(item.earnings_amount) /

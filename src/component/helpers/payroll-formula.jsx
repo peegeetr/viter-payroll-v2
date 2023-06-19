@@ -1368,10 +1368,10 @@ export const payComputeTuition = (emp, deduction) => {
   let tuitionList = [];
   if (deduction.employee_installment_paytype_id === fcaTutionId) {
     if (
-      emp.payroll_start_date.split("-")[0] >=
-        deduction.employee_installment_start_date.split("-")[0] &&
-      emp.payroll_start_date.split("-")[1] >=
-        deduction.employee_installment_start_date.split("-")[1]
+      new Date(deduction.employee_installment_start_date) <=
+        new Date(emp.payroll_start_date) &&
+      new Date(deduction.employee_installment_end_date) >=
+        new Date(emp.payroll_start_date)
     ) {
       finalAmount = Number(deduction.employee_installment_amount) / 2;
       tuitionList.push({
@@ -1410,10 +1410,10 @@ export const payComputeTithes = (emp, deduction) => {
   let tithesList = [];
   if (deduction.employee_installment_paytype_id === fwcTithesId) {
     if (
-      emp.payroll_start_date.split("-")[0] >=
-        deduction.employee_installment_start_date.split("-")[0] &&
-      emp.payroll_start_date.split("-")[1] >=
-        deduction.employee_installment_start_date.split("-")[1]
+      new Date(deduction.employee_installment_start_date) <=
+        new Date(emp.payroll_start_date) &&
+      new Date(deduction.employee_installment_end_date) >=
+        new Date(emp.payroll_start_date)
     ) {
       finalAmount = Number(deduction.employee_installment_amount) / 2;
       tithesList.push({
@@ -1483,10 +1483,10 @@ export const payComputePagibigLoan = (emp, deduction) => {
   let pagibigLoanList = [];
   if (deduction.employee_installment_paytype_id === PagibigLoanId) {
     if (
-      emp.payroll_start_date.split("-")[0] >=
-        deduction.employee_installment_start_date.split("-")[0] &&
-      emp.payroll_start_date.split("-")[1] >=
-        deduction.employee_installment_start_date.split("-")[1]
+      new Date(deduction.employee_installment_start_date) <=
+        new Date(emp.payroll_start_date) &&
+      new Date(deduction.employee_installment_end_date) >=
+        new Date(emp.payroll_start_date)
     ) {
       finalAmount = Number(deduction.employee_installment_amount) / 2;
       pagibigLoanList.push({
@@ -1525,10 +1525,10 @@ export const payComputePagibigMP2 = (emp, deduction) => {
   let pagibigMP2List = [];
   if (deduction.employee_installment_paytype_id === PagibigMP2Id) {
     if (
-      emp.payroll_start_date.split("-")[0] >=
-        deduction.employee_installment_start_date.split("-")[0] &&
-      emp.payroll_start_date.split("-")[1] >=
-        deduction.employee_installment_start_date.split("-")[1]
+      new Date(deduction.employee_installment_start_date) <=
+        new Date(emp.payroll_start_date) &&
+      new Date(deduction.employee_installment_end_date) >=
+        new Date(emp.payroll_start_date)
     ) {
       finalAmount = Number(deduction.employee_installment_amount) / 2;
       pagibigMP2List.push({
@@ -1567,10 +1567,10 @@ export const payComputeSSSLoan = (emp, deduction) => {
   let sSSLoanList = [];
   if (deduction.employee_installment_paytype_id === SSSLoanId) {
     if (
-      emp.payroll_start_date.split("-")[0] >=
-        deduction.employee_installment_start_date.split("-")[0] &&
-      emp.payroll_start_date.split("-")[1] >=
-        deduction.employee_installment_start_date.split("-")[1]
+      new Date(deduction.employee_installment_start_date) <=
+        new Date(emp.payroll_start_date) &&
+      new Date(deduction.employee_installment_end_date) >=
+        new Date(emp.payroll_start_date)
     ) {
       finalAmount = Number(deduction.employee_installment_amount) / 2;
       sSSLoanList.push({

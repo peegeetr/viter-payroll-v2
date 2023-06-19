@@ -25,6 +25,7 @@ import { PagibigMP2Id } from "../../../../helpers/functions-payitemId";
 import { queryData } from "../../../../helpers/queryData";
 import ButtonSpinner from "../../../../partials/spinners/ButtonSpinner";
 import {
+  getDeductionPayrollDateNow,
   getEndOfInstallment,
   getNumberOfMonths,
 } from "../functions-deductions-installment";
@@ -67,9 +68,12 @@ const ModalAddMP2 = ({ item }) => {
   };
 
   const initVal = {
+    employee_installment_actual_pay_date: item
+      ? item.employee_installment_actual_pay_date
+      : getDateNow(),
     employee_installment_start_date: item
       ? item.employee_installment_start_date
-      : getDateNow(),
+      : getDeductionPayrollDateNow(),
     employee_installment_end_date: "",
     employee_installment_paytype_id: PagibigMP2Id,
     employee_installment_employee_id: eid,
@@ -85,6 +89,7 @@ const ModalAddMP2 = ({ item }) => {
   };
 
   const yupSchema = Yup.object({
+    employee_installment_actual_pay_date: Yup.string().required("Required"),
     employee_installment_start_date: Yup.string().required("Required"),
     employee_installment_amount: Yup.string().required("Required"),
     employee_installment_number_of_months: Yup.string().required("Required"),
@@ -136,7 +141,17 @@ const ModalAddMP2 = ({ item }) => {
                   <Form>
                     <div className="relative mb-6 mt-2">
                       <InputText
-                        label="Start Date"
+                        label="Pay Start Date"
+                        type="text"
+                        onFocus={(e) => (e.target.type = "date")}
+                        onBlur={(e) => (e.target.type = "date")}
+                        name="employee_installment_actual_pay_date"
+                        disabled={mutation.isLoading}
+                      />
+                    </div>
+                    <div className="relative mb-6 mt-2">
+                      <InputText
+                        label="Payroll Start Date"
                         type="text"
                         onFocus={(e) => (e.target.type = "date")}
                         onBlur={(e) => (e.target.type = "date")}

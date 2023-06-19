@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 29, 2023 at 08:08 AM
+-- Generation Time: Jun 19, 2023 at 03:09 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -35,6 +35,7 @@ CREATE TABLE `prv2_employee_installment` (
   `employee_installment_number_of_months` varchar(20) NOT NULL,
   `employee_installment_number_of_payrun` varchar(20) NOT NULL,
   `employee_installment_start_date` varchar(20) NOT NULL,
+  `employee_installment_actual_pay_date` varchar(20) NOT NULL,
   `employee_installment_end_date` varchar(20) NOT NULL,
   `employee_installment_status` varchar(5) NOT NULL,
   `employee_installment_details` varchar(100) NOT NULL,

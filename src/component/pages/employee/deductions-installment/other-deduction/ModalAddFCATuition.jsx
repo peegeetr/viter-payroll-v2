@@ -10,25 +10,21 @@ import {
   setSuccess,
 } from "../../../../../store/StoreAction";
 import { StoreContext } from "../../../../../store/StoreContext";
+import { InputText, InputTextArea } from "../../../../helpers/FormInputs";
 import {
-  InputSelect,
-  InputText,
-  InputTextArea,
-} from "../../../../helpers/FormInputs";
-import {
+  devApiUrl,
   getDateNow,
   getUrlParam,
-  devApiUrl,
-  handleNumOnly,
   removeComma,
 } from "../../../../helpers/functions-general";
+import { fcaTutionId } from "../../../../helpers/functions-payitemId";
 import { queryData } from "../../../../helpers/queryData";
 import ButtonSpinner from "../../../../partials/spinners/ButtonSpinner";
 import {
+  getDeductionPayrollDateNow,
   getEndOfInstallment,
   getNumberOfMonths,
 } from "../functions-deductions-installment";
-import { fcaTutionId } from "../../../../helpers/functions-payitemId";
 
 const ModalAddFCATuition = ({ item }) => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -68,9 +64,12 @@ const ModalAddFCATuition = ({ item }) => {
   };
 
   const initVal = {
+    employee_installment_actual_pay_date: item
+      ? item.employee_installment_actual_pay_date
+      : getDateNow(),
     employee_installment_start_date: item
       ? item.employee_installment_start_date
-      : getDateNow(),
+      : getDeductionPayrollDateNow(),
     employee_installment_end_date: "",
     employee_installment_paytype_id: fcaTutionId,
     employee_installment_employee_id: eid,
@@ -145,7 +144,17 @@ const ModalAddFCATuition = ({ item }) => {
                   <Form>
                     <div className="relative mb-6 mt-2">
                       <InputText
-                        label="Start Date"
+                        label="Pay Start Date"
+                        type="text"
+                        onFocus={(e) => (e.target.type = "date")}
+                        onBlur={(e) => (e.target.type = "date")}
+                        name="employee_installment_actual_pay_date"
+                        disabled={mutation.isLoading}
+                      />
+                    </div>
+                    <div className="relative mb-6 mt-2">
+                      <InputText
+                        label="Payroll Start Date"
                         type="text"
                         onFocus={(e) => (e.target.type = "date")}
                         onBlur={(e) => (e.target.type = "date")}

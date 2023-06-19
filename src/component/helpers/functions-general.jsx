@@ -225,7 +225,7 @@ export const getPayPeriod = (startDate, endDate) => {
   const startDay = formatDate(startDate).split(" ")[2];
   const endMo = formatDate(endDate).split(" ")[1];
   const endDay = formatDate(endDate).split(" ")[2];
-  const year = formatDate(startDate).split(" ")[3];
+  const year = formatDate(endDate).split(" ")[3];
   return `${mo} ${startDay} - ${endMo} ${endDay}, ${year}`;
 };
 

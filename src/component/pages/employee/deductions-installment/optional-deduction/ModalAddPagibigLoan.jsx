@@ -22,6 +22,7 @@ import { PagibigLoanId } from "../../../../helpers/functions-payitemId";
 import { queryData } from "../../../../helpers/queryData";
 import ButtonSpinner from "../../../../partials/spinners/ButtonSpinner";
 import {
+  getDeductionPayrollDateNow,
   getEndOfInstallment,
   getNumberOfMonths,
 } from "../functions-deductions-installment";
@@ -63,9 +64,12 @@ const ModalAddPagibigLoan = ({ item }) => {
   };
 
   const initVal = {
+    employee_installment_actual_pay_date: item
+      ? item.employee_installment_actual_pay_date
+      : getDateNow(),
     employee_installment_start_date: item
       ? item.employee_installment_start_date
-      : getDateNow(),
+      : getDeductionPayrollDateNow(),
     employee_installment_end_date: "",
     total_month: "",
     employee_installment_paytype_id: PagibigLoanId,
@@ -141,7 +145,17 @@ const ModalAddPagibigLoan = ({ item }) => {
                   <Form>
                     <div className="relative mb-6 mt-2">
                       <InputText
-                        label="Start Date"
+                        label="Pay Start Date"
+                        type="text"
+                        onFocus={(e) => (e.target.type = "date")}
+                        onBlur={(e) => (e.target.type = "date")}
+                        name="employee_installment_actual_pay_date"
+                        disabled={mutation.isLoading}
+                      />
+                    </div>
+                    <div className="relative mb-6 mt-2">
+                      <InputText
+                        label="Payroll Start Date"
                         type="text"
                         onFocus={(e) => (e.target.type = "date")}
                         onBlur={(e) => (e.target.type = "date")}

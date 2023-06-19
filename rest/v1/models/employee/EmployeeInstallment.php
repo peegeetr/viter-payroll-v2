@@ -7,6 +7,7 @@ class EmployeeInstallment
     public $employee_installment_amount;
     public $employee_installment_number_of_months;
     public $employee_installment_number_of_payrun;
+    public $employee_installment_actual_pay_date;
     public $employee_installment_start_date;
     public $employee_installment_end_date;
     public $employee_installment_status;
@@ -37,6 +38,7 @@ class EmployeeInstallment
             $sql .= "employee_installment_amount, ";
             $sql .= "employee_installment_number_of_months, ";
             $sql .= "employee_installment_number_of_payrun, ";
+            $sql .= "employee_installment_actual_pay_date, ";
             $sql .= "employee_installment_start_date, ";
             $sql .= "employee_installment_end_date, ";
             $sql .= "employee_installment_status, ";
@@ -48,6 +50,7 @@ class EmployeeInstallment
             $sql .= ":employee_installment_amount, ";
             $sql .= ":employee_installment_number_of_months, ";
             $sql .= ":employee_installment_number_of_payrun, ";
+            $sql .= ":employee_installment_actual_pay_date, ";
             $sql .= ":employee_installment_start_date, ";
             $sql .= ":employee_installment_end_date, ";
             $sql .= ":employee_installment_status, ";
@@ -61,6 +64,7 @@ class EmployeeInstallment
                 "employee_installment_amount" => $this->employee_installment_amount,
                 "employee_installment_number_of_months" => $this->employee_installment_number_of_months,
                 "employee_installment_number_of_payrun" => $this->employee_installment_number_of_payrun,
+                "employee_installment_actual_pay_date" => $this->employee_installment_actual_pay_date,
                 "employee_installment_start_date" => $this->employee_installment_start_date,
                 "employee_installment_end_date" => $this->employee_installment_end_date,
                 "employee_installment_status" => $this->employee_installment_status,
@@ -117,6 +121,7 @@ class EmployeeInstallment
             $sql .= "employee_installment_amount, ";
             $sql .= "employee_installment_number_of_months, ";
             $sql .= "employee_installment_number_of_payrun, ";
+            $sql .= "employee_installment_actual_pay_date, ";
             $sql .= "employee_installment_start_date, ";
             $sql .= "employee_installment_end_date, ";
             $sql .= "employee_installment_details, ";
@@ -139,6 +144,7 @@ class EmployeeInstallment
             $sql .= "employee_installment_amount, ";
             $sql .= "employee_installment_number_of_months, ";
             $sql .= "employee_installment_number_of_payrun, ";
+            $sql .= "employee_installment_actual_pay_date, ";
             $sql .= "employee_installment_start_date, ";
             $sql .= "employee_installment_end_date, ";
             $sql .= "employee_installment_details, ";
@@ -169,6 +175,7 @@ class EmployeeInstallment
             $sql .= "employee_installment_amount, ";
             $sql .= "employee_installment_number_of_months, ";
             $sql .= "employee_installment_number_of_payrun, ";
+            $sql .= "employee_installment_actual_pay_date, ";
             $sql .= "employee_installment_start_date, ";
             $sql .= "employee_installment_end_date, ";
             $sql .= "employee_installment_details, ";
@@ -207,6 +214,7 @@ class EmployeeInstallment
     {
         try {
             $sql = "update {$this->tblEmployeeInstallmet} set ";
+            $sql .= "employee_installment_actual_pay_date = :employee_installment_actual_pay_date, ";
             $sql .= "employee_installment_start_date = :employee_installment_start_date, ";
             $sql .= "employee_installment_end_date = :employee_installment_end_date, ";
             $sql .= "employee_installment_amount = :employee_installment_amount, ";
@@ -217,6 +225,7 @@ class EmployeeInstallment
             $sql .= "where employee_installment_aid = :employee_installment_aid ";
             $query = $this->connection->prepare($sql);
             $query->execute([
+                "employee_installment_actual_pay_date" => $this->employee_installment_actual_pay_date,
                 "employee_installment_start_date" => $this->employee_installment_start_date,
                 "employee_installment_end_date" => $this->employee_installment_end_date,
                 "employee_installment_number_of_months" => $this->employee_installment_number_of_months,

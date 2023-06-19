@@ -14,6 +14,7 @@ if (array_key_exists("employeeInstallmentId", $_GET)) {
     // get data
     // get employeeInstallmentId from query string
     $installment->employee_installment_aid = $_GET['employeeInstallmentId'];
+    $installment->employee_installment_actual_pay_date = checkIndex($data, "employee_installment_actual_pay_date");
     $installment->employee_installment_start_date = checkIndex($data, "employee_installment_start_date");
     $installment->employee_installment_end_date = checkIndex($data, "employee_installment_end_date");
     $installment->employee_installment_amount = checkIndex($data, "employee_installment_amount");

@@ -1,3 +1,5 @@
+import { getDateNow } from "../../../helpers/functions-general";
+
 // formatting date
 function formatDateInstallment(date) {
   var d = new Date(date),
@@ -117,4 +119,12 @@ export const getPayItemName = (payItem, id) => {
     }
   });
   return payTypeName;
+};
+
+export const getDeductionPayrollDateNow = () => {
+  let dateNow = getDateNow();
+  let year = dateNow.split("-")[0];
+  let month = dateNow.split("-")[1];
+
+  return `${year}-${month}-01`;
 };

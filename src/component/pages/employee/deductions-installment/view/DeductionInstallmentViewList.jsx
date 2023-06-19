@@ -6,6 +6,7 @@ import useQueryData from "../../../../custom-hooks/useQueryData";
 import {
   devApiUrl,
   formatDate,
+  getPayPeriod,
   getUrlParam,
   numberWithCommas,
 } from "../../../../helpers/functions-general";
@@ -64,8 +65,8 @@ const DeductionInstallmentViewList = ({ setItemEdit, paytypeId, payItem }) => {
               {paytypeId !== PagibigMP2Id && (
                 <th className="min-w-[10rem]">Details</th>
               )}
-              <th className="min-w-[10rem]">Start Date</th>
-              <th className="min-w-[10rem]">End Date</th>
+              <th className="min-w-[10rem]">Pay Date</th>
+              <th className="min-w-[10rem]">Payroll Date</th>
               <th className="min-w-[8rem] text-right pr-4">Amortization</th>
               {paytypeId !== PagibigMP2Id && paytypeId !== fcaTutionId && (
                 <th className="min-w-[8rem] text-right pr-4">Amount</th>
@@ -108,9 +109,14 @@ const DeductionInstallmentViewList = ({ setItemEdit, paytypeId, payItem }) => {
                     <td>{item.employee_installment_details}</td>
                   )}
                   <td className="">
-                    {formatDate(item.employee_installment_start_date)}
+                    {formatDate(item.employee_installment_actual_pay_date)}
                   </td>
-                  <td>{formatDate(item.employee_installment_end_date)}</td>
+                  <td>
+                    {`${getPayPeriod(
+                      item.employee_installment_start_date,
+                      item.employee_installment_end_date
+                    )}`}
+                  </td>
                   <td className="text-right pr-4">
                     &#8369;{" "}
                     {numberWithCommas(

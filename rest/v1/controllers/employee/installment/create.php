@@ -17,6 +17,7 @@ $installment->employee_installment_paytype_id = checkIndex($data, "employee_inst
 $installment->employee_installment_amount = checkIndex($data, "employee_installment_amount");
 $installment->employee_installment_details = checkIndex($data, "employee_installment_details");
 $installment->employee_installment_number_of_months = checkIndex($data, "employee_installment_number_of_months");
+$installment->employee_installment_actual_pay_date = checkIndex($data, "employee_installment_actual_pay_date");
 $installment->employee_installment_start_date = checkIndex($data, "employee_installment_start_date");
 $installment->employee_installment_end_date = checkIndex($data, "employee_installment_end_date");
 $installment->employee_installment_number_of_payrun = 0;

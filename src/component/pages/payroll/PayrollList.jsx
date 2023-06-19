@@ -1,6 +1,6 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import React from "react";
-import { FaEdit, FaList, FaTrash, FaHistory } from "react-icons/fa";
+import { FaEdit, FaList, FaTrash } from "react-icons/fa";
 import { useInView } from "react-intersection-observer";
 import { Link } from "react-router-dom";
 import {
@@ -12,28 +12,25 @@ import {
 import { StoreContext } from "../../../store/StoreContext";
 import {
   devApiUrl,
-  devNavUrl,
   formatDate,
   getPayPeriod,
   getUserType,
   numberWithCommas,
-  UrlSystem,
 } from "../../helpers/functions-general";
-import { queryDataInfinite } from "../../helpers/queryDataInfinite";
-import LoadmoreRq from "../../partials/LoadmoreRq";
-import ModalDeleteRestoreRq from "../../partials/modals/ModalDeleteRestoreRq";
-import NoData from "../../partials/NoData";
-import SearchBarRq from "../../partials/SearchBarRq";
-import ServerError from "../../partials/ServerError";
-import FetchingSpinner from "../../partials/spinners/FetchingSpinner";
-import TableSpinner from "../../partials/spinners/TableSpinner";
-import StatusActive from "../../partials/status/StatusActive";
-import StatusInactive from "../../partials/status/StatusInactive";
-import { validatePrId } from "./FunctionPayroll";
 import {
   payrollCategory13thMonthId,
   payrollCategoryBonusId,
 } from "../../helpers/functions-payroll-category-id";
+import { queryDataInfinite } from "../../helpers/queryDataInfinite";
+import LoadmoreRq from "../../partials/LoadmoreRq";
+import NoData from "../../partials/NoData";
+import SearchBarRq from "../../partials/SearchBarRq";
+import ServerError from "../../partials/ServerError";
+import ModalDeleteRestoreRq from "../../partials/modals/ModalDeleteRestoreRq";
+import TableSpinner from "../../partials/spinners/TableSpinner";
+import StatusActive from "../../partials/status/StatusActive";
+import StatusInactive from "../../partials/status/StatusInactive";
+import { validatePrId } from "./FunctionPayroll";
 
 const PayrollList = ({ setItemEdit }) => {
   const { store, dispatch } = React.useContext(StoreContext);

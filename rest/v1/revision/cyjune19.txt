@@ -2,10 +2,13 @@
 *controllers           
     - employee/installment/create.php
     - employee/installment/update.php
-    -> payroll/list/paid.php
+    - payroll/list/paid.php
+    -> payroll/functions.php
+    -> payroll/update.php
     
 *models     
     -  employee/EmployeeInstallment.php
+    -> payroll/Payroll.php
   
 *htaccess 
     - 

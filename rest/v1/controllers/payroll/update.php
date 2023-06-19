@@ -26,8 +26,8 @@ if (array_key_exists("payrollid", $_GET)) {
 
     //check to see if task id in query string is not empty and is number, if not return json error
     checkId($payroll->payroll_aid);
-    comparePayDate($payroll, $payroll_start_date_old, $payroll->payroll_start_date);
-    comparePayDate($payroll, $payroll_end_date_old, $payroll->payroll_end_date);
+    comparePayPeriodDate($payroll, $payroll_start_date_old, $payroll->payroll_start_date);
+    comparePayPeriodDate($payroll, $payroll_end_date_old, $payroll->payroll_end_date);
     comparePayDate($payroll, $payroll_pay_date_old, $payroll->payroll_pay_date);
     // update
     $query = checkUpdate($payroll);

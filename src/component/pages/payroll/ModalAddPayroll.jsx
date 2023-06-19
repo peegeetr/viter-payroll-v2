@@ -105,10 +105,10 @@ const ModalAddPayroll = ({ item }) => {
               initialValues={initVal}
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
-                // console.log(values, result.data);
+                console.log(values, result.data);
                 mutation.mutate({
                   ...values,
-                  employee: result.data,
+                  employee: result?.data,
                   bonusId: `${payrollCategoryBonusId}`,
                 });
               }}

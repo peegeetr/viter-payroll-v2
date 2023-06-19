@@ -57,7 +57,7 @@ function checkReadByDraft($object)
     return $query;
 }
 
-// check name
+// check pay preriod 
 function checkDateExist($object)
 {
     $query = $object->readIsDateExist();
@@ -65,9 +65,24 @@ function checkDateExist($object)
     checkExistence($count, "Pay period is already exist.");
 }
 
-function comparePayDate($object, $name_old, $name)
+// check pay date 
+function checkPayDateExist($object)
+{
+    $query = $object->readIsPayDateExist();
+    $count = $query->rowCount();
+    checkExistence($count, "Pay date is already exist.");
+}
+
+function comparePayPeriodDate($object, $name_old, $name)
 {
     if (strtolower($name_old) !=  strtolower($name)) {
         checkDateExist($object);
+    }
+}
+
+function comparePayDate($object, $name_old, $name)
+{
+    if (strtolower($name_old) !=  strtolower($name)) {
+        checkPayDateExist($object);
     }
 }

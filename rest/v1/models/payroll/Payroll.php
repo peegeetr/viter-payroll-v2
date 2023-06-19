@@ -282,6 +282,25 @@ class Payroll
         return $query;
     }
 
+    // read date and type id
+    public function readIsPayDateExist()
+    {
+        try {
+            $sql = "select * from ";
+            $sql .= "{$this->tblPayroll} ";
+            $sql .= "where payroll_category_type = :payroll_category_type ";
+            $sql .= "and payroll_pay_date = :payroll_pay_date ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "payroll_category_type" => $this->payroll_category_type,
+                "payroll_pay_date" => $this->payroll_pay_date,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
     // update
     public function update()
     {

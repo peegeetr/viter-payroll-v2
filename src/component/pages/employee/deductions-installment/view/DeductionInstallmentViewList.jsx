@@ -20,6 +20,7 @@ import ModalDeleteRestoreRq from "../../../../partials/modals/ModalDeleteRestore
 import TableSpinner from "../../../../partials/spinners/TableSpinner";
 import Status from "../../../../partials/status/Status";
 import {
+  getDeducPayPeriod,
   getPayItemName,
   getReadNumberOfMonths,
 } from "../functions-deductions-installment";
@@ -66,7 +67,7 @@ const DeductionInstallmentViewList = ({ setItemEdit, paytypeId, payItem }) => {
                 <th className="min-w-[10rem]">Details</th>
               )}
               <th className="min-w-[10rem]">Pay Date</th>
-              <th className="min-w-[10rem]">Payroll Date</th>
+              <th className="min-w-[7rem]">Payroll Date</th>
               <th className="min-w-[8rem] text-right pr-4">Amortization</th>
               {paytypeId !== PagibigMP2Id && paytypeId !== fcaTutionId && (
                 <th className="min-w-[8rem] text-right pr-4">Amount</th>
@@ -112,7 +113,7 @@ const DeductionInstallmentViewList = ({ setItemEdit, paytypeId, payItem }) => {
                     {formatDate(item.employee_installment_actual_pay_date)}
                   </td>
                   <td>
-                    {`${getPayPeriod(
+                    {`${getDeducPayPeriod(
                       item.employee_installment_start_date,
                       item.employee_installment_end_date
                     )}`}

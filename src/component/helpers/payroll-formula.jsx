@@ -1379,9 +1379,7 @@ export const payComputeTuition = (emp, deduction) => {
   if (deduction.employee_installment_paytype_id === fcaTutionId) {
     if (
       new Date(deduction.employee_installment_start_date) <=
-        new Date(emp.payroll_start_date) &&
-      new Date(deduction.employee_installment_end_date) >=
-        new Date(emp.payroll_start_date)
+      new Date(emp.payroll_start_date)
     ) {
       finalAmount = Number(deduction.employee_installment_amount) / 2;
       tuitionList.push({
@@ -1402,8 +1400,9 @@ export const payComputeTuition = (emp, deduction) => {
           deduction.employee_installment_start_date
         ),
         // installment details
-        employee_installment_number_of_months:
-          deduction.employee_installment_number_of_months,
+        employee_installment_number_of_months: Number(
+          deduction.employee_installment_number_of_months
+        ),
         employee_installment_start_date:
           deduction.employee_installment_start_date,
         employee_installment_status: deduction.employee_installment_status,
@@ -1421,9 +1420,7 @@ export const payComputeTithes = (emp, deduction) => {
   if (deduction.employee_installment_paytype_id === fwcTithesId) {
     if (
       new Date(deduction.employee_installment_start_date) <=
-        new Date(emp.payroll_start_date) &&
-      new Date(deduction.employee_installment_end_date) >=
-        new Date(emp.payroll_start_date)
+      new Date(emp.payroll_start_date)
     ) {
       finalAmount = Number(deduction.employee_installment_amount) / 2;
       tithesList.push({
@@ -1444,8 +1441,9 @@ export const payComputeTithes = (emp, deduction) => {
           deduction.employee_installment_start_date
         ),
         // installment details
-        employee_installment_number_of_months:
-          deduction.employee_installment_number_of_months,
+        employee_installment_number_of_months: Number(
+          deduction.employee_installment_number_of_months
+        ),
         employee_installment_start_date:
           deduction.employee_installment_start_date,
         employee_installment_status: deduction.employee_installment_status,
@@ -1494,9 +1492,7 @@ export const payComputePagibigLoan = (emp, deduction) => {
   if (deduction.employee_installment_paytype_id === PagibigLoanId) {
     if (
       new Date(deduction.employee_installment_start_date) <=
-        new Date(emp.payroll_start_date) &&
-      new Date(deduction.employee_installment_end_date) >=
-        new Date(emp.payroll_start_date)
+      new Date(emp.payroll_start_date)
     ) {
       finalAmount = Number(deduction.employee_installment_amount) / 2;
       pagibigLoanList.push({
@@ -1517,8 +1513,9 @@ export const payComputePagibigLoan = (emp, deduction) => {
           deduction.employee_installment_start_date
         ),
         // installment details
-        employee_installment_number_of_months:
-          deduction.employee_installment_number_of_months,
+        employee_installment_number_of_months: Number(
+          deduction.employee_installment_number_of_months
+        ),
         employee_installment_start_date:
           deduction.employee_installment_start_date,
         employee_installment_status: deduction.employee_installment_status,
@@ -1536,9 +1533,7 @@ export const payComputePagibigMP2 = (emp, deduction) => {
   if (deduction.employee_installment_paytype_id === PagibigMP2Id) {
     if (
       new Date(deduction.employee_installment_start_date) <=
-        new Date(emp.payroll_start_date) &&
-      new Date(deduction.employee_installment_end_date) >=
-        new Date(emp.payroll_start_date)
+      new Date(emp.payroll_start_date)
     ) {
       finalAmount = Number(deduction.employee_installment_amount) / 2;
       pagibigMP2List.push({
@@ -1559,8 +1554,9 @@ export const payComputePagibigMP2 = (emp, deduction) => {
           deduction.employee_installment_start_date
         ),
         // installment details
-        employee_installment_number_of_months:
-          deduction.employee_installment_number_of_months,
+        employee_installment_number_of_months: Number(
+          deduction.employee_installment_number_of_months
+        ),
         employee_installment_start_date:
           deduction.employee_installment_start_date,
         employee_installment_status: deduction.employee_installment_status,
@@ -1578,9 +1574,7 @@ export const payComputeSSSLoan = (emp, deduction) => {
   if (deduction.employee_installment_paytype_id === SSSLoanId) {
     if (
       new Date(deduction.employee_installment_start_date) <=
-        new Date(emp.payroll_start_date) &&
-      new Date(deduction.employee_installment_end_date) >=
-        new Date(emp.payroll_start_date)
+      new Date(emp.payroll_start_date)
     ) {
       finalAmount = Number(deduction.employee_installment_amount) / 2;
       sSSLoanList.push({
@@ -1601,8 +1595,9 @@ export const payComputeSSSLoan = (emp, deduction) => {
           deduction.employee_installment_start_date
         ),
         // installment details
-        employee_installment_number_of_months:
-          deduction.employee_installment_number_of_months,
+        employee_installment_number_of_months: Number(
+          deduction.employee_installment_number_of_months
+        ),
         employee_installment_start_date:
           deduction.employee_installment_start_date,
         employee_installment_status: deduction.employee_installment_status,

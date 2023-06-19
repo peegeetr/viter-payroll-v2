@@ -34,8 +34,6 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 
         //check to see if payroll id (PR-001) in query string is not empty and less than 50 chars
         checkKeyword($payrollList->payroll_list_payroll_id);
-        checkUpdateIsPaidPayroll($payrollList);
-        $query = checkUpdateIsPaidPayrollList($payrollList);
 
 
         $allEarningsNumPayList = $data["earningsNumPayList"];
@@ -59,9 +57,7 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
                 $employee_installment_status = $allPagibigLoanList[$pgbg]["employee_installment_status"];
                 $employee_installment_number_of_months = $allPagibigLoanList[$pgbg]["employee_installment_number_of_months"];
                 $numMonths = $allPagibigLoanList[$pgbg]["numOfMonths"];
-                // installemt start date DAY
-                $installmentDayDate = explode("-", $allPagibigLoanList[$pgbg]["employee_installment_start_date"]);
-                $installmentDay = intval($installmentDayDate[2]);
+
                 // End pay date DAY
                 $EndPayDayDate = explode("-", $allPagibigLoanList[$pgbg]["deduction_end_pay_date"]);
                 $EndPayDay = intval($EndPayDayDate[2]);
@@ -74,7 +70,7 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
                 }
                 if (
                     $numMonths >= $employee_installment_number_of_months &&
-                    $employee_installment_status === "0" && $installmentDay <= $EndPayDay
+                    $employee_installment_status === "0" && 28 <= $EndPayDay
                 ) {
                     $payrollList->employee_installment_status = 2;
                     checkUpdateDeductionInstallemnt($payrollList);
@@ -92,9 +88,6 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
                 $employee_installment_status = $allPagibigMP2List[$mp2]["employee_installment_status"];
                 $employee_installment_number_of_months = $allPagibigMP2List[$mp2]["employee_installment_number_of_months"];
                 $numMonths = $allPagibigMP2List[$mp2]["numOfMonths"];
-                // installemt start date DAY
-                $installmentDayDate = explode("-", $allPagibigMP2List[$mp2]["employee_installment_start_date"]);
-                $installmentDay = intval($installmentDayDate[2]);
                 // End pay date DAY
                 $EndPayDayDate = explode("-", $allPagibigMP2List[$mp2]["deduction_end_pay_date"]);
                 $EndPayDay = intval($EndPayDayDate[2]);
@@ -107,7 +100,7 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
                 }
                 if (
                     $numMonths >= $employee_installment_number_of_months &&
-                    $employee_installment_status === "0" && $installmentDay <= $EndPayDay
+                    $employee_installment_status === "0" && 28 <= $EndPayDay
                 ) {
                     $payrollList->employee_installment_status = 2;
                     checkUpdateDeductionInstallemnt($payrollList);
@@ -125,9 +118,6 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
                 $employee_installment_status = $allSSSLoanList[$sss]["employee_installment_status"];
                 $employee_installment_number_of_months = $allSSSLoanList[$sss]["employee_installment_number_of_months"];
                 $numMonths = $allSSSLoanList[$sss]["numOfMonths"];
-                // installemt start date DAY
-                $installmentDayDate = explode("-", $allSSSLoanList[$sss]["employee_installment_start_date"]);
-                $installmentDay = intval($installmentDayDate[2]);
                 // End pay date DAY
                 $EndPayDayDate = explode("-", $allSSSLoanList[$sss]["deduction_end_pay_date"]);
                 $EndPayDay = intval($EndPayDayDate[2]);
@@ -140,7 +130,7 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
                 }
                 if (
                     $numMonths >= $employee_installment_number_of_months &&
-                    $employee_installment_status === "0" && $installmentDay <= $EndPayDay
+                    $employee_installment_status === "0" && 28 <= $EndPayDay
                 ) {
                     $payrollList->employee_installment_status = 2;
                     checkUpdateDeductionInstallemnt($payrollList);
@@ -158,9 +148,7 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
                 $employee_installment_status = $allTuitionList[$tu]["employee_installment_status"];
                 $employee_installment_number_of_months = $allTuitionList[$tu]["employee_installment_number_of_months"];
                 $numMonths = $allTuitionList[$tu]["numOfMonths"];
-                // installemt start date DAY
-                $installmentDayDate = explode("-", $allTuitionList[$tu]["employee_installment_start_date"]);
-                $installmentDay = intval($installmentDayDate[2]);
+
                 // End pay date DAY
                 $EndPayDayDate = explode("-", $allTuitionList[$tu]["deduction_end_pay_date"]);
                 $EndPayDay = intval($EndPayDayDate[2]);
@@ -173,7 +161,7 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
                 }
                 if (
                     $numMonths >= $employee_installment_number_of_months &&
-                    $employee_installment_status === "0" && $installmentDay <= $EndPayDay
+                    $employee_installment_status === "0" && 28 <= $EndPayDay
                 ) {
                     $payrollList->employee_installment_status = 2;
                     checkUpdateDeductionInstallemnt($payrollList);
@@ -191,9 +179,7 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
                 $employee_installment_status = $allTithesList[$t]["employee_installment_status"];
                 $employee_installment_number_of_months = $allTithesList[$t]["employee_installment_number_of_months"];
                 $numMonths = $allTithesList[$t]["numOfMonths"];
-                // installemt start date DAY
-                $installmentDayDate = explode("-", $allTithesList[$t]["employee_installment_start_date"]);
-                $installmentDay = intval($installmentDayDate[2]);
+
                 // End pay date DAY
                 $EndPayDayDate = explode("-", $allTithesList[$t]["deduction_end_pay_date"]);
                 $EndPayDay = intval($EndPayDayDate[2]);
@@ -206,7 +192,7 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
                 }
                 if (
                     $numMonths >= $employee_installment_number_of_months &&
-                    $employee_installment_status === "0" && $installmentDay <= $EndPayDay
+                    $employee_installment_status === "0" && 28 <= $EndPayDay
                 ) {
                     $payrollList->employee_installment_status = 2;
                     checkUpdateDeductionInstallemnt($payrollList);
@@ -235,6 +221,8 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
             }
         }
 
+        checkUpdateIsPaidPayroll($payrollList);
+        $query = checkUpdateIsPaidPayrollList($payrollList);
         http_response_code(200);
         returnSuccess($payrollList, "Payroll type", $query);
     }

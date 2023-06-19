@@ -1,4 +1,4 @@
-import { getDateNow } from "../../../helpers/functions-general";
+import { formatDate, getDateNow } from "../../../helpers/functions-general";
 
 // formatting date
 function formatDateInstallment(date) {
@@ -127,4 +127,14 @@ export const getDeductionPayrollDateNow = () => {
   let month = dateNow.split("-")[1];
 
   return `${year}-${month}-01`;
+};
+
+// get pay period working days between dates
+export const getDeducPayPeriod = (startDate, endDate) => {
+  const mo = formatDate(startDate).split(" ")[1];
+  const day = formatDate(startDate).split(" ")[2];
+  const startYear = formatDate(startDate).split(" ")[3];
+  const endMo = formatDate(endDate).split(" ")[1];
+  const endYear = formatDate(endDate).split(" ")[3];
+  return `${mo} ${day}, ${startYear} - ${endMo} ${day}, ${endYear}`;
 };

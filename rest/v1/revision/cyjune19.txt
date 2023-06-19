@@ -2,6 +2,7 @@
 *controllers           
     - employee/installment/create.php
     - employee/installment/update.php
+    -> payroll/list/paid.php
     
 *models     
     -  employee/EmployeeInstallment.php

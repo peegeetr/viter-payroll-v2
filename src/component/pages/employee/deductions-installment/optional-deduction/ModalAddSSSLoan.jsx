@@ -113,7 +113,6 @@ const ModalAddSSSLoan = ({ item }) => {
               initialValues={initVal}
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
-                // console.log(values);
                 const employee_installment_amount = removeComma(
                   `${values.employee_installment_amount}`
                 );
@@ -125,7 +124,13 @@ const ModalAddSSSLoan = ({ item }) => {
                   Number(employee_installment_number_of_months)
                     ? "0" // ongoing
                     : "2"; // complete
-
+                console.log(
+                  values,
+                  Number(values.total_month) <
+                    Number(employee_installment_number_of_months),
+                  Number(values.total_month),
+                  Number(employee_installment_number_of_months)
+                );
                 mutation.mutate({
                   ...values,
                   employee_installment_amount,

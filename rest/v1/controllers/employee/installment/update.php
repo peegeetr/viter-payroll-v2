@@ -28,7 +28,7 @@ if (array_key_exists("employeeInstallmentId", $_GET)) {
 
     $total_month = checkIndex($data, "total_month");
 
-    if ($total_month > $installment->employee_installment_number_of_months) {
+    if ($total_month >= $installment->employee_installment_number_of_months) {
         $installment->employee_installment_status = 2;
     } else {
         $installment->employee_installment_status = checkIndex($data, "employee_installment_status");

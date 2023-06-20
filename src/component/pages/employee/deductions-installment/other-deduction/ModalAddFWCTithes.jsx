@@ -120,12 +120,11 @@ const ModalAddFWCTithes = ({ item }) => {
                 const employee_installment_number_of_months = removeComma(
                   `${values.employee_installment_number_of_months}`
                 );
-
                 const employee_installment_status =
-                  Number(values.total_month) <
+                  Number(values.total_month) >=
                   Number(employee_installment_number_of_months)
-                    ? "0" // ongoing
-                    : "2"; // complete
+                    ? "2" // ongoing
+                    : "0"; // complete
 
                 mutation.mutate({
                   ...values,

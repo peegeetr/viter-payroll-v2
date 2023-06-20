@@ -81,7 +81,7 @@ const ModalAddMP2 = ({ item }) => {
       ? item.employee_installment_number_of_months
       : "",
     employee_installment_amount: item ? item.employee_installment_amount : "",
-    employee_installment_status: item ? item.employee_installment_status : "",
+    employee_installment_status: item ? item.employee_installment_status : "0",
     employee_installment_details: item
       ? item.employee_installment_details
       : "Pag-ibig MP2",
@@ -122,9 +122,16 @@ const ModalAddMP2 = ({ item }) => {
                   `${values.employee_installment_amount}`
                 );
 
+                const employee_installment_status =
+                  Number(values.total_month) >=
+                  Number(values.employee_installment_number_of_months)
+                    ? "2" // ongoing
+                    : "0"; // complete
+
                 mutation.mutate({
                   ...values,
                   employee_installment_amount,
+                  employee_installment_status,
                 });
               }}
             >

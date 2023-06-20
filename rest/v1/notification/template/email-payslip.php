@@ -2,7 +2,7 @@
 
 function getHtmlEmailPayslip(
   $link,
-  $ROOT_DOMAIN
+  $HRIS_DOMAIN
 ) {
   $html = '
   <style>
@@ -81,7 +81,7 @@ function getHtmlEmailPayslip(
           </p>
 
           <a
-            href="' . $ROOT_DOMAIN . '' . $link . '"
+            href="' . $HRIS_DOMAIN . '' . $link . '"
             style="
               padding: 4px 25px;
               background-color: #0b6351;
@@ -110,7 +110,7 @@ function getHtmlEmailPayslip(
                 font-family: Helvetica Neue, san-serif;
                 color: #505050;
               "
-              >' . $ROOT_DOMAIN . '' . $link . '</a
+              >' . $HRIS_DOMAIN . '' . $link . '</a
             >
           </p>
         </div>

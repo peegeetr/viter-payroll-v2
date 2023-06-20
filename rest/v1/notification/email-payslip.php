@@ -26,7 +26,7 @@ function sendEmail($email, $payrollId, $link)
 	$mail->isHTML(true);
 	$mail->Body = getHtmlEmailPayslip(
 		$link,
-		ROOT_DOMAIN
+		HRIS_DOMAIN
 	);
 	$mail->addAddress($email);
 

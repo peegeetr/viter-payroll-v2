@@ -1,0 +1,25 @@
+
+*controllers           
+    - 
+    
+*models     
+    - 
+  
+*htaccess 
+    - 
+
+*db tables 
+    - 
+
+*core 
+    - 
+
+*extra 
+    - notification/template/email-payslip.php
+    - notification/email-payslip.php
+    - notification/mail-config.php
+    
+Patrick
+    - 
+
+ 

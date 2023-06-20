@@ -12,11 +12,14 @@ define("ADMIN", "jhonny.dichoso@frontlinebusiness.com.ph");
 
 // local 
 define("ROOT_DOMAIN", "http://127.0.0.1:5173/v2");
+define("HRIS_DOMAIN", "http://127.0.0.1:5173/v2");
 // define("IMAGES_URL", "http://localhost:3000/dev-app/img");
 
 // dev online 
 define("IMAGES_URL", "http://127.0.0.1:5173/img");
+// define("HRIS_DOMAIN", "https://hr-app.frontlinebusiness.com.ph");
 
 // production online
+// define("HRIS_DOMAIN", "https://hris.frontlinebusiness.com.ph");
 // define("ROOT_DOMAIN", "https://frontlineworshipcenter.org/donate");
 // define("ROOT_DOMAIN", "https://frontlineworshipcenter.org/donate/img");

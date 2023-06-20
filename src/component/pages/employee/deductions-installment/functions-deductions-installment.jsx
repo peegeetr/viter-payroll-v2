@@ -136,5 +136,5 @@ export const getDeducPayPeriod = (startDate, endDate) => {
   const startYear = formatDate(startDate).split(" ")[3];
   const endMo = formatDate(endDate).split(" ")[1];
   const endYear = formatDate(endDate).split(" ")[3];
-  return `${mo} ${day}, ${startYear} - ${endMo} ${day}, ${endYear}`;
+  return `${mo} ${day} ${startYear} - ${endMo} ${day} ${endYear}`;
 };

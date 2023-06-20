@@ -20,6 +20,6 @@
     - notification/mail-config.php
     
 Patrick
-    - 
+    - Both uploaded to dev and prod.
 
  

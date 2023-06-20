@@ -19,6 +19,6 @@
     - notification/template/email-payslip.php
     
 Patrick
-    - 
+    - Both uploaded to dev and prod.
 
  

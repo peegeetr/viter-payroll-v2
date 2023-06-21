@@ -26,6 +26,7 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
         // get data
         // get listpayrollid from query string
         $payrollList->payroll_list_aid = $_GET['listpayrollid'];
+        $payrollList->payroll_list_basic_pay = checkIndex($data, "payroll_list_basic_pay");
         $payrollList->payroll_list_gross = checkIndex($data, "payroll_list_gross");
         $payrollList->payroll_list_deduction = checkIndex($data, "payroll_list_deduction");
         $payrollList->payroll_list_net_pay = checkIndex($data, "payroll_list_net_pay");

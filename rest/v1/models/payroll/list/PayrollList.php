@@ -662,6 +662,7 @@ class PayrollList
     {
         try {
             $sql = "update {$this->tblPayrollList} set ";
+            $sql .= "payroll_list_basic_pay = :payroll_list_basic_pay, ";
             $sql .= "payroll_list_gross = :payroll_list_gross, ";
             $sql .= "payroll_list_deduction = :payroll_list_deduction, ";
             $sql .= "payroll_list_net_pay = :payroll_list_net_pay, ";
@@ -669,6 +670,7 @@ class PayrollList
             $sql .= "where payroll_list_aid = :payroll_list_aid ";
             $query = $this->connection->prepare($sql);
             $query->execute([
+                "payroll_list_basic_pay" => $this->payroll_list_basic_pay,
                 "payroll_list_gross" => $this->payroll_list_gross,
                 "payroll_list_deduction" => $this->payroll_list_deduction,
                 "payroll_list_net_pay" => $this->payroll_list_net_pay,

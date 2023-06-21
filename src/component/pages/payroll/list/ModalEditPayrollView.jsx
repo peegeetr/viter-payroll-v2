@@ -53,12 +53,14 @@ const ModalEditPayrollView = ({ item }) => {
   };
 
   const initVal = {
+    payroll_list_basic_pay: item.payroll_list_basic_pay,
     payroll_list_gross: item.payroll_list_gross,
     payroll_list_deduction: item.payroll_list_deduction,
     payroll_list_net_pay: item.payroll_list_net_pay,
   };
 
   const yupSchema = Yup.object({
+    payroll_list_basic_pay: Yup.string().required("Required"),
     payroll_list_gross: Yup.string().required("Required"),
     payroll_list_deduction: Yup.string().required("Required"),
     payroll_list_net_pay: Yup.string().required("Required"),
@@ -84,6 +86,9 @@ const ModalEditPayrollView = ({ item }) => {
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
                 // console.log(values);
+                const payroll_list_basic_pay = removeComma(
+                  `${values.payroll_list_basic_pay}`
+                );
                 const payroll_list_gross = removeComma(
                   `${values.payroll_list_gross}`
                 );
@@ -95,6 +100,7 @@ const ModalEditPayrollView = ({ item }) => {
                 );
                 mutation.mutate({
                   ...values,
+                  payroll_list_basic_pay,
                   payroll_list_gross,
                   payroll_list_deduction,
                   payroll_list_net_pay,
@@ -129,6 +135,19 @@ const ModalEditPayrollView = ({ item }) => {
                         <p className="m-0">{item.payroll_list_employee_name}</p>
                       </div>
 
+                      <div className="grid grid-cols-[6rem_1fr] mt-3">
+                        <p className="m-0 text-primary font-bold">
+                          Basic pay :{" "}
+                        </p>
+                        <div className="relative">
+                          <InputText
+                            num="num"
+                            name="payroll_list_basic_pay"
+                            type="text"
+                            disabled={mutation.isLoading}
+                          />
+                        </div>
+                      </div>
                       <div className="grid grid-cols-[6rem_1fr] mt-3">
                         <p className="m-0 text-primary font-bold">Gross : </p>
                         <div className="relative">

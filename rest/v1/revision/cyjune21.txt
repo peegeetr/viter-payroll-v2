@@ -4,7 +4,7 @@
     - deductions/update-amount.php
     - earnings/functions.php
     - earnings/update-amount.php
-    -> payroll/list/functions.php
+    - payroll/list/functions.php
     -> payroll/list/update-amount.php
     
 *models     
@@ -15,7 +15,7 @@
 *htaccess 
     - #earnings
     - #deductions
-    -> #payroll list paid
+    - #payroll list paid
 
 *db tables 
     - 

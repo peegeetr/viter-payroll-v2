@@ -5,15 +5,10 @@ import {
 } from "../../../helpers/functions-general";
 import {
   absencesId,
-  employeeReferralBonusId,
-  hazardPayId,
-  holidayId,
-  inflationAdjustmentId,
   leaveId,
   nightDiffId,
   otherBenefitsEarningsId,
   overtimeId,
-  payAdjustmentId,
   undertimeId,
   wagesEarningsId,
 } from "../../../helpers/functions-payitemId";
@@ -41,7 +36,8 @@ const PayslipEarnings = ({
   let ndHrs = Number(payslip?.data[0].payroll_list_nd_hrs);
   let totalHrs = holidayHrs + leaveHrs;
   let basicHrs = days * 8 - totalHrs;
-  let basicPay = periodPay;
+  // let basicPay = periodPay;
+  let basicPay = Number(payslip?.data[0].payroll_list_basic_pay);
   let gross = payslip?.data[0].payroll_list_gross;
   let totalBenefits = payslip?.data[0].payroll_list_total_benefits;
   let totalAmount = basicPay;

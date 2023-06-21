@@ -1,8 +1,8 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import React from "react";
-import { FaTrash } from "react-icons/fa";
+import { FaTrash, FaEdit } from "react-icons/fa";
 import { useInView } from "react-intersection-observer";
-import { setIsRestore } from "../../../../store/StoreAction";
+import { setIsEdit, setIsRestore } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
 import {
   devApiUrl,
@@ -17,9 +17,11 @@ import ServerError from "../../../partials/ServerError";
 import ModalDeleteRestoreRq from "../../../partials/modals/ModalDeleteRestoreRq";
 import TableSpinner from "../../../partials/spinners/TableSpinner";
 import { getStatus } from "./function-manage-list";
+import ModalEditManageEarnings from "./ModalEditManageEarnings";
 
 const ManageEarningsList = () => {
   const { store, dispatch } = React.useContext(StoreContext);
+  const [itemEdit, setItemEdit] = React.useState(null);
   const [dataItem, setData] = React.useState(null);
   const [id, setId] = React.useState(null);
   const [isDel, setDel] = React.useState(false);
@@ -64,6 +66,10 @@ const ManageEarningsList = () => {
     }
   }, [inView]);
 
+  const handleEdit = (item) => {
+    dispatch(setIsEdit(true));
+    setItemEdit(item);
+  };
   const handleDelete = (item) => {
     dispatch(setIsRestore(true));
     setId(item.earnings_aid);
@@ -83,9 +89,6 @@ const ManageEarningsList = () => {
         onSearch={onSearch}
       />
       <div className="relative text-center">
-        {/* {isFetching && !isFetchingNextPage && status !== "loading" && (
-          <FetchingSpinner />
-        )} */}
         <div className=" overflow-x-auto z-0">
           <table>
             <thead>
@@ -98,10 +101,6 @@ const ManageEarningsList = () => {
                 <th className="min-w-[6rem] text-right ">Amount</th>
                 <th className="text-center ">Installment</th>
                 <th className="min-w-[10rem]">Coverage date</th>
-                {/* <th className="min-w-[6rem]">End Date</th> */}
-                {/* <th className="min-w-[7rem]">Pay Type</th>
-                <th className="min-w-[7rem]">Frequency</th> */}
-                {/* <th className="min-w-[8rem]">Details</th> */}
                 <th className="min-w-[5rem]">Status</th>
                 <th className="text-right">Actions</th>
               </tr>
@@ -187,6 +186,18 @@ const ManageEarningsList = () => {
                             </button>
                           </div>
                         )}
+                        {store.credentials.data.role_is_developer === 1 && (
+                          <div className="flex items-center justify-end gap-2">
+                            <button
+                              type="button"
+                              className="btn-action-table tooltip-action-table"
+                              data-tooltip="Edit"
+                              onClick={() => handleEdit(item)}
+                            >
+                              <FaEdit />
+                            </button>
+                          </div>
+                        )}
                       </td>
                     </tr>
                   ))}
@@ -206,6 +217,7 @@ const ManageEarningsList = () => {
         />
       </div>
 
+      {store.isEdit && <ModalEditManageEarnings item={itemEdit} />}
       {store.isRestore && (
         <ModalDeleteRestoreRq
           id={id}

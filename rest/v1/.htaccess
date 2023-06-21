@@ -64,7 +64,8 @@ RewriteRule ^payrollList/all-salary-category/([0-9]+)$ controllers/payroll/list/
 RewriteRule ^payrollList/report/wtax/monthly-gross/([A-Za-z0-9-]+)$ controllers/payroll/list/report-wtax-monthly-gross.php?year=$1 [L]   
 RewriteRule ^payrollList/report/wtax/summary/([A-Za-z0-9-]+)$ controllers/payroll/list/report-wtax-summary.php?month=$1 [L]   
 RewriteRule ^payrollList/report/bank-template/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)$ controllers/payroll/list/report-bank-template.php?startDate=$1&endDate=$2 [L]   
-     
+RewriteRule ^payrollList/update-amount/([0-9]+)$ controllers/payroll/list/update-amount.php?listpayrollid=$1 [L]  
+
 #earnings
 RewriteRule ^earnings$ controllers/earnings/earnings.php [L]
 RewriteRule ^earnings/([0-9]+)$ controllers/earnings/earnings.php?earningsid=$1 [L] 
@@ -75,6 +76,7 @@ RewriteRule ^earnings/summary/([0-9]+)$ controllers/earnings/summary.php?start=$
 RewriteRule ^earnings/filter/([0-9]+)/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)$ controllers/earnings/filter.php?paytypeId=$1&startDate=$2&endDate=$3 [L]  
 RewriteRule ^earnings/report/paytype/view/([0-9]+)/([A-Za-z0-9-]+)/([0-9]+)$ controllers/earnings/report-paytype-id.php?start=$1&payrollId=$2&payitemId=$3 [L]   
 RewriteRule ^earnings/update-amount/([0-9]+)$ controllers/earnings/update-amount.php?earningsid=$1 [L]  
+RewriteRule ^payrollList/update-amount/([0-9]+)$ controllers/earnings/update-amount.php?earningsid=$1 [L]  
 
 #deductions
 RewriteRule ^deductions$ controllers/deductions/deductions.php [L]

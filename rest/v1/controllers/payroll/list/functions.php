@@ -378,3 +378,11 @@ function checkReadReportBankTemplate($object)
     checkQuery($query, "Empty records. (read report bank template)");
     return $query;
 }
+
+// Update 
+function checkUpdateAmount($object)
+{
+    $query = $object->updateAmount();
+    checkQuery($query, "There's a problem processing your request. (update amount)");
+    return $query;
+}

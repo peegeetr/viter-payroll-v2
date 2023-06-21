@@ -297,4 +297,4 @@ export const showTips = (item) => {
   return `${item.payroll_list_employee_name}`;
 };
 
-export const pesoSign = <span> &#8369; </span>;
+export const pesoSign = <span className="mr-1"> &#8369; </span>;

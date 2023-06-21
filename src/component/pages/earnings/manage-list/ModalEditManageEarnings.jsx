@@ -32,6 +32,7 @@ const ModalEditManageEarnings = ({ item }) => {
       // console.log(data);
       // show success box
       if (data.success) {
+        dispatch(setIsEdit(false));
         dispatch(setSuccess(true));
         dispatch(setMessage(`Successfuly updated.`));
       }

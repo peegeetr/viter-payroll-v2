@@ -657,6 +657,29 @@ class PayrollList
         return $query;
     }
 
+    // update Amount
+    public function updateAmount()
+    {
+        try {
+            $sql = "update {$this->tblPayrollList} set ";
+            $sql .= "payroll_list_gross = :payroll_list_gross, ";
+            $sql .= "payroll_list_deduction = :payroll_list_deduction, ";
+            $sql .= "payroll_list_net_pay = :payroll_list_net_pay, ";
+            $sql .= "payroll_list_datetime = :payroll_list_datetime ";
+            $sql .= "where payroll_list_aid = :payroll_list_aid ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "payroll_list_gross" => $this->payroll_list_gross,
+                "payroll_list_deduction" => $this->payroll_list_deduction,
+                "payroll_list_net_pay" => $this->payroll_list_net_pay,
+                "payroll_list_datetime" => $this->payroll_list_datetime,
+                "payroll_list_aid" => $this->payroll_list_aid,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
 
 
     // create Deduction

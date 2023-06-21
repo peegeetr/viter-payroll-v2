@@ -11,24 +11,28 @@ import {
 } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
 import { InputText } from "../../../helpers/FormInputs";
-import { devApiUrl, removeComma } from "../../../helpers/functions-general";
+import {
+  devApiUrl,
+  getPayPeriod,
+  removeComma,
+} from "../../../helpers/functions-general";
 import { queryData } from "../../../helpers/queryData";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 
-const ModalEditManageDeduction = ({ item }) => {
+const ModalEditPayrollView = ({ item }) => {
   const { store, dispatch } = React.useContext(StoreContext);
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
     mutationFn: (values) =>
       queryData(
-        `${devApiUrl}/v1/deduction/update-amount/${item.deduction_aid}`,
+        `${devApiUrl}/v1/payrollList/update-amount/${item.payroll_list_aid}`,
         "put",
         values
       ),
     onSuccess: (data) => {
       // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: ["deduction"] });
+      queryClient.invalidateQueries({ queryKey: ["payrollList"] });
       // console.log(data);
       // show success box
       if (data.success) {
@@ -49,20 +53,22 @@ const ModalEditManageDeduction = ({ item }) => {
   };
 
   const initVal = {
-    deduction_amount: item.deduction_amount,
+    payroll_list_gross: item.payroll_list_gross,
+    payroll_list_deduction: item.payroll_list_deduction,
+    payroll_list_net_pay: item.payroll_list_net_pay,
   };
 
   const yupSchema = Yup.object({
-    deduction_amount: Yup.string().required("Required"),
+    payroll_list_gross: Yup.string().required("Required"),
+    payroll_list_deduction: Yup.string().required("Required"),
+    payroll_list_net_pay: Yup.string().required("Required"),
   });
   return (
     <>
       <div className="fixed top-0 right-0 bottom-0 left-0 flex items-center justify-center bg-dark bg-opacity-50 z-50">
         <div className="p-1 w-[350px] rounded-b-2xl">
           <div className="flex justify-between items-center bg-primary p-3 rounded-t-2xl">
-            <h3 className="text-white text-sm">
-              Edit Deduction : {item.deduction_payroll_id}
-            </h3>
+            <h3 className="text-white text-sm">Update Payroll</h3>
             <button
               type="button"
               className="text-gray-200 text-base"
@@ -78,10 +84,21 @@ const ModalEditManageDeduction = ({ item }) => {
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
                 // console.log(values);
-                const deduction_amount = removeComma(
-                  `${values.deduction_amount}`
+                const payroll_list_gross = removeComma(
+                  `${values.payroll_list_gross}`
                 );
-                mutation.mutate({ ...values, deduction_amount });
+                const payroll_list_deduction = removeComma(
+                  `${values.payroll_list_deduction}`
+                );
+                const payroll_list_net_pay = removeComma(
+                  `${values.payroll_list_net_pay}`
+                );
+                mutation.mutate({
+                  ...values,
+                  payroll_list_gross,
+                  payroll_list_deduction,
+                  payroll_list_net_pay,
+                });
               }}
             >
               {(props) => {
@@ -92,30 +109,58 @@ const ModalEditManageDeduction = ({ item }) => {
                         <p className="m-0 text-primary font-bold">
                           Payroll ID :{" "}
                         </p>
-                        <p className="m-0">{item.deduction_payroll_id}</p>
+                        <p className="m-0">{item.payroll_id}</p>
+                      </div>
+                      <div className="grid grid-cols-[6rem_1fr]">
+                        <p className="m-0 text-primary font-bold">
+                          Pay Period :{" "}
+                        </p>
+                        <p className="m-0">
+                          {getPayPeriod(
+                            item.payroll_start_date,
+                            item.payroll_end_date
+                          )}
+                        </p>
                       </div>
                       <div className="grid grid-cols-[6rem_1fr]">
                         <p className="m-0 text-primary font-bold">
                           Employee :{" "}
                         </p>
-                        <p className="m-0">{item.deduction_employee}</p>
+                        <p className="m-0">{item.payroll_list_employee_name}</p>
                       </div>
-                      <div className="grid grid-cols-[6rem_1fr] my-1">
-                        <p className="m-0 text-primary font-bold">
-                          Pay Item :{" "}
-                        </p>
-                        <p className="m-0">{item.payitem_name}</p>
-                      </div>
-                      <div className="grid grid-cols-[6rem_1fr] ">
-                        <p className="m-0 text-primary font-bold">Details : </p>
-                        <p className="m-0">{item.deduction_details}</p>
-                      </div>
-                      <div className="grid grid-cols-[6rem_1fr] my-3">
-                        <p className="m-0 text-primary font-bold">Amount : </p>
+
+                      <div className="grid grid-cols-[6rem_1fr] mt-3">
+                        <p className="m-0 text-primary font-bold">Gross : </p>
                         <div className="relative">
                           <InputText
                             num="num"
-                            name="deduction_amount"
+                            name="payroll_list_gross"
+                            type="text"
+                            disabled={mutation.isLoading}
+                          />
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-[6rem_1fr] my-5">
+                        <p className="m-0 text-primary font-bold">
+                          Deduction :{" "}
+                        </p>
+                        <div className="relative">
+                          <InputText
+                            num="num"
+                            name="payroll_list_deduction"
+                            type="text"
+                            disabled={mutation.isLoading}
+                          />
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-[6rem_1fr] mb-3">
+                        <p className="m-0 text-primary font-bold">Net Pay : </p>
+                        <div className="relative">
+                          <InputText
+                            num="num"
+                            name="payroll_list_net_pay"
                             type="text"
                             disabled={mutation.isLoading}
                           />
@@ -150,4 +195,4 @@ const ModalEditManageDeduction = ({ item }) => {
   );
 };
 
-export default ModalEditManageDeduction;
+export default ModalEditPayrollView;

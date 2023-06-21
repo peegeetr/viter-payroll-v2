@@ -8,6 +8,7 @@ import {
   getPayPeriod,
   getUrlParam,
   numberWithCommas,
+  pesoSign,
 } from "../../../../helpers/functions-general";
 import { queryDataInfinite } from "../../../../helpers/queryDataInfinite";
 import BreadCrumbs from "../../../../partials/BreadCrumbs";
@@ -132,6 +133,7 @@ const SummaryTypeViewBasicPay = () => {
                           <td>{counter++}.</td>
                           <td>{item.payroll_list_employee_name}</td>
                           <td className="w-[15rem] text-right mt-2 pr-2 font-bold">
+                            {pesoSign}
                             {`${numberWithCommas(
                               Number(item.payroll_list_basic_pay).toFixed(2)
                             )}`}

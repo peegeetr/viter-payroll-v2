@@ -9,6 +9,7 @@ import {
   getPayPeriod,
   getUrlParam,
   numberWithCommas,
+  pesoSign,
 } from "../../../../helpers/functions-general";
 import { queryDataInfinite } from "../../../../helpers/queryDataInfinite";
 import BreadCrumbs from "../../../../partials/BreadCrumbs";
@@ -181,6 +182,7 @@ const SummaryTypeView = () => {
                               `${Number(item.earnings_rate)}%`}
                           </td>
                           <td className="w-[15rem] text-right mt-2 pr-2 font-bold">
+                            {pesoSign}
                             {item.paytype_category === "earnings"
                               ? `${numberWithCommas(
                                   Number(item.earnings_amount).toFixed(2)
@@ -198,7 +200,7 @@ const SummaryTypeView = () => {
             </table>
             {status !== "loading" && (
               <div className="text-right mt-2 pr-2 text-primary font-bold">
-                <span className="mr-8">Total :</span>{" "}
+                <span className="mr-8">Total :</span> {pesoSign}
                 {numberWithCommas(total.toFixed(2))}
               </div>
             )}

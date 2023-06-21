@@ -1,6 +1,7 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import React from "react";
 import { MdOutlineReceipt } from "react-icons/md";
+import { FaEdit } from "react-icons/fa";
 import { useInView } from "react-intersection-observer";
 import { Link } from "react-router-dom";
 import { StoreContext } from "../../../../store/StoreContext";
@@ -12,6 +13,7 @@ import {
   getWorkingDays,
   getWorkingDaysInMonth,
   numberWithCommas,
+  pesoSign,
 } from "../../../helpers/functions-general";
 import { queryDataInfinite } from "../../../helpers/queryDataInfinite";
 import LoadmoreRq from "../../../partials/LoadmoreRq";
@@ -22,9 +24,12 @@ import TableSpinner from "../../../partials/spinners/TableSpinner";
 import { payrollCategoryBonusId } from "../../../helpers/functions-payroll-category-id";
 import { payrollCategory13thMonthId } from "../../../helpers/functions-payroll-category-id";
 import { payrollCategorySalaryId } from "../../../helpers/functions-payroll-category-id";
+import { setIsEdit } from "../../../../store/StoreAction";
+import ModalEditPayrollView from "./ModalEditPayrollView";
 
 const PayrollViewList = () => {
   const { store, dispatch } = React.useContext(StoreContext);
+  const [itemEdit, setItemEdit] = React.useState(null);
   const link = getUserType(store.credentials.data.role_is_developer === 1);
   const pid = getUrlParam().get("payrollid");
 
@@ -85,6 +90,10 @@ const PayrollViewList = () => {
     }
   }, [inView]);
 
+  const handleEdit = (item) => {
+    dispatch(setIsEdit(true));
+    setItemEdit(item);
+  };
   return (
     <>
       <div className="xs:flex text-primary">
@@ -245,14 +254,26 @@ const PayrollViewList = () => {
                         <td className="text-center">{counter++}.</td>
                         <td>{item.payroll_list_employee_name}</td>
                         <td className="text-right px-2">
-                          {numberWithCommas(item.payroll_list_gross)}
+                          {pesoSign}
+                          {item.payroll_list_gross === "" ||
+                          item.payroll_list_gross === 0
+                            ? "0.00"
+                            : numberWithCommas(item.payroll_list_gross)}
                         </td>
                         <td className="text-right px-2">
-                          {numberWithCommas(item.payroll_list_deduction)}
+                          {pesoSign}
+                          {item.payroll_list_deduction === "" ||
+                          item.payroll_list_deduction === 0
+                            ? "0.00"
+                            : numberWithCommas(item.payroll_list_deduction)}
                         </td>
                         <td className="text-right px-2">
-                          {Number(item.payroll_category_type) ===
-                          payrollCategoryBonusId
+                          {pesoSign}
+                          {item.payroll_list_gross === "" ||
+                          item.payroll_list_gross === 0
+                            ? `0.00`
+                            : Number(item.payroll_category_type) ===
+                              payrollCategoryBonusId
                             ? `${numberWithCommas(item.payroll_list_bonus)}`
                             : Number(item.payroll_category_type) ===
                               payrollCategory13thMonthId
@@ -262,9 +283,19 @@ const PayrollViewList = () => {
                             : `${numberWithCommas(item.payroll_list_net_pay)}`}
                         </td>
                         <td>
-                          {Number(item.payroll_category_type) ===
-                          payrollCategoryBonusId ? (
-                            <div className="flex items-center justify-end gap-1 mr-2">
+                          <div className="flex items-center justify-end gap-1 mr-2">
+                            {store.credentials.data.role_is_developer === 1 && (
+                              <button
+                                type="button"
+                                className="btn-action-table tooltip-action-table"
+                                data-tooltip="Edit"
+                                onClick={() => handleEdit(item)}
+                              >
+                                <FaEdit />
+                              </button>
+                            )}
+                            {Number(item.payroll_category_type) ===
+                            payrollCategoryBonusId ? (
                               <Link
                                 to={`${link}/payroll/list/payslip-bonus?payslipid=${item.payroll_list_aid}`}
                                 className="btn-action-table tooltip-action-table"
@@ -272,10 +303,8 @@ const PayrollViewList = () => {
                               >
                                 <MdOutlineReceipt />
                               </Link>
-                            </div>
-                          ) : Number(item.payroll_category_type) ===
-                            payrollCategory13thMonthId ? (
-                            <div className="flex items-center justify-end gap-1 mr-2">
+                            ) : Number(item.payroll_category_type) ===
+                              payrollCategory13thMonthId ? (
                               <Link
                                 to={`${link}/payroll/list/payslip-13th-Month?payslipid=${item.payroll_list_aid}`}
                                 className="btn-action-table tooltip-action-table"
@@ -283,9 +312,7 @@ const PayrollViewList = () => {
                               >
                                 <MdOutlineReceipt />
                               </Link>
-                            </div>
-                          ) : (
-                            <div className="flex items-center justify-end gap-1 mr-2">
+                            ) : (
                               <Link
                                 to={`${link}/payroll/list/payslip?payslipid=${item.payroll_list_aid}`}
                                 className="btn-action-table tooltip-action-table"
@@ -293,8 +320,8 @@ const PayrollViewList = () => {
                               >
                                 <MdOutlineReceipt />
                               </Link>
-                            </div>
-                          )}
+                            )}
+                          </div>
                         </td>
                       </tr>
                     );
@@ -454,6 +481,7 @@ const PayrollViewList = () => {
           </tbody>
         </table>
       </div>
+      {store.isEdit && <ModalEditPayrollView item={itemEdit} />}
     </>
   );
 };

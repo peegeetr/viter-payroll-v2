@@ -4,14 +4,18 @@
     - deductions/update-amount.php
     - earnings/functions.php
     - earnings/update-amount.php
+    -> payroll/list/functions.php
+    -> payroll/list/update-amount.php
     
 *models     
     - deductions/Deductions.php
     - earnings/Earnings.php
+    -> payroll/list/PayrollList.php
   
 *htaccess 
     - #earnings
     - #deductions
+    -> #payroll list paid
 
 *db tables 
     - 

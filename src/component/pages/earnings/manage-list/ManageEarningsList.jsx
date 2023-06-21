@@ -8,6 +8,7 @@ import {
   devApiUrl,
   formatDate,
   numberWithCommas,
+  pesoSign,
 } from "../../../helpers/functions-general";
 import { queryDataInfinite } from "../../../helpers/queryDataInfinite";
 import LoadmoreRq from "../../../partials/LoadmoreRq";
@@ -135,7 +136,7 @@ const ManageEarningsList = () => {
                       <td>{item.payitem_name}</td>
                       <td>{item.earnings_details}</td>
                       <td className="text-right">
-                        P
+                        {pesoSign}
                         {numberWithCommas(
                           Number(item.earnings_amount).toFixed(2)
                         )}

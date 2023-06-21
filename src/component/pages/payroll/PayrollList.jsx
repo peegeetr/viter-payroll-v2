@@ -16,6 +16,7 @@ import {
   getPayPeriod,
   getUserType,
   numberWithCommas,
+  pesoSign,
 } from "../../helpers/functions-general";
 import {
   payrollCategory13thMonthId,
@@ -176,6 +177,7 @@ const PayrollList = ({ setItemEdit }) => {
                       </td>
                       <td className="text-center">{item.count}</td>
                       <td className="text-right">
+                        {pesoSign}
                         {Number(item.payroll_category_type) ===
                         payrollCategoryBonusId
                           ? `${numberWithCommas(

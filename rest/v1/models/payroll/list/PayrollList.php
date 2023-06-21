@@ -1253,6 +1253,7 @@ class PayrollList
             $sql .= "sum(payrollList.payroll_list_pagibig_ee) as pag, ";
             $sql .= "sum(payrollList.payroll_list_deminimis) as deminimis, ";
             $sql .= "sum(payrollList.payroll_list_bonus) as bonus, ";
+            $sql .= "sum(payrollList.payroll_list_net_pay) as total_net, ";
             $sql .= "payrollList.payroll_list_employee_id, ";
             $sql .= "payrollList.payroll_list_employee_name, ";
             $sql .= "payroll.payroll_pay_date ";

@@ -203,6 +203,7 @@ export const payComputeCategory13thMonth = (category13thMonth, yearlyTax) => {
   let zero = "0.00";
   let taxYearly = 0;
   let baseAmount = 90000;
+  let annualNetSalary = 0;
 
   let payrollTotalAmount = 0;
   let totalBenefits = 0;
@@ -213,6 +214,7 @@ export const payComputeCategory13thMonth = (category13thMonth, yearlyTax) => {
   category13thMonth.map((cItem) => {
     // absencesUndertimeSum = cItem.total_absences + cItem.total_undertime;
     // totalAmount = (cItem.total_basic_pay - absencesUndertimeSum) / 12;
+    annualNetSalary = Number(cItem.total_gross) / 12;
     totalAmount = Number(cItem.total_gross) / 12;
     totalBenefits = Number(cItem.total_benefits) + Number(cItem.bonus);
     total13thAmount = totalAmount + totalBenefits;

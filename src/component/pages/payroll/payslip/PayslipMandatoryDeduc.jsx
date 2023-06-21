@@ -80,8 +80,15 @@ const PayslipMandatoryDeduc = ({ paytypeId, payslip, empid, payrollid }) => {
                 </td>
                 <td className=" text-right px-4 print:py-[2px]">
                   {numberWithCommas(
-                    Number(payslip?.data[0].payroll_list_madatory_ee).toFixed(2)
+                    (
+                      Number(payslip?.data[0].payroll_list_sss_ee) +
+                      Number(payslip?.data[0].payroll_list_pagibig_ee) +
+                      Number(payslip?.data[0].payroll_list_philhealth_ee)
+                    ).toFixed(2)
                   )}
+                  {/* {numberWithCommas(
+                    Number(payslip?.data[0].payroll_list_madatory_ee).toFixed(2)
+                  )} */}
                 </td>
               </tr>
             </>

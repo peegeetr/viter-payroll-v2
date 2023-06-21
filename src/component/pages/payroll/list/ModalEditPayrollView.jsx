@@ -51,7 +51,7 @@ const ModalEditPayrollView = ({ item }) => {
   const handleClose = () => {
     dispatch(setIsEdit(false));
   };
-
+  console.log(item);
   const initVal = {
     payroll_list_sss_er: item.payroll_list_sss_er,
     payroll_list_sss_ee: item.payroll_list_sss_ee,

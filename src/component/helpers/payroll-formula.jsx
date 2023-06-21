@@ -203,6 +203,7 @@ export const payComputeCategory13thMonth = (category13thMonth, yearlyTax) => {
   let zero = "0.00";
   let taxYearly = 0;
   let baseAmount = 90000;
+  let annualMinSalary = 250000;
   let annualNetSalary = 0;
 
   let payrollTotalAmount = 0;
@@ -214,19 +215,52 @@ export const payComputeCategory13thMonth = (category13thMonth, yearlyTax) => {
   category13thMonth.map((cItem) => {
     // absencesUndertimeSum = cItem.total_absences + cItem.total_undertime;
     // totalAmount = (cItem.total_basic_pay - absencesUndertimeSum) / 12;
-    annualNetSalary = Number(cItem.total_gross) / 12;
-    totalAmount = Number(cItem.total_gross) / 12;
-    totalBenefits = Number(cItem.total_benefits) + Number(cItem.bonus);
-    total13thAmount = totalAmount + totalBenefits;
-    totalShareEe = cItem.sss + cItem.pag + cItem.phic;
-    nonTax = totalBenefits + totalShareEe + cItem.deminimis;
+    const d = new Date();
+    const month = d.getMonth();
+    // const month = 10;
+    console.log(month);
+    annualNetSalary = Number(cItem.total_net);
+    total13thAmount = Number(cItem.total_gross) / 12;
+    console.log(total13thAmount, cItem.total_gross);
+    if (month >= 10 && month <= 11) {
+      console.log("000000000");
+      annualNetSalary =
+        Number(cItem.total_net) + Number(cItem.payroll_list_employee_salary);
+      total13thAmount =
+        (Number(cItem.total_gross) +
+          Number(cItem.payroll_list_employee_salary)) /
+        12;
+    }
+    console.log(
+      total13thAmount,
+      cItem.total_gross + Number(cItem.payroll_list_employee_salary)
+    );
+    // console.log(total13thAmount / 12, cItem.total_gross);
+    // totalBenefits = Number(cItem.total_benefits) + Number(cItem.bonus);
+    // total13thAmount = totalAmount + totalBenefits;
+    // totalShareEe = cItem.sss + cItem.pag + cItem.phic;
+    // nonTax = totalBenefits + totalShareEe + cItem.deminimis;
 
     taxYearly =
-      Number(total13thAmount) > baseAmount
-        ? computeTaxYearly(total13thAmount, yearlyTax, nonTax)
+      total13thAmount > baseAmount
+        ? compute13thMonthTax(
+            annualNetSalary,
+            yearlyTax,
+            total13thAmount,
+            baseAmount
+          )
         : 0;
+    // taxYearly =
+    //   Number(total13thAmount) > baseAmount
+    //     ? computeTaxYearly(total13thAmount, yearlyTax, nonTax)
+    //     : 0;
     finalAmount = total13thAmount - taxYearly;
-    // console.log(total13thAmount, totalAmount, cItem.total_gross, taxYearly);
+    console.log(
+      cItem.payroll_list_employee_name,
+      total13thAmount,
+      annualNetSalary,
+      taxYearly
+    );
     payrollTotalAmount += finalAmount;
     payrollList13thMonth.push({
       payroll_category: payrollCategory13thMonthId,
@@ -1213,6 +1247,28 @@ export const computeTaxYearly = (gross, yearlyTax, nonTax = 0) => {
     }
   });
 
+  return taxDue;
+};
+
+// compute 13th month tax due annualNetSalary, yearlyTax, totalAmount
+export const compute13thMonthTax = (
+  annualNetSalary,
+  yearlyTax,
+  total13thAmount,
+  baseAmount
+) => {
+  let taxDue = 0;
+
+  yearlyTax?.map((yTax) => {
+    if (
+      Number(annualNetSalary) >= Number(yTax.tax_yearly_from) &&
+      Number(annualNetSalary) <= Number(yTax.tax_yearly_to)
+    ) {
+      taxDue =
+        (total13thAmount - baseAmount) * (Number(yTax.tax_yearly_rate) / 100);
+    }
+  });
+  console.log(taxDue);
   return taxDue;
 };
 

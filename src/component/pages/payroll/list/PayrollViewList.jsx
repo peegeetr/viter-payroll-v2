@@ -202,8 +202,9 @@ const PayrollViewList = () => {
                         ? Number(item.payroll_list_bonus)
                         : Number(item.payroll_category_type) ===
                           payrollCategory13thMonthId
-                        ? Number(item.payroll_list_13th_month)
-                        : Number(item.payroll_list_total_benefits);
+                        ? Number(item.payroll_list_gross)
+                        : // ? Number(item.payroll_list_13th_month)
+                          Number(item.payroll_list_total_benefits);
 
                     sssEr += Number(item.payroll_list_sss_er);
                     phicEr += Number(item.payroll_list_philhealth_er);

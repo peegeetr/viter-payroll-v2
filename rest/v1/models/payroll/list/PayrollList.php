@@ -1279,6 +1279,7 @@ class PayrollList
             $sql .= "sum(payrollList.payroll_list_net_pay) as total_net, ";
             $sql .= "payrollList.payroll_list_employee_id, ";
             $sql .= "payrollList.payroll_list_employee_name, ";
+            $sql .= "payrollList.payroll_list_employee_salary, ";
             $sql .= "payroll.payroll_pay_date ";
             $sql .= "from {$this->tblPayrollList} as payrollList, ";
             $sql .= "{$this->tblPayroll} as payroll ";

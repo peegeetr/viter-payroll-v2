@@ -52,12 +52,7 @@ const PayslipList = ({ payslip }) => {
   let totalHrs = holidayHrs;
   let basicHrs = days * 8 - totalHrs;
   let basicPay = hourRate * basicHrs - holidayHrs;
-  // console.log(
-  //   payslip
-  //   // Number(payslip?.data[0].payroll_list_gross),
-  //   // Number(payslip?.data[0].payroll_list_total_benefits),
-  //   // basicPay
-  // );
+
   return (
     <>
       <PayslipHeader
@@ -89,66 +84,6 @@ const PayslipList = ({ payslip }) => {
               periodPay={periodPay}
               dailyRate={dailyRate}
             />
-
-            {/* <tr className="font-semibold bg-gray-100 hover:bg-gray-100 uppercase">
-              <td className="w-[30rem]">WAGES</td>
-              <td className="w-[10rem]">hours</td>
-              <td className="w-[10rem] text-right  px-4">rate</td>
-              <td className="text-right  px-4">total</td>
-            </tr>
-            <tr className="hover:bg-transparent">
-              <td className="w-[20rem]">{`Basic Pay ${
-                deminimis > 0
-                  ? `(De Minimis inclusive ${numberWithCommas(deminimis)})`
-                  : ``
-              }`}</td>
-              <td className="w-[10rem]">{basicHrs}</td>
-              <td className="text-right   px-4">{hourRate}</td>
-              <td className="text-right px-4">
-                {numberWithCommas(basicPay.toFixed(2))}
-              </td>
-            </tr>
-            {isLoading ? (
-              <tr className="text-center ">
-                <td colSpan="100%" className="p-10">
-                  Loading...
-                </td>
-              </tr>
-            ) : (
-              <>
-                {earnings?.data.map((item, key) => {
-                  return (
-                    <tr key={key} className="hover:bg-transparent">
-                      <td className="w-[20rem]">{item.earnings_details}</td>
-                      <td className="w-[10rem]">8</td>
-                      <td className="text-right   px-4">
-                        {(
-                          hourRate *
-                          (Number(item.earnings_holidays_rate) / 100)
-                        ).toFixed(4)}
-                      </td>
-                      <td className="text-right px-4">
-                        {numberWithCommas(
-                          Number(item.earnings_amount).toFixed(2)
-                        )}
-                      </td>
-                    </tr>
-                  );
-                })}
-                {earnings?.data.length > 0 && (
-                  <tr className="font-semibold bg-gray-100 hover:bg-gray-100">
-                    <td colSpan={3} className="uppercase text-right xs:pr-4">
-                      Total Wages
-                    </td>
-                    <td className=" text-right px-4">
-                      {numberWithCommas(
-                        Number(payslip?.data[0].payroll_list_gross).toFixed(2)
-                      )}
-                    </td>
-                  </tr>
-                )}
-              </>
-            )} */}
 
             <tr className="hover:bg-white">
               <td colSpan={4} className="print:py-[2px]">

@@ -32,6 +32,7 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
         $payrollList->payroll_list_pagibig_ee = checkIndex($data, "payroll_list_pagibig_ee");
         $payrollList->payroll_list_philhealth_er = checkIndex($data, "payroll_list_philhealth_er");
         $payrollList->payroll_list_philhealth_ee = checkIndex($data, "payroll_list_philhealth_ee");
+        $payrollList->payroll_list_madatory_ee = checkIndex($data, "payroll_list_madatory_ee");
         $payrollList->payroll_list_tax = checkIndex($data, "payroll_list_tax");
         $payrollList->payroll_list_basic_pay = checkIndex($data, "payroll_list_basic_pay");
         $payrollList->payroll_list_gross = checkIndex($data, "payroll_list_gross");

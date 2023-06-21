@@ -668,6 +668,7 @@ class PayrollList
             $sql .= "payroll_list_pagibig_ee = :payroll_list_pagibig_ee, ";
             $sql .= "payroll_list_philhealth_er = :payroll_list_philhealth_er, ";
             $sql .= "payroll_list_philhealth_ee = :payroll_list_philhealth_ee, ";
+            $sql .= "payroll_list_madatory_ee = :payroll_list_madatory_ee, ";
             $sql .= "payroll_list_tax = :payroll_list_tax, ";
             $sql .= "payroll_list_basic_pay = :payroll_list_basic_pay, ";
             $sql .= "payroll_list_gross = :payroll_list_gross, ";
@@ -683,6 +684,7 @@ class PayrollList
                 "payroll_list_pagibig_ee" => $this->payroll_list_pagibig_ee,
                 "payroll_list_philhealth_er" => $this->payroll_list_philhealth_er,
                 "payroll_list_philhealth_ee" => $this->payroll_list_philhealth_ee,
+                "payroll_list_madatory_ee" => $this->payroll_list_madatory_ee,
                 "payroll_list_tax" => $this->payroll_list_tax,
                 "payroll_list_basic_pay" => $this->payroll_list_basic_pay,
                 "payroll_list_gross" => $this->payroll_list_gross,

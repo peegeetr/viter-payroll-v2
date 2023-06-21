@@ -133,6 +133,11 @@ const ModalEditPayrollView = ({ item }) => {
                 const payroll_list_net_pay = removeComma(
                   `${values.payroll_list_net_pay}`
                 );
+                const payroll_list_madatory_ee =
+                  Number(payroll_list_sss_ee) +
+                  Number(payroll_list_pagibig_ee) +
+                  Number(payroll_list_philhealth_ee);
+
                 mutation.mutate({
                   ...values,
                   payroll_list_sss_er,
@@ -141,6 +146,7 @@ const ModalEditPayrollView = ({ item }) => {
                   payroll_list_pagibig_ee,
                   payroll_list_philhealth_er,
                   payroll_list_philhealth_ee,
+                  payroll_list_madatory_ee,
                   payroll_list_tax,
                   payroll_list_basic_pay,
                   payroll_list_gross,

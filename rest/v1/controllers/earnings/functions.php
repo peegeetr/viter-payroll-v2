@@ -84,3 +84,11 @@ function checkReadReportEarningsPaytypeByIdLimit($object)
     checkQuery($query, "Empty records.(Read earnings report paytype id Limit)");
     return $query;
 }
+
+// Update 
+function checkUpdateAmount($object)
+{
+    $query = $object->updateAmount();
+    checkQuery($query, "There's a problem processing your request. (update amount)");
+    return $query;
+}

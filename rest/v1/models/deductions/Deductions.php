@@ -344,6 +344,25 @@ class Deductions
         return $query;
     }
 
+    // update Amount
+    public function updateAmount()
+    {
+        try {
+            $sql = "update {$this->tblDeductions} set ";
+            $sql .= "deduction_amount = :deduction_amount, ";
+            $sql .= "deduction_datetime = :deduction_datetime ";
+            $sql .= "where deduction_aid = :deduction_aid ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "deduction_amount" => $this->deduction_amount,
+                "deduction_datetime" => $this->deduction_datetime,
+                "deduction_aid" => $this->deduction_aid,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
 
     // name
     public function checkName()

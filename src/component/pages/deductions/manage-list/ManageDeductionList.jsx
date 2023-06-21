@@ -1,27 +1,27 @@
-import React from "react";
-import { FaTrash } from "react-icons/fa";
 import { useInfiniteQuery } from "@tanstack/react-query";
+import React from "react";
+import { FaEdit, FaTrash } from "react-icons/fa";
 import { useInView } from "react-intersection-observer";
-import { setIsRestore } from "../../../../store/StoreAction";
+import { setIsEdit, setIsRestore } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
 import {
-  consoleLog,
   devApiUrl,
   formatDate,
   numberWithCommas,
 } from "../../../helpers/functions-general";
 import { queryDataInfinite } from "../../../helpers/queryDataInfinite";
 import LoadmoreRq from "../../../partials/LoadmoreRq";
-import ModalDeleteRestoreRq from "../../../partials/modals/ModalDeleteRestoreRq";
 import NoData from "../../../partials/NoData";
 import SearchBarRq from "../../../partials/SearchBarRq";
 import ServerError from "../../../partials/ServerError";
-import FetchingSpinner from "../../../partials/spinners/FetchingSpinner";
+import ModalDeleteRestoreRq from "../../../partials/modals/ModalDeleteRestoreRq";
 import TableSpinner from "../../../partials/spinners/TableSpinner";
 import { getStatus } from "../../earnings/manage-list/function-manage-list";
+import ModalEditManageDeduction from "./ModalEditManageDeduction";
 
 const ManageDeductionList = () => {
   const { store, dispatch } = React.useContext(StoreContext);
+  const [itemEdit, setItemEdit] = React.useState(null);
   const [dataItem, setData] = React.useState(null);
   const [isDel, setDel] = React.useState(false);
   const [id, setId] = React.useState(null);
@@ -58,8 +58,10 @@ const ManageDeductionList = () => {
     cacheTime: 200,
   });
 
-  consoleLog(result);
-
+  const handleEdit = (item) => {
+    dispatch(setIsEdit(true));
+    setItemEdit(item);
+  };
   React.useEffect(() => {
     if (inView) {
       setPage((prev) => prev + 1);
@@ -101,10 +103,6 @@ const ManageDeductionList = () => {
                 <th className="min-w-[6rem] text-right ">Amount</th>
                 <th className="text-center ">Installment</th>
                 <th className="min-w-[10rem]">Coverage date</th>
-                {/* <th className="min-w-[6rem]">Start Date</th>
-                <th className="min-w-[6rem]">End Date</th>
-                <th className="min-w-[12rem]">Pay Type</th>
-                <th className="min-w-[7rem]">Frequency</th> */}
                 <th>Status</th>
                 <th className="text-right">Actions</th>
               </tr>
@@ -185,6 +183,18 @@ const ManageDeductionList = () => {
                             </button>
                           </div>
                         )}
+                        {store.credentials.data.role_is_developer === 1 && (
+                          <div className="flex items-center justify-end gap-2">
+                            <button
+                              type="button"
+                              className="btn-action-table tooltip-action-table"
+                              data-tooltip="Edit"
+                              onClick={() => handleEdit(item)}
+                            >
+                              <FaEdit />
+                            </button>
+                          </div>
+                        )}
                       </td>
                     </tr>
                   ))}
@@ -204,6 +214,7 @@ const ManageDeductionList = () => {
         />
       </div>
 
+      {store.isEdit && <ModalEditManageDeduction item={itemEdit} />}
       {store.isRestore && (
         <ModalDeleteRestoreRq
           id={id}

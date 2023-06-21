@@ -61,6 +61,13 @@ export const setIsAdd = (val) => {
   };
 };
 
+export const setIsEdit = (val) => {
+  return {
+    type: "IS_EDIT",
+    payload: val,
+  };
+};
+
 export const setIsFinish = (val) => {
   return {
     type: "IS_FINISH",

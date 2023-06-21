@@ -1,0 +1,28 @@
+
+*controllers           
+    - deductions/functions.php
+    - deductions/update-amount.php
+    - earnings/functions.php
+    - earnings/update-amount.php
+    
+*models     
+    - deductions/Deductions.php
+    - earnings/Earnings.php
+  
+*htaccess 
+    - #earnings
+    - #deductions
+
+*db tables 
+    - 
+
+*core 
+    - 
+
+*extra 
+    - 
+    
+Patrick
+    - 
+
+ 

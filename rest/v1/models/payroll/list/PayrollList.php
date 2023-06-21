@@ -662,6 +662,13 @@ class PayrollList
     {
         try {
             $sql = "update {$this->tblPayrollList} set ";
+            $sql .= "payroll_list_sss_er = :payroll_list_sss_er, ";
+            $sql .= "payroll_list_sss_ee = :payroll_list_sss_ee, ";
+            $sql .= "payroll_list_pagibig_er = :payroll_list_pagibig_er, ";
+            $sql .= "payroll_list_pagibig_ee = :payroll_list_pagibig_ee, ";
+            $sql .= "payroll_list_philhealth_er = :payroll_list_philhealth_er, ";
+            $sql .= "payroll_list_philhealth_ee = :payroll_list_philhealth_ee, ";
+            $sql .= "payroll_list_tax = :payroll_list_tax, ";
             $sql .= "payroll_list_basic_pay = :payroll_list_basic_pay, ";
             $sql .= "payroll_list_gross = :payroll_list_gross, ";
             $sql .= "payroll_list_deduction = :payroll_list_deduction, ";
@@ -670,6 +677,13 @@ class PayrollList
             $sql .= "where payroll_list_aid = :payroll_list_aid ";
             $query = $this->connection->prepare($sql);
             $query->execute([
+                "payroll_list_sss_er" => $this->payroll_list_sss_er,
+                "payroll_list_sss_ee" => $this->payroll_list_sss_ee,
+                "payroll_list_pagibig_er" => $this->payroll_list_pagibig_er,
+                "payroll_list_pagibig_ee" => $this->payroll_list_pagibig_ee,
+                "payroll_list_philhealth_er" => $this->payroll_list_philhealth_er,
+                "payroll_list_philhealth_ee" => $this->payroll_list_philhealth_ee,
+                "payroll_list_tax" => $this->payroll_list_tax,
                 "payroll_list_basic_pay" => $this->payroll_list_basic_pay,
                 "payroll_list_gross" => $this->payroll_list_gross,
                 "payroll_list_deduction" => $this->payroll_list_deduction,

@@ -26,7 +26,13 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
         // get data
         // get listpayrollid from query string
         $payrollList->payroll_list_aid = $_GET['listpayrollid'];
-        $payrollList->payroll_list_basic_pay = checkIndex($data, "payroll_list_basic_pay");
+        $payrollList->payroll_list_sss_er = checkIndex($data, "payroll_list_sss_er");
+        $payrollList->payroll_list_sss_ee = checkIndex($data, "payroll_list_sss_ee");
+        $payrollList->payroll_list_pagibig_er = checkIndex($data, "payroll_list_pagibig_er");
+        $payrollList->payroll_list_pagibig_ee = checkIndex($data, "payroll_list_pagibig_ee");
+        $payrollList->payroll_list_philhealth_er = checkIndex($data, "payroll_list_philhealth_er");
+        $payrollList->payroll_list_philhealth_ee = checkIndex($data, "payroll_list_philhealth_ee");
+        $payrollList->payroll_list_tax = checkIndex($data, "payroll_list_tax");
         $payrollList->payroll_list_gross = checkIndex($data, "payroll_list_gross");
         $payrollList->payroll_list_deduction = checkIndex($data, "payroll_list_deduction");
         $payrollList->payroll_list_net_pay = checkIndex($data, "payroll_list_net_pay");

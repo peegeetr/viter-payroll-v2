@@ -53,14 +53,28 @@ const ModalEditPayrollView = ({ item }) => {
   };
 
   const initVal = {
+    payroll_list_sss_er: item.payroll_list_sss_er,
+    payroll_list_sss_ee: item.payroll_list_sss_ee,
+    payroll_list_pagibig_er: item.payroll_list_pagibig_er,
+    payroll_list_pagibig_ee: item.payroll_list_pagibig_ee,
+    payroll_list_philhealth_er: item.payroll_list_philhealth_er,
+    payroll_list_philhealth_ee: item.payroll_list_philhealth_ee,
     payroll_list_basic_pay: item.payroll_list_basic_pay,
+    payroll_list_tax: item.payroll_list_tax,
     payroll_list_gross: item.payroll_list_gross,
     payroll_list_deduction: item.payroll_list_deduction,
     payroll_list_net_pay: item.payroll_list_net_pay,
   };
 
   const yupSchema = Yup.object({
+    payroll_list_sss_er: Yup.string().required("Required"),
+    payroll_list_sss_ee: Yup.string().required("Required"),
+    payroll_list_pagibig_er: Yup.string().required("Required"),
+    payroll_list_pagibig_ee: Yup.string().required("Required"),
+    payroll_list_philhealth_er: Yup.string().required("Required"),
+    payroll_list_philhealth_ee: Yup.string().required("Required"),
     payroll_list_basic_pay: Yup.string().required("Required"),
+    payroll_list_tax: Yup.string().required("Required"),
     payroll_list_gross: Yup.string().required("Required"),
     payroll_list_deduction: Yup.string().required("Required"),
     payroll_list_net_pay: Yup.string().required("Required"),
@@ -86,6 +100,27 @@ const ModalEditPayrollView = ({ item }) => {
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
                 // console.log(values);
+                const payroll_list_sss_er = removeComma(
+                  `${values.payroll_list_sss_er}`
+                );
+                const payroll_list_sss_ee = removeComma(
+                  `${values.payroll_list_sss_ee}`
+                );
+                const payroll_list_pagibig_er = removeComma(
+                  `${values.payroll_list_pagibig_er}`
+                );
+                const payroll_list_pagibig_ee = removeComma(
+                  `${values.payroll_list_pagibig_ee}`
+                );
+                const payroll_list_philhealth_er = removeComma(
+                  `${values.payroll_list_philhealth_er}`
+                );
+                const payroll_list_philhealth_ee = removeComma(
+                  `${values.payroll_list_philhealth_ee}`
+                );
+                const payroll_list_tax = removeComma(
+                  `${values.payroll_list_tax}`
+                );
                 const payroll_list_basic_pay = removeComma(
                   `${values.payroll_list_basic_pay}`
                 );
@@ -100,6 +135,13 @@ const ModalEditPayrollView = ({ item }) => {
                 );
                 mutation.mutate({
                   ...values,
+                  payroll_list_sss_er,
+                  payroll_list_sss_ee,
+                  payroll_list_pagibig_er,
+                  payroll_list_pagibig_ee,
+                  payroll_list_philhealth_er,
+                  payroll_list_philhealth_ee,
+                  payroll_list_tax,
                   payroll_list_basic_pay,
                   payroll_list_gross,
                   payroll_list_deduction,
@@ -135,7 +177,95 @@ const ModalEditPayrollView = ({ item }) => {
                         <p className="m-0">{item.payroll_list_employee_name}</p>
                       </div>
 
-                      <div className="grid grid-cols-[6rem_1fr] mt-3">
+                      {/* sss */}
+                      <div className="grid grid-cols-[7rem_1fr] mt-3 items-center">
+                        <p className="m-0 text-primary font-bold">SSS ER : </p>
+                        <div className="relative">
+                          <InputText
+                            num="num"
+                            name="payroll_list_sss_er"
+                            type="text"
+                            disabled={mutation.isLoading}
+                          />
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-[7rem_1fr] mt-5 items-center">
+                        <p className="m-0 text-primary font-bold">SSS EE : </p>
+                        <div className="relative">
+                          <InputText
+                            num="num"
+                            name="payroll_list_sss_ee"
+                            type="text"
+                            disabled={mutation.isLoading}
+                          />
+                        </div>
+                      </div>
+                      {/* pagibig */}
+                      <div className="grid grid-cols-[7rem_1fr] mt-5 items-center">
+                        <p className="m-0 text-primary font-bold">
+                          Pagibig ER :{" "}
+                        </p>
+                        <div className="relative">
+                          <InputText
+                            num="num"
+                            name="payroll_list_pagibig_er"
+                            type="text"
+                            disabled={mutation.isLoading}
+                          />
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-[7rem_1fr] mt-5 items-center">
+                        <p className="m-0 text-primary font-bold">
+                          Pagibig EE :{" "}
+                        </p>
+                        <div className="relative">
+                          <InputText
+                            num="num"
+                            name="payroll_list_pagibig_ee"
+                            type="text"
+                            disabled={mutation.isLoading}
+                          />
+                        </div>
+                      </div>
+                      {/* pagibig */}
+                      <div className="grid grid-cols-[7rem_1fr] mt-5 items-center">
+                        <p className="m-0 text-primary font-bold">
+                          PhilHealth ER :{" "}
+                        </p>
+                        <div className="relative">
+                          <InputText
+                            num="num"
+                            name="payroll_list_philhealth_er"
+                            type="text"
+                            disabled={mutation.isLoading}
+                          />
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-[7rem_1fr] mt-5 items-center">
+                        <p className="m-0 text-primary font-bold">
+                          PhilHealth EE :{" "}
+                        </p>
+                        <div className="relative">
+                          <InputText
+                            num="num"
+                            name="payroll_list_philhealth_ee"
+                            type="text"
+                            disabled={mutation.isLoading}
+                          />
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-[7rem_1fr] mt-5 items-center">
+                        <p className="m-0 text-primary font-bold">Tax : </p>
+                        <div className="relative">
+                          <InputText
+                            num="num"
+                            name="payroll_list_tax"
+                            type="text"
+                            disabled={mutation.isLoading}
+                          />
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-[7rem_1fr] mt-5 items-center">
                         <p className="m-0 text-primary font-bold">
                           Basic pay :{" "}
                         </p>
@@ -148,7 +278,7 @@ const ModalEditPayrollView = ({ item }) => {
                           />
                         </div>
                       </div>
-                      <div className="grid grid-cols-[6rem_1fr] mt-3">
+                      <div className="grid grid-cols-[7rem_1fr] mt-5 items-center">
                         <p className="m-0 text-primary font-bold">Gross : </p>
                         <div className="relative">
                           <InputText
@@ -160,7 +290,7 @@ const ModalEditPayrollView = ({ item }) => {
                         </div>
                       </div>
 
-                      <div className="grid grid-cols-[6rem_1fr] my-5">
+                      <div className="grid grid-cols-[7rem_1fr] mt-5 items-center">
                         <p className="m-0 text-primary font-bold">
                           Deduction :{" "}
                         </p>
@@ -174,7 +304,7 @@ const ModalEditPayrollView = ({ item }) => {
                         </div>
                       </div>
 
-                      <div className="grid grid-cols-[6rem_1fr] mb-3">
+                      <div className="grid grid-cols-[7rem_1fr] mt-5 items-center">
                         <p className="m-0 text-primary font-bold">Net Pay : </p>
                         <div className="relative">
                           <InputText
@@ -185,23 +315,23 @@ const ModalEditPayrollView = ({ item }) => {
                           />
                         </div>
                       </div>
-                    </div>
-                    <div className="flex items-center gap-1 p-4 ">
-                      <button
-                        type="submit"
-                        disabled={mutation.isLoading || !props.dirty}
-                        className="btn-modal-submit relative"
-                      >
-                        {mutation.isLoading && <ButtonSpinner />}
-                        Update
-                      </button>
-                      <button
-                        type="reset"
-                        className="btn-modal-cancel cursor-pointer"
-                        onClick={handleClose}
-                      >
-                        Cancel
-                      </button>
+                      <div className="flex items-center gap-1 py-4 ">
+                        <button
+                          type="submit"
+                          disabled={mutation.isLoading || !props.dirty}
+                          className="btn-modal-submit relative"
+                        >
+                          {mutation.isLoading && <ButtonSpinner />}
+                          Update
+                        </button>
+                        <button
+                          type="reset"
+                          className="btn-modal-cancel cursor-pointer"
+                          onClick={handleClose}
+                        >
+                          Cancel
+                        </button>
+                      </div>
                     </div>
                   </Form>
                 );

@@ -208,7 +208,7 @@ const ModalAddManageEarnings = ({
   const handleInstallment = () => {
     setIsAmount(true);
   };
-
+  console.log("overtime", overtime);
   const handleClose = () => {
     // dispatch(setIsFinish(false));
     dispatch(setIsAdd(false));
@@ -290,20 +290,6 @@ const ModalAddManageEarnings = ({
                 if (validatePayPeriod(values, payrollDraft, dispatch)) {
                   return;
                 }
-                // // if Data in HRIS is empty
-                // if (
-                //   validateDataIsNotEmpty(
-                //     payItem[0].payitem_aid,
-                //     payLeave,
-                //     absences,
-                //     overtime,
-                //     undertime,
-                //     dispatch
-                //   )
-                // ) {
-                //   return;
-                // }
-
                 if (values.earnings_payitem_id === leaveId) {
                   // get computed leave amount
                   computedLeav = computeLeave(payLeave, employee, payrollDraft);
@@ -337,7 +323,6 @@ const ModalAddManageEarnings = ({
                   );
                 }
 
-                // console.log("123", computedUnpaid, employee.data);
                 mutation.mutate({
                   ...values,
                   employee: employee.data,

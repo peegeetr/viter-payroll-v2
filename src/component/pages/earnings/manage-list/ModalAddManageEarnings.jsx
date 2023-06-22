@@ -323,30 +323,20 @@ const ModalAddManageEarnings = ({
                   );
                 }
 
-                console.log(
-                  "ot",
-                  (computedOT = computeOvertime(
-                    overtime,
-                    employee,
-                    payrollDraft,
-                    holidays
-                  ))
-                );
-
-                // mutation.mutate({
-                //   ...values,
-                //   employee: employee.data,
-                //   payLeave: computedLeav.length > 0 ? computedLeav : [],
-                //   unPaidLeave: computedUnpaid.length > 0 ? computedUnpaid : [],
-                //   overtimeLeave: computedOT.length > 0 ? computedOT : [],
-                //   undertime:
-                //     computedUndertime.length > 0 ? computedUndertime : [],
-                //   // payitemID
-                //   leaveId: leaveId,
-                //   absencesId: absencesId,
-                //   overtimeId: overtimeId,
-                //   undertimeId: undertimeId,
-                // });
+                mutation.mutate({
+                  ...values,
+                  employee: employee.data,
+                  payLeave: computedLeav.length > 0 ? computedLeav : [],
+                  unPaidLeave: computedUnpaid.length > 0 ? computedUnpaid : [],
+                  overtimeLeave: computedOT.length > 0 ? computedOT : [],
+                  undertime:
+                    computedUndertime.length > 0 ? computedUndertime : [],
+                  // payitemID
+                  leaveId: leaveId,
+                  absencesId: absencesId,
+                  overtimeId: overtimeId,
+                  undertimeId: undertimeId,
+                });
               }}
             >
               {(props) => {

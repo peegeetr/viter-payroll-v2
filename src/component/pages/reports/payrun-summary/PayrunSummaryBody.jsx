@@ -48,7 +48,8 @@ const PayrunSummaryBody = ({ result, startDate, endDate }) => {
             holidayHrs = Number(item.payroll_list_holiday_hrs);
             leaveHrs = Number(item.payroll_list_leave_hrs);
             basicHrs = days * 8 - (leaveHrs + holidayHrs);
-            basicPay = hourRate * basicHrs;
+            // basicPay = hourRate * basicHrs;
+            basicPay = item.payroll_list_basic_pay;
             totalWages = 0;
             totalEarnings = 0;
             totalEr = 0;

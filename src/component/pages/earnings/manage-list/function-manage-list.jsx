@@ -258,7 +258,6 @@ export const otFinalAmount = (otItem, eItem, holidays, payrollDraft) => {
     new Date(payrollDraft?.data[0].payroll_start_date)
   );
 
-  console.log(employeeRate(eItem.employee_job_salary, days).hourly);
   let rate25 = 125 / 100;
   let restRate30 = 130 / 100;
   let restRate10 = 0.1;
@@ -273,11 +272,11 @@ export const otFinalAmount = (otItem, eItem, holidays, payrollDraft) => {
   let totalOtRestAmount = 0;
   let totalOtHolidayAmount = 0;
   let totalOtNightDiff = 0;
+  let nightDiff = 0;
   let hourRate = Number(employeeRate(eItem.employee_job_salary, days).hourly);
   let otDate = otItem.task_created.split(" ")[0];
   let otTime = otItem.task_time_started.split(" ")[1];
-  let otTimeHr = otTime.split(":")[0];
-  let otTimeMin = otTime.split(":")[1];
+  let otTimeHr = Number(otTime.split(":")[0]);
   let isNd = otItem.task_ot_is_night_diff;
   holidays?.data.map((holidaysItem) => {
     // if overtime and holiday is same date
@@ -290,7 +289,6 @@ export const otFinalAmount = (otItem, eItem, holidays, payrollDraft) => {
           hourRate * holidayRate * restRate30 * Number(otItem.task_spent);
         isHoliday = true;
         isRestDay = true;
-
         // if overtime is night shift and holiday
         if (
           isNd === 1
@@ -298,20 +296,42 @@ export const otFinalAmount = (otItem, eItem, holidays, payrollDraft) => {
           // ((otTimeHr >= 22 && otTimeHr <= 23) ||
           //   (otTimeHr >= 0 && otTimeHr < 6))
         ) {
-          let totalNd = 0;
-          let timeSpent = Number(otItem.task_spent);
-          if (timeSpent > 0 && timeSpent < 1) {
-            timeSpent = Math.ceil(timeSpent);
-          }
-          let hrs = otTimeHr + timeSpent;
-          let ans = hrs - 22;
-          if (ans === 0) {
-            totalNd = Number(otItem.task_spent);
-          }
-          if (ans > 0) {
-            totalNd = ans;
+          // let totalNd = 0;
+          // let timeSpent = Number(otItem.task_spent);
+          // if (timeSpent > 0 && timeSpent < 1) {
+          //   timeSpent = Math.ceil(timeSpent);
+          // }
+          // let hrs = otTimeHr + timeSpent;
+          // let ans = hrs - 22;
+          // if (ans === 0) {
+          //   totalNd = Number(otItem.task_spent);
+          // }
+          // if (ans > 0) {
+          //   totalNd = ans;
+          // }
+
+          // 4 pm to 9 pm
+          if (otTimeHr < 22 && otTimeHr > 15) {
+            let notNightDiff = getTimeDiff(
+              otItem.task_time_started
+            ).decimalTime;
+            nightDiff = Number(otItem.task_spent) - Number(notNightDiff);
+            totalOtHolidayRestAmount =
+              hourRate * holidayRate * restRate30 * Number(nightDiff);
           }
 
+          // 10 pm to 6 am
+          if (otTimeHr >= 22 || (otTimeHr >= 0 && otTimeHr <= 6)) {
+            totalOtNightDiff = totalOtHolidayRestAmount * restRate10;
+            totalOtHolidayRestAmount =
+              totalOtHolidayRestAmount + totalOtNightDiff;
+
+            // console.log(
+            //   "holiday ot with restday, nd",
+            //   totalOtNightDiff,
+            //   totalOtHolidayRestAmount
+            // );
+          }
           // This part is for patrick
           totalOtNightDiff = totalOtHolidayRestAmount * restRate10;
           totalOtHolidayRestAmount =
@@ -326,13 +346,35 @@ export const otFinalAmount = (otItem, eItem, holidays, payrollDraft) => {
           hourRate * holidayRate * rate25 * Number(otItem.task_spent);
         isHoliday = true;
         if (
-          isNd === 1 &&
-          ((otTimeHr >= 22 && otTimeHr <= 23) ||
-            (otTimeHr >= 0 && otTimeHr < 6))
+          isNd === 1
+          // &&
+          // ((otTimeHr >= 22 && otTimeHr <= 23) ||
+          //   (otTimeHr >= 0 && otTimeHr < 6))
         ) {
-          totalOtNightDiff = totalOtHolidayAmount * restRate10;
-          totalOtHolidayAmount = totalOtHolidayAmount + totalOtNightDiff;
-          console.log(totalOtNightDiff, totalOtHolidayAmount);
+          // 4 pm to 9 pm
+          if (otTimeHr < 22 && otTimeHr > 15) {
+            let notNightDiff = getTimeDiff(
+              otItem.task_time_started
+            ).decimalTime;
+            nightDiff = Number(otItem.task_spent) - Number(notNightDiff);
+            totalOtHolidayAmount =
+              hourRate * holidayRate * rate25 * Number(nightDiff);
+            // console.log(
+            //   "holiday ot with not restday, nd",
+            //   nightDiff,
+            //   totalOtHolidayAmount
+            // );
+          }
+          // 10 pm to 6 am
+          if (otTimeHr >= 22 || (otTimeHr >= 0 && otTimeHr <= 6)) {
+            totalOtNightDiff = totalOtHolidayAmount * restRate10;
+            totalOtHolidayAmount = totalOtHolidayAmount + totalOtNightDiff;
+            // console.log(
+            //   "holiday ot with not restday, nd",
+            //   totalOtNightDiff,
+            //   totalOtHolidayAmount
+            // );
+          }
         }
         finalAmount = totalOtHolidayAmount;
       }
@@ -348,11 +390,23 @@ export const otFinalAmount = (otItem, eItem, holidays, payrollDraft) => {
     isRestDay = true;
 
     if (
-      isNd === 1 &&
-      ((otTimeHr >= 22 && otTimeHr <= 23) || (otTimeHr >= 0 && otTimeHr < 6))
+      isNd === 1
+      //  &&
+      // ((otTimeHr >= 22 && otTimeHr <= 23) || (otTimeHr >= 0 && otTimeHr < 6))
     ) {
-      totalOtNightDiff = totalOtRestAmount * restRate10;
-      totalOtRestAmount = totalOtRestAmount + totalOtNightDiff;
+      // 4 pm to 9 pm
+      if (otTimeHr < 22 && otTimeHr > 15) {
+        let notNightDiff = getTimeDiff(otItem.task_time_started).decimalTime;
+        nightDiff = Number(otItem.task_spent) - Number(notNightDiff);
+        totalOtRestAmount = hourRate * restRate30 * Number(nightDiff);
+        // console.log("ot with restday, nd", nightDiff, totalOtRestAmount);
+      }
+      // 10 pm to 6 am
+      if (otTimeHr >= 22 || (otTimeHr >= 0 && otTimeHr <= 6)) {
+        totalOtNightDiff = totalOtRestAmount * restRate10;
+        totalOtRestAmount = totalOtRestAmount + totalOtNightDiff;
+        // console.log("ot with restday, nd", totalOtRestAmount);
+      }
     }
     finalAmount = totalOtRestAmount;
   }
@@ -361,14 +415,60 @@ export const otFinalAmount = (otItem, eItem, holidays, payrollDraft) => {
   if (!isRestDay && !isHoliday) {
     totalOtAmount25 = hourRate * rate25 * Number(otItem.task_spent);
     if (
-      isNd === 1 &&
-      ((otTimeHr >= 22 && otTimeHr <= 23) || (otTimeHr >= 0 && otTimeHr < 6))
+      isNd === 1
+      // &&
+      // ((otTimeHr >= 22 && otTimeHr <= 23) || (otTimeHr >= 0 && otTimeHr < 6))
     ) {
-      totalOtNightDiff = totalOtAmount25 * restRate10;
-      totalOtAmount25 = totalOtAmount25 + totalOtNightDiff;
+      // 4 pm to 9 pm
+      if (otTimeHr < 22 && otTimeHr > 15) {
+        let notNightDiff = getTimeDiff(otItem.task_time_started).decimalTime;
+        nightDiff = Number(otItem.task_spent) - Number(notNightDiff);
+        totalOtAmount25 = hourRate * rate25 * Number(nightDiff);
+        // console.log(
+        //   "normalday with nd",
+        //   notNightDiff,
+        //   nightDiff,
+        //   totalOtAmount25
+        // );
+      }
+      // 10 pm to 6 am
+      if (otTimeHr >= 22 || (otTimeHr >= 0 && otTimeHr <= 6)) {
+        totalOtNightDiff = totalOtAmount25 * restRate10;
+        totalOtAmount25 = totalOtAmount25 + totalOtNightDiff;
+        // console.log("normalday with nd", totalOtAmount25);
+      }
     }
     finalAmount = totalOtAmount25;
   }
-
+  console.log("finalOTAmount", finalAmount);
   return { finalAmount, otRate, isHoliday, isRestDay };
+};
+
+export const convertTimeToDecimal = (hrs, mins, secs) => {
+  const h = hrs * (1 / 1);
+  const m = mins * (1 / 60);
+  const s = secs * (1 / 3600);
+  const total = h + m + s;
+  return total.toFixed(4);
+};
+
+export const getTimeDiff = (sDate) => {
+  let newDate = sDate.split(" ")[0];
+  let newDateTime = `${newDate} 22:00:00`;
+  let startDate = new Date(sDate);
+  let endDate = new Date(newDateTime);
+
+  // Calculate the time difference in milliseconds
+  let timeDiff = endDate.getTime() - startDate.getTime();
+
+  // Convert the time difference to hours and minutes
+  let hours = Math.floor(timeDiff / (1000 * 60 * 60));
+  let minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+  let sec = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60) / 60);
+  // time
+  let time = `${hours}:${minutes}`;
+
+  let decimalTime = convertTimeToDecimal(hours, minutes, sec);
+
+  return { time, decimalTime };
 };

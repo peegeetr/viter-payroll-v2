@@ -18,6 +18,7 @@ import {
 } from "../../../helpers/functions-general";
 import { queryData } from "../../../helpers/queryData";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
+import { getValuesRemoveComma } from "../FunctionPayroll";
 
 const ModalEditPayrollView = ({ item }) => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -51,7 +52,6 @@ const ModalEditPayrollView = ({ item }) => {
   const handleClose = () => {
     dispatch(setIsEdit(false));
   };
-  console.log(item);
   const initVal = {
     payroll_list_sss_er: item.payroll_list_sss_er,
     payroll_list_sss_ee: item.payroll_list_sss_ee,
@@ -112,82 +112,11 @@ const ModalEditPayrollView = ({ item }) => {
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
                 // console.log(values);
-                const payroll_list_sss_er = removeComma(
-                  `${values.payroll_list_sss_er}`
-                );
-                const payroll_list_sss_ee = removeComma(
-                  `${values.payroll_list_sss_ee}`
-                );
-                const payroll_list_pagibig_er = removeComma(
-                  `${values.payroll_list_pagibig_er}`
-                );
-                const payroll_list_pagibig_ee = removeComma(
-                  `${values.payroll_list_pagibig_ee}`
-                );
-                const payroll_list_philhealth_er = removeComma(
-                  `${values.payroll_list_philhealth_er}`
-                );
-                const payroll_list_philhealth_ee = removeComma(
-                  `${values.payroll_list_philhealth_ee}`
-                );
-                const payroll_list_sss_loan = removeComma(
-                  `${values.payroll_list_sss_loan}`
-                );
-                const payroll_list_pagibig_loan = removeComma(
-                  `${values.payroll_list_pagibig_loan}`
-                );
-                const payroll_list_pagibig_mp2 = removeComma(
-                  `${values.payroll_list_pagibig_mp2}`
-                );
-                const payroll_list_fca_tuition = removeComma(
-                  `${values.payroll_list_fca_tuition}`
-                );
-                const payroll_list_fwc_tithes = removeComma(
-                  `${values.payroll_list_fwc_tithes}`
-                );
-                const payroll_list_other_deduction = removeComma(
-                  `${values.payroll_list_other_deduction}`
-                );
-                const payroll_list_basic_pay = removeComma(
-                  `${values.payroll_list_basic_pay}`
-                );
-                const payroll_list_tax = removeComma(
-                  `${values.payroll_list_tax}`
-                );
-                const payroll_list_gross = removeComma(
-                  `${values.payroll_list_gross}`
-                );
-                const payroll_list_deduction = removeComma(
-                  `${values.payroll_list_deduction}`
-                );
-                const payroll_list_net_pay = removeComma(
-                  `${values.payroll_list_net_pay}`
-                );
-                const payroll_list_madatory_ee =
-                  Number(payroll_list_sss_ee) +
-                  Number(payroll_list_pagibig_ee) +
-                  Number(payroll_list_philhealth_ee);
 
+                const valuesRemoveComma = getValuesRemoveComma(values);
                 mutation.mutate({
                   ...values,
-                  payroll_list_sss_er,
-                  payroll_list_sss_ee,
-                  payroll_list_pagibig_er,
-                  payroll_list_pagibig_ee,
-                  payroll_list_philhealth_er,
-                  payroll_list_philhealth_ee,
-                  payroll_list_madatory_ee,
-                  payroll_list_sss_loan,
-                  payroll_list_pagibig_loan,
-                  payroll_list_pagibig_mp2,
-                  payroll_list_fca_tuition,
-                  payroll_list_fwc_tithes,
-                  payroll_list_other_deduction,
-                  payroll_list_tax,
-                  payroll_list_basic_pay,
-                  payroll_list_gross,
-                  payroll_list_deduction,
-                  payroll_list_net_pay,
+                  payrollList: valuesRemoveComma,
                 });
               }}
             >

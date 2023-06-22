@@ -313,10 +313,6 @@ export const otFinalAmount = (otItem, eItem, holidays, payrollDraft) => {
             totalOtHolidayRestAmount =
               totalOtHolidayRestAmount + totalOtNightDiff;
           }
-          // This part is for patrick
-          totalOtNightDiff = totalOtHolidayRestAmount * restRate10;
-          totalOtHolidayRestAmount =
-            totalOtHolidayRestAmount + totalOtNightDiff;
         }
         finalAmount = totalOtHolidayRestAmount;
       }
@@ -382,7 +378,7 @@ export const otFinalAmount = (otItem, eItem, holidays, payrollDraft) => {
       if (otTimeHr < 22 && otTimeHr > 15) {
         let notNightDiff = getTimeDiff(otItem.task_time_started).decimalTime;
         nightDiff = Number(otItem.task_spent) - Number(notNightDiff);
-
+        // console.log(otItem.task_time_started, nightDiff);
         totalOtNightDiff = hourRate * rate25 * restRate10 * Number(nightDiff);
         totalOtAmount25 = totalOtAmount25 + totalOtNightDiff;
       }

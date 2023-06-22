@@ -231,7 +231,7 @@ const ModalEditPayrollView = ({ item }) => {
                       {/* other deduction sss loan */}
                       <div className="grid grid-cols-[7rem_1fr] mt-3 items-center">
                         <p className="m-0 text-primary font-bold">
-                          SSS LOAN :{" "}
+                          SSS Loan :{" "}
                         </p>
                         <div className="relative">
                           <InputText
@@ -245,7 +245,7 @@ const ModalEditPayrollView = ({ item }) => {
                       {/* other deduction pagibig loan */}
                       <div className="grid grid-cols-[7rem_1fr] mt-5 items-center">
                         <p className="m-0 text-primary font-bold">
-                          PAGIBIG LOAN :{" "}
+                          PAGIBIG Loan :{" "}
                         </p>
                         <div className="relative">
                           <InputText
@@ -273,7 +273,7 @@ const ModalEditPayrollView = ({ item }) => {
                       {/* other deduction fca tuition */}
                       <div className="grid grid-cols-[7rem_1fr] mt-5 items-center">
                         <p className="m-0 text-primary font-bold">
-                          FCA TUITION :{" "}
+                          FCA Tuition :{" "}
                         </p>
                         <div className="relative">
                           <InputText
@@ -287,7 +287,7 @@ const ModalEditPayrollView = ({ item }) => {
                       {/* other deduction fwc tithes */}
                       <div className="grid grid-cols-[7rem_1fr] mt-5 items-center">
                         <p className="m-0 text-primary font-bold">
-                          FWC TITHES :{" "}
+                          FWC Tithes :{" "}
                         </p>
                         <div className="relative">
                           <InputText
@@ -301,7 +301,7 @@ const ModalEditPayrollView = ({ item }) => {
                       {/* other deduction other deductions */}
                       <div className="grid grid-cols-[7rem_1fr] mt-5 items-center">
                         <p className="m-0 text-primary font-bold">
-                          OTHER DEDUCTIONS :{" "}
+                          Other Deduction :{" "}
                         </p>
                         <div className="relative">
                           <InputText

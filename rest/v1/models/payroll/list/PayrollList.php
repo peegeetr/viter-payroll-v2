@@ -669,6 +669,12 @@ class PayrollList
             $sql .= "payroll_list_philhealth_er = :payroll_list_philhealth_er, ";
             $sql .= "payroll_list_philhealth_ee = :payroll_list_philhealth_ee, ";
             $sql .= "payroll_list_madatory_ee = :payroll_list_madatory_ee, ";
+            $sql .= "payroll_list_sss_loan = :payroll_list_sss_loan, ";
+            $sql .= "payroll_list_pagibig_loan = :payroll_list_pagibig_loan, ";
+            $sql .= "payroll_list_pagibig_mp2 = :payroll_list_pagibig_mp2, ";
+            $sql .= "payroll_list_fca_tuition = :payroll_list_fca_tuition, ";
+            $sql .= "payroll_list_fwc_tithes = :payroll_list_fwc_tithes, ";
+            $sql .= "payroll_list_other_deduction = :payroll_list_other_deduction, ";
             $sql .= "payroll_list_tax = :payroll_list_tax, ";
             $sql .= "payroll_list_basic_pay = :payroll_list_basic_pay, ";
             $sql .= "payroll_list_gross = :payroll_list_gross, ";
@@ -685,6 +691,12 @@ class PayrollList
                 "payroll_list_philhealth_er" => $this->payroll_list_philhealth_er,
                 "payroll_list_philhealth_ee" => $this->payroll_list_philhealth_ee,
                 "payroll_list_madatory_ee" => $this->payroll_list_madatory_ee,
+                "payroll_list_sss_loan" => $this->payroll_list_sss_loan,
+                "payroll_list_pagibig_loan" => $this->payroll_list_pagibig_loan,
+                "payroll_list_pagibig_mp2" => $this->payroll_list_pagibig_mp2,
+                "payroll_list_fca_tuition" => $this->payroll_list_fca_tuition,
+                "payroll_list_fwc_tithes" => $this->payroll_list_fwc_tithes,
+                "payroll_list_other_deduction" => $this->payroll_list_other_deduction,
                 "payroll_list_tax" => $this->payroll_list_tax,
                 "payroll_list_basic_pay" => $this->payroll_list_basic_pay,
                 "payroll_list_gross" => $this->payroll_list_gross,

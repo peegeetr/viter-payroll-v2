@@ -1,9 +1,9 @@
 
 *controllers           
-    - payroll/list/update-amount.php
+    -> payroll/list/update-amount.php
     
 *models     
-    - payroll/list/PayrollList.php
+    -> payroll/list/PayrollList.php
   
 *htaccess 
     - 

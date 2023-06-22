@@ -60,6 +60,12 @@ const ModalEditPayrollView = ({ item }) => {
     payroll_list_philhealth_er: item.payroll_list_philhealth_er,
     payroll_list_philhealth_ee: item.payroll_list_philhealth_ee,
     payroll_list_basic_pay: item.payroll_list_basic_pay,
+    payroll_list_sss_loan: item.payroll_list_sss_loan,
+    payroll_list_pagibig_loan: item.payroll_list_pagibig_loan,
+    payroll_list_pagibig_mp2: item.payroll_list_pagibig_mp2,
+    payroll_list_fca_tuition: item.payroll_list_fca_tuition,
+    payroll_list_fwc_tithes: item.payroll_list_fwc_tithes,
+    payroll_list_other_deduction: item.payroll_list_other_deduction,
     payroll_list_tax: item.payroll_list_tax,
     payroll_list_gross: item.payroll_list_gross,
     payroll_list_deduction: item.payroll_list_deduction,
@@ -74,6 +80,12 @@ const ModalEditPayrollView = ({ item }) => {
     payroll_list_philhealth_er: Yup.string().required("Required"),
     payroll_list_philhealth_ee: Yup.string().required("Required"),
     payroll_list_basic_pay: Yup.string().required("Required"),
+    payroll_list_sss_loan: Yup.string().required("Required"),
+    payroll_list_pagibig_loan: Yup.string().required("Required"),
+    payroll_list_pagibig_mp2: Yup.string().required("Required"),
+    payroll_list_fca_tuition: Yup.string().required("Required"),
+    payroll_list_fwc_tithes: Yup.string().required("Required"),
+    payroll_list_other_deduction: Yup.string().required("Required"),
     payroll_list_tax: Yup.string().required("Required"),
     payroll_list_gross: Yup.string().required("Required"),
     payroll_list_deduction: Yup.string().required("Required"),
@@ -118,11 +130,29 @@ const ModalEditPayrollView = ({ item }) => {
                 const payroll_list_philhealth_ee = removeComma(
                   `${values.payroll_list_philhealth_ee}`
                 );
-                const payroll_list_tax = removeComma(
-                  `${values.payroll_list_tax}`
+                const payroll_list_sss_loan = removeComma(
+                  `${values.payroll_list_sss_loan}`
+                );
+                const payroll_list_pagibig_loan = removeComma(
+                  `${values.payroll_list_pagibig_loan}`
+                );
+                const payroll_list_pagibig_mp2 = removeComma(
+                  `${values.payroll_list_pagibig_mp2}`
+                );
+                const payroll_list_fca_tuition = removeComma(
+                  `${values.payroll_list_fca_tuition}`
+                );
+                const payroll_list_fwc_tithes = removeComma(
+                  `${values.payroll_list_fwc_tithes}`
+                );
+                const payroll_list_other_deduction = removeComma(
+                  `${values.payroll_list_other_deduction}`
                 );
                 const payroll_list_basic_pay = removeComma(
                   `${values.payroll_list_basic_pay}`
+                );
+                const payroll_list_tax = removeComma(
+                  `${values.payroll_list_tax}`
                 );
                 const payroll_list_gross = removeComma(
                   `${values.payroll_list_gross}`
@@ -147,6 +177,12 @@ const ModalEditPayrollView = ({ item }) => {
                   payroll_list_philhealth_er,
                   payroll_list_philhealth_ee,
                   payroll_list_madatory_ee,
+                  payroll_list_sss_loan,
+                  payroll_list_pagibig_loan,
+                  payroll_list_pagibig_mp2,
+                  payroll_list_fca_tuition,
+                  payroll_list_fwc_tithes,
+                  payroll_list_other_deduction,
                   payroll_list_tax,
                   payroll_list_basic_pay,
                   payroll_list_gross,
@@ -183,7 +219,7 @@ const ModalEditPayrollView = ({ item }) => {
                         <p className="m-0">{item.payroll_list_employee_name}</p>
                       </div>
 
-                      {/* sss */}
+                      {/* sss er */}
                       <div className="grid grid-cols-[7rem_1fr] mt-3 items-center">
                         <p className="m-0 text-primary font-bold">SSS ER : </p>
                         <div className="relative">
@@ -195,6 +231,7 @@ const ModalEditPayrollView = ({ item }) => {
                           />
                         </div>
                       </div>
+                      {/* sss ee */}
                       <div className="grid grid-cols-[7rem_1fr] mt-5 items-center">
                         <p className="m-0 text-primary font-bold">SSS EE : </p>
                         <div className="relative">
@@ -206,7 +243,7 @@ const ModalEditPayrollView = ({ item }) => {
                           />
                         </div>
                       </div>
-                      {/* pagibig */}
+                      {/* pagibig er */}
                       <div className="grid grid-cols-[7rem_1fr] mt-5 items-center">
                         <p className="m-0 text-primary font-bold">
                           Pagibig ER :{" "}
@@ -220,6 +257,7 @@ const ModalEditPayrollView = ({ item }) => {
                           />
                         </div>
                       </div>
+                      {/* pagibig ee */}
                       <div className="grid grid-cols-[7rem_1fr] mt-5 items-center">
                         <p className="m-0 text-primary font-bold">
                           Pagibig EE :{" "}
@@ -233,7 +271,7 @@ const ModalEditPayrollView = ({ item }) => {
                           />
                         </div>
                       </div>
-                      {/* pagibig */}
+                      {/* PhilHealth er */}
                       <div className="grid grid-cols-[7rem_1fr] mt-5 items-center">
                         <p className="m-0 text-primary font-bold">
                           PhilHealth ER :{" "}
@@ -247,6 +285,7 @@ const ModalEditPayrollView = ({ item }) => {
                           />
                         </div>
                       </div>
+                      {/* PhilHealth ee */}
                       <div className="grid grid-cols-[7rem_1fr] mt-5 items-center">
                         <p className="m-0 text-primary font-bold">
                           PhilHealth EE :{" "}
@@ -260,6 +299,91 @@ const ModalEditPayrollView = ({ item }) => {
                           />
                         </div>
                       </div>
+                      {/* other deduction sss loan */}
+                      <div className="grid grid-cols-[7rem_1fr] mt-3 items-center">
+                        <p className="m-0 text-primary font-bold">
+                          SSS LOAN :{" "}
+                        </p>
+                        <div className="relative">
+                          <InputText
+                            num="num"
+                            name="payroll_list_sss_loan"
+                            type="text"
+                            disabled={mutation.isLoading}
+                          />
+                        </div>
+                      </div>
+                      {/* other deduction pagibig loan */}
+                      <div className="grid grid-cols-[7rem_1fr] mt-5 items-center">
+                        <p className="m-0 text-primary font-bold">
+                          PAGIBIG LOAN :{" "}
+                        </p>
+                        <div className="relative">
+                          <InputText
+                            num="num"
+                            name="payroll_list_pagibig_loan"
+                            type="text"
+                            disabled={mutation.isLoading}
+                          />
+                        </div>
+                      </div>
+                      {/* other deduction pagibig mp2 */}
+                      <div className="grid grid-cols-[7rem_1fr] mt-5 items-center">
+                        <p className="m-0 text-primary font-bold">
+                          PAGIBIG MP2 :{" "}
+                        </p>
+                        <div className="relative">
+                          <InputText
+                            num="num"
+                            name="payroll_list_pagibig_mp2"
+                            type="text"
+                            disabled={mutation.isLoading}
+                          />
+                        </div>
+                      </div>
+                      {/* other deduction fca tuition */}
+                      <div className="grid grid-cols-[7rem_1fr] mt-5 items-center">
+                        <p className="m-0 text-primary font-bold">
+                          FCA TUITION :{" "}
+                        </p>
+                        <div className="relative">
+                          <InputText
+                            num="num"
+                            name="payroll_list_fca_tuition"
+                            type="text"
+                            disabled={mutation.isLoading}
+                          />
+                        </div>
+                      </div>
+                      {/* other deduction fwc tithes */}
+                      <div className="grid grid-cols-[7rem_1fr] mt-5 items-center">
+                        <p className="m-0 text-primary font-bold">
+                          FWC TITHES :{" "}
+                        </p>
+                        <div className="relative">
+                          <InputText
+                            num="num"
+                            name="payroll_list_fwc_tithes"
+                            type="text"
+                            disabled={mutation.isLoading}
+                          />
+                        </div>
+                      </div>
+                      {/* other deduction other deductions */}
+                      <div className="grid grid-cols-[7rem_1fr] mt-5 items-center">
+                        <p className="m-0 text-primary font-bold">
+                          OTHER DEDUCTIONS :{" "}
+                        </p>
+                        <div className="relative">
+                          <InputText
+                            num="num"
+                            name="payroll_list_other_deduction"
+                            type="text"
+                            disabled={mutation.isLoading}
+                          />
+                        </div>
+                      </div>
+                      {/* tax */}
                       <div className="grid grid-cols-[7rem_1fr] mt-5 items-center">
                         <p className="m-0 text-primary font-bold">Tax : </p>
                         <div className="relative">
@@ -271,6 +395,7 @@ const ModalEditPayrollView = ({ item }) => {
                           />
                         </div>
                       </div>
+                      {/* basic pay */}
                       <div className="grid grid-cols-[7rem_1fr] mt-5 items-center">
                         <p className="m-0 text-primary font-bold">
                           Basic pay :{" "}
@@ -284,6 +409,7 @@ const ModalEditPayrollView = ({ item }) => {
                           />
                         </div>
                       </div>
+                      {/* Gross */}
                       <div className="grid grid-cols-[7rem_1fr] mt-5 items-center">
                         <p className="m-0 text-primary font-bold">Gross : </p>
                         <div className="relative">
@@ -295,7 +421,7 @@ const ModalEditPayrollView = ({ item }) => {
                           />
                         </div>
                       </div>
-
+                      {/* Deduction */}
                       <div className="grid grid-cols-[7rem_1fr] mt-5 items-center">
                         <p className="m-0 text-primary font-bold">
                           Deduction :{" "}
@@ -309,7 +435,7 @@ const ModalEditPayrollView = ({ item }) => {
                           />
                         </div>
                       </div>
-
+                      {/* Net Pay */}
                       <div className="grid grid-cols-[7rem_1fr] mt-5 items-center">
                         <p className="m-0 text-primary font-bold">Net Pay : </p>
                         <div className="relative">

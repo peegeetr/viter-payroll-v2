@@ -277,6 +277,7 @@ export const otFinalAmount = (otItem, eItem, holidays, payrollDraft) => {
   let otDate = otItem.task_created.split(" ")[0];
   let otTime = otItem.task_time_started.split(" ")[1];
   let otTimeHr = otTime.split(":")[0];
+  let otTimeMin = otTime.split(":")[1];
   let isNd = otItem.task_ot_is_night_diff;
   holidays?.data.map((holidaysItem) => {
     // if overtime and holiday is same date
@@ -292,10 +293,26 @@ export const otFinalAmount = (otItem, eItem, holidays, payrollDraft) => {
 
         // if overtime is night shift and holiday
         if (
-          isNd === 1 &&
-          ((otTimeHr >= 22 && otTimeHr <= 23) ||
-            (otTimeHr >= 0 && otTimeHr < 6))
+          isNd === 1
+          // &&
+          // ((otTimeHr >= 22 && otTimeHr <= 23) ||
+          //   (otTimeHr >= 0 && otTimeHr < 6))
         ) {
+          let totalNd = 0;
+          let timeSpent = Number(otItem.task_spent);
+          if (timeSpent > 0 && timeSpent < 1) {
+            timeSpent = Math.ceil(timeSpent);
+          }
+          let hrs = otTimeHr + timeSpent;
+          let ans = hrs - 22;
+          if (ans === 0) {
+            totalNd = Number(otItem.task_spent);
+          }
+          if (ans > 0) {
+            totalNd = ans;
+          }
+
+          // This part is for patrick
           totalOtNightDiff = totalOtHolidayRestAmount * restRate10;
           totalOtHolidayRestAmount =
             totalOtHolidayRestAmount + totalOtNightDiff;

@@ -320,7 +320,7 @@ export const otFinalAmount = (otItem, eItem, holidays, payrollDraft) => {
       //if overtime is regular or special holiday day not restday
       if (!isRestDay) {
         totalOtHolidayAmount =
-          hourRate * holidayRate * rate25 * Number(otItem.task_spent);
+          hourRate * holidayRate * restRate30 * Number(otItem.task_spent);
         isHoliday = true;
         if (isNd === 1) {
           // 4 pm to 9 pm
@@ -330,7 +330,11 @@ export const otFinalAmount = (otItem, eItem, holidays, payrollDraft) => {
             ).decimalTime;
             nightDiff = Number(otItem.task_spent) - Number(notNightDiff);
             totalOtNightDiff =
-              hourRate * holidayRate * rate25 * restRate10 * Number(nightDiff);
+              hourRate *
+              holidayRate *
+              restRate30 *
+              restRate10 *
+              Number(nightDiff);
             totalOtHolidayAmount = totalOtHolidayAmount + totalOtNightDiff;
           }
           // 10 pm to 6 am

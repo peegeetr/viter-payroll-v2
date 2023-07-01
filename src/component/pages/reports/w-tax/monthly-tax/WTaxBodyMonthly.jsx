@@ -30,6 +30,7 @@ const WTaxBodyMonthly = ({ result, monthlyTax, month, year }) => {
       Number(totalBenefits) -
       totalNonTaxableCompensation;
 
+    console.log(totalNonTaxableCompensation, taxableCompensationIncome);
     monthlyTax.map((sTax) => {
       if (
         Number(taxableCompensationIncome) >=

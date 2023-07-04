@@ -1069,8 +1069,8 @@ export const holidayTotalAmount = (emp, holidaysItem, holidayExemptions) => {
   // );
   const days = getWorkingDaysInMonth(new Date(emp.payroll_start_date));
 
-  // let rate = Number(holidaysItem.holidays_rate) / 100 - 1;
-  let rate = Number(holidaysItem.holidays_rate) / 100;
+  let rate = Number(holidaysItem.holidays_rate) / 100 - 1;
+  // let rate = Number(holidaysItem.holidays_rate) / 100;
   let workOnHoliday = emp.payroll_list_employee_work_on_holiday;
   let holidayObserved = holidaysItem.holidays_observed;
   let dailyAmount = 0;

@@ -151,8 +151,8 @@ const HolidayExemptionList = ({ setItemEdit, employeeName }) => {
                     </td>
                     <td>
                       {item.holiday_exemption_is_observe === 1
-                        ? "Observed"
-                        : "Not observed"}
+                        ? "Not observed"
+                        : "Observed"}
                     </td>
 
                     <td>

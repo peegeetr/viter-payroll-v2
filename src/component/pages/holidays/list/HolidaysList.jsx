@@ -132,8 +132,8 @@ const HolidaysList = ({ setItemEdit }) => {
                     <td>{item.holidays_rate}%</td>
                     <td>
                       {item.holidays_observed === 1
-                        ? "Observed"
-                        : "Not observed"}
+                        ? "Not observed"
+                        : "Observed"}
                     </td>
 
                     <td>

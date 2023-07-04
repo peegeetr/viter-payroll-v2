@@ -1051,8 +1051,8 @@ class PayrollList
             $sql .= "from {$this->tblPayrollList} as payrollList, ";
             $sql .= "{$this->tblPayroll} as payroll ";
             $sql .= "where payrollList.payroll_list_payroll_id = payroll.payroll_id ";
-            $sql .= "and MONTHNAME(payroll.payroll_pay_date) = :month_name ";
-            $sql .= "and YEAR(payroll.payroll_pay_date) = :year ";
+            $sql .= "and MONTHNAME(payroll.payroll_start_date) = :month_name ";
+            $sql .= "and YEAR(payroll.payroll_start_date) = :year ";
             $sql .= "group by payrollList.payroll_list_employee_id ";
             $sql .= "order by payrollList.payroll_list_payroll_id, ";
             $sql .= "payroll.payroll_pay_date desc, ";
@@ -1090,8 +1090,8 @@ class PayrollList
             $sql .= "from {$this->tblPayrollList} as payrollList, ";
             $sql .= "{$this->tblPayroll} as payroll ";
             $sql .= "where payrollList.payroll_list_payroll_id = payroll.payroll_id ";
-            $sql .= "and MONTH(payroll.payroll_pay_date) = :month ";
-            $sql .= "and YEAR(payroll.payroll_pay_date) = :year ";
+            $sql .= "and MONTH(payroll.payroll_start_date) = :month ";
+            $sql .= "and YEAR(payroll.payroll_start_date) = :year ";
             $sql .= "group by payrollList.payroll_list_employee_id ";
             $sql .= "order by payrollList.payroll_list_payroll_id, ";
             $sql .= "payroll.payroll_end_date desc, ";
@@ -1130,8 +1130,8 @@ class PayrollList
             $sql .= "{$this->tblPayroll} as payroll ";
             $sql .= "where payrollList.payroll_list_employee_id = :payroll_list_employee_id ";
             $sql .= "and payrollList.payroll_list_payroll_id = payroll.payroll_id ";
-            $sql .= "and MONTHNAME(payroll.payroll_pay_date) = :month ";
-            $sql .= "and YEAR(payroll.payroll_pay_date) = :year ";
+            $sql .= "and MONTHNAME(payroll.payroll_start_date) = :month ";
+            $sql .= "and YEAR(payroll.payroll_start_date) = :year ";
             $sql .= "group by payrollList.payroll_list_employee_id ";
             $sql .= "order by payrollList.payroll_list_payroll_id, ";
             $sql .= "payroll.payroll_end_date desc, ";
@@ -1174,7 +1174,7 @@ class PayrollList
             $sql .= "from {$this->tblPayrollList} as payrollList, ";
             $sql .= "{$this->tblPayroll} as payroll ";
             $sql .= "where payrollList.payroll_list_payroll_id = payroll.payroll_id ";
-            $sql .= "and YEAR(payroll.payroll_pay_date) = :payroll_pay_date ";
+            $sql .= "and YEAR(payroll.payroll_start_date) = :payroll_pay_date ";
             $sql .= "group by payrollList.payroll_list_employee_id ";
             $sql .= "order by payrollList.payroll_list_payroll_id, ";
             $sql .= "payroll.payroll_end_date desc, ";
@@ -1216,7 +1216,7 @@ class PayrollList
             $sql .= "{$this->tblPayroll} as payroll ";
             $sql .= "where payrollList.payroll_list_employee_id = :payroll_list_employee_id ";
             $sql .= "and payrollList.payroll_list_payroll_id = payroll.payroll_id ";
-            $sql .= "and YEAR(payroll.payroll_pay_date) = :payroll_pay_date ";
+            $sql .= "and YEAR(payroll.payroll_start_date) = :payroll_pay_date ";
             $sql .= "group by YEAR(payroll.payroll_pay_date) ";
             $sql .= "order by payrollList.payroll_list_payroll_id, ";
             $sql .= "payroll.payroll_end_date desc, ";

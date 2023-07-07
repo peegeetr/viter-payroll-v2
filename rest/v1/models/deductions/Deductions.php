@@ -227,7 +227,7 @@ class Deductions
             $sql .= "deduction.deduction_employee asc ";
             $query = $this->connection->prepare($sql);
             $query->execute([
-                "search" => "{$this->deduction_search}%",
+                "search" => "%{$this->deduction_search}%",
                 "pr_id" => "%{$this->deduction_search}%",
                 "monthName" => "%{$this->deduction_search}%",
             ]);

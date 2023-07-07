@@ -228,9 +228,11 @@ const PayBenefitsList = () => {
                 <React.Fragment key={key}>
                   {page.data.map((item, key) => {
                     totalSalary += Number(item.payroll_list_employee_salary);
-                    totalSss += Number(item.sss_ee);
-                    totalPag += Number(item.pagibig_ee);
-                    totalPhic += Number(item.philhealth_ee);
+                    totalSss += Number(item.sss_ee) + Number(item.sss_er);
+                    totalPag +=
+                      Number(item.pagibig_ee) + Number(item.pagibig_er);
+                    totalPhic +=
+                      Number(item.philhealth_ee) + Number(item.philhealth_er);
                     totalPagLoan += Number(item.pagibig_loan);
                     totalSssLoan += Number(item.sss_loan);
                     totalMp2Loan += Number(item.pagibig_mp2);
@@ -256,17 +258,32 @@ const PayBenefitsList = () => {
                         </td>
                         <td className="w-[15rem] print:py-[2px]">
                           {pesoSign}
-                          {numberWithCommas(Number(item.sss_ee).toFixed(2))}
-                        </td>
-                        <td className="w-[15rem] print:py-[2px]">
-                          {pesoSign}
                           {numberWithCommas(
-                            Number(item.philhealth_ee).toFixed(2)
+                            (Number(item.sss_ee) + Number(item.sss_er)).toFixed(
+                              2
+                            )
                           )}
                         </td>
                         <td className="w-[15rem] print:py-[2px]">
                           {pesoSign}
-                          {numberWithCommas(Number(item.pagibig_ee).toFixed(2))}
+                          {/* {numberWithCommas(
+                            Number(item.philhealth_ee).toFixed(2)
+                          )} */}
+                          {numberWithCommas(
+                            (
+                              Number(item.philhealth_ee) +
+                              Number(item.philhealth_er)
+                            ).toFixed(2)
+                          )}
+                        </td>
+                        <td className="w-[15rem] print:py-[2px]">
+                          {pesoSign}
+                          {/* {numberWithCommas(Number(item.pagibig_ee).toFixed(2))} */}
+                          {numberWithCommas(
+                            (
+                              Number(item.pagibig_ee) + Number(item.pagibig_er)
+                            ).toFixed(2)
+                          )}
                         </td>
                         <td className="w-[15rem] print:py-[2px]">
                           {pesoSign}

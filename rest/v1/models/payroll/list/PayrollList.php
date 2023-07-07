@@ -934,6 +934,9 @@ class PayrollList
             $sql .= "SUM(payrollList.payroll_list_sss_ee) as sss_ee, ";
             $sql .= "SUM(payrollList.payroll_list_pagibig_ee) as pagibig_ee, ";
             $sql .= "SUM(payrollList.payroll_list_philhealth_ee) as philhealth_ee, ";
+            $sql .= "SUM(payrollList.payroll_list_sss_er) as sss_er, ";
+            $sql .= "SUM(payrollList.payroll_list_pagibig_er) as pagibig_er, ";
+            $sql .= "SUM(payrollList.payroll_list_philhealth_er) as philhealth_er, ";
             $sql .= "SUM(payrollList.payroll_list_pagibig_loan) as pagibig_loan, ";
             $sql .= "SUM(payrollList.payroll_list_sss_loan) as sss_loan, ";
             $sql .= "SUM(payrollList.payroll_list_pagibig_mp2) as pagibig_mp2, ";
@@ -964,6 +967,9 @@ class PayrollList
             $sql .= "SUM(payrollList.payroll_list_sss_ee) as sss_ee, ";
             $sql .= "SUM(payrollList.payroll_list_pagibig_ee) as pagibig_ee, ";
             $sql .= "SUM(payrollList.payroll_list_philhealth_ee) as philhealth_ee, ";
+            $sql .= "SUM(payrollList.payroll_list_sss_er) as sss_er, ";
+            $sql .= "SUM(payrollList.payroll_list_pagibig_er) as pagibig_er, ";
+            $sql .= "SUM(payrollList.payroll_list_philhealth_er) as philhealth_er, ";
             $sql .= "SUM(payrollList.payroll_list_pagibig_loan) as pagibig_loan, ";
             $sql .= "SUM(payrollList.payroll_list_sss_loan) as sss_loan, ";
             $sql .= "SUM(payrollList.payroll_list_pagibig_mp2) as pagibig_mp2, ";
@@ -999,6 +1005,9 @@ class PayrollList
             $sql .= "SUM(payrollList.payroll_list_sss_ee) as sss_ee, ";
             $sql .= "SUM(payrollList.payroll_list_pagibig_ee) as pagibig_ee, ";
             $sql .= "SUM(payrollList.payroll_list_philhealth_ee) as philhealth_ee, ";
+            $sql .= "SUM(payrollList.payroll_list_sss_er) as sss_er, ";
+            $sql .= "SUM(payrollList.payroll_list_pagibig_er) as pagibig_er, ";
+            $sql .= "SUM(payrollList.payroll_list_philhealth_er) as philhealth_er, ";
             $sql .= "SUM(payrollList.payroll_list_pagibig_loan) as pagibig_loan, ";
             $sql .= "SUM(payrollList.payroll_list_sss_loan) as sss_loan, ";
             $sql .= "SUM(payrollList.payroll_list_pagibig_mp2) as pagibig_mp2, ";

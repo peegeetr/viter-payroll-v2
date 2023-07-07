@@ -18,6 +18,7 @@ const WTaxBodySummary = ({ result, month, monthlyTax }) => {
   let compensation = 0;
   let taxableCompensation = 0;
   let nonTax = 0;
+  let taxWithheld = 0;
 
   const getCurrentYear = () => {
     return new Date().getFullYear();
@@ -33,6 +34,7 @@ const WTaxBodySummary = ({ result, month, monthlyTax }) => {
         benefits = item.month13 + item.benefits;
         totalDeminimis += item.deminimis;
         deminimis = item.deminimis;
+        taxWithheld += item.tax;
         nonTax = totalDeminimis + totalShareEe + totalBenefits;
         totalCompensation += Number(item.gross) + Number(item.benefits);
         compensation = Number(item.gross) + Number(item.benefits);
@@ -53,6 +55,7 @@ const WTaxBodySummary = ({ result, month, monthlyTax }) => {
     list.totalCompensation = totalCompensation.toFixed(2);
     list.taxableCompensation = taxableCompensation.toFixed(2);
     list.totalDeminimis = totalDeminimis.toFixed(2);
+    list.taxWithheld = taxWithheld.toFixed(2);
     list.nonTax = nonTax.toFixed(2);
     list.taxMonthly = taxMonthly.toFixed(2);
     // reset accumulated variables
@@ -61,6 +64,7 @@ const WTaxBodySummary = ({ result, month, monthlyTax }) => {
     totalBenefits = 0;
     totalDeminimis = 0;
     totalCompensation = 0;
+    taxWithheld = 0;
     return list;
   };
 
@@ -164,7 +168,9 @@ const WTaxBodySummary = ({ result, month, monthlyTax }) => {
               <td className=" text-right px-4"></td>
               <td className=" text-right px-4">
                 {pesoSign}
-                {numberWithCommas(Number(getSummary().taxMonthly).toFixed(2))}
+                {/* {numberWithCommas(Number(getSummary().taxMonthly).toFixed(2))} */}
+                {numberWithCommas(Number(getSummary().taxWithheld).toFixed(2))}
+                {/* {taxWithheld} */}
               </td>
             </tr>
           </tbody>

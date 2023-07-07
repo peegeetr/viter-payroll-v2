@@ -23,15 +23,20 @@ import ServerError from "../../../partials/ServerError";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 import TableSpinner from "../../../partials/spinners/TableSpinner";
 import HeaderPrint from "../../../partials/HeaderPrint";
+import {
+  getCurrentMonth,
+  getMonth,
+  getMonthName,
+} from "../w-tax/yearly-tax/functions-wtax";
 
 const PayBenefitsList = () => {
-  const { store, dispatch } = React.useContext(StoreContext);
-  const link = getUserType(store.credentials.data.role_is_developer === 1);
   const [isFilter, setFilter] = React.useState(false);
   const [isSubmit, setSubmit] = React.useState(false);
-  const [employeeId, setEmployee] = React.useState("");
-  const [startDate, setStartDate] = React.useState("");
-  const [endDate, setEndDate] = React.useState("");
+  const [value, setValue] = React.useState([]);
+  const [month, setMonth] = React.useState("");
+  const getCurrentYear = () => {
+    return new Date().getFullYear();
+  };
 
   const [page, setPage] = React.useState(1);
   let counter = 1;
@@ -43,6 +48,7 @@ const PayBenefitsList = () => {
   let totalSssLoan = 0;
   let totalPagLoan = 0;
   let totalMp2Loan = 0;
+
   // use if with loadmore button and search bar
   const {
     data: result,
@@ -56,9 +62,12 @@ const PayBenefitsList = () => {
     queryKey: ["benefits-summary", isSubmit],
     queryFn: async ({ pageParam = 1 }) =>
       await queryDataInfinite(
-        `${devApiUrl}/v1/payrollList/report/employee-benefits/${startDate}/${endDate}/${employeeId}`, // filter endpoint
-        `${devApiUrl}/v1/payrollList/report/employee-benefits/${0}/${0}/${0}`, // list endpoint
-        isFilter // search boolean
+        `${devApiUrl}/v1/payrollList/report/employee-benefits`, // filter endpoint
+        `${devApiUrl}/v1/payrollList/report/employee-benefits`, // list endpoint
+        isFilter, // search boolean
+        "post",
+        { value },
+        month
       ),
     getNextPageParam: (lastPage) => {
       if (lastPage.page < lastPage.total) {
@@ -87,15 +96,13 @@ const PayBenefitsList = () => {
     false // devKey boolean
   );
   const initVal = {
-    employee_aid: "",
-    start_date: "",
-    end_date: "",
+    employee_aid: "0",
+    month: `${getCurrentMonth()}`,
   };
   // console.log(employee);
   const yupSchema = Yup.object({
     employee_aid: Yup.string().required("Required"),
-    start_date: Yup.string().required("Required"),
-    end_date: Yup.string().required("Required"),
+    month: Yup.string().required("Required"),
   });
   // payroll-type/summary/
   return (
@@ -107,9 +114,8 @@ const PayBenefitsList = () => {
           onSubmit={async (values, { setSubmitting, resetForm }) => {
             setFilter(true);
             setSubmit(!isSubmit);
-            setEmployee(values.employee_aid);
-            setStartDate(values.start_date);
-            setEndDate(values.end_date);
+            setValue(values);
+            setMonth(values.month);
             // // refetch data of query
             // refetch();
           }}
@@ -117,7 +123,7 @@ const PayBenefitsList = () => {
           {(props) => {
             return (
               <Form>
-                <div className="grid gap-5 grid-cols-1 md:grid-cols-[1fr_1fr_1fr_150px] pt-5 pb-4 items-center">
+                <div className="grid gap-5 grid-cols-1 md:grid-cols-[1fr_1fr_150px] pt-5 pb-4 items-center">
                   <div className="relative">
                     <InputSelect
                       label="Employee"
@@ -139,25 +145,23 @@ const PayBenefitsList = () => {
                     </InputSelect>
                   </div>
                   <div className="relative">
-                    <InputText
-                      label="Start Pay Date"
-                      name="start_date"
+                    <InputSelect
+                      label="Month"
+                      name="month"
                       type="text"
                       disabled={isFetching}
-                      onFocus={(e) => (e.target.type = "date")}
-                      onBlur={(e) => (e.target.type = "date")}
-                    />
-                  </div>
-
-                  <div className="relative">
-                    <InputText
-                      label="End Pay Date"
-                      name="end_date"
-                      type="text"
-                      disabled={isFetching}
-                      onFocus={(e) => (e.target.type = "date")}
-                      onBlur={(e) => (e.target.type = "date")}
-                    />
+                    >
+                      <option value="" hidden>
+                        {status === "loading" && "Loading..."}
+                      </option>
+                      {getMonth()?.map((yItem, key) => {
+                        return (
+                          <option key={key} value={yItem.month_aid}>
+                            {`${yItem.month_name}`}
+                          </option>
+                        );
+                      })}
+                    </InputSelect>
                   </div>
 
                   <button
@@ -180,14 +184,15 @@ const PayBenefitsList = () => {
         <HeaderPrint />
       </div>
       <div className="text-center pb-4 font-bold print:pt-4">
-        {startDate !== "" && (
-          <>
-            <p className="m-0  text-lg">Employee Benefits</p>
-            <p className="m-0 text-primary font-bold">
-              {getPayPeriod(startDate, endDate)}
-            </p>
-          </>
-        )}
+        <>
+          <p className="m-0  text-lg">Employee Benefits</p>
+          <p className="m-0 text-primary font-bold">
+            {/* {getPayPeriod(startDate, endDate)} */}
+            {`${getMonthName(
+              month === "" ? getCurrentMonth() : month
+            )} - ${getCurrentYear()}`}
+          </p>
+        </>
       </div>
       <div className="text-center">
         <div className="overflow-x-auto ">
@@ -199,7 +204,7 @@ const PayBenefitsList = () => {
                   Name
                 </th>
                 <th className=" print:py-[2px]">&nbsp;</th>
-                <th className=" print:py-[2px]">SALARY</th>
+                {/* <th className=" print:py-[2px]">SALARY</th> */}
                 <th className=" print:py-[2px]">SSS</th>
                 <th className=" print:py-[2px]">PHIC</th>
                 <th className=" print:py-[2px]">PGBG</th>
@@ -236,12 +241,6 @@ const PayBenefitsList = () => {
                     totalPagLoan += Number(item.pagibig_loan);
                     totalSssLoan += Number(item.sss_loan);
                     totalMp2Loan += Number(item.pagibig_mp2);
-                    // totalSss += Number(item.payroll_list_sss_ee);
-                    // totalPag += Number(item.payroll_list_pagibig_ee);
-                    // totalPhic += Number(item.payroll_list_philhealth_ee);
-                    // totalPagLoan += Number(item.payroll_list_pagibig_loan);
-                    // totalSssLoan += Number(item.payroll_list_sss_loan);
-                    // totalMp2Loan += Number(item.payroll_list_pagibig_mp2);
                     return (
                       <tr key={key} className="text-right">
                         <td className="text-left print:py-[2px]">
@@ -250,12 +249,12 @@ const PayBenefitsList = () => {
                         <td colSpan={2} className="text-left print:py-[2px]">
                           {item.payroll_list_employee_name}
                         </td>
-                        <td className="w-[15rem] print:py-[2px]">
+                        {/* <td className="w-[15rem] print:py-[2px]">
                           {pesoSign}
                           {numberWithCommas(
                             Number(item.payroll_list_employee_salary).toFixed(2)
                           )}
-                        </td>
+                        </td> */}
                         <td className="w-[15rem] print:py-[2px]">
                           {pesoSign}
                           {numberWithCommas(
@@ -311,10 +310,10 @@ const PayBenefitsList = () => {
                   <td colSpan={3} className="w-[15rem] print:py-[2px]">
                     TOTAL
                   </td>
-                  <td className="w-[15rem] print:py-[2px]">
+                  {/* <td className="w-[15rem] print:py-[2px]">
                     {pesoSign}
                     {numberWithCommas(totalSalary.toFixed(2))}
-                  </td>
+                  </td> */}
                   <td className="w-[15rem] print:py-[2px]">
                     {pesoSign}
                     {numberWithCommas(totalSss.toFixed(2))}

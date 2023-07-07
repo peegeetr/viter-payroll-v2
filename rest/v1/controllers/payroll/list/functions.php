@@ -177,6 +177,22 @@ function checkReadReportBenefitsBenefits($object)
 }
 
 
+// Report Filter Benefits by month
+function checkReadReportBenefitsByMonth($object)
+{
+    $query = $object->readReportBenefitsByMonth();
+    checkQuery($query, "Empty records. (read report benefits by month)");
+    return $query;
+}
+
+// Report Filter Benefits by employee id, month
+function checkReadReportBenefitsByEmployeeMonth($object)
+{
+    $query = $object->readReportBenefitsByEmployeeMonth();
+    checkQuery($query, "Empty records. (read report benefits by employee id, month)");
+    return $query;
+}
+
 // REPORT Monthly WTAX filter all employee by date
 function checkReadReportMonthlyWtaxAllEmployeeByDate($object)
 {

@@ -1077,6 +1077,82 @@ class PayrollList
         return $query;
     }
 
+    // Report Filter Benefits by month
+    public function readReportBenefitsByMonth()
+    {
+        try {
+            $sql = "select payrollList.*, ";
+            $sql .= "SUM(payrollList.payroll_list_sss_ee) as sss_ee, ";
+            $sql .= "SUM(payrollList.payroll_list_pagibig_ee) as pagibig_ee, ";
+            $sql .= "SUM(payrollList.payroll_list_philhealth_ee) as philhealth_ee, ";
+            $sql .= "SUM(payrollList.payroll_list_sss_er) as sss_er, ";
+            $sql .= "SUM(payrollList.payroll_list_pagibig_er) as pagibig_er, ";
+            $sql .= "SUM(payrollList.payroll_list_philhealth_er) as philhealth_er, ";
+            $sql .= "SUM(payrollList.payroll_list_pagibig_loan) as pagibig_loan, ";
+            $sql .= "SUM(payrollList.payroll_list_sss_loan) as sss_loan, ";
+            $sql .= "SUM(payrollList.payroll_list_pagibig_mp2) as pagibig_mp2, ";
+            $sql .= "payroll.payroll_category_type, ";
+            $sql .= "payroll.payroll_id, ";
+            $sql .= "payroll.payroll_start_date, ";
+            $sql .= "payroll.payroll_end_date, ";
+            $sql .= "payroll.payroll_pay_date ";
+            $sql .= "from {$this->tblPayrollList} as payrollList, ";
+            $sql .= "{$this->tblPayroll} as payroll ";
+            $sql .= "where payrollList.payroll_list_payroll_id = payroll.payroll_id ";
+            $sql .= "and MONTH(payroll.payroll_start_date) = :payroll_start_date ";
+            $sql .= "group by payrollList.payroll_list_employee_id ";
+            $sql .= "order by payrollList.payroll_list_payroll_id, ";
+            $sql .= "payroll.payroll_end_date desc, ";
+            $sql .= "payrollList.payroll_list_employee_name asc ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "payroll_start_date" => $this->date_from,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    // Report Filter Benefits by employee id, month
+    public function readReportBenefitsByEmployeeMonth()
+    {
+        try {
+            $sql = "select payrollList.*, ";
+            $sql .= "SUM(payrollList.payroll_list_sss_ee) as sss_ee, ";
+            $sql .= "SUM(payrollList.payroll_list_pagibig_ee) as pagibig_ee, ";
+            $sql .= "SUM(payrollList.payroll_list_philhealth_ee) as philhealth_ee, ";
+            $sql .= "SUM(payrollList.payroll_list_sss_er) as sss_er, ";
+            $sql .= "SUM(payrollList.payroll_list_pagibig_er) as pagibig_er, ";
+            $sql .= "SUM(payrollList.payroll_list_philhealth_er) as philhealth_er, ";
+            $sql .= "SUM(payrollList.payroll_list_pagibig_loan) as pagibig_loan, ";
+            $sql .= "SUM(payrollList.payroll_list_sss_loan) as sss_loan, ";
+            $sql .= "SUM(payrollList.payroll_list_pagibig_mp2) as pagibig_mp2, ";
+            $sql .= "payroll.payroll_category_type, ";
+            $sql .= "payroll.payroll_id, ";
+            $sql .= "payroll.payroll_start_date, ";
+            $sql .= "payroll.payroll_end_date, ";
+            $sql .= "payroll.payroll_pay_date ";
+            $sql .= "from {$this->tblPayrollList} as payrollList, ";
+            $sql .= "{$this->tblPayroll} as payroll ";
+            $sql .= "where payrollList.payroll_list_employee_id = :payroll_list_employee_id ";
+            $sql .= "and payrollList.payroll_list_payroll_id = payroll.payroll_id ";
+            $sql .= "and MONTH(payroll.payroll_start_date) = :payroll_start_date ";
+            $sql .= "group by payrollList.payroll_list_employee_id ";
+            $sql .= "order by payrollList.payroll_list_payroll_id, ";
+            $sql .= "payroll.payroll_end_date desc, ";
+            $sql .= "payrollList.payroll_list_employee_name asc ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "payroll_list_employee_id" => $this->payroll_list_employee_id,
+                "payroll_start_date" => $this->date_from,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
     // REPORT Summary WTAX filter 
     // REPORT Summary WTAX filter
     public function readReportSummaryWtax()

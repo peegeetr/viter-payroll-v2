@@ -13,35 +13,36 @@ $conn = checkDbConnection();
 // make instance of classes
 $payrollList = new PayrollList($conn);
 $response = new Response();
+// get data
+$body = file_get_contents("php://input");
+$data = json_decode($body, true);
 // validate api key
 if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
     checkApiKey();
+    // check data
+    checkPayload($data);
+    // get value
+    $allValues = $data['value'];
 
-    if (array_key_exists("startDate", $_GET) && array_key_exists("endDate", $_GET) && array_key_exists("employeeId", $_GET)) {
-        // get data
-        $payrollList->payroll_list_employee_id = $_GET['employeeId'];
-        $payrollList->date_from = $_GET['startDate'];
-        $payrollList->date_to = $_GET['endDate'];
+    $payrollList->payroll_list_employee_id = checkIndex($allValues, "employee_aid");
+    $payrollList->date_from = checkIndex($allValues, "month");
 
-        checkId($payrollList->payroll_list_employee_id);
-
-        if ($payrollList->date_from === '0' && $payrollList->date_to === '0' && $payrollList->payroll_list_employee_id === '0') {
-            $query = checkReadReportBenefitsBenefits($payrollList);
-            http_response_code(200);
-            getQueriedData($query);
-        }
-        if ($payrollList->payroll_list_employee_id === '0') {
-            $query = checkReadReportBenefitsByDate($payrollList);
-            http_response_code(200);
-            getQueriedData($query);
-        }
-        $query = checkReadReportBenefitsByEmpId($payrollList);
+    // by month
+    if ($payrollList->payroll_list_employee_id === '0' && $payrollList->date_from !== "0") {
+        $query = checkReadReportBenefitsByMonth($payrollList);
         http_response_code(200);
         getQueriedData($query);
     }
 
-    // return 404 error if endpoint not available
-    checkEndpoint();
+    // by employee id, by month
+    if ($payrollList->payroll_list_employee_id !== '0' && $payrollList->date_from !== "0") {
+        $query = checkReadReportBenefitsByEmployeeMonth($payrollList);
+        http_response_code(200);
+        getQueriedData($query);
+    }
+    $query = checkReadReportBenefitsBenefits($payrollList);
+    http_response_code(200);
+    getQueriedData($query);
 }
 
 http_response_code(200);

@@ -70,7 +70,7 @@ const PayrollList = ({ setItemEdit }) => {
       }
       return;
     },
-    refetchOnWindowFocus: false,
+    // refetchOnWindowFocus: false,
     cacheTime: 200,
   });
 
@@ -129,6 +129,9 @@ const PayrollList = ({ setItemEdit }) => {
         )} */}
         {loading && <TableSpinner />}
         <div className=" overflow-x-auto z-0">
+          {/* use only for updating important records */}
+          {status !== "loading" && isFetching && <TableSpinner />}
+          {/* use only for updating important records */}
           <table>
             <thead>
               <tr>

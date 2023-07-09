@@ -65,9 +65,9 @@ const PayBenefitsList = () => {
         `${devApiUrl}/v1/payrollList/report/employee-benefits`, // filter endpoint
         `${devApiUrl}/v1/payrollList/report/employee-benefits`, // list endpoint
         isFilter, // search boolean
+        true,
         "post",
-        { value },
-        true
+        { value }
       ),
     getNextPageParam: (lastPage) => {
       if (lastPage.page < lastPage.total) {

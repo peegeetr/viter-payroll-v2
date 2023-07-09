@@ -1,9 +1,10 @@
 
-*controllers     
+*controllers    
+    - payroll/list/functions.php
     - payroll/list/report-employee-benefits.php
-    - 
   
-*models  
+*models 
+    - payroll/list/PayrollList.php
     - 
 
 *htaccess 

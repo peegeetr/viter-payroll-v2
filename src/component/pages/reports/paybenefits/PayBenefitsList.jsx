@@ -63,7 +63,7 @@ const PayBenefitsList = () => {
     queryFn: async ({ pageParam = 1 }) =>
       await queryDataInfinite(
         `${devApiUrl}/v1/payrollList/report/employee-benefits`, // filter endpoint
-        `${devApiUrl}/v1/payrollList/report/employee-benefits`, // list endpoint
+        `${devApiUrl}/v1/payrollList/report/employee-benefits/${getCurrentMonth()}`, // list endpoint
         isFilter, // search boolean
         true,
         "post",
@@ -167,7 +167,7 @@ const PayBenefitsList = () => {
                   <button
                     className="btn-modal-submit relative"
                     type="submit"
-                    disabled={isFetching || !props.dirty}
+                    disabled={isFetching}
                   >
                     {isFetching && <ButtonSpinner />}
                     <MdFilterAlt className="text-lg" />

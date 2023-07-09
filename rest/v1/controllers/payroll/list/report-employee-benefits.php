@@ -23,26 +23,36 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
     checkPayload($data);
     // get value
     $allValues = $data['value'];
+    if (count($allValues) > 0) {
+        if (empty($_GET)) {
+            $payrollList->payroll_list_employee_id = checkIndex($allValues, "employee_aid");
+            $payrollList->date_from = checkIndex($allValues, "month");
 
-    $payrollList->payroll_list_employee_id = checkIndex($allValues, "employee_aid");
-    $payrollList->date_from = checkIndex($allValues, "month");
+            // by month
+            if ($payrollList->payroll_list_employee_id === '0' && $payrollList->date_from !== "0") {
+                $query = checkReadReportBenefitsByMonth($payrollList);
+                http_response_code(200);
+                getQueriedData($query);
+            }
 
-    // by month
-    if ($payrollList->payroll_list_employee_id === '0' && $payrollList->date_from !== "0") {
+            // by employee id, by month
+            if ($payrollList->payroll_list_employee_id !== '0' && $payrollList->date_from !== "0") {
+                $query = checkReadReportBenefitsByEmployeeMonth($payrollList);
+                http_response_code(200);
+                getQueriedData($query);
+            }
+        }
+
+        $query = checkReadReportBenefitsBenefits($payrollList);
+        http_response_code(200);
+        getQueriedData($query);
+    }
+
+    if (array_key_exists("month", $_GET)) {
         $query = checkReadReportBenefitsByMonth($payrollList);
         http_response_code(200);
         getQueriedData($query);
     }
-
-    // by employee id, by month
-    if ($payrollList->payroll_list_employee_id !== '0' && $payrollList->date_from !== "0") {
-        $query = checkReadReportBenefitsByEmployeeMonth($payrollList);
-        http_response_code(200);
-        getQueriedData($query);
-    }
-    $query = checkReadReportBenefitsBenefits($payrollList);
-    http_response_code(200);
-    getQueriedData($query);
 }
 
 http_response_code(200);

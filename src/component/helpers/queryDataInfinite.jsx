@@ -4,9 +4,9 @@ export const queryDataInfinite = (
   urlSearch,
   urlList,
   isSearch,
+  prKey,
   method = "get",
-  fd = {},
-  prKey
+  fd = {}
 ) => {
   return queryData(isSearch ? urlSearch : urlList, method, fd, prKey);
 };

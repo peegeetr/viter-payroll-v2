@@ -67,7 +67,7 @@ const PayBenefitsList = () => {
         isFilter, // search boolean
         "post",
         { value },
-        month
+        true
       ),
     getNextPageParam: (lastPage) => {
       if (lastPage.page < lastPage.total) {

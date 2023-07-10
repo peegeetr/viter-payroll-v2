@@ -1392,6 +1392,7 @@ export const payComputePhil = (emp, philhealth) => {
 
       //if salary >= max
       if (totalSalary >= Number(philhealth[0].philhealth_max)) {
+        // console.log(totalSalary, philhealth[0].philhealth_max);
         philhealthEr = Number(philhealth[0].philhealth_max) / 4;
         philhealthEe = Number(philhealth[0].philhealth_max) / 4;
         // use to insert in earnings table
@@ -1402,9 +1403,16 @@ export const payComputePhil = (emp, philhealth) => {
         philhealthEe = Number(philhealth[0].philhealth_min) / 4;
         // use to insert in earnings table
       }
+
       // if min, max are false
-      philhealthEr = Number(totalSalary) / 4;
-      philhealthEe = Number(totalSalary) / 4;
+      if (
+        totalSalary > Number(philhealth[0].philhealth_min) &&
+        totalSalary < Number(philhealth[0].philhealth_max)
+      ) {
+        philhealthEr = Number(totalSalary) / 4;
+        philhealthEe = Number(totalSalary) / 4;
+        // console.log(totalSalary);
+      }
     }
     // use to insert in earnings table
     philhealthList.push({

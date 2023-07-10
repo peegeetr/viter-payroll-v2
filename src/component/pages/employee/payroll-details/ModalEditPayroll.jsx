@@ -40,6 +40,7 @@ const ModalEditPayroll = ({ itemEdit }) => {
       queryClient.invalidateQueries({ queryKey: ["employee"] });
       // show success box
       if (data.success) {
+        dispatch(setIsRestore(false));
         dispatch(setSuccess(true));
         dispatch(setMessage(`Successfuly updated`));
       }
@@ -82,6 +83,8 @@ const ModalEditPayroll = ({ itemEdit }) => {
       itemEdit.employee_job_pay_freq !== ""
         ? itemEdit.employee_job_pay_freq
         : "sm",
+    employee_job_early_13th_month:
+      itemEdit.employee_job_early_13th_month === 1 ? true : false,
     employee_job_account_number:
       itemEdit.employee_job_account_number !== ""
         ? itemEdit.employee_job_account_number
@@ -197,6 +200,17 @@ const ModalEditPayroll = ({ itemEdit }) => {
                           <MyCheckbox
                             type="checkbox"
                             name="employee_job_work_reg_hol"
+                            disabled={mutation.isLoading}
+                          />
+                        </span>
+                      </div>
+
+                      <div className="relative mb-3 flex items-center">
+                        <p className="w-1/2 m-0">For early 13th month?</p>
+                        <span>
+                          <MyCheckbox
+                            type="checkbox"
+                            name="employee_job_early_13th_month"
                             disabled={mutation.isLoading}
                           />
                         </span>

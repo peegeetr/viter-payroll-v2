@@ -14,8 +14,8 @@ if (array_key_exists("payrollid", $_GET)) {
     // get data
     // get payrollid from query string
     $payroll->payroll_aid = $_GET['payrollid'];
-    $payroll->payroll_start_date = checkIndex($data, "payroll_start_date");
-    $payroll->payroll_end_date = checkIndex($data, "payroll_end_date");
+    $payroll->payroll_start_date = $data["payroll_start_date"];
+    $payroll->payroll_end_date = $data["payroll_end_date"];
     $payroll->payroll_pay_date = addslashes(trim($data["payroll_pay_date"]));
     $payroll->payroll_category_type = checkIndex($data, "payroll_category_type");
     $payroll->payroll_datetime = date("Y-m-d H:i:s");
@@ -23,6 +23,17 @@ if (array_key_exists("payrollid", $_GET)) {
     $payroll_start_date_old = checkIndex($data, "payroll_start_date_old");
     $payroll_end_date_old = checkIndex($data, "payroll_end_date_old");
     $payroll_pay_date_old = addslashes(trim($data["payroll_pay_date_old"]));
+
+    $is13thMonth = $data["month13thId"];
+
+    //if 13th month do this date
+    if ($payroll->payroll_category_type === $is13thMonth) {
+        $payroll->payroll_start_date = date("Y") . "-01-01";
+        $payroll->payroll_end_date = date("Y") . "-12-31";
+    }
+    //check if date is not empty
+    checkKeyword($payroll->payroll_start_date);
+    checkKeyword($payroll->payroll_end_date);
 
     //check to see if task id in query string is not empty and is number, if not return json error
     checkId($payroll->payroll_aid);

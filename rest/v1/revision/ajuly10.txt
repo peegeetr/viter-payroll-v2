@@ -2,6 +2,10 @@
 *controllers    
     - payroll/list/functions.php
     - payroll/list/report-employee-benefits.php
+    -> payroll/create.php
+    -> payroll/functions.php
+    -> payroll/update.php
+    - 
   
 *models 
     - payroll/list/PayrollList.php
@@ -9,6 +13,7 @@
 
 *htaccess 
     - #payroll list paid
+    - 
 
 *db tables 
     -  

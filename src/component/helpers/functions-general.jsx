@@ -258,6 +258,12 @@ export const getDateNow = () => {
     .split("T")[0];
 };
 
+export const currentYear = () => {
+  const d = new Date();
+  const year = d.getFullYear();
+  return year;
+};
+
 export const getYearCount = (hiredDate) => {
   let yearCount = 0;
   const hired = new Date(hiredDate);

@@ -12,13 +12,23 @@ import {
 import { StoreContext } from "../../../store/StoreContext";
 import useQueryData from "../../custom-hooks/useQueryData";
 import { InputSelect, InputText } from "../../helpers/FormInputs";
-import { devApiUrl, hrisDevApiUrl } from "../../helpers/functions-general";
+import {
+  currentYear,
+  devApiUrl,
+  hrisDevApiUrl,
+} from "../../helpers/functions-general";
+import {
+  payrollCategory13thMonthId,
+  payrollCategoryBonusId,
+  payrollCategorySalaryId,
+} from "../../helpers/functions-payroll-category-id";
 import { queryData } from "../../helpers/queryData";
 import ButtonSpinner from "../../partials/spinners/ButtonSpinner";
-import { payrollCategoryBonusId } from "../../helpers/functions-payroll-category-id";
+import { getEmployeeList, getResultEmployeeList } from "./FunctionPayroll";
 
 const ModalAddPayroll = ({ item }) => {
   const { store, dispatch } = React.useContext(StoreContext);
+  const [is13thMonth, setIs13thMonth] = React.useState(false);
 
   // use if not loadmore button undertime
   const { isLoading, data: payrollType } = useQueryData(
@@ -36,6 +46,7 @@ const ModalAddPayroll = ({ item }) => {
     null, // id key
     false // devKey boolean
   );
+
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: (values) =>
@@ -66,11 +77,20 @@ const ModalAddPayroll = ({ item }) => {
     dispatch(setIsAdd(false));
   };
 
+  const handleCategoryType = async (e) => {
+    // // get jobId id
+    let categoryId = e.target.value;
+    if (Number(categoryId) === payrollCategory13thMonthId) {
+      setIs13thMonth(true);
+    }
+  };
   const initVal = {
     payroll_start_date: item ? item.payroll_start_date : "",
     payroll_end_date: item ? item.payroll_end_date : "",
     payroll_pay_date: item ? item.payroll_pay_date : "",
-    payroll_category_type: item ? item.payroll_category_type : "",
+    payroll_category_type: item
+      ? item.payroll_category_type
+      : payrollCategorySalaryId,
 
     payroll_end_date_old: item ? item.payroll_end_date : "",
     payroll_start_date_old: item ? item.payroll_start_date : "",
@@ -78,8 +98,8 @@ const ModalAddPayroll = ({ item }) => {
   };
 
   const yupSchema = Yup.object({
-    payroll_start_date: Yup.string().required("Required"),
-    payroll_end_date: Yup.string().required("Required"),
+    payroll_start_date: !is13thMonth && Yup.string().required("Required"),
+    payroll_end_date: !is13thMonth && Yup.string().required("Required"),
     payroll_pay_date: Yup.string().required("Required"),
     payroll_category_type: Yup.string().required("Required"),
   });
@@ -105,11 +125,15 @@ const ModalAddPayroll = ({ item }) => {
               initialValues={initVal}
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
-                console.log(values, result.data);
+                // console.log(values);
+                const employeeList = getResultEmployeeList(result, values);
+                // console.log("result", employeeList);
+
                 mutation.mutate({
                   ...values,
-                  employee: result?.data,
+                  employee: employeeList,
                   bonusId: `${payrollCategoryBonusId}`,
+                  month13thId: `${payrollCategory13thMonthId}`,
                 });
               }}
             >
@@ -120,6 +144,7 @@ const ModalAddPayroll = ({ item }) => {
                       <InputSelect
                         label="Earning Type"
                         name="payroll_category_type"
+                        onChange={handleCategoryType}
                         disabled={mutation.isLoading}
                         onFocus={(e) =>
                           e.target.parentElement.classList.add("focused")
@@ -140,27 +165,43 @@ const ModalAddPayroll = ({ item }) => {
                         </optgroup>
                       </InputSelect>
                     </div>
-                    <p className="text-primary ml-3 mb-3">Pay period</p>
-                    <div className="relative mb-5">
-                      <InputText
-                        label="From"
-                        type="text"
-                        onFocus={(e) => (e.target.type = "date")}
-                        onBlur={(e) => (e.target.type = "date")}
-                        name="payroll_start_date"
-                        disabled={mutation.isLoading}
-                      />
-                    </div>
-                    <div className="relative mb-5">
-                      <InputText
-                        label="To"
-                        type="text"
-                        onFocus={(e) => (e.target.type = "date")}
-                        onBlur={(e) => (e.target.type = "date")}
-                        name="payroll_end_date"
-                        disabled={mutation.isLoading}
-                      />
-                    </div>
+                    <p className="text-primary ml-3 mb-3">
+                      Pay period
+                      {Number(props.values.payroll_category_type) ===
+                        payrollCategory13thMonthId && (
+                        <>
+                          <span className="text-black">
+                            : Jan - Dec {currentYear()}
+                          </span>
+                        </>
+                      )}
+                    </p>
+
+                    {Number(props.values.payroll_category_type) !==
+                      payrollCategory13thMonthId && (
+                      <>
+                        <div className="relative mb-5">
+                          <InputText
+                            label="From"
+                            type="text"
+                            onFocus={(e) => (e.target.type = "date")}
+                            onBlur={(e) => (e.target.type = "date")}
+                            name="payroll_start_date"
+                            disabled={mutation.isLoading}
+                          />
+                        </div>
+                        <div className="relative mb-5">
+                          <InputText
+                            label="To"
+                            type="text"
+                            onFocus={(e) => (e.target.type = "date")}
+                            onBlur={(e) => (e.target.type = "date")}
+                            name="payroll_end_date"
+                            disabled={mutation.isLoading}
+                          />
+                        </div>
+                      </>
+                    )}
                     <div className="relative mb-5">
                       <InputText
                         label="Pay Date"

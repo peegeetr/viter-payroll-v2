@@ -94,6 +94,10 @@ const PayrollDetailsList = ({
                 <p className="pl-2">
                   {item.employee_job_work_reg_hol === 1 ? "Yes" : "No"}{" "}
                 </p>
+                <p className="font-semibold">For early 13th month?</p>
+                <p className="pl-2">
+                  {item.employee_job_early_13th_month === 1 ? "Yes" : "No"}{" "}
+                </p>
                 <p className="font-semibold">
                   Night differential hours per day
                 </p>

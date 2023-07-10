@@ -33,8 +33,8 @@ if ($lastMemberId->rowCount() == 0) {
 
 checkKeyword($id);
 $payroll->payroll_id = $id;
-$payroll->payroll_start_date = checkIndex($data, "payroll_start_date");
-$payroll->payroll_end_date = checkIndex($data, "payroll_end_date");
+$payroll->payroll_start_date = $data["payroll_start_date"];
+$payroll->payroll_end_date = $data["payroll_end_date"];
 $payroll->payroll_pay_date = checkIndex($data, "payroll_pay_date");
 $payroll->payroll_category_type = checkIndex($data, "payroll_category_type");
 $payroll->payroll_is_paid = 0;
@@ -44,6 +44,7 @@ $payroll->payroll_datetime = date("Y-m-d H:i:s");
 $isDecMonth = date("m");
 $allEmployee = $data["employee"];
 $bonusId = $data["bonusId"];
+$is13thMonth = $data["month13thId"];
 
 // if not december check if there's an existing payroll draft 
 // any payroll type
@@ -51,43 +52,48 @@ if ($isDecMonth != 12) {
     isPayrollType($payroll);
 }
 
-// if ($isDecMonth == 12) {
-//     if ($payroll->payroll_category_type === $bonusId) {
-//         $response = new Response();
-//         $error = [];
-//         $response->setSuccess(false);
-//         $error["count"] = 0;
-//         $error["success"] = false;
-//         $error['error'] = "Please complete drafts first before creating bonus payroll type.";
-//         $response->setData($error);
-//         $response->send();
-//         exit;
-//     }
-// }
+//if 13th month do this date
+if ($payroll->payroll_category_type === $is13thMonth) {
+    $payroll->payroll_start_date = date("Y") . "-01-01";
+    $payroll->payroll_end_date = date("Y") . "-12-31";
+}
+//check if date is not empty
+checkKeyword($payroll->payroll_start_date);
+checkKeyword($payroll->payroll_end_date);
 
 // // validate date
 checkDateExist($payroll);
-// create employee name and id
-for ($i = 0; $i < count($allEmployee); $i++) {
-    $employee_lname = $allEmployee[$i]["employee_lname"];
-    $employee_fname = $allEmployee[$i]["employee_fname"];
 
-    $payroll->payroll_list_employee_name = "{$employee_lname}, {$employee_fname}";
-    $payroll->payroll_list_employee_id = $allEmployee[$i]["employee_aid"];
-    $payroll->payroll_list_employee_email = $allEmployee[$i]["employee_job_email"];
-    $payroll->payroll_list_employee_salary = $allEmployee[$i]["employee_job_salary"];
-    $payroll->payroll_list_night_diff_per_day = $allEmployee[$i]["employee_job_nd_per_day"];
-    $payroll->payroll_list_employee_work_on_holiday = $allEmployee[$i]["employee_job_work_reg_hol"];
-    $payroll->payroll_list_deminimis = $allEmployee[$i]["employee_job_deminimis"];
-    $payroll->payroll_list_pagibig_additional = $allEmployee[$i]["employee_job_pagibig_amount"];
-    $payroll->payroll_list_employee_department = $allEmployee[$i]["department_name"];
-    $payroll->payroll_list_deduc_employee_sss = $allEmployee[$i]["employee_job_sss_deduc"];
-    $payroll->payroll_list_deduc_employee_pgbg = $allEmployee[$i]["employee_job_pag_ibig_deduc"];
-    $payroll->payroll_list_deduc_employee_philhealth = $allEmployee[$i]["employee_job_phil_health_deduc"];
-    $payroll->payroll_list_employee_account_number = $allEmployee[$i]["employee_job_account_number"];
-    // create payroll list
-    if ($allEmployee[$i]["employee_job_payroll_elegibility"] === 1) {
-        checkCreatePayrollList($payroll);
+// check if employee is empty
+if (count($allEmployee) === 0) {
+    resultError("Please check if you have employee.");
+}
+
+// check if employee is not empty
+if (count($allEmployee) > 0) {
+    // create employee name and id
+    for ($i = 0; $i < count($allEmployee); $i++) {
+        $employee_lname = $allEmployee[$i]["employee_lname"];
+        $employee_fname = $allEmployee[$i]["employee_fname"];
+
+        $payroll->payroll_list_employee_name = "{$employee_lname}, {$employee_fname}";
+        $payroll->payroll_list_employee_id = $allEmployee[$i]["employee_aid"];
+        $payroll->payroll_list_employee_email = $allEmployee[$i]["employee_job_email"];
+        $payroll->payroll_list_employee_salary = $allEmployee[$i]["employee_job_salary"];
+        $payroll->payroll_list_night_diff_per_day = $allEmployee[$i]["employee_job_nd_per_day"];
+        $payroll->payroll_list_employee_work_on_holiday = $allEmployee[$i]["employee_job_work_reg_hol"];
+        $payroll->payroll_list_deminimis = $allEmployee[$i]["employee_job_deminimis"];
+        $payroll->payroll_list_pagibig_additional = $allEmployee[$i]["employee_job_pagibig_amount"];
+        $payroll->payroll_list_employee_department = $allEmployee[$i]["department_name"];
+        $payroll->payroll_list_deduc_employee_sss = $allEmployee[$i]["employee_job_sss_deduc"];
+        $payroll->payroll_list_deduc_employee_pgbg = $allEmployee[$i]["employee_job_pag_ibig_deduc"];
+        $payroll->payroll_list_deduc_employee_philhealth = $allEmployee[$i]["employee_job_phil_health_deduc"];
+        $payroll->payroll_list_employee_account_number = $allEmployee[$i]["employee_job_account_number"];
+
+        // create payroll list 
+        if ($allEmployee[$i]["employee_job_payroll_elegibility"] === 1) {
+            checkCreatePayrollList($payroll);
+        }
     }
 }
 

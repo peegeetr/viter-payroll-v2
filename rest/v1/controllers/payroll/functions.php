@@ -86,3 +86,17 @@ function comparePayDate($object, $name_old, $name)
         checkPayDateExist($object);
     }
 }
+
+
+// if error
+function resultError($msg)
+{
+    $response = new Response();
+    $error = [];
+    $response->setSuccess(false);
+    $error['error'] = $msg;
+    $error["success"] = false;
+    $response->setData($error);
+    $response->send();
+    exit;
+}

@@ -22,4 +22,4 @@
     - 
 
 *extra 
-    - 
+    - Uploaded to both dev and prod

@@ -1388,23 +1388,31 @@ export const payComputePhil = (emp, philhealth) => {
     if (philhealth.length > 0) {
       totalSalary =
         Number(emp.payroll_list_employee_salary) *
-        (philhealth[0].philhealth_percentage / 100);
+        (Number(philhealth[0].philhealth_percentage) / 100);
 
       //if salary >= max
-      if (totalSalary >= philhealth[0].philhealth_max) {
+      if (totalSalary >= Number(philhealth[0].philhealth_max)) {
+        // console.log(totalSalary, philhealth[0].philhealth_max);
         philhealthEr = Number(philhealth[0].philhealth_max) / 4;
         philhealthEe = Number(philhealth[0].philhealth_max) / 4;
         // use to insert in earnings table
       }
       //if salary <= min
-      if (totalSalary <= philhealth[0].philhealth_min) {
+      if (totalSalary <= Number(philhealth[0].philhealth_min)) {
         philhealthEr = Number(philhealth[0].philhealth_min) / 4;
         philhealthEe = Number(philhealth[0].philhealth_min) / 4;
         // use to insert in earnings table
       }
+
       // if min, max are false
-      philhealthEr = Number(totalSalary) / 4;
-      philhealthEe = Number(totalSalary) / 4;
+      if (
+        totalSalary > Number(philhealth[0].philhealth_min) &&
+        totalSalary < Number(philhealth[0].philhealth_max)
+      ) {
+        philhealthEr = Number(totalSalary) / 4;
+        philhealthEe = Number(totalSalary) / 4;
+        // console.log(totalSalary);
+      }
     }
     // use to insert in earnings table
     philhealthList.push({

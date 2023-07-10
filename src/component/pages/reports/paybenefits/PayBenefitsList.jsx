@@ -200,11 +200,11 @@ const PayBenefitsList = () => {
             <thead>
               <tr className="text-right">
                 <th className="text-left  print:py-[2px]">#</th>
-                <th className="text-left min-w-[12rem] capitalize print:py-[2px]">
+                <th className="text-left min-w-[14rem] capitalize print:py-[2px]">
                   Name
                 </th>
                 <th className=" print:py-[2px]">&nbsp;</th>
-                {/* <th className=" print:py-[2px]">SALARY</th> */}
+                <th className=" print:py-[2px]">SALARY</th>
                 <th className=" print:py-[2px]">SSS</th>
                 <th className=" print:py-[2px]">PHIC</th>
                 <th className=" print:py-[2px]">PGBG</th>
@@ -249,12 +249,12 @@ const PayBenefitsList = () => {
                         <td colSpan={2} className="text-left print:py-[2px]">
                           {item.payroll_list_employee_name}
                         </td>
-                        {/* <td className="w-[15rem] print:py-[2px]">
+                        <td className="w-[15rem] print:py-[2px]">
                           {pesoSign}
                           {numberWithCommas(
                             Number(item.payroll_list_employee_salary).toFixed(2)
                           )}
-                        </td> */}
+                        </td>
                         <td className="w-[15rem] print:py-[2px]">
                           {pesoSign}
                           {numberWithCommas(
@@ -310,10 +310,10 @@ const PayBenefitsList = () => {
                   <td colSpan={3} className="w-[15rem] print:py-[2px]">
                     TOTAL
                   </td>
-                  {/* <td className="w-[15rem] print:py-[2px]">
+                  <td className="w-[15rem] print:py-[2px]">
                     {pesoSign}
                     {numberWithCommas(totalSalary.toFixed(2))}
-                  </td> */}
+                  </td>
                   <td className="w-[15rem] print:py-[2px]">
                     {pesoSign}
                     {numberWithCommas(totalSss.toFixed(2))}

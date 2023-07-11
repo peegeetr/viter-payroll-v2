@@ -134,7 +134,8 @@ class Deductions
             $sql .= "order by ";
             $sql .= "deduction.deduction_is_paid asc, ";
             $sql .= "DATE(deduction.deduction_start_pay_date) desc, ";
-            $sql .= "deduction.deduction_employee asc ";
+            $sql .= "deduction.deduction_employee, ";
+            $sql .= "payitem.payitem_name ";
             $query = $this->connection->query($sql);
         } catch (PDOException $ex) {
             $query = false;
@@ -174,7 +175,8 @@ class Deductions
             $sql .= "order by ";
             $sql .= "deduction.deduction_is_paid asc, ";
             $sql .= "DATE(deduction.deduction_start_pay_date) desc, ";
-            $sql .= "deduction.deduction_employee asc ";
+            $sql .= "deduction.deduction_employee asc, ";
+            $sql .= "payitem.payitem_name ";
             $sql .= "limit :start, ";
             $sql .= ":total ";
             $query = $this->connection->prepare($sql);
@@ -224,7 +226,8 @@ class Deductions
             $sql .= "order by ";
             $sql .= "deduction.deduction_is_paid asc, ";
             $sql .= "DATE(deduction.deduction_start_pay_date) desc, ";
-            $sql .= "deduction.deduction_employee asc ";
+            $sql .= "deduction.deduction_employee asc, ";
+            $sql .= "payitem.payitem_name ";
             $query = $this->connection->prepare($sql);
             $query->execute([
                 "search" => "%{$this->deduction_search}%",

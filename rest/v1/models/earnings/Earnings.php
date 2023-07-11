@@ -166,8 +166,9 @@ class Earnings
             $sql .= "earnings.earnings_is_paid, ";
             $sql .= "DATE(earnings.earnings_end_pay_date) desc, ";
             $sql .= "earnings.earnings_employee, ";
-            $sql .= "DATE(earnings.earnings_hris_date), ";
-            $sql .= "earnings.earnings_details ";
+            $sql .= "payitem.payitem_name ";
+            // $sql .= "DATE(earnings.earnings_hris_date), ";
+            // $sql .= "earnings.earnings_details ";
             $query = $this->connection->query($sql);
         } catch (PDOException $ex) {
             $query = false;
@@ -215,8 +216,9 @@ class Earnings
             $sql .= "earnings.earnings_is_paid, ";
             $sql .= "DATE(earnings.earnings_end_pay_date) desc, ";
             $sql .= "earnings.earnings_employee, ";
-            $sql .= "DATE(earnings.earnings_hris_date), ";
-            $sql .= "earnings.earnings_details ";
+            $sql .= "payitem.payitem_name ";
+            // $sql .= "DATE(earnings.earnings_hris_date), ";
+            // $sql .= "earnings.earnings_details ";
             $sql .= "limit :start, ";
             $sql .= ":total ";
             $query = $this->connection->prepare($sql);
@@ -273,8 +275,9 @@ class Earnings
             $sql .= "earnings.earnings_is_paid, ";
             $sql .= "DATE(earnings.earnings_end_pay_date) desc, ";
             $sql .= "earnings.earnings_employee, ";
-            $sql .= "DATE(earnings.earnings_hris_date), ";
-            $sql .= "earnings.earnings_details ";
+            $sql .= "payitem.payitem_name ";
+            // $sql .= "DATE(earnings.earnings_hris_date), ";
+            // $sql .= "earnings.earnings_details ";
             $query = $this->connection->prepare($sql);
             $query->execute([
                 "search" => "%{$this->earnings_search}%",

@@ -152,7 +152,10 @@ export const runPayroll = (
   let deducNumInstallmentList = [];
   let zero = "0.00";
 
-  if (Number(categoryId) === payrollCategory13thMonthId) {
+  if (
+    Number(categoryId) === payrollCategory13thMonthId &&
+    category13thMonth.length > 0
+  ) {
     payrollList = payComputeCategory13thMonth(category13thMonth, yearlyTax);
   }
 

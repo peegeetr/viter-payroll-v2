@@ -47,6 +47,15 @@ const ModalAddPayroll = ({ item }) => {
     false // devKey boolean
   );
 
+  // use if not loadmore button undertime
+  const { data: category13thMonth } = useQueryData(
+    `${devApiUrl}/v1/payrollList/category/13month/${payrollCategorySalaryId}`, // endpoint
+    "get", // method
+    "category13thMonth" // key
+  );
+
+  console.log(category13thMonth);
+
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: (values) =>
@@ -126,8 +135,22 @@ const ModalAddPayroll = ({ item }) => {
               validationSchema={yupSchema}
               onSubmit={async (values, { setSubmitting, resetForm }) => {
                 // console.log(values);
+                // for 13th month validation only
+                if (
+                  Number(values.payroll_category_type) ===
+                    payrollCategory13thMonthId &&
+                  category13thMonth?.data.length === 0
+                ) {
+                  dispatch(setError(true));
+                  dispatch(
+                    setMessage(
+                      `There is no salary for this year yet to compute 13th month.`
+                    )
+                  );
+                  return;
+                }
+
                 const employeeList = getResultEmployeeList(result, values);
-                // console.log("result", employeeList);
 
                 mutation.mutate({
                   ...values,

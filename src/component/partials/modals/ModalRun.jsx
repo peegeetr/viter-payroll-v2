@@ -154,7 +154,10 @@ const ModalRun = ({
     ) {
       dispatch(setIsConfirm(false));
       dispatch(setError(true));
-      dispatch(setMessage(`${categoryName} has no entry in earnings`));
+      dispatch(
+        setMessage(`There's no salary entry for ${categoryName} computation.`)
+      );
+      // dispatch(setMessage(`${categoryName} has no entry in earnings`));
       return;
     }
 

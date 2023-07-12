@@ -141,56 +141,47 @@ export const getValuesRemoveComma = (values) => {
   return list;
 };
 
-export const getEmployeeList = (employee, values) => {
+export const getEmployeeList = (employee) => {
   let list = [];
-  let countEarly13thMonth = 0;
-  // check if have early 13th month
   employee?.data.map((eItem) => {
-    countEarly13thMonth += Number(eItem.employee_job_early_13th_month);
+    if (
+      eItem.employee_job_payroll_elegibility === 1 &&
+      eItem.employee_job_early_13th_month === 1
+    ) {
+      console.log(eItem.employee_job_early_13th_month);
+      list.push({
+        employee_aid: eItem.employee_aid,
+        employee_lname: eItem.employee_lname,
+        employee_fname: eItem.employee_fname,
+        employee_job_email: eItem.employee_job_email,
+        employee_job_salary: eItem.employee_job_salary,
+        employee_job_nd_per_day: eItem.employee_job_nd_per_day,
+        employee_job_work_reg_hol: eItem.employee_job_work_reg_hol,
+        employee_job_deminimis: eItem.employee_job_deminimis,
+        employee_job_pagibig_amount: eItem.employee_job_pagibig_amount,
+        department_name: eItem.department_name,
+        employee_job_sss_deduc: eItem.employee_job_sss_deduc,
+        employee_job_pag_ibig_deduc: eItem.employee_job_pag_ibig_deduc,
+        employee_job_phil_health_deduc: eItem.employee_job_phil_health_deduc,
+        employee_job_account_number: eItem.employee_job_account_number,
+        employee_job_payroll_elegibility:
+          eItem.employee_job_payroll_elegibility,
+        employee_job_early_13th_month: eItem.employee_job_early_13th_month,
+      });
+    }
   });
 
-  // if have early 13th month and category id is 13th month
-  if (
-    countEarly13thMonth > 0 &&
-    Number(values.payroll_category_type) === payrollCategory13thMonthId
-  ) {
-    employee?.data.map((eItem) => {
-      if (
-        eItem.employee_job_payroll_elegibility === 1 &&
-        eItem.employee_job_early_13th_month === 1
-      ) {
-        list.push({
-          employee_aid: eItem.employee_aid,
-          employee_lname: eItem.employee_lname,
-          employee_fname: eItem.employee_fname,
-          employee_job_email: eItem.employee_job_email,
-          employee_job_salary: eItem.employee_job_salary,
-          employee_job_nd_per_day: eItem.employee_job_nd_per_day,
-          employee_job_work_reg_hol: eItem.employee_job_work_reg_hol,
-          employee_job_deminimis: eItem.employee_job_deminimis,
-          employee_job_pagibig_amount: eItem.employee_job_pagibig_amount,
-          department_name: eItem.department_name,
-          employee_job_sss_deduc: eItem.employee_job_sss_deduc,
-          employee_job_pag_ibig_deduc: eItem.employee_job_pag_ibig_deduc,
-          employee_job_phil_health_deduc: eItem.employee_job_phil_health_deduc,
-          employee_job_account_number: eItem.employee_job_account_number,
-          employee_job_payroll_elegibility:
-            eItem.employee_job_payroll_elegibility,
-          employee_job_early_13th_month: eItem.employee_job_early_13th_month,
-        });
-      }
-    });
-  }
-
-  return { countEarly13thMonth, list };
+  return list.length === 0 ? employee?.data : list;
 };
 
 export const getResultEmployeeList = (employee, values) => {
   let list = employee?.data;
+  // for 13th month only
 
-  if (getEmployeeList(employee, values).countEarly13thMonth > 0) {
-    list = getEmployeeList(employee, values).list;
+  if (Number(values.payroll_category_type) === payrollCategory13thMonthId) {
+    list = getEmployeeList(employee);
   }
 
+  console.log(list);
   return list;
 };

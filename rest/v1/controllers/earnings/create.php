@@ -84,7 +84,8 @@ if ($data["payitem_is_hris"] === "0" && $earnings->earnings_employee === "all") 
 if ($data["payitem_is_hris"] === "0" && $earnings->earnings_employee !== "all") {
     // create if specific employee and not data from hris
 
-    $earnings->earnings_employee = explode(" ", $data["earnings_employee"])[0] . ", " . explode(" ", $data["earnings_employee"])[1];
+    // $earnings->earnings_employee = explode(" ", $data["earnings_employee"])[0] . ", " . explode(" ", $data["earnings_employee"])[1];
+    $earnings->earnings_employee = $data["earnings_employee"];
     $earnings->earnings_hris_date = "";
     $earnings->earnings_hrs = "";
     $earnings->earnings_rate = "";

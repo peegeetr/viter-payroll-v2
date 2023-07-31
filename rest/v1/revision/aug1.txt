@@ -1,0 +1,19 @@
+
+*controllers     
+    - earnings/create.php
+    - 
+  
+*models  
+    - 
+
+*htaccess 
+    - 
+
+*db tables 
+    -  
+
+*core 
+    - 
+
+*extra 
+    - 

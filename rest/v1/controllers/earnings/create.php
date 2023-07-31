@@ -63,7 +63,7 @@ if ($data["payitem_is_hris"] === "0" && $earnings->earnings_employee === "all") 
         $earnings->earnings_hrs = "";
         $earnings->earnings_rate = "";
 
-        checkDeleteEarningsIdAndEmployeeId($earnings);
+        // checkDeleteEarningsIdAndEmployeeId($earnings);
         $query = checkCreate($earnings);
         // $query = $earnings->checkName();
         // if ($query->rowCount() > 0) {
@@ -79,8 +79,7 @@ if ($data["payitem_is_hris"] === "0" && $earnings->earnings_employee === "all") 
     returnSuccess($earnings, "Earnings", $query, $newCount);
 }
 
-// create if not data from hris and specific employee
-
+// create if not data from hris and specific employee 
 if ($data["payitem_is_hris"] === "0" && $earnings->earnings_employee !== "all") {
     // create if specific employee and not data from hris
 
@@ -90,7 +89,7 @@ if ($data["payitem_is_hris"] === "0" && $earnings->earnings_employee !== "all") 
     $earnings->earnings_hrs = "";
     $earnings->earnings_rate = "";
 
-    checkDeleteEarningsIdAndEmployeeId($earnings);
+    // checkDeleteEarningsIdAndEmployeeId($earnings);
     $query = checkCreate($earnings);
     returnSuccess($earnings, "Earnings", $query);
 }

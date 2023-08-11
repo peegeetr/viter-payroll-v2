@@ -108,6 +108,7 @@ if ($data["payitem_is_hris"] === "1" && $earnings->earnings_payitem_id === $payi
         noDataFound();
     }
     for ($l = 0; $l < count($allLeave); $l++) {
+
         // check name
         $earnings->earnings_employee_id = $allLeave[$l]["employeId"];
         $earnings->earnings_employee = $allLeave[$l]["name"];

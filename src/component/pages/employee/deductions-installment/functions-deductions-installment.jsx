@@ -132,9 +132,8 @@ export const getDeductionPayrollDateNow = () => {
 // get pay period working days between dates
 export const getDeducPayPeriod = (startDate, endDate) => {
   const mo = formatDate(startDate).split(" ")[1];
-  const day = formatDate(startDate).split(" ")[2];
   const startYear = formatDate(startDate).split(" ")[3];
   const endMo = formatDate(endDate).split(" ")[1];
   const endYear = formatDate(endDate).split(" ")[3];
-  return `${mo} ${day} ${startYear} - ${endMo} ${day} ${endYear}`;
+  return `${mo} ${startYear} - ${endMo} ${endYear}`;
 };

@@ -1,0 +1,20 @@
+
+*controllers    
+    - 
+ 
+    
+*models  
+    - payroll/list/PayrollList.php
+    - 
+  
+*htaccess 
+    - 
+
+*db tables 
+    - 
+
+*core 
+    - 
+
+*extra 
+    - 

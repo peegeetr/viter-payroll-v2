@@ -82,8 +82,6 @@ const SummaryTypeList = () => {
     isFilter
   );
 
-  console.log(basicPay, isFilter);
-
   // use if not loadmore button undertime
   const { data: payType, isLoading: loadingPayType } = useQueryData(
     `${devApiUrl}/v1/paytype`, // endpoint
@@ -216,6 +214,7 @@ const SummaryTypeList = () => {
             </thead>
             <tbody>
               {(status === "loading" ||
+                result?.pages[0].data.length === 0 ||
                 (result?.pages[0].data.length === 0 &&
                   basicPay?.count === 0)) && (
                 <tr className="text-center relative">
@@ -262,7 +261,7 @@ const SummaryTypeList = () => {
                       );
                     })}
                   {page.data.map((item, key) => {
-                    total += Number(item.amount) + basicTotal;
+                    total += Number(item.amount);
                     return (
                       <tr key={key}>
                         <td>{counter++}.</td>
@@ -293,7 +292,7 @@ const SummaryTypeList = () => {
       {isFilter && status !== "loading" && (
         <div className="text-right mt-2 pr-2 text-primary font-bold">
           <span className="mr-8">Total :</span>
-          {pesoSign} {numberWithCommas(total.toFixed(2))}
+          {pesoSign} {numberWithCommas((total + basicTotal).toFixed(2))}
         </div>
       )}
       <div className="text-center">

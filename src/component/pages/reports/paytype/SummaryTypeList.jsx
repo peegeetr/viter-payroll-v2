@@ -79,8 +79,10 @@ const SummaryTypeList = () => {
     "post", // method
     "basicPay", // key
     { startDate, endDate },
-    isFetching
+    isFilter
   );
+
+  console.log(basicPay, isFilter);
 
   // use if not loadmore button undertime
   const { data: payType, isLoading: loadingPayType } = useQueryData(
@@ -235,7 +237,7 @@ const SummaryTypeList = () => {
                 <React.Fragment key={key}>
                   {Number(paytype) === wagesEarningsId &&
                     basicPay?.data.map((item, key) => {
-                      basicTotal = Number(item.amount);
+                      basicTotal = Number(item.totalBasicSalary);
                       return (
                         <tr key={key}>
                           <td>1.</td>

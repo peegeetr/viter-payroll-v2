@@ -24,7 +24,8 @@ import TableSpinner from "../../../../partials/spinners/TableSpinner";
 
 const SummaryTypeView = () => {
   const { store, dispatch } = React.useContext(StoreContext);
-  const payrollId = getUrlParam().get("payrollId");
+  const startDate = getUrlParam().get("startDate");
+  const endDate = getUrlParam().get("endDate");
   const payitemId = getUrlParam().get("payitemId");
   const [page, setPage] = React.useState(1);
   let counter = 1;
@@ -62,8 +63,8 @@ const SummaryTypeView = () => {
       await queryDataInfinite(
         ``, // search endpoint
         category === "earnings"
-          ? `${devApiUrl}/v1/earnings/report/paytype/view/${pageParam}/${payrollId}/${payitemId}` // list endpoint
-          : `${devApiUrl}/v1/deductions/report/paytype/view/${pageParam}/${payrollId}/${payitemId}` // list endpoint
+          ? `${devApiUrl}/v1/paytype-report/earnings-paytype/view/${pageParam}/${startDate}/${endDate}/${payitemId}` // list endpoint
+          : `${devApiUrl}/v1/paytype-report/deductions-paytype/view/${pageParam}/${startDate}/${endDate}/${payitemId}` // list endpoint
       ),
     getNextPageParam: (lastPage) => {
       if (lastPage.page < lastPage.total) {
@@ -82,20 +83,8 @@ const SummaryTypeView = () => {
       fetchNextPage();
     }
   }, [inView]);
-  let payPeriodEarinings =
-    result?.pages[0].data.length > 0
-      ? `${getPayPeriod(
-          result?.pages[0].data[0].earnings_start_pay_date,
-          result?.pages[0].data[0].earnings_end_pay_date
-        )}`
-      : "";
-  let payPeriodDeductions =
-    result?.pages[0].data.length > 0
-      ? `${getPayPeriod(
-          result?.pages[0].data[0].deduction_start_pay_date,
-          result?.pages[0].data[0].deduction_end_pay_date
-        )}`
-      : "";
+  let payPeriod = `${getPayPeriod(startDate, endDate)}`;
+
   return (
     <>
       <Header />
@@ -124,12 +113,7 @@ const SummaryTypeView = () => {
             Pay Item: <span className="text-black ml-2">{payItem}</span>
           </p>
           <p className="m-0">
-            Pay Period:{" "}
-            <span className="text-black ml-2">
-              {category === "earnings"
-                ? payPeriodEarinings
-                : payPeriodDeductions}
-            </span>
+            Pay Period: <span className="text-black ml-2">{payPeriod}</span>
           </p>
         </div>
         <div className="relative overflow-x-auto z-0 w-full lg:w-[35rem] ">
@@ -139,6 +123,7 @@ const SummaryTypeView = () => {
                 <tr>
                   <th>#</th>
                   <th>Employee</th>
+                  <th>Payroll ID</th>
                   <th></th>
                   <th className="text-right">Amount</th>
                 </tr>
@@ -164,7 +149,7 @@ const SummaryTypeView = () => {
                 {result?.pages.map((page, key) => (
                   <React.Fragment key={key}>
                     {page.data.map((item, key) => {
-                      console.log(item.earnings_rate);
+                      // console.log(item.earnings_rate);
                       item.earnings_amount === undefined
                         ? (total += Number(item.deduction_amount))
                         : (total += Number(item.earnings_amount));
@@ -176,6 +161,7 @@ const SummaryTypeView = () => {
                               ? `${item.earnings_employee}`
                               : `${item.deduction_employee}`}
                           </td>
+                          <td>{item.payrollid}</td>
                           <td>
                             {item.earnings_rate !== "" &&
                               item.earnings_rate !== undefined &&

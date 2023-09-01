@@ -183,3 +183,16 @@ RewriteRule ^system-mode$ controllers/settings/system-mode/system-mode.php [L]
 RewriteRule ^system-mode/([0-9]+)$ controllers/settings/system-mode/system-mode.php?systemModeId=$1 [L]
 RewriteRule ^system-mode/active/([0-9]+)$ controllers/settings/system-mode/active.php?systemModeId=$1 [L]
 RewriteRule ^system-mode/maintenance$ controllers/settings/system-mode/read-maintenance-on.php [L]
+ 
+#report paytype
+RewriteRule ^paytype-report/filter/([0-9]+)/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)$ controllers/reports/paytype/report-filter.php?payrolltypeid=$1&category=$2&startDate=$3&endDate=$4 [L]
+RewriteRule ^paytype-report/basic-pay$ controllers/reports/paytype/report-filter-basic-pay.php [L] 
+
+#report paytype view
+RewriteRule ^paytype-report/deductions-paytype/view/([0-9]+)/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/([0-9]+)$ controllers/reports/paytype/view/report-deductions-paytype-id.php?start=$1&startDate=$2&endDate=$3&payitemId=$4 [L]
+RewriteRule ^paytype-report/earnings-paytype/view/([0-9]+)/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/([0-9]+)$ controllers/reports/paytype/view/report-earnings-paytype-id.php?start=$1&startDate=$2&endDate=$3&payitemId=$4 [L]  
+RewriteRule ^paytype-report/basic-pay/page/view/([0-9]+)/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)$ controllers/reports/paytype/view/report-basic-pay-page.php?start=$1&startDate=$2&endDate=$3 [L] 
+ 
+#report payrun
+RewriteRule ^payrun-report/employee-run/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/([0-9]+)$ controllers/reports/payrun/report-employee-payrun.php?startDate=$1&endDate=$2&employeeId=$3 [L]  
+

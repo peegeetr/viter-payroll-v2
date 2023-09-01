@@ -23,7 +23,6 @@ import NoData from "../../../partials/NoData";
 import ServerError from "../../../partials/ServerError";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 import TableSpinner from "../../../partials/spinners/TableSpinner";
-import { getBasicPayReport } from "./functions-paytype";
 
 const SummaryTypeList = () => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -53,7 +52,7 @@ const SummaryTypeList = () => {
     queryKey: ["earnings-summary", isSubmit],
     queryFn: async ({ pageParam = 1 }) =>
       await queryDataInfinite(
-        `${devApiUrl}/v1/paytype/report/filter/${paytype}/${category}/${startDate}/${endDate}`, // search endpoint
+        `${devApiUrl}/v1/paytype-report/filter/${paytype}/${category}/${startDate}/${endDate}`, // search endpoint
         `${devApiUrl}/v1/payrollList/page/0/${pageParam}`, // list endpoint
         isFilter // search boolean
       ),
@@ -73,11 +72,14 @@ const SummaryTypeList = () => {
       fetchNextPage();
     }
   }, [inView]);
+
   // use if not loadmore button undertime
   const { data: basicPay } = useQueryData(
-    `${devApiUrl}/v1/payrollList/report/filter/basic-pay`, // endpoint filter
-    "get", // method
-    "basicPay" // key
+    `${devApiUrl}/v1/paytype-report/basic-pay`, // endpoint filter
+    "post", // method
+    "basicPay", // key
+    { startDate, endDate },
+    isFetching
   );
 
   // use if not loadmore button undertime
@@ -102,8 +104,6 @@ const SummaryTypeList = () => {
     start_date: Yup.string().required("Required"),
     end_date: Yup.string().required("Required"),
   });
-  // payroll-type/summary/
-  console.log(result);
   return (
     <>
       <div className="relative overflow-x-auto z-0 w-full  print:hidden">
@@ -122,10 +122,6 @@ const SummaryTypeList = () => {
           }}
         >
           {(props) => {
-            // props.values.deminimis =
-            //   Number(props.values.paytype_aid) === deMinimisEarningsId
-            //     ? deMinimisEarningsId
-            //     : "0";
             return (
               <Form>
                 <div className="grid gap-5 grid-cols-1 md:grid-cols-[1fr_1fr_1fr_150px] pt-5 pb-5 items-center">
@@ -217,7 +213,9 @@ const SummaryTypeList = () => {
               </tr>
             </thead>
             <tbody>
-              {(status === "loading" || result?.pages[0].data.length === 0) && (
+              {(status === "loading" ||
+                (result?.pages[0].data.length === 0 &&
+                  basicPay?.count === 0)) && (
                 <tr className="text-center relative">
                   <td colSpan="100%" className="p-10">
                     {status === "loading" && <TableSpinner />}
@@ -236,17 +234,13 @@ const SummaryTypeList = () => {
               {result?.pages.map((page, key) => (
                 <React.Fragment key={key}>
                   {Number(paytype) === wagesEarningsId &&
-                    result?.pages[0].data.length > 0 &&
-                    getBasicPayReport(
-                      page.data[0].earnings_payroll_id,
-                      basicPay
-                    )?.map((item, key) => {
+                    basicPay?.data.map((item, key) => {
                       basicTotal = Number(item.amount);
                       return (
                         <tr key={key}>
                           <td>1.</td>
-                          <td>{item.payitem_name}</td>
-                          <td>{item.paytype_name}</td>
+                          <td>Basic Pay</td>
+                          <td>Wages</td>
                           <td>{item.count}</td>
                           <td className="text-right text-primary ">
                             <Link
@@ -254,10 +248,12 @@ const SummaryTypeList = () => {
                               data-tooltip="View"
                               target="_blank"
                               rel="noopener noreferrer"
-                              to={`${link}/reports/paytype/basic-pay?payrollId=${item.payroll_id}`}
+                              to={`${link}/reports/paytype/basic-pay?startDate=${startDate}&endDate=${endDate}`}
                             >
                               {pesoSign}
-                              {numberWithCommas(Number(item.amount).toFixed(2))}
+                              {numberWithCommas(
+                                Number(item.totalBasicSalary).toFixed(2)
+                              )}
                             </Link>
                           </td>
                         </tr>
@@ -277,11 +273,7 @@ const SummaryTypeList = () => {
                             data-tooltip="View"
                             target="_blank"
                             rel="noopener noreferrer"
-                            to={
-                              item.paytype_category === "earnings"
-                                ? `${link}/reports/paytype/view?payrollId=${item.earnings_payroll_id}&payitemId=${item.payitem_aid}`
-                                : `${link}/reports/paytype/view?payrollId=${item.deduction_payroll_id}&payitemId=${item.payitem_aid}`
-                            }
+                            to={`${link}/reports/paytype/view?startDate=${startDate}&endDate=${endDate}&payitemId=${item.payitem_aid}`}
                           >
                             {pesoSign}
                             {numberWithCommas(Number(item.amount).toFixed(2))}

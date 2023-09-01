@@ -1,0 +1,25 @@
+
+*controllers    
+    - reports/ {note: all folder and files}
+    - 
+    - 
+ 
+    
+*models  
+    - reports/ {note: all folder and files}
+    - 
+    - 
+  
+*htaccess 
+    - #report paytype
+    - #report paytype view
+    - #report payrun
+
+*db tables 
+    - 
+
+*core 
+    - 
+
+*extra 
+    - 

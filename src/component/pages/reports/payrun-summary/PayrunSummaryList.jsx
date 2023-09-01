@@ -38,7 +38,7 @@ const PayrunSummaryList = () => {
     queryKey: ["earnings-summary", isSubmit],
     queryFn: async ({ pageParam = 1 }) =>
       await queryDataInfinite(
-        `${devApiUrl}/v1/payrollList/report/employee-run/${startDate}/${endDate}/${employeeId}`, // filter endpoint
+        `${devApiUrl}/v1/payrun-report/employee-run/${startDate}/${endDate}/${employeeId}`, // filter endpoint
         `${devApiUrl}/v1/payrollList/page/0/${pageParam}`, // list endpoint
         isFilter // search boolean
       ),

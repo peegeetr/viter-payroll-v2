@@ -23,7 +23,8 @@ import TableSpinner from "../../../../partials/spinners/TableSpinner";
 
 const SummaryTypeViewBasicPay = () => {
   const { store, dispatch } = React.useContext(StoreContext);
-  const payrollId = getUrlParam().get("payrollId");
+  const startDate = getUrlParam().get("startDate");
+  const endDate = getUrlParam().get("endDate");
   let counter = 1;
   const { ref, inView } = useInView();
   let total = 0;
@@ -42,7 +43,7 @@ const SummaryTypeViewBasicPay = () => {
     queryFn: async ({ pageParam = 1 }) =>
       await queryDataInfinite(
         ``, // search endpoint
-        `${devApiUrl}/v1/payrollList/report/basic-pay/page/${payrollId}/${pageParam}`
+        `${devApiUrl}/v1/paytype-report/basic-pay/page/view/${pageParam}/${startDate}/${endDate}`
       ),
     getNextPageParam: (lastPage) => {
       if (lastPage.page < lastPage.total) {
@@ -91,8 +92,8 @@ const SummaryTypeViewBasicPay = () => {
           <p className="m-0">
             Pay Period:
             <span className="text-black ml-2">{`${getPayPeriod(
-              result?.pages[0].data[0].payroll_start_date,
-              result?.pages[0].data[0].payroll_end_date
+              startDate,
+              endDate
             )}`}</span>
           </p>
         </div>
@@ -103,6 +104,7 @@ const SummaryTypeViewBasicPay = () => {
                 <tr>
                   <th>#</th>
                   <th>Employee</th>
+                  <th>Payroll ID</th>
                   <th className="text-right">Amount</th>
                 </tr>
               </thead>
@@ -132,6 +134,7 @@ const SummaryTypeViewBasicPay = () => {
                         <tr key={key}>
                           <td>{counter++}.</td>
                           <td>{item.payroll_list_employee_name}</td>
+                          <td>{item.payroll_id}</td>
                           <td className="w-[15rem] text-right mt-2 pr-2 font-bold">
                             {pesoSign}
                             {`${numberWithCommas(

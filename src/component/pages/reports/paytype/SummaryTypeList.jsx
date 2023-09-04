@@ -79,7 +79,7 @@ const SummaryTypeList = () => {
     "post", // method
     "basicPay", // key
     { startDate, endDate },
-    isFilter
+    isSubmit
   );
 
   // use if not loadmore button undertime

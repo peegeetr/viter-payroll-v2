@@ -45,10 +45,12 @@ const EmployeeList = () => {
     queryKey: ["employee", onSearch, store.isSearch],
     queryFn: async ({ pageParam = 1 }) =>
       await queryDataInfinite(
-        `${hrisDevApiUrl}/v1/employees/search/elegibility/${search.current.value}`, // search endpoint
+        `${hrisDevApiUrl}/v1/employees/search/elegibility`, // search endpoint
         `${hrisDevApiUrl}/v1/employees/pay/elegibility/${pageParam}`, // list endpoint
         store.isSearch, // search boolean
-        false // devKey boolean
+        false, // devKey boolean
+        "post",
+        { searchValue: search.current.value } // search value
       ),
     getNextPageParam: (lastPage) => {
       if (lastPage.page < lastPage.total) {

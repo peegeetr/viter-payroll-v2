@@ -1466,10 +1466,12 @@ class PayrollList
             $sql .= "payrollList.payroll_list_employee_id, ";
             $sql .= "payrollList.payroll_list_employee_name, ";
             $sql .= "payrollList.payroll_list_employee_salary, ";
+            $sql .= "payrollList.payroll_list_job_early_13th_month, ";
             $sql .= "payroll.payroll_pay_date ";
             $sql .= "from {$this->tblPayrollList} as payrollList, ";
             $sql .= "{$this->tblPayroll} as payroll ";
             $sql .= "where YEAR(payroll.payroll_pay_date) = :year ";
+            $sql .= "and MONTH(payroll.payroll_end_date) <= 11 ";
             $sql .= "and payroll.payroll_category_type = :payroll_category_type ";
             $sql .= "and payroll.payroll_id = payrollList.payroll_list_payroll_id ";
             $sql .= "group by payrollList.payroll_list_employee_id ";

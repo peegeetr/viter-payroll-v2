@@ -60,8 +60,6 @@ const PayrollView = () => {
     "category13thMonth" // key
   );
 
-  console.log(category13thMonth);
-
   // use if not loadmore button undertime
   const { data: payrollEarnings } = useQueryData(
     `${devApiUrl}/v1/earnings`, // endpoint
@@ -118,7 +116,7 @@ const PayrollView = () => {
     "holiday-exemptions" // key
   );
 
-  // console.log(payrollList);
+  console.log(payrollList);
   // console.log(payrollList, holidayExemptions);
 
   const handleEmailAll = () => {

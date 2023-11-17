@@ -195,7 +195,12 @@ export const payComputeCategoryBonus = (employee, payrollEarnings) => {
 };
 
 // category Id 13th month
-export const payComputeCategory13thMonth = (category13thMonth, yearlyTax) => {
+export const payComputeCategory13thMonth = (
+  category13thMonth,
+  yearlyTax,
+  employee
+) => {
+  console.log(employee.length);
   let payrollList13thMonth = [];
   let finalAmount = 0;
   let totalAmount = 0;
@@ -218,21 +223,46 @@ export const payComputeCategory13thMonth = (category13thMonth, yearlyTax) => {
     const d = new Date();
     const month = d.getMonth();
     // const month = 10;
-    console.log(month);
+    console.log(cItem);
     annualNetSalary = Number(cItem.total_net);
     total13thAmount = Number(cItem.total_gross) / 12;
     console.log(total13thAmount, cItem.total_gross);
-    if (month >= 10 && month <= 11) {
-      console.log("000000000");
-      annualNetSalary =
-        Number(cItem.total_net) + Number(cItem.payroll_list_employee_salary);
-      total13thAmount =
-        (Number(cItem.total_gross) +
-          Number(cItem.payroll_list_employee_salary)) /
-        12;
-    }
+    // 10 = November and 11 = December
+
+    // if(employee)
+    employee.map((eItem) => {
+      if (
+        month >= 10 &&
+        month <= 11 &&
+        eItem.payroll_list_job_early_13th_month === 0 &&
+        eItem.payroll_list_employee_id === cItem.payroll_list_employee_id
+      ) {
+        console.log("compute 13th month");
+        annualNetSalary =
+          Number(cItem.total_net) + Number(cItem.payroll_list_employee_salary);
+        total13thAmount =
+          (Number(cItem.total_gross) +
+            Number(cItem.payroll_list_employee_salary)) /
+          12;
+      }
+    });
+
+    // if (
+    //   month >= 10 &&
+    //   month <= 11 &&
+    //   cItem.payroll_list_job_early_13th_month === 0
+    // ) {
+    //   console.log("compute 13th month");
+    //   annualNetSalary =
+    //     Number(cItem.total_net) + Number(cItem.payroll_list_employee_salary);
+    //   total13thAmount =
+    //     (Number(cItem.total_gross) +
+    //       Number(cItem.payroll_list_employee_salary)) /
+    //     12;
+    // }
     console.log(
       total13thAmount,
+      Number(cItem.total_gross),
       cItem.total_gross + Number(cItem.payroll_list_employee_salary)
     );
     // console.log(total13thAmount / 12, cItem.total_gross);

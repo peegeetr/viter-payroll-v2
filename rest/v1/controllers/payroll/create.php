@@ -61,8 +61,12 @@ if ($payroll->payroll_category_type === $is13thMonth) {
 checkKeyword($payroll->payroll_start_date);
 checkKeyword($payroll->payroll_end_date);
 
-// // validate date
-checkDateExist($payroll);
+// validate date if not 13th month
+if ($payroll->payroll_category_type !== $is13thMonth) {
+    // // validate date
+    checkDateExist($payroll);
+}
+
 
 // check if employee is empty
 if (count($allEmployee) === 0) {
@@ -82,6 +86,7 @@ if (count($allEmployee) > 0) {
         $payroll->payroll_list_employee_salary = $allEmployee[$i]["employee_job_salary"];
         $payroll->payroll_list_night_diff_per_day = $allEmployee[$i]["employee_job_nd_per_day"];
         $payroll->payroll_list_employee_work_on_holiday = $allEmployee[$i]["employee_job_work_reg_hol"];
+        $payroll->payroll_list_job_early_13th_month = $allEmployee[$i]["employee_job_early_13th_month"];
         $payroll->payroll_list_deminimis = $allEmployee[$i]["employee_job_deminimis"];
         $payroll->payroll_list_pagibig_additional = $allEmployee[$i]["employee_job_pagibig_amount"];
         $payroll->payroll_list_employee_department = $allEmployee[$i]["department_name"];

@@ -156,7 +156,11 @@ export const runPayroll = (
     Number(categoryId) === payrollCategory13thMonthId &&
     category13thMonth.length > 0
   ) {
-    payrollList = payComputeCategory13thMonth(category13thMonth, yearlyTax);
+    payrollList = payComputeCategory13thMonth(
+      category13thMonth,
+      yearlyTax,
+      employee
+    );
   }
 
   if (Number(categoryId) === payrollCategoryBonusId) {

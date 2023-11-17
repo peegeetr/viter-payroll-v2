@@ -55,6 +55,8 @@ const ModalRun = ({
 }) => {
   const { store, dispatch } = React.useContext(StoreContext);
 
+  console.log(employees);
+
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: (values) =>

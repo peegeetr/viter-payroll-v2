@@ -47,6 +47,8 @@ const ModalAddPayroll = ({ item }) => {
     false // devKey boolean
   );
 
+  console.log(result);
+
   // use if not loadmore button undertime
   const { data: category13thMonth } = useQueryData(
     `${devApiUrl}/v1/payrollList/category/13month/${payrollCategorySalaryId}`, // endpoint
@@ -152,6 +154,8 @@ const ModalAddPayroll = ({ item }) => {
 
                 const employeeList = getResultEmployeeList(result, values);
 
+                console.log(employeeList);
+
                 mutation.mutate({
                   ...values,
                   employee: employeeList,
@@ -188,17 +192,6 @@ const ModalAddPayroll = ({ item }) => {
                         </optgroup>
                       </InputSelect>
                     </div>
-                    <p className="text-primary ml-3 mb-3">
-                      Pay period
-                      {Number(props.values.payroll_category_type) ===
-                        payrollCategory13thMonthId && (
-                        <>
-                          <span className="text-black">
-                            : Jan - Dec {currentYear()}
-                          </span>
-                        </>
-                      )}
-                    </p>
 
                     {Number(props.values.payroll_category_type) !==
                       payrollCategory13thMonthId && (
@@ -235,6 +228,18 @@ const ModalAddPayroll = ({ item }) => {
                         disabled={mutation.isLoading}
                       />
                     </div>
+
+                    <p className="text-primary ml-3 mb-3">
+                      Pay period
+                      {Number(props.values.payroll_category_type) ===
+                        payrollCategory13thMonthId && (
+                        <>
+                          <span className="text-black">
+                            : Jan - Dec {currentYear()}
+                          </span>
+                        </>
+                      )}
+                    </p>
 
                     <div className="flex items-center gap-1 pt-5">
                       <button

@@ -1463,6 +1463,9 @@ class PayrollList
             $sql .= "sum(payrollList.payroll_list_deminimis) as deminimis, ";
             $sql .= "sum(payrollList.payroll_list_bonus) as bonus, ";
             $sql .= "sum(payrollList.payroll_list_net_pay) as total_net, ";
+            $sql .= "sum(payrollList.payroll_list_overtime_pay) as total_ot, ";
+            $sql .= "sum(payrollList.payroll_list_holiday) as total_holiday, ";
+            $sql .= "sum(payrollList.payroll_list_night_shift_differential) as total_nd, ";
             $sql .= "payrollList.payroll_list_employee_id, ";
             $sql .= "payrollList.payroll_list_employee_name, ";
             $sql .= "payrollList.payroll_list_employee_salary, ";

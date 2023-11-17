@@ -225,7 +225,12 @@ export const payComputeCategory13thMonth = (
     // const month = 10;
     console.log(cItem);
     annualNetSalary = Number(cItem.total_net);
-    total13thAmount = Number(cItem.total_gross) / 12;
+    total13thAmount =
+      (Number(cItem.total_gross) -
+        Number(cItem.total_ot) -
+        Number(cItem.total_holiday) -
+        Number(cItem.total_nd)) /
+      12;
     console.log(total13thAmount, cItem.total_gross);
     // 10 = November and 11 = December
 
@@ -241,7 +246,10 @@ export const payComputeCategory13thMonth = (
         annualNetSalary =
           Number(cItem.total_net) + Number(cItem.payroll_list_employee_salary);
         total13thAmount =
-          (Number(cItem.total_gross) +
+          (Number(cItem.total_gross) -
+            Number(cItem.total_ot) -
+            Number(cItem.total_holiday) -
+            Number(cItem.total_nd) +
             Number(cItem.payroll_list_employee_salary)) /
           12;
       }

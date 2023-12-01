@@ -226,12 +226,29 @@ export const payComputeCategory13thMonth = (
     console.log(cItem);
     annualNetSalary = Number(cItem.total_net);
     total13thAmount =
-      (Number(cItem.total_gross) -
-        Number(cItem.total_ot) -
-        Number(cItem.total_holiday) -
-        Number(cItem.total_nd)) /
+      // (Number(cItem.total_gross) -
+      // (Number(cItem.total_basic) +
+      //   Number(cItem.total_holiday) +
+      //   Number(cItem.total_adjustment) +
+      //   Number(cItem.total_inflation) -
+      //   Number(cItem.total_absent)) /
+      // 12;
+      (Number(cItem.total_basic) -
+        Number(cItem.total_absent) +
+        Number(cItem.total_adjustment)) /
       12;
-    console.log(total13thAmount, cItem.total_gross);
+    console.log(
+      Number(cItem.total_basic) +
+        Number(cItem.total_holiday) +
+        Number(cItem.total_adjustment) +
+        Number(cItem.total_inflation) -
+        Number(cItem.total_absent),
+      cItem.total_absent,
+      cItem.total_holiday,
+      cItem.total_adjustment,
+      cItem.total_inflation,
+      cItem.total_basic
+    );
     // 10 = November and 11 = December
 
     // if(employee)
@@ -246,10 +263,17 @@ export const payComputeCategory13thMonth = (
         annualNetSalary =
           Number(cItem.total_net) + Number(cItem.payroll_list_employee_salary);
         total13thAmount =
-          (Number(cItem.total_gross) -
-            Number(cItem.total_ot) -
-            Number(cItem.total_holiday) -
-            Number(cItem.total_nd) +
+          // (Number(cItem.total_gross) -
+          // (Number(cItem.total_basic) +
+          //   Number(cItem.total_absent) -
+          //   Number(cItem.total_holiday) +
+          //   Number(cItem.total_adjustment) +
+          //   Number(cItem.total_inflation) +
+          //   Number(cItem.payroll_list_employee_salary)) /
+          // 12;
+          (Number(cItem.total_basic) -
+            Number(cItem.total_absent) +
+            Number(cItem.total_adjustment) +
             Number(cItem.payroll_list_employee_salary)) /
           12;
       }

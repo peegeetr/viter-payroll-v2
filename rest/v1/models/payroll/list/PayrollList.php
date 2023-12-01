@@ -1457,6 +1457,10 @@ class PayrollList
             $sql = "select ";
             $sql .= "sum(payrollList.payroll_list_total_benefits) as total_benefits, ";
             $sql .= "sum(payrollList.payroll_list_gross) as total_gross, ";
+            $sql .= "sum(payrollList.payroll_list_basic_pay) as total_basic, ";
+            $sql .= "sum(payrollList.payroll_list_absences) as total_absent, ";
+            $sql .= "sum(payrollList.payroll_list_adjustment_pay) as total_adjustment, ";
+            $sql .= "sum(payrollList.payroll_list_inflation_adjustment) as total_inflation, ";
             $sql .= "sum(payrollList.payroll_list_sss_ee) as sss, ";
             $sql .= "sum(payrollList.payroll_list_philhealth_ee) as phic, ";
             $sql .= "sum(payrollList.payroll_list_pagibig_ee) as pag, ";

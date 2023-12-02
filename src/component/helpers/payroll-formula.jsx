@@ -218,11 +218,13 @@ export const payComputeCategory13thMonth = (
   let nonTax = 0;
   let employeeSalaryHalf = 0;
   let employeeSalaryRecent = 0;
+  // const daysMonth = getWorkingDaysInMonth(new Date(emp.payroll_start_date));
 
   category13thMonth.map((cItem) => {
     absencesUndertimeSum = cItem.total_absent + cItem.total_undertime;
     employeeSalaryHalf = Number(cItem.total_salary) / 2;
     employeeSalaryRecent = Number(cItem.payroll_list_employee_salary);
+    // employeeRate(cItem.payroll_list_employee_salary, daysMonth).hourly
     // totalAmount = (cItem.total_basic_pay - absencesUndertimeSum) / 12;
     const d = new Date();
     const month = d.getMonth();
@@ -258,10 +260,10 @@ export const payComputeCategory13thMonth = (
         eItem.payroll_list_job_early_13th_month === 0 &&
         eItem.payroll_list_employee_id === cItem.payroll_list_employee_id
       ) {
-        // console.log(
-        //   cItem.payroll_list_employee_name,
-        //   Number(cItem.payroll_list_employee_salary)
-        // );
+        console.log(
+          cItem.payroll_list_employee_name,
+          eItem.payroll_list_employee_salary
+        );
         annualNetSalary =
           Number(cItem.total_net) + Number(cItem.payroll_list_employee_salary);
         total13thAmount =
@@ -275,7 +277,7 @@ export const payComputeCategory13thMonth = (
           // 12;
           (employeeSalaryHalf -
             absencesUndertimeSum +
-            Number(cItem.payroll_list_employee_salary)) /
+            Number(eItem.payroll_list_employee_salary)) /
           12;
       }
     });

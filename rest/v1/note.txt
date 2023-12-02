@@ -27,3 +27,20 @@ FROM `prv2_payroll_list` as lst,  prv2_payroll as pay
 WHERE lst.`payroll_list_employee_id` = 392
 and pay.payroll_id = lst.payroll_list_payroll_id
 and pay.payroll_category_type = 7
+
+
+SELECT
+lst.`payroll_list_payroll_id`
+,lst.`payroll_list_employee_name`
+,lst.`payroll_list_absences`
+,lst.`payroll_list_undertime`
+,lst.`payroll_list_employee_salary`
+FROM `prv2_payroll_list` as lst,  prv2_payroll as pay
+WHERE 
+/*lst.`payroll_list_employee_id` = 392
+and*/
+pay.payroll_id = lst.payroll_list_payroll_id
+and pay.payroll_category_type = 7
+ORDER BY
+lst.`payroll_list_employee_name`,
+lst.`payroll_list_payroll_id`

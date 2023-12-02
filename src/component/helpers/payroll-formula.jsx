@@ -216,14 +216,22 @@ export const payComputeCategory13thMonth = (
   let total13thAmount = 0;
   let totalShareEe = 0;
   let nonTax = 0;
+  let employeeSalaryHalf = 0;
+  let employeeSalaryRecent = 0;
 
   category13thMonth.map((cItem) => {
-    // absencesUndertimeSum = cItem.total_absences + cItem.total_undertime;
+    absencesUndertimeSum = cItem.total_absent + cItem.total_undertime;
+    employeeSalaryHalf = Number(cItem.total_salary) / 2;
+    employeeSalaryRecent = Number(cItem.payroll_list_employee_salary);
     // totalAmount = (cItem.total_basic_pay - absencesUndertimeSum) / 12;
     const d = new Date();
     const month = d.getMonth();
     // const month = 10;
-    console.log(cItem);
+    // console.log(
+    //   cItem.payroll_list_employee_name,
+    //   employeeSalaryRecent,
+    //   absencesUndertimeSum
+    // );
     annualNetSalary = Number(cItem.total_net);
     total13thAmount =
       // (Number(cItem.total_gross) -
@@ -233,22 +241,13 @@ export const payComputeCategory13thMonth = (
       //   Number(cItem.total_inflation) -
       //   Number(cItem.total_absent)) /
       // 12;
-      (Number(cItem.total_basic) -
-        Number(cItem.total_absent) +
-        Number(cItem.total_adjustment)) /
-      12;
-    console.log(
-      Number(cItem.total_basic) +
-        Number(cItem.total_holiday) +
-        Number(cItem.total_adjustment) +
-        Number(cItem.total_inflation) -
-        Number(cItem.total_absent),
-      cItem.total_absent,
-      cItem.total_holiday,
-      cItem.total_adjustment,
-      cItem.total_inflation,
-      cItem.total_basic
-    );
+      (employeeSalaryHalf - absencesUndertimeSum) / 12;
+    // console.log(
+    //   cItem.payroll_list_employee_name,
+    //   employeeSalaryHalf,
+    //   cItem.total_absent,
+    //   cItem.total_undertime
+    // );
     // 10 = November and 11 = December
 
     // if(employee)
@@ -259,7 +258,10 @@ export const payComputeCategory13thMonth = (
         eItem.payroll_list_job_early_13th_month === 0 &&
         eItem.payroll_list_employee_id === cItem.payroll_list_employee_id
       ) {
-        console.log("compute 13th month");
+        // console.log(
+        //   cItem.payroll_list_employee_name,
+        //   Number(cItem.payroll_list_employee_salary)
+        // );
         annualNetSalary =
           Number(cItem.total_net) + Number(cItem.payroll_list_employee_salary);
         total13thAmount =
@@ -271,9 +273,8 @@ export const payComputeCategory13thMonth = (
           //   Number(cItem.total_inflation) +
           //   Number(cItem.payroll_list_employee_salary)) /
           // 12;
-          (Number(cItem.total_basic) -
-            Number(cItem.total_absent) +
-            Number(cItem.total_adjustment) +
+          (employeeSalaryHalf -
+            absencesUndertimeSum +
             Number(cItem.payroll_list_employee_salary)) /
           12;
       }
@@ -292,11 +293,11 @@ export const payComputeCategory13thMonth = (
     //       Number(cItem.payroll_list_employee_salary)) /
     //     12;
     // }
-    console.log(
-      total13thAmount,
-      Number(cItem.total_gross),
-      cItem.total_gross + Number(cItem.payroll_list_employee_salary)
-    );
+    // console.log(
+    //   total13thAmount,
+    //   Number(cItem.total_gross),
+    //   cItem.total_gross + Number(cItem.payroll_list_employee_salary)
+    // );
     // console.log(total13thAmount / 12, cItem.total_gross);
     // totalBenefits = Number(cItem.total_benefits) + Number(cItem.bonus);
     // total13thAmount = totalAmount + totalBenefits;
@@ -320,7 +321,8 @@ export const payComputeCategory13thMonth = (
     console.log(
       cItem.payroll_list_employee_name,
       total13thAmount,
-      annualNetSalary,
+      employeeSalaryRecent,
+      absencesUndertimeSum,
       taxYearly
     );
     payrollTotalAmount += finalAmount;

@@ -1,0 +1,13 @@
+SELECT 
+`payroll_list_payroll_id`
+,`payroll_list_employee_name`
+,`payroll_list_gross`
+,`payroll_list_basic_pay`
+,`payroll_list_absences`
+,`payroll_list_undertime`
+,`payroll_list_overtime_pay`
+,`payroll_list_holiday`
+,`payroll_list_adjustment_pay`
+,`payroll_list_inlfation_adjustment`
+,`payroll_list_night_shift_differential`
+FROM `prv2_payroll_list` WHERE `payroll_list_employee_id` = 392

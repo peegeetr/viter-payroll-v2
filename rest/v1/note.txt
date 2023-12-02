@@ -1,13 +1,29 @@
 SELECT 
 `payroll_list_payroll_id`
 ,`payroll_list_employee_name`
-,`payroll_list_gross`
-,`payroll_list_basic_pay`
 ,`payroll_list_absences`
 ,`payroll_list_undertime`
-,`payroll_list_overtime_pay`
-,`payroll_list_holiday`
 ,`payroll_list_adjustment_pay`
 ,`payroll_list_inlfation_adjustment`
+,`payroll_list_employee_salary`
+,`payroll_list_gross`
+,`payroll_list_basic_pay`
+,`payroll_list_overtime_pay`
+,`payroll_list_holiday`
 ,`payroll_list_night_shift_differential`
-FROM `prv2_payroll_list` WHERE `payroll_list_employee_id` = 392
+FROM `prv2_payroll_list`,  prv2_payroll
+WHERE `payroll_list_employee_id` = 426
+and prv2_payroll.payroll_id = prv2_payroll_list.payroll_list_payroll_id
+and prv2_payroll.payroll_category_type = 7
+
+
+SELECT 
+lst.`payroll_list_payroll_id`
+,lst.`payroll_list_employee_name`
+,lst.`payroll_list_absences`
+,lst.`payroll_list_undertime`
+,lst.`payroll_list_employee_salary`
+FROM `prv2_payroll_list` as lst,  prv2_payroll as pay
+WHERE lst.`payroll_list_employee_id` = 392
+and pay.payroll_id = lst.payroll_list_payroll_id
+and pay.payroll_category_type = 7

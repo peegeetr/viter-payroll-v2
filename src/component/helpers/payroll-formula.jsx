@@ -325,7 +325,8 @@ export const payComputeCategory13thMonth = (
       total13thAmount,
       employeeSalaryRecent,
       absencesUndertimeSum,
-      taxYearly
+      employeeSalaryHalf,
+      cItem.total_salary
     );
     payrollTotalAmount += finalAmount;
     payrollList13thMonth.push({

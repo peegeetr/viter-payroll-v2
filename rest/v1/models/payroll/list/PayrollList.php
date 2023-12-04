@@ -1460,7 +1460,7 @@ class PayrollList
             $sql .= "sum(payrollList.payroll_list_basic_pay) as total_basic, ";
             $sql .= "sum(payrollList.payroll_list_absences) as total_absent, ";
             $sql .= "sum(payrollList.payroll_list_adjustment_pay) as total_adjustment, ";
-            $sql .= "sum(payrollList.payroll_list_inflation_adjustment) as total_inflation, ";
+            $sql .= "sum(payrollList.payroll_list_inlfation_adjustment) as total_inflation, ";
             $sql .= "sum(payrollList.payroll_list_undertime) as total_undertime, ";
             $sql .= "sum(payrollList.payroll_list_employee_salary) as total_salary, ";
             $sql .= "sum(payrollList.payroll_list_sss_ee) as sss, ";

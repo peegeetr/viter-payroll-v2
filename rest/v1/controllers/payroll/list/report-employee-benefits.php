@@ -27,7 +27,7 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
         if (empty($_GET)) {
             $payrollList->payroll_list_employee_id = checkIndex($allValues, "employee_aid");
             $payrollList->date_from = checkIndex($allValues, "month");
-
+            $payrollList->year = checkIndex($allValues, "year");
             // by month
             if ($payrollList->payroll_list_employee_id === '0' && $payrollList->date_from !== "0") {
                 $query = checkReadReportBenefitsByMonth($payrollList);
@@ -49,6 +49,8 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
     }
 
     if (array_key_exists("month", $_GET)) {
+        $payrollList->date_from = checkIndex($_GET, "month");
+        $payrollList->year = date("Y");
         $query = checkReadReportBenefitsByMonth($payrollList);
         http_response_code(200);
         getQueriedData($query);

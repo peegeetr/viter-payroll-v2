@@ -4,29 +4,27 @@ import React from "react";
 import { MdFilterAlt } from "react-icons/md";
 import { useInView } from "react-intersection-observer";
 import * as Yup from "yup";
-import { StoreContext } from "../../../../store/StoreContext";
 import useQueryData from "../../../custom-hooks/useQueryData";
-import { InputSelect, InputText } from "../../../helpers/FormInputs";
+import { InputSelect } from "../../../helpers/FormInputs";
 import {
   devApiUrl,
-  formatDate,
-  getPayPeriod,
-  getUserType,
+  getYearNow,
   hrisDevApiUrl,
   numberWithCommas,
   pesoSign,
 } from "../../../helpers/functions-general";
 import { queryDataInfinite } from "../../../helpers/queryDataInfinite";
+import HeaderPrint from "../../../partials/HeaderPrint";
 import LoadmoreRq from "../../../partials/LoadmoreRq";
 import NoData from "../../../partials/NoData";
 import ServerError from "../../../partials/ServerError";
 import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 import TableSpinner from "../../../partials/spinners/TableSpinner";
-import HeaderPrint from "../../../partials/HeaderPrint";
 import {
   getCurrentMonth,
   getMonth,
   getMonthName,
+  getYear,
 } from "../w-tax/yearly-tax/functions-wtax";
 
 const PayBenefitsList = () => {
@@ -34,6 +32,7 @@ const PayBenefitsList = () => {
   const [isSubmit, setSubmit] = React.useState(false);
   const [value, setValue] = React.useState([]);
   const [month, setMonth] = React.useState("");
+  const [year, setYear] = React.useState("");
   const getCurrentYear = () => {
     return new Date().getFullYear();
   };
@@ -98,11 +97,13 @@ const PayBenefitsList = () => {
   const initVal = {
     employee_aid: "0",
     month: `${getCurrentMonth()}`,
+    year: `${getYearNow()}`,
   };
   // console.log(employee);
   const yupSchema = Yup.object({
     employee_aid: Yup.string().required("Required"),
     month: Yup.string().required("Required"),
+    year: Yup.string().required("Required"),
   });
   // payroll-type/summary/
   return (
@@ -116,6 +117,7 @@ const PayBenefitsList = () => {
             setSubmit(!isSubmit);
             setValue(values);
             setMonth(values.month);
+            setYear(values.year);
             // // refetch data of query
             // refetch();
           }}
@@ -123,7 +125,7 @@ const PayBenefitsList = () => {
           {(props) => {
             return (
               <Form>
-                <div className="grid gap-5 grid-cols-1 md:grid-cols-[1fr_1fr_150px] pt-5 pb-4 items-center">
+                <div className="grid gap-5 grid-cols-1 md:grid-cols-[1fr_1fr_1fr_150px] pt-5 pb-4 items-center md:w-3/4 w-full">
                   <div className="relative">
                     <InputSelect
                       label="Employee"
@@ -139,6 +141,25 @@ const PayBenefitsList = () => {
                         return (
                           <option key={key} value={eItem.employee_aid}>
                             {`${eItem.employee_lname}, ${eItem.employee_fname}`}
+                          </option>
+                        );
+                      })}
+                    </InputSelect>
+                  </div>
+                  <div className="relative">
+                    <InputSelect
+                      label="Year"
+                      name="year"
+                      type="text"
+                      disabled={isFetching}
+                    >
+                      <option value="" hidden>
+                        {status === "loading" && "Loading..."}
+                      </option>
+                      {getYear()?.map((yItem, key) => {
+                        return (
+                          <option key={key} value={yItem.year}>
+                            {`${yItem.year}`}
                           </option>
                         );
                       })}
@@ -188,9 +209,9 @@ const PayBenefitsList = () => {
           <p className="m-0  text-lg">Employee Benefits</p>
           <p className="m-0 text-primary font-bold">
             {/* {getPayPeriod(startDate, endDate)} */}
-            {`${getMonthName(
-              month === "" ? getCurrentMonth() : month
-            )} - ${getCurrentYear()}`}
+            {`${getMonthName(month === "" ? getCurrentMonth() : month)} - ${
+              year === "" ? getYearNow() : year
+            }`}
           </p>
         </>
       </div>

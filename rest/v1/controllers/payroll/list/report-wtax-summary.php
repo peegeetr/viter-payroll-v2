@@ -17,10 +17,10 @@ $response = new Response();
 if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
     checkApiKey();
 
-    if (array_key_exists("month", $_GET)) {
+    if (array_key_exists("month", $_GET) && array_key_exists("year", $_GET)) {
         // get data
         $payrollList->date_from = strtolower($_GET['month']);
-        $payrollList->current_year = date("Y");
+        $payrollList->current_year = checkIndex($_GET, "year");
         // check if not empty
         checkKeyword($payrollList->date_from);
         $query = checkReadReportSummaryWtax($payrollList);

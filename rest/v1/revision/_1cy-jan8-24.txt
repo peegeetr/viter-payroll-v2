@@ -1,0 +1,25 @@
+
+*controllers    
+    - payroll/list/report-employee-benefits.php
+    - payroll/list/report-wtax-summary.php
+    - 
+    - 
+ 
+    
+*models  
+    - payroll/list/PayrollList.php
+    - 
+    - 
+  
+*htaccess 
+    - htaccess
+    - 
+
+*db tables 
+    - 
+
+*core 
+    - 
+
+*extra 
+    - Uploaded 3:30 pm

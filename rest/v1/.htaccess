@@ -62,7 +62,7 @@ RewriteRule ^payrollList/report/filter/basic-pay$ controllers/payroll/list/repor
 RewriteRule ^payrollList/report/basic-pay/page/([A-Za-z0-9-]+)/([0-9]+)$ controllers/payroll/list/report-basic-pay-page.php?listpayrollid=$1&start=$2 [L]
 RewriteRule ^payrollList/all-salary-category/([0-9]+)$ controllers/payroll/list/read-all-salary-category.php?payrollSalaryCategoryId=$1 [L]
 RewriteRule ^payrollList/report/wtax/monthly-gross/([A-Za-z0-9-]+)$ controllers/payroll/list/report-wtax-monthly-gross.php?year=$1 [L]   
-RewriteRule ^payrollList/report/wtax/summary/([A-Za-z0-9-]+)$ controllers/payroll/list/report-wtax-summary.php?month=$1 [L]   
+RewriteRule ^payrollList/report/wtax/summary/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)$ controllers/payroll/list/report-wtax-summary.php?month=$1&year=$2 [L]   
 RewriteRule ^payrollList/report/bank-template/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)$ controllers/payroll/list/report-bank-template.php?startDate=$1&endDate=$2 [L]   
 RewriteRule ^payrollList/update-amount/([0-9]+)$ controllers/payroll/list/update-amount.php?listpayrollid=$1 [L]  
 RewriteRule ^payrollList/report/employee-benefits/([A-Za-z0-9-]+)$ controllers/payroll/list/report-employee-benefits.php?month=$1 [L] 

@@ -304,3 +304,9 @@ export const showTips = (item) => {
 };
 
 export const pesoSign = <span className="mr-1"> &#8369; </span>;
+
+export const getYearNow = () => {
+  const d = new Date();
+  const year = d.getFullYear();
+  return year;
+};

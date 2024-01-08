@@ -87,6 +87,7 @@ class PayrollList
     public $date_from;
     public $date_to;
     public $current_year;
+    public $year;
     public $lastInsertedId;
     public $tblPayrollList;
     public $tblPayroll;
@@ -948,7 +949,8 @@ class PayrollList
             $sql .= "from {$this->tblPayrollList} as payrollList, ";
             $sql .= "{$this->tblPayroll} as payroll ";
             $sql .= "where payrollList.payroll_list_payroll_id = payroll.payroll_id ";
-            $sql .= "group by payrollList.payroll_list_employee_id ";
+            $sql .= "group by payrollList.payroll_list_employee_id, ";
+            $sql .= "YEAR(payroll.payroll_start_date) ";
             $sql .= "order by payrollList.payroll_list_payroll_id, ";
             $sql .= "payroll.payroll_end_date desc, ";
             $sql .= "payrollList.payroll_list_employee_name asc ";
@@ -1100,13 +1102,16 @@ class PayrollList
             $sql .= "{$this->tblPayroll} as payroll ";
             $sql .= "where payrollList.payroll_list_payroll_id = payroll.payroll_id ";
             $sql .= "and MONTH(payroll.payroll_start_date) = :payroll_start_date ";
+            $sql .= "and YEAR(payroll.payroll_start_date) = :year ";
             $sql .= "group by payrollList.payroll_list_employee_id ";
-            $sql .= "order by payrollList.payroll_list_payroll_id, ";
-            $sql .= "payroll.payroll_end_date desc, ";
-            $sql .= "payrollList.payroll_list_employee_name asc ";
+            $sql .= "order by payrollList.payroll_list_employee_name asc ";
+            // $sql .= "order by payrollList.payroll_list_payroll_id, ";
+            // $sql .= "payroll.payroll_end_date desc, ";
+            // $sql .= "payrollList.payroll_list_employee_name asc ";
             $query = $this->connection->prepare($sql);
             $query->execute([
                 "payroll_start_date" => $this->date_from,
+                "year" => $this->year,
             ]);
         } catch (PDOException $ex) {
             $query = false;
@@ -1138,14 +1143,14 @@ class PayrollList
             $sql .= "where payrollList.payroll_list_employee_id = :payroll_list_employee_id ";
             $sql .= "and payrollList.payroll_list_payroll_id = payroll.payroll_id ";
             $sql .= "and MONTH(payroll.payroll_start_date) = :payroll_start_date ";
+            $sql .= "and YEAR(payroll.payroll_start_date) = :year ";
             $sql .= "group by payrollList.payroll_list_employee_id ";
-            $sql .= "order by payrollList.payroll_list_payroll_id, ";
-            $sql .= "payroll.payroll_end_date desc, ";
-            $sql .= "payrollList.payroll_list_employee_name asc ";
+            $sql .= "order by payrollList.payroll_list_employee_name asc ";
             $query = $this->connection->prepare($sql);
             $query->execute([
                 "payroll_list_employee_id" => $this->payroll_list_employee_id,
                 "payroll_start_date" => $this->date_from,
+                "year" => $this->year,
             ]);
         } catch (PDOException $ex) {
             $query = false;

@@ -95,7 +95,6 @@ export const InputSelect = ({ label, onChange, ...props }) => {
     props.name === "employee_job_supervisor_name" ||
     props.name === "holiday_exemption_eid" ||
     props.name === "holiday_exemption_holiday_date" ||
-    props.name === "monthSummary" ||
     props.name === "payroll_category_type" ||
     props.name === "deduction_paytype_id"
   ) {

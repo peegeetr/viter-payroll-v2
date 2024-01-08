@@ -6,7 +6,7 @@ import {
 } from "../../../../helpers/functions-general";
 import { getMonthName } from "../yearly-tax/functions-wtax";
 
-const WTaxBodySummary = ({ result, month, monthlyTax }) => {
+const WTaxBodySummary = ({ result, month, year, monthlyTax }) => {
   let totalShareEe = 0;
   let shareEe = 0;
   let totalBenefits = 0;
@@ -106,7 +106,8 @@ const WTaxBodySummary = ({ result, month, monthlyTax }) => {
         <div className="text-center pb-4 font-bold print:pt-4">
           <p className="m-0  text-lg">Tax Summary</p>
           <p className="m-0 text-primary font-bold">
-            {`${getMonthName(month)} - ${getCurrentYear()}`}
+            {/* {`${getMonthName(month)} - ${getCurrentYear()}`} */}
+            {`${getMonthName(month)} - ${year}`}
           </p>
         </div>
         <table>

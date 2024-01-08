@@ -88,9 +88,9 @@ const WTaxSummaryList = () => {
           }}
         >
           {(props) => {
-            props.values.monthSummary = !isFilter
-              ? getCurrentMonth()
-              : props.values.monthSummary;
+            // props.values.monthSummary = !isFilter
+            //   ? getCurrentMonth()
+            //   : props.values.monthSummary;
             return (
               <Form>
                 <div className="grid gap-5 grid-cols-1 md:grid-cols-[1fr,1fr,10rem] pt-5 pb-5 items-center print:hidden md:min-w-[20rem] md:w-3/4 w-full">
@@ -101,10 +101,11 @@ const WTaxSummaryList = () => {
                       type="text"
                       disabled={isFetching}
                     >
-                      <option value="" hidden>
+                      {/* <option value="" hidden>
                         {status === "loading" && "Loading..."}
-                      </option>
+                      </option> */}
                       {getMonth()?.map((yItem, key) => {
+                        console.log(yItem);
                         return (
                           <option key={key} value={yItem.month_aid}>
                             {`${yItem.month_name}`}
@@ -167,6 +168,7 @@ const WTaxSummaryList = () => {
         <WTaxBodyYearly
           result={result}
           month={month}
+          year={year}
           monthlyTax={monthlyTax?.data}
         />
       </div>

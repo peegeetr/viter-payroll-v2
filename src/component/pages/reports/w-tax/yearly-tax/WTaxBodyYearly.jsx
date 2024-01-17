@@ -21,6 +21,7 @@ const WTaxBodyYearly = ({
   let taxWitheld = 0;
   let taxPayable = 0;
   let nonTax = 0;
+  let taxableCompensationIncome = 0;
   let empGrossMonthly = 0;
 
   // console.log("monthlyGrosss", monthlyGross);
@@ -35,7 +36,7 @@ const WTaxBodyYearly = ({
         let totalBenefits = mg.month13 + mg.bonus + mg.benefits;
         const totalNonTaxableCompensation =
           Number(totalBenefits.toFixed(2)) + totalShareEe + mg.deminimis;
-        let taxableCompensationIncome =
+        taxableCompensationIncome =
           Number(mg.gross.toFixed(2)) - totalNonTaxableCompensation;
         monthlyTax.map((sTax) => {
           if (
@@ -144,6 +145,14 @@ const WTaxBodyYearly = ({
                       <td className=" text-right px-4">
                         {pesoSign}
                         {numberWithCommas(nonTax.toFixed(2))}
+                      </td>
+                    </tr>
+                    <tr className="  bg-gray-200 hover:bg-gray-200 text-primary">
+                      <td className="w-[15rem] ">Total Taxable Compensation</td>
+                      <td className=" text-right px-4"></td>
+                      <td className=" text-right px-4">
+                        {pesoSign}
+                        {numberWithCommas(taxableCompensationIncome.toFixed(2))}
                       </td>
                     </tr>
                     <tr className="  bg-gray-200 hover:bg-gray-200 text-primary">

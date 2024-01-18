@@ -48,14 +48,13 @@ const WTaxBodySummary = ({ result, month, year, monthlyTax }) => {
         compensation = totalCompensation;
         bonus = 0;
 
-        // if (item.payroll_list_employee_id === "388") {
-        if (item.deminimis !== "") {
-          console.log(
-            item.payroll_list_employee_id,
-            item.deminimis,
-            item.payroll_id
-          );
-        }
+        console.log(
+          key,
+          item.gross,
+          item.payroll_category_type,
+          totalCompensation
+        );
+
         // compute monthly tax due
         taxMonthly += payComputeTaxDue(
           compensation,
@@ -67,7 +66,7 @@ const WTaxBodySummary = ({ result, month, year, monthlyTax }) => {
       });
     });
 
-    console.log(11111111111111111111111111111111111111111111111);
+    console.log("---------------------------------------------------------");
     // totalCompensation = totalCompensation + totalBenefits;
     taxableCompensation = totalCompensation - nonTax;
     list.totalShareEe = totalShareEe.toFixed(2);

@@ -47,21 +47,20 @@ export const devBaseUrl = `${urlPayroll}`;
 // export const hrisdevNavUrl = "";
 
 // // Online prod payroll
-// export const devBaseImgUrl = "https://payroll.frontlinebusiness.com.pfca_enrollment_v2h/v2/img";
+// export const devBaseImgUrl = "https://payroll.frontlinebusiness.com.ph/v2/img";
 // export const devApiUrl = "https://payroll.frontlinebusiness.com.ph/v2/rest";
 // export const devBaseUrl = "https://payroll.frontlinebusiness.com.ph/v2";
 // export const devNavUrl = "/v2";
 
-export const baseUrl = "/";
-export const isDemoMode = "1";
+export const baseUrl = "/v2";
+export const isDemoMode = "0";
 export const UrlAdmin = "";
 export const UrlSystem = "system";
 export const is_developer = "is_developer";
 
-export const devKeyPr =
-  "$2a$12$47wDvbLInZif/PVS8B6P3.7WxyJvUpBzZAWCsnWJUKq3nrn4qgmeO";
+export const devKeyPr = "sKPgVdamzw7hL9IqTKFLOqrGVJaHaOwSN4nYhm8Hv9dwjtHZg88e";
 export const devKeyHr =
-  "$2a$12$5obsBD1n0We9BIAM01RJy.4F0t4W2KmMPJppAur2eY1tmpG4y87vO";
+  "$2a$05$9mjWb0WZnCU9k79dNAn85ecjwAQfFjz.EZhgNYBvb5Lwgth7FZBXW";
 
 // console log values
 export const consoleLog = (values, param2 = null) => {

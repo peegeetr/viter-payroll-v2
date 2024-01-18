@@ -105,7 +105,7 @@ const WTaxSummaryList = () => {
                         {status === "loading" && "Loading..."}
                       </option> */}
                       {getMonth()?.map((yItem, key) => {
-                        console.log(yItem);
+                        // console.log(yItem);
                         return (
                           <option key={key} value={yItem.month_aid}>
                             {`${yItem.month_name}`}

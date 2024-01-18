@@ -19,6 +19,7 @@ const WTaxBodySummary = ({ result, month, year, monthlyTax }) => {
   let taxableCompensation = 0;
   let nonTax = 0;
   let taxWithheld = 0;
+  let bonus = 0;
 
   const getCurrentYear = () => {
     return new Date().getFullYear();
@@ -28,17 +29,33 @@ const WTaxBodySummary = ({ result, month, year, monthlyTax }) => {
     let list = {};
     result?.pages.map((page, key) => {
       page.data.map((item, key) => {
+        // payroll_list bonus and total benefits are sometimes same
+        if (item.bonus !== item.benefits) {
+          bonus = item.bonus;
+          // console.log(item.bonus, item.benefits);
+        }
         totalShareEe += item.sss + item.pag + item.phic;
         shareEe = item.sss + item.pag + item.phic;
-        totalBenefits += item.month13 + item.benefits;
+        totalBenefits += item.month13 + item.benefits + bonus;
         benefits = item.month13 + item.benefits;
         totalDeminimis += item.deminimis;
         deminimis = item.deminimis;
         taxWithheld += item.tax;
         nonTax = totalDeminimis + totalShareEe + totalBenefits;
-        totalCompensation += Number(item.gross) + Number(item.benefits);
-        compensation = Number(item.gross) + Number(item.benefits);
+        totalCompensation += Number(item.gross) + item.benefits;
+        // totalCompensation += Number(item.gross) + Number(item.benefits);
+        // compensation = Number(item.gross) + Number(item.benefits);
+        compensation = totalCompensation;
+        bonus = 0;
 
+        // if (item.payroll_list_employee_id === "388") {
+        if (item.deminimis !== "") {
+          console.log(
+            item.payroll_list_employee_id,
+            item.deminimis,
+            item.payroll_id
+          );
+        }
         // compute monthly tax due
         taxMonthly += payComputeTaxDue(
           compensation,
@@ -50,6 +67,9 @@ const WTaxBodySummary = ({ result, month, year, monthlyTax }) => {
       });
     });
 
+    console.log(11111111111111111111111111111111111111111111111);
+    // totalCompensation = totalCompensation + totalBenefits;
+    taxableCompensation = totalCompensation - nonTax;
     list.totalShareEe = totalShareEe.toFixed(2);
     list.totalBenefits = totalBenefits.toFixed(4);
     list.totalCompensation = totalCompensation.toFixed(2);
@@ -65,6 +85,7 @@ const WTaxBodySummary = ({ result, month, year, monthlyTax }) => {
     totalDeminimis = 0;
     totalCompensation = 0;
     taxWithheld = 0;
+    bonus = 0;
     return list;
   };
 
@@ -82,6 +103,8 @@ const WTaxBodySummary = ({ result, month, year, monthlyTax }) => {
       Number(totalDiminimis);
     let taxableCompensationIncome =
       Number(compensation.toFixed(2)) - totalNonTaxableCompensation;
+    // taxableCompensation =
+    //   Number(compensation.toFixed(2)) - Number(nonTax.toFixed(2));
 
     monthlyTax?.map((sTax) => {
       if (
@@ -161,6 +184,14 @@ const WTaxBodySummary = ({ result, month, year, monthlyTax }) => {
               <td className=" text-right px-4">
                 {pesoSign}
                 {numberWithCommas(Number(getSummary().nonTax).toFixed(2))}
+              </td>
+            </tr>
+            <tr className="  bg-gray-200 hover:bg-gray-200 text-primary">
+              <td className="w-[15rem] ">Total Taxable Compensation</td>
+              <td className=" text-right px-4"></td>
+              <td className=" text-right px-4">
+                {pesoSign}
+                {numberWithCommas(Number(taxableCompensation).toFixed(2))}
               </td>
             </tr>
 

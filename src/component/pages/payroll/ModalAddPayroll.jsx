@@ -47,16 +47,12 @@ const ModalAddPayroll = ({ item }) => {
     false // devKey boolean
   );
 
-  console.log(result);
-
   // use if not loadmore button undertime
   const { data: category13thMonth } = useQueryData(
     `${devApiUrl}/v1/payrollList/category/13month/${payrollCategorySalaryId}`, // endpoint
     "get", // method
     "category13thMonth" // key
   );
-
-  console.log(category13thMonth);
 
   const queryClient = useQueryClient();
   const mutation = useMutation({

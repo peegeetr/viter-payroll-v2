@@ -47,7 +47,7 @@ export const devBaseUrl = `${urlPayroll}`;
 // export const hrisdevNavUrl = "";
 
 // // Online prod payroll
-// export const devBaseImgUrl = "https://payroll.frontlinebusiness.com.ph/v2/img";
+// export const devBaseImgUrl = "https://payroll.frontlinebusiness.com.pfca_enrollment_v2h/v2/img";
 // export const devApiUrl = "https://payroll.frontlinebusiness.com.ph/v2/rest";
 // export const devBaseUrl = "https://payroll.frontlinebusiness.com.ph/v2";
 // export const devNavUrl = "/v2";

@@ -24,7 +24,7 @@ import {
 } from "../../helpers/functions-payroll-category-id";
 import { queryData } from "../../helpers/queryData";
 import ButtonSpinner from "../../partials/spinners/ButtonSpinner";
-import { getEmployeeList, getResultEmployeeList } from "./FunctionPayroll";
+import { getResultEmployeeList } from "./FunctionPayroll";
 
 const ModalAddPayroll = ({ item }) => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -150,8 +150,6 @@ const ModalAddPayroll = ({ item }) => {
 
                 const employeeList = getResultEmployeeList(result, values);
 
-                console.log(employeeList);
-
                 mutation.mutate({
                   ...values,
                   employee: employeeList,
@@ -225,17 +223,17 @@ const ModalAddPayroll = ({ item }) => {
                       />
                     </div>
 
-                    <p className="text-primary ml-3 mb-3">
-                      Pay period
-                      {Number(props.values.payroll_category_type) ===
-                        payrollCategory13thMonthId && (
-                        <>
+                    {Number(props.values.payroll_category_type) ===
+                      payrollCategory13thMonthId && (
+                      <>
+                        <p className="text-primary ml-3 mb-3">
+                          Pay period
                           <span className="text-black">
                             : Jan - Dec {currentYear()}
                           </span>
-                        </>
-                      )}
-                    </p>
+                        </p>
+                      </>
+                    )}
 
                     <div className="flex items-center gap-1 pt-5">
                       <button

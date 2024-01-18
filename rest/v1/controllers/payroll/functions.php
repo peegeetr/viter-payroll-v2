@@ -100,3 +100,27 @@ function resultError($msg)
     $response->send();
     exit;
 }
+
+// Filter payroll
+function checkReadFilter($object)
+{
+    $query = $object->readFilter();
+    checkQuery($query, "Empty records (read filter).");
+    return $query;
+}
+
+// Filter payroll Month
+function checkReadFilterMonth($object)
+{
+    $query = $object->readFilterMonth();
+    checkQuery($query, "Empty records (read filter month).");
+    return $query;
+}
+
+// Filter payroll Year
+function checkReadFilterYear($object)
+{
+    $query = $object->readFilterYear();
+    checkQuery($query, "Empty records (read filter year).");
+    return $query;
+}

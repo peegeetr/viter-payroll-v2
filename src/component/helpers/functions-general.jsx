@@ -58,17 +58,14 @@ export const UrlAdmin = "";
 export const UrlSystem = "system";
 export const is_developer = "is_developer";
 
-export const devKeyPr =
-  "$2a$12$47wDvbLInZif/PVS8B6P3.7WxyJvUpBzZAWCsnWJUKq3nrn4qgmeO";
-export const devKeyHr =
-  "$2a$12$5obsBD1n0We9BIAM01RJy.4F0t4W2KmMPJppAur2eY1tmpG4y87vO";
-<<<<<<< HEAD
-
-// export const devKeyPr = "sKPgVdamzw7hL9IqTKFLOqrGVJaHaOwSN4nYhm8Hv9dwjtHZg88e";
+// export const devKeyPr =
+//   "$2a$12$47wDvbLInZif/PVS8B6P3.7WxyJvUpBzZAWCsnWJUKq3nrn4qgmeO";
 // export const devKeyHr =
-//   "$2a$05$9mjWb0WZnCU9k79dNAn85ecjwAQfFjz.EZhgNYBvb5Lwgth7FZBXW";
-=======
->>>>>>> 1b367cc055bded2b86beb245ef9b839c2736efb8
+//   "$2a$12$5obsBD1n0We9BIAM01RJy.4F0t4W2KmMPJppAur2eY1tmpG4y87vO";
+
+export const devKeyPr = "sKPgVdamzw7hL9IqTKFLOqrGVJaHaOwSN4nYhm8Hv9dwjtHZg88e";
+export const devKeyHr =
+  "$2a$05$9mjWb0WZnCU9k79dNAn85ecjwAQfFjz.EZhgNYBvb5Lwgth7FZBXW";
 
 // console log values
 export const consoleLog = (values, param2 = null) => {

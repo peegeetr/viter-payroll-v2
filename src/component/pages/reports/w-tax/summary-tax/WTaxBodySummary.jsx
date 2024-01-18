@@ -5,6 +5,7 @@ import {
   pesoSign,
 } from "../../../../helpers/functions-general";
 import { getMonthName } from "../yearly-tax/functions-wtax";
+import { payrollCategorySalaryId } from "../../../../helpers/functions-payroll-category-id";
 
 const WTaxBodySummary = ({ result, month, year, monthlyTax }) => {
   let totalShareEe = 0;
@@ -20,6 +21,8 @@ const WTaxBodySummary = ({ result, month, year, monthlyTax }) => {
   let nonTax = 0;
   let taxWithheld = 0;
   let bonus = 0;
+  let totalMonth13 = 0;
+  let totalBonus = 0;
 
   const getCurrentYear = () => {
     return new Date().getFullYear();
@@ -30,10 +33,22 @@ const WTaxBodySummary = ({ result, month, year, monthlyTax }) => {
     result?.pages.map((page, key) => {
       page.data.map((item, key) => {
         // payroll_list bonus and total benefits are sometimes same
+        // if (item.bonus !== item.benefits) {
+        //   bonus = item.bonus;
+        //   console.log(item.bonus, item.benefits);
+        // }
         if (item.bonus !== item.benefits) {
           bonus = item.bonus;
-          // console.log(item.bonus, item.benefits);
+          // totalCompensation -= item.month13;
+          // console.log(item.bonus);
         }
+
+        // if there is bonus in gross, deduct it to total compensation
+        if (item.bonus > 0) {
+          totalBonus += item.bonus;
+          console.log(totalBonus);
+        }
+
         totalShareEe += item.sss + item.pag + item.phic;
         shareEe = item.sss + item.pag + item.phic;
         totalBenefits += item.month13 + item.benefits + bonus;
@@ -43,17 +58,25 @@ const WTaxBodySummary = ({ result, month, year, monthlyTax }) => {
         taxWithheld += item.tax;
         nonTax = totalDeminimis + totalShareEe + totalBenefits;
         totalCompensation += Number(item.gross) + item.benefits;
+
+        // if there is 13month in gross, deduct it to total compensation
+        if (item.month13 > 0) {
+          totalMonth13 += item.month13;
+          totalCompensation -= item.month13;
+          // console.log(totalMonth13);
+        }
+        // // if there is bonuses, add it to total compensation
+        // if (item.bonus > 0) {
+        //   // totalMonth13 += item.month13;
+        //   totalCompensation += item.bonus;
+        //   // console.log(totalMonth13);
+        // }
         // totalCompensation += Number(item.gross) + Number(item.benefits);
         // compensation = Number(item.gross) + Number(item.benefits);
         compensation = totalCompensation;
         bonus = 0;
 
-        console.log(
-          key,
-          item.gross,
-          item.payroll_category_type,
-          totalCompensation
-        );
+        // console.log(key, item.gross, item.payroll_category_type, item.month13);
 
         // compute monthly tax due
         taxMonthly += payComputeTaxDue(

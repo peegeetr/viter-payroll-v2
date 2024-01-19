@@ -81,7 +81,7 @@ const PayrollList = ({ setItemEdit }) => {
       }
       return;
     },
-    // refetchOnWindowFocus: false,
+    refetchOnWindowFocus: false,
     cacheTime: 200,
   });
 

@@ -24,22 +24,48 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 
     // get data
     // get task id from query string
+    $payroll->type = checkIndex($data, ("type"));
     $payroll->month = checkIndex($data, ("month"));
     $payroll->year = checkIndex($data, ("year"));
 
-    if ($payroll->month != "0" && $payroll->year == "0") {
+    // month have value only
+    if ($payroll->month != "0" && $payroll->year == "0" && $payroll->type == "0") {
         $query = checkReadFilterMonth($payroll);
         http_response_code(200);
         getQueriedData($query);
     }
 
-    if ($payroll->month == "0" && $payroll->year != "0") {
+    // year have value only
+    if ($payroll->month == "0" && $payroll->year != "0" && $payroll->type == "0") {
         $query = checkReadFilterYear($payroll);
         http_response_code(200);
         getQueriedData($query);
     }
 
-    $query = checkReadFilter($payroll);
+    // type have value only
+    if ($payroll->month == "0" && $payroll->year == "0" && $payroll->type != "0") {
+        $query = checkReadFilterType($payroll);
+        http_response_code(200);
+        getQueriedData($query);
+    }
+
+    // type and month have value
+    if ($payroll->month != "0" && $payroll->year == "0" && $payroll->type != "0") {
+        $query = checkReadFilterMonthAndType($payroll);
+        http_response_code(200);
+        getQueriedData($query);
+    }
+
+    // type, month and year have value
+    if ($payroll->month != "0" && $payroll->year != "0" && $payroll->type != "0") {
+        // type, month and year
+        $query = checkReadFilter($payroll);
+        http_response_code(200);
+        getQueriedData($query);
+    }
+
+    // type, month and year dont have value
+    $query = checkReadAll($payroll);
     http_response_code(200);
     getQueriedData($query);
 }

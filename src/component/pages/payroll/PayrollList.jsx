@@ -43,6 +43,7 @@ const PayrollList = ({ setItemEdit }) => {
   const [loading, setLoading] = React.useState(false);
   const [isFilter, setFilter] = React.useState(false);
   const [isSubmit, setSubmit] = React.useState(false);
+  const [type, setType] = React.useState("0");
   const [month, setMonth] = React.useState("0");
   const [year, setYear] = React.useState("0");
 
@@ -72,7 +73,7 @@ const PayrollList = ({ setItemEdit }) => {
         store.isSearch, // search boolean
         true,
         "post",
-        { month, year }
+        { month, year, type }
       ),
     getNextPageParam: (lastPage) => {
       if (lastPage.page < lastPage.total) {
@@ -123,13 +124,15 @@ const PayrollList = ({ setItemEdit }) => {
   return (
     <>
       {/* filter and search */}
-      <div className="grid grid-cols-1 xl:grid-cols-2 ">
+      <div className="grid grid-cols-1 xl:grid-cols-[1fr_20rem] ">
         <FilterPayroll
           setFilter={setFilter}
           setSubmit={setSubmit}
           isSubmit={isSubmit}
+          setType={setType}
           setMonth={setMonth}
           setYear={setYear}
+          type={type}
           month={month}
           year={year}
           isFilter={isFilter}

@@ -58,6 +58,7 @@ export const UrlAdmin = "";
 export const UrlSystem = "system";
 export const is_developer = "is_developer";
 
+// LOCAL payroll key
 // export const devKeyPr =
 //   "$2a$12$47wDvbLInZif/PVS8B6P3.7WxyJvUpBzZAWCsnWJUKq3nrn4qgmeO";
 // export const devKeyHr =

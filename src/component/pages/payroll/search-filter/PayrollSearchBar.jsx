@@ -13,12 +13,15 @@ const PayrollSearchBar = ({
   setFilter,
   setMonth,
   setYear,
+  setSubmit,
+  isSubmit,
 }) => {
   const handleChange = (e) => {
     setFilter(false);
     setMonth("0");
     setYear("0");
     if (e.target.value === "") {
+      setSubmit(!isSubmit);
       setOnSearch(!onSearch);
       dispatch(setIsSearch(false));
     }
@@ -30,6 +33,7 @@ const PayrollSearchBar = ({
         e.preventDefault();
         let val = search.current.value;
         if (val === "") return;
+        setSubmit(!isSubmit);
         setOnSearch(!onSearch);
         dispatch(setIsSearch(true));
       }}

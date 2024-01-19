@@ -66,7 +66,7 @@ const PayrollList = ({ setItemEdit }) => {
     queryFn: async ({ pageParam = 1 }) =>
       await queryDataInfinite(
         `${devApiUrl}/v1/payroll/search/${search.current.value}`, // search endpoint
-        isFilter
+        isFilter === true
           ? `${devApiUrl}/v1/payroll/filter` // filter endpoint
           : `${devApiUrl}/v1/payroll/page/${pageParam}`, // list endpoint
         store.isSearch, // search boolean
@@ -119,6 +119,7 @@ const PayrollList = ({ setItemEdit }) => {
     dispatch(setStartIndex(0));
     dispatch(setIsSearch(false));
   };
+
   return (
     <>
       {/* filter and search */}
@@ -146,6 +147,8 @@ const PayrollList = ({ setItemEdit }) => {
             setFilter={setFilter}
             setMonth={setMonth}
             setYear={setYear}
+            setSubmit={setSubmit}
+            isSubmit={isSubmit}
           />
         </div>
       </div>

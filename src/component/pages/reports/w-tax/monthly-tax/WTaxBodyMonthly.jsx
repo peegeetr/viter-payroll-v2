@@ -45,6 +45,7 @@ const WTaxBodyMonthly = ({ result, monthlyTax, month, year }) => {
     });
 
     nonTax = totalNonTaxableCompensation;
+    console.log(taxDue);
     return taxDue;
   };
   // console.log(result);

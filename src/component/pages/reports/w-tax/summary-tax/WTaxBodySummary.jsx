@@ -46,7 +46,7 @@ const WTaxBodySummary = ({ result, month, year, monthlyTax }) => {
         // if there is bonus in gross, deduct it to total compensation
         if (item.bonus > 0) {
           totalBonus += item.bonus;
-          console.log(totalBonus);
+          // console.log(totalBonus);
         }
 
         totalShareEe += item.sss + item.pag + item.phic;
@@ -63,7 +63,7 @@ const WTaxBodySummary = ({ result, month, year, monthlyTax }) => {
         if (item.month13 > 0) {
           totalMonth13 += item.month13;
           totalCompensation -= item.month13;
-          console.log(totalMonth13);
+          // console.log(totalMonth13);
         }
         // // if there is bonuses, add it to total compensation
         // if (item.bonus > 0) {
@@ -89,7 +89,7 @@ const WTaxBodySummary = ({ result, month, year, monthlyTax }) => {
       });
     });
 
-    console.log("---------------------------------------------------------");
+    // console.log("---------------------------------------------------------");
     // totalCompensation = totalCompensation + totalBenefits;
     taxableCompensation = totalCompensation - nonTax;
     list.totalShareEe = totalShareEe.toFixed(2);

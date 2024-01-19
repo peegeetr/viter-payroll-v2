@@ -57,13 +57,13 @@ const WTaxBodySummary = ({ result, month, year, monthlyTax }) => {
         deminimis = item.deminimis;
         taxWithheld += item.tax;
         nonTax = totalDeminimis + totalShareEe + totalBenefits;
-        totalCompensation += Number(item.gross) + item.benefits;
+        totalCompensation += Number(item.gross) + item.benefits + item.month13;
 
         // if there is 13month in gross, deduct it to total compensation
         if (item.month13 > 0) {
           totalMonth13 += item.month13;
           totalCompensation -= item.month13;
-          // console.log(totalMonth13);
+          console.log(totalMonth13);
         }
         // // if there is bonuses, add it to total compensation
         // if (item.bonus > 0) {

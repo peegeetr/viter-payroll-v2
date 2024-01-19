@@ -60,7 +60,9 @@ const FilterPayroll = ({
               onChange={(e) => handleMonthFilter(e)}
               value={month}
             >
-              <option value="0" hidden></option>
+              <option value="0" hidden>
+                All
+              </option>
               {getMonth()?.map((yItem, key) => {
                 return (
                   <option key={key} value={yItem.month_aid}>
@@ -78,7 +80,9 @@ const FilterPayroll = ({
               onChange={(e) => handleYearFilter(e)}
               value={year}
             >
-              <option value="" hidden></option>
+              <option value="0" hidden>
+                All
+              </option>
               {getYear()?.map((yItem, key) => {
                 return (
                   <option key={key} value={yItem.year}>

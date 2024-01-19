@@ -18,7 +18,7 @@ import React from "react";
 // const urlPayroll = "http://localhost/projects/viter-payroll-v2";
 // const urlPayrollImg = "http://localhost/projects/viter-payroll-v2/public/img";
 
-// // Mac, Mon, Cy
+// // // Mac, Mon, Cy
 // export const hrisdevNavUrl = "/dev-app";
 // export const devNavUrl = "/v2";
 

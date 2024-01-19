@@ -32,6 +32,7 @@ RewriteRule ^payroll/list$ controllers/payroll/draft.php [L]
 RewriteRule ^payroll/([0-9]+)$ controllers/payroll/payroll.php?payrollid=$1 [L]
 RewriteRule ^payroll/active/([0-9]+)$ controllers/payroll/active.php?payrollid=$1 [L]
 RewriteRule ^payroll/page/([0-9]+)$ controllers/payroll/page.php?start=$1 [L]
+RewriteRule ^payroll/filter$ controllers/payroll/filter.php [L]
 RewriteRule ^payroll/search/([^.].*+)$ controllers/payroll/search.php?search=$1 [L]
 
 #payslip

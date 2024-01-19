@@ -25,13 +25,14 @@ import {
 import { queryDataInfinite } from "../../helpers/queryDataInfinite";
 import LoadmoreRq from "../../partials/LoadmoreRq";
 import NoData from "../../partials/NoData";
-import SearchBarRq from "../../partials/SearchBarRq";
 import ServerError from "../../partials/ServerError";
 import ModalDeleteRestoreRq from "../../partials/modals/ModalDeleteRestoreRq";
 import TableSpinner from "../../partials/spinners/TableSpinner";
 import StatusActive from "../../partials/status/StatusActive";
 import StatusInactive from "../../partials/status/StatusInactive";
+import FilterPayroll from "./search-filter/FilterPayroll";
 import { validatePrId } from "./FunctionPayroll";
+import PayrollSearchBar from "./search-filter/PayrollSearchBar";
 
 const PayrollList = ({ setItemEdit }) => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -40,6 +41,10 @@ const PayrollList = ({ setItemEdit }) => {
   const [isDel, setDel] = React.useState(false);
   const link = getUserType(store.credentials.data.role_is_developer === 1);
   const [loading, setLoading] = React.useState(false);
+  const [isFilter, setFilter] = React.useState(false);
+  const [isSubmit, setSubmit] = React.useState(false);
+  const [month, setMonth] = React.useState("0");
+  const [year, setYear] = React.useState("0");
 
   const [onSearch, setOnSearch] = React.useState(false);
   const [page, setPage] = React.useState(1);
@@ -57,12 +62,17 @@ const PayrollList = ({ setItemEdit }) => {
     isFetchingNextPage,
     status,
   } = useInfiniteQuery({
-    queryKey: ["payroll", onSearch, store.isSearch],
+    queryKey: ["payroll", onSearch, store.isSearch, isSubmit],
     queryFn: async ({ pageParam = 1 }) =>
       await queryDataInfinite(
         `${devApiUrl}/v1/payroll/search/${search.current.value}`, // search endpoint
-        `${devApiUrl}/v1/payroll/page/${pageParam}`, // list endpoint
-        store.isSearch // search boolean
+        isFilter
+          ? `${devApiUrl}/v1/payroll/filter` // filter endpoint
+          : `${devApiUrl}/v1/payroll/page/${pageParam}`, // list endpoint
+        store.isSearch, // search boolean
+        true,
+        "post",
+        { month, year }
       ),
     getNextPageParam: (lastPage) => {
       if (lastPage.page < lastPage.total) {
@@ -80,8 +90,6 @@ const PayrollList = ({ setItemEdit }) => {
       fetchNextPage();
     }
   }, [inView]);
-
-  // console.log(result);
 
   const handleEdit = async (item) => {
     setLoading(true);
@@ -113,15 +121,34 @@ const PayrollList = ({ setItemEdit }) => {
   };
   return (
     <>
-      <SearchBarRq
-        search={search}
-        dispatch={dispatch}
-        store={store}
-        result={result?.pages}
-        isFetching={isFetching}
-        setOnSearch={setOnSearch}
-        onSearch={onSearch}
-      />
+      {/* filter and search */}
+      <div className="grid grid-cols-1 xl:grid-cols-2 ">
+        <FilterPayroll
+          setFilter={setFilter}
+          setSubmit={setSubmit}
+          isSubmit={isSubmit}
+          setMonth={setMonth}
+          setYear={setYear}
+          month={month}
+          year={year}
+          isFilter={isFilter}
+          search={search}
+        />
+        <div className="mt-1">
+          <PayrollSearchBar
+            search={search}
+            dispatch={dispatch}
+            store={store}
+            result={result?.pages}
+            isFetching={isFetching}
+            setOnSearch={setOnSearch}
+            onSearch={onSearch}
+            setFilter={setFilter}
+            setMonth={setMonth}
+            setYear={setYear}
+          />
+        </div>
+      </div>
 
       <div className="relative text-center">
         {/* {isFetching && !isFetchingNextPage && status !== "loading" && (

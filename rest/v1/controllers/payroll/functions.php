@@ -140,3 +140,11 @@ function checkReadFilterMonthAndType($object)
     checkQuery($query, "Empty records (read filter month and type).");
     return $query;
 }
+
+// Filter payroll Month And Type
+function checkReadFilterYearAndType($object)
+{
+    $query = $object->readFilterYearAndType();
+    checkQuery($query, "Empty records (read filter month and type).");
+    return $query;
+}

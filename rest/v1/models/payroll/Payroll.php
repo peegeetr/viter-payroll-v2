@@ -641,4 +641,36 @@ class Payroll
         }
         return $query;
     }
+
+    public function readFilterYearAndType()
+    {
+        try {
+            $sql = "select *, ";
+            $sql .= "COUNT(prlist.payroll_list_employee_id) as count, ";
+            $sql .= "sum(prlist.payroll_list_net_pay) as totalNet, ";
+            $sql .= "sum(prlist.payroll_list_bonus) as totalBonus, ";
+            $sql .= "sum(prlist.payroll_list_13th_month) as total13th, ";
+            $sql .= "prtype.payroll_type_name ";
+            $sql .= "from {$this->tblPayroll} as pr, ";
+            $sql .= "{$this->tblPayrollList} as prlist, ";
+            $sql .= "{$this->tblPayrollType} as prtype ";
+            $sql .= "where ";
+            $sql .= "pr.payroll_category_type = prtype.payroll_type_aid ";
+            $sql .= "and pr.payroll_id = prlist.payroll_list_payroll_id ";
+            $sql .= "and pr.payroll_category_type = :type ";
+            $sql .= "and YEAR(pr.payroll_end_date) = :year ";
+            $sql .= "GROUP BY prlist.payroll_list_payroll_id ";
+            $sql .= "order by pr.payroll_is_paid asc, ";
+            $sql .= "pr.payroll_pay_date desc, ";
+            $sql .= "pr.payroll_id desc ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "type" => $this->type,
+                "year" => $this->year,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
 }

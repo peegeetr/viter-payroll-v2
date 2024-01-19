@@ -56,6 +56,14 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
         getQueriedData($query);
     }
 
+    // type and year have value
+    if ($payroll->month == "0" && $payroll->year != "0" && $payroll->type != "0") {
+        // type, month and year
+        $query = checkReadFilterYearAndType($payroll);
+        http_response_code(200);
+        getQueriedData($query);
+    }
+
     // type, month and year have value
     if ($payroll->month != "0" && $payroll->year != "0" && $payroll->type != "0") {
         // type, month and year

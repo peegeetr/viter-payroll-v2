@@ -34,6 +34,7 @@ class Payroll
     public $payroll_total;
     public $payroll_search;
 
+    public $type;
     public $month;
     public $year;
 
@@ -492,7 +493,8 @@ class Payroll
             $sql .= "COUNT(prlist.payroll_list_employee_id) as count, ";
             $sql .= "sum(prlist.payroll_list_net_pay) as totalNet, ";
             $sql .= "sum(prlist.payroll_list_bonus) as totalBonus, ";
-            $sql .= "sum(prlist.payroll_list_13th_month) as total13th ";
+            $sql .= "sum(prlist.payroll_list_13th_month) as total13th, ";
+            $sql .= "prtype.payroll_type_name ";
             $sql .= "from {$this->tblPayroll} as pr, ";
             $sql .= "{$this->tblPayrollList} as prlist, ";
             $sql .= "{$this->tblPayrollType} as prtype ";
@@ -501,6 +503,7 @@ class Payroll
             $sql .= "and pr.payroll_id = prlist.payroll_list_payroll_id ";
             $sql .= "and YEAR(pr.payroll_end_date) = :year ";
             $sql .= "and MONTH(pr.payroll_end_date) = :month ";
+            $sql .= "and pr.payroll_category_type = :type ";
             $sql .= "GROUP BY prlist.payroll_list_payroll_id ";
             $sql .= "order by pr.payroll_is_paid asc, ";
             $sql .= "pr.payroll_pay_date desc, ";
@@ -509,6 +512,7 @@ class Payroll
             $query->execute([
                 "month" => $this->month,
                 "year" => $this->year,
+                "type" => $this->type,
             ]);
         } catch (PDOException $ex) {
             $query = false;
@@ -523,7 +527,8 @@ class Payroll
             $sql .= "COUNT(prlist.payroll_list_employee_id) as count, ";
             $sql .= "sum(prlist.payroll_list_net_pay) as totalNet, ";
             $sql .= "sum(prlist.payroll_list_bonus) as totalBonus, ";
-            $sql .= "sum(prlist.payroll_list_13th_month) as total13th ";
+            $sql .= "sum(prlist.payroll_list_13th_month) as total13th, ";
+            $sql .= "prtype.payroll_type_name ";
             $sql .= "from {$this->tblPayroll} as pr, ";
             $sql .= "{$this->tblPayrollList} as prlist, ";
             $sql .= "{$this->tblPayrollType} as prtype ";
@@ -552,7 +557,8 @@ class Payroll
             $sql .= "COUNT(prlist.payroll_list_employee_id) as count, ";
             $sql .= "sum(prlist.payroll_list_net_pay) as totalNet, ";
             $sql .= "sum(prlist.payroll_list_bonus) as totalBonus, ";
-            $sql .= "sum(prlist.payroll_list_13th_month) as total13th ";
+            $sql .= "sum(prlist.payroll_list_13th_month) as total13th, ";
+            $sql .= "prtype.payroll_type_name ";
             $sql .= "from {$this->tblPayroll} as pr, ";
             $sql .= "{$this->tblPayrollList} as prlist, ";
             $sql .= "{$this->tblPayrollType} as prtype ";
@@ -567,6 +573,68 @@ class Payroll
             $query = $this->connection->prepare($sql);
             $query->execute([
                 "year" => $this->year,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    public function readFilterType()
+    {
+        try {
+            $sql = "select *, ";
+            $sql .= "COUNT(prlist.payroll_list_employee_id) as count, ";
+            $sql .= "sum(prlist.payroll_list_net_pay) as totalNet, ";
+            $sql .= "sum(prlist.payroll_list_bonus) as totalBonus, ";
+            $sql .= "sum(prlist.payroll_list_13th_month) as total13th, ";
+            $sql .= "prtype.payroll_type_name ";
+            $sql .= "from {$this->tblPayroll} as pr, ";
+            $sql .= "{$this->tblPayrollList} as prlist, ";
+            $sql .= "{$this->tblPayrollType} as prtype ";
+            $sql .= "where ";
+            $sql .= "pr.payroll_category_type = :type ";
+            $sql .= "and pr.payroll_category_type = prtype.payroll_type_aid ";
+            $sql .= "and pr.payroll_id = prlist.payroll_list_payroll_id ";
+            $sql .= "GROUP BY prlist.payroll_list_payroll_id ";
+            $sql .= "order by pr.payroll_is_paid asc, ";
+            $sql .= "pr.payroll_pay_date desc, ";
+            $sql .= "pr.payroll_id desc ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "type" => $this->type,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    public function readFilterMonthAndType()
+    {
+        try {
+            $sql = "select *, ";
+            $sql .= "COUNT(prlist.payroll_list_employee_id) as count, ";
+            $sql .= "sum(prlist.payroll_list_net_pay) as totalNet, ";
+            $sql .= "sum(prlist.payroll_list_bonus) as totalBonus, ";
+            $sql .= "sum(prlist.payroll_list_13th_month) as total13th, ";
+            $sql .= "prtype.payroll_type_name ";
+            $sql .= "from {$this->tblPayroll} as pr, ";
+            $sql .= "{$this->tblPayrollList} as prlist, ";
+            $sql .= "{$this->tblPayrollType} as prtype ";
+            $sql .= "where ";
+            $sql .= "pr.payroll_category_type = prtype.payroll_type_aid ";
+            $sql .= "and pr.payroll_id = prlist.payroll_list_payroll_id ";
+            $sql .= "and pr.payroll_category_type = :type ";
+            $sql .= "and MONTH(pr.payroll_end_date) = :month ";
+            $sql .= "GROUP BY prlist.payroll_list_payroll_id ";
+            $sql .= "order by pr.payroll_is_paid asc, ";
+            $sql .= "pr.payroll_pay_date desc, ";
+            $sql .= "pr.payroll_id desc ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "type" => $this->type,
+                "month" => $this->month,
             ]);
         } catch (PDOException $ex) {
             $query = false;

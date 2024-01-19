@@ -1,22 +1,24 @@
 import React from "react";
-import { Form, Formik } from "formik";
-import { MdFilterAlt } from "react-icons/md";
-import * as Yup from "yup";
+import { setIsSearch } from "../../../../store/StoreAction";
 import { StoreContext } from "../../../../store/StoreContext";
-import { InputSelect } from "../../../helpers/FormInputs";
-import ButtonSpinner from "../../../partials/spinners/ButtonSpinner";
 import {
   getMonth,
   getYear,
 } from "../../reports/w-tax/yearly-tax/functions-wtax";
-import { setIsSearch } from "../../../../store/StoreAction";
+import {
+  payrollCategory13thMonthId,
+  payrollCategoryBonusId,
+  payrollCategorySalaryId,
+} from "../../../helpers/functions-payroll-category-id";
 
 const FilterPayroll = ({
   setFilter,
   setSubmit,
   isSubmit,
+  setType,
   setMonth,
   setYear,
+  type,
   month,
   year,
   isFilter,
@@ -30,6 +32,7 @@ const FilterPayroll = ({
     setFilter(false);
     setMonth("0");
     setYear("0");
+    setType("0");
   };
 
   // if use filter
@@ -48,11 +51,35 @@ const FilterPayroll = ({
     setYear(e.target.value);
     search.current.value = "";
   };
+  // if use filter
+  const handleYearType = async (e) => {
+    dispatch(setIsSearch(false));
+    setSubmit(!isSubmit);
+    setFilter(true);
+    setType(e.target.value);
+    search.current.value = "";
+  };
   return (
     <>
       <div className="relative overflow-x-auto z-0 print:hidden">
-        <form action="" className="sm:flex gap-5 items-center mb-4 ">
-          <div className="relative mt-1">
+        <form action="" className="sm:flex gap-3 mb-4 justify-items-end">
+          <div className="relative mt-2">
+            <label>Type</label>
+            <select
+              name="filter-by"
+              className="sm:w-[10rem]"
+              onChange={(e) => handleYearType(e)}
+              value={type}
+            >
+              <option value="0" hidden>
+                All
+              </option>
+              <option value={payrollCategorySalaryId}>Salary</option>
+              <option value={payrollCategory13thMonthId}>13th Month</option>
+              <option value={payrollCategoryBonusId}>Bonus</option>
+            </select>
+          </div>
+          <div className="relative mt-5 sm:mt-2">
             <label>Month</label>
             <select
               name="filter-by"
@@ -72,7 +99,7 @@ const FilterPayroll = ({
               })}
             </select>
           </div>
-          <div className="relative mt-5 sm:mt-1">
+          <div className="relative mt-5 sm:mt-2">
             <label>Year</label>
             <select
               name="filter-by"
@@ -95,7 +122,7 @@ const FilterPayroll = ({
           {isFilter && (
             <button
               type="reset"
-              className="underline text-red-700 ml-2 sm:mt-0 mt-2"
+              className="underline text-red-700 sm:mt-7 mt-2"
               onClick={handleClear}
             >
               Clear

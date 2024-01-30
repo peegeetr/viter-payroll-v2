@@ -23,12 +23,14 @@ const WTaxBodyYearly = ({
   let nonTax = 0;
   let taxableCompensationIncome = 0;
   let empGrossMonthly = 0;
+  let totalCompensation = 0;
+  let taxDue = 0;
 
   // console.log("monthlyGrosss", monthlyGross);
 
   const payComputeTaxDue = (emp, monthlyTax) => {
     let taxDue = 0;
-    console.log(monthlyGross?.length);
+    console.log(emp);
     // monthlyGross.length > 0 &&
     monthlyGross?.map((mg) => {
       if (emp.payroll_list_employee_id === mg.payroll_list_employee_id) {
@@ -36,8 +38,8 @@ const WTaxBodyYearly = ({
         let totalBenefits = mg.month13 + mg.bonus + mg.benefits;
         const totalNonTaxableCompensation =
           Number(totalBenefits.toFixed(2)) + totalShareEe + mg.deminimis;
-        taxableCompensationIncome =
-          Number(mg.gross.toFixed(2)) - totalNonTaxableCompensation;
+        // taxableCompensationIncome =
+        //   Number(mg.gross.toFixed(2)) - totalNonTaxableCompensation;
         monthlyTax.map((sTax) => {
           if (
             Number(taxableCompensationIncome) >=
@@ -76,9 +78,13 @@ const WTaxBodyYearly = ({
             // console.log(taxMonthly);
             // compute yearly tax due
             // taxYearly = computeTaxPayable(item.gross, yearlyTax);
-            taxYearly = computeTaxYearly(item.gross, yearlyTax, nonTax);
+            totalCompensation = item.gross + item.benefits;
+            taxableCompensationIncome = totalCompensation - nonTax;
+            taxYearly = computeTaxYearly(totalCompensation, yearlyTax, nonTax);
+            console.log(totalCompensation, nonTax, taxYearly);
             taxPayable = taxYearly;
             taxWitheld = taxPayable - taxMonthly;
+            taxDue = taxPayable - item.totalTax;
             // console.log(item, taxMonthly, taxWitheld);
             return (
               <div key={key} className="mb-8 print:mb-12">
@@ -101,7 +107,7 @@ const WTaxBodyYearly = ({
                       <td className="w-[8rem] text-right px-4"></td>
                       <td className=" text-right px-4">
                         {pesoSign}
-                        {numberWithCommas(Number(item.gross).toFixed(2))}
+                        {numberWithCommas(Number(totalCompensation).toFixed(2))}
                       </td>
                     </tr>
                     <tr>
@@ -169,7 +175,7 @@ const WTaxBodyYearly = ({
                       <td className=" text-right px-4"></td>
                       <td className=" text-right px-4">
                         {pesoSign}
-                        {numberWithCommas(taxMonthly.toFixed(2))}
+                        {numberWithCommas(Number(item.totalTax).toFixed(2))}
                         {/* {taxMonthly} */}
                       </td>
                     </tr>
@@ -178,7 +184,7 @@ const WTaxBodyYearly = ({
                       <td className=" text-right px-4"></td>
                       <td className=" text-right px-4">
                         {pesoSign}
-                        {numberWithCommas(taxWitheld.toFixed(2))}
+                        {numberWithCommas(taxDue.toFixed(2))}
                       </td>
                     </tr>
                   </tbody>

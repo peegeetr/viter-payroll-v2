@@ -44,3 +44,28 @@ and pay.payroll_category_type = 7
 ORDER BY
 lst.`payroll_list_employee_name`,
 lst.`payroll_list_payroll_id`
+
+select
+sum(payrollList.payroll_list_gross) as gross, 
+sum(payrollList.payroll_list_sss_ee) as sss, 
+sum(payrollList.payroll_list_philhealth_ee) as phic, 
+sum(payrollList.payroll_list_pagibig_ee) as pag, 
+sum(payrollList.payroll_list_deminimis) as deminimis, 
+sum(payrollList.payroll_list_13th_month) as month13, 
+sum(payrollList.payroll_list_bonus) as bonus, 
+sum(payrollList.payroll_list_total_benefits) as benefits, 
+payroll.payroll_category_type, 
+payroll.payroll_id, 
+payroll.payroll_start_date, 
+payroll.payroll_end_date, 
+payroll.payroll_pay_date 
+from prv2_payroll_list as payrollList, 
+prv2_payroll as payroll 
+where payrollList.payroll_list_employee_id = 426 
+and payrollList.payroll_list_payroll_id = payroll.payroll_id 
+and MONTHNAME(payroll.payroll_start_date) = 'january' 
+and YEAR(payroll.payroll_start_date) = 2023 
+group by payrollList.payroll_list_employee_id 
+order by payrollList.payroll_list_payroll_id, 
+payroll.payroll_end_date desc, 
+payrollList.payroll_list_employee_name asc;

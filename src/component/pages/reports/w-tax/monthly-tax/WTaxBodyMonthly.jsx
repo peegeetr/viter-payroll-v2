@@ -68,6 +68,7 @@ const WTaxBodyMonthly = ({ result, monthlyTax, month, year }) => {
               item.deminimis
             );
             totalCompensation = Number(item.gross) + Number(item.benefits);
+            console.log(item);
             return (
               <div key={key} className="mb-8 print:mb-20">
                 <HeaderPrint />

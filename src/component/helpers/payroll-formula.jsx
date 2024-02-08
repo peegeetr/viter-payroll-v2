@@ -1307,6 +1307,7 @@ export const computeTaxYearly = (gross, yearlyTax, nonTax = 0) => {
       if (Number(taxable) >= 0 && Number(taxable) <= minimum) {
         return taxDue;
       }
+      console.log(yTax.tax_yearly_from);
       taxDue =
         (taxable - Number(yTax.tax_yearly_from)) *
           (Number(yTax.tax_yearly_rate) / 100) +

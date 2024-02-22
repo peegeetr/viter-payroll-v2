@@ -81,11 +81,16 @@ const WTaxBodyYearly = ({
             totalCompensation = item.gross + item.benefits;
             taxableCompensationIncome = totalCompensation - nonTax;
             taxYearly = computeTaxYearly(totalCompensation, yearlyTax, nonTax);
-            console.log(totalCompensation, nonTax, taxYearly);
+            console.log(
+              totalCompensation,
+              nonTax,
+              taxableCompensationIncome,
+              taxYearly
+            );
             taxPayable = taxYearly;
             taxWitheld = taxPayable - taxMonthly;
             taxDue = taxPayable - item.totalTax;
-            // console.log(item, taxMonthly, taxWitheld);
+            console.log(item, taxMonthly, taxWitheld);
             return (
               <div key={key} className="mb-8 print:mb-12">
                 <HeaderPrint />

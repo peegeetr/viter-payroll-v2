@@ -1297,6 +1297,7 @@ export const computeTaxYearly = (gross, yearlyTax, nonTax = 0) => {
   // const minimum = 250000;
   const minimum = Number(yearlyTax[0].tax_yearly_to);
 
+  // compute yearly tax due base on gross amount
   yearlyTax?.map((yTax) => {
     if (
       Number(gross) >= Number(yTax.tax_yearly_from) &&
@@ -1307,7 +1308,21 @@ export const computeTaxYearly = (gross, yearlyTax, nonTax = 0) => {
       if (Number(taxable) >= 0 && Number(taxable) <= minimum) {
         return taxDue;
       }
-      console.log(yTax.tax_yearly_from);
+      console.log(taxable, yTax.tax_yearly_from, yTax.tax_yearly_to);
+
+      // taxDue =
+      //   (taxable - Number(yTax.tax_yearly_from)) *
+      //     (Number(yTax.tax_yearly_rate) / 100) +
+      //   Number(yTax.tax_yearly_fixed_tax);
+    }
+  });
+
+  // compute yearly tax due base on taxable amount
+  yearlyTax?.map((yTax) => {
+    if (
+      Number(taxable) >= Number(yTax.tax_yearly_from) &&
+      Number(taxable) <= Number(yTax.tax_yearly_to)
+    ) {
       taxDue =
         (taxable - Number(yTax.tax_yearly_from)) *
           (Number(yTax.tax_yearly_rate) / 100) +

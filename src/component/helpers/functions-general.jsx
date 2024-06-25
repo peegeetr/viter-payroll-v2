@@ -40,7 +40,7 @@ export const devBaseImgUrl = `${urlPayrollImg}`;
 export const devApiUrl = `${urlPayroll}/rest`;
 export const devBaseUrl = `${urlPayroll}`;
 
-// // // // Online prod hris
+// // // Online prod hris
 // export const hrisDevBaseImgUrl = "https://hris.frontlinebusiness.com.ph/img";
 // export const hrisDevApiUrl = "https://hris.frontlinebusiness.com.ph/rest";
 // export const hrisdevBaseUrl = "https://hris.frontlinebusiness.com.ph";
@@ -53,7 +53,7 @@ export const devBaseUrl = `${urlPayroll}`;
 // export const devNavUrl = "/v2";
 
 export const baseUrl = "";
-export const isDemoMode = "1";
+export const isDemoMode = "0";
 export const UrlAdmin = "";
 export const UrlSystem = "system";
 export const is_developer = "is_developer";

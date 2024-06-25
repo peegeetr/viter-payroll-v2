@@ -25,12 +25,13 @@ const WTaxBodyYearly = ({
   let empGrossMonthly = 0;
   let totalCompensation = 0;
   let taxDue = 0;
+  let totalDeminimis = 0;
 
   // console.log("monthlyGrosss", monthlyGross);
 
   const payComputeTaxDue = (emp, monthlyTax) => {
     let taxDue = 0;
-    console.log(emp);
+    // console.log(emp);
     // monthlyGross.length > 0 &&
     monthlyGross?.map((mg) => {
       if (emp.payroll_list_employee_id === mg.payroll_list_employee_id) {
@@ -69,28 +70,53 @@ const WTaxBodyYearly = ({
           {page.data.map((item, key) => {
             // totalShareEe = 0;
             // totalBenefits = 0;
+            const month13OtherBenefitsDeminimisThreshold = 90000;
+            let additionalTaxable = 0;
             taxMonthly = 0;
+            totalDeminimis = item.deminimis;
             totalShareEe = item.sss + item.pag + item.phic;
             totalBenefits = item.month13 + item.bonus + item.benefits;
-            nonTax = totalBenefits + totalShareEe + item.deminimis;
+
+            if (totalBenefits > month13OtherBenefitsDeminimisThreshold) {
+              totalDeminimis +=
+                totalBenefits - month13OtherBenefitsDeminimisThreshold;
+              totalBenefits = month13OtherBenefitsDeminimisThreshold;
+            }
+
+            // item.deminimis += 70000;
+
+            // console.log(item.deminimis);
+
+            if (totalDeminimis > month13OtherBenefitsDeminimisThreshold) {
+              additionalTaxable +=
+                totalDeminimis - month13OtherBenefitsDeminimisThreshold;
+              totalDeminimis = month13OtherBenefitsDeminimisThreshold;
+            }
+
+            // console.log(additionalTaxable);
+            nonTax = totalBenefits + totalShareEe + totalDeminimis;
+
             // compute monthly tax due
             taxMonthly = payComputeTaxDue(item, monthlyTax);
             // console.log(taxMonthly);
             // compute yearly tax due
             // taxYearly = computeTaxPayable(item.gross, yearlyTax);
+
             totalCompensation = item.gross + item.benefits;
-            taxableCompensationIncome = totalCompensation - nonTax;
-            taxYearly = computeTaxYearly(totalCompensation, yearlyTax, nonTax);
-            console.log(
-              totalCompensation,
-              nonTax,
+            taxableCompensationIncome =
+              totalCompensation - nonTax + additionalTaxable;
+
+            taxYearly = computeTaxYearly(
               taxableCompensationIncome,
-              taxYearly
+              yearlyTax,
+              nonTax
             );
+            // taxYearly = computeTaxYearly(totalCompensation, yearlyTax, nonTax);
+            // console.log(taxableCompensationIncome);
             taxPayable = taxYearly;
             taxWitheld = taxPayable - taxMonthly;
             taxDue = taxPayable - item.totalTax;
-            console.log(item, taxMonthly, taxWitheld);
+            // console.log(item, taxMonthly, taxWitheld);
             return (
               <div key={key} className="mb-8 print:mb-12">
                 <HeaderPrint />
@@ -134,7 +160,7 @@ const WTaxBodyYearly = ({
                       <td className="w-[15rem]">Deminimis</td>
                       <td className="w-[8rem] text-right px-4">
                         {pesoSign}
-                        {numberWithCommas(Number(item.deminimis).toFixed(2))}
+                        {numberWithCommas(Number(totalDeminimis).toFixed(2))}
                       </td>
                       <td className=" text-right px-4"></td>
                     </tr>

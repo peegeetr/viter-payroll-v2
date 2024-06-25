@@ -1294,6 +1294,7 @@ export const payComputeTaxDue = (
 export const computeTaxYearly = (gross, yearlyTax, nonTax = 0) => {
   let taxDue = 0;
   let taxable = 0;
+  // const month13OtherBenefitsDeminimisThreshold = 90000;
   // const minimum = 250000;
   const minimum = Number(yearlyTax[0].tax_yearly_to);
 
@@ -1303,28 +1304,8 @@ export const computeTaxYearly = (gross, yearlyTax, nonTax = 0) => {
       Number(gross) >= Number(yTax.tax_yearly_from) &&
       Number(gross) <= Number(yTax.tax_yearly_to)
     ) {
-      taxable = Number(gross) - Number(nonTax);
-      console.log(taxable, Number(nonTax), minimum);
-      if (Number(taxable) >= 0 && Number(taxable) <= minimum) {
-        return taxDue;
-      }
-      console.log(taxable, yTax.tax_yearly_from, yTax.tax_yearly_to);
-
-      // taxDue =
-      //   (taxable - Number(yTax.tax_yearly_from)) *
-      //     (Number(yTax.tax_yearly_rate) / 100) +
-      //   Number(yTax.tax_yearly_fixed_tax);
-    }
-  });
-
-  // compute yearly tax due base on taxable amount
-  yearlyTax?.map((yTax) => {
-    if (
-      Number(taxable) >= Number(yTax.tax_yearly_from) &&
-      Number(taxable) <= Number(yTax.tax_yearly_to)
-    ) {
       taxDue =
-        (taxable - Number(yTax.tax_yearly_from)) *
+        (gross - Number(yTax.tax_yearly_from)) *
           (Number(yTax.tax_yearly_rate) / 100) +
         Number(yTax.tax_yearly_fixed_tax);
     }

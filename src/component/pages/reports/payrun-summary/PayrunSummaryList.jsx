@@ -19,7 +19,7 @@ const PayrunSummaryList = () => {
   const { store, dispatch } = React.useContext(StoreContext);
   const [isFilter, setFilter] = React.useState(false);
   const [isSubmit, setSubmit] = React.useState(false);
-  const [employeeId, setEmployee] = React.useState("");
+  const [employeeId, setEmployee] = React.useState("0");
   const [startDate, setStartDate] = React.useState("");
   const [endDate, setEndDate] = React.useState("");
 
@@ -182,11 +182,14 @@ const PayrunSummaryList = () => {
             </tbody>
           </table>
         )}
-        <PayrunSummaryBody
-          result={result}
-          startDate={startDate}
-          endDate={endDate}
-        />
+        {result?.pages[0].data.length > 0 && (
+          <PayrunSummaryBody
+            result={result}
+            employeeId={employeeId}
+            startDate={startDate}
+            endDate={endDate}
+          />
+        )}
       </div>
     </>
   );

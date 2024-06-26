@@ -3,8 +3,8 @@ import React from "react";
 // Mac
 // const urlHris = "http://localhost/react-vite/viter-hris-v3"
 // const urlHrisImg = "http://localhost/react-vite/viter-hris-v3/public/img"
-// const urlPayroll = "http://localhost/react-vite/viter-payroll-v2"
-// const urlPayrollImg = "http://localhost/react-vite/viter-payroll-v2/public/img"
+// const urlPayroll = "http://localhost/react-vite/viter-payroll-v2";
+// const urlPayrollImg = "http://localhost/react-vite/viter-payroll-v2/public/img";
 
 // Mon
 // const urlHris = "http://localhost/viter-hris-v3";

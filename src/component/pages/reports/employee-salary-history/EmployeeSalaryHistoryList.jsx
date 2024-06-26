@@ -57,13 +57,15 @@ const EmployeeSalaryHistoryList = () => {
 
   // use if not loadmore button undertime
   const { data: employee, isLoading: loadingEmployee } = useQueryData(
-    `${hrisDevApiUrl}/v1/employees/pay`, // endpoint
+    `${hrisDevApiUrl}/v1/employees`, // endpoint
     "get", // method
     "employees", // key
     {}, // formdata
     null, // id key
     false // devKey boolean
   );
+
+  console.log("result", result);
   const handleEmployee = async (e) => {
     let employeeAid = e.target.value;
     setEmployee(employeeAid);
@@ -133,7 +135,7 @@ const EmployeeSalaryHistoryList = () => {
           {page.data.map((item, key) => {
             return (
               <div key={key} className="my-10 print:my-0 print:mb-12">
-                <SalaryHistoryBody item={item} />
+                <SalaryHistoryBody item={item} employee={employee} />
               </div>
             );
           })}

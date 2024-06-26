@@ -33,9 +33,6 @@ const PayBenefitsList = () => {
   const [value, setValue] = React.useState([]);
   const [month, setMonth] = React.useState("");
   const [year, setYear] = React.useState("");
-  const getCurrentYear = () => {
-    return new Date().getFullYear();
-  };
 
   const [page, setPage] = React.useState(1);
   let counter = 1;
@@ -87,7 +84,7 @@ const PayBenefitsList = () => {
 
   // use if not loadmore button undertime
   const { data: employee, isLoading: loadingEmployee } = useQueryData(
-    `${hrisDevApiUrl}/v1/employees/pay`, // endpoint
+    `${hrisDevApiUrl}/v1/employees`, // endpoint
     "get", // method
     "employees", // key
     {}, // formdata

@@ -32,7 +32,8 @@ const PayrunSummaryBody = ({ result, employeeId, startDate, endDate }) => {
   const { data: earnings, isLoading } = useQueryData(
     `${devApiUrl}/v1/payslip/earnings/${wagesEarningsId}/${employeeId}/${payrollid}`, // endpoint
     "get", // method
-    `earnings-${wagesEarningsId}` // key
+    `earnings-wages`, // key
+    { employeeId, payrollid }
   );
 
   let undertime = 0;
@@ -188,7 +189,7 @@ const PayrunSummaryBody = ({ result, employeeId, startDate, endDate }) => {
                           ? `${numberWithCommas(
                               Number(item.absences).toFixed(2)
                             )}`
-                          : 0.0}
+                          : "0.00"}
                         )
                       </td>
                     </tr>
@@ -198,7 +199,7 @@ const PayrunSummaryBody = ({ result, employeeId, startDate, endDate }) => {
                         {pesoSign}(
                         {Number(undertime) > 0
                           ? `${numberWithCommas(Number(undertime).toFixed(2))}`
-                          : 0.0}
+                          : "0.00"}
                         )
                       </td>
                     </tr>

@@ -40,6 +40,10 @@ class ReportPayrun
             $sql .= "sum(payrollList.payroll_list_overtime_pay) as overtime_pay, ";
             $sql .= "sum(payrollList.payroll_list_holiday) as holiday, ";
             $sql .= "sum(payrollList.payroll_list_night_shift_differential) as night_shift_differential, ";
+            $sql .= "sum(payrollList.payroll_list_hazard_pay) as hazardPay, ";
+            $sql .= "sum(payrollList.payroll_list_inlfation_adjustment) as inflationPay, ";
+            $sql .= "sum(payrollList.payroll_list_adjustment_pay) as payAdjustment, ";
+            $sql .= "sum(payrollList.payroll_list_undertime) as undertime, ";
             $sql .= "sum(payrollList.payroll_list_leave_pay) as leave_pay, ";
             $sql .= "sum(payrollList.payroll_list_absences) as absences, ";
             $sql .= "sum(payrollList.payroll_list_total_benefits) as total_benefits, ";
@@ -105,6 +109,10 @@ class ReportPayrun
             $sql .= "sum(payrollList.payroll_list_overtime_pay) as overtime_pay, ";
             $sql .= "sum(payrollList.payroll_list_holiday) as holiday, ";
             $sql .= "sum(payrollList.payroll_list_night_shift_differential) as night_shift_differential, ";
+            $sql .= "sum(payrollList.payroll_list_hazard_pay) as hazardPay, ";
+            $sql .= "sum(payrollList.payroll_list_inlfation_adjustment) as inflationPay, ";
+            $sql .= "sum(payrollList.payroll_list_adjustment_pay) as payAdjustment, ";
+            $sql .= "sum(payrollList.payroll_list_undertime) as undertime, ";
             $sql .= "sum(payrollList.payroll_list_leave_pay) as leave_pay, ";
             $sql .= "sum(payrollList.payroll_list_absences) as absences, ";
             $sql .= "sum(payrollList.payroll_list_total_benefits) as total_benefits, ";

@@ -27,34 +27,35 @@ const PayrunSummaryBody = ({ result, employeeId, startDate, endDate }) => {
   //   employeeRate(result?.pages[0].data[0].payroll_list_employee_salary, days)
   //     .hourly
   // );
-  const payrollid = result?.pages[0].data[0].payroll_id;
-  // use if not loadmore button undertime
-  const { data: earnings, isLoading } = useQueryData(
-    `${devApiUrl}/v1/payslip/earnings/${wagesEarningsId}/${employeeId}/${payrollid}`, // endpoint
-    "get", // method
-    `earnings-wages`, // key
-    { employeeId, payrollid }
-  );
+  // const payrollid = result?.pages[0].data[0].payroll_id;
+  // // use if not loadmore button undertime
+  // const { data: earnings, isLoading } = useQueryData(
+  //   `${devApiUrl}/v1/payslip/earnings/${wagesEarningsId}/${employeeId}/${payrollid}`, // endpoint
+  //   "get", // method
+  //   `earnings-wages`, // key
+  //   { employeeId, payrollid }
+  // );
 
-  let undertime = 0;
-  let hazardPay = 0;
-  let inflationPay = 0;
-  let payAdjustment = 0;
+  // let undertime = 0;
+  // let hazardPay = 0;
+  // let inflationPay = 0;
+  // let payAdjustment = 0;
 
-  earnings?.data.map((item) => {
-    if (item.earnings_payitem_id === undertimeId) {
-      undertime += Number(item.earnings_amount);
-    }
-    if (item.earnings_payitem_id === hazardPayId) {
-      hazardPay += Number(item.earnings_amount);
-    }
-    if (item.earnings_payitem_id === inflationAdjustmentId) {
-      inflationPay += Number(item.earnings_amount);
-    }
-    if (item.earnings_payitem_id === payAdjustmentId) {
-      payAdjustment += Number(item.earnings_amount);
-    }
-  });
+  // earnings?.data.map((item) => {
+  //   console.log(item);
+  //   if (item.earnings_payitem_id === undertimeId) {
+  //     undertime += Number(item.earnings_amount);
+  //   }
+  //   if (item.earnings_payitem_id === hazardPayId) {
+  //     hazardPay += Number(item.earnings_amount);
+  //   }
+  //   if (item.earnings_payitem_id === inflationAdjustmentId) {
+  //     inflationPay += Number(item.earnings_amount);
+  //   }
+  //   if (item.earnings_payitem_id === payAdjustmentId) {
+  //     payAdjustment += Number(item.earnings_amount);
+  //   }
+  // });
 
   let days = 0;
   let hourRate = 0;
@@ -104,10 +105,10 @@ const PayrunSummaryBody = ({ result, employeeId, startDate, endDate }) => {
               Number(item.overtime_pay) +
               Number(item.holiday) +
               Number(item.night_shift_differential) +
-              Number(hazardPay) +
-              Number(inflationPay) +
-              Number(payAdjustment) -
-              (Number(item.absences) + Number(undertime));
+              Number(item.hazardPay) +
+              Number(item.inflationPay) +
+              Number(item.payAdjustment) -
+              (Number(item.absences) + Number(item.undertime));
 
             totalEarnings += totalWages + Number(item.total_benefits);
 
@@ -197,8 +198,10 @@ const PayrunSummaryBody = ({ result, employeeId, startDate, endDate }) => {
                       <td className="w-[15rem] print:py-[2px]">Undertime</td>
                       <td className="w-[8rem] text-right px-4 print:py-[2px]">
                         {pesoSign}(
-                        {Number(undertime) > 0
-                          ? `${numberWithCommas(Number(undertime).toFixed(2))}`
+                        {Number(item.undertime) > 0
+                          ? `${numberWithCommas(
+                              Number(item.undertime).toFixed(2)
+                            )}`
                           : "0.00"}
                         )
                       </td>
@@ -225,7 +228,7 @@ const PayrunSummaryBody = ({ result, employeeId, startDate, endDate }) => {
                       <td className="w-[15rem] print:py-[2px]">Hazard Pay</td>
                       <td className="w-[8rem] text-right px-4 print:py-[2px]">
                         {pesoSign}
-                        {numberWithCommas(Number(hazardPay).toFixed(2))}
+                        {numberWithCommas(Number(item.hazardPay).toFixed(2))}
                       </td>
                     </tr>
                     <tr className="hover:bg-white ">
@@ -234,7 +237,7 @@ const PayrunSummaryBody = ({ result, employeeId, startDate, endDate }) => {
                       </td>
                       <td className="w-[8rem] text-right px-4 print:py-[2px]">
                         {pesoSign}
-                        {numberWithCommas(Number(inflationPay).toFixed(2))}
+                        {numberWithCommas(Number(item.inflationPay).toFixed(2))}
                       </td>
                     </tr>
                     <tr className="hover:bg-white ">
@@ -243,7 +246,9 @@ const PayrunSummaryBody = ({ result, employeeId, startDate, endDate }) => {
                       </td>
                       <td className="w-[8rem] text-right px-4 print:py-[2px]">
                         {pesoSign}
-                        {numberWithCommas(Number(payAdjustment).toFixed(2))}
+                        {numberWithCommas(
+                          Number(item.payAdjustment).toFixed(2)
+                        )}
                       </td>
                     </tr>
                     <tr className="hover:bg-white font-bold uppercase ">
@@ -284,9 +289,7 @@ const PayrunSummaryBody = ({ result, employeeId, startDate, endDate }) => {
                       <td className="w-[15rem] print:py-[2px]">Bonus</td>
                       <td className="w-[8rem] text-right px-4 print:py-[2px]">
                         {pesoSign}
-                        {numberWithCommas(
-                          Number(item.employee_referral_bonus).toFixed(2)
-                        )}
+                        {numberWithCommas(Number(item.bonus).toFixed(2))}
                       </td>
                     </tr>
                     <tr className="hover:bg-white ">
@@ -295,7 +298,9 @@ const PayrunSummaryBody = ({ result, employeeId, startDate, endDate }) => {
                       </td>
                       <td className="w-[8rem] text-right px-4 print:py-[2px]">
                         {pesoSign}
-                        {numberWithCommas(Number(item.bonus).toFixed(2))}
+                        {numberWithCommas(
+                          Number(item.employee_referral_bonus).toFixed(2)
+                        )}
                       </td>
                     </tr>
                     <tr className="hover:bg-white ">

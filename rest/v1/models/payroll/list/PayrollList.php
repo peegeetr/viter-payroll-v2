@@ -1054,6 +1054,10 @@ class PayrollList
             $sql .= "sum(payrollList.payroll_list_13th_month) as month13, ";
             $sql .= "sum(payrollList.payroll_list_bonus) as bonus, ";
             $sql .= "sum(payrollList.payroll_list_total_benefits) as benefits, ";
+            $sql .= "sum(payrollList.payroll_list_employee_referral_bonus) as employee_referral_bonus, ";
+            $sql .= "sum(payrollList.payroll_list_bereavement) as bereavement, ";
+            $sql .= "sum(payrollList.payroll_list_other_allowances) as other_allowances, ";
+            $sql .= "sum(payrollList.payroll_list_tax) as tax, ";
             $sql .= "payroll.payroll_category_type, ";
             $sql .= "payroll.payroll_id, ";
             $sql .= "payroll.payroll_start_date, ";
@@ -1172,6 +1176,9 @@ class PayrollList
             $sql .= "sum(payrollList.payroll_list_13th_month) as month13, ";
             $sql .= "sum(payrollList.payroll_list_bonus) as bonus, ";
             $sql .= "sum(payrollList.payroll_list_total_benefits) as benefits, ";
+            $sql .= "sum(payrollList.payroll_list_employee_referral_bonus) as employee_referral_bonus, ";
+            $sql .= "sum(payrollList.payroll_list_bereavement) as bereavement, ";
+            $sql .= "sum(payrollList.payroll_list_other_allowances) as other_allowances, ";
             $sql .= "sum(payrollList.payroll_list_tax) as tax, ";
             $sql .= "payroll.payroll_category_type, ";
             $sql .= "payroll.payroll_id, ";
@@ -1183,7 +1190,7 @@ class PayrollList
             $sql .= "where payrollList.payroll_list_payroll_id = payroll.payroll_id ";
             $sql .= "and MONTH(payroll.payroll_start_date) = :month ";
             $sql .= "and YEAR(payroll.payroll_start_date) = :year ";
-            $sql .= "and payroll.payroll_category_type = 8 ";
+            $sql .= "and payroll.payroll_category_type = 7 ";
             $sql .= "group by payrollList.payroll_list_employee_id ";
             $sql .= "order by payrollList.payroll_list_payroll_id, ";
             $sql .= "payroll.payroll_end_date desc, ";
@@ -1213,6 +1220,10 @@ class PayrollList
             $sql .= "sum(payrollList.payroll_list_13th_month) as month13, ";
             $sql .= "sum(payrollList.payroll_list_bonus) as bonus, ";
             $sql .= "sum(payrollList.payroll_list_total_benefits) as benefits, ";
+            $sql .= "sum(payrollList.payroll_list_employee_referral_bonus) as employee_referral_bonus, ";
+            $sql .= "sum(payrollList.payroll_list_bereavement) as bereavement, ";
+            $sql .= "sum(payrollList.payroll_list_other_allowances) as other_allowances, ";
+            $sql .= "sum(payrollList.payroll_list_tax) as tax, ";
             $sql .= "payroll.payroll_category_type, ";
             $sql .= "payroll.payroll_id, ";
             $sql .= "payroll.payroll_start_date, ";
@@ -1254,6 +1265,9 @@ class PayrollList
             $sql .= "sum(payrollList.payroll_list_13th_month) as month13, ";
             $sql .= "sum(payrollList.payroll_list_bonus) as bonus, ";
             $sql .= "sum(payrollList.payroll_list_total_benefits) as benefits, ";
+            $sql .= "sum(payrollList.payroll_list_employee_referral_bonus) as employee_referral_bonus, ";
+            $sql .= "sum(payrollList.payroll_list_bereavement) as bereavement, ";
+            $sql .= "sum(payrollList.payroll_list_other_allowances) as other_allowances, ";
             $sql .= "payrollList.payroll_list_tax, ";
             $sql .= "payrollList.payroll_list_employee_id, ";
             $sql .= "payrollList.payroll_list_employee_name, ";
@@ -1295,6 +1309,9 @@ class PayrollList
             $sql .= "sum(payrollList.payroll_list_13th_month) as month13, ";
             $sql .= "sum(payrollList.payroll_list_bonus) as bonus, ";
             $sql .= "sum(payrollList.payroll_list_total_benefits) as benefits, ";
+            $sql .= "sum(payrollList.payroll_list_employee_referral_bonus) as employee_referral_bonus, ";
+            $sql .= "sum(payrollList.payroll_list_bereavement) as bereavement, ";
+            $sql .= "sum(payrollList.payroll_list_other_allowances) as other_allowances, ";
             $sql .= "payrollList.payroll_list_tax, ";
             $sql .= "payrollList.payroll_list_employee_id, ";
             $sql .= "payrollList.payroll_list_employee_name, ";

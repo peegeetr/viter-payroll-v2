@@ -37,6 +37,7 @@ const WTaxBodySummary = ({ result, month, year, monthlyTax }) => {
         //   bonus = item.bonus;
         //   console.log(item.bonus, item.benefits);
         // }
+        console.log(item);
         if (item.bonus !== item.benefits) {
           bonus = item.bonus;
           // totalCompensation -= item.month13;
@@ -51,7 +52,13 @@ const WTaxBodySummary = ({ result, month, year, monthlyTax }) => {
 
         totalShareEe += item.sss + item.pag + item.phic;
         shareEe = item.sss + item.pag + item.phic;
-        totalBenefits += item.month13 + item.benefits + bonus;
+        totalBenefits +=
+          item.month13 +
+          item.benefits +
+          bonus +
+          item.employee_referral_bonus +
+          item.other_allowances +
+          item.bereavement;
         benefits = item.month13 + item.benefits;
         totalDeminimis += item.deminimis;
         deminimis = item.deminimis;

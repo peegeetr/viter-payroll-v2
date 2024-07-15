@@ -70,6 +70,8 @@ const PayrunSummaryBody = ({ result, employeeId, startDate, endDate }) => {
   let leaveHrs = 0;
   let basicHrs = 0;
   let otherBenefits = 0;
+  // let payStartYearMonth = "";
+  // let payEndYearMonth = "";
 
   // console.log(result);
   return (
@@ -82,6 +84,14 @@ const PayrunSummaryBody = ({ result, employeeId, startDate, endDate }) => {
               new Date(item.payroll_end_date)
             );
 
+            // payStartYearMonth =
+            //   item.payroll_start_date.split("-")[0] +
+            //   item.payroll_start_date.split("-")[1];
+            // payEndYearMonth =
+            //   item.payroll_start_date.split("-")[0] +
+            //   item.payroll_start_date.split("-")[1];
+
+            // console.log(payStartYearMonth, payEndYearMonth);
             console.log("item", item);
             hourRate = Number(
               employeeRate(item.payroll_list_employee_salary, days).hourly
@@ -110,13 +120,15 @@ const PayrunSummaryBody = ({ result, employeeId, startDate, endDate }) => {
               Number(item.payAdjustment) -
               (Number(item.absences) + Number(item.undertime));
 
-            totalEarnings += totalWages + Number(item.total_benefits);
-
             otherBenefits +=
               Number(item.employee_referral_bonus) +
               Number(item.bereavement) +
-              Number(item.separation_pay) +
+              // Number(item.separation_pay) +
+              Number(item.pay13th_month) +
+              Number(item.bonus) +
               Number(item.other_allowances);
+
+            totalEarnings += totalWages + Number(otherBenefits);
 
             totalEr +=
               Number(item.sss_er) +
@@ -341,7 +353,8 @@ const PayrunSummaryBody = ({ result, employeeId, startDate, endDate }) => {
                       <td className="w-[8rem] text-right px-4 print:py-[2px]">
                         {pesoSign}
                         {numberWithCommas(
-                          Number(item.total_benefits).toFixed(2)
+                          // Number(item.total_benefits).toFixed(2)
+                          Number(otherBenefits).toFixed(2)
                         )}
                       </td>
                     </tr>

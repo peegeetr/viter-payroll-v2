@@ -68,6 +68,7 @@ const WTaxBodyYearly = ({
       {result?.pages.map((page, key) => (
         <React.Fragment key={key}>
           {page.data.map((item, key) => {
+            console.log(item);
             // totalShareEe = 0;
             // totalBenefits = 0;
             const month13OtherBenefitsDeminimisThreshold = 90000;
@@ -75,7 +76,13 @@ const WTaxBodyYearly = ({
             taxMonthly = 0;
             totalDeminimis = item.deminimis;
             totalShareEe = item.sss + item.pag + item.phic;
-            totalBenefits = item.month13 + item.bonus + item.benefits;
+            // totalBenefits = item.month13 + item.bonus + item.benefits;
+            totalBenefits =
+              item.month13 +
+              item.bonus +
+              item.employee_referral_bonus +
+              item.bereavement +
+              item.other_allowances;
 
             if (totalBenefits > month13OtherBenefitsDeminimisThreshold) {
               totalDeminimis +=

@@ -58,7 +58,12 @@ const WTaxBodyMonthly = ({ result, monthlyTax, month, year }) => {
             totalBenefits = 0;
             tax = 0;
             totalShareEe += item.sss + item.pag + item.phic;
-            totalBenefits += item.month13 + item.benefits;
+            totalBenefits +=
+              item.month13 +
+              item.employee_referral_bonus +
+              item.bereavement +
+              item.bonus +
+              item.other_allowances;
             // compute monthly tax due
             tax = payComputeTaxDue(
               item.gross,
@@ -148,7 +153,7 @@ const WTaxBodyMonthly = ({ result, monthlyTax, month, year }) => {
                       <td className=" text-right px-4"></td>
                       <td className=" text-right px-4">
                         {pesoSign}
-                        {numberWithCommas(tax.toFixed(2))}
+                        {numberWithCommas(item.tax.toFixed(2))}
                       </td>
                     </tr>
                   </tbody>

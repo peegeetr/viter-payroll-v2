@@ -187,8 +187,14 @@ export const runPayroll = (
           emp.payroll_list_employee_id === earning.earnings_employee_id && // employee id
           new Date(emp.payroll_end_date) >=
             new Date(earning.earnings_start_pay_date) && // payroll end date
-          new Date(emp.payroll_end_date) >=
-            new Date(earning.earnings_end_pay_date) // payroll end date
+          (new Date(emp.payroll_end_date) >=
+            new Date(earning.earnings_end_pay_date) ||
+            new Date(earning.earnings_end_pay_date) >=
+              new Date(emp.payroll_end_date)) // payroll end date
+          // new Date(emp.payroll_end_date) >=
+          //   new Date(earning.earnings_start_pay_date) && // payroll end date
+          // new Date(emp.payroll_end_date) >=
+          //   new Date(earning.earnings_end_pay_date) // payroll end date
         ) {
           totalOtAmount += payComputeOt(earning).finalAmount;
           totalOtHrs += payComputeOt(earning).otHrs;
@@ -399,7 +405,7 @@ export const runPayroll = (
 
       netPay = grossAmount + totalBenefits - deductionAmount;
       payrollTotalAmount += netPay;
-      // console.log(totalAdjustmentAmount);
+      console.log(totalAbsencesAmount.toFixed(2));
       // data to send to server
       payrollList.push({
         payroll_category: payrollCategorySalaryId,

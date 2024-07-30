@@ -412,6 +412,7 @@ export const payComputeAbsences = (earning) => {
   if (earning.earnings_payitem_id === absencesId) {
     finalAmount += Number(earning.earnings_amount);
     leaveHrs += Number(earning.earnings_hrs);
+    console.log(earning.earnings_employee, finalAmount);
   }
   return { finalAmount, leaveHrs };
 };

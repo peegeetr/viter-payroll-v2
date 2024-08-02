@@ -23,7 +23,6 @@ const WTaxBodySummary = ({ result, month, year, monthlyTax }) => {
   let bonus = 0;
   let totalMonth13 = 0;
   let totalBonus = 0;
-
   const getCurrentYear = () => {
     return new Date().getFullYear();
   };
@@ -37,7 +36,7 @@ const WTaxBodySummary = ({ result, month, year, monthlyTax }) => {
         //   bonus = item.bonus;
         //   console.log(item.bonus, item.benefits);
         // }
-        console.log(item);
+        // console.log(item);
         if (item.bonus !== item.benefits) {
           bonus = item.bonus;
           // totalCompensation -= item.month13;
@@ -54,7 +53,7 @@ const WTaxBodySummary = ({ result, month, year, monthlyTax }) => {
         shareEe = item.sss + item.pag + item.phic;
         totalBenefits +=
           item.month13 +
-          item.benefits +
+          // item.benefits +
           bonus +
           item.employee_referral_bonus +
           item.other_allowances +
@@ -64,8 +63,11 @@ const WTaxBodySummary = ({ result, month, year, monthlyTax }) => {
         deminimis = item.deminimis;
         taxWithheld += item.tax;
         nonTax = totalDeminimis + totalShareEe + totalBenefits;
-        totalCompensation += Number(item.gross) + item.benefits + item.month13;
+        // totalCompensation += Number(item.gross) + item.benefits + item.month13;
 
+        // console.log(val, totalBenefits, item.month13);
+        totalCompensation += Number(item.gross);
+        // console.log(item.benefits);
         // if there is 13month in gross, deduct it to total compensation
         if (item.month13 > 0) {
           totalMonth13 += item.month13;
@@ -97,7 +99,7 @@ const WTaxBodySummary = ({ result, month, year, monthlyTax }) => {
     });
 
     // console.log("---------------------------------------------------------");
-    // totalCompensation = totalCompensation + totalBenefits;
+    totalCompensation = totalCompensation + totalBenefits;
     taxableCompensation = totalCompensation - nonTax;
     list.totalShareEe = totalShareEe.toFixed(2);
     list.totalBenefits = totalBenefits.toFixed(4);

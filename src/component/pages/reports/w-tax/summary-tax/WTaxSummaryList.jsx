@@ -69,6 +69,7 @@ const WTaxSummaryList = () => {
     `${devApiUrl}/v1/payrollList/report/wtax/13thmonth-summary/${month}/${year}`, // endpoint
     "get", // method
     "13thmonth-summary", // key
+    null,
     { month, year }
   );
 
@@ -77,10 +78,11 @@ const WTaxSummaryList = () => {
     `${devApiUrl}/v1/payrollList/report/wtax/bonus-summary/${month}/${year}`, // endpoint
     "get", // method
     "bonus-summary", // key
+    null,
     { month, year }
   );
 
-  console.log("summary13thMonth", summary13thMonth);
+  console.log("summary13thMonth", summary13thMonth, month, year);
   console.log("summaryBonus", summaryBonus);
 
   const initVal = {

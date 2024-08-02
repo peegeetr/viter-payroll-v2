@@ -64,6 +64,25 @@ const WTaxSummaryList = () => {
     "monthlyTax" // key
   );
 
+  // use if not loadmore button monthly tax
+  const { data: summary13thMonth } = useQueryData(
+    `${devApiUrl}/v1/payrollList/report/wtax/13thmonth-summary/${month}/${year}`, // endpoint
+    "get", // method
+    "13thmonth-summary", // key
+    { month, year }
+  );
+
+  // use if not loadmore button monthly tax
+  const { data: summaryBonus } = useQueryData(
+    `${devApiUrl}/v1/payrollList/report/wtax/bonus-summary/${month}/${year}`, // endpoint
+    "get", // method
+    "bonus-summary", // key
+    { month, year }
+  );
+
+  console.log("summary13thMonth", summary13thMonth);
+  console.log("summaryBonus", summaryBonus);
+
   const initVal = {
     monthSummary: `${getCurrentMonth()}`,
     year: `${getYearNow()}`,

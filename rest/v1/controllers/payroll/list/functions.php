@@ -387,6 +387,22 @@ function checkReadReportSummaryWtax($object)
     return $query;
 }
 
+// filter Report Summary W-TAX
+function checkReadBonusReportSummaryWtax($object)
+{
+    $query = $object->readBonusReportSummaryWtax();
+    checkQuery($query, "Empty records. (report bonus filter summary w-tax)");
+    return $query;
+}
+
+// filter Report Summary W-TAX
+function checkRead13thMonthReportSummaryWtax($object)
+{
+    $query = $object->read13thMonthReportSummaryWtax();
+    checkQuery($query, "Empty records. (report 13th month filter summary w-tax)");
+    return $query;
+}
+
 // filter by date in payroll list
 function checkReadReportBankTemplate($object)
 {

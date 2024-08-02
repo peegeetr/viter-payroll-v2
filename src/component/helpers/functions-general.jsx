@@ -1,10 +1,10 @@
 import React from "react";
 
 // Mac
-// const urlHris = "http://localhost/react-vite/viter-hris-v3"
-// const urlHrisImg = "http://localhost/react-vite/viter-hris-v3/public/img"
-// const urlPayroll = "http://localhost/react-vite/viter-payroll-v2";
-// const urlPayrollImg = "http://localhost/react-vite/viter-payroll-v2/public/img";
+const urlHris = "http://localhost/react-vite/viter-hris-v3";
+const urlHrisImg = "http://localhost/react-vite/viter-hris-v3/public/img";
+const urlPayroll = "http://localhost/react-vite/viter-payroll-v2";
+const urlPayrollImg = "http://localhost/react-vite/viter-payroll-v2/public/img";
 
 // Mon
 // const urlHris = "http://localhost/viter-hris-v3";
@@ -17,10 +17,10 @@ import React from "react";
 // export const devNavUrl = "/v2";
 
 // // Patrick
-const urlHris = `https://hr-app.frontlinebusiness.com.ph`;
-const urlHrisImg = `https://hr-app.frontlinebusiness.com.ph/img`;
-const urlPayroll = `https://payroll-app.frontlinebusiness.com.ph`;
-const urlPayrollImg = `https://payroll-app.frontlinebusiness.com.ph/img`;
+// const urlHris = `https://hr-app.frontlinebusiness.com.ph`;
+// const urlHrisImg = `https://hr-app.frontlinebusiness.com.ph/img`;
+// const urlPayroll = `https://payroll-app.frontlinebusiness.com.ph`;
+// const urlPayrollImg = `https://payroll-app.frontlinebusiness.com.ph/img`;
 export const hrisdevNavUrl = "";
 export const devNavUrl = "";
 

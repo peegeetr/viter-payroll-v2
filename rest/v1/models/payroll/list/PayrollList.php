@@ -1163,7 +1163,7 @@ class PayrollList
     }
 
     // REPORT Summary WTAX filter 
-    // REPORT Summary WTAX filter
+    // REPORT Summary WTAX filter SALARY
     public function readReportSummaryWtax()
     {
         try {
@@ -1190,7 +1190,95 @@ class PayrollList
             $sql .= "where payrollList.payroll_list_payroll_id = payroll.payroll_id ";
             $sql .= "and MONTH(payroll.payroll_start_date) = :month ";
             $sql .= "and YEAR(payroll.payroll_start_date) = :year ";
-            $sql .= "and payroll.payroll_category_type = 7 ";
+            $sql .= "and payroll.payroll_category_type = '7' ";
+            $sql .= "group by payrollList.payroll_list_employee_id ";
+            $sql .= "order by payrollList.payroll_list_payroll_id, ";
+            $sql .= "payroll.payroll_end_date desc, ";
+            $sql .= "payrollList.payroll_list_employee_name asc ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "month" => $this->date_from,
+                "year" => $this->current_year,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    // REPORT Summary WTAX filter 
+    // REPORT Summary WTAX filter BONUS
+    public function readBonusReportSummaryWtax()
+    {
+        try {
+            $sql = "select payrollList.*, ";
+            $sql .= "sum(payrollList.payroll_list_gross) as gross, ";
+            $sql .= "sum(payrollList.payroll_list_sss_ee) as sss, ";
+            $sql .= "sum(payrollList.payroll_list_philhealth_ee) as phic, ";
+            $sql .= "sum(payrollList.payroll_list_pagibig_ee) as pag, ";
+            $sql .= "sum(payrollList.payroll_list_deminimis) as deminimis, ";
+            $sql .= "sum(payrollList.payroll_list_13th_month) as month13, ";
+            $sql .= "sum(payrollList.payroll_list_bonus) as bonus, ";
+            $sql .= "sum(payrollList.payroll_list_total_benefits) as benefits, ";
+            $sql .= "sum(payrollList.payroll_list_employee_referral_bonus) as employee_referral_bonus, ";
+            $sql .= "sum(payrollList.payroll_list_bereavement) as bereavement, ";
+            $sql .= "sum(payrollList.payroll_list_other_allowances) as other_allowances, ";
+            $sql .= "sum(payrollList.payroll_list_tax) as tax, ";
+            $sql .= "payroll.payroll_category_type, ";
+            $sql .= "payroll.payroll_id, ";
+            $sql .= "payroll.payroll_start_date, ";
+            $sql .= "payroll.payroll_end_date, ";
+            $sql .= "payroll.payroll_pay_date ";
+            $sql .= "from {$this->tblPayrollList} as payrollList, ";
+            $sql .= "{$this->tblPayroll} as payroll ";
+            $sql .= "where payrollList.payroll_list_payroll_id = payroll.payroll_id ";
+            $sql .= "and MONTH(payroll.payroll_start_date) = :month ";
+            $sql .= "and YEAR(payroll.payroll_start_date) = :year ";
+            $sql .= "and payroll.payroll_category_type = '9' ";
+            $sql .= "group by payrollList.payroll_list_employee_id ";
+            $sql .= "order by payrollList.payroll_list_payroll_id, ";
+            $sql .= "payroll.payroll_end_date desc, ";
+            $sql .= "payrollList.payroll_list_employee_name asc ";
+            $query = $this->connection->prepare($sql);
+            $query->execute([
+                "month" => $this->date_from,
+                "year" => $this->current_year,
+            ]);
+        } catch (PDOException $ex) {
+            $query = false;
+        }
+        return $query;
+    }
+
+    // REPORT Summary WTAX filter 
+    // REPORT Summary WTAX filter BONUS
+    public function read13thMonthReportSummaryWtax()
+    {
+        try {
+            $sql = "select payrollList.*, ";
+            $sql .= "sum(payrollList.payroll_list_gross) as gross, ";
+            $sql .= "sum(payrollList.payroll_list_sss_ee) as sss, ";
+            $sql .= "sum(payrollList.payroll_list_philhealth_ee) as phic, ";
+            $sql .= "sum(payrollList.payroll_list_pagibig_ee) as pag, ";
+            $sql .= "sum(payrollList.payroll_list_deminimis) as deminimis, ";
+            $sql .= "sum(payrollList.payroll_list_13th_month) as month13, ";
+            $sql .= "sum(payrollList.payroll_list_bonus) as bonus, ";
+            $sql .= "sum(payrollList.payroll_list_total_benefits) as benefits, ";
+            $sql .= "sum(payrollList.payroll_list_employee_referral_bonus) as employee_referral_bonus, ";
+            $sql .= "sum(payrollList.payroll_list_bereavement) as bereavement, ";
+            $sql .= "sum(payrollList.payroll_list_other_allowances) as other_allowances, ";
+            $sql .= "sum(payrollList.payroll_list_tax) as tax, ";
+            $sql .= "payroll.payroll_category_type, ";
+            $sql .= "payroll.payroll_id, ";
+            $sql .= "payroll.payroll_start_date, ";
+            $sql .= "payroll.payroll_end_date, ";
+            $sql .= "payroll.payroll_pay_date ";
+            $sql .= "from {$this->tblPayrollList} as payrollList, ";
+            $sql .= "{$this->tblPayroll} as payroll ";
+            $sql .= "where payrollList.payroll_list_payroll_id = payroll.payroll_id ";
+            $sql .= "and MONTH(payroll.payroll_start_date) = :month ";
+            $sql .= "and YEAR(payroll.payroll_start_date) = :year ";
+            $sql .= "and payroll.payroll_category_type = '8' ";
             $sql .= "group by payrollList.payroll_list_employee_id ";
             $sql .= "order by payrollList.payroll_list_payroll_id, ";
             $sql .= "payroll.payroll_end_date desc, ";

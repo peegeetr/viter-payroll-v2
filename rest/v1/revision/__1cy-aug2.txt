@@ -1,0 +1,40 @@
+
+*controllers     
+    - rest/v1/controllers/payroll/list/functions.php
+    - rest/v1/controllers/payroll/list/report-13thmonth-wtax-summary.php
+    - rest/v1/controllers/payroll/list/report-bonus-wtax-summary.php
+    - 
+    - 
+    - 
+    - 
+ 
+    
+*models   
+    - rest/v1/models/payroll/list/PayrollList.php
+    - 
+    - 
+    - 
+    - 
+  
+*htaccess 
+    - rest/v1/.htaccess
+    -
+    -
+    - 
+
+*db tables 
+    - 
+    - 
+    - 
+    - 
+
+*core 
+    - 
+    - 
+    - 
+
+*extra 
+    -
+    -
+    -
+    -

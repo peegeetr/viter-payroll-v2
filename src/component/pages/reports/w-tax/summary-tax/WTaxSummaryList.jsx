@@ -82,9 +82,6 @@ const WTaxSummaryList = () => {
     { month, year }
   );
 
-  console.log("summary13thMonth", summary13thMonth, month, year);
-  console.log("summaryBonus", summaryBonus);
-
   const initVal = {
     monthSummary: `${getCurrentMonth()}`,
     year: `${getYearNow()}`,
@@ -188,6 +185,8 @@ const WTaxSummaryList = () => {
         )}
         <WTaxBodyYearly
           result={result}
+          summary13thMonth={summary13thMonth}
+          summaryBonus={summaryBonus}
           month={month}
           year={year}
           monthlyTax={monthlyTax?.data}

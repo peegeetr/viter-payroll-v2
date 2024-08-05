@@ -7,7 +7,14 @@ import {
 import { getMonthName } from "../yearly-tax/functions-wtax";
 import { payrollCategorySalaryId } from "../../../../helpers/functions-payroll-category-id";
 
-const WTaxBodySummary = ({ result, month, year, monthlyTax }) => {
+const WTaxBodySummary = ({
+  result,
+  summary13thMonth,
+  summaryBonus,
+  month,
+  year,
+  monthlyTax,
+}) => {
   let totalShareEe = 0;
   let shareEe = 0;
   let totalBenefits = 0;
@@ -23,38 +30,63 @@ const WTaxBodySummary = ({ result, month, year, monthlyTax }) => {
   let bonus = 0;
   let totalMonth13 = 0;
   let totalBonus = 0;
+  let month13thTotal = 0;
+  let bonusTotal = 0;
+
   const getCurrentYear = () => {
     return new Date().getFullYear();
+  };
+
+  const getTotalBonus = () => {
+    let total = 0;
+    summaryBonus?.data.map((bonus) => {
+      total += Number(bonus.payroll_list_gross);
+    });
+    return total;
+  };
+
+  const getTotal13thMonth = () => {
+    let total = 0;
+    summary13thMonth?.data.map((item) => {
+      total += Number(item.payroll_list_gross);
+    });
+    return total;
   };
 
   const getSummary = () => {
     let list = {};
     result?.pages.map((page, key) => {
       page.data.map((item, key) => {
+        // summaryBonus?.data.map((bonus) => {
+        //   bonusTotal += Number(bonus.payroll_list_gross);
+        //   console.log(bonusTotal);
+        // });
         // payroll_list bonus and total benefits are sometimes same
         // if (item.bonus !== item.benefits) {
         //   bonus = item.bonus;
         //   console.log(item.bonus, item.benefits);
         // }
         // console.log(item);
-        if (item.bonus !== item.benefits) {
-          bonus = item.bonus;
-          // totalCompensation -= item.month13;
-          // console.log(item.bonus);
-        }
+        // if (item.bonus !== item.benefits) {
+        //   bonus = item.bonus;
+        //   // totalCompensation -= item.month13;
+        //   // console.log(item.bonus);
+        // }
 
-        // if there is bonus in gross, deduct it to total compensation
-        if (item.bonus > 0) {
-          totalBonus += item.bonus;
-          // console.log(totalBonus);
-        }
+        // // if there is bonus in gross, deduct it to total compensation
+        // if (item.bonus > 0) {
+        //   totalBonus += item.bonus;
+        //   // console.log(totalBonus);
+        // }
 
         totalShareEe += item.sss + item.pag + item.phic;
         shareEe = item.sss + item.pag + item.phic;
         totalBenefits +=
-          item.month13 +
+          // item.month13 +
+          // month13thTotal +
           // item.benefits +
-          bonus +
+          // bonus +
+          // getTotalBonus() +
           item.employee_referral_bonus +
           item.other_allowances +
           item.bereavement;
@@ -62,7 +94,7 @@ const WTaxBodySummary = ({ result, month, year, monthlyTax }) => {
         totalDeminimis += item.deminimis;
         deminimis = item.deminimis;
         taxWithheld += item.tax;
-        nonTax = totalDeminimis + totalShareEe + totalBenefits;
+        // nonTax = totalDeminimis + totalShareEe + totalBenefits;
         // totalCompensation += Number(item.gross) + item.benefits + item.month13;
 
         // console.log(val, totalBenefits, item.month13);
@@ -99,7 +131,9 @@ const WTaxBodySummary = ({ result, month, year, monthlyTax }) => {
     });
 
     // console.log("---------------------------------------------------------");
+    totalBenefits += getTotalBonus() + getTotal13thMonth();
     totalCompensation = totalCompensation + totalBenefits;
+    nonTax = totalDeminimis + totalShareEe + totalBenefits;
     taxableCompensation = totalCompensation - nonTax;
     list.totalShareEe = totalShareEe.toFixed(2);
     list.totalBenefits = totalBenefits.toFixed(4);

@@ -1276,8 +1276,8 @@ class PayrollList
             $sql .= "from {$this->tblPayrollList} as payrollList, ";
             $sql .= "{$this->tblPayroll} as payroll ";
             $sql .= "where payrollList.payroll_list_payroll_id = payroll.payroll_id ";
-            $sql .= "and MONTH(payroll.payroll_start_date) = :month ";
-            $sql .= "and YEAR(payroll.payroll_start_date) = :year ";
+            $sql .= "and MONTH(payroll.payroll_pay_date) = :month ";
+            $sql .= "and YEAR(payroll.payroll_pay_date) = :year ";
             $sql .= "and payroll.payroll_category_type = '8' ";
             $sql .= "group by payrollList.payroll_list_employee_id ";
             $sql .= "order by payrollList.payroll_list_payroll_id, ";
